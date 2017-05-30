@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Gou</string>
+    <string name="login_btn">登录</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="rechargeinfo_textone">1、充值账户均在第三方支付平台托管,请仔细阅读第三方支付平台的法律声明和服务协议,使用该第三方支付平台的服务即视为已同意其法律声明和服务协议的全部内容.</string>
+    <string name="rechargeinfo_texttwo">2.充值费用暂免,如收款将另行通知.</string>
+    <string name="rechargeinfo_textthree">3.充值(7*24小时)实时到账.</string>
+    <string name="rechargeinfo_textfour">4.如果充值金额没有及时到账,可以与我公司或第三方支付平台联系.</string>
+    <string name="rechargefirminfo_textone">1.请务必先发起提交后再登录支付宝进行付款!</string>
+    <string name="rechargefirminfo_texttwo">2.可以直接使用手机支付宝进行转账付款</string>
+    <string name="rechargefirminfo_textthree">3.请务必在付款支付宝认证姓名正确填写您在支付宝实名认证的身份证姓名</string>
+    <string name="rechargefirminfo_textfour">4.请务必2小时内完成付款操作</string>
+    <string name="applyresult_one">1.第一步:提交申请->第二步:登录【手机支付宝】->第三步:点击【转账】->第四步:【转账到银行卡】->第五步:根据以上信息按步骤完成充值.</string>
+    <string name="applyresult_two">2.转账时间:默认保持两小时内到账才会实时到账</string>
 </resources>

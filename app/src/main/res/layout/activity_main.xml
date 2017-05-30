@@ -1,18 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.king.gou.ui.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RadioGroup
+        android:id="@+id/MainActivity_group"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
 
-</android.support.constraint.ConstraintLayout>
+        <RadioButton
+            android:id="@+id/HomeFrmRadioBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:drawableTop="@drawable/select_home"
+            android:gravity="center_horizontal"
+            android:text="首页"
+            android:textColor="@color/select_radiobtn_color" />
+
+
+        <RadioButton
+
+            android:id="@+id/GameFrmRadioBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/select_game"
+            android:gravity="center_horizontal"
+            android:text="游戏大厅"
+            android:textColor="@color/select_radiobtn_color" />
+
+
+        <RadioButton
+            android:id="@+id/FindFrmRadioBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/select_find"
+            android:gravity="center_horizontal"
+            android:text="发现"
+            android:textColor="@color/select_radiobtn_color" />
+
+
+        <RadioButton
+            android:id="@+id/MyFrmRadioBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/select_my"
+            android:gravity="center_horizontal"
+            android:text="个人中心"
+            android:textColor="@color/select_radiobtn_color" />
+
+    </RadioGroup>
+    <!--首页-->
+    <fragment
+        android:id="@+id/fragment_home"
+        android:name="com.example.king.gou.fragment.HomeFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/MainActivity_group" />
+    <!--游戏大厅-->
+    <fragment
+        android:id="@+id/fragment_game"
+        android:name="com.example.king.gou.fragment.GameFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/MainActivity_group" />
+    <!--发现-->
+    <fragment
+        android:id="@+id/fragment_find"
+        android:name="com.example.king.gou.fragment.FindFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/MainActivity_group" />
+    <!--个人中心-->
+    <fragment
+        android:id="@+id/fragment_my"
+        android:name="com.example.king.gou.fragment.MyFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/MainActivity_group" />
+</RelativeLayout>

@@ -1,17 +1,15 @@
-package com.example.king.gou.ui;
+package com.example.king.gou.ui.FrmMyActivity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Window;
 
 import com.example.king.gou.R;
 
-public class BaseActivity extends AppCompatActivity {
+public class RechargeComfirmActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_base);
+        setContentView(R.layout.activity_recharge_comfirm);
     }
 }
