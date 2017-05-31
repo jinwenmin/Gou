@@ -11,31 +11,28 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/YouXijl"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_youxijilu"
+            android:drawableTop="@mipmap/ic_dailishouye"
             android:gravity="center_horizontal"
-            android:text="游戏记录" />
+            android:text="代理首页" />
 
         <TextView
-            android:id="@+id/ZhuiHaojl"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_zhuihaojilu"
+            android:drawableTop="@mipmap/ic_kaihuzhongxin"
             android:gravity="center_horizontal"
-            android:text="追号记录" />
+            android:text="开户中心" />
 
         <TextView
-            android:id="@+id/CaiPiaobb"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_caipiaobaobiao"
+            android:drawableTop="@mipmap/ic_tuanduibaobiao"
             android:gravity="center_horizontal"
-            android:text="彩票报表" />
+            android:text="团队报表" />
     </LinearLayout>
 
     <LinearLayout
@@ -44,32 +41,29 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/CunQujl"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_cunqukuanjilu"
+            android:drawableTop="@mipmap/ic_huiyuanguanli"
             android:gravity="center_horizontal"
-            android:text="存取款记录" />
+            android:text="会员管理" />
 
         <TextView
-            android:id="@+id/GeRenzb"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
 
-            android:drawableTop="@mipmap/ic_zhangbianjilu"
+            android:drawableTop="@mipmap/ic_tuanduizbjl"
             android:gravity="center_horizontal"
-            android:text="个人账变记录" />
+            android:text="团队帐变记录" />
 
         <TextView
-            android:id="@+id/FanDianjl"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_fandianjilu"
+            android:drawableTop="@mipmap/ic_tuanduiyxjl"
             android:gravity="center_horizontal"
-            android:text="返点记录" />
+            android:text="团队游戏记录" />
     </LinearLayout>
 
     <LinearLayout
@@ -78,29 +72,27 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/GeRenbjl"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_baijialebaobiao"
+            android:drawableTop="@mipmap/ic_tuanduizhjl"
             android:gravity="center_horizontal"
-            android:text="个人百家乐报表" />
-
-        <TextView
-            android:id="@+id/ZhuanZhangjl"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_zhuanzhangjilu"
-            android:gravity="center_horizontal"
-            android:text="转账记录" />
+            android:text="团队追号记录" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-
+            android:drawableTop="@mipmap/ic_tuanduicunqukuan"
             android:gravity="center_horizontal"
-            android:text=" " />
+            android:text="团队存取款记录" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/ic_tuanduibaijialebaobiao"
+            android:gravity="center_horizontal"
+            android:text="团队百家乐报表" />
     </LinearLayout>
 </LinearLayout>

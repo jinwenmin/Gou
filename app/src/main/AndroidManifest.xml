@@ -21,10 +21,12 @@
         </activity>
         <activity android:name=".ui.BaseActivity" />
         <activity android:name=".ui.WelcomeActivity" />
-        <activity android:name=".ui.FrmMyActivity.ReChargeActivity" />
-        <activity android:name=".ui.FrmMyActivity.RechargeComfirmActivity" />
-        <activity android:name=".ui.FrmMyActivity.ApplyResultActivity" />
-        <activity android:name=".ui.FrmMyActivity.TixianAppliActivity"></activity>
+        <activity android:name=".ui.frmMyActivity.ReChargeActivity" />
+        <activity android:name=".ui.frmMyActivity.RechargeComfirmActivity" />
+        <activity android:name=".ui.frmMyActivity.ApplyResultActivity" />
+        <activity android:name=".ui.frmMyActivity.TixianAppliActivity" />
+        <activity android:name=".ui.frmMyActivity.TikuanInfoActivity" />
+        <activity android:name=".ui.orderFrmActivity.GameJiluActivity"></activity>
     </application>
 
 </manifest>
