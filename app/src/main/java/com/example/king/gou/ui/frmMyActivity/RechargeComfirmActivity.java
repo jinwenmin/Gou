@@ -1,4 +1,4 @@
-package com.example.king.gou.ui.FrmMyActivity;
+package com.example.king.gou.ui.frmMyActivity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

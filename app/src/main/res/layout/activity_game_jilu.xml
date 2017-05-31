@@ -111,16 +111,46 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="6666-66-66" />
+                android:text="全部票种" />
+            <FrameLayout
+                android:layout_width="28dp"
+                android:layout_height="28dp">
 
-            <Spinner
-                android:id="@+id/gameLotteryType"
+                <Spinner
+                    android:id="@+id/gameLotteryType"
+                    style="@android:style/Widget.Spinner"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="-4dp"
+                    android:background="@mipmap/drop_down"
+                     android:visibility="invisible"/>
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@mipmap/drop_down" />
+            </FrameLayout>
+          <!--  <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:background="@mipmap/drop_down"></Spinner>
+                android:layout_marginRight="10dp">
+
+                <Spinner
+                    android:id="@+id/gameLotteryType"
+                    style="@android:style/Widget.Spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    android:background="@mipmap/drop_down"></Spinner>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/drop_down" />
+            </FrameLayout>-->
+
 
             <ImageView
                 android:layout_width="wrap_content"

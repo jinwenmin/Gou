@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/lottery_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="彩票种类" />
+
+    <TextView
+        android:id="@+id/lottery_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lottery_type"
+        android:layout_marginLeft="10dp"
+        android:text="20170000000期" />
+
+    <TextView
+        android:id="@+id/lottery_type2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lottery_type"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/lottery_date"
+        android:text="定位胆" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lottery_type2"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="投注金额:" />
+
+        <TextView
+            android:id="@+id/TouZhuMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5元" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="中奖金额:" />
+
+        <TextView
+            android:id="@+id/ZhongJiangMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0元" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="70dp"
+        android:layout_height="35dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/zhongjiang_btn"
+        android:text="未开奖"
+        android:textColor="#4F94CD" />
+</RelativeLayout>

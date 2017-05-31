@@ -1,15 +1,15 @@
-package com.example.king.gou.ui.FrmMyActivity;
+package com.example.king.gou.ui.frmMyActivity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.king.gou.R;
 
-public class ApplyResultActivity extends AppCompatActivity {
+public class TixianAppliActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_apply_result);
+        setContentView(R.layout.activity_tixian_appli);
     }
 }

@@ -1,15 +1,15 @@
-package com.example.king.gou.ui.FrmMyActivity;
+package com.example.king.gou.ui.frmMyActivity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.king.gou.R;
 
-public class TixianAppliActivity extends AppCompatActivity {
+public class ReChargeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tixian_appli);
+        setContentView(R.layout.activity_re_charge);
     }
 }

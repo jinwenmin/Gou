@@ -1,5 +1,6 @@
 package com.example.king.gou.ui.orderFrmActivity;
 
+import android.app.DatePickerDialog;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -9,10 +10,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -23,13 +27,17 @@ import android.widget.Toast;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.MyFrmPageAdapter;
 import com.example.king.gou.fragment.BaseFragment;
+import com.example.king.gou.ui.MainActivity;
 import com.example.king.gou.ui.gameAcVpFrms.AllFragment;
 import com.example.king.gou.ui.gameAcVpFrms.KillOrderFragment;
 import com.example.king.gou.ui.gameAcVpFrms.NoDrawFragment;
 import com.example.king.gou.ui.gameAcVpFrms.NoWinFragment;
 import com.example.king.gou.ui.gameAcVpFrms.WinFragment;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -61,7 +69,8 @@ public class GameJiluActivity extends AppCompatActivity implements View.OnClickL
     MyFrmPageAdapter myFrmPageAdapter;
     @BindView(R.id.gameLotteryType)
     Spinner gameLotteryType;
-    private CalendarView calenderView;
+    private DatePickerDialog datePickerDialog;
+    private DatePickerDialog datePickerDialog2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +85,62 @@ public class GameJiluActivity extends AppCompatActivity implements View.OnClickL
         relateTime2.setOnClickListener(this);
         relateBank3.setOnClickListener(this);
         initViewpager();
+        initDateDialog();
+        initSpinner();
     }
 
+    private void initSpinner() {
+        List<String> list = new ArrayList<>();
+        list.add("第一");
+        list.add("第一");
+        list.add("第一");
+        list.add("第一");
+        list.add("第一");
+        list.add("第一");
+        list.add("第一");
+        list.add("第一");
+        //将可选内容与adapter链接
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, list);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        gameLotteryType.setAdapter(adapter);
+
+
+    }
+
+    private void initDateDialog() {
+        int year;
+        int month;
+        int day;
+        Calendar calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH) + 1;
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        timetext.setText(year + "-" + month + "-" + day);
+        //获取当前所有的毫秒数
+        long times = System.currentTimeMillis();
+        //加上一天的毫秒数就是明天的时间
+        long hou = times + 86400000;
+        Date date = new Date(hou);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println();
+        Log.e("times", sdf.format(date));
+        timetext2.setText(sdf.format(date));
+        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                timetext.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
+            }
+        }, year, month, day);
+        datePickerDialog2 = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                timetext2.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
+            }
+        }, year, month, day);
+
+    }
+
+    //实例化 Viewpager
     private void initViewpager() {
         List<BaseFragment> fragments = new ArrayList<>();
         List<String> tits = new ArrayList<>();
@@ -94,49 +157,16 @@ public class GameJiluActivity extends AppCompatActivity implements View.OnClickL
         myFrmPageAdapter.addFrmList(fragments, tits);
     }
 
-    public void showSelectDate() {
-        Log.i("弹出对话框", "");
-    /*    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("选择日期");
-        //    设置Title的图标
-        builder.setIcon(R.mipmap.ic_youxijilu);
-        builder.setView(R.layout.timeselect);
-        builder.show();*/
-        PopupWindow mPopupWindow;
-        View popupView = getLayoutInflater().inflate(R.layout.timeselect, null);
-        mPopupWindow = new PopupWindow(popupView, ViewPager.LayoutParams.MATCH_PARENT, ViewPager.LayoutParams.WRAP_CONTENT, true);
-        mPopupWindow.setTouchable(true);
-        mPopupWindow.setOutsideTouchable(true);
-        mPopupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(), (Bitmap) null));
-
-       /* View view = getLayoutInflater().inflate(R.layout.timeselect, null, false);
-        PopupWindow popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        popupWindow.setContentView(view);
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
-        popupWindow.setOutsideTouchable(true);
-        calenderView = ((CalendarView) view.findViewById(R.id.calendarView));
-        // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
-        // 我觉得这里是API的一个bug
-        popupWindow.setBackgroundDrawable(getResources().getDrawable(
-                R.drawable.fenxiang));
-        popupWindow.showAtLocation(null, Gravity.CENTER, 0, 0);*/
-
-    }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.relateTime1:
 
                 Toast.makeText(this, "点击了第一个", Toast.LENGTH_SHORT).show();
-                //showSelectDate();
-                PopupWindow mPopupWindow;
-                View popupView = getLayoutInflater().inflate(R.layout.timeselect, null);
-                mPopupWindow = new PopupWindow(popupView, ViewPager.LayoutParams.MATCH_PARENT, ViewPager.LayoutParams.WRAP_CONTENT, true);
-                mPopupWindow.setTouchable(true);
-                mPopupWindow.setOutsideTouchable(true);
-                mPopupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(), (Bitmap) null));
+                datePickerDialog.show();
                 break;
+            case R.id.relateTime2:
+                datePickerDialog2.show();
         }
     }
 }
