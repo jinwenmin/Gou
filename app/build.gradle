@@ -35,6 +35,8 @@ dependencies {
     compile project(':viewlib')
     //弹窗警告 或提示
 
+    //好看的toast
+    //viewpger
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'io.reactivex.rxjava2:rxjava:2.0.7'
@@ -49,10 +51,8 @@ dependencies {
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.android.support:design:26.0.0-alpha1'
     compile 'com.github.1em0nsOft:LemonBubble4Android:1.0.13'
-    //好看的toast
     compile 'com.github.GrenderG:Toasty:1.1.4'
+    compile 'com.jude:rollviewpager:1.2.9'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
-    //viewpger
-    compile 'com.jude:rollviewpager:1.2.9'
 }
