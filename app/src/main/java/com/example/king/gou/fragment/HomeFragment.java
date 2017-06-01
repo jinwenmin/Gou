@@ -11,6 +11,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.example.king.gou.R;
+import com.example.king.gou.adapters.PageAdapter;
+import com.jude.rollviewpager.RollPagerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +32,7 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.home_top)
     RelativeLayout homeTop;
     @BindView(R.id.home_viewpager)
-    ViewPager homeViewpager;
+    RollPagerView homeViewpager;
     @BindView(R.id.ScrollImg1)
     ImageView ScrollImg1;
     Unbinder unbinder;
@@ -37,6 +42,7 @@ public class HomeFragment extends BaseFragment {
     ImageView ScrollImg3;
     @BindView(R.id.ScrollImg4)
     ImageView ScrollImg4;
+    List imgs = new ArrayList();
 
     public static HomeFragment newInstance() {
 
@@ -54,6 +60,30 @@ public class HomeFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+        ImageView img1 = new ImageView(getContext());
+
+        img1.setImageResource(R.mipmap.ic_launcher);
+        ImageView img2 = new ImageView(getContext());
+        img2.setImageResource(R.mipmap.ic_baijialebaobiao);
+        ImageView img3 = new ImageView(getContext());
+        img3.setImageResource(R.mipmap.ic_caipiaobaobiao);
+        ImageView img4 = new ImageView(getContext());
+        img4.setImageResource(R.mipmap.ic_cunqukuanjilu);
+        ImageView img5 = new ImageView(getContext());
+        img5.setImageResource(R.mipmap.ic_fandianjilu);
+        img1.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        img2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        img3.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        img4.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        img5.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        imgs.add(img1);
+        imgs.add(img2);
+        imgs.add(img3);
+        imgs.add(img4);
+        imgs.add(img5);
+        PageAdapter pageAdapter = new PageAdapter(imgs);
+        homeViewpager.setAdapter(pageAdapter);
         initScrollView();
         return view;
     }
