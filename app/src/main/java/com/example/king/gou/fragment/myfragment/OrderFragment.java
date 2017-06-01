@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.king.gou.R;
 import com.example.king.gou.fragment.BaseFragment;
+import com.example.king.gou.ui.orderFrmActivity.CunQuActivity;
 import com.example.king.gou.ui.orderFrmActivity.GameJiluActivity;
 
 import butterknife.BindView;
@@ -58,6 +59,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
         View view = inflater.inflate(R.layout.fragment_order, container, false);
         unbinder = ButterKnife.bind(this, view);
         YouXijl.setOnClickListener(this);
+        CunQujl.setOnClickListener(this);
         return view;
     }
 
@@ -72,6 +74,9 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
         switch (view.getId()) {
             case R.id.YouXijl:
                 startActivity(new Intent(getActivity(), GameJiluActivity.class));
+                break;
+            case R.id.CunQujl:
+                startActivity(new Intent(getActivity(), CunQuActivity.class));
                 break;
         }
     }

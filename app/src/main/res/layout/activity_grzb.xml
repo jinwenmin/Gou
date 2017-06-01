@@ -24,14 +24,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="游戏记录"
+            android:text="个人帐变记录"
             android:textColor="@android:color/white"
             android:textSize="23sp" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:orientation="horizontal">
 
         <RelativeLayout
@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="3dp"
-                android:text="全部票种" />
+                android:text="全部" />
 
             <FrameLayout
                 android:layout_width="28dp"
@@ -135,41 +135,23 @@
                     android:visibility="invisible" />
 
                 <ImageView
-                    android:layout_marginRight="10dp"
                     android:layout_width="28dp"
                     android:layout_height="28dp"
+                    android:layout_marginRight="10dp"
                     android:src="@drawable/wuka_xiala" />
             </FrameLayout>
-            <!--  <FrameLayout
-                  android:layout_width="28dp"
-                  android:layout_height="28dp">
-                  <ImageView
-                      android:layout_width="28dp"
-                      android:layout_height="28dp"
-                      android:src="@mipmap/drop_down" />
-                  <Spinner
-                      android:id="@+id/gameLotteryType"
-                      style="@android:style/Widget.Spinner"
-                      android:layout_width="28dp"
-                      android:layout_height="28dp"
-                      android:layout_marginLeft="-4dp"
-                      android:background="@null"
-                       />
-
-              </FrameLayout>-->
         </RelativeLayout>
     </LinearLayout>
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/gamejl_tablayout"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="1dp"
+        android:background="@color/gray" />
 
-    </android.support.design.widget.TabLayout>
-
-    <android.support.v4.view.ViewPager
-
-        android:id="@+id/gamejl_viewpager"
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v4.view.ViewPager>
+        android:layout_height="match_parent">
+
+
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>

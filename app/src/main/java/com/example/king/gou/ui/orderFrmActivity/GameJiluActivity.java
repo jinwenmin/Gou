@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -33,6 +34,9 @@ import com.example.king.gou.ui.gameAcVpFrms.KillOrderFragment;
 import com.example.king.gou.ui.gameAcVpFrms.NoDrawFragment;
 import com.example.king.gou.ui.gameAcVpFrms.NoWinFragment;
 import com.example.king.gou.ui.gameAcVpFrms.WinFragment;
+import com.example.king.gou.utils.DateUtil;
+
+import net.lemonsoft.lemonbubble.LemonBubble;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,6 +46,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 
 
 public class GameJiluActivity extends AppCompatActivity implements View.OnClickListener {
@@ -103,6 +108,17 @@ public class GameJiluActivity extends AppCompatActivity implements View.OnClickL
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         gameLotteryType.setAdapter(adapter);
+        gameLotteryType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                adapterView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                adapterView.setVisibility(View.VISIBLE);
+            }
+        });
 
 
     }
@@ -125,16 +141,34 @@ public class GameJiluActivity extends AppCompatActivity implements View.OnClickL
         System.out.println();
         Log.e("times", sdf.format(date));
         timetext2.setText(sdf.format(date));
+        //第一个日期选择器
         datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 timetext.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
+                Long getdaytime = DateUtil.getInstance().toDate(year + "-" + (month + 1) + "-" + dayOfMonth) / 1000;
+                //第二个日期的时间
+                long l2 = DateUtil.getInstance().toDate(timetext2.getText().toString()) / 1000;
+                //第一个日期的时间
+                long l1 = DateUtil.getInstance().toDate(timetext.getText().toString()) / 1000;
+                if (l2 - l1 > 864000) {
+                    Toasty.warning(getApplicationContext(), "你的选择期限超过了10天", Toast.LENGTH_SHORT, true).show();
+                }
+                Log.e("现在时长", l2 + "  " + l1);
             }
         }, year, month, day);
+        //第二个日期选择器
         datePickerDialog2 = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 timetext2.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
+                //第二个日期的时间
+                long l2 = DateUtil.getInstance().toDate(timetext2.getText().toString()) / 1000;
+                //第一个日期的时间
+                long l1 = DateUtil.getInstance().toDate(timetext.getText().toString()) / 1000;
+                if (l2 - l1 > 864000) {
+                    Toasty.warning(getApplicationContext(), "你的选择期限超过了10天", Toast.LENGTH_SHORT, true).show();
+                }
             }
         }, year, month, day);
 

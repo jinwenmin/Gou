@@ -1,12 +1,13 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.king.gou.fragment.HomeFragment">
 
     <RelativeLayout
+        android:id="@+id/home_top"
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="@dimen/top_height">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -14,6 +15,67 @@
             android:layout_centerHorizontal="true"
             android:src="@drawable/ic_home_logo" />
 
+        <ImageView
+            android:id="@+id/Erweima"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="5dp"
+            android:src="@drawable/img_qrcode" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_margin="5dp"
+            android:layout_toLeftOf="@id/Erweima"
+            android:src="@drawable/ic_home_share" />
     </RelativeLayout>
 
-</FrameLayout>
+    <com.jude.rollviewpager.RollPagerView
+        android:id="@+id/home_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@id/home_top"></com.jude.rollviewpager.RollPagerView>
+
+    <HorizontalScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/home_viewpager"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+            <ImageView
+                android:id="@+id/ScrollImg1"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginLeft="5dp" />
+
+            <ImageView
+                android:id="@+id/ScrollImg2"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginLeft="5dp" />
+
+            <ImageView
+                android:id="@+id/ScrollImg3"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginLeft="5dp" />
+
+            <ImageView
+                android:id="@+id/ScrollImg4"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginLeft="5dp" />
+        </LinearLayout>
+    </HorizontalScrollView>
+</RelativeLayout>

@@ -14,4 +14,32 @@
     <string name="rechargefirminfo_textfour">4.请务必2小时内完成付款操作</string>
     <string name="applyresult_one">1.第一步:提交申请->第二步:登录【手机支付宝】->第三步:点击【转账】->第四步:【转账到银行卡】->第五步:根据以上信息按步骤完成充值.</string>
     <string name="applyresult_two">2.转账时间:默认保持两小时内到账才会实时到账</string>
+
+
+    <string-array name="lottery_type">
+        <item>全部彩种</item>
+        <item>重庆时时彩</item>
+        <item>天津时时彩</item>
+        <item>新疆时时彩</item>
+        <item>广东11选5</item>
+        <item>山东11选5</item>
+        <item>安徽11选5</item>
+        <item>江西11选5</item>
+        <item>上海11选5</item>
+        <item>重庆快乐十分</item>
+        <item>广东快乐十分</item>
+        <item>韩国1.5分彩</item>
+        <item>北京PK10</item>
+        <item>福彩3D</item>
+        <item>排列三</item>
+        <item>上海时时乐</item>
+        <item>北京五分3D</item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+
+
+    </string-array>
 </resources>

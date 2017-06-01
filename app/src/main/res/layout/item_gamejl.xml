@@ -58,11 +58,13 @@
             android:text="0元" />
     </LinearLayout>
 
-    <Button
-        android:layout_width="70dp"
-        android:layout_height="35dp"
+    <TextView
+        android:layout_width="60dp"
+        android:layout_height="20dp"
         android:layout_alignParentRight="true"
-        android:background="@drawable/zhongjiang_btn"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edit_user_pwd_bg"
+        android:gravity="center"
         android:text="未开奖"
         android:textColor="#4F94CD" />
 </RelativeLayout>

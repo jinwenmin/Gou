@@ -26,7 +26,13 @@
         <activity android:name=".ui.frmMyActivity.ApplyResultActivity" />
         <activity android:name=".ui.frmMyActivity.TixianAppliActivity" />
         <activity android:name=".ui.frmMyActivity.TikuanInfoActivity" />
-        <activity android:name=".ui.orderFrmActivity.GameJiluActivity"></activity>
+        <activity android:name=".ui.orderFrmActivity.GameJiluActivity" />
+        <activity android:name=".ui.orderFrmActivity.ZhuiHaoActivity" />
+        <activity android:name=".ui.orderFrmActivity.TouZhuResultActivity" />
+        <activity android:name=".ui.orderFrmActivity.LotteryBaoBiaoActivity" />
+        <activity android:name=".ui.orderFrmActivity.CunQuActivity" />
+        <activity android:name=".ui.orderFrmActivity.GrzbActivity" />
+        <activity android:name=".ui.orderFrmActivity.FanDianActivity"></activity>
     </application>
 
 </manifest>
