@@ -10,12 +10,16 @@ import android.widget.Toast;
 
 import com.example.king.gou.R;
 
+import java.util.Random;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sephiroth.android.library.picasso.Picasso;
 
 public class WelcomeActivity extends BaseActivity {
-
+    String[] path = new String[]{
+            "file:///android_asset/bg_loading_page2.webp", "file:///android_asset/bg_loading_page.webp"
+    };
 
     @BindView(R.id.welcome_bg)
     ImageView welcomeBg;
@@ -23,15 +27,18 @@ public class WelcomeActivity extends BaseActivity {
     TextView passToAc;
     Handler handler;
     Runnable runnable;
+    String url = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         ButterKnife.bind(this);
-
+        Random random = new Random();
+        int i = random.nextInt(path.length);
         try {
-            Picasso.with(this).load("file:///android_asset/bg_loading_page2.webp").into(welcomeBg);
+            url = path[i];
+            Picasso.with(this).load(url).into(welcomeBg);
         } catch (Exception e) {
             e.printStackTrace();
         }

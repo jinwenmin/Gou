@@ -1,14 +1,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_ralative"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/home_bg"
     tools:context="com.example.king.gou.fragment.HomeFragment">
 
     <RelativeLayout
         android:id="@+id/home_top"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/top_height">
+        android:layout_height="@dimen/top_height"
+        android:background="@color/top_background">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -37,47 +40,97 @@
     <com.jude.rollviewpager.RollPagerView
         android:id="@+id/home_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="250dp"
         android:layout_below="@id/home_top"
         app:rollviewpager_play_delay="3000"></com.jude.rollviewpager.RollPagerView>
 
-    <HorizontalScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="100dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/home_viewpager"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
-        android:scrollbars="none">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/home_viewpager">
 
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|top" />
 
-            <ImageView
-                android:id="@+id/ScrollImg1"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:layout_marginLeft="5dp" />
+        <com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|top">
 
-            <ImageView
-                android:id="@+id/ScrollImg2"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:layout_marginLeft="5dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/ScrollImg3"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:layout_marginLeft="5dp" />
+                <HorizontalScrollView
+                    android:id="@+id/home_scroll1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="100dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:scrollbars="none">
 
-            <ImageView
-                android:id="@+id/ScrollImg4"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:layout_marginLeft="5dp" />
-        </LinearLayout>
-    </HorizontalScrollView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp">
+
+                        <ImageView
+                            android:id="@+id/ScrollImg1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp" />
+
+                        <ImageView
+                            android:id="@+id/ScrollImg2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="100dp"
+                            android:layout_marginLeft="5dp" />
+
+                        <ImageView
+                            android:id="@+id/ScrollImg3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="100dp"
+                            android:layout_marginLeft="5dp" />
+
+                        <ImageView
+                            android:id="@+id/ScrollImg4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="100dp"
+                            android:layout_marginLeft="5dp" />
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <RelativeLayout
+                    android:id="@+id/MyGame"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/top_height"
+                    android:layout_below="@id/home_scroll1"
+                    android:background="@color/btn_background">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:text="我的游戏"
+                        android:textColor="@android:color/white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        android:text="添加游戏"
+                        android:textColor="@android:color/white" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader>
+
+    </FrameLayout>
 </RelativeLayout>

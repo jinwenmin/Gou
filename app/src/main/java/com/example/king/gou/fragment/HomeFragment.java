@@ -3,15 +3,21 @@ package com.example.king.gou.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 import com.example.king.gou.R;
+import com.example.king.gou.adapters.HomeGameAdapter;
 import com.example.king.gou.adapters.PageAdapter;
+import com.example.king.gou.utils.FixGridLayout;
 import com.jude.rollviewpager.RollPagerView;
 
 import java.util.ArrayList;
@@ -43,6 +49,12 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.ScrollImg4)
     ImageView ScrollImg4;
     List imgs = new ArrayList();
+    @BindView(R.id.home_ralative)
+    RelativeLayout homeRalative;
+    @BindView(R.id.recycler)
+    RecyclerView recycler;
+    @BindView(R.id.header)
+    RecyclerViewHeader header;
 
     public static HomeFragment newInstance() {
 
@@ -58,34 +70,40 @@ public class HomeFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        ImageView img1 = new ImageView(getContext());
-
-        img1.setImageResource(R.mipmap.ic_launcher);
-        ImageView img2 = new ImageView(getContext());
-        img2.setImageResource(R.mipmap.ic_baijialebaobiao);
-        ImageView img3 = new ImageView(getContext());
-        img3.setImageResource(R.mipmap.ic_caipiaobaobiao);
-        ImageView img4 = new ImageView(getContext());
-        img4.setImageResource(R.mipmap.ic_cunqukuanjilu);
-        ImageView img5 = new ImageView(getContext());
-        img5.setImageResource(R.mipmap.ic_fandianjilu);
-        img1.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        img2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        img3.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        img4.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        img5.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        imgs.add(img1);
-        imgs.add(img2);
-        imgs.add(img3);
-        imgs.add(img4);
-        imgs.add(img5);
+        recycler.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+        header.attachTo(recycler, true);
+        initImgs();
+        HomeGameAdapter adapter = new HomeGameAdapter(getActivity());
+        recycler.setAdapter(adapter);
         PageAdapter pageAdapter = new PageAdapter(imgs);
         homeViewpager.setAdapter(pageAdapter);
         initScrollView();
         return view;
+    }
+
+    private void initImgs() {
+
+        ImageView img1 = new ImageView(getContext());
+        Picasso.with(getActivity()).load("file:///android_asset/banner1.webp").into(img1);
+        ImageView img2 = new ImageView(getContext());
+        Picasso.with(getActivity()).load("file:///android_asset/banner2.webp").into(img2);
+        ImageView img3 = new ImageView(getContext());
+        Picasso.with(getActivity()).load("file:///android_asset/banner3.webp").into(img3);
+        ImageView img4 = new ImageView(getContext());
+        Picasso.with(getActivity()).load("file:///android_asset/banner4.webp").into(img4);
+        img1.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        img2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        img3.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        img4.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        imgs.add(img1);
+        imgs.add(img2);
+        imgs.add(img3);
+        imgs.add(img4);
+
     }
 
     private void initScrollView() {

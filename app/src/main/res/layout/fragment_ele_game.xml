@@ -1,13 +1,36 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/linear_biankuang"
     tools:context="com.example.king.gou.fragment.gamefragments.EleGameFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.example.king.gou.utils.CustomVideoView
+        android:id="@+id/elegame_Videoview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="200dp"
+        android:layout_margin="5dp" />
 
-</FrameLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/elegame_Videoview">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="Name" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="12dp"
+            android:background="@drawable/play_game"
+            android:padding="8dp"
+            android:text="开始游戏"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
+</RelativeLayout>
