@@ -32,7 +32,11 @@
         <activity android:name=".ui.orderFrmActivity.LotteryBaoBiaoActivity" />
         <activity android:name=".ui.orderFrmActivity.CunQuActivity" />
         <activity android:name=".ui.orderFrmActivity.GrzbActivity" />
-        <activity android:name=".ui.orderFrmActivity.FanDianActivity"></activity>
+        <activity android:name=".ui.orderFrmActivity.FanDianActivity" />
+        <activity android:name=".ui.orderFrmActivity.MyBJLActivity" />
+        <activity android:name=".ui.orderFrmActivity.ZhuanZhangActivity" />
+        <activity android:name=".ui.proxyfragment.ProxyHomeActivity" />
+        <activity android:name=".ui.proxyfragment.UserCenterActivity"></activity>
     </application>
 
 </manifest>

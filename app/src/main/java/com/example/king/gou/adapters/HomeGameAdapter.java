@@ -46,7 +46,7 @@ public class HomeGameAdapter extends RecyclerView.Adapter<HomeGameAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.item_gamejl, parent, false);
+        View view = inflater.inflate(R.layout.item_demo, parent, false);
 
         return new ViewHolder(view);
     }

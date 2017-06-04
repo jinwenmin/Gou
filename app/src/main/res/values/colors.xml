@@ -6,4 +6,5 @@
     <color name="top_background">#27408B</color>
     <color name="btn_background">#0000EE</color>
     <color name="my_btn_color">#FFFFFF</color>
+    <color name="color_bg">#FFFFF0</color>
 </resources>

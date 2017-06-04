@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.king.gou.ui.orderFrmActivity.MyBJLActivity">
+
+    <RelativeLayout
+        android:id="@+id/MyBJLTop"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/top_background">
+
+        <ImageView
+            android:id="@+id/_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="个人百家乐报表"
+            android:textColor="@android:color/white"
+            android:textSize="23sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/MyBJLrelateTime1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/MyBJLtimetext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="3dp"
+                android:text="2010-01-01" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="3dp"
+                android:background="@drawable/wuka_xiala" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@color/gray" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/MyBJLrelateTime2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:layout_weight="1"
+
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/MyBJLtimetext2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="3dp"
+                android:text="2010-01-01" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="3dp"
+                android:background="@drawable/wuka_xiala" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@color/gray" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/MyBJLrelateBank4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:layout_weight="1"
+
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/MyBJLtimetext4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
+                android:text="按日统计" />
+
+            <FrameLayout
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true">
+
+                <Spinner
+                    android:id="@+id/MyBJLgameLotteryType4"
+                    style="@android:style/Widget.Spinner"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="-4dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/wuka_xiala"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="3dp"
+                    android:background="@drawable/wuka_xiala" />
+            </FrameLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@color/gray" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/MyBJLrelateBank3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:layout_weight="1"
+
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/MyBJLtimetext3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
+                android:text="全部" />
+
+            <FrameLayout
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true">
+
+                <Spinner
+                    android:id="@+id/MyBJLgameLotteryType"
+                    style="@android:style/Widget.Spinner"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="-4dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/wuka_xiala"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="3dp"
+                    android:background="@drawable/wuka_xiala" />
+            </FrameLayout>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@color/gray" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/MyBJLrelateBank5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:layout_weight="1"
+
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/MyBJLtimetext5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
+                android:text="全部    " />
+
+            <FrameLayout
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true">
+
+                <Spinner
+                    android:id="@+id/MyBJLgameLotteryType2"
+                    style="@android:style/Widget.Spinner"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="-4dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/wuka_xiala"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="3dp"
+                    android:background="@drawable/wuka_xiala" />
+            </FrameLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:background="@android:color/darker_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"></View>
+</LinearLayout>

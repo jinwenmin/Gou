@@ -11,8 +11,8 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.king.gou.R;
 
+import com.example.king.gou.R;
 import com.example.king.gou.ui.BaseActivity;
 
 import butterknife.BindView;

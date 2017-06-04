@@ -14,6 +14,9 @@
     <string name="rechargefirminfo_textfour">4.请务必2小时内完成付款操作</string>
     <string name="applyresult_one">1.第一步:提交申请->第二步:登录【手机支付宝】->第三步:点击【转账】->第四步:【转账到银行卡】->第五步:根据以上信息按步骤完成充值.</string>
     <string name="applyresult_two">2.转账时间:默认保持两小时内到账才会实时到账</string>
+    <string name="user_center_one">1.自动注册的会员初始密码"a123456".</string>
+    <string name="user_center_two">2.为提高服务器效率,系统将自动清理注册一个月没有充值,或者两个月未登录,并且金额低于10元的账户.</string>
+    <string name="user_center_three">1.生成链接不会立即扣除配额,只有用户使用该链接注册成功的时候,才会扣减配额</string>
 
 
     <string-array name="lottery_type">
@@ -42,4 +45,24 @@
         <item>福彩3D</item>
         <item>香港六合彩</item>
     </string-array>
+    <array name="time">
+        <item>最近一天</item>
+        <item>最近三天</item>
+        <item>最近七天</item>
+        <item>最近第一月</item>
+    </array>
+
+    <array name="user_spinner">
+        <item>代理</item>
+        <item>玩家</item>
+    </array>
+    <array name="user_spinner2">
+        <item>1天有效</item>
+        <item>3天有效</item>
+        <item>7天有效</item>
+        <item>15天有效</item>
+        <item>30天有效</item>
+        <item>3个月有效</item>
+        <item>6个月有效</item>
+    </array>
 </resources>

@@ -5,162 +5,39 @@
 
     tools:context="com.example.king.gou.fragment.gamefragments.EleGameFragment">
 
-    <ScrollView
+    <RelativeLayout
+        android:id="@+id/elegame_game2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/linear_biankuang">
+
+        <ImageView
+            android:id="@+id/elegame_Imageview1"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:layout_margin="5dp" />
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/elegame_Imageview1">
 
-            <!-- TODO: Update blank fragment layout -->
-            <RelativeLayout
-                android:id="@+id/elegame_game1"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/linear_biankuang">
+                android:layout_margin="15dp"
+                android:text="PT" />
 
-                <com.example.king.gou.utils.CustomVideoView
-                    android:id="@+id/elegame_Videoview"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_margin="5dp" />
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/elegame_Videoview">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:text="AG亚洲馆" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_margin="12dp"
-                        android:background="@drawable/play_game"
-                        android:padding="8dp"
-                        android:text="开始游戏"
-                        android:textColor="@android:color/white" />
-                </RelativeLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/elegame_game2"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/elegame_game1"
-                android:layout_margin="5dp"
-                android:background="@drawable/linear_biankuang">
-
-                <ImageView
-
-                    android:id="@+id/elegame_Imageview1"
-                    android:layout_width="match_parent"
-                    android:layout_height="280dp"
-                    android:layout_margin="5dp" />
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/elegame_Imageview1">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:text="OG旗舰厅" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_margin="12dp"
-                        android:background="@drawable/play_game"
-                        android:padding="8dp"
-                        android:text="开始游戏"
-                        android:textColor="@android:color/white" />
-                </RelativeLayout>
-            </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/elegame_game3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/elegame_game2"
-                android:layout_margin="5dp"
-                android:background="@drawable/linear_biankuang">
-
-                <ImageView
-
-                    android:id="@+id/elegame_Imageview2"
-                    android:layout_width="match_parent"
-                    android:layout_height="280dp"
-                    android:layout_margin="5dp" />
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/elegame_Imageview2">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:text="EBET" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_margin="12dp"
-                        android:background="@drawable/play_game"
-                        android:padding="8dp"
-                        android:text="开始游戏"
-                        android:textColor="@android:color/white" />
-                </RelativeLayout>
-            </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/elegame_game4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/elegame_game3"
-                android:layout_margin="5dp"
-                android:background="@drawable/linear_biankuang">
-
-                <ImageView
-
-                    android:id="@+id/elegame_Imageview3"
-                    android:layout_width="match_parent"
-                    android:layout_height="280dp"
-                    android:layout_margin="5dp" />
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/elegame_Imageview3">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:text="BINN国际馆" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_margin="12dp"
-                        android:background="@drawable/play_game"
-                        android:padding="8dp"
-                        android:text="开始游戏"
-                        android:textColor="@android:color/white" />
-                </RelativeLayout>
-            </RelativeLayout>
+                android:layout_alignParentRight="true"
+                android:layout_margin="12dp"
+                android:background="@drawable/play_game"
+                android:padding="8dp"
+                android:text="开始游戏"
+                android:textColor="@android:color/white" />
         </RelativeLayout>
-    </ScrollView>
+    </RelativeLayout>
 </RelativeLayout>
