@@ -7,7 +7,7 @@
         android:id="@+id/TixianAppliTop"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="#4F94CD">
+        android:background="@color/top_background">
 
         <ImageView
             android:layout_width="30dp"
@@ -171,12 +171,13 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/TiJiao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@drawable/recharge_btn"
             android:text="提交"
-            android:textColor="#0000EE"
+            android:textColor="@color/my_btn_color"
             android:textSize="20sp" />
 
 

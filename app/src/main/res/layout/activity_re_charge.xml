@@ -138,7 +138,7 @@
             android:layout_margin="15dp"
             android:background="@drawable/recharge_btn"
             android:text="充值"
-            android:textColor="#0000EE"
+            android:textColor="@color/my_btn_color"
             android:textSize="20sp" />
 
         <LinearLayout

@@ -1,0 +1,5 @@
+<resources>
+
+    <dimen name="common_icon">32dp</dimen>
+    <dimen name="elegame_imgheight">280dp</dimen>
+</resources>
