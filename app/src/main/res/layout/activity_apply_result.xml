@@ -108,7 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="您支付宝姓名"
+                android:text="您支付宝姓名:"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />
 
@@ -140,7 +140,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="收款银行"
+                android:text="收款银行:"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />
 
@@ -172,7 +172,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="收款姓名"
+                android:text="收款姓名:"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />
 
@@ -185,11 +185,36 @@
                 android:hint="神仙哥哥"
                 android:textSize="15sp" />
 
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/ApplyResultRe7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ApplyResultRe5">
+
+            <TextView
+                android:id="@+id/textApplyResultFuYanId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="附言ID:"
+                android:textColor="@android:color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/ApplyResultFuYanId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_toRightOf="@id/textApplyResultFuYanId"
+                android:hint="xxxxx"
+                android:textSize="15sp" />
+
             <TextView
                 android:id="@+id/AccountText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textApplyResultUserName"
+                android:layout_below="@id/textApplyResultFuYanId"
                 android:layout_margin="10dp"
                 android:text="因客户充值错误所导致的的损失由客户自己承担,与平台无关."
                 android:textColor="@android:color/holo_red_dark"
@@ -199,7 +224,7 @@
             android:id="@+id/view5"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/ApplyResultRe5"
+            android:layout_below="@id/ApplyResultRe7"
             android:background="@android:color/darker_gray"></View>
         <RelativeLayout
             android:id="@+id/ApplyResultRe6"
@@ -212,7 +237,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="银行账户"
+                android:text="银行账户:"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />
 
