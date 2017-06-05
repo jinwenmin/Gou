@@ -45,6 +45,7 @@
                 android:text="安全设置" />
 
             <RelativeLayout
+                android:id="@+id/Setting_UpdataPwd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
@@ -537,9 +538,9 @@
                     android:src="@drawable/img_next" />
 
                 <TextView
-                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_toLeftOf="@id/Left"
                     android:text="当前版本7.02303" />
 
@@ -586,12 +587,13 @@
                     android:layout_below="@id/Setting_img14"
                     android:background="@color/gray" />
             </RelativeLayout>
+
             <Button
-                android:background="@drawable/recharge_btn"
-                android:layout_margin="50dp"
-                android:text="退出登录"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_margin="50dp"
+                android:background="@drawable/recharge_btn"
+                android:text="退出登录" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

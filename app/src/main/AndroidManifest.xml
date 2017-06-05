@@ -44,7 +44,8 @@
         <activity android:name=".ui.proxyfragment.TeamZhuihaojlActivity" />
         <activity android:name=".ui.proxyfragment.TeamCunQuActivity" />
         <activity android:name=".ui.proxyfragment.TeamBjlActivity" />
-        <activity android:name=".ui.SettingActivity"></activity>
+        <activity android:name=".ui.SettingActivity" />
+        <activity android:name=".ui.settingfragment.UpdataPwdActivity"></activity>
     </application>
 
 </manifest>
