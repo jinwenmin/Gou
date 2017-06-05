@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.king.gou.ui.proxyfragment.VIPManActivity">
+
+    <RelativeLayout
+        android:id="@+id/ProxyTop"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/top_background">
+
+        <ImageView
+            android:id="@+id/_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="会员管理"
+            android:textColor="@android:color/white"
+            android:textSize="23sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+
+        <Button
+
+            android:id="@+id/vipMan_searBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="搜索" />
+
+        <EditText
+            android:id="@+id/VipMan_Edit"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/vipMan_searBtn"
+            android:background="@drawable/edit_user_pwd_bg"
+            android:drawableLeft="@mipmap/search"
+            android:gravity="center"
+            android:hint="搜索用户"
+            ></EditText>
+    </RelativeLayout>
+</LinearLayout>

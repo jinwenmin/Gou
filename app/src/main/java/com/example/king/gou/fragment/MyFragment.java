@@ -18,6 +18,7 @@ import com.example.king.gou.R;
 import com.example.king.gou.adapters.MyFrmPageAdapter;
 import com.example.king.gou.fragment.myfragment.OrderFragment;
 import com.example.king.gou.fragment.myfragment.ProxyFragment;
+import com.example.king.gou.ui.SettingActivity;
 import com.example.king.gou.ui.frmMyActivity.ReChargeActivity;
 
 
@@ -108,6 +109,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         ToRecharge.setOnClickListener(this);
         ToQukuan.setOnClickListener(this);
         ToZhuanZhang.setOnClickListener(this);
+        frmMySetting.setOnClickListener(this);
     }
 
     //加载订单报表 和管理 两个fragment
@@ -137,6 +139,9 @@ public class MyFragment extends Fragment implements View.OnClickListener {
             case R.id.ToQukuan:
                 break;
             case R.id.ToZhuanZhang:
+                break;
+            case R.id.frmMySetting:
+                startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;
         }
 
