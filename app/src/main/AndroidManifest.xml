@@ -36,7 +36,15 @@
         <activity android:name=".ui.orderFrmActivity.MyBJLActivity" />
         <activity android:name=".ui.orderFrmActivity.ZhuanZhangActivity" />
         <activity android:name=".ui.proxyfragment.ProxyHomeActivity" />
-        <activity android:name=".ui.proxyfragment.UserCenterActivity"></activity>
+        <activity android:name=".ui.proxyfragment.UserCenterActivity" />
+        <activity android:name=".ui.proxyfragment.TeamBaoBiaoActivity" />
+        <activity android:name=".ui.proxyfragment.VIPManActivity" />
+        <activity android:name=".ui.proxyfragment.TeamZBJLActivity" />
+        <activity android:name=".ui.proxyfragment.TeamGamejlActivity" />
+        <activity android:name=".ui.proxyfragment.TeamZhuihaojlActivity" />
+        <activity android:name=".ui.proxyfragment.TeamCunQuActivity" />
+        <activity android:name=".ui.proxyfragment.TeamBjlActivity" />
+        <activity android:name=".ui.SettingActivity"></activity>
     </application>
 
 </manifest>
