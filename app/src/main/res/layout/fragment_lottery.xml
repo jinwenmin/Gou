@@ -4,10 +4,16 @@
     android:layout_height="match_parent"
     tools:context="com.example.king.gou.fragment.gamefragments.LotteryFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
+
+
+        <com.example.king.gou.utils.PinnedHeaderListView
+            android:id="@+id/classify_morelist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@drawable/home_bg"
+            android:cacheColorHint="#00000000"
+            android:divider="@null"
+            android:listSelector="#00000000" />
 </FrameLayout>

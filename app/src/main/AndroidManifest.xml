@@ -45,7 +45,11 @@
         <activity android:name=".ui.proxyfragment.TeamCunQuActivity" />
         <activity android:name=".ui.proxyfragment.TeamBjlActivity" />
         <activity android:name=".ui.SettingActivity" />
-        <activity android:name=".ui.settingfragment.UpdataPwdActivity"></activity>
+        <activity android:name=".ui.settingfragment.UpdatePwdActivity" />
+        <activity android:name=".ui.settingfragment.UpdateMoneyPwdActivity" />
+        <activity android:name=".ui.settingfragment.MoneyProtectActivity" />
+        <activity android:name=".ui.settingfragment.UpdateNickNameActivity" />
+        <activity android:name=".ui.AddGameActivity"></activity>
     </application>
 
 </manifest>

@@ -1,35 +1,31 @@
-package com.example.king.gou.fragment.gamefragments;
-
+package com.example.king.gou.ui;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.ListView;
 
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.MyAdapter;
 import com.example.king.gou.bean.GameIm;
 import com.example.king.gou.bean.GameImages;
-import com.example.king.gou.fragment.BaseFragment;
 import com.example.king.gou.utils.PinnedHeaderListView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class LotteryFragment extends BaseFragment {
+public class AddGameActivity extends AppCompatActivity {
 
+    @BindView(R.id.listView)
+    ListView listView;
     @BindView(R.id.classify_morelist)
     PinnedHeaderListView classifyMorelist;
-    Unbinder unbinder;
+    private List<Map<String, String>> mylist = new ArrayList<Map<String, String>>();
+    private List<Map<String, String>> splitList = new ArrayList<Map<String, String>>();
     private List<GameImages> imgs = new ArrayList<>();
 
     private int ssc[] = new int[]{R.drawable.ic_shishicai_cq, R.drawable.ic_shishicai_tj, R.drawable.ic_shishicai_xj, R.drawable.ic_shishicai_bj};
@@ -45,34 +41,18 @@ public class LotteryFragment extends BaseFragment {
     private int dpc[] = new int[]{R.drawable.ic_35, R.drawable.ic_3d, R.drawable.ic_6hc};
     private String dpcName[] = new String[]{"排列三、五", "福彩3D", "香港六合彩"};
 
-    public static LotteryFragment newInstance() {
-
-        Bundle args = new Bundle();
-
-        LotteryFragment fragment = new LotteryFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_lottery, container, false);
-        unbinder = ButterKnife.bind(this, view);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_game);
+        ButterKnife.bind(this);
+
         getdatas();
         // 配置适配器
-        MyAdapter adapter = new MyAdapter(getActivity(), imgs); // 布局里的控件id
+        MyAdapter adapter = new MyAdapter(this, imgs); // 布局里的控件id
         // 添加并且显示
         classifyMorelist.setAdapter(adapter);
-        return view;
-    }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 
     public List<GameImages> getdatas() {
@@ -144,4 +124,5 @@ public class LotteryFragment extends BaseFragment {
         imgs.add(gameTypes6);
         return imgs;
     }
+
 }

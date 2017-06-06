@@ -1,6 +1,7 @@
 package com.example.king.gou.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -8,16 +9,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.HomeGameAdapter;
 import com.example.king.gou.adapters.PageAdapter;
-import com.example.king.gou.utils.FixGridLayout;
+import com.example.king.gou.ui.AddGameActivity;
 import com.jude.rollviewpager.RollPagerView;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ import it.sephiroth.android.library.picasso.Picasso;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
     @BindView(R.id.Erweima)
     ImageView Erweima;
@@ -55,6 +55,8 @@ public class HomeFragment extends BaseFragment {
     RecyclerView recycler;
     @BindView(R.id.header)
     RecyclerViewHeader header;
+    @BindView(R.id.HomeFragment_addGame)
+    TextView HomeFragmentAddGame;
 
     public static HomeFragment newInstance() {
 
@@ -73,7 +75,7 @@ public class HomeFragment extends BaseFragment {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         unbinder = ButterKnife.bind(this, view);
-
+        HomeFragmentAddGame.setOnClickListener(this);
         recycler.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         header.attachTo(recycler, true);
         initImgs();
@@ -117,5 +119,14 @@ public class HomeFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.HomeFragment_addGame:
+                startActivity(new Intent(getActivity(), AddGameActivity.class));
+                break;
+        }
     }
 }

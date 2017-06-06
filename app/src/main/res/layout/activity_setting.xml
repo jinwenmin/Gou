@@ -84,6 +84,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/updateMoneyPwd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
@@ -122,6 +123,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/Pwd_protect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
@@ -237,9 +239,9 @@
                 android:text="用户信息设置" />
 
             <RelativeLayout
+                android:id="@+id/update_NickName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:background="@android:color/white">
 
                 <ImageView

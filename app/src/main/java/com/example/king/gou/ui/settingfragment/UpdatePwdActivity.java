@@ -6,7 +6,7 @@ import android.os.Bundle;
 import com.example.king.gou.R;
 
 
-public class UpdataPwdActivity extends AppCompatActivity {
+public class UpdatePwdActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

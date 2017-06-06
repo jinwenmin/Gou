@@ -65,4 +65,24 @@
         <item>3个月有效</item>
         <item>6个月有效</item>
     </array>
+    <array name="protect_pwd">
+        <item>您的出生地是?</item>
+        <item>您小学班主任的名字是?</item>
+        <item>您中学班主任的名字是?</item>
+        <item>您高中班主任的名字是?</item>
+        <item>您大学班主任的名字是?</item>
+        <item>您的小学校名是?</item>
+        <item>您母亲的姓名是?</item>
+        <item>您母亲的生日是?</item>
+        <item>您父亲的姓名是?</item>
+        <item>您父亲的生日是?</item>
+        <item>您配偶的姓名是?</item>
+        <item>您配偶的生日是?</item>
+        <item>对你影响最大的人名字是?</item>
+        <item>您最喜欢的运动是?</item>
+        <item>您的学号(或工号)是?</item>
+        <item>您最喜欢的明星名字是?</item>
+        <item>您最熟悉的童年好友名字是?</item>
+
+    </array>
 </resources>
