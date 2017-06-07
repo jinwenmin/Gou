@@ -49,7 +49,8 @@
         <activity android:name=".ui.settingfragment.UpdateMoneyPwdActivity" />
         <activity android:name=".ui.settingfragment.MoneyProtectActivity" />
         <activity android:name=".ui.settingfragment.UpdateNickNameActivity" />
-        <activity android:name=".ui.AddGameActivity"></activity>
+        <activity android:name=".ui.AddGameActivity" />
+        <activity android:name=".ui.frmMyActivity.NoticeActivity"></activity>
     </application>
 
 </manifest>

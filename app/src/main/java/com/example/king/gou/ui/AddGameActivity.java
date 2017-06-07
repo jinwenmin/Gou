@@ -104,10 +104,10 @@ public class AddGameActivity extends AppCompatActivity {
         GameImages gameTypes6 = new GameImages();
         gameTypes6.setType("低频彩");
         List<GameIm> gameIms6 = new ArrayList<>();
-        for (int j = 0; j < klc.length; j++) {
+        for (int j = 0; j < dpc.length; j++) {
             GameIm gameIm = new GameIm();
-            gameIm.setGameimg(klc[j]);
-            gameIm.setImgText(klcName[j]);
+            gameIm.setGameimg(dpc[j]);
+            gameIm.setImgText(dpcName[j]);
             gameIms6.add(gameIm);
         }
         gameTypes1.setGameIms(gameIms);
