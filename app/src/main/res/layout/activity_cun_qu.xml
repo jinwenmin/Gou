@@ -9,48 +9,48 @@
     <RelativeLayout
         android:id="@+id/RechargeFirmTop"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/top_height"
         android:background="@color/top_background">
 
         <ImageView
             android:id="@+id/gamejl_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="60px"
+            android:layout_height="60px"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_back" />
 
         <RadioGroup
-            android:layout_width="200dp"
+            android:layout_width="400px"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/CunJl"
-                android:layout_width="0dp"
+                android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/cunqu_left_top"
                 android:button="@null"
                 android:checked="true"
                 android:gravity="center"
-                android:padding="4dp"
+                android:padding="8px"
                 android:text="存款记录"
                 android:textColor="@color/select_cunqu_top_radiobutton"
-                android:textSize="15sp" />
+                android:textSize="30px" />
 
             <RadioButton
                 android:id="@+id/Qujl"
-                android:layout_width="0dp"
+                android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/cunqu_right_top"
                 android:button="@null"
                 android:gravity="center"
-                android:padding="4dp"
+                android:padding="8px"
                 android:text="取款记录"
                 android:textColor="@color/select_cunqu_top_radiobutton"
-                android:textSize="15sp" />
+                android:textSize="30px" />
 
         </RadioGroup>
     </RelativeLayout>

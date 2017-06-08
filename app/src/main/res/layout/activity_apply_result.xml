@@ -6,12 +6,12 @@
     <RelativeLayout
         android:id="@+id/ApplyResultTop"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/top_height"
         android:background="@color/top_background">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="60px"
+            android:layout_height="60px"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_back" />
 
@@ -21,294 +21,300 @@
             android:layout_centerInParent="true"
             android:text="申请结果"
             android:textColor="@android:color/white"
-            android:textSize="23sp" />
+            android:textSize="@dimen/top_textsize" />
     </RelativeLayout>
-<ScrollView
-    android:layout_below="@id/ApplyResultTop"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <RelativeLayout
 
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ApplyResultTop">
 
         <RelativeLayout
-            android:id="@+id/ApplyResultRe1"
+
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/ApplyResultTypeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_margin="10dp"
-                android:text="倒计时："
-                android:textColor="@android:color/black"
-                android:textSize="15sp" />
+            <RelativeLayout
+                android:id="@+id/ApplyResultRe1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/ApplyResultZFBnameSum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/ApplyResultTypeText"
-                android:text="2:00:00"
-                android:textColor="@android:color/black" />
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/ApplyResultTypeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="10px"
+                    android:text="倒计时："
+                    android:textColor="@android:color/black"
+                    android:textSize="35px" />
 
-        <View
-            android:id="@+id/view1"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/ApplyResultRe1"
-            android:background="@android:color/darker_gray"></View>
+                <TextView
+                    android:id="@+id/ApplyResultZFBnameSum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/ApplyResultTypeText"
+                    android:text="2:00:00"
+                    android:textColor="@android:color/black"
+                    android:textSize="25px" />
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/ApplyResultRe2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/view1">
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_below="@id/ApplyResultRe1"
+                android:background="@android:color/darker_gray"></View>
 
-            <TextView
-                android:id="@+id/textMoney"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="充值金额："
-                android:textColor="@android:color/black"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/ApplyResultZFBMoney"
+            <RelativeLayout
+                android:id="@+id/ApplyResultRe2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_toRightOf="@id/textMoney"
-                android:hint="0.00"
-                android:textSize="15sp" />
-        </RelativeLayout>
+                android:layout_below="@id/view1">
 
-        <View
-            android:id="@+id/view2"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/ApplyResultRe2"
-            android:background="@android:color/darker_gray"></View>
+                <TextView
+                    android:id="@+id/textMoney"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10px"
+                    android:text="充值金额："
+                    android:textColor="@android:color/black"
+                    android:textSize="35px" />
 
-        <RelativeLayout
-            android:id="@+id/ApplyResultRe3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/view2">
+                <TextView
+                    android:id="@+id/ApplyResultZFBMoney"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10px"
+                    android:layout_toRightOf="@id/textMoney"
+                    android:hint="0.00"
+                    android:textSize="35px" />
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/textZFBname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="您支付宝姓名:"
-                android:textColor="@android:color/black"
-                android:textSize="15sp" />
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/ApplyResultRe2"
+                android:background="@android:color/darker_gray"></View>
 
-            <TextView
-                android:id="@+id/ApplyResultZFBname"
+            <RelativeLayout
+                android:id="@+id/ApplyResultRe3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_toRightOf="@id/textZFBname"
-                android:hint="哈哈"
-                android:textSize="15sp" />
-        </RelativeLayout>
+                android:layout_below="@id/view2">
 
-        <View
-            android:id="@+id/view3"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/ApplyResultRe3"
-            android:background="@android:color/darker_gray"></View>
+                <TextView
+                    android:id="@+id/textZFBname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10px"
+                    android:text="您支付宝姓名:"
+                    android:textColor="@android:color/black"
+                    android:textSize="35px" />
 
-        <RelativeLayout
-            android:id="@+id/ApplyResultRe4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/view3">
+                <TextView
+                    android:id="@+id/ApplyResultZFBname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10px"
+                    android:layout_toRightOf="@id/textZFBname"
+                    android:hint="哈哈"
+                    android:textSize="35px" />
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/textApplyResultBank"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="收款银行:"
-                android:textColor="@android:color/black"
-                android:textSize="15sp" />
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_below="@id/ApplyResultRe3"
+                android:background="@android:color/darker_gray"></View>
 
-            <TextView
-                android:id="@+id/ApplyResultBank"
+            <RelativeLayout
+                android:id="@+id/ApplyResultRe4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_toRightOf="@id/textApplyResultBank"
-                android:hint="招商银行"
-                android:textSize="15sp" />
-        </RelativeLayout>
+                android:layout_below="@id/view3">
 
-        <View
-            android:id="@+id/view4"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/ApplyResultRe4"
-            android:background="@android:color/darker_gray"></View>
+                <TextView
+                    android:id="@+id/textApplyResultBank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10px"
+                    android:text="收款银行:"
+                    android:textColor="@android:color/black"
+                    android:textSize="35px" />
 
-        <RelativeLayout
-            android:id="@+id/ApplyResultRe5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/view4">
+                <TextView
+                    android:id="@+id/ApplyResultBank"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10px"
+                    android:layout_toRightOf="@id/textApplyResultBank"
+                    android:hint="招商银行"
+                    android:textSize="35px" />
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/textApplyResultUserName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="收款姓名:"
-                android:textColor="@android:color/black"
-                android:textSize="15sp" />
+            <View
+                android:id="@+id/view4"
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_below="@id/ApplyResultRe4"
+                android:background="@android:color/darker_gray"></View>
 
-            <TextView
-                android:id="@+id/ApplyResultUserName"
+            <RelativeLayout
+                android:id="@+id/ApplyResultRe5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_toRightOf="@id/textApplyResultUserName"
-                android:hint="神仙哥哥"
-                android:textSize="15sp" />
+                android:layout_below="@id/view4">
 
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/ApplyResultRe7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ApplyResultRe5">
+                <TextView
+                    android:id="@+id/textApplyResultUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10px"
+                    android:text="收款姓名:"
+                    android:textColor="@android:color/black"
+                    android:textSize="35px" />
 
-            <TextView
-                android:id="@+id/textApplyResultFuYanId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="附言ID:"
-                android:textColor="@android:color/black"
-                android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/ApplyResultUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10px"
+                    android:layout_toRightOf="@id/textApplyResultUserName"
+                    android:hint="神仙哥哥"
+                    android:textSize="35px" />
 
-            <TextView
-                android:id="@+id/ApplyResultFuYanId"
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/ApplyResultRe7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_toRightOf="@id/textApplyResultFuYanId"
-                android:hint="xxxxx"
-                android:textSize="15sp" />
+                android:layout_below="@id/ApplyResultRe5">
 
-            <TextView
-                android:id="@+id/AccountText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textApplyResultFuYanId"
-                android:layout_margin="10dp"
-                android:text="因客户充值错误所导致的的损失由客户自己承担,与平台无关."
-                android:textColor="@android:color/holo_red_dark"
-                android:textSize="13sp" />
-        </RelativeLayout>
-        <View
-            android:id="@+id/view5"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/ApplyResultRe7"
-            android:background="@android:color/darker_gray"></View>
-        <RelativeLayout
-            android:id="@+id/ApplyResultRe6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/view5">
+                <TextView
+                    android:id="@+id/textApplyResultFuYanId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10px"
+                    android:text="附言ID:"
+                    android:textColor="@android:color/black"
+                    android:textSize="35px" />
 
-            <TextView
-                android:id="@+id/textApplyResultBankNum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="银行账户:"
-                android:textColor="@android:color/black"
-                android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/ApplyResultFuYanId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10px"
+                    android:layout_toRightOf="@id/textApplyResultFuYanId"
+                    android:hint="xxxxx"
+                    android:textSize="35px" />
 
-            <TextView
-                android:id="@+id/ApplyResultBankNum"
+                <TextView
+                    android:id="@+id/AccountText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textApplyResultFuYanId"
+                    android:layout_margin="10px"
+                    android:text="因客户充值错误所导致的的损失由客户自己承担,与平台无关."
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="30px" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/view5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/ApplyResultRe7"
+                android:background="@android:color/darker_gray"></View>
+
+            <RelativeLayout
+                android:id="@+id/ApplyResultRe6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_toRightOf="@id/textApplyResultBankNum"
-                android:hint="62200000000000"
-                android:textSize="15sp" />
+                android:layout_below="@id/view5">
 
-            <TextView
+                <TextView
+                    android:id="@+id/textApplyResultBankNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10px"
+                    android:text="银行账户:"
+                    android:textColor="@android:color/black"
+                    android:textSize="35px" />
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textApplyResultBankNum"
-                android:layout_margin="10dp"
-                android:text="充值账号随机更换."
-                android:textColor="@android:color/holo_red_dark"
-                android:textSize="13sp" />
-        </RelativeLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/ApplyResultRe6"
-            android:background="#B9D3EE"
-            android:orientation="vertical">
+                <TextView
+                    android:id="@+id/ApplyResultBankNum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10px"
+                    android:layout_toRightOf="@id/textApplyResultBankNum"
+                    android:hint="62200000000000"
+                    android:textSize="35px" />
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:background="@drawable/recharge_btn"
-                android:text="查看充值记录"
-                android:textColor="@color/my_btn_color"
-                android:textSize="20sp" />
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textApplyResultBankNum"
+                    android:layout_margin="10px"
+                    android:text="充值账号随机更换."
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="35px" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="20dp"
-                android:background="#FEFFF1"
+                android:layout_below="@id/ApplyResultRe6"
+                android:background="#B9D3EE"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <Button
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:text="付款说明："
-                    android:textColor="@android:color/black" />
+                    android:layout_margin="20px"
+                    android:background="@drawable/recharge_btn"
+                    android:text="查看充值记录"
+                    android:textColor="@color/my_btn_color"
+                    android:textSize="35px" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="15dp"
-                    android:text="@string/applyresult_one"
-                    android:textColor="#0000EE" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="20px"
+                    android:background="@drawable/linear_biankuang"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    
-                    android:layout_margin="15dp"
-                    android:text="@string/applyresult_two"
-                    android:textColor="#0000EE" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="30px"
+                        android:text="付款说明："
+                        android:textColor="@android:color/black" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20px"
+                        android:layout_marginRight="20px"
+                        android:layout_marginTop="20px"
+                        android:text="@string/applyresult_one"
+                        android:textColor="#0000EE" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_margin="20px"
+                        android:text="@string/applyresult_two"
+                        android:textColor="#0000EE" />
+
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </RelativeLayout>
-</ScrollView>
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

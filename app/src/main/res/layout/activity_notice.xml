@@ -10,13 +10,13 @@
     <RelativeLayout
         android:id="@+id/NoticeTop"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/top_height"
         android:background="@color/top_background">
 
         <ImageView
             android:id="@+id/_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="60px"
+            android:layout_height="60px"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_back" />
 
@@ -26,7 +26,7 @@
             android:layout_centerInParent="true"
             android:text="公告"
             android:textColor="@android:color/white"
-            android:textSize="23sp" />
+            android:textSize="@dimen/top_textsize" />
     </RelativeLayout>
 
     <ListView

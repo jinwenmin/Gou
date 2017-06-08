@@ -25,6 +25,7 @@
             android:drawableTop="@drawable/select_home"
             android:gravity="center_horizontal"
             android:text="首页"
+
             android:textColor="@color/select_radiobtn_color" />
 
 

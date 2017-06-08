@@ -10,13 +10,13 @@
     <RelativeLayout
         android:id="@+id/RechargeFirmTop"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/top_height"
         android:background="@color/top_background">
 
         <ImageView
             android:id="@+id/gamejl_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/top_height"
+            android:layout_height="@dimen/top_height"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_back" />
 
@@ -26,42 +26,43 @@
             android:layout_centerInParent="true"
             android:text="返点记录"
             android:textColor="@android:color/white"
-            android:textSize="23sp" />
+            android:textSize="@dimen/top_textsize" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="60px"
         android:orientation="horizontal">
 
         <RelativeLayout
             android:id="@+id/FanDianrelateTime1"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_marginRight="2dp"
+            android:layout_marginRight="4px"
             android:layout_weight="1"
             android:orientation="horizontal">
 
             <TextView
+                android:textSize="30px"
                 android:id="@+id/FanDiantimetext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="3dp"
+                android:layout_marginLeft="6px"
                 android:text="2010-01-01" />
 
             <ImageView
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="50px"
+                android:layout_height="50px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="10px"
                 android:background="@drawable/wuka_xiala" />
 
             <View
-                android:layout_width="1dp"
-                android:layout_height="40dp"
+                android:layout_width="2px"
+                android:layout_height="60px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:background="@color/gray" />
@@ -69,33 +70,34 @@
 
         <RelativeLayout
             android:id="@+id/FanDianrelateTime2"
-            android:layout_width="0dp"
+            android:layout_width="2px"
             android:layout_height="match_parent"
-            android:layout_marginRight="2dp"
+            android:layout_marginRight="4px"
             android:layout_weight="1"
 
             android:orientation="horizontal">
 
             <TextView
+                android:textSize="30px"
                 android:id="@+id/FanDiantimetext2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="3dp"
+                android:layout_marginLeft="6px"
                 android:text="6666-66-66" />
 
             <ImageView
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="50px"
+                android:layout_height="50px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="10px"
                 android:background="@drawable/wuka_xiala" />
 
             <View
-                android:layout_width="1dp"
-                android:layout_height="40dp"
+                android:layout_width="2px"
+                android:layout_height="60px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:background="@color/gray" />
@@ -111,33 +113,34 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textSize="30px"
                 android:id="@+id/FanDiantimetext3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="3dp"
+                android:layout_marginLeft="6px"
                 android:text="全部" />
 
             <FrameLayout
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="50px"
+                android:layout_height="50px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true">
 
                 <Spinner
                     android:id="@+id/FanDianType"
                     style="@android:style/Widget.Spinner"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_marginLeft="-4dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_width="50px"
+                    android:layout_height="50px"
+                    android:layout_marginLeft="-4px"
+                    android:layout_marginRight="10px"
                     android:background="@drawable/wuka_xiala"
                     android:visibility="invisible" />
 
                 <ImageView
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_width="50px"
+                    android:layout_height="50px"
+                    android:layout_marginRight="10px"
                     android:src="@drawable/wuka_xiala" />
             </FrameLayout>
         </RelativeLayout>
@@ -145,6 +148,6 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="2px"
         android:background="@color/gray" />
 </LinearLayout>

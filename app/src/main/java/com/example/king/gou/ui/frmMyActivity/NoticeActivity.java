@@ -4,9 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.king.gou.R;
+import com.example.king.gou.ui.BaseActivity;
 
 
-public class NoticeActivity extends AppCompatActivity {
+public class NoticeActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

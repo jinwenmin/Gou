@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <TextView
+
         android:id="@+id/item_notice_nameId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,4 +20,11 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:text="NoticeTime" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="NoticeTip" />
+
 </LinearLayout>

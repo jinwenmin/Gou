@@ -10,13 +10,13 @@
     <RelativeLayout
         android:id="@+id/LotteryBBTop"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/top_height"
         android:background="@color/top_background">
 
         <ImageView
             android:id="@+id/_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/top_height"
+            android:layout_height="@dimen/top_height"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_back" />
 
@@ -26,19 +26,19 @@
             android:layout_centerInParent="true"
             android:text="彩票报表"
             android:textColor="@android:color/white"
-            android:textSize="23sp" />
+            android:textSize="@dimen/top_textsize" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="60px"
         android:orientation="horizontal">
 
         <RelativeLayout
             android:id="@+id/LotteryBBrelateTime1"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_marginRight="2dp"
+            android:layout_marginRight="4px"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -48,20 +48,21 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="3dp"
-                android:text="2010-01-01" />
+                android:layout_marginLeft="6px"
+                android:text="2010-01-01"
+                android:textSize="25px" />
 
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="25px"
+                android:layout_height="25px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="3dp"
+                android:layout_marginRight="6px"
                 android:background="@drawable/wuka_xiala" />
 
             <View
-                android:layout_width="1dp"
-                android:layout_height="40dp"
+                android:layout_width="1px"
+                android:layout_height="60px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:background="@color/gray" />
@@ -69,9 +70,9 @@
 
         <RelativeLayout
             android:id="@+id/LotteryBBrelateTime2"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_marginRight="2dp"
+            android:layout_marginRight="4px"
             android:layout_weight="1"
 
             android:orientation="horizontal">
@@ -82,20 +83,21 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="3dp"
-                android:text="6666-66-66" />
+                android:layout_marginLeft="6px"
+                android:text="6666-66-66"
+                android:textSize="25px" />
 
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="25px"
+                android:layout_height="25px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="3dp"
+                android:layout_marginRight="6px"
                 android:background="@drawable/wuka_xiala" />
 
             <View
-                android:layout_width="1dp"
-                android:layout_height="40dp"
+                android:layout_width="1px"
+                android:layout_height="60px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:background="@color/gray" />
@@ -103,9 +105,9 @@
 
         <RelativeLayout
             android:id="@+id/LotteryBBrelateBank4"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_marginRight="2dp"
+            android:layout_marginRight="4px"
             android:layout_weight="1"
 
             android:orientation="horizontal">
@@ -115,38 +117,39 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="3dp"
-                android:text="按日统计" />
+                android:layout_marginLeft="6px"
+                android:text="按日统计"
+                android:textSize="25px" />
 
             <FrameLayout
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="25px"
+                android:layout_height="25px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true">
 
                 <Spinner
                     android:id="@+id/LotteryBBgameLotteryType4"
                     style="@android:style/Widget.Spinner"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_marginLeft="-4dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_width="25px"
+                    android:layout_height="25px"
+                    android:layout_marginLeft="-4px"
+                    android:layout_marginRight="10px"
                     android:background="@drawable/wuka_xiala"
                     android:visibility="invisible" />
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="25px"
+                    android:layout_height="25px"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
-                    android:layout_marginRight="3dp"
+                    android:layout_marginRight="3px"
                     android:background="@drawable/wuka_xiala" />
             </FrameLayout>
 
             <View
-                android:layout_width="1dp"
-                android:layout_height="40dp"
+                android:layout_width="1px"
+                android:layout_height="60px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:background="@color/gray" />
@@ -154,9 +157,9 @@
 
         <RelativeLayout
             android:id="@+id/LotteryBBrelateBank3"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_marginRight="2dp"
+            android:layout_marginRight="4px"
             android:layout_weight="1"
 
             android:orientation="horizontal">
@@ -166,38 +169,40 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="3dp"
-                android:text="彩票" />
+                android:layout_marginLeft="6px"
+                android:text="彩票"
+                android:textSize="25px" />
 
             <FrameLayout
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="25px"
+                android:layout_height="25px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true">
 
                 <Spinner
                     android:id="@+id/LotteryBBgameLotteryType"
                     style="@android:style/Widget.Spinner"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_marginLeft="-4dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_width="25px"
+                    android:layout_height="25px"
+                    android:layout_marginLeft="-4px"
+                    android:layout_marginRight="4px"
                     android:background="@drawable/wuka_xiala"
                     android:visibility="invisible" />
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="25px"
+                    android:layout_height="25px"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
-                    android:layout_marginRight="3dp"
+                    android:layout_marginRight="4px"
                     android:background="@drawable/wuka_xiala" />
             </FrameLayout>
         </RelativeLayout>
     </LinearLayout>
-<View
-    android:background="@android:color/darker_gray"
-    android:layout_width="match_parent"
-    android:layout_height="1dp"></View>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@android:color/darker_gray"></View>
 </LinearLayout>
