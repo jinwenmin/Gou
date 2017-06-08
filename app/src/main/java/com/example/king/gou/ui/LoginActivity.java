@@ -8,8 +8,9 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.king.gou.R;
+import com.zhy.autolayout.AutoLayoutActivity;
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends AutoLayoutActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

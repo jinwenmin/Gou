@@ -21,18 +21,18 @@
 
         <ImageView
             android:id="@+id/Erweima"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="50px"
+            android:layout_height="50px"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_margin="5dp"
+            android:layout_margin="8px"
             android:src="@drawable/img_qrcode" />
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="50px"
+            android:layout_height="50px"
             android:layout_centerVertical="true"
-            android:layout_margin="5dp"
+            android:layout_margin="8px"
             android:layout_toLeftOf="@id/Erweima"
             android:src="@drawable/ic_home_share" />
     </RelativeLayout>
@@ -40,7 +40,7 @@
     <com.jude.rollviewpager.RollPagerView
         android:id="@+id/home_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="350px"
         android:layout_below="@id/home_top"
         app:rollviewpager_play_delay="3000"></com.jude.rollviewpager.RollPagerView>
 
@@ -68,40 +68,45 @@
                 <HorizontalScrollView
                     android:id="@+id/home_scroll1"
                     android:layout_width="fill_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5px"
+                    android:layout_marginTop="5px"
                     android:scrollbars="none">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="100dp">
+                        android:layout_height="wrap_content">
 
                         <ImageView
+                            android:layout_gravity="center_vertical"
                             android:id="@+id/ScrollImg1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp" />
+                            android:layout_width="300px"
+                            android:layout_height="150px"
+                            android:layout_marginLeft="8px" />
 
                         <ImageView
+
+                            android:layout_gravity="center_vertical"
                             android:id="@+id/ScrollImg2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="100dp"
-                            android:layout_marginLeft="5dp" />
+                            android:layout_width="300px"
+                            android:layout_height="150px"
+                            android:layout_marginLeft="8px" />
 
                         <ImageView
+                            android:layout_gravity="center_vertical"
                             android:id="@+id/ScrollImg3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="100dp"
-                            android:layout_marginLeft="5dp" />
+                            android:layout_width="300px"
+                            android:layout_height="150px"
+                            android:layout_marginLeft="8px" />
 
                         <ImageView
+                            android:layout_gravity="center_vertical"
                             android:id="@+id/ScrollImg4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="100dp"
-                            android:layout_marginLeft="5dp" />
+                            android:layout_width="300px"
+                            android:layout_height="150px"
+                            android:layout_marginLeft="8px" />
                     </LinearLayout>
                 </HorizontalScrollView>
 
@@ -116,7 +121,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="8px"
                         android:text="我的游戏"
                         android:textColor="@android:color/white" />
 
@@ -126,7 +131,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginRight="8px"
                         android:text="添加游戏"
                         android:textColor="@android:color/white" />
                 </RelativeLayout>

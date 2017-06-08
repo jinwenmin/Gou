@@ -36,6 +36,7 @@ dependencies {
     //弹窗警告 或提示
 
     //好看的toast
+
     //viewpger
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -57,4 +58,5 @@ dependencies {
     compile 'com.henryblue.minimusicview:library:1.0.1'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    compile project(':autolayout')
 }

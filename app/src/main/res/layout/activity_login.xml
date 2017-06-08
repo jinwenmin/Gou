@@ -10,11 +10,10 @@
     <ImageView
         android:id="@+id/login_icon"
         android:layout_width="wrap_content"
-        android:layout_height="130dp"
+        android:layout_height="220px"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:src="@mipmap/ic_login_logo" />
-
 
 
     <RelativeLayout
@@ -24,62 +23,62 @@
         android:layout_centerHorizontal="true">
 
         <RelativeLayout
-            android:layout_centerHorizontal="true"
             android:id="@+id/relativelayuout1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10px"
             android:background="@drawable/login_relativelayout_bg">
 
             <com.chaychan.viewlib.PowerfulEditText
                 android:id="@+id/login_user"
 
-                android:layout_width="350dp"
-                android:layout_height="60dp"
+                android:layout_width="450px"
+                android:layout_height="100px"
                 android:background="@drawable/edit_user_pwd_bg"
                 android:drawableLeft="@mipmap/ic_user_origin"
                 android:gravity="center"
                 android:hint="输入您的账号"
-                android:paddingBottom="5dp"
-                android:paddingLeft="5dp"
-                android:paddingTop="5dp"
+                android:paddingBottom="15px"
+                android:paddingLeft="15px"
+                android:paddingTop="15px"
                 app:funcType="canClear" />
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_centerHorizontal="true"
             android:id="@+id/relativelayout2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/relativelayuout1"
-            android:layout_margin="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10px"
+            android:layout_marginTop="10px"
             android:background="@drawable/login_relativelayout_bg">
 
             <com.chaychan.viewlib.PowerfulEditText
-                android:layout_width="350dp"
-                android:layout_height="60dp"
+                android:layout_width="450px"
+                android:layout_height="100px"
 
                 android:background="@drawable/edit_user_pwd_bg"
                 android:drawableLeft="@mipmap/ic_password_origin"
                 android:gravity="center"
                 android:hint="输入你的密码"
-                android:paddingBottom="5dp"
-                android:paddingLeft="5dp"
-                android:paddingTop="5dp" />
+                android:paddingBottom="15px"
+                android:paddingLeft="15px"
+                android:paddingTop="15px" />
         </RelativeLayout>
 
         <Button
             android:id="@+id/login_btn"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
+            android:layout_width="500px"
+            android:layout_height="100px"
             android:layout_below="@id/relativelayout2"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20px"
             android:background="@drawable/login_btn_bg"
             android:text="@string/login_btn"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="40px" />
 
         <TextView
             android:id="@+id/forget_pwd"
@@ -118,7 +117,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:orientation="horizontal">
 
                 <TextView

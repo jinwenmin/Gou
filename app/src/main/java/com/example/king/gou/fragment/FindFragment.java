@@ -15,10 +15,14 @@ import com.example.king.gou.R;
 public class FindFragment extends Fragment {
 
 
-    public FindFragment() {
-        // Required empty public constructor
-    }
+    public static FindFragment newInstance() {
 
+        Bundle args = new Bundle();
+
+        FindFragment fragment = new FindFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,13 +9,13 @@
     <RelativeLayout
         android:id="@+id/MyBJLTop"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/top_height"
         android:background="@color/top_background">
 
         <ImageView
             android:id="@+id/_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="30px"
+            android:layout_height="30px"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_back" />
 
@@ -41,7 +40,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="5px"
                 android:text="安全设置" />
 
             <RelativeLayout
@@ -53,32 +52,32 @@
 
                 <ImageView
                     android:id="@+id/Setting_img1"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="35px"
+                    android:layout_height="35px"
                     android:layout_centerVertical="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="10px"
                     android:src="@drawable/ic_setting_login_pwd" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_margin="2dp"
+                    android:layout_margin="2px"
 
                     android:layout_toRightOf="@id/Setting_img1"
                     android:text="修改登录密码" />
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="15px"
+                    android:layout_height="15px"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="5px"
                     android:src="@drawable/img_next" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="1px"
                     android:layout_below="@id/Setting_img1"
                     android:background="@color/gray" />
             </RelativeLayout>
@@ -92,32 +91,32 @@
 
                 <ImageView
                     android:id="@+id/Setting_img2"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="35px"
+                    android:layout_height="35px"
                     android:layout_centerVertical="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="10px"
                     android:src="@drawable/ic_setting_money_pwd" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_margin="2dp"
+                    android:layout_margin="2px"
 
                     android:layout_toRightOf="@id/Setting_img2"
                     android:text="修改资金密码" />
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="15px"
+                    android:layout_height="15px"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="5px"
                     android:src="@drawable/img_next" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="1px"
                     android:layout_below="@id/Setting_img2"
                     android:background="@color/gray" />
             </RelativeLayout>
@@ -131,32 +130,32 @@
 
                 <ImageView
                     android:id="@+id/Setting_img3"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="35px"
+                    android:layout_height="35px"
                     android:layout_centerVertical="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="10px"
                     android:src="@drawable/ic_setting_pwd_protect" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_margin="2dp"
+                    android:layout_margin="2px"
 
                     android:layout_toRightOf="@id/Setting_img3"
                     android:text="密码保护" />
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="15px"
+                    android:layout_height="15px"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="5px"
                     android:src="@drawable/img_next" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="1px"
                     android:layout_below="@id/Setting_img3"
                     android:background="@color/gray" />
             </RelativeLayout>
@@ -169,17 +168,17 @@
 
                 <ImageView
                     android:id="@+id/Setting_img4"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="35px"
+                    android:layout_height="35px"
                     android:layout_centerVertical="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="10px"
                     android:src="@drawable/ic_setting_zhiwenjiesuo" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_margin="2dp"
+                    android:layout_margin="2px"
 
                     android:layout_toRightOf="@id/Setting_img4"
                     android:text="指纹解锁开关" />
@@ -187,7 +186,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="1px"
                     android:layout_below="@id/Setting_img4"
                     android:background="@color/gray" />
 
@@ -208,34 +207,34 @@
 
                 <ImageView
                     android:id="@+id/Setting_img5"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="35px"
+                    android:layout_height="35px"
                     android:layout_centerVertical="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="10px"
                     android:src="@drawable/ic_setting_qrcode" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_margin="2dp"
+                    android:layout_margin="2px"
 
                     android:layout_toRightOf="@id/Setting_img5"
                     android:text="二维码扫描" />
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="15px"
+                    android:layout_height="15px"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="5px"
                     android:src="@drawable/img_next" />
             </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="15px"
                 android:text="用户信息设置" />
 
             <RelativeLayout
@@ -246,31 +245,31 @@
 
                 <ImageView
                     android:id="@+id/Setting_img6"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="35px"
+                    android:layout_height="35px"
                     android:layout_centerVertical="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="10px"
                     android:src="@drawable/ic_setting_nickname" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_margin="2dp"
+                    android:layout_margin="2px"
                     android:layout_toRightOf="@id/Setting_img6"
                     android:text="修改昵称" />
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="15px"
+                    android:layout_height="15px"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="5px"
                     android:src="@drawable/img_next" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="1px"
                     android:layout_below="@id/Setting_img6"
                     android:background="@color/gray" />
             </RelativeLayout>
@@ -283,31 +282,31 @@
 
                 <ImageView
                     android:id="@+id/Setting_img7"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="35px"
+                    android:layout_height="35px"
                     android:layout_centerVertical="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="10px"
                     android:src="@drawable/ic_setting_bank_card" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_margin="2dp"
+                    android:layout_margin="2px"
                     android:layout_toRightOf="@id/Setting_img7"
                     android:text="银行卡管理" />
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="15px"
+                    android:layout_height="15px"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="5px"
                     android:src="@drawable/img_next" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="1px"
                     android:layout_below="@id/Setting_img7"
                     android:background="@color/gray" />
             </RelativeLayout>
@@ -320,17 +319,17 @@
 
                 <ImageView
                     android:id="@+id/Setting_img8"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="35px"
+                    android:layout_height="35px"
                     android:layout_centerVertical="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="10px"
                     android:src="@drawable/ic_setting_notification_switch" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_margin="2dp"
+                    android:layout_margin="2px"
 
                     android:layout_toRightOf="@id/Setting_img8"
                     android:text="通知开关" />
@@ -338,7 +337,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="1px"
                     android:layout_below="@id/Setting_img8"
                     android:background="@color/gray" />
 
@@ -360,17 +359,17 @@
 
                 <ImageView
                     android:id="@+id/Setting_img9"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="35px"
+                    android:layout_height="35px"
                     android:layout_centerVertical="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="10px"
                     android:src="@drawable/ic_setting_music" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_margin="2dp"
+                    android:layout_margin="2px"
 
                     android:layout_toRightOf="@id/Setting_img9"
                     android:text="普通音效开关" />
@@ -378,7 +377,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="1px"
                     android:layout_below="@id/Setting_img9"
                     android:background="@color/gray" />
 
@@ -400,17 +399,17 @@
 
                 <ImageView
                     android:id="@+id/Setting_img10"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="35px"
+                    android:layout_height="35px"
                     android:layout_centerVertical="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="10px"
                     android:src="@drawable/ic_setting_music" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_margin="2dp"
+                    android:layout_margin="2px"
 
                     android:layout_toRightOf="@id/Setting_img10"
                     android:text="倒计时音效开关" />
@@ -418,7 +417,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="1px"
                     android:layout_below="@id/Setting_img10"
                     android:background="@color/gray" />
 
@@ -440,17 +439,17 @@
 
                 <ImageView
                     android:id="@+id/Setting_img11"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="35px"
+                    android:layout_height="35px"
                     android:layout_centerVertical="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="10px"
                     android:src="@drawable/ic_setting_quick_bet_switch" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_margin="2dp"
+                    android:layout_margin="2px"
 
                     android:layout_toRightOf="@id/Setting_img11"
                     android:text="快速投注开关" />
@@ -458,7 +457,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="1px"
                     android:layout_below="@id/Setting_img11"
                     android:background="@color/gray" />
 
@@ -479,31 +478,31 @@
 
                 <ImageView
                     android:id="@+id/Setting_img12"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="35px"
+                    android:layout_height="35px"
                     android:layout_centerVertical="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="10px"
                     android:src="@drawable/ic_yddljc" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_margin="2dp"
+                    android:layout_margin="2px"
                     android:layout_toRightOf="@id/Setting_img12"
                     android:text="异地登录设置" />
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="15px"
+                    android:layout_height="15px"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="5px"
                     android:src="@drawable/img_next" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="1px"
                     android:layout_below="@id/Setting_img12"
                     android:background="@color/gray" />
             </RelativeLayout>
@@ -516,27 +515,27 @@
 
                 <ImageView
                     android:id="@+id/Setting_img13"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="35px"
+                    android:layout_height="35px"
                     android:layout_centerVertical="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="10px"
                     android:src="@drawable/ic_setting_version" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_margin="2dp"
+                    android:layout_margin="2px"
                     android:layout_toRightOf="@id/Setting_img13"
                     android:text="版本升级" />
 
                 <ImageView
                     android:id="@+id/Left"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="15px"
+                    android:layout_height="15px"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="5px"
                     android:src="@drawable/img_next" />
 
                 <TextView
@@ -548,7 +547,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="1px"
                     android:layout_below="@id/Setting_img13"
                     android:background="@color/gray" />
             </RelativeLayout>
@@ -561,31 +560,31 @@
 
                 <ImageView
                     android:id="@+id/Setting_img14"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="35px"
+                    android:layout_height="35px"
                     android:layout_centerVertical="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="10px"
                     android:src="@drawable/ic_setting_about" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_margin="2dp"
+                    android:layout_margin="2px"
                     android:layout_toRightOf="@id/Setting_img14"
                     android:text="关于我们" />
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="15px"
+                    android:layout_height="15px"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="5px"
                     android:src="@drawable/img_next" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="1px"
                     android:layout_below="@id/Setting_img14"
                     android:background="@color/gray" />
             </RelativeLayout>
@@ -593,7 +592,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="50dp"
+                android:layout_margin="50px"
                 android:background="@drawable/recharge_btn"
                 android:text="退出登录" />
         </LinearLayout>

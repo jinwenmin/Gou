@@ -18,6 +18,7 @@ import com.example.king.gou.R;
 import com.example.king.gou.adapters.MyFrmPageAdapter;
 import com.example.king.gou.fragment.myfragment.OrderFragment;
 import com.example.king.gou.fragment.myfragment.ProxyFragment;
+import com.example.king.gou.ui.GameCenterActivity;
 import com.example.king.gou.ui.SettingActivity;
 import com.example.king.gou.ui.frmMyActivity.ReChargeActivity;
 
@@ -139,6 +140,8 @@ public class MyFragment extends Fragment implements View.OnClickListener {
             case R.id.ToQukuan:
                 break;
             case R.id.ToZhuanZhang:
+                startActivity(new Intent(getActivity(), GameCenterActivity.class));
+
                 break;
             case R.id.frmMySetting:
                 startActivity(new Intent(getActivity(), SettingActivity.class));

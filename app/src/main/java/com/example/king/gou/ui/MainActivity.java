@@ -9,11 +9,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.king.gou.R;
+import com.zhy.autolayout.AutoLayoutActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends AutoLayoutActivity {
     @BindView(R.id.HomeFrmRadioBtn)
     RadioButton HomeFrmRadioBtn;
     @BindView(R.id.GameFrmRadioBtn)

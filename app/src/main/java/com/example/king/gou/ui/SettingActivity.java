@@ -12,12 +12,13 @@ import com.example.king.gou.ui.settingfragment.MoneyProtectActivity;
 import com.example.king.gou.ui.settingfragment.UpdateMoneyPwdActivity;
 import com.example.king.gou.ui.settingfragment.UpdateNickNameActivity;
 import com.example.king.gou.ui.settingfragment.UpdatePwdActivity;
+import com.zhy.autolayout.AutoLayoutActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
+public class SettingActivity extends AutoLayoutActivity implements View.OnClickListener {
 
     @BindView(R.id._back)
     ImageView Back;
