@@ -17,15 +17,15 @@
                 android:id="@+id/betgame_game1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:background="@drawable/linear_biankuang">
 
                 <VideoView
-                    android:layout_centerHorizontal="true"
                     android:id="@+id/betgame_Videoview"
                     android:layout_width="match_parent"
-                    android:layout_height="280dp"
-                    android:layout_margin="5dp" />
+                    android:layout_height="560px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="10px" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -35,16 +35,16 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
+                        android:layout_margin="30px"
                         android:text="AG亚洲馆" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_margin="12dp"
+                        android:layout_margin="24px"
                         android:background="@drawable/play_game"
-                        android:padding="8dp"
+                        android:padding="16px"
                         android:text="开始游戏"
                         android:textColor="@android:color/white" />
                 </RelativeLayout>
@@ -55,15 +55,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/betgame_game1"
-                android:layout_margin="5dp"
+                android:layout_margin="10px"
                 android:background="@drawable/linear_biankuang">
 
                 <ImageView
 
                     android:id="@+id/betgame_Imageview1"
                     android:layout_width="match_parent"
-                    android:layout_height="280dp"
-                    android:layout_margin="5dp" />
+                    android:layout_height="560px"
+                    android:layout_margin="10px" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -73,34 +73,35 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
+                        android:layout_margin="30px"
                         android:text="OG旗舰厅" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_margin="12dp"
+                        android:layout_margin="24px"
                         android:background="@drawable/play_game"
-                        android:padding="8dp"
+                        android:padding="16px"
                         android:text="开始游戏"
                         android:textColor="@android:color/white" />
                 </RelativeLayout>
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/betgame_game3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/betgame_game2"
-                android:layout_margin="5dp"
+                android:layout_margin="10px"
                 android:background="@drawable/linear_biankuang">
 
                 <ImageView
 
                     android:id="@+id/betgame_Imageview2"
                     android:layout_width="match_parent"
-                    android:layout_height="280dp"
-                    android:layout_margin="5dp" />
+                    android:layout_height="560px"
+                    android:layout_margin="10px" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -110,34 +111,35 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
+                        android:layout_margin="30px"
                         android:text="EBET" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_margin="12dp"
+                        android:layout_margin="24px"
                         android:background="@drawable/play_game"
-                        android:padding="8dp"
+                        android:padding="16px"
                         android:text="开始游戏"
                         android:textColor="@android:color/white" />
                 </RelativeLayout>
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/betgame_game4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/betgame_game3"
-                android:layout_margin="5dp"
+                android:layout_margin="10px"
                 android:background="@drawable/linear_biankuang">
 
                 <ImageView
 
                     android:id="@+id/betgame_Imageview3"
                     android:layout_width="match_parent"
-                    android:layout_height="280dp"
-                    android:layout_margin="5dp" />
+                    android:layout_height="560px"
+                    android:layout_margin="10px" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -147,16 +149,16 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
+                        android:layout_margin="30px"
                         android:text="BINN国际馆" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_margin="12dp"
+                        android:layout_margin="24px"
                         android:background="@drawable/play_game"
-                        android:padding="8dp"
+                        android:padding="16px"
                         android:text="开始游戏"
                         android:textColor="@android:color/white" />
                 </RelativeLayout>

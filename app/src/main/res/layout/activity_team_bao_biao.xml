@@ -9,13 +9,13 @@
     <RelativeLayout
         android:id="@+id/ProxyTop"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/top_height"
         android:background="@color/top_background">
 
         <ImageView
             android:id="@+id/_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/top_height"
+            android:layout_height="@dimen/top_height"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_back" />
 
@@ -25,42 +25,43 @@
             android:layout_centerInParent="true"
             android:text="团队报表"
             android:textColor="@android:color/white"
-            android:textSize="23sp" />
+            android:textSize="@dimen/top_textsize" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="60px"
         android:orientation="horizontal">
 
         <RelativeLayout
             android:id="@+id/TeamBBrelateTime1"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_marginRight="2dp"
+            android:layout_marginRight="2px"
             android:layout_weight="1"
             android:orientation="horizontal">
 
             <TextView
+                android:textSize="25px"
                 android:id="@+id/TeamBBtimetext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="3dp"
+                android:layout_marginLeft="6px"
                 android:text="2010-01-01" />
 
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="30px"
+                android:layout_height="30px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="3dp"
+                android:layout_marginRight="6px"
                 android:background="@drawable/wuka_xiala" />
 
             <View
-                android:layout_width="1dp"
-                android:layout_height="40dp"
+                android:layout_width="2px"
+                android:layout_height="60px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:background="@color/gray" />
@@ -68,33 +69,34 @@
 
         <RelativeLayout
             android:id="@+id/TeamBBrelateTime2"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_marginRight="2dp"
+            android:layout_marginRight="4px"
             android:layout_weight="1"
 
             android:orientation="horizontal">
 
             <TextView
+                android:textSize="25px"
                 android:id="@+id/TeamBBtimetext2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="3dp"
+                android:layout_marginLeft="6px"
                 android:text="2010-01-20" />
 
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="30px"
+                android:layout_height="30px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="3dp"
+                android:layout_marginRight="6px"
                 android:background="@drawable/wuka_xiala" />
 
             <View
-                android:layout_width="1dp"
-                android:layout_height="40dp"
+                android:layout_width="2px"
+                android:layout_height="60px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:background="@color/gray" />
@@ -102,50 +104,52 @@
 
         <RelativeLayout
             android:id="@+id/TeamBBrelateBank4"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_marginRight="2dp"
+            android:layout_marginRight="4px"
             android:layout_weight="1"
 
             android:orientation="horizontal">
 
             <TextView
+                android:textSize="25px"
                 android:id="@+id/TeamBBtimetext4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="3dp"
+                android:layout_marginLeft="6px"
                 android:text="彩票" />
 
             <FrameLayout
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_marginRight="6px"
+                android:layout_width="30px"
+                android:layout_height="30px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true">
 
                 <Spinner
                     android:id="@+id/TeamBBgameLotteryType4"
                     style="@android:style/Widget.Spinner"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_marginLeft="-4dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_width="30px"
+                    android:layout_height="30px"
+                    android:layout_marginLeft="-4px"
+                    android:layout_marginRight="6px"
                     android:background="@drawable/wuka_xiala"
                     android:visibility="invisible" />
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="30px"
+                    android:layout_height="30px"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
-                    android:layout_marginRight="3dp"
+
                     android:background="@drawable/wuka_xiala" />
             </FrameLayout>
 
             <View
-                android:layout_width="1dp"
-                android:layout_height="40dp"
+                android:layout_width="1px"
+                android:layout_height="60px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:background="@color/gray" />
@@ -154,65 +158,69 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1px"
         android:background="@color/gray" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:layout_margin="10px">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="5dp"
+            android:padding="15px"
             android:text="总计"
-            android:textSize="20sp" />
+            android:textSize="30px" />
 
         <EditText
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/edit_user_pwd_bg"
             android:drawableLeft="@mipmap/search"
             android:gravity="center"
             android:hint="搜索用户"
-            android:padding="5dp" />
+            android:padding="10px" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:layout_margin="10px">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <TextView
+                android:textSize="25px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="消费量:" />
 
             <TextView
+                android:textSize="25px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <TextView
+                android:textSize="25px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="返点:" />
 
             <TextView
+                android:textSize="25px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0" />
@@ -222,35 +230,39 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:layout_margin="10px">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <TextView
+                android:textSize="25px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="盈亏:" />
 
             <TextView
+                android:textSize="25px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0.0000" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <TextView
+                android:textSize="25px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="中奖:" />
 
             <TextView
+                android:textSize="25px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0" />

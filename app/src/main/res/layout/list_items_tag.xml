@@ -3,12 +3,12 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="#555555"
-    android:paddingLeft="10dip">
+    android:paddingLeft="20px">
 
     <TextView
         android:id="@+id/itemTitle"
         android:layout_width="wrap_content"
-        android:layout_height="20dip"
+        android:layout_height="40px"
         android:gravity="center_vertical"
         android:textColor="#ffffff" />
 </LinearLayout>

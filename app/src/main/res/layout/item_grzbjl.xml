@@ -9,17 +9,19 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="10px"
             android:layout_weight="1">
 
             <TextView
+                android:textSize="28px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="操作金额: " />
 
             <TextView
+                android:textSize="28px"
                 android:id="@+id/CunkunMoney"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -28,17 +30,19 @@
 
         <LinearLayout
             android:visibility="gone"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10px"
             android:layout_weight="1">
 
             <TextView
+                android:textSize="28px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="手续费: " />
 
             <TextView
+                android:textSize="28px"
                 android:id="@+id/CunkunSXF"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -46,22 +50,22 @@
         </LinearLayout>
 
         <RelativeLayout
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="10px"
             android:layout_weight="1">
 
             <TextView
+                android:textSize="28px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="40px"
                 android:background="@drawable/finsh"
-                android:paddingBottom="2dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:paddingTop="2dp"
-
+                android:paddingBottom="5px"
+                android:paddingLeft="15px"
+                android:paddingRight="15px"
+                android:paddingTop="5px"
                 android:text="撤单"
                 android:textColor="#436EEE" />
 
@@ -72,14 +76,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp">
+        android:layout_margin="10px">
 
         <TextView
+            android:textSize="28px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="操作日期: " />
 
         <TextView
+            android:textSize="28px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="00000" />
@@ -88,37 +94,41 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="10px"
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="horizontal">
 
             <TextView
+                android:textSize="28px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="操作前金额: " />
 
             <TextView
+                android:textSize="28px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="00" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <TextView
+                android:textSize="28px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="操作后金额: " />
 
             <TextView
+                android:textSize="28px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="00" />

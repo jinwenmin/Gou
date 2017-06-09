@@ -6,12 +6,12 @@
     <RelativeLayout
         android:id="@+id/TixianAppliTop"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/top_height"
         android:background="@color/top_background">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/top_height"
+            android:layout_height="@dimen/top_height"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_back" />
 
@@ -21,13 +21,13 @@
             android:layout_centerInParent="true"
             android:text="提现申请"
             android:textColor="@android:color/white"
-            android:textSize="23sp" />
+            android:textSize="@dimen/top_textsize" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/TixianAppliRe1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="75px"
         android:layout_below="@id/TixianAppliTop">
 
         <TextView
@@ -35,10 +35,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_margin="10dp"
+            android:layout_margin="20px"
             android:text="账户余额："
             android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:textSize="30px" />
 
         <TextView
             android:id="@+id/TixianAppliZFBnameSum"
@@ -47,20 +47,21 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/TixianAppliSumText"
             android:text="￥0"
+            android:textSize="30px"
             android:textColor="@android:color/holo_red_dark" />
     </RelativeLayout>
 
     <View
         android:id="@+id/view1"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1px"
         android:layout_below="@id/TixianAppliRe1"
         android:background="@android:color/darker_gray"></View>
 
     <RelativeLayout
         android:id="@+id/TixianAppliRe2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="75px"
         android:layout_below="@id/view1">
 
         <TextView
@@ -68,34 +69,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_margin="10dp"
+            android:layout_margin="20px"
             android:text="提现金额"
             android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:textSize="30px" />
 
         <EditText
             android:id="@+id/TixianAppliZFBname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="20px"
             android:layout_toRightOf="@id/textMoney"
             android:background="@null"
             android:hint="100"
             android:inputType="number"
-            android:textSize="15sp" />
+            android:textSize="30px" />
     </RelativeLayout>
 
     <View
         android:id="@+id/view2"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1px"
         android:layout_below="@id/TixianAppliRe2"
         android:background="@android:color/darker_gray"></View>
 
     <RelativeLayout
         android:id="@+id/TixianAppliRe3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="75px"
         android:layout_below="@id/view2">
 
         <TextView
@@ -103,34 +104,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_margin="10dp"
+            android:layout_margin="20px"
             android:text="资金密码"
             android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:textSize="30px" />
 
         <EditText
             android:id="@+id/MoneyPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="20px"
             android:layout_toRightOf="@id/textMoneyPwd"
             android:background="@null"
             android:hint="请输入资金密码"
             android:inputType="textPassword"
-            android:textSize="15sp" />
+            android:textSize="30px" />
     </RelativeLayout>
 
     <View
         android:id="@+id/view3"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1px"
         android:layout_below="@id/TixianAppliRe3"
         android:background="@android:color/darker_gray"></View>
 
     <RelativeLayout
         android:id="@+id/TixianAppliRe4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="75px"
         android:layout_below="@id/view3">
 
         <TextView
@@ -138,12 +139,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_margin="10dp"
+            android:layout_margin="20px"
             android:text="选择银行卡"
             android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:textSize="30px" />
 
         <Spinner
+
             android:id="@+id/MoneyBankSpinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -160,7 +162,7 @@
             android:gravity="center_horizontal"
             android:text="-请选择银行卡-"
             android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:textSize="30px" />
     </RelativeLayout>
 
     <LinearLayout
@@ -173,12 +175,12 @@
         <Button
             android:id="@+id/TiJiao"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_height="80px"
+            android:layout_margin="30px"
             android:background="@drawable/recharge_btn"
             android:text="提交"
             android:textColor="@color/my_btn_color"
-            android:textSize="20sp" />
+            android:textSize="35px" />
 
 
     </LinearLayout>

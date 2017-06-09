@@ -8,27 +8,29 @@
         android:id="@+id/item_cpbb_Time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="20px"
         android:text="总计"
-        android:textSize="18sp" />
+        android:textSize="36px" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginLeft="20px"
+        android:layout_marginRight="20px">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <TextView
+                android:textSize="25px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="消费量: " />
 
             <TextView
+                android:textSize="25px"
                 android:id="@+id/item_cpbb_XiaofeiSum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -36,16 +38,18 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <TextView
+                android:textSize="25px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="返点:  " />
 
             <TextView
+                android:textSize="25px"
                 android:id="@+id/item_cpbb_fandian"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,19 +63,21 @@
         android:layout_width="match_parent"
 
         android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:layout_margin="20px">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <TextView
+                android:textSize="25px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="盈亏:  " />
 
             <TextView
+                android:textSize="25px"
                 android:id="@+id/item_cpbb_yk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -79,16 +85,18 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <TextView
+                android:textSize="25px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="中奖:  " />
 
             <TextView
+                android:textSize="25px"
                 android:id="@+id/item_cpbb_zj"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -9,13 +9,13 @@
     <RelativeLayout
         android:id="@+id/ProxyTop"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/top_height"
         android:background="@color/top_background">
 
         <ImageView
             android:id="@+id/_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/top_height"
+            android:layout_height="@dimen/top_height"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_back" />
 
@@ -25,19 +25,19 @@
             android:layout_centerInParent="true"
             android:text="游戏记录"
             android:textColor="@android:color/white"
-            android:textSize="23sp" />
+            android:textSize="@dimen/top_textsize" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="60px"
         android:orientation="horizontal">
 
         <RelativeLayout
             android:id="@+id/TeamGameJLrelateTime1"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_marginRight="2dp"
+            android:layout_marginRight="4px"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -47,20 +47,21 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="3dp"
-                android:text="2010-01-01" />
+                android:layout_marginLeft="6px"
+                android:text="2010-01-01"
+                android:textSize="25px" />
 
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="30px"
+                android:layout_height="30px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="3dp"
+                android:layout_marginRight="6px"
                 android:background="@drawable/wuka_xiala" />
 
             <View
-                android:layout_width="1dp"
-                android:layout_height="40dp"
+                android:layout_width="1px"
+                android:layout_height="60px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:background="@color/gray" />
@@ -68,9 +69,9 @@
 
         <RelativeLayout
             android:id="@+id/TeamGameJLrelateTime2"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_marginRight="2dp"
+            android:layout_marginRight="4px"
             android:layout_weight="1"
 
             android:orientation="horizontal">
@@ -81,20 +82,21 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="3dp"
-                android:text="2010-01-20" />
+                android:layout_marginLeft="6px"
+                android:text="2010-01-20"
+                android:textSize="25px" />
 
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="30px"
+                android:layout_height="30px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="3dp"
+                android:layout_marginRight="6px"
                 android:background="@drawable/wuka_xiala" />
 
             <View
-                android:layout_width="1dp"
-                android:layout_height="40dp"
+                android:layout_width="1px"
+                android:layout_height="60px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:background="@color/gray" />
@@ -102,9 +104,9 @@
 
         <RelativeLayout
             android:id="@+id/TeamGameJLrelateBank4"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_marginRight="2dp"
+            android:layout_marginRight="4px"
             android:layout_weight="1"
 
             android:orientation="horizontal">
@@ -114,38 +116,39 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="3dp"
-                android:text="全部" />
+                android:layout_marginLeft="6px"
+                android:text="全部"
+                android:textSize="25px" />
 
             <FrameLayout
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="56px"
+                android:layout_height="56px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true">
 
                 <Spinner
                     android:id="@+id/TeamGameJLgameLotteryType4"
                     style="@android:style/Widget.Spinner"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_marginLeft="-4dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_width="56px"
+                    android:layout_height="56px"
+                    android:layout_marginLeft="-4px"
+                    android:layout_marginRight="10px"
                     android:background="@drawable/wuka_xiala"
                     android:visibility="invisible" />
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="30px"
+                    android:layout_height="30px"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
-                    android:layout_marginRight="3dp"
+                    android:layout_marginRight="6px"
                     android:background="@drawable/wuka_xiala" />
             </FrameLayout>
 
             <View
-                android:layout_width="1dp"
-                android:layout_height="40dp"
+                android:layout_width="1px"
+                android:layout_height="60px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:background="@color/gray" />
@@ -154,7 +157,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1px"
         android:background="@color/gray" />
 
     <LinearLayout
@@ -162,15 +165,16 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="8"
             android:background="@null"
             android:gravity="center"
-            android:hint="按用户名查询(可选)" />
+            android:hint="按用户名查询(可选)"
+            android:textSize="35px" />
 
         <Button
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:text="搜索"
@@ -179,7 +183,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1px"
         android:background="@color/gray" />
 
     <RadioGroup
@@ -188,46 +192,49 @@
         android:orientation="horizontal">
 
         <RadioButton
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="5dp"
-            android:text="自己" />
+            android:padding="10px"
+            android:text="自己"
+            android:textSize="35px" />
 
         <View
-            android:layout_width="1dp"
+            android:layout_width="1px"
             android:layout_height="match_parent"
             android:background="@color/gray" />
 
         <RadioButton
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="5dp"
-            android:text="直接下级" />
+            android:padding="10px"
+            android:text="直接下级"
+            android:textSize="35px" />
 
         <View
-            android:layout_width="1dp"
+            android:layout_width="1px"
             android:layout_height="match_parent"
             android:background="@color/gray" />
 
         <RadioButton
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="5dp"
-            android:text="所有下级" />
+            android:padding="10px"
+            android:text="所有下级"
+            android:textSize="35px" />
     </RadioGroup>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1px"
         android:background="@color/gray" />
 
     <android.support.design.widget.TabLayout
-        android:layout_width="match_parent"
         android:id="@+id/TeamGamejlTabLayout"
-        android:layout_height="40dp"></android.support.design.widget.TabLayout>
+        android:layout_width="match_parent"
+        android:layout_height="60px"></android.support.design.widget.TabLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/TeamGamejlViewpager"
