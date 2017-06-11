@@ -1,9 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/home_bg"
+    android:orientation="vertical"
     tools:context="com.example.king.gou.fragment.GameFragment">
 
     <RelativeLayout
@@ -23,15 +24,17 @@
     </RelativeLayout>
 
     <android.support.design.widget.TabLayout
+        app:tabIndicatorColor="@android:color/white"
         android:id="@+id/gameTablayout"
         android:layout_width="match_parent"
-        android:layout_height="60px">
+        android:layout_height="60px"
+        android:background="@color/top_background"
+        app:tabSelectedTextColor="@android:color/white">
 
     </android.support.design.widget.TabLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/Viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </android.support.v4.view.ViewPager>
+        android:layout_height="match_parent"></android.support.v4.view.ViewPager>
 </LinearLayout>

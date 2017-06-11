@@ -7,5 +7,5 @@
     <ImageView
         android:id="@+id/sport_img1"
         android:layout_width="match_parent"
-        android:layout_height="560px" />
+        android:layout_height="400px" />
 </RelativeLayout>

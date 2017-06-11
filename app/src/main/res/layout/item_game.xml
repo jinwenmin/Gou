@@ -6,26 +6,26 @@
 
     <ImageView
         android:id="@+id/img2"
-        android:layout_width="180px"
-        android:layout_height="180px"
+        android:layout_width="120px"
+        android:layout_height="120px"
         android:layout_gravity="center"
-        android:layout_margin="20px"
+        android:layout_margin="10px"
         android:visibility="gone" />
 
     <ImageView
         android:id="@+id/img1"
-        android:layout_width="180px"
-        android:layout_height="180px"
+        android:layout_width="120px"
+        android:layout_height="120px"
         android:layout_gravity="center"
-        android:layout_margin="20px" />
+        android:layout_margin="10px" />
 
     <TextView
         android:id="@+id/text1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="20px"
+        android:layout_margin="10px"
         android:text="111"
         android:textColor="@android:color/black"
-        android:textSize="35px" />
+        android:textSize="30px" />
 </LinearLayout>

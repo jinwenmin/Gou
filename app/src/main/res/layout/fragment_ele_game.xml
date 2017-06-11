@@ -15,7 +15,7 @@
         <ImageView
             android:id="@+id/elegame_Imageview1"
             android:layout_width="match_parent"
-            android:layout_height="560px"
+            android:layout_height="400px"
             android:layout_margin="10px" />
 
         <RelativeLayout
@@ -24,16 +24,19 @@
             android:layout_below="@id/elegame_Imageview1">
 
             <TextView
+                android:layout_centerVertical="true"
+                android:textSize="20px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="30px"
                 android:text="PT" />
 
             <TextView
+                android:textSize="20px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_margin="24px"
+                android:layout_margin="20px"
                 android:background="@drawable/play_game"
                 android:padding="16px"
                 android:text="开始游戏"

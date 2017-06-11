@@ -44,7 +44,14 @@
             android:layout_weight="1"
             android:src="@mipmap/search" />
 
-
+        <Button
+            android:id="@+id/vipMan_searBtn"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_weight="2"
+            android:text="搜索"
+            android:textSize="30px" />
         <EditText
             android:id="@+id/VipMan_Edit"
             android:layout_width="0px"
@@ -58,13 +65,6 @@
             android:hint="搜索用户"
             android:textSize="30px"></EditText>
 
-        <Button
-            android:id="@+id/vipMan_searBtn"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_weight="2"
-            android:text="搜索"
-            android:textSize="30px" />
+
     </LinearLayout>
 </LinearLayout>

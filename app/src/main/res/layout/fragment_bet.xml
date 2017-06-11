@@ -17,7 +17,7 @@
                 android:id="@+id/betgame_game1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="10px"
                 android:background="@drawable/linear_biankuang">
 
                 <VideoView
@@ -62,7 +62,7 @@
 
                     android:id="@+id/betgame_Imageview1"
                     android:layout_width="match_parent"
-                    android:layout_height="560px"
+                    android:layout_height="400px"
                     android:layout_margin="10px" />
 
                 <RelativeLayout
@@ -100,7 +100,7 @@
 
                     android:id="@+id/betgame_Imageview2"
                     android:layout_width="match_parent"
-                    android:layout_height="560px"
+                    android:layout_height="400px"
                     android:layout_margin="10px" />
 
                 <RelativeLayout
@@ -138,7 +138,7 @@
 
                     android:id="@+id/betgame_Imageview3"
                     android:layout_width="match_parent"
-                    android:layout_height="560px"
+                    android:layout_height="400px"
                     android:layout_margin="10px" />
 
                 <RelativeLayout
