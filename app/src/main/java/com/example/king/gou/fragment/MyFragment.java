@@ -20,7 +20,9 @@ import com.example.king.gou.fragment.myfragment.OrderFragment;
 import com.example.king.gou.fragment.myfragment.ProxyFragment;
 import com.example.king.gou.ui.GameCenterActivity;
 import com.example.king.gou.ui.SettingActivity;
+import com.example.king.gou.ui.frmMyActivity.MessageActivity;
 import com.example.king.gou.ui.frmMyActivity.ReChargeActivity;
+import com.example.king.gou.ui.frmMyActivity.ZhuanZhangActivity;
 
 
 import java.util.ArrayList;
@@ -33,7 +35,7 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MyFragment extends Fragment implements View.OnClickListener {
+public class MyFragment extends BaseFragment implements View.OnClickListener {
 
 
     @BindView(R.id.frmMyKeFu)
@@ -100,7 +102,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         myFrmPageAdapter = new MyFrmPageAdapter(getChildFragmentManager());
         frmMyTablayout.setupWithViewPager(frmMyViewpager);
         frmMyViewpager.setAdapter(myFrmPageAdapter);
-
+        frmMyMsg.setOnClickListener(this);
         initClick();
         initFrms();
         return view;
@@ -140,11 +142,14 @@ public class MyFragment extends Fragment implements View.OnClickListener {
             case R.id.ToQukuan:
                 break;
             case R.id.ToZhuanZhang:
-                startActivity(new Intent(getActivity(), GameCenterActivity.class));
+                startActivity(new Intent(getActivity(), ZhuanZhangActivity.class));
 
                 break;
             case R.id.frmMySetting:
                 startActivity(new Intent(getActivity(), SettingActivity.class));
+                break;
+            case R.id.frmMyMsg:
+                startActivity(new Intent(getActivity(), MessageActivity.class));
                 break;
         }
 

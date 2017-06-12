@@ -17,7 +17,7 @@ import com.example.king.gou.ui.orderFrmActivity.GameJiluActivity;
 import com.example.king.gou.ui.orderFrmActivity.GrzbActivity;
 import com.example.king.gou.ui.orderFrmActivity.LotteryBaoBiaoActivity;
 import com.example.king.gou.ui.orderFrmActivity.MyBJLActivity;
-import com.example.king.gou.ui.orderFrmActivity.ZhuanZhangActivity;
+import com.example.king.gou.ui.orderFrmActivity.ZhuanZhangjlActivity;
 import com.example.king.gou.ui.orderFrmActivity.ZhuiHaoActivity;
 
 import butterknife.BindView;
@@ -112,7 +112,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
                 StartA(MyBJLActivity.class);
                 break;
             case R.id.ZhuanZhangjl:
-                StartA(ZhuanZhangActivity.class);
+                StartA(ZhuanZhangjlActivity.class);
                 break;
         }
     }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.king.gou.R;
+import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.Random;
 
@@ -16,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sephiroth.android.library.picasso.Picasso;
 
-public class WelcomeActivity extends BaseActivity {
+public class WelcomeActivity extends AutoLayoutActivity {
     String[] path = new String[]{
             "file:///android_asset/bg_loading_page2.webp", "file:///android_asset/bg_loading_page.webp"
     };

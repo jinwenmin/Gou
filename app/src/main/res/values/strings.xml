@@ -85,4 +85,8 @@
         <item>您最熟悉的童年好友名字是?</item>
 
     </array>
+    <array name="zhuanzhang_item_out">
+        <item>主账户</item>
+        <item>OG</item>
+    </array>
 </resources>
