@@ -12,7 +12,7 @@
 
         <TextView
             android:id="@+id/proxy_home"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableTop="@mipmap/ic_dailishouye"
@@ -21,7 +21,7 @@
 
         <TextView
             android:id="@+id/proxy_userCenter"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableTop="@mipmap/ic_kaihuzhongxin"
@@ -30,7 +30,7 @@
 
         <TextView
             android:id="@+id/proxy_TeamBaoBiao"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableTop="@mipmap/ic_tuanduibaobiao"
@@ -45,7 +45,7 @@
 
         <TextView
             android:id="@+id/proxy_VipMan"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableTop="@mipmap/ic_huiyuanguanli"
@@ -54,7 +54,7 @@
 
         <TextView
             android:id="@+id/proxy_TeamZhangBian"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableTop="@mipmap/ic_tuanduizbjl"
@@ -63,7 +63,7 @@
 
         <TextView
             android:id="@+id/proxy_GameJl"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableTop="@mipmap/ic_tuanduiyxjl"
@@ -78,7 +78,7 @@
 
         <TextView
             android:id="@+id/proxy_TeamZhuiHao"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableTop="@mipmap/ic_tuanduizhjl"
@@ -87,7 +87,7 @@
 
         <TextView
             android:id="@+id/proxy_TeamCunQu"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableTop="@mipmap/ic_tuanduicunqukuan"
@@ -96,7 +96,7 @@
 
         <TextView
             android:id="@+id/proxy_TeamBjl"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableTop="@mipmap/ic_tuanduibaijialebaobiao"

@@ -78,13 +78,13 @@
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/Linearshoujian"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30px"
         android:layout_marginRight="30px"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/textView4"
@@ -96,13 +96,13 @@
             android:textSize="25px" />
 
         <EditText
-            android:textColor="@android:color/black"
             android:id="@+id/editText"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="8"
+            android:editable="false"
             android:text="所有下级用户"
-
+            android:textColor="@android:color/black"
             android:textSize="25px" />
     </LinearLayout>
 

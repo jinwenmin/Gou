@@ -13,12 +13,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.king.gou.R;
+import com.zhy.autolayout.AutoLayoutActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class UserCenterActivity extends AppCompatActivity {
+public class UserCenterActivity extends AutoLayoutActivity {
 
     @BindView(R.id._back)
     ImageView Back;

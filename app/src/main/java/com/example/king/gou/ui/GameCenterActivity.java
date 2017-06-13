@@ -17,6 +17,7 @@ import com.example.king.gou.fragment.BaseFragment;
 import com.example.king.gou.fragment.FindFragment;
 import com.example.king.gou.fragment.myfragment.OrderFragment;
 import com.example.king.gou.fragment.myfragment.ProxyFragment;
+import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class GameCenterActivity extends AppCompatActivity {
+public class GameCenterActivity extends AutoLayoutActivity {
 
     @BindView(R.id.vpId)
     ViewPager vpId;

@@ -4,9 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.king.gou.R;
+import com.zhy.autolayout.AutoLayoutActivity;
 
 
-public class TeamZBJLActivity extends AppCompatActivity {
+public class TeamZBJLActivity extends AutoLayoutActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -9,6 +9,7 @@ import com.example.king.gou.adapters.MyAdapter;
 import com.example.king.gou.bean.GameIm;
 import com.example.king.gou.bean.GameImages;
 import com.example.king.gou.utils.PinnedHeaderListView;
+import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class AddGameActivity extends AppCompatActivity {
+public class AddGameActivity extends AutoLayoutActivity {
 
     @BindView(R.id.listView)
     ListView listView;

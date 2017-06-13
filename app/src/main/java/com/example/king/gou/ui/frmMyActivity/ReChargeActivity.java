@@ -14,11 +14,12 @@ import android.widget.TextView;
 
 import com.example.king.gou.R;
 import com.example.king.gou.ui.BaseActivity;
+import com.zhy.autolayout.AutoLayoutActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ReChargeActivity extends BaseActivity implements View.OnClickListener {
+public class ReChargeActivity extends AutoLayoutActivity implements View.OnClickListener {
 
     @BindView(R.id.RechargeTypeText)
     TextView RechargeTypeText;

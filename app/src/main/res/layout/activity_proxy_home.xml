@@ -9,13 +9,13 @@
     <RelativeLayout
         android:id="@+id/ProxyTop"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/top_height"
         android:background="@color/top_background">
 
         <ImageView
             android:id="@+id/_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/top_height"
+            android:layout_height="@dimen/top_height"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_back" />
 
@@ -25,21 +25,22 @@
             android:layout_centerInParent="true"
             android:text="代理首页"
             android:textColor="@android:color/white"
-            android:textSize="23sp" />
+            android:textSize="@dimen/top_textsize" />
     </RelativeLayout>
 
     <TextView
+        android:textSize="28px"
         android:id="@+id/text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/ProxyTop"
-        android:layout_margin="5dp"
+        android:layout_margin="10px"
         android:text="团队详情" />
 
     <View
         android:id="@+id/View1"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1px"
         android:layout_below="@id/text1"
         android:background="@color/gray" />
 
@@ -48,20 +49,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/View1"
-        android:layout_margin="5dp">
+        android:layout_margin="10px">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="horizontal">
 
             <TextView
+                android:textSize="28px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="团队: " />
 
             <TextView
+                android:textSize="28px"
                 android:id="@+id/tuandui_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -69,17 +72,19 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="horizontal">
 
             <TextView
+                android:textSize="28px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="代理: " />
 
             <TextView
+                android:textSize="28px"
                 android:id="@+id/Proxy_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -92,20 +97,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/Linear1"
-        android:layout_margin="5dp">
+        android:layout_margin="10px">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="horizontal">
 
             <TextView
+                android:textSize="28px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="玩家: " />
 
             <TextView
+                android:textSize="28px"
                 android:id="@+id/wanjia_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -113,17 +120,19 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="horizontal">
 
             <TextView
+                android:textSize="28px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="团队金额: " />
 
             <TextView
+                android:textSize="28px"
                 android:id="@+id/TuanDui_Money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -136,14 +145,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/Linear2"
-        android:layout_margin="10dp"
+        android:layout_margin="20px"
         android:background="@drawable/spinner_biankuang"
         android:entries="@array/time"></Spinner>
 
     <View
         android:id="@+id/View2"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1px"
         android:layout_below="@id/proxy_home_spinner"
         android:background="@color/gray" />
 
@@ -152,24 +161,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/View2"
-        android:layout_margin="5dp">
+        android:layout_margin="10px">
 
         <TextView
-            android:layout_width="0dp"
+            android:textSize="28px"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="left"
             android:text="充值量:" />
 
         <TextView
-            android:layout_width="0dp"
+            android:textSize="28px"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="left"
             android:text="提现量:" />
 
         <TextView
-            android:layout_width="0dp"
+            android:textSize="28px"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="left"
@@ -181,24 +193,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/Linear3"
-        android:layout_margin="5dp">
+        android:layout_margin="10px">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="left"
             android:text="0" />
 
         <TextView
-            android:layout_width="0dp"
+            android:textSize="28px"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="left"
             android:text="0" />
 
         <TextView
-            android:layout_width="0dp"
+            android:textSize="28px"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="left"
@@ -210,18 +224,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/Linear4"
-        android:layout_margin="5dp">
+        android:layout_margin="10px">
 
         <TextView
-            android:layout_width="0dp"
+            android:textSize="28px"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="left"
             android:text="派奖量:" />
 
         <TextView
+            android:textSize="28px"
             android:id="@+id/textView2"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="left"
@@ -233,17 +249,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/Linear5"
-        android:layout_margin="5dp">
+        android:layout_margin="10px">
 
         <TextView
-            android:layout_width="0dp"
+            android:textSize="28px"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="left"
             android:text="0" />
 
         <TextView
-            android:layout_width="0dp"
+            android:textSize="28px"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="left"
@@ -254,7 +272,7 @@
     <View
         android:id="@+id/View3"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1px"
         android:layout_below="@id/Linear6"
         android:background="@color/gray" />
 </RelativeLayout>

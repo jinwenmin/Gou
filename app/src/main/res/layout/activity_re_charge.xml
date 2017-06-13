@@ -13,8 +13,8 @@
 
         <ImageView
             android:id="@+id/TopBack"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="60px"
+            android:layout_height="60px"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_back" />
 
@@ -24,7 +24,7 @@
             android:layout_centerInParent="true"
             android:text="充值"
             android:textColor="@android:color/white"
-            android:textSize="23sp" />
+            android:textSize="@dimen/top_textsize" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -38,21 +38,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_margin="10dp"
+            android:layout_margin="20px"
             android:text="充值方式"
             android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:textSize="30px" />
 
         <RadioGroup
             android:id="@+id/RechargeRadioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_margin="5dp"
+            android:layout_margin="10px"
             android:layout_toRightOf="@id/RechargeTypeText"
             android:orientation="horizontal">
 
             <RadioButton
+                android:textSize="30px"
                 android:id="@+id/RechargeZhiFuBao"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,6 +61,7 @@
                 android:text="支付宝" />
 
             <RadioButton
+                android:textSize="30px"
                 android:id="@+id/RechargeZhuanZhang"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -70,7 +72,7 @@
     <View
         android:id="@+id/view1"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1px"
         android:layout_below="@id/RechargeRe"
         android:background="@android:color/darker_gray"></View>
 
@@ -79,27 +81,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/view1"
-        android:layout_margin="10dp"
+        android:layout_margin="20px"
         android:text="充值金额"
         android:textColor="@android:color/black"
-        android:textSize="15sp" />
+        android:textSize="30px" />
 
     <EditText
         android:id="@+id/RechargeMoney"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/view1"
-        android:layout_margin="10dp"
+        android:layout_margin="20px"
         android:layout_toRightOf="@id/textMoney"
         android:background="@null"
         android:hint="每次最少100元最多10000元"
         android:inputType="number"
-        android:textSize="15sp" />
+        android:textSize="30px" />
 
     <View
         android:id="@+id/view2"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1px"
         android:layout_below="@id/RechargeMoney"
         android:background="@android:color/darker_gray"></View>
 
@@ -108,21 +110,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/view2"
-        android:layout_margin="10dp"
+        android:layout_margin="20px"
         android:text="账户余额"
         android:textColor="@android:color/black"
-        android:textSize="15sp" />
+        android:textSize="30px" />
 
     <TextView
         android:id="@+id/AccountSum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/view2"
-        android:layout_margin="10dp"
+        android:layout_margin="20px"
         android:layout_toRightOf="@id/AccountText"
         android:text="￥0"
         android:textColor="@android:color/holo_red_dark"
-        android:textSize="15sp" />
+        android:textSize="30px" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -134,60 +136,64 @@
         <Button
             android:id="@+id/ChongZ"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_height="60px"
+            android:layout_margin="50px"
             android:background="@drawable/recharge_btn"
             android:text="充值"
             android:textColor="@color/my_btn_color"
-            android:textSize="20sp" />
+            android:textSize="30px" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="20dp"
+            android:layout_margin="40px"
             android:background="@drawable/linear_biankuang"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_margin="30px"
                 android:text="温馨提示："
                 android:textColor="@android:color/black" />
 
             <TextView
+                android:textSize="25px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginLeft="30px"
+                android:layout_marginRight="30px"
+                android:layout_marginTop="30px"
                 android:text="@string/rechargeinfo_textone"
                 android:textColor="#0000EE" />
 
             <TextView
+                android:textSize="25px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginLeft="30px"
+                android:layout_marginRight="30px"
+                android:layout_marginTop="30px"
                 android:text="@string/rechargeinfo_texttwo"
                 android:textColor="#0000EE" />
 
             <TextView
+                android:textSize="25px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginLeft="30px"
+                android:layout_marginRight="30px"
+                android:layout_marginTop="30px"
                 android:text="@string/rechargeinfo_textthree"
                 android:textColor="#0000EE" />
 
             <TextView
+                android:textSize="25px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginLeft="30px"
+                android:layout_marginRight="30px"
+                android:layout_marginTop="30px"
                 android:text="@string/rechargeinfo_textfour"
                 android:textColor="#0000EE" />
         </LinearLayout>

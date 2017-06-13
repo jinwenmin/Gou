@@ -4,9 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.king.gou.R;
+import com.zhy.autolayout.AutoLayoutActivity;
 
 
-public class UpdatePwdActivity extends AppCompatActivity {
+public class UpdatePwdActivity extends AutoLayoutActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

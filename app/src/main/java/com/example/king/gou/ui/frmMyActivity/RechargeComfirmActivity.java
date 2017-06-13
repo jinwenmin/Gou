@@ -10,11 +10,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.king.gou.R;
+import com.zhy.autolayout.AutoLayoutActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RechargeComfirmActivity extends AppCompatActivity implements View.OnClickListener {
+public class RechargeComfirmActivity extends AutoLayoutActivity implements View.OnClickListener {
 
     @BindView(R.id.RechargeFirmTop)
     RelativeLayout RechargeFirmTop;

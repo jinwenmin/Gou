@@ -12,7 +12,7 @@
 
         <TextView
             android:id="@+id/YouXijl"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableTop="@mipmap/ic_youxijilu"
@@ -21,7 +21,7 @@
 
         <TextView
             android:id="@+id/ZhuiHaojl"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableTop="@mipmap/ic_zhuihaojilu"
@@ -30,7 +30,7 @@
 
         <TextView
             android:id="@+id/CaiPiaobb"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableTop="@mipmap/ic_caipiaobaobiao"
@@ -45,7 +45,7 @@
 
         <TextView
             android:id="@+id/CunQujl"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableTop="@mipmap/ic_cunqukuanjilu"
@@ -54,7 +54,7 @@
 
         <TextView
             android:id="@+id/GeRenzb"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
 
@@ -64,7 +64,7 @@
 
         <TextView
             android:id="@+id/FanDianjl"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableTop="@mipmap/ic_fandianjilu"
@@ -79,7 +79,7 @@
 
         <TextView
             android:id="@+id/GeRenbjl"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableTop="@mipmap/ic_baijialebaobiao"
@@ -88,7 +88,7 @@
 
         <TextView
             android:id="@+id/ZhuanZhangjl"
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableTop="@mipmap/ic_zhuanzhangjilu"
@@ -96,7 +96,7 @@
             android:text="转账记录" />
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
 

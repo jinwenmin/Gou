@@ -21,6 +21,7 @@ import com.example.king.gou.fragment.myfragment.ProxyFragment;
 import com.example.king.gou.ui.GameCenterActivity;
 import com.example.king.gou.ui.SettingActivity;
 import com.example.king.gou.ui.frmMyActivity.MessageActivity;
+import com.example.king.gou.ui.frmMyActivity.NoticeActivity;
 import com.example.king.gou.ui.frmMyActivity.ReChargeActivity;
 import com.example.king.gou.ui.frmMyActivity.ZhuanZhangActivity;
 
@@ -100,11 +101,11 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_my, container, false);
         unbinder = ButterKnife.bind(this, view);
         myFrmPageAdapter = new MyFrmPageAdapter(getChildFragmentManager());
-        frmMyTablayout.setupWithViewPager(frmMyViewpager);
-        frmMyViewpager.setAdapter(myFrmPageAdapter);
-        frmMyMsg.setOnClickListener(this);
-        initClick();
         initFrms();
+        frmMyViewpager.setAdapter(myFrmPageAdapter);
+        frmMyTablayout.setupWithViewPager(frmMyViewpager);
+
+        initClick();
         return view;
     }
 
@@ -113,6 +114,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         ToQukuan.setOnClickListener(this);
         ToZhuanZhang.setOnClickListener(this);
         frmMySetting.setOnClickListener(this);
+        frmMyMsg.setOnClickListener(this);
+        frmMyNotice.setOnClickListener(this);
     }
 
     //加载订单报表 和管理 两个fragment
@@ -150,6 +153,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.frmMyMsg:
                 startActivity(new Intent(getActivity(), MessageActivity.class));
+                break;
+            case R.id.frmMyNotice:
+                startActivity(new Intent(getActivity(), NoticeActivity.class));
                 break;
         }
 

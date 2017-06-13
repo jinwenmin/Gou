@@ -11,11 +11,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.king.gou.R;
+import com.zhy.autolayout.AutoLayoutActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TixianAppliActivity extends AppCompatActivity implements View.OnClickListener {
+public class TixianAppliActivity extends AutoLayoutActivity implements View.OnClickListener {
 
     @BindView(R.id.TixianAppliTop)
     RelativeLayout TixianAppliTop;
