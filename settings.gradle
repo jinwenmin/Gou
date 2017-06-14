@@ -1,1 +1,1 @@
-include ':app', ':viewlib'
+include ':app', ':viewlib', ':alertview', ':autolayout'
