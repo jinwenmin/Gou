@@ -3,18 +3,22 @@ package com.example.king.gou.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.king.gou.R;
+import com.example.king.gou.service.RetrofitService;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import it.sephiroth.android.library.picasso.Picasso;
 
 public class WelcomeActivity extends AutoLayoutActivity {

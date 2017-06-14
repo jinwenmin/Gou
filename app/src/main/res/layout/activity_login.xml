@@ -41,7 +41,7 @@
                 android:paddingBottom="15px"
                 android:paddingLeft="15px"
                 android:paddingTop="15px"
-                android:textSize="35px"
+                android:textSize="25px"
                 app:funcType="canClear" />
 
             <ImageView
@@ -63,16 +63,17 @@
             android:background="@drawable/login_relativelayout_bg">
 
             <com.chaychan.viewlib.PowerfulEditText
+                android:id="@+id/login_pwd"
                 android:layout_width="450px"
                 android:layout_height="80px"
-
                 android:background="@null"
                 android:gravity="center"
                 android:hint="输入你的密码"
+                android:inputType="textPassword"
                 android:paddingBottom="15px"
                 android:paddingLeft="15px"
                 android:paddingTop="15px"
-                android:textSize="35px" />
+                android:textSize="25px" />
 
             <ImageView
                 android:layout_width="100px"

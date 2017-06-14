@@ -1,10 +1,14 @@
 package com.example.king.gou.ui;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -28,12 +32,21 @@ public class MainActivity extends AutoLayoutActivity {
     private Fragment[] mFragments = new Fragment[4];
     private FragmentManager supportFragmentManager;
     private FragmentTransaction mFragmentTransaction;
+    private SharedPreferences login_userinfo;
+    private int login_uid;
+    private Handler handler;
+    long TIME = 1000;
+    Runnable runnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        login_userinfo = getSharedPreferences("login_userinfo", Activity.MODE_PRIVATE);
+        login_uid = login_userinfo.getInt("login_uid", 0);
+        initTime();
+        handler.postDelayed(runnable, TIME); //每隔1s执行
         supportFragmentManager = getSupportFragmentManager();
         mFragments[0] = supportFragmentManager.findFragmentById(R.id.fragment_home);
         mFragments[1] = supportFragmentManager.findFragmentById(R.id.fragment_game);
@@ -68,5 +81,16 @@ public class MainActivity extends AutoLayoutActivity {
                 }
             }
         });
+    }
+
+    private void initTime() {
+        handler = new Handler();
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                handler.postDelayed(this, TIME);
+                Log.i("循环请求", "");
+            }
+        };
     }
 }

@@ -2,11 +2,14 @@ package com.example.king.gou.utils;
 
 import android.text.TextUtils;
 
+import com.example.king.gou.bean.Login;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -17,14 +20,11 @@ import retrofit2.http.Query;
 public interface ApiInterface {
     //默认的服务器地址
     public final static String HOST = "http://vipfacaiflvbceshi.com";
-    String text = "AppClient=1&ipwd=false&p=password&u=username&t=1497274998360";
 
-//接口
-    /*@GET("/article/list/text")
-    Observable<TextEntity> getTexts(@Query("page") int page);*/
-
+    //登陆
+    @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/signin")
-    Observable<Object> getLogin(
+    Observable<Login> getLogin(
             @Query("AppClient") int num,
             @Query("u") String username,
             @Query("p") String password,
@@ -33,5 +33,13 @@ public interface ApiInterface {
             @Query("t") long time
     );
 
+    //登出
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @GET("/logout")
+    Observable<Object> getSignout();
 
+    //登陆状态查询
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/chat-message")
+    Observable<Object> getLoginState();
 }
