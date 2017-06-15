@@ -1,12 +1,18 @@
 package com.example.king.gou.service;
 
+import android.os.AsyncTask;
+
 import com.example.king.gou.bean.Login;
 import com.example.king.gou.bean.LoginState;
 import com.example.king.gou.utils.ApiInterface;
+import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -18,16 +24,23 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Query;
 
+import static com.example.king.gou.ui.LoginActivity.getSessionCookie;
+
 /**
  * Created by king on 2017/5/29.
  */
 
-public class RetrofitService {
+public class RetrofitService extends HttpEngine {
+
+    public static int API_ID_ERROR = 0;
+    public static int API_ID_LOGIN = 1;
     private Retrofit retrofit;
     private ApiInterface apiInterface;
 
@@ -48,6 +61,7 @@ public class RetrofitService {
         initRetrofit();
         apiInterface = retrofit.create(ApiInterface.class);
     }
+
     OkHttpClient.Builder builder = new OkHttpClient.Builder();
     Interceptor myInterceptor = new Interceptor() {
         @Override
@@ -58,7 +72,7 @@ public class RetrofitService {
             return response;
         }
     };
-    
+
     private void initRetrofit() {
         Gson gson = new GsonBuilder().setLenient().create();
         retrofit = new Retrofit.Builder()
@@ -76,6 +90,8 @@ public class RetrofitService {
                                           boolean ipwd,
                                           String reqkey,
                                           long time) {
+
+
         return apiInterface.getLogin(num, username, password, ipwd, reqkey, time)
                 .flatMap(new Function<Login, ObservableSource<Login>>() {
                     @Override
@@ -120,6 +136,36 @@ public class RetrofitService {
                         return Observable.just(o);
                     }
                 }).compose(RxUtils.<Object>rxHelper());
+    }
+
+    public void Login2(final DataListener listener, int num, String username,
+                       String password,
+                       boolean ipwd,
+                       String reqkey,
+                       long time) {
+        //  listener.onReceivedData(API_ID_LOGIN, null, API_ID_ERROR);
+
+        Call<Login> logine = apiInterface.getLogine(num, username, password, ipwd, reqkey, time);
+        Call<Login> clone = logine.clone();
+        clone.enqueue(new Callback<Login>() {
+            @Override
+            public void onResponse(Call<Login> call, retrofit2.Response<Login> response) {
+                  listener.onRequestStart(API_ID_LOGIN);
+                //获取cookie
+                String sessionId = getSessionCookie(response.headers().get("Set-Cookie"));
+                System.out.println("Cookie==" + sessionId);
+                Gson gson = new GsonBuilder().setLenient().create();
+                Login body = response.body();
+                listener.onReceivedData(API_ID_LOGIN, body, -1);
+                System.out.println("用户信息==" + body);
+                  listener.onRequestEnd(API_ID_LOGIN);
+            }
+
+            @Override
+            public void onFailure(Call<Login> call, Throwable t) {
+
+            }
+        });
     }
 }
 

@@ -9,6 +9,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import io.reactivex.Observable;
+import retrofit2.Call;
+import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -52,4 +54,16 @@ public interface ApiInterface {
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/amount-refresh")
     Observable<Object> getUserAmount();
+
+    //登陆
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/signin")
+    Call<Login> getLogine(
+            @Query("AppClient") int num,
+            @Query("u") String username,
+            @Query("p") String password,
+            @Query("ipwd") boolean ipwd,
+            @Query("reqkey") String reqkey,
+            @Query("t") long time
+    );
 }

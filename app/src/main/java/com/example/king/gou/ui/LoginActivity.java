@@ -20,9 +20,11 @@ import com.chaychan.viewlib.PowerfulEditText;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.Login;
 import com.example.king.gou.service.RetrofitService;
+import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import org.json.JSONObject;
@@ -41,7 +43,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.http.POST;
 
-public class LoginActivity extends AutoLayoutActivity {
+public class LoginActivity extends AutoLayoutActivity implements HttpEngine.DataListener {
     String rekey;
     @BindView(R.id.login_icon)
     ImageView loginIcon;
@@ -182,34 +184,10 @@ public class LoginActivity extends AutoLayoutActivity {
         Log.i("时间消息:", timeMillis + "");
         Log.i("密码SHA256消息", password);
         Log.i("时间戳SHA256消息", s1);
-
-        OkHttpClient okHttpClient = new OkHttpClient();
-        Request.Builder requestBuilder = new Request.Builder().url("http://vipfacaiflvbceshi.com/signin?AppClient=1&u=" + Login_UserName + "&p=" + password + "&ipwd=" + false + "&reqkey=" + rekey + "&t=" + timeMillis);
-        // Request.Builder requestBuilder = new Request.Builder().url("http://vipfacaiflvbceshi.com/logout");
-        // requestBuilder.addHeader( "XMLHttpRequest","X-Requested-With");
-        //可以省略，默认是GET请求
-        final Request request = requestBuilder.build();
-        requestBuilder.method("GET", null);
-        Call mcall = okHttpClient.newCall(request);
-        mcall.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                Gson gson = new Gson();
-                ResponseBody responseBody = response.body();
-                System.out.println("数据是==" + responseBody);
-                String sessionCookie = getSessionCookie(response.headers().get("Set-Cookie"));
-                System.out.println("SessionCook==" + sessionCookie);
-            }
-        });
-
-/*
-        RetrofitService.getInstance()
+        RetrofitService.getInstance().Login2(this, 1, "testapp", password, false, rekey, timeMillis);
+       /* RetrofitService.getInstance()
                 .getLoginInfo(1, "testapp", password, false, rekey, timeMillis)
+
                 .subscribe(new Observer<Login>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -247,12 +225,6 @@ public class LoginActivity extends AutoLayoutActivity {
                             Toast.makeText(LoginActivity.this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
                         }
 
-                       *//* Log.i("Object消息", o.toString());
-                        Gson gson=new GsonBuilder().setLenient().create();
-                         login = gson.fromJson(o.toString(), Login.class);*//*
-                        Log.i("Object消息2", o.getStatus() + "");
-
-
                     }
 
                     @Override
@@ -265,6 +237,65 @@ public class LoginActivity extends AutoLayoutActivity {
                         Log.i("Success消息", "");
                     }
                 });*/
+
+    }
+
+    public void LoginHttp() {
+        //String s = RxUtils.getInstance().SHA256("a12345678");
+        if (Login_UserName.isEmpty() || Login_Pwd.isEmpty()) {
+            Toast.makeText(this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String password = RxUtils.getInstance().HMACSHA256(Login_Pwd, Login_UserName);
+        password = password.toLowerCase();
+        Log.i("小写的密码消息", password);
+        long timeMillis = System.currentTimeMillis();
+        String s1 = RxUtils.getInstance().HMACSHA256(String.valueOf(timeMillis), Login_UserName);
+        Log.i("时间消息:", timeMillis + "");
+        Log.i("密码SHA256消息", password);
+        Log.i("时间戳SHA256消息", s1);
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request.Builder requestBuilder = new Request.Builder().url("http://vipfacaiflvbceshi.com/signin?AppClient=1&u=" + Login_UserName + "&p=" + password + "&ipwd=" + false + "&reqkey=" + rekey + "&t=" + timeMillis);
+        // Request.Builder requestBuilder = new Request.Builder().url("http://vipfacaiflvbceshi.com/logout");
+        // requestBuilder.addHeader( "XMLHttpRequest","X-Requested-With");
+        //可以省略，默认是GET请求
+        final Request request = requestBuilder.build();
+        requestBuilder.method("GET", null);
+        Call mcall = okHttpClient.newCall(request);
+        mcall.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Gson gson = new Gson();
+                ResponseBody responseBody = response.body();
+                System.out.println("数据是==" + responseBody.string());
+                String sessionCookie = getSessionCookie(response.headers().get("Set-Cookie"));
+                System.out.println("SessionCook==" + sessionCookie);
+            }
+        });
+
+    }
+
+    @Override
+    public void onReceivedData(int apiId, Object object, int errorId) {
+        if (apiId == RetrofitService.API_ID_LOGIN) {
+            Login login = (Login) object;
+            System.out.println("这是Login界面的信息" + login.toString());
+        }
+    }
+
+    @Override
+    public void onRequestStart(int apiId) {
+
+    }
+
+    @Override
+    public void onRequestEnd(int apiId) {
 
     }
 
