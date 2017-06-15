@@ -3,6 +3,7 @@ package com.example.king.gou.utils;
 import android.text.TextUtils;
 
 import com.example.king.gou.bean.Login;
+import com.example.king.gou.bean.LoginState;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -41,5 +42,14 @@ public interface ApiInterface {
     //登陆状态查询
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/chat-message")
-    Observable<Object> getLoginState();
+    Observable<LoginState> getLoginState(@Query("luid") int luid
+            , @Query("uonline") int uonline
+            , @Query("type") int type
+            , @Query("ids") String ids
+            , @Query("gets") int gets);
+
+    //查询用户余额
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/amount-refresh")
+    Observable<Object> getUserAmount();
 }

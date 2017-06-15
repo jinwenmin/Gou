@@ -15,6 +15,8 @@ import io.reactivex.ObservableTransformer;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 
 /**
  * Created by king on 2017/5/29.
@@ -107,6 +109,15 @@ public class RxUtils {
             hs.append(stmp);
         }
         return hs.toString().toUpperCase();
+    }
+
+    public OkHttpClient Http() {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request.Builder requestBuilder = new Request.Builder().url("http://vipfacaiflvbceshi.com/logout");
+//可以省略，默认是GET请求
+        requestBuilder.method("GET", null);
+
+        return okHttpClient;
     }
 }
 

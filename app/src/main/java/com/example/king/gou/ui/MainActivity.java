@@ -13,10 +13,18 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.king.gou.R;
+import com.example.king.gou.bean.LoginState;
+import com.example.king.gou.service.RetrofitService;
 import com.zhy.autolayout.AutoLayoutActivity;
+
+import java.sql.Time;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 public class MainActivity extends AutoLayoutActivity {
     @BindView(R.id.HomeFrmRadioBtn)
@@ -34,9 +42,8 @@ public class MainActivity extends AutoLayoutActivity {
     private FragmentTransaction mFragmentTransaction;
     private SharedPreferences login_userinfo;
     private int login_uid;
-    private Handler handler;
     long TIME = 1000;
-    Runnable runnable;
+    private Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +53,6 @@ public class MainActivity extends AutoLayoutActivity {
         login_userinfo = getSharedPreferences("login_userinfo", Activity.MODE_PRIVATE);
         login_uid = login_userinfo.getInt("login_uid", 0);
         initTime();
-        handler.postDelayed(runnable, TIME); //每隔1s执行
         supportFragmentManager = getSupportFragmentManager();
         mFragments[0] = supportFragmentManager.findFragmentById(R.id.fragment_home);
         mFragments[1] = supportFragmentManager.findFragmentById(R.id.fragment_game);
@@ -84,13 +90,42 @@ public class MainActivity extends AutoLayoutActivity {
     }
 
     private void initTime() {
-        handler = new Handler();
-        runnable = new Runnable() {
+        timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                handler.postDelayed(this, TIME);
-                Log.i("循环请求", "");
+                RetrofitService.getInstance().getLoginSta(login_uid, 1, 1, String.valueOf(login_uid), 1)
+                        .subscribe(new Observer<LoginState>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+
+                            }
+
+                            @Override
+                            public void onNext(LoginState o) {
+
+                                System.out.println("用户信息==" + o.toString());
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onComplete() {
+
+                            }
+                        });
             }
         };
+        timer.schedule(timerTask, 0, 3000);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        timer.cancel();
     }
 }

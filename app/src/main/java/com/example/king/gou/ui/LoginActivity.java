@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,19 +13,33 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+
+import com.android.volley.toolbox.Volley;
 import com.chaychan.viewlib.PowerfulEditText;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.Login;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.utils.RxUtils;
+
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.zhy.autolayout.AutoLayoutActivity;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+import retrofit2.http.POST;
 
 public class LoginActivity extends AutoLayoutActivity {
     String rekey;
@@ -46,6 +61,7 @@ public class LoginActivity extends AutoLayoutActivity {
     private String Login_Pwd;
     Login login;
     private SharedPreferences login_userinfo;
+    private RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +69,15 @@ public class LoginActivity extends AutoLayoutActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        requestQueue = Volley.newRequestQueue(this);
+
         findViewById(R.id.login_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 initNameAndPwd();
 
                 Login();
+                //  Login2();
                 //   logout();
 
             }
@@ -66,6 +85,41 @@ public class LoginActivity extends AutoLayoutActivity {
 
 
     }
+
+    /*
+    * ToDo:用户的cookie截取,
+    * */
+    public static String getSessionCookie(String cookieString) {
+        if (!TextUtils.isEmpty(cookieString)) {
+            String[] splitCookie = cookieString.split(";");
+            String[] splitSessionId = splitCookie[0].split("=");
+            cookieString = splitSessionId[1];
+            return cookieString;
+        }
+        return "";
+    }
+
+    private void Login2() {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request.Builder requestBuilder = new Request.Builder().url("http://vipfacaiflvbceshi.com/chat-message?luid=2047&uonline=1&type=1");
+        //可以省略，默认是GET请求
+        requestBuilder.method("GET", null);
+        final Request request = requestBuilder.build();
+        Call mcall = okHttpClient.newCall(request);
+        mcall.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String sessionCookie = getSessionCookie(response.headers().get("Set-Cookie"));
+                System.out.println("SessionCook==" + sessionCookie);
+            }
+        });
+    }
+
 
     private void initNameAndPwd() {
         Login_UserName = loginUser.getText().toString().trim();
@@ -128,6 +182,32 @@ public class LoginActivity extends AutoLayoutActivity {
         Log.i("时间消息:", timeMillis + "");
         Log.i("密码SHA256消息", password);
         Log.i("时间戳SHA256消息", s1);
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request.Builder requestBuilder = new Request.Builder().url("http://vipfacaiflvbceshi.com/signin?AppClient=1&u=" + Login_UserName + "&p=" + password + "&ipwd=" + false + "&reqkey=" + rekey + "&t=" + timeMillis);
+        // Request.Builder requestBuilder = new Request.Builder().url("http://vipfacaiflvbceshi.com/logout");
+        // requestBuilder.addHeader( "XMLHttpRequest","X-Requested-With");
+        //可以省略，默认是GET请求
+        final Request request = requestBuilder.build();
+        requestBuilder.method("GET", null);
+        Call mcall = okHttpClient.newCall(request);
+        mcall.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Gson gson = new Gson();
+                ResponseBody responseBody = response.body();
+                System.out.println("数据是==" + responseBody);
+                String sessionCookie = getSessionCookie(response.headers().get("Set-Cookie"));
+                System.out.println("SessionCook==" + sessionCookie);
+            }
+        });
+
+/*
         RetrofitService.getInstance()
                 .getLoginInfo(1, "testapp", password, false, rekey, timeMillis)
                 .subscribe(new Observer<Login>() {
@@ -138,6 +218,7 @@ public class LoginActivity extends AutoLayoutActivity {
 
                     @Override
                     public void onNext(Login o) {
+
                         Log.i("Object消息", o.toString());
                         if (o.getStatus() == 1 && o.isState() == true && o.isUnsignin() == true && o.getFreeze() == 0) {
                             SharedPreferences login_userinfo = getSharedPreferences("login_userinfo", Activity.MODE_PRIVATE);
@@ -166,9 +247,9 @@ public class LoginActivity extends AutoLayoutActivity {
                             Toast.makeText(LoginActivity.this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
                         }
 
-                       /* Log.i("Object消息", o.toString());
+                       *//* Log.i("Object消息", o.toString());
                         Gson gson=new GsonBuilder().setLenient().create();
-                         login = gson.fromJson(o.toString(), Login.class);*/
+                         login = gson.fromJson(o.toString(), Login.class);*//*
                         Log.i("Object消息2", o.getStatus() + "");
 
 
@@ -183,7 +264,7 @@ public class LoginActivity extends AutoLayoutActivity {
                     public void onComplete() {
                         Log.i("Success消息", "");
                     }
-                });
+                });*/
 
     }
 
