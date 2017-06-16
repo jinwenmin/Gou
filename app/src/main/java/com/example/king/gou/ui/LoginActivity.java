@@ -63,7 +63,7 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
     private String Login_Pwd;
     Login login;
     private SharedPreferences login_userinfo;
-    private RequestQueue requestQueue;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +71,6 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        requestQueue = Volley.newRequestQueue(this);
 
         findViewById(R.id.login_btn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,33 +131,6 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
         Log.i("MD5", rekey);
     }
 
-    private void logout() {
-        RetrofitService.getInstance()
-                .getLogOut()
-                .subscribe(new Observer<Object>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Object o) {
-                        Log.i("Object消息", o.toString());
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.i("Error消息", e.toString());
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Log.i("Success消息", "");
-                    }
-                });
-
-    }
 
     @Override
     protected void onStart() {
@@ -286,6 +258,36 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
         if (apiId == RetrofitService.API_ID_LOGIN) {
             Login login = (Login) object;
             System.out.println("这是Login界面的信息" + login.toString());
+            Log.i("Object消息", login.toString());
+
+            if (login.getStatus() == 1 && login.isState() == true && login.isUnsignin() == true && login.getFreeze() == 0) {
+                SharedPreferences login_userinfo = getSharedPreferences("login_userinfo", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor edit = login_userinfo.edit();
+                edit.putString("login_username", Login_UserName);
+                edit.putString("login_userpwd", Login_Pwd);
+                edit.putInt("login_uid", login.getUid());
+                edit.putString("login_sessionid", login.getSessionId());
+                edit.commit();
+                startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
+                Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+            if (login.isState() == false) {
+                Toast.makeText(LoginActivity.this, "登录失败" + login.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+            if (login.isUnsignin() == false) {
+                Toast.makeText(LoginActivity.this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
+            }
+            if (login.getFreeze() == -1) {
+                Toast.makeText(LoginActivity.this, "用户名密码错误次数达到5次，请30分钟后再试或联系客服", Toast.LENGTH_SHORT).show();
+            }
+            if (login.getFreeze() == 1) {
+                Toast.makeText(LoginActivity.this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
+            }
+            if (login.getUid() == -1) {
+                Toast.makeText(LoginActivity.this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 

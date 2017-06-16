@@ -11,7 +11,16 @@ public class Login {
     boolean unsignin;
     boolean state;
     String targetUrl;
-String message;
+    String message;
+    String sessionId;
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
 
     public String getMessage() {
         return message;
@@ -42,6 +51,7 @@ String message;
     public void setStatus(int status) {
         this.status = status;
     }
+
     public int getUid() {
         return uid;
     }

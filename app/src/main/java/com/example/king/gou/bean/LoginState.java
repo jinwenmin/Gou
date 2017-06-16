@@ -14,6 +14,15 @@ public class LoginState {
     int way;
     String fmsg;
     List<msg> Msg;
+    String sessionId;
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
 
     public String getUname() {
         return uname;
@@ -71,7 +80,7 @@ public class LoginState {
         Msg = msg;
     }
 
- public    class msg {
+    public class msg {
         int cid;
         String ctime;
         boolean mine;

@@ -39,16 +39,18 @@ public interface ApiInterface {
     //登出
     @Headers("X-Requested-With: XMLHttpRequest")
     @GET("/logout")
-    Observable<Object> getSignout();
+    Call<Object> getSignout();
 
     //登陆状态查询
-    @Headers("X-Requested-With: XMLHttpRequest")
+    @Headers({"X-Requested-With: XMLHttpRequest", "Add-Cookie"})
+
     @POST("/chat-message")
-    Observable<LoginState> getLoginState(@Query("luid") int luid
-            , @Query("uonline") int uonline
-            , @Query("type") int type
-            , @Query("ids") String ids
-            , @Query("gets") int gets);
+    Call<Object> getLoginState(
+            @Query("luid") int luid,
+            @Query("uonline") int uonline,
+            @Query("type") int type,
+            @Query("ids") String[] ids,
+            @Query("gets") int gets);
 
     //查询用户余额
     @Headers("X-Requested-With: XMLHttpRequest")
