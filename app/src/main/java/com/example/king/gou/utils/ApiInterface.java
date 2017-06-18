@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.example.king.gou.bean.Login;
 import com.example.king.gou.bean.LoginState;
 import com.example.king.gou.bean.UserAmount;
+import com.example.king.gou.bean.UserInfo;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -16,6 +17,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -70,4 +72,29 @@ public interface ApiInterface {
             @Query("reqkey") String reqkey,
             @Query("t") long time
     );
+    //登陆
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/get-user-datas")
+    Call<UserInfo> getUserInfo();
+
+    //活动列表
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/get-activitys")
+    Call<Object> getActivityList();
+
+    //公告列表
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/get-notices")
+    Call<Object> getNotices();
+
+    //公告列表
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/notice-view/{id}")
+    Call<Object> getNoticesContent(@Path("id") int id);
+
+    //获取玩法
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/get-rules_description/{tid}")
+    Call<Object> getGameType();
+
 }

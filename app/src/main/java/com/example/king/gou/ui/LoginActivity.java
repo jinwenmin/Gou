@@ -157,58 +157,7 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
         Log.i("密码SHA256消息", password);
         Log.i("时间戳SHA256消息", s1);
         RetrofitService.getInstance().Login2(this, 1, "testapp", password, false, rekey, timeMillis);
-       /* RetrofitService.getInstance()
-                .getLoginInfo(1, "testapp", password, false, rekey, timeMillis)
 
-                .subscribe(new Observer<Login>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        Log.i("Disposeable消息", d.toString());
-                    }
-
-                    @Override
-                    public void onNext(Login o) {
-
-                        Log.i("Object消息", o.toString());
-                        if (o.getStatus() == 1 && o.isState() == true && o.isUnsignin() == true && o.getFreeze() == 0) {
-                            SharedPreferences login_userinfo = getSharedPreferences("login_userinfo", Activity.MODE_PRIVATE);
-                            SharedPreferences.Editor edit = login_userinfo.edit();
-                            edit.putString("login_username", Login_UserName);
-                            edit.putString("login_userpwd", Login_Pwd);
-                            edit.putInt("login_uid", o.getUid());
-                            edit.commit();
-                            startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
-                            Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
-                            finish();
-                        }
-                        if (o.isState() == false) {
-                            Toast.makeText(LoginActivity.this, "登录失败" + o.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                        if (o.isUnsignin() == false) {
-                            Toast.makeText(LoginActivity.this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
-                        }
-                        if (o.getFreeze() == -1) {
-                            Toast.makeText(LoginActivity.this, "用户名密码错误次数达到5次，请30分钟后再试或联系客服", Toast.LENGTH_SHORT).show();
-                        }
-                        if (o.getFreeze() == 1) {
-                            Toast.makeText(LoginActivity.this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
-                        }
-                        if (o.getUid() == -1) {
-                            Toast.makeText(LoginActivity.this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.i("Error消息", e.toString());
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Log.i("Success消息", "");
-                    }
-                });*/
 
     }
 

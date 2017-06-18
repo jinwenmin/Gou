@@ -1,10 +1,13 @@
 package com.example.king.gou.service;
 
 
+import android.util.Log;
+
 import com.example.king.gou.MyApp;
 import com.example.king.gou.bean.Login;
 import com.example.king.gou.bean.LoginState;
 import com.example.king.gou.bean.UserAmount;
+import com.example.king.gou.bean.UserInfo;
 import com.example.king.gou.utils.AddCookiesInterceptor;
 import com.example.king.gou.utils.ApiInterface;
 import com.example.king.gou.utils.HttpEngine;
@@ -46,10 +49,12 @@ import static com.example.king.gou.ui.LoginActivity.getSessionCookie;
 
 public class RetrofitService extends HttpEngine {
 
-    public static int API_ID_ERROR = 0;
-    public static int API_ID_LOGIN = 1;
-    public static int API_ID_LOGINSTATE = 2;
-    public static int API_ID_USERAMOUNT = 3;
+    public static int API_ID_ERROR = 0;//错误的返回
+    public static int API_ID_LOGIN = 1;//登录
+    public static int API_ID_LOGINSTATE = 2;//检查登录状态
+    public static int API_ID_USERAMOUNT = 3;//用户的总金额
+    public static int API_ID_USERINFO = 4;
+
     private Retrofit retrofit;
     private ApiInterface apiInterface;
     String sessionLoginId;
@@ -115,11 +120,11 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<UserAmount>() {
             @Override
             public void onResponse(Call<UserAmount> call, retrofit2.Response<UserAmount> response) {
-                List<UserAmount> amounts=new ArrayList<UserAmount>();
-                amounts.add(0,response.body());
-               listener.onReceivedData(API_ID_USERAMOUNT, amounts, API_ID_ERROR);
+                List<UserAmount> amounts = new ArrayList<UserAmount>();
+                amounts.add(0, response.body());
+                listener.onReceivedData(API_ID_USERAMOUNT, amounts, API_ID_ERROR);
                 Gson gson = new Gson();
-               // UserAmount userAmount1 = gson.fromJson(response.body(), UserAmount.class);
+                // UserAmount userAmount1 = gson.fromJson(response.body(), UserAmount.class);
                 System.out.println(" 用户的余额==" + response.body().toString());
                 listener.onRequestEnd(API_ID_USERAMOUNT);
             }
@@ -175,7 +180,7 @@ public class RetrofitService extends HttpEngine {
         Call<Object> loginState = apiInterface.getLoginState(luid, uonline, type, ids, gets);
         System.out.println("登录信息=" + luid + " " + uonline + " " + type + " " + ids + " " + gets);
         Call<Object> clone = loginState.clone();
- 
+
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
@@ -196,6 +201,7 @@ public class RetrofitService extends HttpEngine {
 
     }
 
+    //登录
     public void Login2(final DataListener listener, int num, String username,
                        String password,
                        boolean ipwd,
@@ -225,6 +231,103 @@ public class RetrofitService extends HttpEngine {
 
             }
         });
+    }
+
+    //用户的基本信息
+    public void GetUserInfo(final DataListener listener) {
+        Call<UserInfo> userInfo = apiInterface.getUserInfo();
+        Call<UserInfo> clone = userInfo.clone();
+        clone.enqueue(new Callback<UserInfo>() {
+            @Override
+            public void onResponse(Call<UserInfo> call, retrofit2.Response<UserInfo> response) {
+                listener.onRequestStart(API_ID_USERINFO);
+                List<UserInfo> userInfos = new ArrayList<UserInfo>();
+                userInfos.add(0, response.body());
+                listener.onReceivedData(API_ID_USERINFO, userInfos, API_ID_ERROR);
+                System.out.println("用户的基本信息==" + response.body());
+                listener.onRequestEnd(API_ID_USERINFO);
+            }
+
+            @Override
+            public void onFailure(Call<UserInfo> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //获取活动列表
+    public void GetActivityList(DataListener listener) {
+        Call<Object> activityList = apiInterface.getActivityList();
+        Call<Object> clone = activityList.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("获取活动列表", response.body() + "");
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+    //获取公告
+    public void GetNotices(DataListener listener) {
+        Call<Object> clone = apiInterface.getNotices().clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                String[] Notice = new String[]{response.body().toString()};
+                String[] Notices = new String[]{Notice[0]};
+                String[] No = new String[]{Notices[0]};
+                Log.d("获取的公告列表==", No[0] + "  ");
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+    //获取公告内容
+    public void getNoticesContent(DataListener listener, int id) {
+        Call<Object> noticesContent = apiInterface.getNoticesContent(id);
+        Call<Object> clone = noticesContent.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("一个公告的内容", response.body() + "");
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //获取玩法
+    public void getGametype(DataListener listener) {
+        Call<Object> clone = apiInterface.getGameType().clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("获取游戏玩法", response.body() + "");
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+
+
     }
 }
 

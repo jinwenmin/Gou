@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.MyFrmPageAdapter;
 import com.example.king.gou.bean.UserAmount;
+import com.example.king.gou.bean.UserInfo;
 import com.example.king.gou.fragment.myfragment.OrderFragment;
 import com.example.king.gou.fragment.myfragment.ProxyFragment;
 import com.example.king.gou.service.RetrofitService;
@@ -88,6 +89,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
     @BindView(R.id.ToZhuanZhang)
     LinearLayout ToZhuanZhang;
     List<UserAmount> userAmount;
+    List<UserInfo> userInfos;
 
     public static MyFragment newInstance() {
 
@@ -107,6 +109,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
         unbinder = ButterKnife.bind(this, view);
         myFrmPageAdapter = new MyFrmPageAdapter(getChildFragmentManager());
         RetrofitService.getInstance().LoginUserAmount(this);
+        RetrofitService.getInstance().GetUserInfo(this);
+       RetrofitService.getInstance().GetNotices(this);
+        // RetrofitService.getInstance().getGametype(this);
         initFrms();
         frmMyViewpager.setAdapter(myFrmPageAdapter);
         frmMyTablayout.setupWithViewPager(frmMyViewpager);
@@ -172,9 +177,18 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
     public void onReceivedData(int apiId, Object object, int errorId) {
         if (RetrofitService.API_ID_USERAMOUNT == apiId) {
             userAmount = (List<UserAmount>) object;
-            if (userAmount.get(0).isRc()==true) {
+            if (userAmount.get(0).isRc() == true) {
                 frmMyCount.setText(userAmount.get(0).getOthers());
             }
+        }
+        if (RetrofitService.API_ID_USERINFO == apiId) {
+            userInfos = (List<UserInfo>) object;
+            UserInfo userInfo = userInfos.get(0);
+            frmMyNickName.setText(userInfo.getNname());
+            frmMyUserName.setText(userInfo.getUname());
+            frmMyMoneyS.setText(userInfo.getSamount() + "");
+            frmMyCount.setText(userInfo.getAmount() + "");
+
         }
     }
 
