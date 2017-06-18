@@ -19,6 +19,7 @@ import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.prefs.Preferences;
@@ -280,10 +281,11 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                String[] Notice = new String[]{response.body().toString()};
-                String[] Notices = new String[]{Notice[0]};
-                String[] No = new String[]{Notices[0]};
-                Log.d("获取的公告列表==", No[0] + "  ");
+
+                List<String[]> Notice = new ArrayList<String[]>();
+                Notice.add(0, new String[]{response.body().toString()});
+
+                Log.d("获取的公告列表==", Notice.get(0)[0] + "  ");
             }
 
             @Override
