@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.example.king.gou.bean.Login;
 import com.example.king.gou.bean.LoginState;
+import com.example.king.gou.bean.UserAmount;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -12,6 +13,7 @@ import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -42,7 +44,7 @@ public interface ApiInterface {
     Call<Object> getSignout();
 
     //登陆状态查询
-    @Headers({"X-Requested-With: XMLHttpRequest", "Add-Cookie"})
+    @Headers("X-Requested-With: XMLHttpRequest")
 
     @POST("/chat-message")
     Call<Object> getLoginState(
@@ -55,7 +57,7 @@ public interface ApiInterface {
     //查询用户余额
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/amount-refresh")
-    Observable<Object> getUserAmount();
+    Call<UserAmount> getUserAmount();
 
     //登陆
     @Headers("X-Requested-With: XMLHttpRequest")

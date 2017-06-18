@@ -16,14 +16,18 @@ import android.widget.TextView;
 
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.MyFrmPageAdapter;
+import com.example.king.gou.bean.UserAmount;
 import com.example.king.gou.fragment.myfragment.OrderFragment;
 import com.example.king.gou.fragment.myfragment.ProxyFragment;
+import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.ui.GameCenterActivity;
+import com.example.king.gou.ui.MainActivity;
 import com.example.king.gou.ui.SettingActivity;
 import com.example.king.gou.ui.frmMyActivity.MessageActivity;
 import com.example.king.gou.ui.frmMyActivity.NoticeActivity;
 import com.example.king.gou.ui.frmMyActivity.ReChargeActivity;
 import com.example.king.gou.ui.frmMyActivity.ZhuanZhangActivity;
+import com.example.king.gou.utils.HttpEngine;
 
 
 import java.util.ArrayList;
@@ -36,7 +40,7 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MyFragment extends BaseFragment implements View.OnClickListener {
+public class MyFragment extends BaseFragment implements View.OnClickListener, HttpEngine.DataListener {
 
 
     @BindView(R.id.frmMyKeFu)
@@ -83,6 +87,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     LinearLayout ToQukuan;
     @BindView(R.id.ToZhuanZhang)
     LinearLayout ToZhuanZhang;
+    List<UserAmount> userAmount;
 
     public static MyFragment newInstance() {
 
@@ -101,6 +106,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_my, container, false);
         unbinder = ButterKnife.bind(this, view);
         myFrmPageAdapter = new MyFrmPageAdapter(getChildFragmentManager());
+        RetrofitService.getInstance().LoginUserAmount(this);
         initFrms();
         frmMyViewpager.setAdapter(myFrmPageAdapter);
         frmMyTablayout.setupWithViewPager(frmMyViewpager);
@@ -159,6 +165,26 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 break;
         }
 
+
+    }
+
+    @Override
+    public void onReceivedData(int apiId, Object object, int errorId) {
+        if (RetrofitService.API_ID_USERAMOUNT == apiId) {
+            userAmount = (List<UserAmount>) object;
+            if (userAmount.get(0).isRc()==true) {
+                frmMyCount.setText(userAmount.get(0).getOthers());
+            }
+        }
+    }
+
+    @Override
+    public void onRequestStart(int apiId) {
+
+    }
+
+    @Override
+    public void onRequestEnd(int apiId) {
 
     }
 }

@@ -171,7 +171,7 @@
                         android:id="@+id/frmMyCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0.0"
+                        android:text="88888"
                         android:textColor="@android:color/black"
                         android:textSize="35px" />
                 </LinearLayout>

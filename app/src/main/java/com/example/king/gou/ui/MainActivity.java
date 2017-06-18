@@ -101,7 +101,8 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
         final TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                RetrofitService.getInstance().LoginState(MainActivity.this, login_uid, 1, 0, new String[]{String.valueOf(login_uid)}, 1);
+                 RetrofitService.getInstance().LoginState(MainActivity.this, login_uid, 1, 1, new String[]{String.valueOf(login_uid)}, 1);
+
             }
         };
         timer.schedule(timerTask, 0, 3000);
