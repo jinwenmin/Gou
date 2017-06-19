@@ -11,7 +11,10 @@
 
         android:id="@+id/frmMyTop"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/top_height">
+        android:layout_height="@dimen/top_height"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <ImageView
             android:id="@+id/frmMyKeFu"

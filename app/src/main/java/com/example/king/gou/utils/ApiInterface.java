@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.example.king.gou.bean.Login;
 import com.example.king.gou.bean.LoginState;
+import com.example.king.gou.bean.NoticeContent;
 import com.example.king.gou.bean.UserAmount;
 import com.example.king.gou.bean.UserInfo;
 
@@ -90,7 +91,7 @@ public interface ApiInterface {
     //公告列表
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/notice-view/{id}")
-    Call<Object> getNoticesContent(@Path("id") int id);
+    Call<NoticeContent> getNoticesContent(@Path("id") int id);
 
     //获取玩法
     @Headers("X-Requested-With: XMLHttpRequest")

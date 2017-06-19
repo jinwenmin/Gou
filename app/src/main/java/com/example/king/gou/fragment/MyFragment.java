@@ -110,7 +110,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
         myFrmPageAdapter = new MyFrmPageAdapter(getChildFragmentManager());
         RetrofitService.getInstance().LoginUserAmount(this);
         RetrofitService.getInstance().GetUserInfo(this);
-       RetrofitService.getInstance().GetNotices(this);
+
         // RetrofitService.getInstance().getGametype(this);
         initFrms();
         frmMyViewpager.setAdapter(myFrmPageAdapter);

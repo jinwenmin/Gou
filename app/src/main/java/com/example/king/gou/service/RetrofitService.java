@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.king.gou.MyApp;
 import com.example.king.gou.bean.Login;
 import com.example.king.gou.bean.LoginState;
+import com.example.king.gou.bean.NoticeContent;
 import com.example.king.gou.bean.UserAmount;
 import com.example.king.gou.bean.UserInfo;
 import com.example.king.gou.utils.AddCookiesInterceptor;
@@ -54,7 +55,9 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_LOGIN = 1;//登录
     public static int API_ID_LOGINSTATE = 2;//检查登录状态
     public static int API_ID_USERAMOUNT = 3;//用户的总金额
-    public static int API_ID_USERINFO = 4;
+    public static int API_ID_USERINFO = 4;//用户的基本信息
+    public static int API_ID_NOTICECONTENT = 5;//公告
+    public static int API_ID_NOTICECONTENT2 = 6;
 
     private Retrofit retrofit;
     private ApiInterface apiInterface;
@@ -276,16 +279,24 @@ public class RetrofitService extends HttpEngine {
     }
 
     //获取公告
-    public void GetNotices(DataListener listener) {
+    public void GetNotices(final DataListener listener) {
         Call<Object> clone = apiInterface.getNotices().clone();
+        listener.onRequestStart(API_ID_NOTICECONTENT);
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
 
-                List<String[]> Notice = new ArrayList<String[]>();
-                Notice.add(0, new String[]{response.body().toString()});
-
-                Log.d("获取的公告列表==", Notice.get(0)[0] + "  ");
+                ArrayList<Object> No = new ArrayList<Object>();
+                No = (ArrayList<Object>) response.body();
+                List<String[]> NoticeContent = new ArrayList<String[]>();
+                for (int i = 0; i < No.size(); i++) {
+                    String substring = No.get(i).toString().substring(1, No.get(i).toString().length() - 1);
+                    String[] split = substring.split(",");
+                    NoticeContent.add(split);
+                }
+                listener.onReceivedData(API_ID_NOTICECONTENT, NoticeContent, API_ID_ERROR);
+                Log.d("获取的公告列表==", NoticeContent.get(1)[1] + "  ");
+                listener.onRequestEnd(API_ID_NOTICECONTENT);
             }
 
             @Override
@@ -298,17 +309,23 @@ public class RetrofitService extends HttpEngine {
     }
 
     //获取公告内容
-    public void getNoticesContent(DataListener listener, int id) {
-        Call<Object> noticesContent = apiInterface.getNoticesContent(id);
-        Call<Object> clone = noticesContent.clone();
-        clone.enqueue(new Callback<Object>() {
+    public void getNoticesContent(final DataListener listener, int id) {
+        Call<NoticeContent> noticesContent = apiInterface.getNoticesContent(id);
+        Call<NoticeContent> clone = noticesContent.clone();
+        clone.enqueue(new Callback<NoticeContent>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                Log.d("一个公告的内容", response.body() + "");
+            public void onResponse(Call<NoticeContent> call, retrofit2.Response<NoticeContent> response) {
+                listener.onRequestStart(API_ID_NOTICECONTENT2);
+Gson gson=new Gson();
+                NoticeContent noticeContent = gson.fromJson(response.body().toString(), NoticeContent.class);
+
+                // listener.onReceivedData(API_ID_NOTICECONTENT2, response.body(), API_ID_ERROR);
+                Log.d("一个公告的内容", noticeContent.getOthers().get(0).getContent()+ "");
+                listener.onRequestEnd(API_ID_NOTICECONTENT2);
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<NoticeContent> call, Throwable t) {
 
             }
         });
