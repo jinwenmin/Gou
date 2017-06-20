@@ -91,7 +91,7 @@ public interface ApiInterface {
     //公告列表
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/notice-view/{id}")
-    Call<NoticeContent> getNoticesContent(@Path("id") int id);
+    Call<Object> getNoticesContent(@Path("id") int id);
 
     //获取玩法
     @Headers("X-Requested-With: XMLHttpRequest")

@@ -105,7 +105,7 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
 
             }
         };
-        timer.schedule(timerTask, 0, 3000);
+        timer.schedule(timerTask, 0, 5000);
 
     }
 

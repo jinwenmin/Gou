@@ -74,6 +74,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
         unbinder = ButterKnife.bind(this, view);
         HomeFragmentAddGame.setOnClickListener(this);
         recycler.setLayoutManager(new GridLayoutManager(getActivity(), 4));

@@ -3,6 +3,8 @@ package com.example.king.gou.ui.frmMyActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class NoticeContentActivity extends AppCompatActivity implements HttpEngine.DataListener {
+public class NoticeContentActivity extends AppCompatActivity implements HttpEngine.DataListener, View.OnClickListener {
 
     @BindView(R.id._back)
     ImageView Back;
@@ -35,15 +37,18 @@ public class NoticeContentActivity extends AppCompatActivity implements HttpEngi
         Intent intent = getIntent();
         int uid = intent.getIntExtra("uid", 0);
         RetrofitService.getInstance().getNoticesContent(this, uid);
+        initClick();
+    }
+
+    private void initClick() {
+        Back.setOnClickListener(this);
     }
 
     @Override
     public void onReceivedData(int apiId, Object object, int errorId) {
         if (apiId == RetrofitService.API_ID_NOTICECONTENT2) {
-            NoticeContent notice = (NoticeContent) object;
-            if (notice.getRc() == false) {
-                NoticeContentText.setText(notice.getOthers().get(0).getContent());
-            }
+            String notice = (String) object;
+            NoticeContentText.setText(Html.fromHtml(notice));
         }
     }
 
@@ -55,5 +60,16 @@ public class NoticeContentActivity extends AppCompatActivity implements HttpEngi
     @Override
     public void onRequestEnd(int apiId) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id._back:
+                finish();
+                break;
+
+
+        }
     }
 }

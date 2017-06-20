@@ -310,22 +310,30 @@ public class RetrofitService extends HttpEngine {
 
     //获取公告内容
     public void getNoticesContent(final DataListener listener, int id) {
-        Call<NoticeContent> noticesContent = apiInterface.getNoticesContent(id);
-        Call<NoticeContent> clone = noticesContent.clone();
-        clone.enqueue(new Callback<NoticeContent>() {
+        Call<Object> noticesContent = apiInterface.getNoticesContent(id);
+        Call<Object> clone = noticesContent.clone();
+        clone.enqueue(new Callback<Object>() {
             @Override
-            public void onResponse(Call<NoticeContent> call, retrofit2.Response<NoticeContent> response) {
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
                 listener.onRequestStart(API_ID_NOTICECONTENT2);
-Gson gson=new Gson();
-                NoticeContent noticeContent = gson.fromJson(response.body().toString(), NoticeContent.class);
+                String s = response.body().toString();
+                s = s.substring(1, s.length() - 1);
+                Log.d("一个公告的内容1===", s + "");
+                String rc = s.substring(s.indexOf("rc=") + 3, s.indexOf(","));
+                String id = s.substring(s.indexOf("id=") + 3, s.indexOf(", others"));
+                String msg = s.substring(s.indexOf("msg=") + 4, s.indexOf(", id"));
+                String content = s.substring(s.indexOf("content=") + 8, s.indexOf(", user"));
 
-                // listener.onReceivedData(API_ID_NOTICECONTENT2, response.body(), API_ID_ERROR);
-                Log.d("一个公告的内容", noticeContent.getOthers().get(0).getContent()+ "");
+                Log.d("Content的内容===", content);
+                Gson gson = new Gson();
+                listener.onReceivedData(API_ID_NOTICECONTENT2,content,API_ID_ERROR);
+                // NoticeContent noticeContent = gson.fromJson(s, NoticeContent.class);
+                //  Log.d("一个公告的内容2===", noticeContent.getOthers().get(0).getUser() + "");
                 listener.onRequestEnd(API_ID_NOTICECONTENT2);
             }
 
             @Override
-            public void onFailure(Call<NoticeContent> call, Throwable t) {
+            public void onFailure(Call<Object> call, Throwable t) {
 
             }
         });

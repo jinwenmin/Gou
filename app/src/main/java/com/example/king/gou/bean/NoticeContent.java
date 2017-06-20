@@ -61,7 +61,6 @@ public class NoticeContent {
          */
 
         private String title;
-        private String content;
         private String user;
         private String time;
         private int sticky;
@@ -74,13 +73,7 @@ public class NoticeContent {
             this.title = title;
         }
 
-        public String getContent() {
-            return content;
-        }
 
-        public void setContent(String content) {
-            this.content = content;
-        }
 
         public String getUser() {
             return user;

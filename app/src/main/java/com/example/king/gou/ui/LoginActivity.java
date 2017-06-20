@@ -138,6 +138,7 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
         login_userinfo = getSharedPreferences("login_userinfo", Activity.MODE_PRIVATE);
         String login_username = login_userinfo.getString("login_username", "");
         String login_userpwd = login_userinfo.getString("login_userpwd", "");
+
         loginUser.setText(login_username);
         loginPwd.setText(login_userpwd);
     }

@@ -54,7 +54,6 @@ public class NoticeActivity extends AutoLayoutActivity implements HttpEngine.Dat
                 intent.putExtra("uid",parseInt);
                 startActivity(intent);
                 finish();
-                RetrofitService.getInstance().getNoticesContent(NoticeActivity.this, parseInt);
             }
         });
     }

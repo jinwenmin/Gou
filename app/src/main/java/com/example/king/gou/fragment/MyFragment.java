@@ -107,6 +107,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my, container, false);
         unbinder = ButterKnife.bind(this, view);
+        RetrofitService.getInstance().getGametype(this);
         myFrmPageAdapter = new MyFrmPageAdapter(getChildFragmentManager());
         RetrofitService.getInstance().LoginUserAmount(this);
         RetrofitService.getInstance().GetUserInfo(this);
