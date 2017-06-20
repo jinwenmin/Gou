@@ -73,6 +73,7 @@ public interface ApiInterface {
             @Query("reqkey") String reqkey,
             @Query("t") long time
     );
+
     //登陆
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-user-datas")
@@ -96,6 +97,14 @@ public interface ApiInterface {
     //获取玩法
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-rules_description/{tid}")
-    Call<Object> getGameType();
+    Call<Object> getGameType(@Path("tid") int tid);
+
+    //获取游戏
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/get-game-datas")
+    Call<Object> getGame(@Query("type") int type,
+                         @Query("gid") int gid,
+                         @Query("tid") int tid,
+                         @Query("ptid") int ptid);
 
 }

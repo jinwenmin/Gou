@@ -326,7 +326,7 @@ public class RetrofitService extends HttpEngine {
 
                 Log.d("Content的内容===", content);
                 Gson gson = new Gson();
-                listener.onReceivedData(API_ID_NOTICECONTENT2,content,API_ID_ERROR);
+                listener.onReceivedData(API_ID_NOTICECONTENT2, content, API_ID_ERROR);
                 // NoticeContent noticeContent = gson.fromJson(s, NoticeContent.class);
                 //  Log.d("一个公告的内容2===", noticeContent.getOthers().get(0).getUser() + "");
                 listener.onRequestEnd(API_ID_NOTICECONTENT2);
@@ -340,12 +340,29 @@ public class RetrofitService extends HttpEngine {
     }
 
     //获取玩法
-    public void getGametype(DataListener listener) {
-        Call<Object> clone = apiInterface.getGameType().clone();
+    public void getGametype(DataListener listener, int id) {
+        Call<Object> clone = apiInterface.getGameType(id).clone();
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
                 Log.d("获取游戏玩法", response.body() + "");
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //获取游戏
+    public void getGame(DataListener listener, int type, int gid, int tid, int ptid) {
+        Call<Object> game = apiInterface.getGame(type, gid, tid, ptid);
+        Call<Object> clone = game.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("获取到的游戏===", response.body() + "");
             }
 
             @Override
