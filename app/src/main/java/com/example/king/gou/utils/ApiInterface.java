@@ -107,4 +107,44 @@ public interface ApiInterface {
                          @Query("tid") int tid,
                          @Query("ptid") int ptid);
 
+    //获取奖金详情
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/prize-details-list")
+    Call<Object> getPrizeDetails(@Query("rows") int rows,
+                                 @Query("page") int page,
+                                 @Query("sidx") String sidx,
+                                 @Query("sord") String sord);
+
+    //找回密码接口
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/back-pass-check")
+    Call<Object> getBackPassword(@Query("u") String u,
+                                 @Query("p") String p
+    );
+
+//找回密码保存
+
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/back-pass-save")
+    Call<Object> getBackPasswordSave(@Query("u") String u,//用户名
+                                     @Query("p") String p//密码
+    );
+
+    //找回密码保存
+
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/freeze-user-check")
+    Call<Object> getFreezeUser(@Query("u") String u,//需要冻结的用户名
+                               @Query("n") String n,//持卡人姓名
+                               @Query("no") String no//已绑定的银行卡号
+    );
+
+    //领取活动奖金
+
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/activity-notices-check")
+    Call<Object> getActivityCheck(@Query("id") int id,//活动id
+                                  @Query("alid") int alid//活动层级id
+
+    );
 }
