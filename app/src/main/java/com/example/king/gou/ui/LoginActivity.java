@@ -157,7 +157,7 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
         Log.i("时间消息:", timeMillis + "");
         Log.i("密码SHA256消息", password);
         Log.i("时间戳SHA256消息", s1);
-        RetrofitService.getInstance().Login2(this, 1, "testapp", password, false, rekey, timeMillis);
+        RetrofitService.getInstance().Login2(this, 1, Login_UserName,password, false, rekey, timeMillis);
 
 
     }

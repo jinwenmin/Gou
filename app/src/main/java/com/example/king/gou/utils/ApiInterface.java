@@ -41,7 +41,7 @@ public interface ApiInterface {
             @Query("t") long time
     );
 
-    //登出
+    //登出有日志
     @Headers("X-Requested-With: XMLHttpRequest")
     @GET("/logout")
     Call<Object> getSignout();
@@ -74,7 +74,7 @@ public interface ApiInterface {
             @Query("t") long time
     );
 
-    //登陆
+    //用户信息
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-user-datas")
     Call<UserInfo> getUserInfo();
@@ -113,7 +113,10 @@ public interface ApiInterface {
     Call<Object> getPrizeDetails(@Query("rows") int rows,
                                  @Query("page") int page,
                                  @Query("sidx") String sidx,
-                                 @Query("sord") String sord);
+                                 @Query("sord") String sord,
+                                 @Query("id") int id,
+                                 @Query("rid") int rid
+    );
 
     //找回密码接口
     @Headers("X-Requested-With: XMLHttpRequest")

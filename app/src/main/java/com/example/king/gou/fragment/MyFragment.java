@@ -107,18 +107,18 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my, container, false);
         unbinder = ButterKnife.bind(this, view);
-        RetrofitService.getInstance().getGame(this,1, 0, 0, 0);
-        RetrofitService.getInstance().getGame(this,2, 0, 0, 0);
-        RetrofitService.getInstance().getGame(this,3, 0, 0, 0);
-        RetrofitService.getInstance().getGame(this,4, 0, 0, 0);
-        RetrofitService.getInstance().getGame(this,5, 0, 0, 0);
-        RetrofitService.getInstance().getGame(this,6, 0, 0, 0);
-        RetrofitService.getInstance().getGame(this,7, 0, 0, 0);
-        RetrofitService.getInstance().getGame(this,8, 0, 0, 0);
+        RetrofitService.getInstance().getGame(this, 1, 0, 0, 0);
+        RetrofitService.getInstance().getGame(this, 2, 0, 0, 0);
+        RetrofitService.getInstance().getGame(this, 3, 0, 0, 0);
+        RetrofitService.getInstance().getGame(this, 4, 0, 0, 0);
+        RetrofitService.getInstance().getGame(this, 5, 0, 0, 0);
+        RetrofitService.getInstance().getGame(this, 6, 0, 0, 0);
+        RetrofitService.getInstance().getGame(this, 7, 0, 0, 0);
+        RetrofitService.getInstance().getGame(this, 8, 0, 0, 0);
         myFrmPageAdapter = new MyFrmPageAdapter(getChildFragmentManager());
         RetrofitService.getInstance().LoginUserAmount(this);
         RetrofitService.getInstance().GetUserInfo(this);
-RetrofitService.getInstance().GetPrizeDetails(100,1);
+      //  RetrofitService.getInstance().GetPrizeDetails(this, 100, 1);
         // RetrofitService.getInstance().getGametype(this);
         initFrms();
         frmMyViewpager.setAdapter(myFrmPageAdapter);

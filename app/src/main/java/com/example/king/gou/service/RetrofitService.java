@@ -237,6 +237,8 @@ public class RetrofitService extends HttpEngine {
         //  listener.onReceivedData(API_ID_LOGIN, null, API_ID_ERROR);
 
         Call<Login> logine = apiInterface.getLogine(num, username, password, ipwd, reqkey, time);
+        String s = logine.request().toString();
+        System.out.println("请求完全体=="+s);
         Call<Login> clone = logine.clone();
         clone.enqueue(new Callback<Login>() {
             @Override
@@ -423,8 +425,8 @@ public class RetrofitService extends HttpEngine {
     }
 
     //奖金详情
-    public void GetPrizeDetails(DataListener listener, int rows, int page) {
-        Call<Object> prizeDetails = apiInterface.getPrizeDetails(rows, page, "grid", "asc");
+    public void GetPrizeDetails(DataListener listener, int rows, int page, int id, int rid) {
+        Call<Object> prizeDetails = apiInterface.getPrizeDetails(rows, page, "grid", "asc", id, rid);
         Call<Object> clone = prizeDetails.clone();
         clone.enqueue(new Callback<Object>() {
             @Override
@@ -475,8 +477,8 @@ public class RetrofitService extends HttpEngine {
     }
 
     //领取活动奖金
-    public void getActivityCheck(String u, String n, String no) {
-        Call<Object> clone = apiInterface.getActivityCheck(u, n, no).clone();
+    public void getActivityCheck(DataListener listener, int id, int alid) {
+        Call<Object> clone = apiInterface.getActivityCheck(id, alid).clone();
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
