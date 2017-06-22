@@ -1,1 +1,1 @@
-include ':app', ':viewlib', ':alertview', ':autolayout'
+include ':app', ':viewlib', ':alertview', ':autolayout', ':lib_tv_fullhtml'
