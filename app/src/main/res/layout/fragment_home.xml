@@ -36,7 +36,10 @@
             android:layout_toLeftOf="@id/Erweima"
             android:src="@drawable/ic_home_share" />
     </RelativeLayout>
-
+<com.example.king.gou.utils.MainScrollUpAdvertisementView
+    android:layout_below="@id/home_top"
+    android:layout_width="fill_parent"
+    android:layout_height="60px"></com.example.king.gou.utils.MainScrollUpAdvertisementView>
     <com.jude.rollviewpager.RollPagerView
         android:id="@+id/home_viewpager"
         android:layout_width="fill_parent"

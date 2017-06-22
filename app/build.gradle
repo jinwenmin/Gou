@@ -62,4 +62,5 @@ dependencies {
     compile 'eu.the4thfloor.volley:com.android.volley:2015.05.28'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    compile project(':lib_tv_fullhtml')
 }

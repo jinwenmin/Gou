@@ -26,11 +26,19 @@
             android:textSize="@dimen/top_textsize" />
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/linear1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
     <TextView
-        android:textSize="40px"
-        android:layout_margin="20px"
-        android:padding="20px"
         android:id="@+id/NoticeContent_text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_margin="20px"
+        android:padding="20px"
+        android:textSize="40px" />
 </LinearLayout>
