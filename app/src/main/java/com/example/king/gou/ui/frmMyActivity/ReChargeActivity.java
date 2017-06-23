@@ -53,6 +53,11 @@ public class ReChargeActivity extends AutoLayoutActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_re_charge);
         ButterKnife.bind(this);
+        initClick();
+
+    }
+
+    private void initClick() {
         ChongZ.setOnClickListener(this);
         TopBack.setOnClickListener(this);
     }

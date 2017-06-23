@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/_back"
-            android:layout_width="60px"
-            android:layout_height="60px"
+            android:layout_width="@dimen/top_height"
+            android:layout_height="@dimen/top_height"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_back" />
 

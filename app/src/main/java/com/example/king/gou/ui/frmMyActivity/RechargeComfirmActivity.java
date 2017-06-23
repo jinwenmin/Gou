@@ -2,10 +2,10 @@ package com.example.king.gou.ui.frmMyActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -37,13 +37,21 @@ public class RechargeComfirmActivity extends AutoLayoutActivity implements View.
     TextView AccountText;
     @BindView(R.id.ApplyTo)
     Button ApplyTo;
+    @BindView(R.id.TopBack)
+    ImageView TopBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recharge_comfirm);
         ButterKnife.bind(this);
+        initCLick();
+
+    }
+
+    private void initCLick() {
         ApplyTo.setOnClickListener(this);
+TopBack.setOnClickListener(this);
     }
 
     @Override
@@ -51,6 +59,9 @@ public class RechargeComfirmActivity extends AutoLayoutActivity implements View.
         switch (v.getId()) {
             case R.id.ApplyTo:
                 startActivity(new Intent(RechargeComfirmActivity.this, TixianAppliActivity.class));
+                break;
+            case R.id.TopBack:
+                finish();
                 break;
         }
     }

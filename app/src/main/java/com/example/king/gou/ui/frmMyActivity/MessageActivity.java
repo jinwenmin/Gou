@@ -15,7 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MessageActivity extends AutoLayoutActivity {
+public class MessageActivity extends AutoLayoutActivity implements View.OnClickListener {
 
     @BindView(R.id.gamejl_back)
     ImageView gamejlBack;
@@ -33,12 +33,25 @@ public class MessageActivity extends AutoLayoutActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
         ButterKnife.bind(this);
-        newMess.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+
+        initClick();
+    }
+
+    private void initClick() {
+        newMess.setOnClickListener(this);
+        gamejlBack.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.newMess:
                 startActivity(new Intent(MessageActivity.this,NewMessageActivity.class));
                 finish();
-            }
-        });
+                break;
+            case R.id.gamejl_back:
+                finish();
+                break;
+        }
     }
 }

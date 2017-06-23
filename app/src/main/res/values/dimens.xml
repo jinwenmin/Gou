@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="top_height">80px</dimen>
-    <dimen name="top_textsize">60px</dimen>
+    <dimen name="top_textsize">50px</dimen>
 
 </resources>

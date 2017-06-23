@@ -22,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class NewMessageActivity extends AutoLayoutActivity implements OnItemClickListener {
+public class NewMessageActivity extends AutoLayoutActivity implements OnItemClickListener, View.OnClickListener {
 
     @BindView(R.id._back)
     ImageView Back;
@@ -60,6 +60,11 @@ public class NewMessageActivity extends AutoLayoutActivity implements OnItemClic
                 R.layout.mess_select_user, null);
         alertView.addExtView(contentView);
         initRadioGroup();
+        initClick();
+    }
+
+    private void initClick() {
+        Back.setOnClickListener(this);
     }
 
     private void initRadioGroup() {
@@ -90,6 +95,15 @@ public class NewMessageActivity extends AutoLayoutActivity implements OnItemClic
         if (o == alertView && position != AlertView.CANCELPOSITION) {
             editText_select = ((EditText) contentView.findViewById(R.id.mess_select_edit));
             editText.setText(editText_select.getText().toString().trim());
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id._back:
+                finish();
+                break;
         }
     }
 }

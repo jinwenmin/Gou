@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.king.gou.ui.orderFrmActivity.GameJiluActivity">
+   >
 
     <RelativeLayout
         android:id="@+id/LotteryBBTop"
@@ -39,7 +39,7 @@
             android:layout_height="60px">
 
             <RelativeLayout
-                android:id="@+id/LotteryBBrelateTime1"
+                android:id="@+id/TeamCunQurelateTime1"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_marginRight="4px"
@@ -47,7 +47,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/LotteryBBtimetext"
+                    android:id="@+id/TeamCunQutimetext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -59,7 +59,7 @@
                 <ImageView
                     android:layout_width="30px"
                     android:layout_height="30px"
-                    android:layout_alignBottom="@+id/LotteryBBtimetext"
+                    android:layout_alignBottom="@+id/TeamCunQutimetext"
                     android:layout_toLeftOf="@+id/view"
                     android:layout_toStartOf="@+id/view"
                     android:background="@drawable/wuka_xiala" />
@@ -75,7 +75,7 @@
 
             <RelativeLayout
 
-                android:id="@+id/LotteryBBrelateTime2"
+                android:id="@+id/TeamCunQurelateTime2"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_marginRight="4px"
@@ -84,7 +84,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/LotteryBBtimetext2"
+                    android:id="@+id/TeamCunQutimetext2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -118,7 +118,7 @@
             android:layout_below="@id/TeamCunquLinear1">
 
             <RelativeLayout
-                android:id="@+id/LotteryBBrelateBank4"
+                android:id="@+id/TeamCunQurelateBank4"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_marginRight="4px"
@@ -127,7 +127,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/LotteryBBtimetext4"
+                    android:id="@+id/TeamCunQutimetext4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -151,7 +151,7 @@
                         android:background="@drawable/wuka_xiala" />
 
                     <Spinner
-                        android:id="@+id/LotteryBBgameLotteryType4"
+                        android:id="@+id/TeamCunQuLotteryType4"
                         style="@android:style/Widget.Spinner"
                         android:layout_width="30px"
                         android:layout_height="30px"
@@ -170,7 +170,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/LotteryBBrelateBank3"
+                android:id="@+id/TeamCunQurelateBank3"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_marginRight="4px"
@@ -179,7 +179,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/LotteryBBtimetext3"
+                    android:id="@+id/TeamCunQutimetext3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -194,7 +194,7 @@
                     android:layout_centerVertical="true">
 
                     <Spinner
-                        android:id="@+id/LotteryBBgameLotteryType"
+                        android:id="@+id/TeamCunQuLotteryType"
                         style="@android:style/Widget.Spinner"
                         android:layout_width="30px"
                         android:layout_height="30px"

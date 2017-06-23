@@ -2,10 +2,10 @@ package com.example.king.gou.ui.frmMyActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -54,21 +54,31 @@ public class TixianAppliActivity extends AutoLayoutActivity implements View.OnCl
     RelativeLayout TixianAppliRe4;
     @BindView(R.id.TiJiao)
     Button TiJiao;
+    @BindView(R.id._back)
+    ImageView Back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tixian_appli);
         ButterKnife.bind(this);
+        initClick();
+
+    }
+
+    private void initClick() {
         TiJiao.setOnClickListener(this);
+        Back.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.TiJiao:
-                startActivity(new Intent(TixianAppliActivity.this,ApplyResultActivity.class));
+                startActivity(new Intent(TixianAppliActivity.this, ApplyResultActivity.class));
                 break;
+            case R.id._back:
+                finish();break;
         }
 
     }

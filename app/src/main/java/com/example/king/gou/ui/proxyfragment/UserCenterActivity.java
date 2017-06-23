@@ -19,7 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class UserCenterActivity extends AutoLayoutActivity {
+public class UserCenterActivity extends AutoLayoutActivity implements View.OnClickListener {
 
     @BindView(R.id._back)
     ImageView Back;
@@ -63,7 +63,7 @@ public class UserCenterActivity extends AutoLayoutActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_center);
         ButterKnife.bind(this);
-
+initClick();
         userCenterGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
@@ -88,6 +88,19 @@ public class UserCenterActivity extends AutoLayoutActivity {
             }
         });
         radioBtn1.setChecked(true);
+
+    }
+
+    private void initClick() {
+        Back.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id._back:
+                finish();break;
+        }
 
     }
 }

@@ -22,23 +22,36 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="公告详情"
+
             android:textColor="@android:color/white"
             android:textSize="@dimen/top_textsize" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/linear1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-    </LinearLayout>
 
     <TextView
+        android:textColor="@android:color/black"
         android:id="@+id/NoticeContent_text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="20px"
         android:padding="20px"
-        android:textSize="40px" />
+        android:textSize="30px" />
+    <TextView
+        android:textColor="@android:color/black"
+        android:id="@+id/NoticeUser_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20px"
+        android:layout_marginTop="20px"
+
+        android:padding="20px"
+        android:textSize="30px" />
+    <TextView
+        android:textColor="@android:color/black"
+        android:id="@+id/NoticeTime_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20px"
+        android:padding="20px"
+        android:textSize="30px" />
 </LinearLayout>

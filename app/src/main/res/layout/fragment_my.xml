@@ -25,6 +25,7 @@
             android:src="@drawable/img_customer_chat_origin" />
 
         <ImageView
+
             android:id="@+id/frmMyMsg"
             android:layout_width="50px"
             android:layout_height="50px"

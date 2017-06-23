@@ -24,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class NoticeActivity extends AutoLayoutActivity implements HttpEngine.DataListener {
+public class NoticeActivity extends AutoLayoutActivity implements HttpEngine.DataListener, View.OnClickListener {
 
     @BindView(R.id._back)
     ImageView Back;
@@ -40,6 +40,7 @@ public class NoticeActivity extends AutoLayoutActivity implements HttpEngine.Dat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice);
         ButterKnife.bind(this);
+        initClick();
         adapter = new NoticeAdapter(this);
         NoticeListView.setAdapter(adapter);
         RetrofitService.getInstance().GetNotices(this);
@@ -56,6 +57,10 @@ public class NoticeActivity extends AutoLayoutActivity implements HttpEngine.Dat
                 finish();
             }
         });
+    }
+
+    private void initClick() {
+        Back.setOnClickListener(this);
     }
 
 
@@ -76,5 +81,13 @@ public class NoticeActivity extends AutoLayoutActivity implements HttpEngine.Dat
     @Override
     public void onRequestEnd(int apiId) {
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id._back:
+                finish();break;
+        }
     }
 }

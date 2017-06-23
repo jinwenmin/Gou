@@ -86,12 +86,18 @@ public class GameJiluActivity extends AppCompatActivity implements View.OnClickL
         gamejlTablayout.setupWithViewPager(gamejlViewpager);
         gamejlViewpager.setAdapter(myFrmPageAdapter);
         relateTime1.setClickable(true);
-        relateTime1.setOnClickListener(this);
-        relateTime2.setOnClickListener(this);
-        relateBank3.setOnClickListener(this);
+
+        initClick();
         initViewpager();
         initDateDialog();
         initSpinner();
+    }
+
+    private void initClick() {
+        relateTime1.setOnClickListener(this);
+        relateTime2.setOnClickListener(this);
+        relateBank3.setOnClickListener(this);
+        gamejlBack.setOnClickListener(this);
     }
 
     private void initSpinner() {
@@ -195,12 +201,14 @@ public class GameJiluActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.relateTime1:
-
                 Toast.makeText(this, "点击了第一个", Toast.LENGTH_SHORT).show();
                 datePickerDialog.show();
                 break;
             case R.id.relateTime2:
                 datePickerDialog2.show();
+                break;
+            case R.id.gamejl_back:
+                finish();
         }
     }
 }

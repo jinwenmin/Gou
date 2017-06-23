@@ -348,11 +348,13 @@ public class RetrofitService extends HttpEngine {
                 String rc = s.substring(s.indexOf("rc=") + 3, s.indexOf(","));
                 String id = s.substring(s.indexOf("id=") + 3, s.indexOf(", others"));
                 String msg = s.substring(s.indexOf("msg=") + 4, s.indexOf(", id"));
+                String time = s.substring(s.indexOf("time=") + 5, s.indexOf(", sticky"));
+                String user = s.substring(s.indexOf("user=") + 5, s.indexOf(", time"));
                 String content = s.substring(s.indexOf("content=") + 8, s.indexOf(", user"));
-
+                String[] strings=new String[]{content,time,user};
                 Log.d("Content的内容===", content);
                 Gson gson = new Gson();
-                listener.onReceivedData(API_ID_NOTICECONTENT2, content, API_ID_ERROR);
+                listener.onReceivedData(API_ID_NOTICECONTENT2, strings, API_ID_ERROR);
                 // NoticeContent noticeContent = gson.fromJson(s, NoticeContent.class);
                 //  Log.d("一个公告的内容2===", noticeContent.getOthers().get(0).getUser() + "");
                 listener.onRequestEnd(API_ID_NOTICECONTENT2);
