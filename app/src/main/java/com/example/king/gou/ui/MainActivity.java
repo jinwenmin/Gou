@@ -1,18 +1,36 @@
 package com.example.king.gou.ui;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.KeyguardManager;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.hardware.fingerprint.FingerprintManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CancellationSignal;
 import android.os.Handler;
+import android.os.PersistableBundle;
 import android.support.annotation.IdRes;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bigkoo.alertview.AlertView;
+import com.bigkoo.alertview.OnItemClickListener;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.LoginState;
 import com.example.king.gou.service.RetrofitService;
@@ -28,7 +46,7 @@ import butterknife.ButterKnife;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataListener {
+public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataListener,OnItemClickListener {
     @BindView(R.id.HomeFrmRadioBtn)
     RadioButton HomeFrmRadioBtn;
     @BindView(R.id.GameFrmRadioBtn)
@@ -47,12 +65,34 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
     long TIME = 1000;
     private Timer timer;
     private String login_sessionid;
-
+    private AlertView alertView;
+    ; // 一个自定义的布局，作为显示的内容
+    View contentView;
+    private ImageView fingerImg;
+    private TextView fingerText;
+    private final static String TAG = "finger_log";
+    FingerprintManager manager;
+    KeyguardManager mKeyManager;
+    private final static int REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        manager = (FingerprintManager) this.getSystemService(Context.FINGERPRINT_SERVICE);
+        mKeyManager = (KeyguardManager) this.getSystemService(Context.KEYGUARD_SERVICE);
+        if (isFinger()) {
+            alertView = new AlertView(null, null, "取消", null, null, MainActivity.this, AlertView.Style.Alert, MainActivity.this);
+            contentView = LayoutInflater.from(getApplicationContext()).inflate(
+                    R.layout.item_finger, null);
+            alertView.addExtView(contentView);
+            fingerImg = ((ImageView) contentView.findViewById(R.id.fingerImg));
+            fingerText = ((TextView) contentView.findViewById(R.id.fingerText));
+            alertView.show();
+            Toast.makeText(MainActivity.this, "请进行指纹识别", Toast.LENGTH_LONG).show();
+            Log(TAG, "keyi");
+            startListening(null);
+        }
         login_userinfo = getSharedPreferences("login_userinfo", Activity.MODE_PRIVATE);
         login_uid = login_userinfo.getInt("login_uid", 0);
         login_sessionid = login_userinfo.getString("login_sessionid", "");
@@ -131,6 +171,124 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
 
     @Override
     public void onRequestEnd(int apiId) {
+
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+
+    }
+
+    public boolean isFinger() {
+
+        //android studio 上，没有这个会报错
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "没有指纹识别权限", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        Log(TAG, "有指纹权限");
+        //判断硬件是否支持指纹识别
+        if (!manager.isHardwareDetected()) {
+            Toast.makeText(this, "没有指纹识别模块", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        Log(TAG, "有指纹模块");
+        //判断 是否开启锁屏密码
+
+        if (!mKeyManager.isKeyguardSecure()) {
+            Toast.makeText(this, "没有开启锁屏密码", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        Log(TAG, "已开启锁屏密码");
+        //判断是否有指纹录入
+        if (!manager.hasEnrolledFingerprints()) {
+            Toast.makeText(this, "没有录入指纹", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        Log(TAG, "已录入指纹");
+
+        return true;
+    }
+
+    CancellationSignal mCancellationSignal = new CancellationSignal();
+    //回调方法
+
+    FingerprintManager.AuthenticationCallback mSelfCancelled = new FingerprintManager.AuthenticationCallback() {
+        @Override
+        public void onAuthenticationError(int errorCode, CharSequence errString) {
+            //但多次指纹密码验证错误后，进入此方法；并且，不能短时间内调用指纹验证
+            Toast.makeText(MainActivity.this, errString, Toast.LENGTH_SHORT).show();
+            showAuthenticationScreen();
+        }
+
+        @Override
+        public void onAuthenticationHelp(int helpCode, CharSequence helpString) {
+
+            Toast.makeText(MainActivity.this, helpString, Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
+            fingerText.setText("指纹识别成功");
+            fingerText.setTextColor(Color.rgb(0, 150, 136));
+            fingerImg.setImageResource(R.drawable.ic_fingerprint_success);
+            Toast.makeText(MainActivity.this, "指纹识别成功", Toast.LENGTH_SHORT).show();
+
+            alertView.dismiss();
+        }
+
+        @Override
+        public void onAuthenticationFailed() {
+            fingerText.setText("指纹验证失败,请重试");
+            fingerText.setTextColor(Color.rgb(244, 81, 30));
+            fingerImg.setImageResource(R.drawable.ic_fingerprint_error);
+            Toast.makeText(MainActivity.this, "指纹识别失败", Toast.LENGTH_SHORT).show();
+            alertView.dismiss();
+        }
+    };
+
+
+    public void startListening(FingerprintManager.CryptoObject cryptoObject) {
+        //android studio 上，没有这个会报错
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "没有指纹识别权限", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        manager.authenticate(cryptoObject, mCancellationSignal, 0, mSelfCancelled, null);
+
+
+    }
+
+    /**
+     * 锁屏密码
+     */
+    private void showAuthenticationScreen() {
+
+        Intent intent = mKeyManager.createConfirmDeviceCredentialIntent("finger", "测试指纹识别");
+        if (intent != null) {
+            startActivityForResult(intent, REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS) {
+            // Challenge completed, proceed with using cipher
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(this, "识别成功", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "识别失败", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void Log(String tag, String msg) {
+        Log.d(tag, msg);
+    }
+
+    @Override
+    public void onItemClick(Object o, int position) {
 
     }
 }

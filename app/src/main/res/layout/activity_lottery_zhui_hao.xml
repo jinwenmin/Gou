@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.king.gou.ui.LotteryZhuiHaoActivity">
+
+    <RadioGroup
+        android:id="@+id/group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/LotteryZhuiHaoRB1"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="利润率追号"
+            android:textSize="30px" />
+
+        <RadioButton
+            android:id="@+id/LotteryZhuiHaoRB2"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="同倍追号"
+            android:textSize="30px" />
+
+        <RadioButton
+            android:id="@+id/LotteryZhuiHaoRB3"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="翻倍追号"
+            android:textSize="30px" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/Linear1"
+        android:layout_below="@id/group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20px"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_margin="20px"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前 "
+                android:textSize="28px" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="88888888期"
+                android:textSize="28px" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_margin="20px"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="距离投注截至还有 "
+                android:textSize="28px" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="01:00"
+                android:textSize="28px" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativelayout2"
+        android:layout_below="@id/Linear1"
+        android:layout_width="match_parent"
+        android:layout_height="60px"
+        android:layout_margin="10px">
+
+        <TextView
+            android:id="@+id/ZhuiHaoQi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="追号期数: "
+            android:textSize="35px" />
+
+        <EditText
+            android:id="@+id/EdittextZhuiHaoQi"
+            android:layout_width="150px"
+            android:layout_height="60px"
+            android:layout_toRightOf="@id/ZhuiHaoQi"
+            android:background="@drawable/edit_user_pwd_bg"
+            android:hint="10"
+            android:paddingLeft="20px"
+            android:textSize="35px" />
+
+        <TextView
+            android:id="@+id/ZhuiHaoZongQi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10px"
+            android:layout_toRightOf="@id/EdittextZhuiHaoQi"
+            android:text="总期数:10期"
+            android:textSize="20px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/ZhuiHaoZongQi"
+            android:layout_marginLeft="10px"
+            android:layout_toRightOf="@id/EdittextZhuiHaoQi"
+            android:gravity="center_vertical"
+            android:text="追号总金额:404.0元"
+            android:textSize="20px" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/text3"
+        android:layout_below="@id/relativelayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="------追号计划------" />
+
+    <RelativeLayout
+        android:id="@+id/relativelayout4"
+        android:layout_below="@id/text3"
+        android:layout_width="match_parent"
+        android:layout_height="60px"
+        android:layout_margin="10px">
+
+        <TextView
+            android:id="@+id/ZhuiHaoQiShiBei"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="起始倍数: "
+            android:textSize="35px" />
+
+        <EditText
+            android:id="@+id/EdittextZhuiHaoQiShiBei"
+            android:layout_width="150px"
+            android:layout_height="60px"
+            android:layout_toRightOf="@id/ZhuiHaoQiShiBei"
+            android:background="@drawable/edit_user_pwd_bg"
+            android:hint="1"
+            android:paddingLeft="20px"
+            android:textSize="35px" />
+
+        <TextView
+            android:id="@+id/ZhuiHaoMaxBei"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20px"
+            android:layout_toRightOf="@id/EdittextZhuiHaoQiShiBei"
+            android:text="起始倍数: "
+            android:textSize="35px" />
+
+        <EditText
+            android:id="@+id/EdittextZhuiHaoMaxBei"
+            android:layout_width="150px"
+            android:layout_height="60px"
+            android:layout_toRightOf="@id/ZhuiHaoMaxBei"
+            android:background="@drawable/edit_user_pwd_bg"
+            android:hint="100"
+            android:paddingLeft="20px"
+            android:textSize="35px" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativelayout5"
+        android:layout_below="@id/relativelayout4"
+        android:layout_width="match_parent"
+        android:layout_height="60px"
+        android:layout_margin="10px">
+
+        <TextView
+            android:id="@+id/ZhuiHaoShouYi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="起始倍数: "
+            android:textSize="35px" />
+
+        <EditText
+            android:id="@+id/EdittextZhuiHaoShouYi"
+            android:layout_width="150px"
+            android:layout_height="60px"
+            android:layout_toRightOf="@id/ZhuiHaoShouYi"
+            android:background="@drawable/edit_user_pwd_bg"
+            android:hint="1"
+            android:paddingLeft="20px"
+            android:textSize="35px" />
+
+        <TextView
+            android:id="@+id/ZhuiHaoB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20px"
+            android:layout_toRightOf="@id/EdittextZhuiHaoShouYi"
+            android:text="%"
+            android:textSize="35px" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30px"
+            android:layout_toRightOf="@id/ZhuiHaoB"
+            android:background="@drawable/vipman_btn"
+            android:text="生成追号单"
+            android:textColor="@android:color/white" />
+
+    </RelativeLayout>
+
+    <ListView
+        android:layout_below="@id/relativelayout5"
+        android:id="@+id/LotteryZhuiHaoListView"
+        android:layout_width="match_parent"
+        android:layout_height="520px"></ListView>
+
+
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:id="@+id/Linear7"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_gravity="center"
+            android:layout_margin="15px"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/vipman_btn"
+            android:text="取消"
+            android:textColor="@android:color/white"
+            android:textSize="30px" />
+
+        <Button
+            android:layout_gravity="center"
+            android:layout_margin="15px"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/vipman_btn"
+            android:text="立即投注"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/Linear6"
+        android:layout_above="@id/Linear7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="全选"
+            android:textSize="30px" />
+
+        <CheckBox
+            android:textSize="30px"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="中奖后停止追号？" />
+    </LinearLayout>
+</RelativeLayout>

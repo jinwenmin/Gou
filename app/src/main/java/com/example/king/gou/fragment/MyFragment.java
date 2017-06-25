@@ -22,6 +22,7 @@ import com.example.king.gou.fragment.myfragment.OrderFragment;
 import com.example.king.gou.fragment.myfragment.ProxyFragment;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.ui.GameCenterActivity;
+import com.example.king.gou.ui.LotteryZhuiHaoActivity;
 import com.example.king.gou.ui.MainActivity;
 import com.example.king.gou.ui.SettingActivity;
 import com.example.king.gou.ui.frmMyActivity.MessageActivity;
@@ -162,6 +163,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
                 startActivity(new Intent(getActivity(), ReChargeActivity.class));
                 break;
             case R.id.ToQukuan:
+                startActivity(new Intent(getActivity(), LotteryZhuiHaoActivity.class));
                 break;
             case R.id.ToZhuanZhang:
                 startActivity(new Intent(getActivity(), ZhuanZhangActivity.class));

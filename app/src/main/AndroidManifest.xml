@@ -3,7 +3,7 @@
     package="com.example.king.gou">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <application
         android:name=".MyApp"
         android:allowBackup="true"
@@ -64,7 +64,8 @@
         <activity android:name=".ui.frmMyActivity.ZhuanZhangActivity" />
         <activity android:name=".ui.frmMyActivity.MessageActivity" />
         <activity android:name=".ui.frmMyActivity.NewMessageActivity" />
-        <activity android:name=".ui.frmMyActivity.NoticeContentActivity"></activity>
+        <activity android:name=".ui.frmMyActivity.NoticeContentActivity" />
+        <activity android:name=".ui.LotteryZhuiHaoActivity"></activity>
     </application>
 
 </manifest>
