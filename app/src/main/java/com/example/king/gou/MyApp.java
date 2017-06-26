@@ -10,7 +10,16 @@ import android.content.Context;
 public class MyApp extends Application {
     private static MyApp myApp;
     private static Context context;
-    private String sessionId="";
+    private String sessionId = "";
+    private boolean isFinger;
+
+    public boolean isFinger() {
+        return isFinger;
+    }
+
+    public void setFinger(boolean finger) {
+        isFinger = finger;
+    }
 
     public static MyApp getInstance() {
         return myApp;

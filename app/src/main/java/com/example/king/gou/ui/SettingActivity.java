@@ -5,6 +5,8 @@ import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
@@ -22,11 +24,13 @@ import android.widget.Toast;
 
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.ui.settingfragment.MoneyProtectActivity;
 import com.example.king.gou.ui.settingfragment.UpdateMoneyPwdActivity;
 import com.example.king.gou.ui.settingfragment.UpdateNickNameActivity;
 import com.example.king.gou.ui.settingfragment.UpdatePwdActivity;
+import com.example.king.gou.utils.DataBaseHelper;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import butterknife.BindView;
@@ -98,12 +102,16 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
     View contentView;
     private ImageView fingerImg;
     private TextView fingerText;
+    DataBaseHelper dataBaseHelper;
+    SQLiteDatabase writableDatabase;
+    String isfinger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
+        initDataHelper();
         SettingUpdataPwd.setOnClickListener(this);
         updateMoneyPwd.setOnClickListener(this);
         updateNickName.setOnClickListener(this);
@@ -111,7 +119,35 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
         LinearCheck1.setOnClickListener(this);
         manager = (FingerprintManager) this.getSystemService(Context.FINGERPRINT_SERVICE);
         mKeyManager = (KeyguardManager) this.getSystemService(Context.KEYGUARD_SERVICE);
+        switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b == true) {
+                    writableDatabase.execSQL("insert into fingers(isfinger) values('true')");
+                } else {
+                    writableDatabase.execSQL("insert into fingers(isfinger) values('false')");
+                }
+            }
+        });
+        Cursor cursor = writableDatabase.query("fingers", new String[]{"id", "isfinger"}, "id=?", new String[]{"1"}, null, null, null);
+        while (cursor.moveToNext()) {
+            isfinger = cursor.getString(cursor.getColumnIndex("isfinger"));
+            Log.d("这个isFInger==",isfinger);
+            if ("true".equals(isfinger)) {
+                switch1.setChecked(true);
+            }
+            else{
+                switch1.setChecked(false);
+            }
+        }
+    }
 
+    private void initDataHelper() {
+        dataBaseHelper = new DataBaseHelper(SettingActivity.this, "fingers.db", null, 1);
+        /* 创建两张表 */
+        writableDatabase = dataBaseHelper.getWritableDatabase();
+        writableDatabase.execSQL("create table  if not exists fingers(id INTEGER PRIMARY KEY autoincrement,isfinger String);");
+        writableDatabase.execSQL("insert into fingers(isfinger) values('false')");
 
     }
 
@@ -208,8 +244,10 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
             fingerImg.setImageResource(R.drawable.ic_fingerprint_success);
             Toast.makeText(SettingActivity.this, "指纹识别成功", Toast.LENGTH_SHORT).show();
             if (switch1.isChecked()) {
+                writableDatabase.execSQL("update fingers set isfinger = true where id = 1");
                 switch1.setChecked(false);
             } else {
+                writableDatabase.execSQL("update fingers set isfinger = false where id = 1");
                 switch1.setChecked(true);
             }
             alertView.dismiss();

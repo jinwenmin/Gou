@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.AsyncTask;
@@ -31,9 +33,11 @@ import android.widget.Toast;
 
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.LoginState;
 import com.example.king.gou.service.RetrofitService;
+import com.example.king.gou.utils.DataBaseHelper;
 import com.example.king.gou.utils.HttpEngine;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -46,7 +50,7 @@ import butterknife.ButterKnife;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataListener,OnItemClickListener {
+public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataListener, OnItemClickListener {
     @BindView(R.id.HomeFrmRadioBtn)
     RadioButton HomeFrmRadioBtn;
     @BindView(R.id.GameFrmRadioBtn)
@@ -74,25 +78,69 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
     FingerprintManager manager;
     KeyguardManager mKeyManager;
     private final static int REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS = 0;
+    DataBaseHelper dataBaseHelper;
+    DataBaseHelper dataBaseFingerHelper;
+
+    String id = null;
+
+    String name = null;
+    String isfinger;
+    SQLiteDatabase writableDatabase1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        dataBaseHelper = new DataBaseHelper(MainActivity.this, "yigou.db", null, 1);
+        /* 创建两张表 */
+        SQLiteDatabase writableDatabase = dataBaseHelper.getWritableDatabase();
+        writableDatabase.execSQL("create table  if not exists student(id INTEGER PRIMARY KEY autoincrement,name text);");
+        /* 给表添加数据： *//* 方式1： *//* 增加一条数据 */
+        writableDatabase.execSQL("insert into student(name) values('mike')");
+        Cursor cursor = writableDatabase.query("student", new String[]{"id", "name"}, "id=?", new String[]{"1"}, null, null, null);
+        while (cursor.moveToNext()) {
+
+            id = cursor.getString(cursor.getColumnIndex("id"));
+
+            name = cursor.getString(cursor.getColumnIndex("name"));
+
+        }
+        Toast.makeText(MainActivity.this, "查询数据为：id=" + id + " \n name=" + name, Toast.LENGTH_LONG).show();
+
+
         manager = (FingerprintManager) this.getSystemService(Context.FINGERPRINT_SERVICE);
         mKeyManager = (KeyguardManager) this.getSystemService(Context.KEYGUARD_SERVICE);
-        if (isFinger()) {
-            alertView = new AlertView(null, null, "取消", null, null, MainActivity.this, AlertView.Style.Alert, MainActivity.this);
-            contentView = LayoutInflater.from(getApplicationContext()).inflate(
-                    R.layout.item_finger, null);
-            alertView.addExtView(contentView);
-            fingerImg = ((ImageView) contentView.findViewById(R.id.fingerImg));
-            fingerText = ((TextView) contentView.findViewById(R.id.fingerText));
-            alertView.show();
-            Toast.makeText(MainActivity.this, "请进行指纹识别", Toast.LENGTH_LONG).show();
-            Log(TAG, "keyi");
-            startListening(null);
+
+        dataBaseFingerHelper = new DataBaseHelper(MainActivity.this, "fingers.db", null, 1);
+        /* 创建两张表 */
+        writableDatabase1 = dataBaseFingerHelper.getWritableDatabase();
+        writableDatabase1.execSQL("create table  if not exists fingers(id INTEGER PRIMARY KEY autoincrement,isfinger String);");
+        writableDatabase1.execSQL("insert into fingers(isfinger) values('false')");
+
+        dataBaseFingerHelper = new DataBaseHelper(MainActivity.this, "fingers.db", null, 1);
+        /* 创建两张表 */
+        writableDatabase1 = dataBaseFingerHelper.getWritableDatabase();
+        Cursor cursor2 = writableDatabase1.query("fingers", new String[]{"id", "isfinger"}, "id=?", new String[]{"1"}, null, null, null);
+        while (cursor2.moveToNext()) {
+            isfinger = cursor2.getString(cursor2.getColumnIndex("isfinger"));
+            Log.d("这个isFInger==", isfinger);
+            if ("true".equals(isfinger)) {
+                if (isFinger()) {
+                    alertView = new AlertView(null, null, "取消", null, null, MainActivity.this, AlertView.Style.Alert, MainActivity.this);
+                    contentView = LayoutInflater.from(getApplicationContext()).inflate(
+                            R.layout.item_finger, null);
+                    alertView.addExtView(contentView);
+                    fingerImg = ((ImageView) contentView.findViewById(R.id.fingerImg));
+                    fingerText = ((TextView) contentView.findViewById(R.id.fingerText));
+                    alertView.show();
+                    Toast.makeText(MainActivity.this, "请进行指纹识别", Toast.LENGTH_LONG).show();
+                    Log(TAG, "keyi");
+                    startListening(null);
+                }
+            }
         }
+
+
         login_userinfo = getSharedPreferences("login_userinfo", Activity.MODE_PRIVATE);
         login_uid = login_userinfo.getInt("login_uid", 0);
         login_sessionid = login_userinfo.getString("login_sessionid", "");
@@ -141,7 +189,7 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
         final TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                 RetrofitService.getInstance().LoginState(MainActivity.this, login_uid, 1, 0, new String[]{String.valueOf(login_uid)}, 1);
+                RetrofitService.getInstance().LoginState(MainActivity.this, login_uid, 1, 0, new String[]{String.valueOf(login_uid)}, 1);
 
             }
         };
@@ -289,6 +337,8 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
 
     @Override
     public void onItemClick(Object o, int position) {
-
+        if (position == AlertView.CANCELPOSITION) {
+            finish();
+        }
     }
 }

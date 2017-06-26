@@ -36,10 +36,12 @@
             android:layout_toLeftOf="@id/Erweima"
             android:src="@drawable/ic_home_share" />
     </RelativeLayout>
-<com.example.king.gou.utils.MainScrollUpAdvertisementView
-    android:layout_below="@id/home_top"
-    android:layout_width="fill_parent"
-    android:layout_height="60px"></com.example.king.gou.utils.MainScrollUpAdvertisementView>
+
+    <com.example.king.gou.utils.MainScrollUpAdvertisementView
+        android:layout_width="fill_parent"
+        android:layout_height="60px"
+        android:layout_below="@id/home_top"></com.example.king.gou.utils.MainScrollUpAdvertisementView>
+
     <com.jude.rollviewpager.RollPagerView
         android:id="@+id/home_viewpager"
         android:layout_width="fill_parent"
@@ -83,32 +85,32 @@
                         android:layout_height="wrap_content">
 
                         <ImageView
-                            android:layout_gravity="center_vertical"
                             android:id="@+id/ScrollImg1"
                             android:layout_width="300px"
                             android:layout_height="150px"
+                            android:layout_gravity="center_vertical"
                             android:layout_marginLeft="8px" />
 
                         <ImageView
 
-                            android:layout_gravity="center_vertical"
                             android:id="@+id/ScrollImg2"
                             android:layout_width="300px"
                             android:layout_height="150px"
+                            android:layout_gravity="center_vertical"
                             android:layout_marginLeft="8px" />
 
                         <ImageView
-                            android:layout_gravity="center_vertical"
                             android:id="@+id/ScrollImg3"
                             android:layout_width="300px"
                             android:layout_height="150px"
+                            android:layout_gravity="center_vertical"
                             android:layout_marginLeft="8px" />
 
                         <ImageView
-                            android:layout_gravity="center_vertical"
                             android:id="@+id/ScrollImg4"
                             android:layout_width="300px"
                             android:layout_height="150px"
+                            android:layout_gravity="center_vertical"
                             android:layout_marginLeft="8px" />
                     </LinearLayout>
                 </HorizontalScrollView>
@@ -121,12 +123,24 @@
                     android:background="@color/top_background">
 
                     <TextView
+                        android:textSize="30px"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="8px"
                         android:text="我的游戏"
                         android:textColor="@android:color/white" />
+
+                    <TextView
+                        android:id="@+id/HomeFragment_Text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="8px"
+                        android:text="以下是经常使用的游戏类型"
+                        android:textColor="@android:color/white"
+                        android:textSize="30px" />
 
                     <TextView
                         android:id="@+id/HomeFragment_addGame"
@@ -136,7 +150,8 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="8px"
                         android:text="添加游戏"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@android:color/white"
+                        android:visibility="gone" />
                 </RelativeLayout>
             </RelativeLayout>
         </com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader>
