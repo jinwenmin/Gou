@@ -60,14 +60,15 @@ public class UpdatePwdActivity extends AutoLayoutActivity implements View.OnClic
                 String oldPwd = UpdataPwdOldPwd.getText().toString().trim();
                 String newPwd = UpdataPwdNewPwd.getText().toString().trim();
                 String newPwdCheck = UpdataPwdCheckNewPwd.getText().toString().trim();
-                // if (oldPwd != null && newPwd != null && newPwdCheck != null && newPwd.equals(newPwdCheck)) {
-                Log.d("修改密码界面用户名", MyApp.getInstance().getUserName());
-                String hmacshaOld = RxUtils.getInstance().HMACSHA256(oldPwd, MyApp.getInstance().getUserName());
-                Log.d("加密后的原密码", hmacshaOld);
-                String pwd = RxUtils.getInstance().HMACSHA256(newPwd, MyApp.getInstance().getUserName());
-                RetrofitService.getInstance().getUpDataPwd(this, hmacshaOld, pwd);
+                if (oldPwd != null && newPwd != null && newPwdCheck != null && newPwd.equals(newPwdCheck)) {
+                    Log.d("修改密码界面用户名", MyApp.getInstance().getUserName());
+                    String hmacshaOld = RxUtils.getInstance().HMACSHA256(oldPwd, MyApp.getInstance().getUserName());
+                    Log.d("加密后的原密码", hmacshaOld);
+                    String pwd = RxUtils.getInstance().HMACSHA256(newPwd, MyApp.getInstance().getUserName());
+                    Log.d("加密后的修改过的密码", pwd);
+                    RetrofitService.getInstance().getUpDataPwd(this, hmacshaOld, pwd);
 
-                // }
+                }
 
 
                 break;

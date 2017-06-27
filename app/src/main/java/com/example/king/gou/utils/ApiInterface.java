@@ -10,6 +10,7 @@ import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.bean.UserAmount;
 import com.example.king.gou.bean.UserInfo;
 
+import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -182,7 +183,93 @@ public interface ApiInterface {
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/password-manage-save")
     Call<RestultInfo> getUpDatePwd(@Query("p0") String p0,//原密码
-                              @Query("p1") String p1//新密码
+                                   @Query("p1") String p1//新密码
     );
 
+    //修改登录密码
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/own-withdraw-check")
+    Call<RestultInfo> getCheckSafePwd(@Query("p") String p//安全密码，加密方式同登录密码
+    );
+
+    //保存安全问题
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/security-question-save")
+    Call<RestultInfo> getSaveSafeQues(
+            @Query("q") String q,//安全问题
+            @Query("a") String a//安全问题的答案
+    );
+
+    //获取绑定银行卡数据
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/get-card-datas")
+    Call<Object> getCardDatas();
+
+    //验证银行卡号
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/check-bankcard-resource")
+    Call<Object> getCheckBankCardNum(
+            @Query("name") String name,//持卡人姓名
+            @Query("card") String card//银行卡号
+
+    );
+
+    //获取省市级联
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/get-city-datas")
+    Call<Object> getPrivens(
+            @Query("id") int id//省份id
+
+    );
+
+    //保存银行卡  应用场景：绑定新卡保存银行卡数据
+
+    /*{
+    bank：bank，
+    province_id：province_id，
+    province：province，
+    city_id：city_id，
+    city：city，
+    branch：branch，
+    name：name，
+    card：card
+
+    bank[int]：开户银行id
+    province_id[int]：省份id
+    province[string]：省份
+    city_id[int]：城市id
+    city[string]：城市
+    branch[string]：支行名称
+    name[string]：持卡人姓名
+    card[string]：银行卡号
+    }*/
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/binding-card-save")
+    Call<RestultInfo> getSaveBankCard(
+            @Query("bank") int bank,//开户银行id
+            @Query("province_id") int province_id,//省份id
+            @Query("province") String province,//省份
+            @Query("city_id") int city_id,//城市id
+            @Query("city") String city,//城市
+            @Query("branch") String branch,//支行名称
+            @Query("name") String name,//持卡人姓名
+            @Query("card") String card//银行卡号
+
+    );
+
+    //获取提现数据
+    //使用场景：提现界面数据初始(提现功能先必须验证安全密码，通过后才能提现)
+    //请求地址：/get-withdraw-datas
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/get-withdraw-datas")
+    Call<Object> getWithDrawData();
+
+    //添加提现申请
+    //  应用场景：提现验证通过后创建提现申请
+    // 请求地址：/own-withdraw-create
+    // 请求模式：POST
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/own-withdraw-create")
+    Call<RestultInfo> getWithDrawCreate(@Query("aid") int aid,//收款银行卡id
+                                   @Query("amount") BigDecimal amount);//提现金额
 }

@@ -74,6 +74,7 @@
             android:textSize="30px" />
 
         <EditText
+            android:id="@+id/SavePwdProtectEdittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30px"
@@ -183,6 +184,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4px"
@@ -208,6 +210,7 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/SavePwdProtect"
         android:layout_width="match_parent"
         android:layout_height="70px"
         android:layout_marginLeft="80px"

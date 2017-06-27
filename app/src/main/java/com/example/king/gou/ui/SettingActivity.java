@@ -1,43 +1,31 @@
 package com.example.king.gou.ui;
 
-import android.Manifest;
 import android.app.KeyguardManager;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
-import android.os.CancellationSignal;
-import android.support.v4.app.ActivityCompat;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bigkoo.alertview.AlertView;
-import com.bigkoo.alertview.OnItemClickListener;
-import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
+import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.ui.settingfragment.MoneyProtectActivity;
 import com.example.king.gou.ui.settingfragment.UpdateMoneyPwdActivity;
 import com.example.king.gou.ui.settingfragment.UpdateNickNameActivity;
-import com.example.king.gou.ui.settingfragment.UpdatePwdActivity;
 import com.example.king.gou.utils.DataBaseHelper;
+import com.example.king.gou.utils.HttpEngine;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class SettingActivity extends AutoLayoutActivity implements View.OnClickListener{
+public class SettingActivity extends AutoLayoutActivity implements View.OnClickListener, HttpEngine.DataListener {
 
     @BindView(R.id._back)
     ImageView Back;
@@ -97,6 +85,8 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
     private final static int REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS = 0;
     @BindView(R.id.LinearCheck1)
     RelativeLayout LinearCheck1;
+    @BindView(R.id.getCardData)
+    RelativeLayout getCardData;
     private AlertView alertView;
     ; // 一个自定义的布局，作为显示的内容
     View contentView;
@@ -111,12 +101,13 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
-      //  initDataHelper();
+        //  initDataHelper();
         SettingUpdataPwd.setOnClickListener(this);
         updateMoneyPwd.setOnClickListener(this);
         updateNickName.setOnClickListener(this);
         PwdProtect.setOnClickListener(this);
         LinearCheck1.setOnClickListener(this);
+        getCardData.setOnClickListener(this);
        /* manager = (FingerprintManager) this.getSystemService(Context.FINGERPRINT_SERVICE);
         mKeyManager = (KeyguardManager) this.getSystemService(Context.KEYGUARD_SERVICE);
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -160,7 +151,8 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.Setting_UpdataPwd:
-                StartA(UpdatePwdActivity.class);
+                //   StartA(UpdatePwdActivity.class);
+                StartA(CheckSafePwdActivity.class);
                 break;
             case R.id.Pwd_protect:
                 StartA(MoneyProtectActivity.class);
@@ -185,8 +177,25 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
                     startListening(null);
                 }*/
                 break;
-
+            case R.id.getCardData:
+                RetrofitService.getInstance().getCardDatas(this);
+                break;
         }
+    }
+
+    @Override
+    public void onReceivedData(int apiId, Object object, int errorId) {
+
+    }
+
+    @Override
+    public void onRequestStart(int apiId) {
+
+    }
+
+    @Override
+    public void onRequestEnd(int apiId) {
+
     }
 /*
     public boolean isFinger() {

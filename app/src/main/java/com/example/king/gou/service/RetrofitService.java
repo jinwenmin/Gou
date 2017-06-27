@@ -24,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.util.ArrayList;
@@ -63,6 +64,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_UPDATENICKNAME = 7;//修改用户昵称
     public static int API_ID_SAFEQUES = 8;//获取安全问题
     public static int API_ID_UPDATAPWD = 9;//修改登录密码
+    public static int API_ID_SAFEPWD = 10;//验证安全密码
     private Retrofit retrofit;
     private ApiInterface apiInterface;
     String sessionLoginId;
@@ -588,7 +590,7 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
-                listener.onReceivedData(API_ID_UPDATAPWD,response.body(),API_ID_ERROR);
+                listener.onReceivedData(API_ID_UPDATAPWD, response.body(), API_ID_ERROR);
                 Log.d("修改密码的结果", response.body().toString());
             }
 
@@ -597,7 +599,151 @@ public class RetrofitService extends HttpEngine {
 
             }
         });
+    }
 
+    //验证安全密码
+    public void getCheckSafePwd(final DataListener listener, String p) {
+        Call<RestultInfo> clone = apiInterface.getCheckSafePwd(p).clone();
+        clone.enqueue(new Callback<RestultInfo>() {
+            @Override
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+                listener.onReceivedData(API_ID_SAFEPWD, response.body(), API_ID_ERROR);
+                Log.d("验证安全问题的结果", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //保存安全问题
+    public void getSaveSafeQus(DataListener listener, String q, String a) {
+        Call<RestultInfo> infoCall = apiInterface.getSaveSafeQues(q, a).clone();
+        infoCall.enqueue(new Callback<RestultInfo>() {
+            @Override
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+                Log.d("验证安全密码", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //获取绑定的银行卡的数据
+    public void getCardDatas(DataListener listener) {
+        Call<Object> clone = apiInterface.getCardDatas().clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("获取绑定的银行卡的数据", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //验证银行卡号
+    public void getCheckCardNum(DataListener listener, String name, String card) {
+        Call<Object> checkBankCardNum = apiInterface.getCheckBankCardNum(name, card);
+        Call<Object> clone = checkBankCardNum.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("验证卡号返回的", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    //获得省市级联动
+    public void getPrivens(DataListener listener, int id) {
+        Call<Object> objectCall = apiInterface.getPrivens(id).clone();
+        objectCall.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("获取省市联动", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    /*
+        bank[int]：开户银行id
+        province_id[int]：省份id
+        province[string]：省份
+        city_id[int]：城市id
+        city[string]：城市
+        branch[string]：支行名称
+        name[string]：持卡人姓名
+        card[string]：银行卡号*/
+    //保存银行卡  应用场景：绑定新卡保存银行卡数据
+    public void getSaveBankCard(DataListener listener, int bank, int province_id, String province, int city_id, String city, String branch, String name, String card) {
+        Call<RestultInfo> saveBankCard = apiInterface.getSaveBankCard(bank, province_id, province, city_id, city, branch, name, card);
+        Call<RestultInfo> clone = saveBankCard.clone();
+        clone.enqueue(new Callback<RestultInfo>() {
+            @Override
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+                Log.d("保存银行卡返回的数据", response.body().toString());
+
+            }
+
+            @Override
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //获取提现数据
+    public void getWithDrawDatas(DataListener listener) {
+        Call<Object> clone = apiInterface.getWithDrawData().clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("获取提现数据", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+    //添加提现申请
+    //  应用场景：提现验证通过后创建提现申请
+    public void getWithDrawCreates(DataListener listener, int aid, BigDecimal amount){
+        Call<RestultInfo> clone = apiInterface.getWithDrawCreate(aid, amount).clone();
+        clone.enqueue(new Callback<RestultInfo>() {
+            @Override
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+
+
+            }
+
+            @Override
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
+
+            }
+        });
 
     }
 }

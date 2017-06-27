@@ -1,12 +1,14 @@
 package com.example.king.gou.ui.settingfragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 
 import com.example.king.gou.R;
 import com.example.king.gou.service.RetrofitService;
@@ -18,6 +20,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 
 
 public class MoneyProtectActivity extends AutoLayoutActivity implements View.OnClickListener, HttpEngine.DataListener {
@@ -33,6 +36,10 @@ public class MoneyProtectActivity extends AutoLayoutActivity implements View.OnC
     @BindView(R.id.SpinnerQues3)
     Spinner SpinnerQues3;
     List<String> Safes = new ArrayList<String>();
+    @BindView(R.id.SavePwdProtect)
+    Button SavePwdProtect;
+    @BindView(R.id.SavePwdProtectEdittext)
+    EditText SavePwdProtectEdittext;
     private ArrayAdapter<String> adapter;
 
     @Override
@@ -47,7 +54,7 @@ public class MoneyProtectActivity extends AutoLayoutActivity implements View.OnC
 
     private void initClick() {
         Back.setOnClickListener(this);
-
+        SavePwdProtect.setOnClickListener(this);
     }
 
     @Override
@@ -55,6 +62,16 @@ public class MoneyProtectActivity extends AutoLayoutActivity implements View.OnC
         switch (view.getId()) {
             case R.id._back:
                 finish();
+                break;
+            case R.id.SavePwdProtect:
+                String selectedItem = (String) SpinnerQues1.getSelectedItem();
+                Log.d("选中的问题", selectedItem);
+                String SaveEditeText = SavePwdProtectEdittext.getText().toString().trim();
+                if (SaveEditeText == null) {
+                    Toasty.error(MoneyProtectActivity.this, "答案不能为空", 2000).show();
+                    return;
+                }
+                RetrofitService.getInstance().getSaveSafeQus(this, selectedItem, SaveEditeText);
                 break;
         }
     }
@@ -69,8 +86,7 @@ public class MoneyProtectActivity extends AutoLayoutActivity implements View.OnC
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 //第四步：将适配器添加到下拉列表上
                 SpinnerQues1.setAdapter(adapter);
-                SpinnerQues2.setAdapter(adapter);
-                SpinnerQues3.setAdapter(adapter);
+
 
             }
         }
