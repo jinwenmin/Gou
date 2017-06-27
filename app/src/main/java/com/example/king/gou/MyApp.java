@@ -12,6 +12,24 @@ public class MyApp extends Application {
     private static Context context;
     private String sessionId = "";
     private boolean isFinger;
+    private String UserNickName;
+    private String UserName;
+
+    public String getUserName() {
+        return UserName;
+    }
+
+    public void setUserName(String userName) {
+        UserName = userName;
+    }
+
+    public String getUserNickName() {
+        return UserNickName;
+    }
+
+    public void setUserNickName(String userNickName) {
+        UserNickName = userNickName;
+    }
 
     public boolean isFinger() {
         return isFinger;

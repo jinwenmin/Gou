@@ -59,7 +59,7 @@ public class MyAdapter extends SectionedBaseAdapter {
     public View getItemView(final int section, final int position, View convertView, ViewGroup parent) {
         final ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_game_add, null);
+            convertView = mInflater.inflate(R.layout.item_game, null);
             viewHolder = new ViewHolder();
             viewHolder.img = (ImageView) convertView.findViewById(R.id.img1);
             viewHolder.name = (TextView) convertView.findViewById(R.id.text1);

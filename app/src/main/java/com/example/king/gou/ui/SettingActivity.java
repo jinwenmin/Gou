@@ -37,7 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class SettingActivity extends AutoLayoutActivity implements View.OnClickListener, OnItemClickListener {
+public class SettingActivity extends AutoLayoutActivity implements View.OnClickListener{
 
     @BindView(R.id._back)
     ImageView Back;
@@ -111,13 +111,13 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
-        initDataHelper();
+      //  initDataHelper();
         SettingUpdataPwd.setOnClickListener(this);
         updateMoneyPwd.setOnClickListener(this);
         updateNickName.setOnClickListener(this);
         PwdProtect.setOnClickListener(this);
         LinearCheck1.setOnClickListener(this);
-        manager = (FingerprintManager) this.getSystemService(Context.FINGERPRINT_SERVICE);
+       /* manager = (FingerprintManager) this.getSystemService(Context.FINGERPRINT_SERVICE);
         mKeyManager = (KeyguardManager) this.getSystemService(Context.KEYGUARD_SERVICE);
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -139,7 +139,7 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
             else{
                 switch1.setChecked(false);
             }
-        }
+        }*/
     }
 
     private void initDataHelper() {
@@ -172,7 +172,7 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
                 StartA(UpdateMoneyPwdActivity.class);
                 break;
             case R.id.LinearCheck1:
-                if (isFinger()) {
+               /* if (isFinger()) {
                     alertView = new AlertView(null, null, "取消", null, null, SettingActivity.this, AlertView.Style.Alert, SettingActivity.this);
                     contentView = LayoutInflater.from(getApplicationContext()).inflate(
                             R.layout.item_finger, null);
@@ -183,12 +183,12 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
                     Toast.makeText(SettingActivity.this, "请进行指纹识别", Toast.LENGTH_LONG).show();
                     Log(TAG, "keyi");
                     startListening(null);
-                }
+                }*/
                 break;
 
         }
     }
-
+/*
     public boolean isFinger() {
 
         //android studio 上，没有这个会报错
@@ -275,9 +275,9 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
 
     }
 
-    /**
+    *//**
      * 锁屏密码
-     */
+     *//*
     private void showAuthenticationScreen() {
 
         Intent intent = mKeyManager.createConfirmDeviceCredentialIntent("finger", "测试指纹识别");
@@ -305,5 +305,5 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
     @Override
     public void onItemClick(Object o, int position) {
 
-    }
+    }*/
 }

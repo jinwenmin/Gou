@@ -35,6 +35,7 @@ import com.example.king.gou.ui.gameAcVpFrms.NoDrawFragment;
 import com.example.king.gou.ui.gameAcVpFrms.NoWinFragment;
 import com.example.king.gou.ui.gameAcVpFrms.WinFragment;
 import com.example.king.gou.utils.DateUtil;
+import com.zhy.autolayout.AutoLayoutActivity;
 
 import net.lemonsoft.lemonbubble.LemonBubble;
 
@@ -49,7 +50,7 @@ import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
 
 
-public class GameJiluActivity extends AppCompatActivity implements View.OnClickListener {
+public class GameJiluActivity extends AutoLayoutActivity implements View.OnClickListener {
 
     @BindView(R.id.gamejl_back)
     ImageView gamejlBack;

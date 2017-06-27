@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import com.example.king.gou.bean.Login;
 import com.example.king.gou.bean.LoginState;
 import com.example.king.gou.bean.NoticeContent;
+import com.example.king.gou.bean.RestultInfo;
+
 import com.example.king.gou.bean.UserAmount;
 import com.example.king.gou.bean.UserInfo;
 
@@ -150,4 +152,37 @@ public interface ApiInterface {
                                   @Query("alid") int alid//活动层级id
 
     );
+
+    //用户信息页面修改昵称
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/profile-save")
+    Call<RestultInfo> getNickNameChange(@Query("nickname") String nickname//用户新昵称
+    );
+
+    //强制修改初始密码
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/password-manage-save2")
+    Call<RestultInfo> getUpdateFirstPwd(@Query("p0") String p0,//初始密码
+                                        @Query("p0") String p1,//新密码
+                                        @Query("p0") String p2,//安全密码
+                                        @Query("email") String email//邮箱
+    );
+
+    //获取安全问题
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/get-questions")
+    Call<Object> getSafeQues();
+
+    //获取首页的公告或者滚动栏
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/notice-view-pop")
+    Call<Object> getHomeNotice();
+
+    //修改登录密码
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/password-manage-save")
+    Call<RestultInfo> getUpDatePwd(@Query("p0") String p0,//原密码
+                              @Query("p1") String p1//新密码
+    );
+
 }

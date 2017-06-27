@@ -46,6 +46,7 @@
             android:textSize="30px" />
 
         <EditText
+            android:id="@+id/UpdataPwdOldPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -85,6 +86,7 @@
             android:textSize="30px" />
 
         <EditText
+            android:id="@+id/UpdataPwdNewPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -109,6 +111,7 @@
             android:textSize="30px" />
 
         <EditText
+            android:id="@+id/UpdataPwdCheckNewPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -118,6 +121,7 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/UpDataPwdClick"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="80px"

@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.example.king.gou.bean.Login;
 import com.example.king.gou.bean.LoginState;
+import com.example.king.gou.bean.RestultInfo;
+
 import com.example.king.gou.bean.UserAmount;
 import com.example.king.gou.bean.UserInfo;
 import com.example.king.gou.utils.AddCookiesInterceptor;
@@ -57,7 +59,10 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_USERAMOUNT = 3;//用户的总金额
     public static int API_ID_USERINFO = 4;//用户的基本信息
     public static int API_ID_NOTICECONTENT = 5;//公告
-    public static int API_ID_NOTICECONTENT2 = 6;
+    public static int API_ID_NOTICECONTENT2 = 6;//公告详情
+    public static int API_ID_UPDATENICKNAME = 7;//修改用户昵称
+    public static int API_ID_SAFEQUES = 8;//获取安全问题
+    public static int API_ID_UPDATAPWD = 9;//修改登录密码
     private Retrofit retrofit;
     private ApiInterface apiInterface;
     String sessionLoginId;
@@ -238,7 +243,7 @@ public class RetrofitService extends HttpEngine {
 
         Call<Login> logine = apiInterface.getLogine(num, username, password, ipwd, reqkey, time);
         String s = logine.request().toString();
-        System.out.println("请求完全体=="+s);
+        System.out.println("请求完全体==" + s);
         Call<Login> clone = logine.clone();
         clone.enqueue(new Callback<Login>() {
             @Override
@@ -351,7 +356,7 @@ public class RetrofitService extends HttpEngine {
                 String time = s.substring(s.indexOf("time=") + 5, s.indexOf(", sticky"));
                 String user = s.substring(s.indexOf("user=") + 5, s.indexOf(", time"));
                 String content = s.substring(s.indexOf("content=") + 8, s.indexOf(", user"));
-                String[] strings=new String[]{content,time,user};
+                String[] strings = new String[]{content, time, user};
                 Log.d("Content的内容===", content);
                 Gson gson = new Gson();
                 listener.onReceivedData(API_ID_NOTICECONTENT2, strings, API_ID_ERROR);
@@ -490,6 +495,105 @@ public class RetrofitService extends HttpEngine {
 
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+    //修改用户昵称
+    public void getUpdateNickName(final DataListener listener, String nickName) {
+        Call<RestultInfo> nickNameChange = apiInterface.getNickNameChange(nickName);
+        Call<RestultInfo> clone = nickNameChange.clone();
+        clone.enqueue(new Callback<RestultInfo>() {
+            @Override
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+                Log.d("修改昵称返回的", response.body().getMsg() + "");
+                listener.onReceivedData(API_ID_UPDATENICKNAME, response.body(), API_ID_ERROR);
+            }
+
+            @Override
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+    //强制修改初始密码
+    public void getUpdateFirstPwd(DataListener listener, String p0, String p1, String p2, String email) {
+        Call<RestultInfo> clone = apiInterface.getUpdateFirstPwd(p0, p1, p2, email).clone();
+        clone.enqueue(new Callback<RestultInfo>() {
+            @Override
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    //获取安全问题
+    public void getSafeQues(final DataListener listener) {
+        Call<Object> clone = apiInterface.getSafeQues().clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                String ques = response.body().toString();
+                String substring = ques.substring(1, ques.length() - 1);
+
+                String[] split = substring.split(",");
+                List<String> Safe = new ArrayList<String>();
+                for (int i = 1; i < split.length; i = i + 2) {
+                    Log.d("安全问题是==", split[i].substring(0, split[i].length() - 1));
+                    Safe.add(split[i].substring(0, split[i].length() - 1));
+                }
+                listener.onReceivedData(API_ID_SAFEQUES, Safe, API_ID_ERROR);
+                Log.d("安全问题是2==", substring);
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    //获取首页的公告或者滚动栏的内容
+    public void getHomeNotice(DataListener listener) {
+        Call<Object> clone = apiInterface.getHomeNotice().clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("首页的公告==", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //修改登录密码
+    public void getUpDataPwd(final DataListener listener, String p0, String p1) {
+        Call<RestultInfo> clone = apiInterface.getUpDatePwd(p0, p1).clone();
+        clone.enqueue(new Callback<RestultInfo>() {
+            @Override
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+                listener.onReceivedData(API_ID_UPDATAPWD,response.body(),API_ID_ERROR);
+                Log.d("修改密码的结果", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
 
             }
         });

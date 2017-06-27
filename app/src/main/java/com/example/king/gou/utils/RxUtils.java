@@ -90,7 +90,7 @@ public class RxUtils {
             SecretKeySpec signingKey = new SecretKeySpec(key.getBytes(), "HmacSHA256");
             Mac mac = Mac.getInstance("HmacSHA256");
             mac.init(signingKey);
-            return byte2hex(mac.doFinal(data.getBytes()));
+            return byte2hex(mac.doFinal(data.getBytes())).toLowerCase();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (InvalidKeyException e) {

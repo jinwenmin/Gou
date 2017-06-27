@@ -1,7 +1,10 @@
 package com.example.king.gou.fragment;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.MyFrmPageAdapter;
 import com.example.king.gou.bean.UserAmount;
@@ -91,6 +95,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
     LinearLayout ToZhuanZhang;
     List<UserAmount> userAmount;
     List<UserInfo> userInfos;
+    private Broadcast broad;
 
     public static MyFragment newInstance() {
 
@@ -108,6 +113,11 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my, container, false);
         unbinder = ButterKnife.bind(this, view);
+        broad = new Broadcast();
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("action.NickName");
+        getActivity().registerReceiver(broad, intentFilter);
         RetrofitService.getInstance().getGame(this, 1, 0, 0, 0);
         RetrofitService.getInstance().getGame(this, 2, 0, 0, 0);
         RetrofitService.getInstance().getGame(this, 3, 0, 0, 0);
@@ -119,7 +129,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
         myFrmPageAdapter = new MyFrmPageAdapter(getChildFragmentManager());
         RetrofitService.getInstance().LoginUserAmount(this);
         RetrofitService.getInstance().GetUserInfo(this);
-      //  RetrofitService.getInstance().GetPrizeDetails(this, 100, 1);
+        RetrofitService.getInstance().getSafeQues(this);
+        //  RetrofitService.getInstance().GetPrizeDetails(this, 100, 1);
         // RetrofitService.getInstance().getGametype(this);
         initFrms();
         frmMyViewpager.setAdapter(myFrmPageAdapter);
@@ -195,6 +206,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
             userInfos = (List<UserInfo>) object;
             UserInfo userInfo = userInfos.get(0);
             frmMyNickName.setText(userInfo.getNname());
+            MyApp.getInstance().setUserNickName(userInfo.getNname());
             frmMyUserName.setText(userInfo.getUname());
             frmMyMoneyS.setText(userInfo.getSamount() + "");
             frmMyCount.setText(userInfo.getAmount() + "");
@@ -210,5 +222,25 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
     @Override
     public void onRequestEnd(int apiId) {
 
+    }
+
+    private class Broadcast extends BroadcastReceiver {
+
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("action.NickName")) {
+
+                frmMyNickName.setText(intent.getStringExtra("NickName"));
+
+            }
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(broad);
     }
 }

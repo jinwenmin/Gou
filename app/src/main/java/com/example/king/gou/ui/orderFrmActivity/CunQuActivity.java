@@ -8,12 +8,13 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 
 import com.example.king.gou.R;
+import com.zhy.autolayout.AutoLayoutActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class CunQuActivity extends AppCompatActivity implements View.OnClickListener {
+public class CunQuActivity extends AutoLayoutActivity implements View.OnClickListener {
 
     @BindView(R.id.gamejl_back)
     ImageView gamejlBack;

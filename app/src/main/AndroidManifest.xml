@@ -4,11 +4,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
-    <!--往sdcard中写入数据的权限 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-    <!--在sdcard中创建/删除文件的权限 -->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+    <!-- 往sdcard中写入数据的权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 在sdcard中创建/删除文件的权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".MyApp"
@@ -71,7 +71,8 @@
         <activity android:name=".ui.frmMyActivity.MessageActivity" />
         <activity android:name=".ui.frmMyActivity.NewMessageActivity" />
         <activity android:name=".ui.frmMyActivity.NoticeContentActivity" />
-        <activity android:name=".ui.LotteryZhuiHaoActivity"></activity>
+        <activity android:name=".ui.LotteryZhuiHaoActivity" />
+        <activity android:name=".ui.settingfragment.UpDateFirstPwdActivity"></activity>
     </application>
 
 </manifest>

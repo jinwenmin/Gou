@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CancellationSignal;
 import android.os.Handler;
@@ -50,7 +51,7 @@ import butterknife.ButterKnife;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataListener, OnItemClickListener {
+public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataListener {
     @BindView(R.id.HomeFrmRadioBtn)
     RadioButton HomeFrmRadioBtn;
     @BindView(R.id.GameFrmRadioBtn)
@@ -86,6 +87,7 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
     String name = null;
     String isfinger;
     SQLiteDatabase writableDatabase1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,19 +110,21 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
         Toast.makeText(MainActivity.this, "查询数据为：id=" + id + " \n name=" + name, Toast.LENGTH_LONG).show();
 
 
-        manager = (FingerprintManager) this.getSystemService(Context.FINGERPRINT_SERVICE);
+       /* manager = (FingerprintManager) this.getSystemService(Context.FINGERPRINT_SERVICE);
         mKeyManager = (KeyguardManager) this.getSystemService(Context.KEYGUARD_SERVICE);
 
         dataBaseFingerHelper = new DataBaseHelper(MainActivity.this, "fingers.db", null, 1);
-        /* 创建两张表 */
+        *//* 创建两张表 *//*
         writableDatabase1 = dataBaseFingerHelper.getWritableDatabase();
         writableDatabase1.execSQL("create table  if not exists fingers(id INTEGER PRIMARY KEY autoincrement,isfinger String);");
         writableDatabase1.execSQL("insert into fingers(isfinger) values('false')");
 
-        dataBaseFingerHelper = new DataBaseHelper(MainActivity.this, "fingers.db", null, 1);
-        /* 创建两张表 */
+        dataBaseFingerHelper = new DataBaseHelper(MainActivity.this, "fingers.db", null, 1);*/
+     /*   *//* 创建两张表 *//*
         writableDatabase1 = dataBaseFingerHelper.getWritableDatabase();
         Cursor cursor2 = writableDatabase1.query("fingers", new String[]{"id", "isfinger"}, "id=?", new String[]{"1"}, null, null, null);
+        int sdkInt = Build.VERSION.SDK_INT;
+        Log.d("手机版本", sdkInt + "");
         while (cursor2.moveToNext()) {
             isfinger = cursor2.getString(cursor2.getColumnIndex("isfinger"));
             Log.d("这个isFInger==", isfinger);
@@ -138,7 +142,7 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
                     startListening(null);
                 }
             }
-        }
+        }*/
 
 
         login_userinfo = getSharedPreferences("login_userinfo", Activity.MODE_PRIVATE);
@@ -227,9 +231,11 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
         super.onCreate(savedInstanceState, persistentState);
 
     }
-
+/*
     public boolean isFinger() {
+        if (Build.VERSION.SDK_INT>23) {
 
+        }
         //android studio 上，没有这个会报错
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, "没有指纹识别权限", Toast.LENGTH_SHORT).show();
@@ -308,9 +314,9 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
 
     }
 
-    /**
+    *//**
      * 锁屏密码
-     */
+     *//*
     private void showAuthenticationScreen() {
 
         Intent intent = mKeyManager.createConfirmDeviceCredentialIntent("finger", "测试指纹识别");
@@ -340,5 +346,5 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
         if (position == AlertView.CANCELPOSITION) {
             finish();
         }
-    }
+    }*/
 }

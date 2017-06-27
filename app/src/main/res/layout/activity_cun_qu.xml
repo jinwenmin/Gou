@@ -21,36 +21,38 @@
 
         <RadioGroup
             android:layout_width="400px"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="15px"
+            android:paddingTop="15px">
 
             <RadioButton
                 android:id="@+id/CunJl"
                 android:layout_width="0px"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/cunqu_left_top"
                 android:button="@null"
                 android:checked="true"
                 android:gravity="center"
-                android:padding="8px"
+
                 android:text="存款记录"
                 android:textColor="@color/select_cunqu_top_radiobutton"
-                android:textSize="30px" />
+                android:textSize="35px" />
 
             <RadioButton
                 android:id="@+id/Qujl"
                 android:layout_width="0px"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/cunqu_right_top"
                 android:button="@null"
                 android:gravity="center"
-                android:padding="8px"
+
                 android:text="取款记录"
                 android:textColor="@color/select_cunqu_top_radiobutton"
-                android:textSize="30px" />
+                android:textSize="35px" />
 
         </RadioGroup>
     </RelativeLayout>

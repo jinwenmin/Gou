@@ -17,6 +17,7 @@ import com.android.volley.RequestQueue;
 
 import com.android.volley.toolbox.Volley;
 import com.chaychan.viewlib.PowerfulEditText;
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.Login;
 import com.example.king.gou.service.RetrofitService;
@@ -150,7 +151,7 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
             return;
         }
         String password = RxUtils.getInstance().HMACSHA256(Login_Pwd, Login_UserName);
-        password = password.toLowerCase();
+
         Log.i("小写的密码消息", password);
         long timeMillis = System.currentTimeMillis();
         String s1 = RxUtils.getInstance().HMACSHA256(String.valueOf(timeMillis), Login_UserName);
@@ -218,6 +219,7 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
                 edit.putInt("login_uid", login.getUid());
                 edit.putString("login_sessionid", login.getSessionId());
                 edit.commit();
+                MyApp.getInstance().setUserName(Login_UserName);
                 startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
                 Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                 finish();

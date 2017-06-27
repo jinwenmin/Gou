@@ -17,7 +17,9 @@ import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.HomeGameAdapter;
 import com.example.king.gou.adapters.PageAdapter;
+import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.ui.AddGameActivity;
+import com.example.king.gou.utils.HttpEngine;
 import com.jude.rollviewpager.RollPagerView;
 
 import java.util.ArrayList;
@@ -31,7 +33,7 @@ import it.sephiroth.android.library.picasso.Picasso;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends BaseFragment implements View.OnClickListener {
+public class HomeFragment extends BaseFragment implements View.OnClickListener, HttpEngine.DataListener {
 
     @BindView(R.id.Erweima)
     ImageView Erweima;
@@ -79,6 +81,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         HomeFragmentAddGame.setOnClickListener(this);
         recycler.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         header.attachTo(recycler, true);
+        RetrofitService.getInstance().getHomeNotice(this);
         initImgs();
         HomeGameAdapter adapter = new HomeGameAdapter(getActivity());
         recycler.setAdapter(adapter);
@@ -129,5 +132,20 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(new Intent(getActivity(), AddGameActivity.class));
                 break;
         }
+    }
+
+    @Override
+    public void onReceivedData(int apiId, Object object, int errorId) {
+
+    }
+
+    @Override
+    public void onRequestStart(int apiId) {
+
+    }
+
+    @Override
+    public void onRequestEnd(int apiId) {
+
     }
 }

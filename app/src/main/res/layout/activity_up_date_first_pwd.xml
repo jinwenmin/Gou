@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.king.gou.ui.settingfragment.MoneyProtectActivity">
+    tools:context="com.example.king.gou.ui.settingfragment.UpdatePwdActivity">
 
     <RelativeLayout
-        android:id="@+id/MoneyProtectTop"
+        android:id="@+id/UpDatePwdTop"
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_height"
         android:background="@color/top_background">
@@ -21,198 +21,160 @@
             android:src="@drawable/ic_back" />
 
         <TextView
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="密码保护"
+            android:text="修改登录密码"
             android:textColor="@android:color/white"
             android:textSize="@dimen/top_textsize" />
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="30px"
-        android:text="请设置不一样的问题和答案,保存后"
-        android:textSize="30px" />
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:padding="15px">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="问题:"
-            android:textSize="30px" />
-
-        <Spinner
-            android:id="@+id/SpinnerQues1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30px"
-
-            android:spinnerMode="dropdown"
-            android:textSize="30px"></Spinner>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4px"
-        android:background="@android:color/white"
-        android:padding="15px">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="答案:"
-            android:textSize="30px" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30px"
-            android:background="@null"
-            android:gravity="center"
-            android:hint="输入答案"
-            android:textSize="30px"></EditText>
-    </LinearLayout>
-
-    <LinearLayout
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30px"
         android:background="@android:color/white"
-        android:padding="15px">
+        android:padding="20px">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="问题二:"
-            android:textSize="30px" />
-
-        <Spinner
-            android:id="@+id/SpinnerQues2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-
-            android:spinnerMode="dropdown"
-            android:textSize="30px"></Spinner>
-    </LinearLayout>
-
-    <LinearLayout
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4px"
-        android:background="@android:color/white"
-        android:padding="15px">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="答案:"
+            android:gravity="center"
+            android:text="当前密码"
+            android:textColor="@android:color/black"
             android:textSize="30px" />
 
         <EditText
+            android:id="@+id/UpDateOldPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30px"
             android:background="@null"
             android:gravity="center"
-            android:hint="输入答案"
-            android:textSize="30px"></EditText>
-    </LinearLayout>
-
-    <LinearLayout
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60px"
-        android:background="@android:color/white"
-        android:padding="15px">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="问题三:"
+            android:hint="请输入当前的密码"
             android:textSize="30px" />
-
-        <Spinner
-            android:id="@+id/SpinnerQues3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30px"
-            android:spinnerMode="dropdown"
-            android:textSize="30px"></Spinner>
     </LinearLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30px"
+        android:layout_marginTop="30px"
+        android:text="提示:"
+        android:textSize="25px" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30px"
+        android:text="密码由6至16个字符组成"
+        android:textSize="25px" />
+
     <LinearLayout
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4px"
+        android:layout_marginTop="30px"
         android:background="@android:color/white"
-        android:padding="15px">
+        android:padding="20px">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="答案:"
+            android:gravity="center"
+            android:text="输入新密码"
+            android:textColor="@android:color/black"
             android:textSize="30px" />
 
         <EditText
+            android:id="@+id/UpDateNewPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30px"
             android:background="@null"
             android:gravity="center"
-            android:hint="输入答案"
-            android:textSize="30px"></EditText>
+            android:hint="输入新密码"
+            android:textSize="30px" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4px"
+        android:layout_marginTop="10px"
         android:background="@android:color/white"
-        android:padding="15px">
+        android:padding="20px">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="资金密码"
-            android:textColor="@color/top_background"
+            android:gravity="center"
+            android:text="确认新密码"
+            android:textColor="@android:color/black"
             android:textSize="30px" />
 
         <EditText
+            android:id="@+id/UpDateCheckNewPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30px"
             android:background="@null"
             android:gravity="center"
-            android:hint="请输入资金密码"
-            android:textSize="30px"></EditText>
+            android:hint="确认新密码"
+            android:textSize="30px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10px"
+        android:background="@android:color/white"
+        android:padding="20px">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="输入安全密码"
+            android:textColor="@android:color/black"
+            android:textSize="30px" />
+
+        <EditText
+            android:id="@+id/UpDateSafePwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="输入安全密码"
+            android:textSize="30px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10px"
+        android:background="@android:color/white"
+        android:padding="20px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="确认安全密码"
+            android:textColor="@android:color/black"
+            android:textSize="30px" />
+
+        <EditText
+            android:id="@+id/UpDateCheckSafePwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="确认安全密码"
+            android:textSize="30px" />
     </LinearLayout>
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="70px"
-        android:layout_marginLeft="80px"
-        android:layout_marginRight="80px"
-        android:layout_marginTop="50px"
+        android:layout_height="wrap_content"
+        android:layout_margin="80px"
         android:background="@drawable/recharge_btn"
         android:text="确认"
         android:textColor="@color/my_btn_color"
