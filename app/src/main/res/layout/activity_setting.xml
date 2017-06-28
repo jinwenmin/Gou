@@ -52,8 +52,8 @@
 
                 <ImageView
                     android:id="@+id/Setting_img1"
-                    android:layout_width="35px"
-                    android:layout_height="35px"
+                    android:layout_width="45px"
+                    android:layout_height="45px"
                     android:layout_centerVertical="true"
                     android:layout_margin="10px"
                     android:src="@drawable/ic_setting_login_pwd" />
@@ -63,9 +63,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_margin="2px"
-
                     android:layout_toRightOf="@id/Setting_img1"
-                    android:text="修改登录密码" />
+                    android:text="修改登录密码"
+                    android:textSize="35px" />
 
                 <ImageView
                     android:layout_width="15px"
@@ -91,8 +91,8 @@
 
                 <ImageView
                     android:id="@+id/Setting_img2"
-                    android:layout_width="35px"
-                    android:layout_height="35px"
+                    android:layout_width="45px"
+                    android:layout_height="45px"
                     android:layout_centerVertical="true"
                     android:layout_margin="10px"
                     android:src="@drawable/ic_setting_money_pwd" />
@@ -102,9 +102,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_margin="2px"
-
                     android:layout_toRightOf="@id/Setting_img2"
-                    android:text="修改资金密码" />
+                    android:text="修改资金密码"
+                    android:textSize="35px" />
 
                 <ImageView
                     android:layout_width="15px"
@@ -122,6 +122,84 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/updateSafePwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@android:color/white">
+
+                <ImageView
+                    android:id="@+id/Setting_img22"
+                    android:layout_width="45px"
+                    android:layout_height="45px"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="10px"
+                    android:src="@drawable/ic_setting_money_pwd" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="2px"
+                    android:layout_toRightOf="@id/Setting_img22"
+                    android:text="修改安全密码"
+                    android:textSize="35px" />
+
+                <ImageView
+                    android:layout_width="15px"
+                    android:layout_height="15px"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5px"
+                    android:src="@drawable/img_next" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@id/Setting_img22"
+                    android:background="@color/gray" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/ResetPwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@android:color/white">
+
+                <ImageView
+                    android:id="@+id/Setting_img23"
+                    android:layout_width="45px"
+                    android:layout_height="45px"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="10px"
+                    android:src="@drawable/ic_setting_money_pwd" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="2px"
+                    android:layout_toRightOf="@id/Setting_img23"
+                    android:text="重置登录密码或者安全密码"
+                    android:textSize="35px" />
+
+                <ImageView
+                    android:layout_width="15px"
+                    android:layout_height="15px"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5px"
+                    android:src="@drawable/img_next" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@id/Setting_img23"
+                    android:background="@color/gray" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/Pwd_protect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -130,8 +208,8 @@
 
                 <ImageView
                     android:id="@+id/Setting_img3"
-                    android:layout_width="35px"
-                    android:layout_height="35px"
+                    android:layout_width="45px"
+                    android:layout_height="45px"
                     android:layout_centerVertical="true"
                     android:layout_margin="10px"
                     android:src="@drawable/ic_setting_pwd_protect" />
@@ -141,9 +219,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_margin="2px"
-
                     android:layout_toRightOf="@id/Setting_img3"
-                    android:text="密码保护" />
+                    android:text="密码保护"
+                    android:textSize="35px" />
 
                 <ImageView
                     android:layout_width="15px"
@@ -168,8 +246,8 @@
 
                 <ImageView
                     android:id="@+id/Setting_img4"
-                    android:layout_width="35px"
-                    android:layout_height="35px"
+                    android:layout_width="45px"
+                    android:layout_height="45px"
                     android:layout_centerVertical="true"
                     android:layout_margin="10px"
                     android:src="@drawable/ic_setting_zhiwenjiesuo" />
@@ -179,9 +257,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_margin="2px"
-
                     android:layout_toRightOf="@id/Setting_img4"
-                    android:text="指纹解锁开关" />
+                    android:text="指纹解锁开关"
+                    android:textSize="35px" />
 
 
                 <View
@@ -208,8 +286,8 @@
 
                 <ImageView
                     android:id="@+id/Setting_img5"
-                    android:layout_width="35px"
-                    android:layout_height="35px"
+                    android:layout_width="45px"
+                    android:layout_height="45px"
                     android:layout_centerVertical="true"
                     android:layout_margin="10px"
                     android:src="@drawable/ic_setting_qrcode" />
@@ -219,9 +297,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_margin="2px"
-
                     android:layout_toRightOf="@id/Setting_img5"
-                    android:text="二维码扫描" />
+                    android:text="二维码扫描"
+                    android:textSize="35px" />
 
                 <ImageView
                     android:layout_width="15px"
@@ -246,8 +324,8 @@
 
                 <ImageView
                     android:id="@+id/Setting_img6"
-                    android:layout_width="35px"
-                    android:layout_height="35px"
+                    android:layout_width="45px"
+                    android:layout_height="45px"
                     android:layout_centerVertical="true"
                     android:layout_margin="10px"
                     android:src="@drawable/ic_setting_nickname" />
@@ -258,7 +336,8 @@
                     android:layout_centerVertical="true"
                     android:layout_margin="2px"
                     android:layout_toRightOf="@id/Setting_img6"
-                    android:text="修改昵称" />
+                    android:text="修改昵称"
+                    android:textSize="35px" />
 
                 <ImageView
                     android:layout_width="15px"
@@ -283,8 +362,8 @@
 
                 <ImageView
                     android:id="@+id/Setting_img7"
-                    android:layout_width="35px"
-                    android:layout_height="35px"
+                    android:layout_width="45px"
+                    android:layout_height="45px"
                     android:layout_centerVertical="true"
                     android:layout_margin="10px"
                     android:src="@drawable/ic_setting_bank_card" />
@@ -295,7 +374,8 @@
                     android:layout_centerVertical="true"
                     android:layout_margin="2px"
                     android:layout_toRightOf="@id/Setting_img7"
-                    android:text="银行卡管理" />
+                    android:text="银行卡管理"
+                    android:textSize="35px" />
 
                 <ImageView
                     android:layout_width="15px"
@@ -320,8 +400,8 @@
 
                 <ImageView
                     android:id="@+id/Setting_img8"
-                    android:layout_width="35px"
-                    android:layout_height="35px"
+                    android:layout_width="45px"
+                    android:layout_height="45px"
                     android:layout_centerVertical="true"
                     android:layout_margin="10px"
                     android:src="@drawable/ic_setting_notification_switch" />
@@ -331,9 +411,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_margin="2px"
-
                     android:layout_toRightOf="@id/Setting_img8"
-                    android:text="通知开关" />
+                    android:text="通知开关"
+                    android:textSize="35px" />
 
 
                 <View
@@ -360,8 +440,8 @@
 
                 <ImageView
                     android:id="@+id/Setting_img9"
-                    android:layout_width="35px"
-                    android:layout_height="35px"
+                    android:layout_width="45px"
+                    android:layout_height="45px"
                     android:layout_centerVertical="true"
                     android:layout_margin="10px"
                     android:src="@drawable/ic_setting_music" />
@@ -371,9 +451,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_margin="2px"
-
                     android:layout_toRightOf="@id/Setting_img9"
-                    android:text="普通音效开关" />
+                    android:text="普通音效开关"
+                    android:textSize="35px" />
 
 
                 <View
@@ -400,8 +480,8 @@
 
                 <ImageView
                     android:id="@+id/Setting_img10"
-                    android:layout_width="35px"
-                    android:layout_height="35px"
+                    android:layout_width="45px"
+                    android:layout_height="45px"
                     android:layout_centerVertical="true"
                     android:layout_margin="10px"
                     android:src="@drawable/ic_setting_music" />
@@ -411,9 +491,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_margin="2px"
-
                     android:layout_toRightOf="@id/Setting_img10"
-                    android:text="倒计时音效开关" />
+                    android:text="倒计时音效开关"
+                    android:textSize="35px" />
 
 
                 <View
@@ -440,8 +520,8 @@
 
                 <ImageView
                     android:id="@+id/Setting_img11"
-                    android:layout_width="35px"
-                    android:layout_height="35px"
+                    android:layout_width="45px"
+                    android:layout_height="45px"
                     android:layout_centerVertical="true"
                     android:layout_margin="10px"
                     android:src="@drawable/ic_setting_quick_bet_switch" />
@@ -451,9 +531,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_margin="2px"
-
                     android:layout_toRightOf="@id/Setting_img11"
-                    android:text="快速投注开关" />
+                    android:text="快速投注开关"
+                    android:textSize="35px" />
 
 
                 <View
@@ -480,8 +560,8 @@
                 <ImageView
 
                     android:id="@+id/Setting_img12"
-                    android:layout_width="35px"
-                    android:layout_height="35px"
+                    android:layout_width="45px"
+                    android:layout_height="45px"
                     android:layout_centerVertical="true"
                     android:layout_margin="10px"
                     android:src="@drawable/ic_yddljc" />
@@ -492,7 +572,8 @@
                     android:layout_centerVertical="true"
                     android:layout_margin="2px"
                     android:layout_toRightOf="@id/Setting_img12"
-                    android:text="异地登录设置" />
+                    android:text="异地登录设置"
+                    android:textSize="35px" />
 
                 <ImageView
                     android:layout_width="15px"
@@ -517,8 +598,8 @@
 
                 <ImageView
                     android:id="@+id/Setting_img13"
-                    android:layout_width="35px"
-                    android:layout_height="35px"
+                    android:layout_width="45px"
+                    android:layout_height="45px"
                     android:layout_centerVertical="true"
                     android:layout_margin="10px"
                     android:src="@drawable/ic_setting_version" />
@@ -529,7 +610,8 @@
                     android:layout_centerVertical="true"
                     android:layout_margin="2px"
                     android:layout_toRightOf="@id/Setting_img13"
-                    android:text="版本升级" />
+                    android:text="版本升级"
+                    android:textSize="35px" />
 
                 <ImageView
                     android:id="@+id/Left"
@@ -545,7 +627,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@id/Left"
-                    android:text="当前版本7.02303" />
+                    android:text="当前版本7.02303"
+                    android:textSize="30px" />
 
                 <View
                     android:layout_width="match_parent"
@@ -562,8 +645,8 @@
 
                 <ImageView
                     android:id="@+id/Setting_img14"
-                    android:layout_width="35px"
-                    android:layout_height="35px"
+                    android:layout_width="45px"
+                    android:layout_height="45px"
                     android:layout_centerVertical="true"
                     android:layout_margin="10px"
                     android:src="@drawable/ic_setting_about" />
@@ -574,7 +657,8 @@
                     android:layout_centerVertical="true"
                     android:layout_margin="2px"
                     android:layout_toRightOf="@id/Setting_img14"
-                    android:text="关于我们" />
+                    android:text="关于我们"
+                    android:textSize="35px" />
 
                 <ImageView
                     android:layout_width="15px"
@@ -592,13 +676,13 @@
             </RelativeLayout>
 
             <Button
-
                 android:layout_width="match_parent"
-                android:layout_height="60px"
+                android:layout_height="80px"
                 android:layout_margin="50px"
                 android:background="@drawable/recharge_btn"
                 android:text="退出登录"
-                android:textColor="@color/my_btn_color" />
+                android:textColor="@color/my_btn_color"
+                android:textSize="40px" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

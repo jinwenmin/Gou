@@ -186,7 +186,7 @@ public interface ApiInterface {
                                    @Query("p1") String p1//新密码
     );
 
-    //修改登录密码
+    //验证安全密码
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/own-withdraw-check")
     Call<RestultInfo> getCheckSafePwd(@Query("p") String p//安全密码，加密方式同登录密码
@@ -271,5 +271,24 @@ public interface ApiInterface {
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/own-withdraw-create")
     Call<RestultInfo> getWithDrawCreate(@Query("aid") int aid,//收款银行卡id
-                                   @Query("amount") BigDecimal amount);//提现金额
+                                        @Query("amount") BigDecimal amount);//提现金额
+
+    //修改安全密码
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/password-manage-save")
+    Call<RestultInfo> getUpDataSafePwd(
+            @Query("p0") String p0,//原安全密码，加密方式同登录密码
+            @Query("p1") String p1,
+            @Query("email") String email
+    );
+
+
+    //充值安全密码或者登录密码
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/safetypassword-back-save")
+    Call<RestultInfo> getResetPwd(
+            @Query("type") int type,//type[int]：重置类型  1：重置登录密码  2：重置安全密码
+            @Query("p") String p//新密码 或者 新安全密码
+    );
+
 }

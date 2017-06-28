@@ -21,6 +21,7 @@ import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.Login;
 import com.example.king.gou.service.RetrofitService;
+import com.example.king.gou.ui.settingfragment.UpDateFirstPwdActivity;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
 
@@ -158,7 +159,7 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
         Log.i("时间消息:", timeMillis + "");
         Log.i("密码SHA256消息", password);
         Log.i("时间戳SHA256消息", s1);
-        RetrofitService.getInstance().Login2(this, 1, Login_UserName,password, false, rekey, timeMillis);
+        RetrofitService.getInstance().Login2(this, 1, Login_UserName, password, false, rekey, timeMillis);
 
 
     }
@@ -220,7 +221,12 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
                 edit.putString("login_sessionid", login.getSessionId());
                 edit.commit();
                 MyApp.getInstance().setUserName(Login_UserName);
-                startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
+                if (Login_Pwd.equals("a123456")) {
+                    startActivity(new Intent(LoginActivity.this, UpDateFirstPwdActivity.class));
+
+                } else {
+                    startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
+                }
                 Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                 finish();
             }

@@ -8,7 +8,7 @@
     tools:context="com.example.king.gou.ui.settingfragment.UpdatePwdActivity">
 
     <RelativeLayout
-        android:id="@+id/UpDatePwdTop"
+        android:id="@+id/MyBJLTop"
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_height"
         android:background="@color/top_background">
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="修改登录密码"
+            android:text="修改安全密码"
             android:textColor="@android:color/white"
             android:textSize="@dimen/top_textsize" />
     </RelativeLayout>
@@ -46,12 +46,12 @@
             android:textSize="30px" />
 
         <EditText
-            android:id="@+id/UpDateOldPwd"
+            android:id="@+id/UpdataPwdOldPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
             android:gravity="center"
-            android:hint="请输入当前的密码"
+            android:hint="请输入当前的安全密码"
             android:textSize="30px" />
     </LinearLayout>
 
@@ -67,14 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30px"
-        android:text="密码由6至16个字符组成"
-        android:textSize="25px" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30px"
-        android:text="新密码不能和初始密码一样,\n安全密码不能和登录密码一样"
+        android:text="密码由6至16个字符组成 \n不能为初始密码"
         android:textSize="25px" />
 
     <LinearLayout
@@ -88,17 +81,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="输入新密码"
+            android:text="输入新安全密码"
             android:textColor="@android:color/black"
             android:textSize="30px" />
 
         <EditText
-            android:id="@+id/UpDateNewPwd"
+            android:id="@+id/UpdataSafePwdNewPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
             android:gravity="center"
-            android:hint="输入新密码"
+            android:hint="输入新安全密码"
             android:textSize="30px" />
     </LinearLayout>
 
@@ -113,43 +106,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="确认新密码"
+            android:text="确认新安全密码"
             android:textColor="@android:color/black"
             android:textSize="30px" />
 
         <EditText
-            android:id="@+id/UpDateCheckNewPwd"
+            android:id="@+id/UpdataSafePwdCheck"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
             android:gravity="center"
-            android:hint="确认新密码"
-            android:textSize="30px" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10px"
-        android:background="@android:color/white"
-        android:padding="20px">
-
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="输入安全密码"
-            android:textColor="@android:color/black"
-            android:textSize="30px" />
-
-        <EditText
-            android:id="@+id/UpDateSafePwd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:gravity="center"
-            android:hint="输入安全密码"
+            android:hint="确认新安全密码"
             android:textSize="30px" />
     </LinearLayout>
 
@@ -164,48 +131,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="确认安全密码"
+            android:text="输入绑定邮箱"
             android:textColor="@android:color/black"
             android:textSize="30px" />
 
         <EditText
-            android:id="@+id/UpDateCheckSafePwd"
+            android:id="@+id/UpdataSafepwdEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
             android:gravity="center"
-            android:hint="确认安全密码"
-            android:textSize="30px" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10px"
-        android:background="@android:color/white"
-        android:padding="20px">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="输入邮箱地址"
-            android:textColor="@android:color/black"
-            android:textSize="30px" />
-
-        <EditText
-            android:id="@+id/UpDateEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:gravity="center"
-            android:hint="输入邮箱地址"
-            android:inputType="textEmailAddress"
+            android:hint="输入绑定的邮箱"
             android:textSize="30px" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/UpDataFirstPwd"
+        android:id="@+id/UpDataPwdClick"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="80px"

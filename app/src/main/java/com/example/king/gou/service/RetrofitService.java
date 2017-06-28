@@ -65,6 +65,8 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_SAFEQUES = 8;//获取安全问题
     public static int API_ID_UPDATAPWD = 9;//修改登录密码
     public static int API_ID_SAFEPWD = 10;//验证安全密码
+    public static int API_ID_UPDATAFIRSTPWD = 11;//强制修改初始密码
+    public static int API_ID_HOMENOTICE = 12;//首页的滚动公告
     private Retrofit retrofit;
     private ApiInterface apiInterface;
     String sessionLoginId;
@@ -318,7 +320,7 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-
+                Log.d("获取的公告列表==", response.body() + "  ");
                 ArrayList<Object> No = new ArrayList<Object>();
                 No = (ArrayList<Object>) response.body();
                 List<String[]> NoticeContent = new ArrayList<String[]>();
@@ -525,12 +527,13 @@ public class RetrofitService extends HttpEngine {
     }
 
     //强制修改初始密码
-    public void getUpdateFirstPwd(DataListener listener, String p0, String p1, String p2, String email) {
+    public void getUpdateFirstPwd(final DataListener listener, String p0, String p1, String p2, String email) {
         Call<RestultInfo> clone = apiInterface.getUpdateFirstPwd(p0, p1, p2, email).clone();
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
-
+                listener.onReceivedData(API_ID_UPDATAFIRSTPWD, response.body(), API_ID_ERROR);
+                Log.d("强制修改初始密码的结果", response.body().toString());
             }
 
             @Override
@@ -569,12 +572,16 @@ public class RetrofitService extends HttpEngine {
     }
 
     //获取首页的公告或者滚动栏的内容
-    public void getHomeNotice(DataListener listener) {
+    public void getHomeNotice(final DataListener listener) {
         Call<Object> clone = apiInterface.getHomeNotice().clone();
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                Log.d("首页的公告==", response.body().toString());
+                String toString = response.body().toString();
+                String substring = toString.substring(toString.indexOf("content=") + 8, toString.indexOf(", user="));
+                listener.onReceivedData(API_ID_HOMENOTICE, substring, API_ID_ERROR);
+                Log.d("首页的公告==", toString);
+                Log.d("首页的公告2==", substring);
             }
 
             @Override
@@ -728,14 +735,15 @@ public class RetrofitService extends HttpEngine {
 
 
     }
+
     //添加提现申请
     //  应用场景：提现验证通过后创建提现申请
-    public void getWithDrawCreates(DataListener listener, int aid, BigDecimal amount){
+    public void getWithDrawCreates(DataListener listener, int aid, BigDecimal amount) {
         Call<RestultInfo> clone = apiInterface.getWithDrawCreate(aid, amount).clone();
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
-
+                Log.d("提交申请返回的", response.body().toString());
 
             }
 
@@ -746,27 +754,39 @@ public class RetrofitService extends HttpEngine {
         });
 
     }
+
+    //修改安全密码
+    public void getUpDataSafePwd(DataListener listener, String p0, String p1, String email) {
+        Call<RestultInfo> clone = apiInterface.getUpDataSafePwd(p0, p1, email).clone();
+        clone.enqueue(new Callback<RestultInfo>() {
+            @Override
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+                Log.d("修改安全密码返回的数据", response.body().toString());
+
+            }
+
+            @Override
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+    //重置安全密码 或者 登陆密码
+    public void getResetPwd(DataListener listener, int type, String p) {
+        Call<RestultInfo> clone = apiInterface.getResetPwd(type, p).clone();
+        clone.enqueue(new Callback<RestultInfo>() {
+            @Override
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+                Log.d("重置安全密码或者登陆密码", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
+
+            }
+        });
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

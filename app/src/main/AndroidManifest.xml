@@ -73,7 +73,8 @@
         <activity android:name=".ui.frmMyActivity.NoticeContentActivity" />
         <activity android:name=".ui.LotteryZhuiHaoActivity" />
         <activity android:name=".ui.settingfragment.UpDateFirstPwdActivity" />
-        <activity android:name=".ui.CheckSafePwdActivity"></activity>
+        <activity android:name=".ui.CheckSafePwdActivity" />
+        <activity android:name=".ui.UpDataSafePwdActivity"></activity>
     </application>
 
 </manifest>

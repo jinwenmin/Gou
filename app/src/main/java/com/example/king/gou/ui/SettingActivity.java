@@ -87,6 +87,8 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
     RelativeLayout LinearCheck1;
     @BindView(R.id.getCardData)
     RelativeLayout getCardData;
+    @BindView(R.id.updateSafePwd)
+    RelativeLayout updateSafePwd;
     private AlertView alertView;
     ; // 一个自定义的布局，作为显示的内容
     View contentView;
@@ -108,6 +110,7 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
         PwdProtect.setOnClickListener(this);
         LinearCheck1.setOnClickListener(this);
         getCardData.setOnClickListener(this);
+        updateSafePwd.setOnClickListener(this);
        /* manager = (FingerprintManager) this.getSystemService(Context.FINGERPRINT_SERVICE);
         mKeyManager = (KeyguardManager) this.getSystemService(Context.KEYGUARD_SERVICE);
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -179,6 +182,9 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
                 break;
             case R.id.getCardData:
                 RetrofitService.getInstance().getCardDatas(this);
+                break;
+            case R.id.updateSafePwd:
+                StartA(UpDataSafePwdActivity.class);
                 break;
         }
     }

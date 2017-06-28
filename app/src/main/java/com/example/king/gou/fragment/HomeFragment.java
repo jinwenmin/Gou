@@ -6,20 +6,26 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.HomeGameAdapter;
 import com.example.king.gou.adapters.PageAdapter;
+import com.example.king.gou.bean.AdvertisementObject;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.ui.AddGameActivity;
+import com.example.king.gou.utils.BaseAutoScrollUpTextView;
 import com.example.king.gou.utils.HttpEngine;
+import com.example.king.gou.utils.MainScrollUpAdvertisementView;
 import com.jude.rollviewpager.RollPagerView;
 
 import java.util.ArrayList;
@@ -59,6 +65,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     RecyclerViewHeader header;
     @BindView(R.id.HomeFragment_addGame)
     TextView HomeFragmentAddGame;
+    @BindView(R.id.MainScrollAd)
+    MainScrollUpAdvertisementView MainScrollAd;
 
     public static HomeFragment newInstance() {
 
@@ -136,7 +144,29 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
     @Override
     public void onReceivedData(int apiId, Object object, int errorId) {
-
+        if (apiId == RetrofitService.API_ID_HOMENOTICE) {
+            if (object != null) {
+                final String notice = (String) object;
+                TextView textView = new TextView(getActivity());
+                textView.setText(Html.fromHtml(notice));
+                Log.d("这个是首页的公告==", Html.fromHtml(notice) + "");
+                ArrayList<AdvertisementObject> notices = new ArrayList<AdvertisementObject>();
+                AdvertisementObject advertisementObject = new AdvertisementObject();
+                advertisementObject.info = Html.fromHtml(notice) + "";
+                notices.add(advertisementObject);
+                notices.add(advertisementObject);
+                MainScrollAd.setData(notices);
+                MainScrollAd.setTextSize(15);
+                MainScrollAd.setTimer(3000);
+                MainScrollAd.setOnItemClickListener(new BaseAutoScrollUpTextView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+                        Toast.makeText(getActivity(), Html.fromHtml(notice) + "", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                MainScrollAd.start();
+            }
+        }
     }
 
     @Override
