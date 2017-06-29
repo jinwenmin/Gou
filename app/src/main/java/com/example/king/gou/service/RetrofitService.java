@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.example.king.gou.bean.Login;
 import com.example.king.gou.bean.LoginState;
+import com.example.king.gou.bean.MapsIdAndValue;
 import com.example.king.gou.bean.RestultInfo;
 
 import com.example.king.gou.bean.UserAmount;
@@ -67,6 +68,8 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_SAFEPWD = 10;//验证安全密码
     public static int API_ID_UPDATAFIRSTPWD = 11;//强制修改初始密码
     public static int API_ID_HOMENOTICE = 12;//首页的滚动公告
+    public static int API_ID_CARDLOCK = 13;//绑定银行卡锁定
+    public static int API_ID_CARDDATAS = 14;//获取绑定银行卡所需要信息
     private Retrofit retrofit;
     private ApiInterface apiInterface;
     String sessionLoginId;
@@ -642,12 +645,62 @@ public class RetrofitService extends HttpEngine {
     }
 
     //获取绑定的银行卡的数据
-    public void getCardDatas(DataListener listener) {
+    public void getCardDatas(final DataListener listener) {
         Call<Object> clone = apiInterface.getCardDatas().clone();
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                Log.d("获取绑定的银行卡的数据", response.body().toString());
+                String s = response.body().toString();
+                String Banks = s.substring(s.indexOf("banks=[") + 7, s.indexOf("], provincials"));
+                String Privinces = s.substring(s.indexOf("provincials=[") + 13, s.indexOf("], locked"));
+                Log.d("获取绑定的银行卡的全部数据", response.body().toString());
+                Log.d("获取绑定的银行卡的银行数据", Banks);
+                String[] split = Banks.split(",");
+                List<List<MapsIdAndValue>> CardDatas = new ArrayList<List<MapsIdAndValue>>();
+                List<MapsIdAndValue> Maps = new ArrayList<MapsIdAndValue>();
+                for (int i = 0; i < split.length; i++) {
+                    Log.d("银行信息==", split[i] + "     " + split[i].length());
+                    MapsIdAndValue maps = new MapsIdAndValue();
+                    if (i % 2 == 0) {
+                        String substring = split[i].substring(split[i].indexOf("[") + 1, split[i].length());
+                        String substring1 = substring.substring(0, substring.length() - 2);
+                        int i1 = Integer.parseInt(substring1);
+                        maps.setId(i1);
+                        Log.d("银行id==", i1 + "");
+                    }
+                    if (i % 2 != 0) {
+                        String substring = split[i].substring(1, split[i].length() - 1);
+                        Log.d("银行Value==", substring);
+                        maps.setValues(substring);
+                    }
+                    Maps.add(maps);
+                }
+                String[] prinvin = Privinces.split(",");
+                List<MapsIdAndValue> Mapss = new ArrayList<MapsIdAndValue>();
+
+                for (int i = 0; i < prinvin.length; i++) {
+                    MapsIdAndValue maps = new MapsIdAndValue();
+                    if (i % 2 == 0) {
+                        String substring = prinvin[i].substring(prinvin[i].indexOf("[") + 1, prinvin[i].length());
+                        String substring1 = substring.substring(0, substring.length() - 2);
+                        int i1 = Integer.parseInt(substring1);
+                        maps.setId(i1);
+                        Log.d("省份id==", i1 + "");
+                    }
+                    if (i % 2 != 0) {
+                        String substring = prinvin[i].substring(1, prinvin[i].length() - 1);
+                        Log.d("省份Value==", substring);
+                        maps.setValues(substring);
+                    }
+                    Mapss.add(maps);
+                }
+                CardDatas.add(Maps);
+                CardDatas.add(Mapss);
+                String values = CardDatas.get(0).get(3).getValues();
+                String values1 = CardDatas.get(1).get(5).getValues();
+                Log.d("获取银行卡所需的数据返回", values + "    " + values1);
+                listener.onReceivedData(API_ID_CARDDATAS, CardDatas, API_ID_ERROR);
+
             }
 
             @Override
@@ -788,5 +841,24 @@ public class RetrofitService extends HttpEngine {
 
             }
         });
+    }
+
+    //绑定银行卡锁定
+    public void getBingCardLock(final DataListener listener) {
+        Call<RestultInfo> clone = apiInterface.getBindingCardLock().clone();
+        clone.enqueue(new Callback<RestultInfo>() {
+            @Override
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+                listener.onReceivedData(API_ID_CARDLOCK, response.body(), API_ID_ERROR);
+                Log.d("绑定银行卡锁定", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
+
+            }
+        });
+
+
     }
 }

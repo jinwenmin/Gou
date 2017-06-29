@@ -41,6 +41,7 @@ dependencies {
     compile project(':autolayout')
     compile project(':alertview')
     compile project(':lib_tv_fullhtml')
+    //日期选择
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'io.reactivex.rxjava2:rxjava:2.0.7'
@@ -61,6 +62,7 @@ dependencies {
     compile 'com.henryblue.minimusicview:library:1.0.1'
     compile 'io.zipkin.brave:brave-instrumentation-okhttp3:4.3.4'
     compile 'eu.the4thfloor.volley:com.android.volley:2015.05.28'
+    compile 'com.github.codbking:PickTime:v1.0.1'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
 }

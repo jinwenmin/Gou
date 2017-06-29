@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bigkoo.alertview.AlertView;
 import com.example.king.gou.R;
 import com.example.king.gou.service.RetrofitService;
+import com.example.king.gou.ui.settingfragment.BankCardManActivity;
 import com.example.king.gou.ui.settingfragment.MoneyProtectActivity;
 import com.example.king.gou.ui.settingfragment.UpdateMoneyPwdActivity;
 import com.example.king.gou.ui.settingfragment.UpdateNickNameActivity;
@@ -181,7 +182,8 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
                 }*/
                 break;
             case R.id.getCardData:
-                RetrofitService.getInstance().getCardDatas(this);
+                //RetrofitService.getInstance().getCardDatas(this);
+                StartA(BankCardManActivity.class);
                 break;
             case R.id.updateSafePwd:
                 StartA(UpDataSafePwdActivity.class);

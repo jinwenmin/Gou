@@ -291,4 +291,11 @@ public interface ApiInterface {
             @Query("p") String p//新密码 或者 新安全密码
     );
 
+    //锁定绑定银行卡
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/binding-card-lock")
+    Call<RestultInfo> getBindingCardLock();
+
+
+
 }

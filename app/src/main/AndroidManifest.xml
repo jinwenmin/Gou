@@ -74,7 +74,9 @@
         <activity android:name=".ui.LotteryZhuiHaoActivity" />
         <activity android:name=".ui.settingfragment.UpDateFirstPwdActivity" />
         <activity android:name=".ui.CheckSafePwdActivity" />
-        <activity android:name=".ui.UpDataSafePwdActivity"></activity>
+        <activity android:name=".ui.UpDataSafePwdActivity" />
+        <activity android:name=".ui.settingfragment.BankCardManActivity" />
+        <activity android:name=".ui.settingfragment.SaveCardActivity"></activity>
     </application>
 
 </manifest>
