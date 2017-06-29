@@ -7,7 +7,42 @@ package com.example.king.gou.bean;
 public class MapsIdAndValue {
     int id;
     String Values;
+    String Bank;
+    String CardNum;
+    String Time;
+    String Locked;
 
+    public String getLocked() {
+        return Locked;
+    }
+
+    public void setLocked(String locked) {
+        Locked = locked;
+    }
+
+    public String getBank() {
+        return Bank;
+    }
+
+    public void setBank(String bank) {
+        Bank = bank;
+    }
+
+    public String getCardNum() {
+        return CardNum;
+    }
+
+    public void setCardNum(String cardNum) {
+        CardNum = cardNum;
+    }
+
+    public String getTime() {
+        return Time;
+    }
+
+    public void setTime(String time) {
+        Time = time;
+    }
 
     public int getId() {
         return id;
@@ -30,6 +65,9 @@ public class MapsIdAndValue {
         return "MapsIdAndValue{" +
                 "id=" + id +
                 ", Values='" + Values + '\'' +
+                ", Bank='" + Bank + '\'' +
+                ", CardNum='" + CardNum + '\'' +
+                ", Time='" + Time + '\'' +
                 '}';
     }
 }

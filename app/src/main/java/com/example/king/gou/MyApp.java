@@ -15,6 +15,7 @@ public class MyApp extends Application {
     private String UserNickName;
     private String UserName;
 
+
     public String getUserName() {
         return UserName;
     }

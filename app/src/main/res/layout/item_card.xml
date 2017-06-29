@@ -32,15 +32,17 @@
 
 
         <TextView
-            android:id="@+id/cardItem_CardId"
+
+            android:id="@+id/cardItem_UserName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="200px"
-            android:text="信用卡"
+            android:text="神仙哥哥"
             android:textColor="@color/color_f"
             android:textSize="25px" />
 
         <TextView
+
             android:id="@+id/card_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -48,7 +50,7 @@
             android:gravity="right|center"
             android:paddingRight="20px"
             android:text="**** **** **** 5039"
-            android:textColor="@color/color_f"
+            android:textColor="#ffffff"
             android:textSize="50px" />
 
 

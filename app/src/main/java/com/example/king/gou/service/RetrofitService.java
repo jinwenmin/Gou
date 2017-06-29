@@ -12,6 +12,7 @@ import com.example.king.gou.bean.RestultInfo;
 
 import com.example.king.gou.bean.UserAmount;
 import com.example.king.gou.bean.UserInfo;
+import com.example.king.gou.ui.MainActivity;
 import com.example.king.gou.utils.AddCookiesInterceptor;
 import com.example.king.gou.utils.ApiInterface;
 import com.example.king.gou.utils.HttpEngine;
@@ -70,6 +71,10 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_HOMENOTICE = 12;//首页的滚动公告
     public static int API_ID_CARDLOCK = 13;//绑定银行卡锁定
     public static int API_ID_CARDDATAS = 14;//获取绑定银行卡所需要信息
+    public static int API_ID_GETCITYS = 15;//省市联动获得的市名
+    public static int API_ID_SAVECARD = 16;//保存银行卡
+
+
     private Retrofit retrofit;
     private ApiInterface apiInterface;
     String sessionLoginId;
@@ -651,53 +656,72 @@ public class RetrofitService extends HttpEngine {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
                 String s = response.body().toString();
+                String Cards = s.substring(s.indexOf("cards=[") + 7, s.indexOf(", banks"));
                 String Banks = s.substring(s.indexOf("banks=[") + 7, s.indexOf("], provincials"));
                 String Privinces = s.substring(s.indexOf("provincials=[") + 13, s.indexOf("], locked"));
+                String Locked = s.substring(s.indexOf("locked=") + 7, s.length() - 1);
+
                 Log.d("获取绑定的银行卡的全部数据", response.body().toString());
                 Log.d("获取绑定的银行卡的银行数据", Banks);
                 String[] split = Banks.split(",");
                 List<List<MapsIdAndValue>> CardDatas = new ArrayList<List<MapsIdAndValue>>();
-                List<MapsIdAndValue> Maps = new ArrayList<MapsIdAndValue>();
-                for (int i = 0; i < split.length; i++) {
+                List<MapsIdAndValue> Mapsbank = new ArrayList<MapsIdAndValue>();
+                for (int i = 0; i < split.length; i = i + 2) {
                     Log.d("银行信息==", split[i] + "     " + split[i].length());
-                    MapsIdAndValue maps = new MapsIdAndValue();
-                    if (i % 2 == 0) {
-                        String substring = split[i].substring(split[i].indexOf("[") + 1, split[i].length());
-                        String substring1 = substring.substring(0, substring.length() - 2);
-                        int i1 = Integer.parseInt(substring1);
-                        maps.setId(i1);
-                        Log.d("银行id==", i1 + "");
-                    }
-                    if (i % 2 != 0) {
-                        String substring = split[i].substring(1, split[i].length() - 1);
-                        Log.d("银行Value==", substring);
-                        maps.setValues(substring);
-                    }
-                    Maps.add(maps);
+                    MapsIdAndValue mapBank = new MapsIdAndValue();
+
+                    String substring = split[i].substring(split[i].indexOf("[") + 1, split[i].length());
+                    String substring1 = substring.substring(0, substring.length() - 2);
+                    int i1 = Integer.parseInt(substring1);
+                    mapBank.setId(i1);
+                    Log.d("银行id==", i1 + "");
+
+                    String substring2 = split[i + 1].substring(1, split[i + 1].length() - 1);
+                    Log.d("银行Value==", substring2);
+                    mapBank.setValues(substring2);
+
+                    Mapsbank.add(mapBank);
                 }
                 String[] prinvin = Privinces.split(",");
-                List<MapsIdAndValue> Mapss = new ArrayList<MapsIdAndValue>();
+                List<MapsIdAndValue> MapsPrivince = new ArrayList<MapsIdAndValue>();
 
-                for (int i = 0; i < prinvin.length; i++) {
+                for (int i = 0; i < prinvin.length; i = i + 2) {
                     MapsIdAndValue maps = new MapsIdAndValue();
-                    if (i % 2 == 0) {
-                        String substring = prinvin[i].substring(prinvin[i].indexOf("[") + 1, prinvin[i].length());
-                        String substring1 = substring.substring(0, substring.length() - 2);
-                        int i1 = Integer.parseInt(substring1);
-                        maps.setId(i1);
-                        Log.d("省份id==", i1 + "");
-                    }
-                    if (i % 2 != 0) {
-                        String substring = prinvin[i].substring(1, prinvin[i].length() - 1);
-                        Log.d("省份Value==", substring);
-                        maps.setValues(substring);
-                    }
-                    Mapss.add(maps);
+                    String substring = prinvin[i].substring(prinvin[i].indexOf("[") + 1, prinvin[i].length());
+                    String substring1 = substring.substring(0, substring.length() - 2);
+                    int i1 = Integer.parseInt(substring1);
+                    maps.setId(i1);
+                    Log.d("省份id==", i1 + "");
+                    String substring2 = prinvin[i + 1].substring(1, prinvin[i + 1].length() - 1);
+                    Log.d("省份Value==", substring2);
+                    maps.setValues(substring2);
+
+                    MapsPrivince.add(maps);
                 }
-                CardDatas.add(Maps);
-                CardDatas.add(Mapss);
-                String values = CardDatas.get(0).get(3).getValues();
-                String values1 = CardDatas.get(1).get(5).getValues();
+                String[] splitCards = Cards.split(",");
+                List<MapsIdAndValue> mapCard = new ArrayList<MapsIdAndValue>();
+                for (int i = 0; i < splitCards.length; i = i + 5) {
+                    MapsIdAndValue maps = new MapsIdAndValue();
+                    String CardId = splitCards[i].substring(splitCards[i].indexOf("[") + 1, splitCards[i].length() - 2);
+                    int CardIntId = Integer.parseInt(CardId);
+                    maps.setId(CardIntId);
+                    String Cardname = splitCards[i + 1].substring(1, splitCards[i + 1].length());
+                    maps.setValues(Cardname);
+                    String BankName = splitCards[i + 2].substring(1, splitCards[i + 2].length());
+                    maps.setBank(BankName);
+                    String CardNum = splitCards[i + 3].substring(1, splitCards[i + 3].length());
+                    maps.setCardNum(CardNum);
+                    String Time = splitCards[i + 4].substring(1, splitCards[i + 4].length());
+                    maps.setTime(Time);
+                    Log.d("银行卡号信息", maps.toString());
+                    mapCard.add(maps);
+                    maps.setLocked(Locked);
+                }
+                CardDatas.add(Mapsbank);
+                CardDatas.add(MapsPrivince);
+                CardDatas.add(mapCard);
+                String values = CardDatas.get(0).get(1).getValues();
+                String values1 = CardDatas.get(1).get(1).getValues();
                 Log.d("获取银行卡所需的数据返回", values + "    " + values1);
                 listener.onReceivedData(API_ID_CARDDATAS, CardDatas, API_ID_ERROR);
 
@@ -729,12 +753,27 @@ public class RetrofitService extends HttpEngine {
     }
 
     //获得省市级联动
-    public void getPrivens(DataListener listener, int id) {
+    public void getPrivens(final DataListener listener, int id) {
         Call<Object> objectCall = apiInterface.getPrivens(id).clone();
         objectCall.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                Log.d("获取省市联动", response.body().toString());
+                String string = response.body().toString();
+                String citys = string.substring(1, string.length() - 1);
+                String[] split = citys.split(",");
+                List<MapsIdAndValue> Citys = new ArrayList<MapsIdAndValue>();
+                for (int i = 0; i < split.length; i = i + 2) {
+                    MapsIdAndValue mapsIdAndValue = new MapsIdAndValue();
+                    String cityId = split[i].substring(split[i].indexOf("[") + 1, split[i].length() - 2);
+                    int parseInt = Integer.parseInt(cityId);
+                    String cityName = split[i + 1].substring(1, split[i + 1].indexOf("]"));
+                    mapsIdAndValue.setId(parseInt);
+                    mapsIdAndValue.setValues(cityName);
+                    Log.d("城市id+name", cityId + "    " + cityName);
+                    Citys.add(mapsIdAndValue);
+                }
+                listener.onReceivedData(API_ID_GETCITYS, Citys, API_ID_ERROR);
+                Log.d("获取省市联动", string);
             }
 
             @Override
@@ -754,13 +793,14 @@ public class RetrofitService extends HttpEngine {
         name[string]：持卡人姓名
         card[string]：银行卡号*/
     //保存银行卡  应用场景：绑定新卡保存银行卡数据
-    public void getSaveBankCard(DataListener listener, int bank, int province_id, String province, int city_id, String city, String branch, String name, String card) {
+    public void getSaveBankCard(final DataListener listener, int bank, int province_id, String province, int city_id, String city, String branch, String name, String card) {
         Call<RestultInfo> saveBankCard = apiInterface.getSaveBankCard(bank, province_id, province, city_id, city, branch, name, card);
         Call<RestultInfo> clone = saveBankCard.clone();
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
                 Log.d("保存银行卡返回的数据", response.body().toString());
+                listener.onReceivedData(API_ID_SAVECARD, response.body(), API_ID_ERROR);
 
             }
 
