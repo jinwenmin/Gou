@@ -6,6 +6,8 @@ import android.util.Log;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -138,6 +140,13 @@ public class RxUtils {
         requestBuilder.method("GET", null);
 
         return okHttpClient;
+    }
+
+    public String Dates(long time) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
+        String format = sdf.format(new Date(time));
+        return format;
     }
 }
 

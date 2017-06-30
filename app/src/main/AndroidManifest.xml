@@ -13,9 +13,9 @@
     <application
         android:name=".MyApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ytxlog"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ytxlog"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".ui.MainActivity" />
@@ -76,7 +76,8 @@
         <activity android:name=".ui.CheckSafePwdActivity" />
         <activity android:name=".ui.UpDataSafePwdActivity" />
         <activity android:name=".ui.settingfragment.BankCardManActivity" />
-        <activity android:name=".ui.settingfragment.SaveCardActivity"></activity>
+        <activity android:name=".ui.settingfragment.SaveCardActivity" />
+        <activity android:name=".ui.frmMyActivity.ChatUserActivity"></activity>
     </application>
 
 </manifest>

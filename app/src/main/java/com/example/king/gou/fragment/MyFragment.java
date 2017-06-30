@@ -29,6 +29,7 @@ import com.example.king.gou.ui.GameCenterActivity;
 import com.example.king.gou.ui.LotteryZhuiHaoActivity;
 import com.example.king.gou.ui.MainActivity;
 import com.example.king.gou.ui.SettingActivity;
+import com.example.king.gou.ui.frmMyActivity.ChatUserActivity;
 import com.example.king.gou.ui.frmMyActivity.MessageActivity;
 import com.example.king.gou.ui.frmMyActivity.NoticeActivity;
 import com.example.king.gou.ui.frmMyActivity.ReChargeActivity;
@@ -147,6 +148,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
         frmMySetting.setOnClickListener(this);
         frmMyMsg.setOnClickListener(this);
         frmMyNotice.setOnClickListener(this);
+        frmMyKeFu.setOnClickListener(this);
     }
 
     //加载订单报表 和管理 两个fragment
@@ -170,6 +172,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.frmMyKeFu:
+                startActivity(new Intent(getActivity(), ChatUserActivity.class));
+                break;
             case R.id.ToRecharge:
                 startActivity(new Intent(getActivity(), ReChargeActivity.class));
                 break;

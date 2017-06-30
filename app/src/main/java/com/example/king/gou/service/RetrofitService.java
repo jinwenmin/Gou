@@ -73,7 +73,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_CARDDATAS = 14;//获取绑定银行卡所需要信息
     public static int API_ID_GETCITYS = 15;//省市联动获得的市名
     public static int API_ID_SAVECARD = 16;//保存银行卡
-
+    public static int API_ID_CHATUSERS = 17;//获取聊天用户
 
     private Retrofit retrofit;
     private ApiInterface apiInterface;
@@ -898,7 +898,117 @@ public class RetrofitService extends HttpEngine {
 
             }
         });
+    }
 
+    //获取聊天用户
+    public void getChatUser(final DataListener listener) {
+        Call<Object> clone = apiInterface.getChatUsers().clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                String ChatUser = response.body().toString();
+                String ChatuserNew = ChatUser.substring(ChatUser.indexOf("[") + 1, ChatUser.length() - 1);
+                String[] splitChatUser = ChatuserNew.split(",");
+                List<MapsIdAndValue> ChatUsers = new ArrayList<MapsIdAndValue>();
+                for (int i = 0; i < splitChatUser.length; i = i + 2) {
+                    MapsIdAndValue users = new MapsIdAndValue();
+                    int Userid = Integer.parseInt(splitChatUser[i].substring(splitChatUser[i].indexOf("[") + 1, splitChatUser[i].length() - 2));
+                    String UserName = splitChatUser[i + 1].substring(1, splitChatUser[i + 1].length() - 1);
+                    users.setId(Userid);
+                    users.setValues(UserName);
+                    ChatUsers.add(users);
+                    Log.d("获取单个聊天用户", users.toString());
+                }
+                listener.onReceivedData(API_ID_CHATUSERS, ChatUsers, API_ID_ERROR);
+                Log.d("获取聊天用户", ChatuserNew);
 
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Log.d("获取聊天用户的Error", t.toString());
+            }
+        });
+    }
+
+    //获得消息列表
+    public void getChatList(DataListener listener, int page, int rows, String sidx, String sord, int send_uid, String from, String to) {
+        Call<Object> clone = apiInterface.getChatList(page, rows, sidx, sord, send_uid, from, to).clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("获取消息列表", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //删除聊天消息
+    public void getDeleteChatMsg(DataListener listener, int id) {
+        Call<RestultInfo> clone = apiInterface.getDeleteChatMsg(id).clone();
+        clone.enqueue(new Callback<RestultInfo>() {
+            @Override
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+                Log.d("删除聊天消息", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //加载聊天信息
+    public void getChatMsg(DataListener listener, int id) {
+        Call<Object> clone = apiInterface.getChatMsg(id).clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("加载聊天信息", response.body().toString());
+
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //发送聊天信息
+    public void getSendMsg(DataListener listener, int id, String title, String msg) {
+        Call<Object> clone = apiInterface.getSendMsg(id, title, msg).clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("发送聊天信息", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //轮询获取新消息
+    public void getNewMsg(DataListener listener, int id) {
+        Call<Object> clone = apiInterface.getNewMsg(id).clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("轮询获取新消息", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
     }
 }

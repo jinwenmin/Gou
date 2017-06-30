@@ -86,13 +86,14 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
 
     String name = null;
     String isfinger;
-    SQLiteDatabase writableDatabase1;
+    SQLiteDatabase databaseFinger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        RetrofitService.getInstance().getChatUser(this);
         dataBaseHelper = new DataBaseHelper(MainActivity.this, "yigou.db", null, 1);
         /* 创建两张表 */
         SQLiteDatabase writableDatabase = dataBaseHelper.getWritableDatabase();
@@ -101,31 +102,29 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
         writableDatabase.execSQL("insert into student(name) values('mike')");
         Cursor cursor = writableDatabase.query("student", new String[]{"id", "name"}, "id=?", new String[]{"1"}, null, null, null);
         while (cursor.moveToNext()) {
-
             id = cursor.getString(cursor.getColumnIndex("id"));
-
             name = cursor.getString(cursor.getColumnIndex("name"));
-
         }
         Toast.makeText(MainActivity.this, "查询数据为：id=" + id + " \n name=" + name, Toast.LENGTH_LONG).show();
 
 
        /* manager = (FingerprintManager) this.getSystemService(Context.FINGERPRINT_SERVICE);
         mKeyManager = (KeyguardManager) this.getSystemService(Context.KEYGUARD_SERVICE);
-
-        dataBaseFingerHelper = new DataBaseHelper(MainActivity.this, "fingers.db", null, 1);
-        *//* 创建两张表 *//*
-        writableDatabase1 = dataBaseFingerHelper.getWritableDatabase();
-        writableDatabase1.execSQL("create table  if not exists fingers(id INTEGER PRIMARY KEY autoincrement,isfinger String);");
-        writableDatabase1.execSQL("insert into fingers(isfinger) values('false')");
-
-        dataBaseFingerHelper = new DataBaseHelper(MainActivity.this, "fingers.db", null, 1);*/
-     /*   *//* 创建两张表 *//*
-        writableDatabase1 = dataBaseFingerHelper.getWritableDatabase();
-        Cursor cursor2 = writableDatabase1.query("fingers", new String[]{"id", "isfinger"}, "id=?", new String[]{"1"}, null, null, null);
+*/
+        dataBaseFingerHelper = new DataBaseHelper(MainActivity.this, "fing.db", null, 1);
+        /* 创建两张表 */
+        databaseFinger = dataBaseFingerHelper.getWritableDatabase();
+        databaseFinger.execSQL("create table  if not exists fingers(id INTEGER PRIMARY KEY autoincrement,isfinger String);");
+        databaseFinger.execSQL("insert into fingers(isfinger) values('true')");
+        databaseFinger.execSQL("update fingers set isfinger='true' where id=0");
+        Cursor cursor2 = databaseFinger.query("fingers", new String[]{"id", "isfinger"}, "id=?", new String[]{"0"}, null, null, null);
         int sdkInt = Build.VERSION.SDK_INT;
         Log.d("手机版本", sdkInt + "");
         while (cursor2.moveToNext()) {
+            String isfinger = cursor2.getString(cursor2.getColumnIndex("isfinger"));
+            Log.d("Finger===", isfinger);
+        }
+      /*  while (cursor2.moveToNext()) {
             isfinger = cursor2.getString(cursor2.getColumnIndex("isfinger"));
             Log.d("这个isFInger==", isfinger);
             if ("true".equals(isfinger)) {

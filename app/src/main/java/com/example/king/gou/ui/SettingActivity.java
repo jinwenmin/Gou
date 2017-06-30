@@ -2,9 +2,11 @@ package com.example.king.gou.ui;
 
 import android.app.KeyguardManager;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -104,7 +106,7 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
-        //  initDataHelper();
+        initDataHelper();
         SettingUpdataPwd.setOnClickListener(this);
         updateMoneyPwd.setOnClickListener(this);
         updateNickName.setOnClickListener(this);
@@ -138,12 +140,19 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
     }
 
     private void initDataHelper() {
-        dataBaseHelper = new DataBaseHelper(SettingActivity.this, "fingers.db", null, 1);
+        dataBaseHelper = new DataBaseHelper(SettingActivity.this, "fing.db", null, 1);
         /* 创建两张表 */
         writableDatabase = dataBaseHelper.getWritableDatabase();
-        writableDatabase.execSQL("create table  if not exists fingers(id INTEGER PRIMARY KEY autoincrement,isfinger String);");
-        writableDatabase.execSQL("insert into fingers(isfinger) values('false')");
-
+        Cursor cursor2 = writableDatabase.query("fingers", new String[]{"id", "isfinger"}, "id=?", new String[]{"1"}, null, null, null);
+        while (cursor2.moveToNext()) {
+            String isfinger = cursor2.getString(cursor2.getColumnIndex("isfinger"));
+            Log.d("FingerSetting===", isfinger);
+            if ("false".equals(isfinger)) {
+                switch1.setChecked(false);
+            } else if ("true".equals(isfinger)) {
+                switch1.setChecked(true);
+            }
+        }
     }
 
     public void StartA(Class cls) {

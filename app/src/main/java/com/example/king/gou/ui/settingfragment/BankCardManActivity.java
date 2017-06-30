@@ -82,7 +82,7 @@ public class BankCardManActivity extends AutoLayoutActivity implements SlideCutL
                 RestultInfo restultInfo = (RestultInfo) object;
                 if (restultInfo.isRc() == true) {
                     Toasty.success(this, restultInfo.getMsg(), 2000).show();
-                    BindCardBtn.setVisibility(View.GONE);
+                   // BindCardBtn.setVisibility(View.GONE);
 
                 } else {
                     Toasty.error(this, restultInfo.getMsg(), 2000).show();
@@ -95,7 +95,7 @@ public class BankCardManActivity extends AutoLayoutActivity implements SlideCutL
                 List<MapsIdAndValue> mapsBank = MapsBank.get(2);
                 String locked = mapsBank.get(1).getLocked();
                 if ("true".equals(locked)) {
-                    BindCardBtn.setVisibility(View.GONE);
+                    //BindCardBtn.setVisibility(View.GONE);
                 } else {
                     BindCardBtn.setVisibility(View.VISIBLE);
                 }

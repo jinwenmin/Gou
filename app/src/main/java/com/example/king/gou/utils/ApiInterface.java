@@ -296,6 +296,54 @@ public interface ApiInterface {
     @POST("/binding-card-lock")
     Call<RestultInfo> getBindingCardLock();
 
+    //获取聊天用户
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/get-chat-users")
+    Call<Object> getChatUsers();
 
+    //查询消息列表
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/message-manage-list")
+    Call<Object> getChatList(
+            @Query("page") int page,//查询的页码
+            @Query("rows") int rows,//每页查询的记录数
+            @Query("sidx") String sidx,//排序参数，这里是[chat_date]
+            @Query("sord") String sord,//排序类型，这里是[desc]
+            @Query("send_uid") int send_uid,//查询用户id
+            @Query("from") String from,//查询开始时间[yyyy-MM-dd HH:mm:ss]
+            @Query("to") String to//查询结束时间[yyyy-MM-dd HH:mm:ss]
+    );
+
+    //删除聊天信息
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/message-manage-delete")
+    Call<RestultInfo> getDeleteChatMsg(
+            @Query("id") int id//聊天消息id
+
+    );
+
+    //加载聊天信息
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/message-manage-loads")
+    Call<Object> getChatMsg(
+            @Query("id") int id//聊天消息id
+
+    );
+
+    //发送聊天信息
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/message-manage-loads")
+    Call<Object> getSendMsg(
+            @Query("id") int id,//聊天消息id
+            @Query("title") String title, //聊天消息id
+            @Query("msg") String msg//聊天消息id
+    );
+
+    //轮询读取新消息
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/message-manage-getnew")
+    Call<Object> getNewMsg(
+            @Query("id") int id//聊天对象uid
+    );
 
 }
