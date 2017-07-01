@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.king.gou.bean.GameType;
 import com.example.king.gou.bean.Login;
 import com.example.king.gou.bean.LoginState;
 import com.example.king.gou.bean.MapsIdAndValue;
@@ -402,12 +403,47 @@ public class RetrofitService extends HttpEngine {
 
     //获取游戏
     public void getGame(DataListener listener, int type, int gid, int tid, int ptid) {
-        Call<Object> game = apiInterface.getGame(type, gid, tid, ptid);
+
+        final Call<Object> game = apiInterface.getGame(type, gid, tid, ptid);
+        final String s = game.request().toString();
+        Log.d("获得游戏的请求体", s);
         Call<Object> clone = game.clone();
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                Log.d("获取到的游戏===", response.body() + "");
+                Log.d("获取到的游戏===", response.body().toString());
+                String StringType = s.substring(s.indexOf("type=") + 5, s.indexOf("&gid"));
+                Log.d("获取到的游戏Type===", StringType + "");
+                List<GameType> gameTypes = new ArrayList<GameType>();
+                String s1 = response.body().toString();
+                String GameT = s1.substring(1, s1.length() - 1);
+                String[] split = GameT.split(",");
+                if ("1".equals(StringType)) {
+                    for (int i = 0; i < split.length; i = i + 2) {
+                        GameType gameType = new GameType();
+                        String GameName = split[i].substring(split[i].indexOf("name=") + 5, split[i].length());
+                        String GameTid = split[i + 1].substring(split[i + 1].indexOf("tid=") + 4, split[i + 1].length() - 3);
+                        int intGameTid = Integer.parseInt(GameTid);
+                        gameType.setName(GameName);
+                        gameType.setTid(intGameTid);
+                        Log.d("Game游戏==", gameType.toString());
+                        gameTypes.add(gameType);
+                    }
+                }
+                if ("2".equals(StringType)) {
+                    for (int i = 0; i < split.length; i = i + 3) {
+                        Log.d("Game游戏Split=", split[i]);
+                        GameType gameType = new GameType();
+                        String GameName = split[i + 1].substring(split[i + 1].indexOf("name=") + 5, split[i + 1].length());
+                        String GameTid = split[i + 2].substring(split[i + 2].indexOf("tid=") + 4, split[i + 2].length() - 3);
+                        String GameGid = split[i].substring(split[i].indexOf("gid=") + 4, split[i].length() - 2);
+                        gameType.setGid(Integer.parseInt(GameGid));
+                        gameType.setTid(Integer.parseInt(GameTid));
+                        gameType.setName(GameName);
+                        Log.d("Game游戏==", gameType.toString());
+                        gameTypes.add(gameType);
+                    }
+                }
             }
 
             @Override

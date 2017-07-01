@@ -110,6 +110,7 @@ public interface ApiInterface {
                          @Query("tid") int tid,
                          @Query("ptid") int ptid);
 
+
     //获取奖金详情
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/prize-details-list")

@@ -48,7 +48,20 @@
         android:id="@+id/MainScrollAd"
         android:layout_width="fill_parent"
         android:layout_height="60px"
+
         android:layout_below="@id/home_top"></com.example.king.gou.utils.MainScrollUpAdvertisementView>
+    <com.example.king.gou.utils.MarqueeText
+        android:id="@+id/test"
+        android:visibility="gone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_red_dark"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:layout_below="@id/home_top"
+        android:text="大家好，我是程序员小冰，欢迎关注微博：http://weibo.com/mcxiaobing"
+        android:textColor="#000000"
+        android:textSize="20dp"></com.example.king.gou.utils.MarqueeText>
 
     <FrameLayout
         android:layout_width="match_parent"

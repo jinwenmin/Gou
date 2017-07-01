@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import com.example.king.gou.ui.AddGameActivity;
 import com.example.king.gou.utils.BaseAutoScrollUpTextView;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.MainScrollUpAdvertisementView;
+import com.example.king.gou.utils.MarqueeText;
 import com.jude.rollviewpager.RollPagerView;
 
 import java.util.ArrayList;
@@ -67,6 +69,14 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     TextView HomeFragmentAddGame;
     @BindView(R.id.MainScrollAd)
     MainScrollUpAdvertisementView MainScrollAd;
+    @BindView(R.id.test)
+    MarqueeText test;
+    @BindView(R.id.home_scroll1)
+    HorizontalScrollView homeScroll1;
+    @BindView(R.id.HomeFragment_Text)
+    TextView HomeFragmentText;
+    @BindView(R.id.MyGame)
+    RelativeLayout MyGame;
 
     public static HomeFragment newInstance() {
 
@@ -86,6 +96,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         unbinder = ButterKnife.bind(this, view);
+        test.startScroll();
         HomeFragmentAddGame.setOnClickListener(this);
         recycler.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         header.attachTo(recycler, true);
