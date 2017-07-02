@@ -8,14 +8,8 @@ public class GameType {
     int gid;
     String name;
     int tid;
-
-    public int getGid() {
-        return gid;
-    }
-
-    public void setGid(int gid) {
-        this.gid = gid;
-    }
+    int group_id;
+    int ptid;
 
     @Override
     public String toString() {
@@ -23,7 +17,33 @@ public class GameType {
                 "gid=" + gid +
                 ", name='" + name + '\'' +
                 ", tid=" + tid +
+                ", group_id=" + group_id +
+                ", ptid=" + ptid +
                 '}';
+    }
+
+    public int getPtid() {
+        return ptid;
+    }
+
+    public void setPtid(int ptid) {
+        this.ptid = ptid;
+    }
+
+    public int getGroup_id() {
+        return group_id;
+    }
+
+    public void setGroup_id(int group_id) {
+        this.group_id = group_id;
+    }
+
+    public int getGid() {
+        return gid;
+    }
+
+    public void setGid(int gid) {
+        this.gid = gid;
     }
 
     public String getName() {

@@ -414,7 +414,7 @@ public class RetrofitService extends HttpEngine {
                 Log.d("获取到的游戏===", response.body().toString());
                 String StringType = s.substring(s.indexOf("type=") + 5, s.indexOf("&gid"));
                 Log.d("获取到的游戏Type===", StringType + "");
-                List<GameType> gameTypes = new ArrayList<GameType>();
+                List<GameType> ListgameTypes = new ArrayList<GameType>();
                 String s1 = response.body().toString();
                 String GameT = s1.substring(1, s1.length() - 1);
                 String[] split = GameT.split(",");
@@ -427,7 +427,7 @@ public class RetrofitService extends HttpEngine {
                         gameType.setName(GameName);
                         gameType.setTid(intGameTid);
                         Log.d("Game游戏==", gameType.toString());
-                        gameTypes.add(gameType);
+                        ListgameTypes.add(gameType);
                     }
                 }
                 if ("2".equals(StringType)) {
@@ -441,7 +441,49 @@ public class RetrofitService extends HttpEngine {
                         gameType.setTid(Integer.parseInt(GameTid));
                         gameType.setName(GameName);
                         Log.d("Game游戏==", gameType.toString());
-                        gameTypes.add(gameType);
+                        ListgameTypes.add(gameType);
+                    }
+                }
+                if ("3".equals(StringType)) {
+                    for (int i = 0; i < split.length; i = i + 2) {
+                        Log.d("Game游戏Split=", split[i]);
+                        GameType gameType = new GameType();
+                        String GameGroupId = split[i].substring(split[i].indexOf("group_id=") + 9, split[i].length() - 2);
+                        String GameName = split[i + 1].substring(split[i + 1].indexOf("name=") + 5, split[i + 1].length() - 1);
+                        gameType.setGroup_id(Integer.parseInt(GameGroupId));
+                        gameType.setName(GameName);
+                        Log.d("Game游戏==", gameType.toString());
+                        ListgameTypes.add(gameType);
+                    }
+                }
+                if ("4".equals(StringType)) {
+                    for (int i = 0; i < split.length; i = i + 3) {
+                        Log.d("Game游戏Split=", split[i]);
+                        GameType gameType = new GameType();
+                        String GameGid = split[i].substring(split[i].indexOf("gid=") + 4, split[i].length() - 2);
+                        String GameGroupId = split[i + 1].substring(split[i + 1].indexOf("group_id=") + 9, split[i + 1].length() - 2);
+                        String GameName = split[i + 2].substring(split[i + 2].indexOf("name=") + 5, split[i + 2].length() - 1);
+                        gameType.setGid(Integer.parseInt(GameGid));
+                        gameType.setGroup_id(Integer.parseInt(GameGroupId));
+                        gameType.setName(GameName);
+                        Log.d("Game游戏==", gameType.toString());
+                        ListgameTypes.add(gameType);
+                    }
+                }
+                if ("5".equals(StringType)) {
+                    for (int i = 0; i < split.length; i=i+4) {
+                        Log.d("Game游戏Split=", split[i]);
+                        GameType gameType = new GameType();
+                        String GameGid = split[i].substring(split[i].indexOf("gid=") + 4, split[i].length() - 2);
+                        String GameName = split[i + 1].substring(split[i + 1].indexOf("name=") + 5, split[i + 1].length());
+                        String GamePtidId = split[i + 2].substring(split[i + 2].indexOf("ptid=") + 5, split[i + 2].length() - 2);
+                        String GameTidId = split[i + 3].substring(split[i + 3].indexOf("tid=") + 4, split[i + 3].length() - 3);
+                        gameType.setGid(Integer.parseInt(GameGid));
+                        gameType.setName(GameName);
+                        gameType.setPtid(Integer.parseInt(GamePtidId));
+                        gameType.setTid(Integer.parseInt(GameTidId));
+                        ListgameTypes.add(gameType);
+                        Log.d("Game游戏==", gameType.toString());
                     }
                 }
             }
