@@ -20,6 +20,7 @@ import com.example.king.gou.ui.settingfragment.BankCardManActivity;
 import com.example.king.gou.ui.settingfragment.MoneyProtectActivity;
 import com.example.king.gou.ui.settingfragment.UpdateMoneyPwdActivity;
 import com.example.king.gou.ui.settingfragment.UpdateNickNameActivity;
+import com.example.king.gou.ui.settingfragment.UpdatePwdActivity;
 import com.example.king.gou.utils.DataBaseHelper;
 import com.example.king.gou.utils.HttpEngine;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -107,6 +108,7 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
         initDataHelper();
+        Back.setOnClickListener(this);
         SettingUpdataPwd.setOnClickListener(this);
         updateMoneyPwd.setOnClickListener(this);
         updateNickName.setOnClickListener(this);
@@ -164,8 +166,8 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.Setting_UpdataPwd:
-                //   StartA(UpdatePwdActivity.class);
-                StartA(CheckSafePwdActivity.class);
+                  StartA(UpdatePwdActivity.class);
+                //StartA(CheckSafePwdActivity.class);
                 break;
             case R.id.Pwd_protect:
                 StartA(MoneyProtectActivity.class);
@@ -196,6 +198,9 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
                 break;
             case R.id.updateSafePwd:
                 StartA(UpDataSafePwdActivity.class);
+                break;
+            case R.id._back:
+                finish();
                 break;
         }
     }

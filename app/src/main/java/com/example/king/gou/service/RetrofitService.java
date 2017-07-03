@@ -79,6 +79,7 @@ public class RetrofitService extends HttpEngine {
     private Retrofit retrofit;
     private ApiInterface apiInterface;
     String sessionLoginId;
+    String reqkey;
 
     public static class SingleInstanceHolder {
         private static RetrofitService retrofitService = new RetrofitService();
@@ -168,7 +169,10 @@ public class RetrofitService extends HttpEngine {
 
       }*/
     public void LogOut() {
-        Call<Object> signout = apiInterface.getSignout();
+        Long currentTimeMillis = System.currentTimeMillis();
+        reqkey = "AppClient=1&t=" + currentTimeMillis;
+        reqkey = RxUtils.getInstance().md5(reqkey);
+        Call<Object> signout = apiInterface.getSignout(1, reqkey, currentTimeMillis);
         Call<Object> clone = signout.clone();
         clone.enqueue(new Callback<Object>() {
             @Override
@@ -192,6 +196,7 @@ public class RetrofitService extends HttpEngine {
                            String[] ids,
                            int gets
     ) {
+
         Call<Object> loginState = apiInterface.getLoginState(luid, uonline, type, ids, gets);
         System.out.println("登录信息=" + luid + " " + uonline + " " + type + " " + ids + " " + gets);
         Call<Object> clone = loginState.clone();
@@ -218,6 +223,7 @@ public class RetrofitService extends HttpEngine {
 
 
     }
+/*
 
     public void LoginSta(final DataListener listener, int luid, int uonline, int type, String[] ids, int gets) {
         Call<Object> loginState = apiInterface.getLoginState(luid, uonline, type, ids, gets);
@@ -246,6 +252,7 @@ public class RetrofitService extends HttpEngine {
         });
 
     }
+*/
 
     public void Login2(final DataListener listener, int num, String username,
                        String password,
@@ -283,7 +290,10 @@ public class RetrofitService extends HttpEngine {
 
     //用户的基本信息
     public void GetUserInfo(final DataListener listener) {
-        Call<UserInfo> userInfo = apiInterface.getUserInfo();
+        long currentTimeMillis = System.currentTimeMillis();
+        reqkey = "AppClient=1&t=" + currentTimeMillis;
+        reqkey = RxUtils.getInstance().md5(reqkey);
+        Call<UserInfo> userInfo = apiInterface.getUserInfo(1, reqkey, currentTimeMillis);
         Call<UserInfo> clone = userInfo.clone();
         clone.enqueue(new Callback<UserInfo>() {
             @Override
@@ -305,7 +315,10 @@ public class RetrofitService extends HttpEngine {
 
     //获取活动列表
     public void GetActivityList(DataListener listener) {
-        Call<Object> activityList = apiInterface.getActivityList();
+        long currentTimeMillis = System.currentTimeMillis();
+        reqkey = "AppClient=1&t=" + currentTimeMillis;
+        reqkey = RxUtils.getInstance().md5(reqkey);
+        Call<Object> activityList = apiInterface.getActivityList(1, reqkey, currentTimeMillis);
         Call<Object> clone = activityList.clone();
         clone.enqueue(new Callback<Object>() {
             @Override
@@ -324,7 +337,10 @@ public class RetrofitService extends HttpEngine {
 
     //获取公告
     public void GetNotices(final DataListener listener) {
-        Call<Object> clone = apiInterface.getNotices().clone();
+        long currentTimeMillis = System.currentTimeMillis();
+        reqkey = "AppClient=1&t=" + currentTimeMillis;
+        reqkey = RxUtils.getInstance().md5(reqkey);
+        Call<Object> clone = apiInterface.getNotices(1, reqkey, currentTimeMillis).clone();
         listener.onRequestStart(API_ID_NOTICECONTENT);
         clone.enqueue(new Callback<Object>() {
             @Override
@@ -354,6 +370,8 @@ public class RetrofitService extends HttpEngine {
 
     //获取公告内容
     public void getNoticesContent(final DataListener listener, int id) {
+        long currentTimeMillis = System.currentTimeMillis();
+        reqkey = "AppClient=1&id=" + id + "&t=" + currentTimeMillis;
         Call<Object> noticesContent = apiInterface.getNoticesContent(id);
         Call<Object> clone = noticesContent.clone();
         clone.enqueue(new Callback<Object>() {
@@ -403,8 +421,10 @@ public class RetrofitService extends HttpEngine {
 
     //获取游戏
     public void getGame(DataListener listener, int type, int gid, int tid, int ptid) {
-
-        final Call<Object> game = apiInterface.getGame(type, gid, tid, ptid);
+        long currentTimeMillis = System.currentTimeMillis();
+        String reqkey1 = "AppClient=1&type=" + type + "&gid=" + gid + "&tid=" + tid + "&ptid=" + ptid + "&t=" + currentTimeMillis;
+        String reqkey2 = RxUtils.getInstance().md5(reqkey1);
+        final Call<Object> game = apiInterface.getGame(1, type, gid, tid, ptid, reqkey2, currentTimeMillis);
         final String s = game.request().toString();
         Log.d("获得游戏的请求体", s);
         Call<Object> clone = game.clone();
@@ -471,7 +491,7 @@ public class RetrofitService extends HttpEngine {
                     }
                 }
                 if ("5".equals(StringType)) {
-                    for (int i = 0; i < split.length; i=i+4) {
+                    for (int i = 0; i < split.length; i = i + 4) {
                         Log.d("Game游戏Split=", split[i]);
                         GameType gameType = new GameType();
                         String GameGid = split[i].substring(split[i].indexOf("gid=") + 4, split[i].length() - 2);
@@ -499,7 +519,10 @@ public class RetrofitService extends HttpEngine {
 
     //获取用户的余额
     public void LoginUserAmount(final DataListener listener) {
-        final Call<UserAmount> userAmount = apiInterface.getUserAmount();
+        long currentTimeMillis = System.currentTimeMillis();
+        reqkey = "AppClient=1&t=" + currentTimeMillis;
+        reqkey = RxUtils.getInstance().md5(reqkey);
+        final Call<UserAmount> userAmount = apiInterface.getUserAmount(1, reqkey, currentTimeMillis);
         Call<UserAmount> clone = userAmount.clone();
         listener.onRequestStart(API_ID_USERAMOUNT);
         clone.enqueue(new Callback<UserAmount>() {
@@ -541,7 +564,10 @@ public class RetrofitService extends HttpEngine {
 
     //找回密码
     public void getBackPassWord(String u, String p) {
-        Call<Object> backPassword = apiInterface.getBackPassword(u, p);
+        long currentTimeMillis = System.currentTimeMillis();
+        reqkey = "AppClient=1&u=" + u + "&p=" + p + "&t=" + currentTimeMillis;
+        reqkey = RxUtils.getInstance().md5(reqkey);
+        Call<Object> backPassword = apiInterface.getBackPassword(1, u, p, reqkey, currentTimeMillis);
         Call<Object> clone = backPassword.clone();
         clone.enqueue(new Callback<Object>() {
             @Override
@@ -558,7 +584,10 @@ public class RetrofitService extends HttpEngine {
 
     //找回密码保存
     public void getBackPassWordSave(final DataListener listener, String u, String p) {
-        Call<Object> clone = apiInterface.getBackPasswordSave(u, p).clone();
+        long currentTimeMillis = System.currentTimeMillis();
+        reqkey = "AppClient=1&u=" + u + "&p=" + p + "&t=" + currentTimeMillis;
+        reqkey = RxUtils.getInstance().md5(reqkey);
+        Call<Object> clone = apiInterface.getBackPasswordSave(1, u, p, reqkey, currentTimeMillis).clone();
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
@@ -594,7 +623,10 @@ public class RetrofitService extends HttpEngine {
 
     //修改用户昵称
     public void getUpdateNickName(final DataListener listener, String nickName) {
-        Call<RestultInfo> nickNameChange = apiInterface.getNickNameChange(nickName);
+        long currentTimeMillis = System.currentTimeMillis();
+        reqkey = "AppClient=1&nickname=" + nickName + "&t=" + currentTimeMillis;
+        reqkey = RxUtils.getInstance().md5(reqkey);
+        Call<RestultInfo> nickNameChange = apiInterface.getNickNameChange(1, nickName, reqkey, currentTimeMillis);
         Call<RestultInfo> clone = nickNameChange.clone();
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
@@ -614,7 +646,10 @@ public class RetrofitService extends HttpEngine {
 
     //强制修改初始密码
     public void getUpdateFirstPwd(final DataListener listener, String p0, String p1, String p2, String email) {
-        Call<RestultInfo> clone = apiInterface.getUpdateFirstPwd(p0, p1, p2, email).clone();
+        long currentTimeMillis = System.currentTimeMillis();
+        String reqkey = "AppClient=1&p0=" + p0 + "&p1=" + p1 + "&p2=" + p2 + "&email=" + email + "&t=" + currentTimeMillis;
+        String reqkey2 = RxUtils.getInstance().md5(reqkey);
+        Call<RestultInfo> clone = apiInterface.getUpdateFirstPwd(1, p0, p1, p2, email, reqkey2, currentTimeMillis).clone();
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
@@ -632,7 +667,10 @@ public class RetrofitService extends HttpEngine {
 
     //获取安全问题
     public void getSafeQues(final DataListener listener) {
-        Call<Object> clone = apiInterface.getSafeQues().clone();
+        long currentTimeMillis = System.currentTimeMillis();
+        String reqkey1 = "AppClient=1&t=" + currentTimeMillis;
+        String reqkey2 = RxUtils.getInstance().md5(reqkey1);
+        Call<Object> clone = apiInterface.getSafeQues(1, reqkey2, currentTimeMillis).clone();
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
@@ -679,7 +717,10 @@ public class RetrofitService extends HttpEngine {
 
     //修改登录密码
     public void getUpDataPwd(final DataListener listener, String p0, String p1) {
-        Call<RestultInfo> clone = apiInterface.getUpDatePwd(p0, p1).clone();
+        long currentTimeMillis = System.currentTimeMillis();
+        String re1 = "AppClient=1&p0=" + p0 + "&p1=" + p1 + "&t=" + currentTimeMillis;
+        String re2 = RxUtils.getInstance().md5(re1);
+        Call<RestultInfo> clone = apiInterface.getUpDatePwd(1, p0, p1, re2, currentTimeMillis).clone();
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
@@ -696,7 +737,10 @@ public class RetrofitService extends HttpEngine {
 
     //验证安全密码
     public void getCheckSafePwd(final DataListener listener, String p) {
-        Call<RestultInfo> clone = apiInterface.getCheckSafePwd(p).clone();
+        long currentTimeMillis = System.currentTimeMillis();
+        String r1 = "AppClient=1&p=" + p + "&t=" + currentTimeMillis;
+        String r2 = RxUtils.getInstance().md5(r1);
+        Call<RestultInfo> clone = apiInterface.getCheckSafePwd(1, p, r2, currentTimeMillis).clone();
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
@@ -713,7 +757,10 @@ public class RetrofitService extends HttpEngine {
 
     //保存安全问题
     public void getSaveSafeQus(DataListener listener, String q, String a) {
-        Call<RestultInfo> infoCall = apiInterface.getSaveSafeQues(q, a).clone();
+        long currentTimeMillis = System.currentTimeMillis();
+        String r1 = "AppClient=1&q=" + q + "&a=" + a + "&t=" + currentTimeMillis;
+        String r2 = RxUtils.getInstance().md5(r1);
+        Call<RestultInfo> infoCall = apiInterface.getSaveSafeQues(1, q, a, r2, currentTimeMillis).clone();
         infoCall.enqueue(new Callback<RestultInfo>() {
             @Override
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
@@ -729,7 +776,10 @@ public class RetrofitService extends HttpEngine {
 
     //获取绑定的银行卡的数据
     public void getCardDatas(final DataListener listener) {
-        Call<Object> clone = apiInterface.getCardDatas().clone();
+        long currentTimeMillis = System.currentTimeMillis();
+        String r1 = "AppClient=1&t=" + currentTimeMillis;
+        String r2 = RxUtils.getInstance().md5(r1);
+        Call<Object> clone = apiInterface.getCardDatas(1, r2, currentTimeMillis).clone();
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
@@ -814,7 +864,10 @@ public class RetrofitService extends HttpEngine {
 
     //验证银行卡号
     public void getCheckCardNum(DataListener listener, String name, String card) {
-        Call<Object> checkBankCardNum = apiInterface.getCheckBankCardNum(name, card);
+        long currentTimeMillis = System.currentTimeMillis();
+        String r1 = "AppClient=1&name=" + name + "&card=" + card + "&t=" + currentTimeMillis;
+        String r2 = RxUtils.getInstance().md5(r1);
+        Call<Object> checkBankCardNum = apiInterface.getCheckBankCardNum(1, name, card, r2, currentTimeMillis);
         Call<Object> clone = checkBankCardNum.clone();
         clone.enqueue(new Callback<Object>() {
             @Override
@@ -832,7 +885,10 @@ public class RetrofitService extends HttpEngine {
 
     //获得省市级联动
     public void getPrivens(final DataListener listener, int id) {
-        Call<Object> objectCall = apiInterface.getPrivens(id).clone();
+        long currentTimeMillis = System.currentTimeMillis();
+        String r1 = "AppClient=1&id=" + id + "&t=" + currentTimeMillis;
+        String r2 = RxUtils.getInstance().md5(r1);
+        Call<Object> objectCall = apiInterface.getPrivens(1, id, r2, currentTimeMillis).clone();
         objectCall.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
@@ -872,7 +928,10 @@ public class RetrofitService extends HttpEngine {
         card[string]：银行卡号*/
     //保存银行卡  应用场景：绑定新卡保存银行卡数据
     public void getSaveBankCard(final DataListener listener, int bank, int province_id, String province, int city_id, String city, String branch, String name, String card) {
-        Call<RestultInfo> saveBankCard = apiInterface.getSaveBankCard(bank, province_id, province, city_id, city, branch, name, card);
+        long currentTimeMillis = System.currentTimeMillis();
+        String r1 = "AppClient=1&bank=" + bank + "&province_id=" + province_id + "&province=" + province + "&city_id=" + city_id + "&city=" + city + "&branch=" + branch + "&name=" + name + "&card=" + card + "&t=" + currentTimeMillis;
+        String r2 = RxUtils.getInstance().md5(r1);
+        Call<RestultInfo> saveBankCard = apiInterface.getSaveBankCard(1, bank, province_id, province, city_id, city, branch, name, card, r2, currentTimeMillis);
         Call<RestultInfo> clone = saveBankCard.clone();
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
@@ -891,7 +950,10 @@ public class RetrofitService extends HttpEngine {
 
     //获取提现数据
     public void getWithDrawDatas(DataListener listener) {
-        Call<Object> clone = apiInterface.getWithDrawData().clone();
+        long currentTimeMillis = System.currentTimeMillis();
+        String r1 = "AppClient=1&t=" + currentTimeMillis;
+        String r2 = RxUtils.getInstance().md5(r1);
+        Call<Object> clone = apiInterface.getWithDrawData(1, r2, currentTimeMillis).clone();
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
@@ -910,7 +972,10 @@ public class RetrofitService extends HttpEngine {
     //添加提现申请
     //  应用场景：提现验证通过后创建提现申请
     public void getWithDrawCreates(DataListener listener, int aid, BigDecimal amount) {
-        Call<RestultInfo> clone = apiInterface.getWithDrawCreate(aid, amount).clone();
+        long currentTimeMillis = System.currentTimeMillis();
+        String r1 = "AppClient=1&aid=" + aid + "&amount=" + amount + "&t=" + currentTimeMillis;
+        String r2 = RxUtils.getInstance().md5(r1);
+        Call<RestultInfo> clone = apiInterface.getWithDrawCreate(1, aid, amount, r2, currentTimeMillis).clone();
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
@@ -928,7 +993,10 @@ public class RetrofitService extends HttpEngine {
 
     //修改安全密码
     public void getUpDataSafePwd(DataListener listener, String p0, String p1, String email) {
-        Call<RestultInfo> clone = apiInterface.getUpDataSafePwd(p0, p1, email).clone();
+        long currentTimeMillis = System.currentTimeMillis();
+        String r1 = "AppClient=1&p0=" + p0 + "&p1=" + p1 + "&email=" + email + "&t=" + currentTimeMillis;
+        String r2 = RxUtils.getInstance().md5(r1);
+        Call<RestultInfo> clone = apiInterface.getUpDataSafePwd(1, p0, p1, email, r2, currentTimeMillis).clone();
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
@@ -947,7 +1015,10 @@ public class RetrofitService extends HttpEngine {
 
     //重置安全密码 或者 登陆密码
     public void getResetPwd(DataListener listener, int type, String p) {
-        Call<RestultInfo> clone = apiInterface.getResetPwd(type, p).clone();
+        long currentTimeMillis = System.currentTimeMillis();
+        String r1 = "AppClient=1&type=" + type + "&p=" + p + "&t=" + currentTimeMillis;
+        String r2 = RxUtils.getInstance().md5(r1);
+        Call<RestultInfo> clone = apiInterface.getResetPwd(1, type, p, r2, currentTimeMillis).clone();
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
@@ -963,7 +1034,10 @@ public class RetrofitService extends HttpEngine {
 
     //绑定银行卡锁定
     public void getBingCardLock(final DataListener listener) {
-        Call<RestultInfo> clone = apiInterface.getBindingCardLock().clone();
+        long currentTimeMillis = System.currentTimeMillis();
+        String r1 = "AppClient=1&t=" + currentTimeMillis;
+        String r2 = RxUtils.getInstance().md5(r1);
+        Call<RestultInfo> clone = apiInterface.getBindingCardLock(1, r2, currentTimeMillis).clone();
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
@@ -980,7 +1054,10 @@ public class RetrofitService extends HttpEngine {
 
     //获取聊天用户
     public void getChatUser(final DataListener listener) {
-        Call<Object> clone = apiInterface.getChatUsers().clone();
+        long currentTimeMillis = System.currentTimeMillis();
+        String r1 = "AppClient=1&t=" + currentTimeMillis;
+        String r2 = RxUtils.getInstance().md5(r1);
+        Call<Object> clone = apiInterface.getChatUsers(1, r2, currentTimeMillis).clone();
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
@@ -1011,7 +1088,10 @@ public class RetrofitService extends HttpEngine {
 
     //获得消息列表
     public void getChatList(DataListener listener, int page, int rows, String sidx, String sord, int send_uid, String from, String to) {
-        Call<Object> clone = apiInterface.getChatList(page, rows, sidx, sord, send_uid, from, to).clone();
+        long currentTimeMillis = System.currentTimeMillis();
+        String r1 = "AppClient=1&page=" + page + "&rows=" + rows + "&sidx=" + sidx + "&sord=" + sord + "&send_uid=" + send_uid + "&from=" + from + "&to=" + to + "&t=" + currentTimeMillis;
+        String r2 = RxUtils.getInstance().md5(r1);
+        Call<Object> clone = apiInterface.getChatList(1, page, rows, sidx, sord, send_uid, from, to, r2, currentTimeMillis).clone();
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
@@ -1027,7 +1107,10 @@ public class RetrofitService extends HttpEngine {
 
     //删除聊天消息
     public void getDeleteChatMsg(DataListener listener, int id) {
-        Call<RestultInfo> clone = apiInterface.getDeleteChatMsg(id).clone();
+        long currentTimeMillis = System.currentTimeMillis();
+        String r1 = "AppClient=1&id=" + id + "&t=" + currentTimeMillis;
+        String r2 = RxUtils.getInstance().md5(r1);
+        Call<RestultInfo> clone = apiInterface.getDeleteChatMsg(1, id, r2, currentTimeMillis).clone();
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
@@ -1043,7 +1126,10 @@ public class RetrofitService extends HttpEngine {
 
     //加载聊天信息
     public void getChatMsg(DataListener listener, int id) {
-        Call<Object> clone = apiInterface.getChatMsg(id).clone();
+        long currentTimeMillis = System.currentTimeMillis();
+        String r1 = "AppClient=1&id=" + id + "&t=" + currentTimeMillis;
+        String r2 = RxUtils.getInstance().md5(r1);
+        Call<Object> clone = apiInterface.getChatMsg(1, id, r2, currentTimeMillis).clone();
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
@@ -1060,7 +1146,10 @@ public class RetrofitService extends HttpEngine {
 
     //发送聊天信息
     public void getSendMsg(DataListener listener, int id, String title, String msg) {
-        Call<Object> clone = apiInterface.getSendMsg(id, title, msg).clone();
+        long currentTimeMillis = System.currentTimeMillis();
+        String r1 = "AppClient=1&id=" + id + "&title=" + title + "&msg=" + msg + "&t=" + currentTimeMillis;
+        String r2 = RxUtils.getInstance().md5(r1);
+        Call<Object> clone = apiInterface.getSendMsg(1, id, title, msg, r2, currentTimeMillis).clone();
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
@@ -1076,7 +1165,10 @@ public class RetrofitService extends HttpEngine {
 
     //轮询获取新消息
     public void getNewMsg(DataListener listener, int id) {
-        Call<Object> clone = apiInterface.getNewMsg(id).clone();
+        long currentTimeMillis = System.currentTimeMillis();
+        String r1 = "AppClient=1&id=" + id + "&t=" + currentTimeMillis;
+        String r2 = RxUtils.getInstance().md5(r1);
+        Call<Object> clone = apiInterface.getNewMsg(1, id, r2, currentTimeMillis).clone();
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {

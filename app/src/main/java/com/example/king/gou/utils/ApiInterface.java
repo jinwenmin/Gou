@@ -47,23 +47,34 @@ public interface ApiInterface {
     //登出有日志
     @Headers("X-Requested-With: XMLHttpRequest")
     @GET("/logout")
-    Call<Object> getSignout();
+    Call<Object> getSignout(
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
 
     //登陆状态查询
     @Headers("X-Requested-With: XMLHttpRequest")
-
     @POST("/chat-message")
     Call<Object> getLoginState(
+
             @Query("luid") int luid,
             @Query("uonline") int uonline,
             @Query("type") int type,
             @Query("ids") String[] ids,
-            @Query("gets") int gets);
+            @Query("gets") int gets
+    );
+
 
     //查询用户余额
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/amount-refresh")
-    Call<UserAmount> getUserAmount();
+    Call<UserAmount> getUserAmount(
+
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
 
     //登陆
     @Headers("X-Requested-With: XMLHttpRequest")
@@ -80,22 +91,39 @@ public interface ApiInterface {
     //用户信息
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-user-datas")
-    Call<UserInfo> getUserInfo();
+    Call<UserInfo> getUserInfo(
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
 
     //活动列表
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-activitys")
-    Call<Object> getActivityList();
+    Call<Object> getActivityList(
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
 
     //公告列表
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-notices")
-    Call<Object> getNotices();
+    Call<Object> getNotices(
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+
+    );
 
     //公告列表
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/notice-view/{id}")
-    Call<Object> getNoticesContent(@Path("id") int id);
+    Call<Object> getNoticesContent(
+
+            @Path("id") int id
+
+    );
 
     //获取玩法
     @Headers("X-Requested-With: XMLHttpRequest")
@@ -105,10 +133,15 @@ public interface ApiInterface {
     //获取游戏
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-game-datas")
-    Call<Object> getGame(@Query("type") int type,
-                         @Query("gid") int gid,
-                         @Query("tid") int tid,
-                         @Query("ptid") int ptid);
+    Call<Object> getGame(
+            @Query("AppClient") int num,
+            @Query("type") int type,
+            @Query("gid") int gid,
+            @Query("tid") int tid,
+            @Query("ptid") int ptid,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
 
 
     //获取奖金详情
@@ -125,25 +158,38 @@ public interface ApiInterface {
     //找回密码接口
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/back-pass-check")
-    Call<Object> getBackPassword(@Query("u") String u,
-                                 @Query("p") String p
+    Call<Object> getBackPassword(
+            @Query("AppClient") int num,
+            @Query("u") String u,
+            @Query("p") String p,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+
     );
 
-//找回密码保存
 
+    //找回密码保存
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/back-pass-save")
-    Call<Object> getBackPasswordSave(@Query("u") String u,//用户名
-                                     @Query("p") String p//密码
+    Call<Object> getBackPasswordSave(
+            @Query("AppClient") int num,
+            @Query("u") String u,//用户名
+            @Query("p") String p,//密码
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
     );
 
     //找回密码保存
 
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/freeze-user-check")
-    Call<Object> getFreezeUser(@Query("u") String u,//需要冻结的用户名
-                               @Query("n") String n,//持卡人姓名
-                               @Query("no") String no//已绑定的银行卡号
+    Call<Object> getFreezeUser(
+            @Query("AppClient") int num,
+            @Query("u") String u,//需要冻结的用户名
+            @Query("n") String n,//持卡人姓名
+            @Query("no") String no,//已绑定的银行卡号
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
     );
 
     //领取活动奖金
@@ -158,22 +204,34 @@ public interface ApiInterface {
     //用户信息页面修改昵称
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/profile-save")
-    Call<RestultInfo> getNickNameChange(@Query("nickname") String nickname//用户新昵称
+    Call<RestultInfo> getNickNameChange(
+            @Query("AppClient") int num,
+            @Query("nickname") String nickname,//用户新昵称
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
     );
 
     //强制修改初始密码
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/password-manage-save2")
-    Call<RestultInfo> getUpdateFirstPwd(@Query("p0") String p0,//初始密码
-                                        @Query("p0") String p1,//新密码
-                                        @Query("p0") String p2,//安全密码
-                                        @Query("email") String email//邮箱
+    Call<RestultInfo> getUpdateFirstPwd(
+            @Query("AppClient") int num,
+            @Query("p0") String p0,//初始密码
+            @Query("p0") String p1,//新密码
+            @Query("p0") String p2,//安全密码
+            @Query("email") String email,//邮箱
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
     );
 
     //获取安全问题
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-questions")
-    Call<Object> getSafeQues();
+    Call<Object> getSafeQues(
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
 
     //获取首页的公告或者滚动栏
     @Headers("X-Requested-With: XMLHttpRequest")
@@ -183,35 +241,53 @@ public interface ApiInterface {
     //修改登录密码
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/password-manage-save")
-    Call<RestultInfo> getUpDatePwd(@Query("p0") String p0,//原密码
-                                   @Query("p1") String p1//新密码
+    Call<RestultInfo> getUpDatePwd(
+            @Query("AppClient") int num,
+            @Query("p0") String p0,//原密码
+            @Query("p1") String p1,//新密码
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
     );
 
     //验证安全密码
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/own-withdraw-check")
-    Call<RestultInfo> getCheckSafePwd(@Query("p") String p//安全密码，加密方式同登录密码
+    Call<RestultInfo> getCheckSafePwd(
+            @Query("AppClient") int num,
+            @Query("p") String p,//安全密码，加密方式同登录密码
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
     );
 
     //保存安全问题
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/security-question-save")
     Call<RestultInfo> getSaveSafeQues(
+            @Query("AppClient") int num,
             @Query("q") String q,//安全问题
-            @Query("a") String a//安全问题的答案
+            @Query("a") String a,//安全问题的答案
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
     );
 
     //获取绑定银行卡数据
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-card-datas")
-    Call<Object> getCardDatas();
+    Call<Object> getCardDatas(
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
 
     //验证银行卡号
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/check-bankcard-resource")
     Call<Object> getCheckBankCardNum(
+            @Query("AppClient") int num,
             @Query("name") String name,//持卡人姓名
-            @Query("card") String card//银行卡号
+            @Query("card") String card,//银行卡号
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
 
     );
 
@@ -219,7 +295,10 @@ public interface ApiInterface {
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-city-datas")
     Call<Object> getPrivens(
-            @Query("id") int id//省份id
+            @Query("AppClient") int num,
+            @Query("id") int id,//省份id
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
 
     );
 
@@ -247,6 +326,7 @@ public interface ApiInterface {
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/binding-card-save")
     Call<RestultInfo> getSaveBankCard(
+            @Query("AppClient") int num,
             @Query("bank") int bank,//开户银行id
             @Query("province_id") int province_id,//省份id
             @Query("province") String province,//省份
@@ -254,7 +334,9 @@ public interface ApiInterface {
             @Query("city") String city,//城市
             @Query("branch") String branch,//支行名称
             @Query("name") String name,//持卡人姓名
-            @Query("card") String card//银行卡号
+            @Query("card") String card,//银行卡号
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
 
     );
 
@@ -263,7 +345,11 @@ public interface ApiInterface {
     //请求地址：/get-withdraw-datas
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-withdraw-datas")
-    Call<Object> getWithDrawData();
+    Call<Object> getWithDrawData(
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
 
     //添加提现申请
     //  应用场景：提现验证通过后创建提现申请
@@ -271,16 +357,25 @@ public interface ApiInterface {
     // 请求模式：POST
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/own-withdraw-create")
-    Call<RestultInfo> getWithDrawCreate(@Query("aid") int aid,//收款银行卡id
-                                        @Query("amount") BigDecimal amount);//提现金额
+    Call<RestultInfo> getWithDrawCreate(
+            @Query("AppClient") int num,
+            @Query("aid") int aid,//收款银行卡id
+            @Query("amount") BigDecimal amount,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+
+    );//提现金额
 
     //修改安全密码
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/password-manage-save")
     Call<RestultInfo> getUpDataSafePwd(
+            @Query("AppClient") int num,
             @Query("p0") String p0,//原安全密码，加密方式同登录密码
             @Query("p1") String p1,
-            @Query("email") String email
+            @Query("email") String email,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
     );
 
 
@@ -288,46 +383,68 @@ public interface ApiInterface {
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/safetypassword-back-save")
     Call<RestultInfo> getResetPwd(
+            @Query("AppClient") int num,
             @Query("type") int type,//type[int]：重置类型  1：重置登录密码  2：重置安全密码
-            @Query("p") String p//新密码 或者 新安全密码
+            @Query("p") String p,//新密码 或者 新安全密码
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
     );
 
     //锁定绑定银行卡
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/binding-card-lock")
-    Call<RestultInfo> getBindingCardLock();
+    Call<RestultInfo> getBindingCardLock(
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
 
     //获取聊天用户
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-chat-users")
-    Call<Object> getChatUsers();
+    Call<Object> getChatUsers(
+
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
 
     //查询消息列表
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/message-manage-list")
     Call<Object> getChatList(
+
+            @Query("AppClient") int num,
+
             @Query("page") int page,//查询的页码
             @Query("rows") int rows,//每页查询的记录数
             @Query("sidx") String sidx,//排序参数，这里是[chat_date]
             @Query("sord") String sord,//排序类型，这里是[desc]
             @Query("send_uid") int send_uid,//查询用户id
             @Query("from") String from,//查询开始时间[yyyy-MM-dd HH:mm:ss]
-            @Query("to") String to//查询结束时间[yyyy-MM-dd HH:mm:ss]
+            @Query("to") String to,//查询结束时间[yyyy-MM-dd HH:mm:ss]
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
     );
 
     //删除聊天信息
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/message-manage-delete")
     Call<RestultInfo> getDeleteChatMsg(
-            @Query("id") int id//聊天消息id
-
+            @Query("AppClient") int num,
+            @Query("id") int id,//聊天消息id
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
     );
 
     //加载聊天信息
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/message-manage-loads")
     Call<Object> getChatMsg(
-            @Query("id") int id//聊天消息id
+            @Query("AppClient") int num,
+            @Query("id") int id,//聊天消息id
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
 
     );
 
@@ -335,16 +452,72 @@ public interface ApiInterface {
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/message-manage-loads")
     Call<Object> getSendMsg(
+            @Query("AppClient") int num,
             @Query("id") int id,//聊天消息id
             @Query("title") String title, //聊天消息id
-            @Query("msg") String msg//聊天消息id
+            @Query("msg") String msg,//聊天消息id
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
     );
 
     //轮询读取新消息
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/message-manage-getnew")
     Call<Object> getNewMsg(
-            @Query("id") int id//聊天对象uid
+            @Query("AppClient") int num,
+            @Query("id") int id,//聊天对象uid
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+
+    //投注单详情
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/betting-details/{id}")
+    Call<Object> getBettingDetails(
+            @Query("AppClient") int num,
+            @Path("id") int id,//id为投注单bid
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //查询投注记录
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/betting-record-list")
+    Call<Object> getBettingRecordList(
+            @Query("AppClient") int num,
+            @Query("page") int page,//查询的页码
+            @Query("rows") int rows,//每页查询的记录数
+            @Query("sidx") String sidx,//排序参数，这里是[serial_number]
+            @Query("sord") String sord,//排序类型，这里是[desc]
+            @Query("from") String from,//查询开始时间[yyyy-MM-dd HH:mm:ss]
+            @Query("to") String to,//查询结束时间[yyyy-MM-dd HH:mm:ss]
+            @Query("id") int id,//游戏id
+            @Query("rid") int rid,//玩法id
+            @Query("status") int status,//投注单状态
+            //-1：全部
+            //0：未购买
+            //1：未开奖
+            //2：本人撤单
+            //3：管理员撤单
+            //4：已过期
+            //5：未中奖
+            //6：平台撤单
+            //7：已派奖
+            @Query("rebuy") String rebuy,
+            @Query("period") String period,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //撤销投注单
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/lottery-bet-revoke/{bid}")
+    Call<RestultInfo> getLotteryBetRevoke(
+            @Query("AppClient") int num,
+            @Path("bid") int id,//购彩单id
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
     );
 
 }

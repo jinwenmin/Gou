@@ -28,6 +28,9 @@ import okhttp3.Request;
  */
 
 public class RxUtils {
+
+    public String AppClient = "AppClient=1";
+
     public RxUtils() throws NoSuchAlgorithmException {
     }
 

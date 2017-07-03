@@ -121,16 +121,21 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("action.NickName");
         getActivity().registerReceiver(broad, intentFilter);
-        RetrofitService.getInstance().getGame(this,5, 21, 0, 0);
-        SystemClock.sleep(3000);
-        RetrofitService.getInstance().getGame(this,6, 21, 0, 0);
+         RetrofitService.getInstance().getGame(this,5, 21, 0, 0);
+        // SystemClock.sleep(3000);
+        //RetrofitService.getInstance().getGame(this,6, 21, 0, 0);
+      //  RetrofitService.getInstance().getGame(this, 5, 1, 0, 0);
+//
+      //  RetrofitService.getInstance().getGame(this, 7, 2, 0, 0);
+
+       // RetrofitService.getInstance().getGame(this, 8, 1, 1, 0);
         //RetrofitService.getInstance().getGame(this, 2, 1, 0, 0);SystemClock.sleep(3000);
         //RetrofitService.getInstance().getGame(this, 3, 0, 0, 0);SystemClock.sleep(3000);
         //RetrofitService.getInstance().getGame(this, 4, 0, 0, 0);SystemClock.sleep(3000);
         //RetrofitService.getInstance().getGame(this, 5, 0, 0, 0);SystemClock.sleep(3000);
-       // RetrofitService.getInstance().getGame(this, 6, 0, 0, 0);SystemClock.sleep(3000);
-     //   RetrofitService.getInstance().getGame(this, 7, 0, 0, 0);SystemClock.sleep(3000);
-    //    RetrofitService.getInstance().getGame(this, 8, 0, 0, 0);SystemClock.sleep(3000);
+        // RetrofitService.getInstance().getGame(this, 6, 0, 0, 0);SystemClock.sleep(3000);
+        //   RetrofitService.getInstance().getGame(this, 7, 0, 0, 0);SystemClock.sleep(3000);
+        //    RetrofitService.getInstance().getGame(this, 8, 0, 0, 0);SystemClock.sleep(3000);
         myFrmPageAdapter = new MyFrmPageAdapter(getChildFragmentManager());
         RetrofitService.getInstance().LoginUserAmount(this);
         RetrofitService.getInstance().GetUserInfo(this);
