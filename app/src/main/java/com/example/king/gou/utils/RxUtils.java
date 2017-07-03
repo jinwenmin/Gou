@@ -8,6 +8,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -150,6 +151,14 @@ public class RxUtils {
         SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
         String format = sdf.format(new Date(time));
         return format;
+    }
+
+    public String getReqkey(Map map) {
+        for (int i = 0; i < map.keySet().size(); i++) {
+
+        }
+
+        return null;
     }
 }
 
