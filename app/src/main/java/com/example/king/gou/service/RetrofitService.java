@@ -225,36 +225,6 @@ public class RetrofitService extends HttpEngine {
 
 
     }
-/*
-
-    public void LoginSta(final DataListener listener, int luid, int uonline, int type, String[] ids, int gets) {
-        Call<Object> loginState = apiInterface.getLoginState(luid, uonline, type, ids, gets);
-        System.out.println("登录信息=" + luid + " " + uonline + " " + type + " " + ids + " " + gets);
-        Call<Object> clone = loginState.clone();
-        clone.enqueue(new Callback<Object>() {
-            @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                listener.onRequestStart(API_ID_LOGINSTATE);
-                //获取cookie
-                String sessionId = getSessionCookie(response.headers().get("Set-Cookie"));
-                System.out.println("用户信息登录状态==" + response.body().toString());
-                System.out.println("Cookie登录状态==" + sessionId);
-                ////   LoginState body = response.body();
-                Gson gson = new GsonBuilder().setLenient().create();
-                //
-                //    listener.onReceivedData(API_ID_LOGINSTATE, body, -1);
-
-                listener.onRequestEnd(API_ID_LOGINSTATE);
-            }
-
-            @Override
-            public void onFailure(Call<Object> call, Throwable t) {
-
-            }
-        });
-
-    }
-*/
 
     public void Login2(final DataListener listener, int num, String username,
                        String password,
@@ -424,11 +394,14 @@ public class RetrofitService extends HttpEngine {
     //获取游戏
     public void getGame(DataListener listener, int type, int gid, int tid, int ptid) {
         long currentTimeMillis = System.currentTimeMillis();
-        Map map=new HashMap();
+        Map map = new HashMap();
+        map.put("type", type + "");
+        map.put("gid", gid + "");
+        map.put("tid", tid + "");
+        map.put("ptid", ptid + "");
 
-        String reqkey1 = "AppClient=1" + "&gid=" + gid + "&ptid=" + ptid + "&tid=" + tid + "&type=" + type + "&t=" + currentTimeMillis;
-        String reqkey2 = RxUtils.getInstance().md5(reqkey1);
-        final Call<Object> game = apiInterface.getGame(1, type, gid, tid, ptid, reqkey2, currentTimeMillis);
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        final Call<Object> game = apiInterface.getGame(1, type, gid, tid, ptid, reqkey, currentTimeMillis);
         final String s = game.request().toString();
         Log.d("获得游戏的请求体", s);
         Call<Object> clone = game.clone();
@@ -450,7 +423,7 @@ public class RetrofitService extends HttpEngine {
                         int intGameTid = Integer.parseInt(GameTid);
                         gameType.setName(GameName);
                         gameType.setTid(intGameTid);
-                       // Log.d("Game游戏==", gameType.toString());
+                        // Log.d("Game游戏==", gameType.toString());
                         ListgameTypes.add(gameType);
                     }
                 }
@@ -464,7 +437,7 @@ public class RetrofitService extends HttpEngine {
                         gameType.setGid(Integer.parseInt(GameGid));
                         gameType.setTid(Integer.parseInt(GameTid));
                         gameType.setName(GameName);
-                      //  Log.d("Game游戏==", gameType.toString());
+                        //  Log.d("Game游戏==", gameType.toString());
                         ListgameTypes.add(gameType);
                     }
                 }
@@ -476,7 +449,7 @@ public class RetrofitService extends HttpEngine {
                         String GameName = split[i + 1].substring(split[i + 1].indexOf("name=") + 5, split[i + 1].length() - 1);
                         gameType.setGroup_id(Integer.parseInt(GameGroupId));
                         gameType.setName(GameName);
-                      //  Log.d("Game游戏==", gameType.toString());
+                        //  Log.d("Game游戏==", gameType.toString());
                         ListgameTypes.add(gameType);
                     }
                 }
@@ -496,7 +469,7 @@ public class RetrofitService extends HttpEngine {
                 }
                 if ("5".equals(StringType)) {
                     for (int i = 0; i < split.length; i = i + 4) {
-                       // Log.d("Game游戏Split=", split[i]);
+                        // Log.d("Game游戏Split=", split[i]);
                         GameType gameType = new GameType();
                         String GameGid = split[i].substring(split[i].indexOf("gid=") + 4, split[i].length() - 2);
                         String GameName = split[i + 1].substring(split[i + 1].indexOf("name=") + 5, split[i + 1].length());
@@ -507,7 +480,7 @@ public class RetrofitService extends HttpEngine {
                         gameType.setPtid(Integer.parseInt(GamePtidId));
                         gameType.setTid(Integer.parseInt(GameTidId));
                         ListgameTypes.add(gameType);
-                       // Log.d("Game游戏==", gameType.toString());
+                        // Log.d("Game游戏==", gameType.toString());
                     }
                 }
             }
@@ -1177,6 +1150,87 @@ public class RetrofitService extends HttpEngine {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
                 Log.d("轮询获取新消息", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getBettingRecord(DataListener listener, int page, int rows, String sidx, String sord, String from, String to, int id, int rid, int status, String rebuy, String period) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("page", page + "");
+        map.put("rows", rows + "");
+        map.put("sidx", sidx);
+        map.put("from", from);
+        map.put("to", to);
+        map.put("id", id + "");
+        map.put("rid", rid + "");
+        map.put("status", status + "");
+        map.put("rebuy", rebuy);
+        map.put("period", period);
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> bettingRecordList = apiInterface.getBettingRecordList(1, page, rows, sidx, sord, from, to, id, rid, status, rebuy, period, reqkey, currentTimeMillis);
+        String s = bettingRecordList.request().toString();
+        Log.d("查询投注记录请求完全体==", s);
+        Call<Object> clone = bettingRecordList.clone();
+
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("查询投注记录", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Log.d("查询投注记录错误信息", t.toString());
+            }
+        });
+
+    }
+
+    public void getKeepNum(DataListener listener, int page, int rows, String sidx, String sord, String from, String to, int id, int rid) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap();
+        map.put("page", page + "");
+        map.put("rows", rows + "");
+        map.put("sidx", sidx + "");
+        map.put("sord", sord + "");
+        map.put("from", from + "");
+        map.put("to", to + "");
+        map.put("id", id + "");
+        map.put("rid", rid + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> keepNum = apiInterface.getKeepNum(1, page, rows, sidx, sord, from, to, id, rid, reqkey, currentTimeMillis);
+        Call<Object> clone = keepNum.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("查询追号返回数据", response.body().toString());
+
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Log.d("查询追号返回数据异常", t.toString());
+            }
+        });
+    }
+
+    public void getKeepNumDeTails(DataListener listener, int id) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("id", id + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> keepNumDetails = apiInterface.getKeepNumDetails(1, id, reqkey, currentTimeMillis);
+        Call<Object> clone = keepNumDetails.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+
             }
 
             @Override

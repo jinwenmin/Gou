@@ -520,4 +520,210 @@ public interface ApiInterface {
             @Query("t") long t
     );
 
+    //查询追号记录
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/keep-number-list")
+    Call<Object> getKeepNum(
+            @Query("AppClient") int num,
+            @Query("page") int page,
+            @Query("rows") int rows,
+            @Query("sidx") String sidx,
+            @Query("sord") String sord,
+            @Query("from") String from,
+            @Query("to") String to,
+            @Query("id") int id,
+            @Query("rid") int rid,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //47 查询追号详情
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/auto-purchase-details/{id}")
+    Call<Object> getKeepNumDetails(
+            @Query("AppClient") int num,
+            @Path("id") int id,//id为追号记录id
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //48 查询追号投注记录
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/keep-number-bet-list")
+    Call<Object> getKeepNumBet(
+            @Query("AppClient") int num,
+            @Query("page") int page,
+            @Query("rows") int rows,
+            @Query("sidx") String sidx,
+            @Query("sord") String sord,
+            @Query("id") int id,//追号记录id
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //49 批量撤单(停止追号)
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/lottery-betlist-revoke")
+    Call<Object> getLotteryBetRevoke(
+            @Query("AppClient") int num,
+            @Query("ids") String ids,//勾选的投注单id集；逗号分隔
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //50 查询个人报表彩票帐变
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/account-change-list")
+    Call<Object> getAccountChangeList(
+            @Query("AppClient") int num,
+            @Query("page") int page,
+            @Query("rows") int rows,
+            @Query("sidx") String sidx,
+            @Query("sord") String sord,
+            @Query("from") String from,
+            @Query("to") String to,
+            @Query("id") int id,
+            @Query("type") int type,/*查询类型
+                                        0：个人报表
+                                        1：团队报表*/
+            @Query("stype") int stype,
+                                        /*帐变类型
+                                        0：所有类型
+                                        1：加入游戏
+                                        2：投注返点
+                                        3：奖金派送
+                                        4：追号扣款
+                                        5：当期追号返款
+                                        6：游戏扣款
+                                        7：撤单返款
+                                        8：撤销返点
+                                        9：撤销派奖*/
+            @Query("model") int model,
+                                            /*投注模式
+                                            0：所有模式
+                                            1：元
+                                            2：角
+                                            3：分
+                                            4：厘*/
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //51 个人报表充提记录
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/activity-record-list")
+    Call<Object> getActivityRecordList(
+            @Query("AppClient") int num,
+            @Query("page") int page,
+            @Query("rows") int rows,
+            @Query("sidx") String sidx,
+            @Query("sord") String sord,
+            @Query("from") String from,
+            @Query("to") String to,
+
+            @Query("type") int type,/*查询类型
+                                        0：所有类型
+                                        10：[+]上级充值
+                                        11：[-]充值扣费
+                                        12：[-]小额扣费
+                                        13：特殊金额整理
+                                        14：[+]理赔充值
+                                        15：[-]管理员扣减
+                                        16：[-]提款申请
+                                        17：[+]提款失败
+                                        18：[=]提款成功
+                                        19：[+]在线充值
+                                        20：[+]现金充值
+                                        21：[+]充值手续费
+                                        22：[+]活动奖金
+                                        26：[+]支付宝充值
+                                        31：[+]转账汇款
+                                        32：[+]日工资
+                                        33：[-]日工资扣费
+                                        34：[+]日工资充值*/
+
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //52 个人报表活动记录
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/recharge-withdraw-list")
+    Call<Object> getReChargeWithDrawList(
+            @Query("AppClient") int num,
+            @Query("page") int page,
+            @Query("rows") int rows,
+            @Query("sidx") String sidx,
+            @Query("sord") String sord,
+            @Query("from") String from,
+            @Query("to") String to,
+
+            @Query("type") int type,/*查询类型
+                                        0：所有类型
+                                        22：活动奖金
+                                        29：亏损佣金
+                                        30：消费佣金*/
+
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //53 个人报表彩票投注
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/betting-list")
+    Call<Object> getBettingList(
+            @Query("AppClient") int num,
+            @Query("page") int page,
+            @Query("rows") int rows,
+            @Query("sidx") String sidx,
+            @Query("sord") String sord,
+            @Query("from") String from,
+            @Query("to") String to,
+            @Query("id") int id,
+            @Query("rid") int rid,
+            @Query("status") String status,
+                                    /*投注单状态
+                                    -2：所有状态
+                                    -1：未开奖
+                                    0：未中奖
+                                    1：已派奖
+                                    2：本人撤单
+                                    3：管理员撤单
+                                    4：已过期
+                                    6：平台撤单*/
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //54 个人报表彩票盈亏
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/profit-loss-list")
+    Call<Object> getProfitLossList(
+            @Query("AppClient") int num,
+            @Query("page") int page,
+            @Query("rows") int rows,
+            @Query("sidx") String sidx,
+            @Query("sord") String sord,
+            @Query("from") String from,
+            @Query("to") String to,
+            @Query("id") int id,
+            @Query("gtype") int gtype,
+                            /*查询类型
+                            1：彩票娱乐场
+                            2：香港六合彩
+                            0：所有类型*/
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //55 获取大数据投注内容
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/get-data?id={id}")
+    Call<Object> getGetMoreData(
+            @Query("AppClient") int num,
+            @Path("id") int id,//id为投注单bid
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
 }

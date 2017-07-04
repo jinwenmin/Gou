@@ -38,10 +38,14 @@ import com.example.king.gou.ui.frmMyActivity.NoticeActivity;
 import com.example.king.gou.ui.frmMyActivity.ReChargeActivity;
 import com.example.king.gou.ui.frmMyActivity.ZhuanZhangActivity;
 import com.example.king.gou.utils.HttpEngine;
+import com.example.king.gou.utils.RxUtils;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -88,7 +92,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
     @BindView(R.id.frmMyViewpager)
     ViewPager frmMyViewpager;
     Unbinder unbinder;
-    MyFrmPageAdapter myFrmPageAdapter;
+    public MyFrmPageAdapter myFrmPageAdapter;
     @BindView(R.id.ToRecharge)
     LinearLayout ToRecharge;
     @BindView(R.id.frmMyTop)
@@ -117,11 +121,18 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my, container, false);
         unbinder = ButterKnife.bind(this, view);
-        broad = new Broadcast();
 
+        broad = new Broadcast();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("action.NickName");
         getActivity().registerReceiver(broad, intentFilter);
+        Map<String, String> map = new HashMap<>();
+        map.put("aaa", "111");
+        map.put("ccc", "222");
+        map.put("bbb", "333");
+        map.put("zzz", "444");
+        map.put("ppp", "555");
+        //  RxUtils.getInstance().getReqkey(map);
         RetrofitService.getInstance().getGame(this, 1, 0, 0, 0);
         RetrofitService.getInstance().getGame(this, 2, 0, 0, 0);
         RetrofitService.getInstance().getGame(this, 3, 0, 0, 0);
@@ -132,17 +143,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
         SystemClock.sleep(3000);
         RetrofitService.getInstance().getGame(this, 8, 2, 62, 0);
         //  RetrofitService.getInstance().getGame(this, 5, 1, 0, 0);
-        //
-        //  RetrofitService.getInstance().getGame(this, 7, 2, 0, 0);
+        RetrofitService.getInstance().getBettingRecord(this, 1, 10, "serial_number", "desc", "2017-01-01 22:01:01", "2017-01-06 22:01:01", 2, 166, -1, "", "");
+        RetrofitService.getInstance();
 
-        // RetrofitService.getInstance().getGame(this, 8, 1, 1, 0);
-        //RetrofitService.getInstance().getGame(this, 2, 1, 0, 0);SystemClock.sleep(3000);
-        //RetrofitService.getInstance().getGame(this, 3, 0, 0, 0);SystemClock.sleep(3000);
-        //RetrofitService.getInstance().getGame(this, 4, 0, 0, 0);SystemClock.sleep(3000);
-        //RetrofitService.getInstance().getGame(this, 5, 0, 0, 0);SystemClock.sleep(3000);
-        // RetrofitService.getInstance().getGame(this, 6, 0, 0, 0);SystemClock.sleep(3000);
-        //   RetrofitService.getInstance().getGame(this, 7, 0, 0, 0);SystemClock.sleep(3000);
-        //    RetrofitService.getInstance().getGame(this, 8, 0, 0, 0);SystemClock.sleep(3000);
         myFrmPageAdapter = new MyFrmPageAdapter(getChildFragmentManager());
         RetrofitService.getInstance().LoginUserAmount(this);
         RetrofitService.getInstance().GetUserInfo(this);
