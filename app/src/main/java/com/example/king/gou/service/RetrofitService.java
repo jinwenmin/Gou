@@ -1164,6 +1164,7 @@ public class RetrofitService extends HttpEngine {
         Map<String, String> map = new HashMap<>();
         map.put("page", page + "");
         map.put("rows", rows + "");
+        map.put("sord", sord );
         map.put("sidx", sidx);
         map.put("from", from);
         map.put("to", to);
