@@ -112,38 +112,58 @@
 
             android:orientation="horizontal">
 
-            <TextView
+            <EditText
                 android:id="@+id/timetext3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="6px"
-                android:text="全部票种"
+                android:background="@null"
+                android:hint="请输入期号"
                 android:textSize="30px" />
 
-            <FrameLayout
-                android:layout_width="50px"
-                android:layout_height="50px"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true">
+            <Button
+                android:id="@+id/SearchQiHao"
+                android:layout_width="80px"
+                android:layout_height="60px"
+                android:layout_toRightOf="@id/timetext3"
+                android:text="确定"
+                android:textSize="15px" />
 
-                <Spinner
-                    android:id="@+id/gameLotteryType"
-                    style="@android:style/Widget.Spinner"
-                    android:layout_width="50px"
-                    android:layout_height="50px"
-                    android:layout_marginLeft="-4px"
-                    android:layout_marginRight="10px"
-                    android:background="@drawable/wuka_xiala"
-                    android:visibility="invisible" />
-
-                <ImageView
-                    android:layout_width="50px"
-                    android:layout_height="50px"
-                    android:layout_marginRight="20px"
-                    android:src="@drawable/wuka_xiala" />
-            </FrameLayout>
         </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60px"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/gameType1"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_marginRight="4px"
+            android:layout_weight="1">
+
+        </Spinner>
+
+
+        <Spinner
+            android:id="@+id/gameType2"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_marginRight="4px"
+            android:layout_weight="1">
+
+        </Spinner>
+
 
 
     </LinearLayout>
@@ -156,7 +176,8 @@
     <android.support.design.widget.TabLayout
         android:id="@+id/gamejl_tablayout"
         android:layout_width="match_parent"
-        android:layout_height="60px">
+        android:layout_height="60px"
+        app:tabMode="scrollable">
 
     </android.support.design.widget.TabLayout>
 

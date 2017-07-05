@@ -10,6 +10,7 @@ public class GameType {
     int tid;
     int group_id;
     int ptid;
+int grid;
 
     @Override
     public String toString() {
@@ -19,7 +20,16 @@ public class GameType {
                 ", tid=" + tid +
                 ", group_id=" + group_id +
                 ", ptid=" + ptid +
+                ", grid=" + grid +
                 '}';
+    }
+
+    public int getGrid() {
+        return grid;
+    }
+
+    public void setGrid(int grid) {
+        this.grid = grid;
     }
 
     public int getPtid() {

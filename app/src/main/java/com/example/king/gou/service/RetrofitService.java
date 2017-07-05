@@ -11,6 +11,7 @@ import com.example.king.gou.bean.LoginState;
 import com.example.king.gou.bean.MapsIdAndValue;
 import com.example.king.gou.bean.RestultInfo;
 
+import com.example.king.gou.bean.TouZhu;
 import com.example.king.gou.bean.UserAmount;
 import com.example.king.gou.bean.UserInfo;
 import com.example.king.gou.ui.MainActivity;
@@ -77,7 +78,11 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_GETCITYS = 15;//省市联动获得的市名
     public static int API_ID_SAVECARD = 16;//保存银行卡
     public static int API_ID_CHATUSERS = 17;//获取聊天用户
-
+    public static int API_ID_GAME4 = 18;//获取游戏
+    public static int API_ID_GAME5 = 19;//获取游戏
+    public static int API_ID_GAME6 = 20;//获取游戏
+    public static int API_ID_GAME7 = 21;//获取游戏
+    public static int API_ID_TOUZHUSEAR = 22;//获取投注单
     private Retrofit retrofit;
     private ApiInterface apiInterface;
     String sessionLoginId;
@@ -392,7 +397,7 @@ public class RetrofitService extends HttpEngine {
     }
 
     //获取游戏
-    public void getGame(DataListener listener, int type, int gid, int tid, int ptid) {
+    public void getGame(final DataListener listener, int type, int gid, int tid, int ptid) {
         long currentTimeMillis = System.currentTimeMillis();
         Map map = new HashMap();
         map.put("type", type + "");
@@ -408,7 +413,7 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                Log.d("获取到的游戏===", response.body().toString());
+                Log.d("获取到的游戏====", response.body().toString());
                 String StringType = s.substring(s.indexOf("type=") + 5, s.indexOf("&gid"));
                 Log.d("获取到的游戏Type===", StringType + "");
                 List<GameType> ListgameTypes = new ArrayList<GameType>();
@@ -466,6 +471,7 @@ public class RetrofitService extends HttpEngine {
                         //Log.d("Game游戏==", gameType.toString());
                         ListgameTypes.add(gameType);
                     }
+                    listener.onReceivedData(API_ID_GAME4, ListgameTypes, API_ID_ERROR);
                 }
                 if ("5".equals(StringType)) {
                     for (int i = 0; i < split.length; i = i + 4) {
@@ -482,7 +488,35 @@ public class RetrofitService extends HttpEngine {
                         ListgameTypes.add(gameType);
                         // Log.d("Game游戏==", gameType.toString());
                     }
+                    listener.onReceivedData(API_ID_GAME5, ListgameTypes, API_ID_ERROR);
                 }
+                if ("7".equals(StringType)) {
+                    boolean flag = false;
+                    for (int i = 0; i < split.length; i = i + 4) {
+                        Log.d("Game游戏Split=", split[i]);
+                        GameType gameType = new GameType();
+                        if (flag == false) {
+                            GameType gameType1 = new GameType();
+                            gameType1.setName("全部彩种");
+                            gameType1.setTid(0);
+                            ListgameTypes.add(gameType1);
+                            flag = true;
+                        }
+                        String GameGid = split[i].substring(split[i].indexOf("gid=") + 4, split[i].length() - 2);
+                        String GameGridId = split[i + 1].substring(split[i + 1].indexOf("grid=") + 5, split[i + 1].length() - 2);
+                        String GameName = split[i + 2].substring(split[i + 2].indexOf("name=") + 5, split[i + 2].length());
+                        String GameTidId = split[i + 3].substring(split[i + 3].indexOf("tid=") + 4, split[i + 3].length() - 3);
+                        gameType.setGid(Integer.parseInt(GameGid));
+                        gameType.setName(GameName);
+                        gameType.setGrid(Integer.parseInt(GameGridId));
+                        gameType.setTid(Integer.parseInt(GameTidId));
+                        ListgameTypes.add(gameType);
+                        Log.d("Game游戏==", gameType.toString());
+                    }
+                    listener.onReceivedData(API_ID_GAME7, ListgameTypes, API_ID_ERROR);
+                }
+
+
             }
 
             @Override
@@ -679,9 +713,9 @@ public class RetrofitService extends HttpEngine {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
                 String toString = response.body().toString();
+                Log.d("首页的公告==", toString);
                 String substring = toString.substring(toString.indexOf("content=") + 8, toString.indexOf(", user="));
                 listener.onReceivedData(API_ID_HOMENOTICE, substring, API_ID_ERROR);
-                Log.d("首页的公告==", toString);
                 Log.d("首页的公告2==", substring);
             }
 
@@ -1159,12 +1193,12 @@ public class RetrofitService extends HttpEngine {
         });
     }
 
-    public void getBettingRecord(DataListener listener, int page, int rows, String sidx, String sord, String from, String to, int id, int rid, int status, String rebuy, String period) {
+    public void getBettingRecord(final DataListener listener, int page, int rows, String sidx, String sord, String from, String to, int id, int rid, int status, String rebuy, String period) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         map.put("page", page + "");
         map.put("rows", rows + "");
-        map.put("sord", sord );
+        map.put("sord", sord);
         map.put("sidx", sidx);
         map.put("from", from);
         map.put("to", to);
@@ -1176,13 +1210,48 @@ public class RetrofitService extends HttpEngine {
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
         Call<Object> bettingRecordList = apiInterface.getBettingRecordList(1, page, rows, sidx, sord, from, to, id, rid, status, rebuy, period, reqkey, currentTimeMillis);
         String s = bettingRecordList.request().toString();
-        Log.d("查询投注记录请求完全体==", s);
+        Log.d("查询投注记录请求完全体====", s);
         Call<Object> clone = bettingRecordList.clone();
 
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                Log.d("查询投注记录", response.body().toString());
+                String touZhu = response.body().toString();
+                Log.d("查询投注记录====", touZhu);
+                String substring = touZhu.substring(touZhu.indexOf("content=[") + 9, touZhu.indexOf("], number"));
+                List<TouZhu> ts = new ArrayList<TouZhu>();
+                if (substring.length() > 10) {
+                    String[] split = substring.split(", ");
+                    for (int i = 0; i < split.length; i = i + 11) {
+                        TouZhu t = new TouZhu();
+                        String bid = split[i].substring(1, split[i].length() - 2);
+                        String name = split[i + 1];
+                        String rname = split[i + 2];
+                        String period = split[i + 3];
+                        String picked_text = split[i + 4];
+                        String amount = split[i + 5];
+                        String prize = split[i + 6];
+                        String re_buy = split[i + 7];
+                        String buy_time = split[i + 8];
+                        String status = split[i + 9].substring(0, split[i + 9].length() - 2);
+                        String winning_numbers = split[i + 10].substring(0, split[i + 10].length() - 1);
+                        t.setBid(Integer.parseInt(bid));
+                        t.setName(name);
+                        t.setRname(rname);
+                        t.setPeriod(period);
+                        t.setPiced_text(picked_text);
+                        t.setAmount(Double.parseDouble(amount));
+                        t.setPrize(Double.parseDouble(prize));
+                        t.setRe_buy(re_buy);
+                        t.setBuy_time(buy_time);
+                        t.setStatus(Integer.parseInt(status));
+                        t.setWinning_numbers(winning_numbers);
+                        ts.add(t);
+                        Log.d("单个的投注记录", split[i]);
+                    }
+                    listener.onReceivedData(API_ID_TOUZHUSEAR, ts, API_ID_ERROR);
+                }
+
             }
 
             @Override

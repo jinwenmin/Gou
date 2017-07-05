@@ -6,6 +6,7 @@ import android.util.Log;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -159,7 +160,7 @@ public class RxUtils {
         return format;
     }
 
-    public String getReqkey(Map<String, String> map,long currentTimeMillis) {
+    public String getReqkey(Map<String, String> map, long currentTimeMillis) {
 
         String str = "AppClient=1";
         Map<String, String> resultMap = sortMapByKey(map);
@@ -169,7 +170,7 @@ public class RxUtils {
         }
         str = str + "&t=" + currentTimeMillis;
         Log.d("key", str);
-        str=md5(str);
+        str = md5(str);
         return str;
     }
 
@@ -215,6 +216,16 @@ public class RxUtils {
         }
         return sortedMap;
     }
+
+    public  String FormatDate(Date date) {
+        // 给定模式
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        // public final String format(Date date)
+        String s = sdf.format(date);
+
+        return s;
+    }
+
 }
 
 
