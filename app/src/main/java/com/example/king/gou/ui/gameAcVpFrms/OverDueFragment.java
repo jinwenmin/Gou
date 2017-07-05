@@ -24,22 +24,16 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class KillOrderFragment extends BaseFragment {
+public class OverDueFragment extends BaseFragment {
 
 
     @BindView(R.id.Gamelist)
     ListView Gamelist;
     Unbinder unbinder;
     TouZhuAdapter adapter;
-    List<TouZhu> touzhu=new ArrayList<>();
-
-    public static KillOrderFragment newInstance() {
-
-        Bundle args = new Bundle();
-
-        KillOrderFragment fragment = new KillOrderFragment();
-        fragment.setArguments(args);
-        return fragment;
+List<TouZhu> touzhu=new ArrayList<>();
+    public OverDueFragment() {
+        // Required empty public constructor
     }
 
 
@@ -47,7 +41,7 @@ public class KillOrderFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_kill_order, container, false);
+        View view = inflater.inflate(R.layout.fragment_over_due, container, false);
         unbinder = ButterKnife.bind(this, view);
         adapter = new TouZhuAdapter(getActivity());
         Gamelist.setAdapter(adapter);
@@ -55,17 +49,16 @@ public class KillOrderFragment extends BaseFragment {
         return view;
     }
 
+    public void getList(List<TouZhu> ts) {
+        if (ts.size() != 0) {
+            //adapter.addListView(ts);
+            touzhu=ts;
+        }
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
-
-    public void getList(List<TouZhu> ts) {
-        if (ts.size() != 0) {
-            // adapter.addListView(ts);
-            touzhu = ts;
-        }
-
     }
 }

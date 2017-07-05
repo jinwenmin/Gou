@@ -492,6 +492,7 @@ public class RetrofitService extends HttpEngine {
                 }
                 if ("7".equals(StringType)) {
                     boolean flag = false;
+                    Log.d("Split.leng=", split.length + "");
                     for (int i = 0; i < split.length; i = i + 4) {
                         Log.d("Game游戏Split=", split[i]);
                         GameType gameType = new GameType();

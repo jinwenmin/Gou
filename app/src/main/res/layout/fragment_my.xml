@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="@drawable/home_bg"
     tools:context="com.example.king.gou.fragment.MyFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -12,9 +12,10 @@
         android:id="@+id/frmMyTop"
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_height"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/white">
 
         <ImageView
             android:id="@+id/frmMyKeFu"
@@ -74,7 +75,8 @@
             <RelativeLayout
                 android:id="@+id/frmMyTopInfo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@drawable/usercenter_head_bg">
 
                 <LinearLayout
                     android:id="@+id/linear1"
@@ -207,9 +209,9 @@
                 </LinearLayout>
 
                 <LinearLayout
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:layout_below="@id/linear5"
                     android:layout_marginTop="10px"
                     android:alpha="0.4"
@@ -279,19 +281,20 @@
 
 
             </RelativeLayout>
+
             <android.support.design.widget.TabLayout
-                android:layout_below="@id/frmMyTopInfo"
                 android:id="@+id/frmMyTablayout"
                 android:layout_width="match_parent"
-                android:layout_height="60px">
+                android:layout_height="60px"
+                android:layout_below="@id/frmMyTopInfo">
 
             </android.support.design.widget.TabLayout>
 
             <android.support.v4.view.ViewPager
-                android:layout_below="@id/frmMyTablayout"
                 android:id="@+id/frmMyViewpager"
                 android:layout_width="match_parent"
-                android:layout_height="600px"></android.support.v4.view.ViewPager>
+                android:layout_height="600px"
+                android:layout_below="@id/frmMyTablayout"></android.support.v4.view.ViewPager>
 
         </RelativeLayout>
     </ScrollView>

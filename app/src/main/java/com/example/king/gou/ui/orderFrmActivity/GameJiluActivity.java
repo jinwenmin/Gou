@@ -1,9 +1,6 @@
 package com.example.king.gou.ui.orderFrmActivity;
 
 import android.app.DatePickerDialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -31,9 +28,13 @@ import com.example.king.gou.fragment.BaseFragment;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.ui.gameAcVpFrms.AllFragment;
 import com.example.king.gou.ui.gameAcVpFrms.KillOrderFragment;
-import com.example.king.gou.ui.gameAcVpFrms.NoDrawFragment;
+import com.example.king.gou.ui.gameAcVpFrms.ManKillOrderFragment;
+import com.example.king.gou.ui.gameAcVpFrms.NoBuyFragment;
+import com.example.king.gou.ui.gameAcVpFrms.NoOpenFragment;
 import com.example.king.gou.ui.gameAcVpFrms.NoWinFragment;
-import com.example.king.gou.ui.gameAcVpFrms.WinFragment;
+import com.example.king.gou.ui.gameAcVpFrms.OverDueFragment;
+import com.example.king.gou.ui.gameAcVpFrms.PaiJiangFragment;
+import com.example.king.gou.ui.gameAcVpFrms.TerraceKillFragment;
 import com.example.king.gou.utils.DateUtil;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
@@ -90,6 +91,14 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
     int Gid = 0;
     ArrayList<TouZhu> ts;
     AllFragment allFragment;
+    private NoBuyFragment noBuyFragment;
+    private NoOpenFragment noOpenFragment;
+    private KillOrderFragment killOrderFragment;
+    private ManKillOrderFragment manKillOrderFragment;
+    private OverDueFragment overDueFragment;
+    private NoWinFragment nowinFragment;
+    private TerraceKillFragment terraceKillFragment;
+    private PaiJiangFragment paiJiangFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,11 +110,24 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
         gamejlTablayout.setupWithViewPager(gamejlViewpager);
         gamejlViewpager.setAdapter(myFrmPageAdapter);
         relateTime1.setClickable(true);
-        allFragment = new AllFragment();
+        initFragment();
+
         initClick();
         initViewpager();
         initDateDialog();
         initSpinner();
+    }
+
+    private void initFragment() {
+        allFragment = new AllFragment();
+        noBuyFragment = new NoBuyFragment();
+        noOpenFragment = new NoOpenFragment();
+        killOrderFragment = new KillOrderFragment();
+        manKillOrderFragment = new ManKillOrderFragment();
+        overDueFragment = new OverDueFragment();
+        nowinFragment = new NoWinFragment();
+        terraceKillFragment = new TerraceKillFragment();
+        paiJiangFragment = new PaiJiangFragment();
     }
 
 
@@ -211,14 +233,14 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
         List<BaseFragment> fragments = new ArrayList<>();
         List<String> tits = new ArrayList<>();
         fragments.add(allFragment);
-        fragments.add(NoDrawFragment.newInstance());
-        fragments.add(WinFragment.newInstance());
-        fragments.add(NoWinFragment.newInstance());
-        fragments.add(KillOrderFragment.newInstance());
-        fragments.add(KillOrderFragment.newInstance());
-        fragments.add(KillOrderFragment.newInstance());
-        fragments.add(KillOrderFragment.newInstance());
-        fragments.add(KillOrderFragment.newInstance());
+        fragments.add(noBuyFragment);
+        fragments.add(noOpenFragment);
+        fragments.add(killOrderFragment);
+        fragments.add(manKillOrderFragment);
+        fragments.add(overDueFragment);
+        fragments.add(nowinFragment);
+        fragments.add(terraceKillFragment);
+        fragments.add(paiJiangFragment);
         tits.add("全部");
         tits.add("未购买");
         tits.add("未开奖");
@@ -343,10 +365,51 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
             if (object != null) {
                 ts = (ArrayList<TouZhu>) object;
                 Log.d("游戏数据", ts.get(0).getName());
+                List<TouZhu> t1 = new ArrayList<>();
+                List<TouZhu> t2 = new ArrayList<>();
+                List<TouZhu> t3 = new ArrayList<>();
+                List<TouZhu> t4 = new ArrayList<>();
+                List<TouZhu> t5 = new ArrayList<>();
+                List<TouZhu> t6 = new ArrayList<>();
+                List<TouZhu> t7 = new ArrayList<>();
+                List<TouZhu> t8 = new ArrayList<>();
+
+                for (int i = 0; i < ts.size(); i++) {
+                    if (ts.get(i).getStatus() == 0) {
+                        t1.add(ts.get(i));
+                    }
+                    if (ts.get(i).getStatus() == 1) {
+                        t2.add(ts.get(i));
+                    }
+                    if (ts.get(i).getStatus() == 2) {
+                        t3.add(ts.get(i));
+                    }
+                    if (ts.get(i).getStatus() == 3) {
+                        t4.add(ts.get(i));
+                    }
+                    if (ts.get(i).getStatus() == 4) {
+                        t5.add(ts.get(i));
+                    }
+                    if (ts.get(i).getStatus() == 5) {
+                        t6.add(ts.get(i));
+                    }
+                    if (ts.get(i).getStatus() == 6) {
+                        t7.add(ts.get(i));
+                    }
+                    if (ts.get(i).getStatus() == 7) {
+                        t8.add(ts.get(i));
+                    }
+
+                }
                 allFragment.getList(ts);
-               /* Intent intent = new Intent("action.Betting");
-                intent.putExtra("Betting", "6666");
-                this.sendBroadcast(intent);*/
+                noBuyFragment.getList(t1);
+                noOpenFragment.getList(t2);
+                killOrderFragment.getList(t3);
+                manKillOrderFragment.getList(t4);
+                overDueFragment.getList(t5);
+                nowinFragment.getList(t6);
+                terraceKillFragment.getList(t7);
+                paiJiangFragment.getList(t8);
             }
         }
     }

@@ -165,7 +165,6 @@
         </Spinner>
 
 
-
     </LinearLayout>
 
     <View
@@ -185,5 +184,7 @@
 
         android:id="@+id/gamejl_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v4.view.ViewPager>
+        android:layout_height="match_parent">
+        4
+    </android.support.v4.view.ViewPager>
 </LinearLayout>

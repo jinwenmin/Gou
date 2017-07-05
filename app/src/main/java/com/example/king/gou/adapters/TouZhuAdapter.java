@@ -1,6 +1,7 @@
 package com.example.king.gou.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,38 @@ public class TouZhuAdapter extends BaseAdapter {
         } else if (!"null".equals(ts.get(i).getWinning_numbers())) {
             viewHolder.WinNum.setText(ts.get(i).getWinning_numbers());
         }
+        if (ts.get(i).getStatus() == 0) {
+            viewHolder.LotteryStatus.setText("未购买");
+            viewHolder.LotteryStatus.setTextColor(Color.parseColor("#666666"));
+        }
+        if (ts.get(i).getStatus() == 1) {
+            viewHolder.LotteryStatus.setText("未开奖");
+            viewHolder.LotteryStatus.setTextColor(Color.parseColor("#0000ff"));
+        }
+        if (ts.get(i).getStatus() == 2) {
+            viewHolder.LotteryStatus.setText("本人撤单");
+            viewHolder.LotteryStatus.setTextColor(Color.parseColor("#666666"));
+        }
+        if (ts.get(i).getStatus() == 3) {
+            viewHolder.LotteryStatus.setText("管理员撤单");
+            viewHolder.LotteryStatus.setTextColor(Color.parseColor("#666666"));
+        }
+        if (ts.get(i).getStatus() == 4) {
+            viewHolder.LotteryStatus.setText("已过期");
+            viewHolder.LotteryStatus.setTextColor(Color.parseColor("#666666"));
+        }
+        if (ts.get(i).getStatus() == 5) {
+            viewHolder.LotteryStatus.setText("未中奖");
+            viewHolder.LotteryStatus.setTextColor(Color.parseColor("#00802f"));
+        }
+        if (ts.get(i).getStatus() == 6) {
+            viewHolder.LotteryStatus.setText("平台撤单");
+            viewHolder.LotteryStatus.setTextColor(Color.parseColor("#666666"));
+        }
+        if (ts.get(i).getStatus() == 7) {
+            viewHolder.LotteryStatus.setText("已派奖");
+            viewHolder.LotteryStatus.setTextColor(Color.parseColor("#ff0000"));
+        }
         return view;
     }
 
@@ -89,6 +122,8 @@ public class TouZhuAdapter extends BaseAdapter {
         LinearLayout lotteryType3;
         @BindView(R.id.WinNum)
         TextView WinNum;
+        @BindView(R.id.Lottery_status)
+        TextView LotteryStatus;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

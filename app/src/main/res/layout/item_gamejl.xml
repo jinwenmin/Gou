@@ -5,11 +5,12 @@
     android:orientation="vertical">
 
     <TextView
+        android:textColor="@android:color/black"
         android:id="@+id/lottery_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20px"
         android:layout_marginBottom="10px"
+        android:layout_marginLeft="20px"
         android:layout_marginTop="10px"
         android:text="彩票种类"
         android:textSize="30px" />
@@ -19,88 +20,89 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/lottery_type"
-        android:layout_marginLeft="20px"
         android:layout_marginBottom="10px"
+        android:layout_marginLeft="20px"
         android:text="20170000000期"
-        android:textSize="28px" />
+        android:textSize="25px" />
 
     <TextView
-        android:layout_marginBottom="10px"
         android:id="@+id/lottery_type2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/lottery_type"
+        android:layout_marginBottom="10px"
         android:layout_marginLeft="20px"
         android:layout_toRightOf="@id/lottery_date"
         android:text="定位胆"
-        android:textSize="28px" />
+        android:textSize="25px" />
 
     <LinearLayout
         android:id="@+id/lottery_type3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/lottery_type2"
-        android:layout_marginLeft="20px"
-        android:layout_marginBottom="10px">
+        android:layout_marginBottom="10px"
+        android:layout_marginLeft="20px">
 
         <TextView
-            android:textSize="28px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="投注金额:" />
+            android:text="投注金额:"
+            android:textSize="25px" />
 
         <TextView
             android:id="@+id/TouZhuMoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="5元"
-            android:textSize="28px" />
+            android:textSize="25px" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20px"
             android:text="中奖金额:"
-            android:textSize="28px" />
+            android:textSize="25px" />
 
         <TextView
             android:id="@+id/ZhongJiangMoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0元"
-            android:textSize="28px" />
+            android:textSize="25px" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_below="@id/lottery_type3"
-        android:layout_marginLeft="20px"
-        android:layout_marginBottom="20px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/lottery_type3"
+        android:layout_marginBottom="20px"
+        android:layout_marginLeft="20px"
         android:orientation="horizontal">
 
         <TextView
-            android:textSize="28px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="开奖号码:" />
+            android:text="开奖号码:"
+            android:textSize="25px" />
 
         <TextView
-            android:textSize="28px"
             android:id="@+id/WinNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="00000000" />
+            android:text="00000000"
+            android:textSize="25px" />
     </LinearLayout>
 
     <TextView
+        android:id="@+id/Lottery_status"
         android:layout_width="100px"
         android:layout_height="40px"
         android:layout_alignParentRight="true"
         android:layout_marginTop="40px"
         android:background="@drawable/edit_user_pwd_bg"
         android:gravity="center"
-        android:text="未开奖"
+        android:text="XXX"
         android:textColor="#4F94CD"
         android:textSize="23px" />
 </RelativeLayout>
