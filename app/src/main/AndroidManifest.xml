@@ -78,7 +78,8 @@
         <activity android:name=".ui.settingfragment.BankCardManActivity" />
         <activity android:name=".ui.settingfragment.SaveCardActivity" />
         <activity android:name=".ui.frmMyActivity.ChatUserActivity" />
-        <activity android:name=".ui.gameAcVpFrms.ZhuiHaoDetailActivity"></activity>
+        <activity android:name=".ui.gameAcVpFrms.ZhuiHaoDetailActivity" />
+        <activity android:name=".ui.gameAcVpFrms.ZhuiHaoTouZhuActivity"></activity>
     </application>
 
 </manifest>

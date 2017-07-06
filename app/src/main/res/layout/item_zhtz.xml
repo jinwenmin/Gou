@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/TouZhuCheck"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/TouZhuId"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:padding="15px"
+            android:text="投注单id"
+            android:textColor="@android:color/black"
+            android:textSize="30px" />
+
+        <TextView
+            android:id="@+id/TouZhuQi"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:padding="15px"
+            android:text="投注期号"
+            android:textColor="@android:color/black"
+            android:textSize="30px" />
+
+        <TextView
+            android:id="@+id/TouZhuBei"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:padding="15px"
+            android:text="投注倍数"
+            android:textColor="@android:color/black"
+            android:textSize="30px" />
+
+        <TextView
+            android:id="@+id/TouZhuStatus"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:padding="5px"
+            android:text="投注单状态"
+            android:textColor="@android:color/black"
+            android:textSize="30px" />
+    </LinearLayout>
+</LinearLayout>

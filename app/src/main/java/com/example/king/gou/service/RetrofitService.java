@@ -15,6 +15,7 @@ import com.example.king.gou.bean.TouZhu;
 import com.example.king.gou.bean.UserAmount;
 import com.example.king.gou.bean.UserInfo;
 import com.example.king.gou.bean.ZhuiHao;
+import com.example.king.gou.bean.ZhuiHaoDetails;
 import com.example.king.gou.ui.MainActivity;
 import com.example.king.gou.utils.AddCookiesInterceptor;
 import com.example.king.gou.utils.ApiInterface;
@@ -85,6 +86,8 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_GAME7 = 21;//获取游戏
     public static int API_ID_TOUZHUSEAR = 22;//获取投注单
     public static int API_ID_ZHUIHAO = 23;//获取追号记录
+    public static int API_ID_ZHUIHAODETAILS = 24;//获取追号详情
+    public static int API_ID_ZHTZDETAIL = 25;//获取追号投注详情
     private Retrofit retrofit;
     private ApiInterface apiInterface;
     String sessionLoginId;
@@ -319,7 +322,9 @@ public class RetrofitService extends HttpEngine {
         long currentTimeMillis = System.currentTimeMillis();
         reqkey = "AppClient=1&t=" + currentTimeMillis;
         reqkey = RxUtils.getInstance().md5(reqkey);
-        Call<Object> clone = apiInterface.getNotices(1, reqkey, currentTimeMillis).clone();
+        Call<Object> notices = apiInterface.getNotices(1, reqkey, currentTimeMillis);
+
+        Call<Object> clone = notices.clone();
         listener.onRequestStart(API_ID_NOTICECONTENT);
         clone.enqueue(new Callback<Object>() {
             @Override
@@ -352,6 +357,8 @@ public class RetrofitService extends HttpEngine {
         long currentTimeMillis = System.currentTimeMillis();
         reqkey = "AppClient=1&id=" + id + "&t=" + currentTimeMillis;
         Call<Object> noticesContent = apiInterface.getNoticesContent(id);
+        String s = noticesContent.request().toString();
+        Log.d("公告的全体", s);
         Call<Object> clone = noticesContent.clone();
         clone.enqueue(new Callback<Object>() {
             @Override
@@ -1340,7 +1347,7 @@ public class RetrofitService extends HttpEngine {
     }
 
     //查询追号详情
-    public void getKeepNumDeTails(DataListener listener, int id) {
+    public void getKeepNumDeTails(final DataListener listener, int id) {
         Call<Object> keepNumDetails = apiInterface.getKeepNumDetails(id);
         Call<Object> clone = keepNumDetails.clone();
         clone.enqueue(new Callback<Object>() {
@@ -1349,25 +1356,105 @@ public class RetrofitService extends HttpEngine {
                 String s = response.body().toString();
                 s = s.substring(s.indexOf("others={") + 8, s.length() - 2);
                 Log.d("查询追号详情===", s);
+                ZhuiHaoDetails zz = new ZhuiHaoDetails();
                 String id = s.substring(s.indexOf("id=") + 3, s.indexOf(", amount"));
+                id = id.substring(0, id.length() - 2);
                 String amount = s.substring(s.indexOf("amount=") + 7, s.indexOf(", cancelAmount"));
                 String cancelAmount = s.substring(s.indexOf("cancelAmount=") + 13, s.indexOf(", cancelPeriods"));
                 String cancelPeriods = s.substring(s.indexOf("cancelPeriods=") + 14, s.indexOf(", drawPeriod"));
+                cancelPeriods = cancelPeriods.substring(0, cancelPeriods.length() - 2);
                 String drawPeriod = s.substring(s.indexOf("drawPeriod=") + 11, s.indexOf(", gid"));
                 String gid = s.substring(s.indexOf("gid=") + 4, s.indexOf(", mode"));
+                gid = gid.substring(0, gid.length() - 2);
                 String mode = s.substring(s.indexOf("mode=") + 5, s.indexOf(", number"));
+                mode = mode.substring(0, mode.length() - 2);
                 String number = s.substring(s.indexOf("number=") + 7, s.indexOf(", periods"));
                 String periods = s.substring(s.indexOf("periods=") + 8, s.indexOf(", pickedNumbers"));
+                periods = periods.substring(0, periods.length() - 2);
                 String pickedNumbers = s.substring(s.indexOf("pickedNumbers=") + 14, s.indexOf(", purchaseAmount"));
                 String purchaseAmount = s.substring(s.indexOf("purchaseAmount=") + 15, s.indexOf(", purchaseDate"));
                 String purchaseDate = s.substring(s.indexOf("purchaseDate=") + 13, s.indexOf(", purchasePeriods"));
                 String purchasePeriods = s.substring(s.indexOf("purchasePeriods=") + 16, s.indexOf(", rulesId"));
+                purchasePeriods = purchasePeriods.substring(0, purchasePeriods.length() - 2);
                 String rulesId = s.substring(s.indexOf("rulesId=") + 8, s.indexOf(", startPeriod"));
+                rulesId = rulesId.substring(0, rulesId.length() - 2);
                 String startPeriod = s.substring(s.indexOf("startPeriod=") + 12, s.indexOf(", bids"));
                 String bids = s.substring(s.indexOf("bids=") + 5, s.indexOf(", status"));
                 String status = s.substring(s.indexOf("status=") + 7, s.indexOf(", stopByWin"));
+                status = status.substring(0, status.length() - 2);
                 String stopByWin = s.substring(s.indexOf("stopByWin=") + 10, s.indexOf(", uid"));
+                stopByWin = stopByWin.substring(0, stopByWin.length() - 2);
                 String uid = s.substring(s.indexOf("uid=") + 4, s.length() - 2);
+                zz.setId(Integer.parseInt(id));
+                zz.setAmount(Double.parseDouble(amount));
+                zz.setCancelAmount(Double.parseDouble(cancelAmount));
+                zz.setCancelPeriods(Integer.parseInt(cancelPeriods));
+                zz.setDrawPeriod(drawPeriod);
+                zz.setGid(Integer.parseInt(gid));
+                zz.setMode(Integer.parseInt(mode));
+                zz.setNumber(number);
+                zz.setPeriods(Integer.parseInt(periods));
+                zz.setPickedNumbers(pickedNumbers);
+                zz.setPurchaseAmount(Double.parseDouble(purchaseAmount));
+                zz.setPurchaseDate(purchaseDate);
+                zz.setPurchasePeriods(Integer.parseInt(purchasePeriods));
+                zz.setRulesId(Integer.parseInt(rulesId));
+                zz.setStartPeriod(startPeriod);
+                zz.setBids(bids);
+                zz.setStatus(Integer.parseInt(status));
+                zz.setStopByWin(Integer.parseInt(stopByWin));
+                zz.setUid(Integer.parseInt(uid));
+                Log.d("查询追号详情===.toString", zz.toString());
+                listener.onReceivedData(API_ID_ZHUIHAODETAILS, zz, API_ID_ERROR);
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //查询追号投注记录
+    public void getKeepNumBet(final DataListener listener, int page, int rows, String sidx, String sord, int id) {
+        long l = System.currentTimeMillis();
+        Map map = new HashMap();
+        map.put("page", page + "");
+        map.put("rows", rows + "");
+        map.put("sidx", sidx);
+        map.put("sord", sord);
+        map.put("id", id + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, l);
+        Call<Object> keepNumBet = apiInterface.getKeepNumBet(1, page, rows, sidx, sord, id, reqkey, l);
+        Call<Object> clone = keepNumBet.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                String s = response.body().toString();
+                Log.d("查询追号投注记录", s);
+                String substring = s.substring(s.indexOf("content=[") + 9, s.indexOf("], number="));
+                String[] sp = substring.split(", ");
+                if (sp.length > 4) {
+                    List<ZhuiHao> zhs = new ArrayList<ZhuiHao>();
+
+                    for (int i = 0; i < sp.length; i = i + 5) {
+                        Log.d("查询追号投注记录Split", sp[i]);
+                        String id = sp[i].substring(sp[i].indexOf("[") + 1, sp[i].length() - 2);//投注单id
+                        String draw_period = sp[i + 1];//投注期号
+                        String multiple = sp[i + 2].substring(0, sp[i + 2].length() - 2);//投注倍数
+                        String status = sp[i + 3].substring(0, sp[i + 3].length() - 2);//投注单状态
+                        ZhuiHao zh = new ZhuiHao();
+                        zh.setId(Integer.parseInt(id));
+                        zh.setNumber(draw_period);
+                        zh.setPrize_num(Integer.parseInt(multiple));
+                        zh.setStatus(Integer.parseInt(status));
+                        Log.d("查询追号投注记录Bean", zh.toString());
+                        zhs.add(zh);
+                    }
+                    listener.onReceivedData(API_ID_ZHTZDETAIL, zhs, API_ID_ERROR);
+                }
+
+
             }
 
             @Override
