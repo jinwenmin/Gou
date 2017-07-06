@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="追号详情"
+            android:text="追号记录"
             android:textColor="@android:color/white"
             android:textSize="@dimen/top_textsize" />
     </RelativeLayout>
@@ -34,12 +34,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <CheckBox
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:gravity="center" />
 
         <TextView
             android:layout_width="0px"
@@ -47,7 +41,9 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="2"
             android:gravity="center"
+            android:padding="5px"
             android:text="追号期数"
+            android:textColor="@android:color/black"
             android:textSize="30px" />
 
         <TextView
@@ -56,7 +52,9 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="2"
             android:gravity="center"
-            android:text="追号倍数"
+            android:padding="5px"
+            android:text="追号金额"
+            android:textColor="@android:color/black"
             android:textSize="30px" />
 
         <TextView
@@ -65,7 +63,9 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="2"
             android:gravity="center"
+            android:padding="5px"
             android:text="追号状态"
+            android:textColor="@android:color/black"
             android:textSize="30px" />
 
         <TextView
@@ -73,16 +73,33 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="2"
-
             android:gravity="center"
-            android:text="操作"
+            android:padding="5px"
+            android:text="游戏名称"
+            android:textColor="@android:color/black"
             android:textSize="30px" />
 
-        <ImageView
+        <TextView
             android:layout_width="0px"
-            android:layout_height="50px"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:src="@mipmap/refrash" />
+            android:layout_weight="2"
+            android:gravity="center"
+            android:padding="5px"
+            android:text="中奖金额"
+            android:textColor="@android:color/black"
+            android:textSize="30px" />
     </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/ZhuiHaoRe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/ZhuiHaoListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 </LinearLayout>

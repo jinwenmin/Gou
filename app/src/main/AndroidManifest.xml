@@ -77,7 +77,8 @@
         <activity android:name=".ui.UpDataSafePwdActivity" />
         <activity android:name=".ui.settingfragment.BankCardManActivity" />
         <activity android:name=".ui.settingfragment.SaveCardActivity" />
-        <activity android:name=".ui.frmMyActivity.ChatUserActivity"></activity>
+        <activity android:name=".ui.frmMyActivity.ChatUserActivity" />
+        <activity android:name=".ui.gameAcVpFrms.ZhuiHaoDetailActivity"></activity>
     </application>
 
 </manifest>

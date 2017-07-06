@@ -541,10 +541,8 @@ public interface ApiInterface {
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/auto-purchase-details/{id}")
     Call<Object> getKeepNumDetails(
-            @Query("AppClient") int num,
-            @Path("id") int id,//id为追号记录id
-            @Query("reqkey") String reqkey,
-            @Query("t") long t
+            @Path("id") int id//id为追号记录id
+
     );
 
     //48 查询追号投注记录

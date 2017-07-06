@@ -14,6 +14,7 @@ import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.bean.TouZhu;
 import com.example.king.gou.bean.UserAmount;
 import com.example.king.gou.bean.UserInfo;
+import com.example.king.gou.bean.ZhuiHao;
 import com.example.king.gou.ui.MainActivity;
 import com.example.king.gou.utils.AddCookiesInterceptor;
 import com.example.king.gou.utils.ApiInterface;
@@ -83,6 +84,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_GAME6 = 20;//获取游戏
     public static int API_ID_GAME7 = 21;//获取游戏
     public static int API_ID_TOUZHUSEAR = 22;//获取投注单
+    public static int API_ID_ZHUIHAO = 23;//获取追号记录
     private Retrofit retrofit;
     private ApiInterface apiInterface;
     String sessionLoginId;
@@ -332,7 +334,7 @@ public class RetrofitService extends HttpEngine {
                     NoticeContent.add(split);
                 }
                 listener.onReceivedData(API_ID_NOTICECONTENT, NoticeContent, API_ID_ERROR);
-                Log.d("获取的公告列表==", NoticeContent.get(1)[1] + "  ");
+                //Log.d("获取的公告列表==", NoticeContent.get(1)[1] + "  ");
                 listener.onRequestEnd(API_ID_NOTICECONTENT);
             }
 
@@ -1263,7 +1265,7 @@ public class RetrofitService extends HttpEngine {
 
     }
 
-    public void getKeepNum(DataListener listener, int page, int rows, String sidx, String sord, String from, String to, int id, int rid) {
+    public void getKeepNum(final DataListener listener, int page, int rows, String sidx, String sord, String from, final String to, int id, int rid) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap();
         map.put("page", page + "");
@@ -1280,8 +1282,54 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                Log.d("查询追号返回数据", response.body().toString());
-
+                String toString = response.body().toString();
+                String substring = toString.substring(toString.indexOf("content=[") + 9, toString.indexOf("], number"));
+                Log.d("追号记录SubString=", substring);
+                if (substring.length() > 10) {
+                    String[] sp = substring.split(", ");
+                    List<ZhuiHao> zhuiHaos = new ArrayList<ZhuiHao>();
+                    for (int i = 0; i < sp.length; i = i + 17) {
+                        Log.d("追号记录截取1", sp[i]);
+                        ZhuiHao z = new ZhuiHao();
+                        String id = sp[i].substring(1, sp[i].length() - 2);
+                        String number = sp[i + 1];
+                        String purchase_date = sp[i + 2];
+                        String gname = sp[i + 3];
+                        String rname = sp[i + 4];
+                        String start_period = sp[i + 5];
+                        String periods = sp[i + 6].substring(0, sp[i + 6].length() - 2);
+                        String purchase_periods = sp[i + 7].substring(0, sp[i + 7].length() - 2);
+                        String picked_numbers = sp[i + 8];
+                        String mode = sp[i + 9].substring(0, sp[i + 9].length() - 2);
+                        String amount = sp[i + 10];
+                        String purchase_amount = sp[i + 11];
+                        String cancel_amount = sp[i + 12];
+                        String prize_num = sp[i + 13].substring(0, sp[i + 13].length() - 2);
+                        String prize_amount = sp[i + 14];
+                        Log.d("i+15", sp[i + 15]);
+                        String status = sp[i + 16].substring(0, sp[i + 16].length() - 3);
+                        z.setId(Integer.parseInt(id));
+                        z.setNumber(number);
+                        z.setPurchase_date(purchase_date);
+                        z.setGname(gname);
+                        z.setRname(rname);
+                        z.setStart_period(start_period);
+                        z.setPeriods(Integer.parseInt(periods));
+                        z.setPurchase_periods(Integer.parseInt(purchase_periods));
+                        z.setPicked_numbers(picked_numbers);
+                        z.setMode(Integer.parseInt(mode));
+                        z.setAmount(Double.parseDouble(amount));
+                        z.setPurchase_amount(Double.parseDouble(purchase_amount));
+                        z.setCancel_amount(Double.parseDouble(cancel_amount));
+                        z.setPrize_num(Integer.parseInt(prize_num));
+                        z.setPrize_amount(Double.parseDouble(prize_amount));
+                        z.setStatus(Integer.parseInt(status));
+                        Log.d("查询追号的Bean", z.toString());
+                        zhuiHaos.add(z);
+                    }
+                    listener.onReceivedData(API_ID_ZHUIHAO, zhuiHaos, API_ID_ERROR);
+                    Log.d("查询追号返回数据", toString);
+                }
             }
 
             @Override
@@ -1291,17 +1339,35 @@ public class RetrofitService extends HttpEngine {
         });
     }
 
+    //查询追号详情
     public void getKeepNumDeTails(DataListener listener, int id) {
-        long currentTimeMillis = System.currentTimeMillis();
-        Map<String, String> map = new HashMap<>();
-        map.put("id", id + "");
-        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> keepNumDetails = apiInterface.getKeepNumDetails(1, id, reqkey, currentTimeMillis);
+        Call<Object> keepNumDetails = apiInterface.getKeepNumDetails(id);
         Call<Object> clone = keepNumDetails.clone();
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-
+                String s = response.body().toString();
+                s = s.substring(s.indexOf("others={") + 8, s.length() - 2);
+                Log.d("查询追号详情===", s);
+                String id = s.substring(s.indexOf("id=") + 3, s.indexOf(", amount"));
+                String amount = s.substring(s.indexOf("amount=") + 7, s.indexOf(", cancelAmount"));
+                String cancelAmount = s.substring(s.indexOf("cancelAmount=") + 13, s.indexOf(", cancelPeriods"));
+                String cancelPeriods = s.substring(s.indexOf("cancelPeriods=") + 14, s.indexOf(", drawPeriod"));
+                String drawPeriod = s.substring(s.indexOf("drawPeriod=") + 11, s.indexOf(", gid"));
+                String gid = s.substring(s.indexOf("gid=") + 4, s.indexOf(", mode"));
+                String mode = s.substring(s.indexOf("mode=") + 5, s.indexOf(", number"));
+                String number = s.substring(s.indexOf("number=") + 7, s.indexOf(", periods"));
+                String periods = s.substring(s.indexOf("periods=") + 8, s.indexOf(", pickedNumbers"));
+                String pickedNumbers = s.substring(s.indexOf("pickedNumbers=") + 14, s.indexOf(", purchaseAmount"));
+                String purchaseAmount = s.substring(s.indexOf("purchaseAmount=") + 15, s.indexOf(", purchaseDate"));
+                String purchaseDate = s.substring(s.indexOf("purchaseDate=") + 13, s.indexOf(", purchasePeriods"));
+                String purchasePeriods = s.substring(s.indexOf("purchasePeriods=") + 16, s.indexOf(", rulesId"));
+                String rulesId = s.substring(s.indexOf("rulesId=") + 8, s.indexOf(", startPeriod"));
+                String startPeriod = s.substring(s.indexOf("startPeriod=") + 12, s.indexOf(", bids"));
+                String bids = s.substring(s.indexOf("bids=") + 5, s.indexOf(", status"));
+                String status = s.substring(s.indexOf("status=") + 7, s.indexOf(", stopByWin"));
+                String stopByWin = s.substring(s.indexOf("stopByWin=") + 10, s.indexOf(", uid"));
+                String uid = s.substring(s.indexOf("uid=") + 4, s.length() - 2);
             }
 
             @Override

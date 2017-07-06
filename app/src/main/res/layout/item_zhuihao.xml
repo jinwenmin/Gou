@@ -5,55 +5,61 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
-        <CheckBox
-
-            android:id="@+id/ZHuihaoCheck"
-            android:layout_width="0px"
-            android:layout_height="45px"
-            android:layout_weight="1"
-            android:gravity="center" />
-
         <TextView
-            android:textSize="23px"
+            android:padding="3px"
             android:id="@+id/ZhuihaoQI"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center"
             android:singleLine="true"
-            android:text="2017-1-1-1" />
+            android:text="2017-1-1-1"
+            android:textSize="30px" />
 
         <TextView
-            android:textSize="23px"
-            android:id="@+id/ZHuihaoBei"
+            android:padding="3px"
+            android:id="@+id/ZHuihaoAmount"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center"
-            android:text="1" />
+            android:text="1"
+            android:textSize="30px" />
 
         <TextView
-            android:textSize="23px"
+            android:padding="3px"
             android:id="@+id/ZhuiHaoZT"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center"
-            android:text="未完成" />
+            android:text="未完成"
+            android:textSize="30px" />
 
         <TextView
-            android:textSize="23px"
-            android:id="@+id/ZhuoHaoCZ"
+            android:padding="3px"
+            android:id="@+id/ZhuoHaoName"
             android:layout_width="0px"
+
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center"
-            android:text="订单详情"
-            android:textColor="@color/btn_background" />
+            android:text="游戏名称"
+
+            android:textSize="30px" />
+
+        <TextView
+            android:gravity="center"
+            android:textSize="30px"
+            android:id="@+id/ZhuiHaoPriAmount"
+            android:padding="3px"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
     </LinearLayout>
 </LinearLayout>
