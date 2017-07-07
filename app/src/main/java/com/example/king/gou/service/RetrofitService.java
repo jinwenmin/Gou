@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.king.gou.bean.CunQu;
 import com.example.king.gou.bean.GameType;
 import com.example.king.gou.bean.Login;
 import com.example.king.gou.bean.LoginState;
@@ -88,6 +89,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_ZHUIHAO = 23;//获取追号记录
     public static int API_ID_ZHUIHAODETAILS = 24;//获取追号详情
     public static int API_ID_ZHTZDETAIL = 25;//获取追号投注详情
+    public static int API_ID_CACEL = 26;//撤销投注单
     private Retrofit retrofit;
     private ApiInterface apiInterface;
     String sessionLoginId;
@@ -468,6 +470,10 @@ public class RetrofitService extends HttpEngine {
                     }
                 }
                 if ("4".equals(StringType)) {
+                    GameType g2 = new GameType();
+                    g2.setGrid(0);
+                    g2.setName("全部游戏");
+                    ListgameTypes.add(g2);
                     for (int i = 0; i < split.length; i = i + 3) {
                         //Log.d("Game游戏Split=", split[i]);
                         GameType gameType = new GameType();
@@ -1462,5 +1468,120 @@ public class RetrofitService extends HttpEngine {
 
             }
         });
+    }
+
+    //批量撤销投注单
+    public void getLotteryBetRevoke(final DataListener listener, String ids) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("ids", ids);
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<RestultInfo> lotteryBetRevoke = apiInterface.getLotteryBetRevoke(1, ids, reqkey, currentTimeMillis);
+        Call<RestultInfo> clone = lotteryBetRevoke.clone();
+        clone.enqueue(new Callback<RestultInfo>() {
+            @Override
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+                Log.d("批量撤销投注单", response.body().toString());
+                listener.onReceivedData(API_ID_CACEL, response.body(), API_ID_ERROR);
+            }
+
+            @Override
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    //查询个人报表彩票帐变
+    public void getAccountChangeList(DataListener listener, int page, int rows, String sidx, String sord, String from, final String to, int id, int type, int stype, int model) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> maps = new HashMap<>();
+        maps.put("page", page + "");
+        maps.put("rows", rows + "");
+        maps.put("sidx", sidx + "");
+        maps.put("sord", sord + "");
+        maps.put("from", from + "");
+        maps.put("to", to + "");
+        maps.put("id", id + "");
+        maps.put("type", type + "");
+        maps.put("stype", stype + "");
+        maps.put("model", model + "");
+        String reqkey = RxUtils.getInstance().getReqkey(maps, currentTimeMillis);
+        Call<Object> accountChangeList = apiInterface.getAccountChangeList(1, page, rows, sidx, sord, from, to, id, type, stype, model, reqkey, currentTimeMillis);
+        Call<Object> clone = accountChangeList.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("查询个人报表彩票帐变", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+    //52 个人报表充提记录
+    public void getReChargeWithDrawList(DataListener listener, int page, int rows, String sidx, String sord, String from, final String to, int type) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("page", page + "");
+        map.put("rows", rows + "");
+        map.put("sidx", sidx + "");
+        map.put("sord", sord + "");
+        map.put("from", from + "");
+        map.put("to", to + "");
+        map.put("type", type + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> reChargeWithDrawList = apiInterface.getReChargeWithDrawList(1, page, rows, sidx, sord, from, to, type, reqkey, currentTimeMillis);
+        Call<Object> clone = reChargeWithDrawList.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                String s = response.body().toString();
+                String substring = s.substring(s.indexOf("rows=[") + 6, s.indexOf("], userdata="));
+                if (substring.length() > 10) {
+                    //String substring1 = substring.substring(substring.indexOf("id=") + 3, substring.indexOf(", cell="));
+                    String[] ss = substring.split(", ");
+                    List<CunQu> cs = new ArrayList<CunQu>();
+                    for (int i = 0; i < ss.length; i++) {
+                        Log.d("个人报表充提记录Split==", ss[i]);
+                        CunQu cunQu = new CunQu();
+                        String id = ss[i].substring(4, ss[i].length());
+                        String serial_number = ss[i + 1].substring(6, ss[i + 1].length());
+                        String uname = ss[i + 2];
+                        String date = ss[i + 3];
+                        String stype = ss[i + 4];
+                        String income = ss[i + 5];
+                        String expend = ss[i + 6];
+                        String amount = ss[i + 7];
+                        String status = ss[i + 8];
+                        String detial = ss[i + 9];
+                        cunQu.setId(Integer.parseInt(id));
+                        cunQu.setSerial_number(serial_number);
+                        cunQu.setUname(uname);
+                        cunQu.setDate(date);
+                        cunQu.setStype(Integer.parseInt(stype));
+                        cunQu.setIncome(Double.parseDouble(income));
+                        cunQu.setExpend(Double.parseDouble(expend));
+                        cunQu.setAmount(Double.parseDouble(amount));
+                        cunQu.setStatus(Integer.parseInt(status));
+                        cunQu.setDetial(detial);
+                        cs.add(cunQu);
+                    }
+                }
+                Log.d("个人报表充提记录", s);
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+
     }
 }

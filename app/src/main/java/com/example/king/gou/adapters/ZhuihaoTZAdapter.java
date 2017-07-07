@@ -73,8 +73,11 @@ public class ZhuihaoTZAdapter extends BaseAdapter {
                 mChecked.set(p, isChecked);
             }
         });
+
+
         if (zh.get(position).getStatus() == 0) {
             viewHolder.TouZhuStatus.setText("可选");
+            viewHolder.TouZhuCheck.setChecked(zh.get(position).isBo());
         } else if (zh.get(position).getStatus() == 1) {
             viewHolder.TouZhuStatus.setText("不可选");
         }
@@ -107,4 +110,16 @@ public class ZhuihaoTZAdapter extends BaseAdapter {
         }
     }
 
+    public void getCheck(boolean bs) {
+        if (bs == true) {
+            for (int i = 0; i < zh.size(); i++) {
+
+            }
+        }
+        if (bs == false) {
+            for (int i = 0; i < zh.size(); i++) {
+
+            }
+        }
+    }
 }

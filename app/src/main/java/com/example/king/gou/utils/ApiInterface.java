@@ -513,7 +513,7 @@ public interface ApiInterface {
     //撤销投注单
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/lottery-bet-revoke/{bid}")
-    Call<RestultInfo> getLotteryBetRevoke(
+    Call<RestultInfo> getLotteryBetRevoke1(
             @Query("AppClient") int num,
             @Path("bid") int id,//购彩单id
             @Query("reqkey") String reqkey,
@@ -562,7 +562,7 @@ public interface ApiInterface {
     //49 批量撤单(停止追号)
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/lottery-betlist-revoke")
-    Call<Object> getLotteryBetRevoke(
+    Call<RestultInfo> getLotteryBetRevoke(
             @Query("AppClient") int num,
             @Query("ids") String ids,//勾选的投注单id集；逗号分隔
             @Query("reqkey") String reqkey,
@@ -607,7 +607,7 @@ public interface ApiInterface {
             @Query("t") long t
     );
 
-    //51 个人报表充提记录
+    //52 个人报表活动记录
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/activity-record-list")
     Call<Object> getActivityRecordList(
@@ -644,7 +644,7 @@ public interface ApiInterface {
             @Query("t") long t
     );
 
-    //52 个人报表活动记录
+    //51 个人报表充提记录
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/recharge-withdraw-list")
     Call<Object> getReChargeWithDrawList(

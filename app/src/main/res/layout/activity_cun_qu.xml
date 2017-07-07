@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.king.gou.ui.orderFrmActivity.CunQuActivity">
 
     <RelativeLayout
@@ -13,47 +14,178 @@
         android:background="@color/top_background">
 
         <ImageView
-            android:id="@+id/gamejl_back"
+            android:id="@+id/CunQu_back"
             android:layout_width="@dimen/top_back"
             android:layout_height="@dimen/top_back"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_back" />
 
-        <RadioGroup
-            android:layout_width="400px"
-            android:layout_height="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:orientation="horizontal"
-            android:paddingBottom="15px"
-            android:paddingTop="15px">
-
-            <RadioButton
-                android:id="@+id/CunJl"
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/cunqu_left_top"
-                android:button="@null"
-                android:checked="true"
-                android:gravity="center"
-
-                android:text="存款记录"
-                android:textColor="@color/select_cunqu_top_radiobutton"
-                android:textSize="35px" />
-
-            <RadioButton
-                android:id="@+id/Qujl"
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/cunqu_right_top"
-                android:button="@null"
-                android:gravity="center"
-
-                android:text="取款记录"
-                android:textColor="@color/select_cunqu_top_radiobutton"
-                android:textSize="35px" />
-
-        </RadioGroup>
+            android:text="存取款记录"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/top_textsize" />
     </RelativeLayout>
-</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/Linear"
+        android:layout_width="match_parent"
+        android:layout_height="60px"
+        android:layout_below="@id/RechargeFirmTop"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/relateTime1"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_marginRight="4px"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/timetext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="3dp"
+                android:text="2010-01-01"
+                android:textSize="30px" />
+
+            <ImageView
+                android:layout_width="50px"
+                android:layout_height="50px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10px"
+                android:background="@drawable/wuka_xiala" />
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="60px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@color/gray" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/relateTime2"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2px"
+            android:layout_weight="1"
+
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/timetext2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="6px"
+                android:text="6666-66-66"
+                android:textSize="30px" />
+
+            <ImageView
+                android:layout_width="50px"
+                android:layout_height="50px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10px"
+                android:background="@drawable/wuka_xiala" />
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="60px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@color/gray" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Spinner
+                android:id="@+id/SpinnerType"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></Spinner>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/Linear"
+        android:background="@color/gray" />
+
+    <LinearLayout
+        android:id="@+id/Linear1"
+        android:layout_width="match_parent"
+        android:layout_height="50px"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:textColor="@android:color/black"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="总支出: "
+                android:textSize="30px" />
+            <TextView
+                android:id="@+id/Expend"
+                android:layout_gravity="center"
+                android:textSize="30px"
+                android:text="XXXX"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:textColor="@android:color/black"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="总收入: "
+                android:textSize="30px" />
+
+            <TextView
+                android:id="@+id/InCome"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XXXX"
+                android:textSize="30px" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/CunQuListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/Linear1"
+        android:layout_below="@id/view"></ListView>
+
+</RelativeLayout>

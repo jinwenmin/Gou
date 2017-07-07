@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by Administrator on 2017/7/6.
  */
 
-public class ZhuiHao implements Serializable{
+public class ZhuiHao implements Serializable {
     int id;
     String number;
     String purchase_date;
@@ -24,6 +24,7 @@ public class ZhuiHao implements Serializable{
     double prize_amount;
     String bids;
     int status;
+    boolean Bo;
 
     @Override
     public String toString() {
@@ -45,7 +46,16 @@ public class ZhuiHao implements Serializable{
                 ", prize_amount=" + prize_amount +
                 ", bids='" + bids + '\'' +
                 ", status=" + status +
+                ", Bo=" + Bo +
                 '}';
+    }
+
+    public boolean isBo() {
+        return Bo;
+    }
+
+    public void setBo(boolean bo) {
+        Bo = bo;
     }
 
     public int getId() {
