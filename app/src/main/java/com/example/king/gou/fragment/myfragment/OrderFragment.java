@@ -16,6 +16,7 @@ import com.example.king.gou.ui.orderFrmActivity.FanDianActivity;
 import com.example.king.gou.ui.orderFrmActivity.GameJiluActivity;
 import com.example.king.gou.ui.orderFrmActivity.GrzbActivity;
 import com.example.king.gou.ui.orderFrmActivity.LotteryBaoBiaoActivity;
+import com.example.king.gou.ui.orderFrmActivity.LotteryLossActivity;
 import com.example.king.gou.ui.orderFrmActivity.MyBJLActivity;
 import com.example.king.gou.ui.orderFrmActivity.ZhuanZhangjlActivity;
 import com.example.king.gou.ui.orderFrmActivity.ZhuiHaoActivity;
@@ -47,6 +48,8 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
     @BindView(R.id.ZhuanZhangjl)
     TextView ZhuanZhangjl;
     Unbinder unbinder;
+    @BindView(R.id.CaiPiaoyk)
+    TextView CaiPiaoyk;
 
     public static OrderFragment newInstance() {
 
@@ -72,7 +75,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
         FanDianjl.setOnClickListener(this);
         GeRenbjl.setOnClickListener(this);
         ZhuanZhangjl.setOnClickListener(this);
-
+        CaiPiaoyk.setOnClickListener(this);
         return view;
     }
 
@@ -113,6 +116,9 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.ZhuanZhangjl:
                 StartA(ZhuanZhangjlActivity.class);
+                break;
+            case R.id.CaiPiaoyk:
+                StartA(LotteryLossActivity.class);
                 break;
         }
     }

@@ -130,53 +130,56 @@
         android:id="@+id/Linear1"
         android:layout_width="match_parent"
         android:layout_height="50px"
+        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
-            android:gravity="center"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
-                android:textColor="@android:color/black"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="总支出: "
+                android:textColor="@android:color/black"
                 android:textSize="30px" />
+
             <TextView
                 android:id="@+id/Expend"
-                android:layout_gravity="center"
-                android:textSize="30px"
-                android:text="XXXX"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="0.000"
+                android:textSize="30px" />
         </LinearLayout>
 
         <LinearLayout
-            android:gravity="center"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
-                android:textColor="@android:color/black"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="总收入: "
+                android:textColor="@android:color/black"
                 android:textSize="30px" />
 
             <TextView
                 android:id="@+id/InCome"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="XXXX"
+                android:layout_gravity="center"
+                android:text="0.000"
                 android:textSize="30px" />
         </LinearLayout>
     </LinearLayout>

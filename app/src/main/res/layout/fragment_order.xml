@@ -96,11 +96,12 @@
             android:text="转账记录" />
 
         <TextView
+            android:id="@+id/CaiPiaoyk"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-
+            android:drawableTop="@mipmap/ic_caipiaobaobiao"
             android:gravity="center_horizontal"
-            android:text=" " />
+            android:text="彩票盈亏" />
     </LinearLayout>
 </LinearLayout>

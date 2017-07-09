@@ -5,16 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.king.gou.ui.orderFrmActivity.GameJiluActivity">
+    tools:context="com.example.king.gou.ui.orderFrmActivity.LotteryLossActivity">
 
     <RelativeLayout
-        android:id="@+id/RechargeFirmTop"
+        android:id="@+id/LotteryLossTop"
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_height"
         android:background="@color/top_background">
 
         <ImageView
-            android:id="@+id/gamejl_back"
+            android:id="@+id/LotteryLoss_back"
             android:layout_width="@dimen/top_back"
             android:layout_height="@dimen/top_back"
             android:layout_centerVertical="true"
@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="个人帐变记录"
+            android:text="个人报表彩票盈亏"
             android:textColor="@android:color/white"
             android:textSize="@dimen/top_textsize" />
     </RelativeLayout>
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="3dp"
+                android:layout_marginLeft="6px"
                 android:text="2010-01-01"
                 android:textSize="30px" />
 
@@ -61,7 +61,7 @@
                 android:background="@drawable/wuka_xiala" />
 
             <View
-                android:layout_width="1px"
+                android:layout_width="2px"
                 android:layout_height="60px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
@@ -72,7 +72,7 @@
             android:id="@+id/relateTime2"
             android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_marginRight="2px"
+            android:layout_marginRight="4px"
             android:layout_weight="1"
 
             android:orientation="horizontal">
@@ -82,8 +82,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="6px"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
                 android:text="6666-66-66"
                 android:textSize="30px" />
 
@@ -96,7 +96,7 @@
                 android:background="@drawable/wuka_xiala" />
 
             <View
-                android:layout_width="1px"
+                android:layout_width="2px"
                 android:layout_height="60px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
@@ -104,53 +104,19 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/relateBank3"
             android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_marginRight="4px"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <Spinner
-                android:id="@+id/SpinnerGame"
+                android:id="@+id/SpinnerGtype"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"></Spinner>
+
         </RelativeLayout>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/gray" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Spinner
-            android:id="@+id/SpinnerType"
-            android:layout_width="0px"
-            android:layout_height="60px"
-            android:layout_weight="1"></Spinner>
-
-        <View
-            android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:background="@color/gray" />
-
-        <Spinner
-            android:id="@+id/SpinnerStype"
-            android:layout_width="0px"
-            android:layout_height="60px"
-            android:layout_weight="1"></Spinner>
-
-        <View
-            android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:background="@color/gray" />
-
-        <Spinner
-            android:id="@+id/SpinnerModel"
-            android:layout_width="0px"
-            android:layout_height="60px"
-            android:layout_weight="1"></Spinner>
     </LinearLayout>
 
     <View
@@ -161,23 +127,69 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/ChangeAmount"
+
+        <LinearLayout
+            android:id="@+id/Linear1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50px"
             android:layout_alignParentBottom="true"
-            android:gravity="center_horizontal"
-            android:text="总计：0"
-            android:textColor="@color/top_background"
-            android:textSize="40px" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="投注汇总: "
+                    android:textColor="@android:color/black"
+                    android:textSize="30px" />
+
+                <TextView
+                    android:id="@+id/Expend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="0.000"
+                    android:textSize="30px" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="奖金汇总: "
+                    android:textColor="@android:color/black"
+                    android:textSize="30px" />
+
+                <TextView
+                    android:id="@+id/InCome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="0.000"
+                    android:textSize="30px" />
+            </LinearLayout>
+        </LinearLayout>
+
         <ListView
-            android:layout_above="@id/ChangeAmount"
-            android:id="@+id/GRZBListView"
+            android:id="@+id/LotteryLossListView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </ListView>
-
-
+            android:layout_height="match_parent"
+            android:layout_above="@id/Linear1"></ListView>
     </RelativeLayout>
 </LinearLayout>

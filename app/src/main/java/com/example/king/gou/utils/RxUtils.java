@@ -3,6 +3,8 @@ package com.example.king.gou.utils;
 import android.text.TextUtils;
 import android.util.Log;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -159,7 +161,19 @@ public class RxUtils {
         String format = sdf.format(new Date(time));
         return format;
     }
+    public  String ZhToUtf(String zh) {
+        if (zh == null) {
+            return null;
+        }
+        String url = null;
+        try {
+            url = URLEncoder.encode(zh, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
+        return url;
+    }
     public String getReqkey(Map<String, String> map, long currentTimeMillis) {
 
         String str = "AppClient=1";

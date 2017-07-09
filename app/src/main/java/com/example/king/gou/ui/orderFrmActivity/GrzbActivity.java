@@ -1,6 +1,7 @@
 package com.example.king.gou.ui.orderFrmActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,8 +19,11 @@ import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnSureLisener;
 import com.codbking.widget.bean.DateType;
 import com.example.king.gou.R;
+import com.example.king.gou.adapters.AccountsAdapter;
+import com.example.king.gou.bean.AccountChange;
 import com.example.king.gou.bean.GameType;
 import com.example.king.gou.service.RetrofitService;
+import com.example.king.gou.ui.gameAcVpFrms.ZhuiHaoDetailActivity;
 import com.example.king.gou.utils.DateUtil;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
@@ -62,6 +66,8 @@ public class GrzbActivity extends AutoLayoutActivity implements View.OnClickList
     String date2;
     @BindView(R.id.SpinnerGame)
     Spinner SpinnerGame;
+    @BindView(R.id.ChangeAmount)
+    TextView ChangeAmount;
     private DatePickerDialog datePickerDialog;
     private DatePickerDialog datePickerDialog2;
     private ArrayAdapter<String> adapter1;
@@ -72,12 +78,16 @@ public class GrzbActivity extends AutoLayoutActivity implements View.OnClickList
     int Model;
     int Game;
     List<GameType> ListgameTypes = new ArrayList<GameType>();
+    List<List<AccountChange>> acs;
+    AccountsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grzb);
         ButterKnife.bind(this);
+        adapter = new AccountsAdapter(this);
+        GRZBListView.setAdapter(adapter);
         initClick();
         initDateDialog();
         initSpinner();
@@ -99,6 +109,7 @@ public class GrzbActivity extends AutoLayoutActivity implements View.OnClickList
                 int selectedItemPosition1 = SpinnerModel.getSelectedItemPosition();
                 Log.d("这些内容", gid + "   " + selectedItemPosition + "   " + selectedItemPosition1);
                 RetrofitService.getInstance().getAccountChangeList(GrzbActivity.this, 1, 100, "atid", "desc", timetext.getText().toString().trim(), timetext2.getText().toString().trim(), gid, selectedItemPosition, i, selectedItemPosition1);
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -110,6 +121,7 @@ public class GrzbActivity extends AutoLayoutActivity implements View.OnClickList
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 RetrofitService.getInstance().getAccountChangeList(GrzbActivity.this, 1, 100, "atid", "desc", timetext.getText().toString().trim(), timetext2.getText().toString().trim(), ListgameTypes.get(SpinnerGame.getSelectedItemPosition()).getGid(), SpinnerType.getSelectedItemPosition(), i, SpinnerModel.getSelectedItemPosition());
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -121,6 +133,7 @@ public class GrzbActivity extends AutoLayoutActivity implements View.OnClickList
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 RetrofitService.getInstance().getAccountChangeList(GrzbActivity.this, 1, 100, "atid", "desc", timetext.getText().toString().trim(), timetext2.getText().toString().trim(), ListgameTypes.get(SpinnerGame.getSelectedItemPosition()).getGid(), SpinnerType.getSelectedItemPosition(), SpinnerStype.getSelectedItemPosition(), i);
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -132,6 +145,7 @@ public class GrzbActivity extends AutoLayoutActivity implements View.OnClickList
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 RetrofitService.getInstance().getAccountChangeList(GrzbActivity.this, 1, 100, "atid", "desc", timetext.getText().toString().trim(), timetext2.getText().toString().trim(), ListgameTypes.get(i).getGid(), SpinnerType.getSelectedItemPosition(), SpinnerStype.getSelectedItemPosition(), SpinnerModel.getSelectedItemPosition());
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -182,6 +196,16 @@ public class GrzbActivity extends AutoLayoutActivity implements View.OnClickList
         relateTime1.setOnClickListener(this);
         relateTime2.setOnClickListener(this);
         gamejlBack.setOnClickListener(this);
+        GRZBListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(GrzbActivity.this, AccountChangeDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("Account", acs.get(1).get(position));
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initDateDialog() {
@@ -261,6 +285,7 @@ public class GrzbActivity extends AutoLayoutActivity implements View.OnClickList
                         Log.d("Date===", substring);
                         timetext.setText(substring);
                         RetrofitService.getInstance().getAccountChangeList(GrzbActivity.this, 1, 100, "atid", "desc", formatDate, timetext2.getText().toString().trim(), ListgameTypes.get(SpinnerGame.getSelectedItemPosition()).getGid(), SpinnerType.getSelectedItemPosition(), SpinnerStype.getSelectedItemPosition(), SpinnerModel.getSelectedItemPosition());
+                        adapter.notifyDataSetChanged();
                     }
                 });
                 dialog.show();
@@ -288,6 +313,7 @@ public class GrzbActivity extends AutoLayoutActivity implements View.OnClickList
                         Log.d("Date===", substring);
                         timetext2.setText(substring);
                         RetrofitService.getInstance().getAccountChangeList(GrzbActivity.this, 1, 100, "atid", "desc", timetext.getText().toString().trim(), formatDate, ListgameTypes.get(SpinnerGame.getSelectedItemPosition()).getGid(), SpinnerType.getSelectedItemPosition(), SpinnerStype.getSelectedItemPosition(), SpinnerModel.getSelectedItemPosition());
+                        adapter.notifyDataSetChanged();
                     }
                 });
                 dialog2.show();
@@ -313,6 +339,14 @@ public class GrzbActivity extends AutoLayoutActivity implements View.OnClickList
             SpinnerGame.setAdapter(adapter2);
             Game = ListgameTypes.get(SpinnerGame.getSelectedItemPosition()).getGid();
             initSpinnerSelect();
+        }
+        if (apiId == RetrofitService.API_ID_ACCOUNTCHANGE) {
+
+            if (object != null) {
+                acs = (List<List<AccountChange>>) object;
+                adapter.getList(acs.get(1));
+                ChangeAmount.setText("总计：" + acs.get(0).get(0).getAmountss() + "");
+            }
         }
     }
 

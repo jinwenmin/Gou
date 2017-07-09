@@ -17,6 +17,7 @@ import java.security.NoSuchAlgorithmException;
 import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
@@ -202,13 +203,19 @@ public interface ApiInterface {
     );
 
     //用户信息页面修改昵称
+    String[] str = new String[]{
+            "X-Requested-With: XMLHttpRequest",
+            "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"
+    };
+
     @Headers("X-Requested-With: XMLHttpRequest")
+    @FormUrlEncoded
     @POST("/profile-save")
     Call<RestultInfo> getNickNameChange(
-            @Query("AppClient") int num,
-            @Query("nickname") String nickname,//用户新昵称
-            @Query("reqkey") String reqkey,
-            @Query("t") long t
+            @Field("AppClient") int num,
+            @Field("nickname") String nickname,//用户新昵称
+            @Field("reqkey") String reqkey,
+            @Field("t") long t
     );
 
     //强制修改初始密码
@@ -679,7 +686,7 @@ public interface ApiInterface {
             @Query("to") String to,
             @Query("id") int id,
             @Query("rid") int rid,
-            @Query("status") String status,
+            @Query("status") int status,
                                     /*投注单状态
                                     -2：所有状态
                                     -1：未开奖
@@ -704,7 +711,6 @@ public interface ApiInterface {
             @Query("sord") String sord,
             @Query("from") String from,
             @Query("to") String to,
-            @Query("id") int id,
             @Query("gtype") int gtype,
                             /*查询类型
                             1：彩票娱乐场

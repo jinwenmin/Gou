@@ -353,6 +353,7 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
                 List<String> types = new ArrayList<>();
                 for (int i = 0; i < gameTypes2.size(); i++) {
                     types.add(gameTypes2.get(i).getName());
+                    Log.d("gameTypes2",gameTypes2.get(i).getName());
                 }
                 adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, types);
                 //第三步：为适配器设置下拉列表下拉时的菜单样式。

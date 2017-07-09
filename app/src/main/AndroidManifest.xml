@@ -79,7 +79,9 @@
         <activity android:name=".ui.settingfragment.SaveCardActivity" />
         <activity android:name=".ui.frmMyActivity.ChatUserActivity" />
         <activity android:name=".ui.gameAcVpFrms.ZhuiHaoDetailActivity" />
-        <activity android:name=".ui.gameAcVpFrms.ZhuiHaoTouZhuActivity"></activity>
+        <activity android:name=".ui.gameAcVpFrms.ZhuiHaoTouZhuActivity" />
+        <activity android:name=".ui.orderFrmActivity.AccountChangeDetailActivity" />
+        <activity android:name=".ui.orderFrmActivity.LotteryLossActivity"></activity>
     </application>
 
 </manifest>
