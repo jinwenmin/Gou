@@ -13,9 +13,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
-
-import com.android.volley.toolbox.Volley;
 import com.chaychan.viewlib.PowerfulEditText;
 import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
@@ -24,28 +21,21 @@ import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.ui.settingfragment.UpDateFirstPwdActivity;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
-
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.zhy.autolayout.AutoLayoutActivity;
-
-import org.json.JSONObject;
 
 import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import retrofit2.http.POST;
 
-public class LoginActivity extends AutoLayoutActivity implements HttpEngine.DataListener {
+public class LoginActivity extends AutoLayoutActivity implements HttpEngine.DataListener, View.OnClickListener {
     String rekey;
     @BindView(R.id.login_icon)
     ImageView loginIcon;
@@ -61,6 +51,8 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
     Button loginBtn;
     @BindView(R.id.forget_pwd)
     TextView forgetPwd;
+    @BindView(R.id.rigisterUser)
+    TextView rigisterUser;
     private String Login_UserName;
     private String Login_Pwd;
     Login login;
@@ -85,8 +77,13 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
 
             }
         });
+        initClick();
 
 
+    }
+
+    private void initClick() {
+        rigisterUser.setOnClickListener(this);
     }
 
     /*
@@ -257,6 +254,15 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
     @Override
     public void onRequestEnd(int apiId) {
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.rigisterUser:
+                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+                break;
+        }
     }
 
 

@@ -4,15 +4,20 @@ import android.accounts.Account;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.pm.LabeledIntent;
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.widget.ImageView;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.bean.AccountChange;
 import com.example.king.gou.bean.CunQu;
 import com.example.king.gou.bean.GameType;
 import com.example.king.gou.bean.Login;
 import com.example.king.gou.bean.LoginState;
+import com.example.king.gou.bean.LotteryLoss;
 import com.example.king.gou.bean.MapsIdAndValue;
 import com.example.king.gou.bean.RestultInfo;
 
@@ -40,6 +45,7 @@ import java.math.BigDecimal;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.URLDecoder;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -101,6 +107,9 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_CACEL = 26;//撤销投注单
     public static int API_ID_ACCOUNTCHANGE = 27;//个人账变记录
     public static int API_ID_RECHARGEDRAW = 28;//个人充提记录
+    public static int API_ID_PROFITLOSS = 29;//彩票盈亏
+    public static int API_ID_IMAGECHECK = 30;//获取验证图片信息
+
     private Retrofit retrofit;
     private ApiInterface apiInterface;
     String sessionLoginId;
@@ -1255,6 +1264,7 @@ public class RetrofitService extends HttpEngine {
         });
     }
 
+    //查询投注记录
     public void getBettingRecord(final DataListener listener, int page, int rows, String sidx, String sord, String from, String to, int id, int rid, int status, String rebuy, String period) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
@@ -1716,7 +1726,7 @@ public class RetrofitService extends HttpEngine {
     }
 
     //个人报表彩票盈亏
-    public void getProfitLossList(DataListener listener, int page, int rows, String sidx, String sord, String from, final String to, int gtype) {
+    public void getProfitLossList(final DataListener listener, int page, int rows, String sidx, String sord, String from, final String to, int gtype) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> maps = new HashMap<>();
         maps.put("page", page + "");
@@ -1735,16 +1745,41 @@ public class RetrofitService extends HttpEngine {
                 String s = response.body().toString();
                 Log.d("个人报表彩票盈亏", s);
                 String substring = s.substring(s.indexOf("records=") + 8, s.indexOf(".0, rows="));
+                List<List<LotteryLoss>> l = new ArrayList<List<LotteryLoss>>();
+                String substring1 = s.substring(s.indexOf(", userdata={"), s.length());
+                List<LotteryLoss> lotter1 = new ArrayList<LotteryLoss>();
+                LotteryLoss loss1 = new LotteryLoss();
+                String betting_amounts = substring1.substring(substring1.indexOf("betting_amount=") + 15, substring1.indexOf(", winning_amount"));
+                String winning_amounts = substring1.substring(substring1.indexOf("winning_amount=") + 15, substring1.length() - 2);
+                loss1.setBetting_amounts(Double.parseDouble(betting_amounts));
+                loss1.setWinning_amounts(Double.parseDouble(winning_amounts));
+                lotter1.add(loss1);
+                l.add(lotter1);
                 int record = Integer.parseInt(substring);
                 if (record != 0) {
                     String loss = s.substring(s.indexOf("rows=[") + 6, s.indexOf("], userdata"));
                     String[] los = loss.split(",");
-                    for (int i = 0; i < los.length; i++) {
+                    List<LotteryLoss> losses = new ArrayList<LotteryLoss>();
+                    for (int i = 0; i < los.length; i = i + 12) {
+                        LotteryLoss ls = new LotteryLoss();
                         Log.d("个人报表彩票盈亏Loss", los[i]);
+                        String id = los[i].substring(4, los[i].length());
+                        String uname = los[i + 1].substring(los[i + 1].indexOf("cell=[") + 6, los[i + 1].length());
+                        String betting_amount = los[i + 4];
+                        String rebate_amount = los[i + 5];
+                        String winning_amount = los[i + 6];
+                        String profit_loss = los[i + 9];
+                        ls.setBetting_amount(Double.parseDouble(betting_amount));
+                        ls.setRebate_amount(Double.parseDouble(rebate_amount));
+                        ls.setWinning_amount(Double.parseDouble(winning_amount));
+                        ls.setProfit_loss(Double.parseDouble(profit_loss));
+                        Log.d("个人报表彩票盈亏Bean", ls.toString());
+                        losses.add(ls);
                     }
+                    l.add(losses);
                 }
 
-
+                listener.onReceivedData(API_ID_PROFITLOSS, l, API_ID_ERROR);
             }
 
             @Override
@@ -1754,5 +1789,72 @@ public class RetrofitService extends HttpEngine {
         });
     }
 
+    //55 获取大数据投注内容
+    public void getGetMoreData(DataListener listener, int id) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> maps = new HashMap<>();
+        maps.put("id", id + "");
+        String reqkey = RxUtils.getInstance().getReqkey(maps, currentTimeMillis);
+        Call<Object> getMoreData = apiInterface.getGetMoreData(1, id, reqkey, currentTimeMillis);
+        Call<Object> clone = getMoreData.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("获取大数据投注内容", response.body().toString());
+            }
 
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+    //获取验证码图片
+    public void getCaptCha(final DataListener listener, long t) {
+
+        Map<String, String> maps = new HashMap<>();
+        maps.put("t", t + "");
+        String reqkey = RxUtils.getInstance().getReqkey(maps, t);
+        Call<Object> captCha = apiInterface.getCaptCha(1, t, reqkey, t);
+        Call<Object> clone = captCha.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                //    ImageView img= (ImageView) response.body();
+                //    Bitmap bitmap = RxUtils.getInstance().stringtoBitmap(response.body().toString());
+                Log.d("获取验证码图片", response.body().toString());
+                listener.onReceivedData(API_ID_IMAGECHECK, response.body().toString(), API_ID_ERROR);
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Log.d("获取验证码图片Error", t.toString());
+            }
+        });
+    }
+
+    //验证码校验
+    public void getCaptChaCheck(DataListener listener, String u, String c) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> maps = new HashMap<>();
+        maps.put("u", u);
+        maps.put("c", c);
+        String reqkey = RxUtils.getInstance().getReqkey(maps, currentTimeMillis);
+        Call<Object> captChaCheck = apiInterface.getCaptChaCheck(1, u, c, reqkey, currentTimeMillis);
+        Call<Object> clone = captChaCheck.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("验证码校验", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
 }

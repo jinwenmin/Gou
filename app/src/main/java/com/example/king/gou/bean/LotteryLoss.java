@@ -10,6 +10,8 @@ public class LotteryLoss {
     double winning_amount;
     int type;
     double betting_amounts;
+    double rebate_amount;
+    double profit_loss;
 
     @Override
     public String toString() {
@@ -19,8 +21,26 @@ public class LotteryLoss {
                 ", winning_amount=" + winning_amount +
                 ", type=" + type +
                 ", betting_amounts=" + betting_amounts +
+                ", rebate_amount=" + rebate_amount +
+                ", profit_loss=" + profit_loss +
                 ", winning_amounts=" + winning_amounts +
                 '}';
+    }
+
+    public double getProfit_loss() {
+        return profit_loss;
+    }
+
+    public void setProfit_loss(double profit_loss) {
+        this.profit_loss = profit_loss;
+    }
+
+    public double getRebate_amount() {
+        return rebate_amount;
+    }
+
+    public void setRebate_amount(double rebate_amount) {
+        this.rebate_amount = rebate_amount;
     }
 
     public String getUname() {

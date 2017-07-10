@@ -81,7 +81,8 @@
         <activity android:name=".ui.gameAcVpFrms.ZhuiHaoDetailActivity" />
         <activity android:name=".ui.gameAcVpFrms.ZhuiHaoTouZhuActivity" />
         <activity android:name=".ui.orderFrmActivity.AccountChangeDetailActivity" />
-        <activity android:name=".ui.orderFrmActivity.LotteryLossActivity"></activity>
+        <activity android:name=".ui.orderFrmActivity.LotteryLossActivity" />
+        <activity android:name=".ui.RegisterActivity"></activity>
     </application>
 
 </manifest>

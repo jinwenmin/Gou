@@ -1,6 +1,9 @@
 package com.example.king.gou.utils;
 
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.text.TextUtils;
+import android.widget.ImageView;
 
 import com.example.king.gou.bean.Login;
 import com.example.king.gou.bean.LoginState;
@@ -11,6 +14,7 @@ import com.example.king.gou.bean.UserAmount;
 import com.example.king.gou.bean.UserInfo;
 
 import java.math.BigDecimal;
+import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -722,12 +726,36 @@ public interface ApiInterface {
 
     //55 获取大数据投注内容
     @Headers("X-Requested-With: XMLHttpRequest")
-    @POST("/get-data?id={id}")
+    @POST("/get-data")
     Call<Object> getGetMoreData(
             @Query("AppClient") int num,
-            @Path("id") int id,//id为投注单bid
+            @Query("id") int id,//id为投注单bid
             @Query("reqkey") String reqkey,
             @Query("t") long t
     );
+
+
+    //57 获取验证码图片
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @GET("/captcha")
+    Call<Object> getCaptCha(
+            @Query("AppClient") int num,
+            @Query("t") long t1,//时间戳，用于防止验证码图片缓存
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+//
+
+    //58 验证码校验
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @GET("/captcha-check")
+    Call<Object> getCaptChaCheck(
+            @Query("AppClient") int num,
+            @Query("u") String u,//用户名(如果有，主要用于获取预保留验证信息)
+            @Query("c") String c,//4位验证码
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+//
 
 }

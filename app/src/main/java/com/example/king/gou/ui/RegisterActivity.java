@@ -1,0 +1,150 @@
+package com.example.king.gou.ui;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+
+import com.example.king.gou.R;
+import com.example.king.gou.service.RetrofitService;
+import com.example.king.gou.utils.ApiInterface;
+import com.example.king.gou.utils.HttpEngine;
+import com.example.king.gou.utils.RxUtils;
+import com.zhy.autolayout.AutoLayoutActivity;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
+import it.sephiroth.android.library.picasso.Picasso;
+
+
+public class RegisterActivity extends AutoLayoutActivity implements HttpEngine.DataListener, View.OnClickListener {
+
+    @BindView(R.id.img)
+    LinearLayout img;
+    @BindView(R.id._back)
+    ImageView Back;
+    @BindView(R.id.RegisterTop)
+    RelativeLayout RegisterTop;
+    @BindView(R.id.Name)
+    EditText Name;
+    @BindView(R.id.UserNickName)
+    EditText UserNickName;
+    @BindView(R.id.NewPwd)
+    EditText NewPwd;
+    @BindView(R.id.CheckPwd)
+    EditText CheckPwd;
+    @BindView(R.id.TopCode)
+    EditText TopCode;
+    @BindView(R.id.YZMCheck)
+    EditText YZMCheck;
+    @BindView(R.id.ImageYZM)
+    ImageView ImageYZM;
+    @BindView(R.id.UpdataYZM)
+    Button UpdataYZM;
+    @BindView(R.id.SingUpId)
+    Button SingUpId;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_register);
+        ButterKnife.bind(this);
+        initClick();
+        initYZM();
+        //RetrofitService.getInstance().getCaptCha(this, currentTimeMillis);
+    }
+
+    private void initClick() {
+        Back.setOnClickListener(this);
+        UpdataYZM.setOnClickListener(this);
+        SingUpId.setOnClickListener(this);
+    }
+
+    private void initYZM() {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> maps = new HashMap<>();
+        maps.put("t", currentTimeMillis + "");
+        String reqkey = RxUtils.getInstance().getReqkey(maps, currentTimeMillis);
+        String url = ApiInterface.HOST + "/captcha?AppClient=1&reqkey=" + reqkey + "&t=" + currentTimeMillis + "&t=" + currentTimeMillis;
+        Picasso.with(this).load(url).into(ImageYZM);
+    }
+
+    @Override
+    public void onReceivedData(int apiId, Object object, int errorId) {
+        if (apiId == RetrofitService.API_ID_IMAGECHECK) {
+            String imgs = (String) object;
+            //  img.addView(imgs);
+            ImageView imageView = new ImageView(this);
+            Picasso.with(this).load("http://vipfacaiflvbceshi.com/captcha?AppClient=1&reqkey=3fdd55a4c912988c3d62dffc962b0b0b&t=1499673696909&t=1499673690991").into(imageView);
+            img.addView(imageView);
+        }
+    }
+
+    @Override
+    public void onRequestStart(int apiId) {
+
+    }
+
+    @Override
+    public void onRequestEnd(int apiId) {
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.UpdataYZM:
+                initYZM();
+                break;
+            case R.id._back:
+                finish();
+                break;
+            case R.id.SingUpId:
+                String name = Name.getText().toString();
+                String newpwd = NewPwd.getText().toString().trim();
+                String userNickname = UserNickName.getText().toString().trim();
+                String checkPwd = CheckPwd.getText().toString().trim();
+                String yzmCheck = YZMCheck.getText().toString().trim();
+                String topcode = TopCode.getText().toString().trim();
+                if ("".equals(name)) {
+                    Toasty.error(RegisterActivity.this, "用户名不可为空", 2000).show();
+                    return;
+                }
+                if ("".equals(newpwd)) {
+                    Toasty.error(RegisterActivity.this, "密码不可为空", 2000).show();
+                    return;
+                }
+                if ("".equals(checkPwd)) {
+                    Toasty.error(RegisterActivity.this, "确认密码不可为空", 2000).show();
+                    return;
+                }
+                if ("".equals(userNickname)) {
+                    Toasty.error(RegisterActivity.this, "用户昵称不可为空", 2000).show();
+                    return;
+                }
+                if ("".equals(yzmCheck)) {
+                    Toasty.error(RegisterActivity.this, "验证码不可为空", 2000).show();
+                    return;
+                }
+                if ("".equals(topcode)) {
+                    Toasty.error(RegisterActivity.this, "上级推广码不可为空", 2000).show();
+                    return;
+                }
+                if (!newpwd.equals(checkPwd)) {
+                    Toasty.error(RegisterActivity.this, "密码和确认密码不一致", 2000).show();
+                    return;
+                }
+                RetrofitService.getInstance().getCaptChaCheck(RegisterActivity.this, "", yzmCheck);
+                break;
+
+        }
+
+    }
+}

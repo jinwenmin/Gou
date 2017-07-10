@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -14,6 +16,8 @@ import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnSureLisener;
 import com.codbking.widget.bean.DateType;
 import com.example.king.gou.R;
+import com.example.king.gou.adapters.ProfitLossAdapter;
+import com.example.king.gou.bean.LotteryLoss;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
@@ -49,13 +53,25 @@ public class LotteryLossActivity extends AutoLayoutActivity implements View.OnCl
     RelativeLayout relateBank3;
     String date1;
     String date2;
+    @BindView(R.id.Expend)
+    TextView Expend;
+    @BindView(R.id.InCome)
+    TextView InCome;
+    @BindView(R.id.Linear1)
+    LinearLayout Linear1;
+    @BindView(R.id.LotteryLossListView)
+    ListView LotteryLossListView;
     private ArrayAdapter<String> adapter;
+    ProfitLossAdapter profitLossAdapter;
+    List<List<LotteryLoss>> losses = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lottery_loss);
         ButterKnife.bind(this);
+        profitLossAdapter = new ProfitLossAdapter(this);
+        LotteryLossListView.setAdapter(profitLossAdapter);
         initDateDialog();
         initClick();
         initSpinner();
@@ -136,7 +152,7 @@ public class LotteryLossActivity extends AutoLayoutActivity implements View.OnCl
                         String substring = formatDate.substring(0, 10);
                         Log.d("Date===", substring);
                         timetext.setText(substring);
-                        RetrofitService.getInstance().getProfitLossList(LotteryLossActivity.this, 1, 100, "betting_amount", "desc",  timetext.getText().toString().trim(), timetext2.getText().toString().trim(), SpinnerGtype.getSelectedItemPosition());
+                        RetrofitService.getInstance().getProfitLossList(LotteryLossActivity.this, 1, 100, "betting_amount", "desc", timetext.getText().toString().trim(), timetext2.getText().toString().trim(), SpinnerGtype.getSelectedItemPosition());
                     }
                 });
                 dialog.show();
@@ -175,7 +191,16 @@ public class LotteryLossActivity extends AutoLayoutActivity implements View.OnCl
 
     @Override
     public void onReceivedData(int apiId, Object object, int errorId) {
-
+        if (apiId == RetrofitService.API_ID_PROFITLOSS) {
+            losses = (List<List<LotteryLoss>>) object;
+            List<LotteryLoss> lotteryLosses = losses.get(0);
+            InCome.setText(lotteryLosses.get(0).getWinning_amounts() + "");
+            Expend.setText(lotteryLosses.get(0).getBetting_amounts() + "");
+            if (losses.size() == 2) {
+                List<LotteryLoss> lotteryLosses1 = losses.get(1);
+                profitLossAdapter.getList(lotteryLosses1);
+            }
+        }
     }
 
     @Override
@@ -187,4 +212,6 @@ public class LotteryLossActivity extends AutoLayoutActivity implements View.OnCl
     public void onRequestEnd(int apiId) {
 
     }
+
+
 }
