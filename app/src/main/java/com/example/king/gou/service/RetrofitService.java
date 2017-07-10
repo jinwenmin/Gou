@@ -34,6 +34,7 @@ import com.example.king.gou.utils.ReceivedCookiesInterceptor;
 import com.example.king.gou.utils.RxUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.squareup.okhttp.ResponseBody;
 
 
 import org.json.JSONArray;
@@ -56,6 +57,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
+import it.sephiroth.android.library.picasso.Picasso;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -68,6 +70,7 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.Query;
 
 import static com.example.king.gou.ui.LoginActivity.getSessionCookie;
@@ -109,6 +112,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_RECHARGEDRAW = 28;//个人充提记录
     public static int API_ID_PROFITLOSS = 29;//彩票盈亏
     public static int API_ID_IMAGECHECK = 30;//获取验证图片信息
+    public static int API_ID_TEAMCQ = 31;//团队充提记录
 
     private Retrofit retrofit;
     private ApiInterface apiInterface;
@@ -1818,15 +1822,23 @@ public class RetrofitService extends HttpEngine {
         Map<String, String> maps = new HashMap<>();
         maps.put("t", t + "");
         String reqkey = RxUtils.getInstance().getReqkey(maps, t);
-        Call<Object> captCha = apiInterface.getCaptCha(1, t, reqkey, t);
+        Call<Object> captCha = apiInterface.getCaptCha(t);
+        String s = captCha.request().toString();
+        String yzm = s.substring(s.indexOf("url=") + 4, s.indexOf(", tag="));
+        ImageView imageView = new ImageView(MyApp.getInstance().getContext());
+        Picasso.with(MyApp.getInstance().getContext()).load(yzm).into(imageView);
+        Log.d("获取验证码的完全请求体", s);
         Call<Object> clone = captCha.clone();
+
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+
                 //    ImageView img= (ImageView) response.body();
                 //    Bitmap bitmap = RxUtils.getInstance().stringtoBitmap(response.body().toString());
                 Log.d("获取验证码图片", response.body().toString());
                 listener.onReceivedData(API_ID_IMAGECHECK, response.body().toString(), API_ID_ERROR);
+                //
             }
 
             @Override
@@ -1848,7 +1860,88 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                int code = response.code();
+                sessionLoginId = getSessionCookie(response.headers().get("Set-Cookie"));
+                System.out.println("验证码校验Cookie==" + sessionLoginId);
+                Gson gson = new GsonBuilder().setLenient().create();
+                Log.d("验证码校验Code", code + "");
                 Log.d("验证码校验", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    //52 个人报表充提记录
+    public void getTeamReChargeWithDrawList(final DataListener listener, int page, int rows, String sidx, String sord, String from, final String to, String name, int type, int team) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("page", page + "");
+        map.put("rows", rows + "");
+        map.put("sidx", sidx + "");
+        map.put("sord", sord + "");
+        map.put("from", from + "");
+        map.put("to", to + "");
+        map.put("name", name + "");
+        map.put("type", type + "");
+        map.put("team", team + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> reChargeWithDrawList = apiInterface.getTeamReChargeWithDrawList(1, page, rows, sidx, sord, from, to, name, type, team, reqkey, currentTimeMillis);
+        Call<Object> clone = reChargeWithDrawList.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                String s = response.body().toString();
+                Log.d("团队报表充提记录", s);
+                List<List<CunQu>> cqs = new ArrayList<List<CunQu>>();
+                List<CunQu> ccs = new ArrayList<CunQu>();
+                String incomes = s.substring(s.indexOf("userdata={income=") + 17, s.indexOf(", expend"));
+                String expends = s.substring(s.indexOf("expend=") + 7, s.indexOf(", serial_number="));
+                CunQu c = new CunQu();
+                c.setIncomes(Double.parseDouble(incomes));
+                c.setExpengs(Double.parseDouble(expends));
+                ccs.add(c);
+                cqs.add(ccs);
+                String Records = s.substring(s.indexOf("records=") + 8, s.indexOf(".0, rows="));
+                int i1 = Integer.parseInt(Records);
+                String substring = s.substring(s.indexOf("rows=[") + 6, s.indexOf("], userdata="));
+                if (i1 > 0) {
+                    //String substring1 = substring.substring(substring.indexOf("id=") + 3, substring.indexOf(", cell="));
+                    String[] ss = substring.split(", ");
+                    List<CunQu> cs = new ArrayList<CunQu>();
+                    for (int i = 0; i < ss.length; i = i + 10) {
+                        Log.d("团队报表充提记录Split==", ss[i]);
+                        CunQu cunQu = new CunQu();
+                        String id = ss[i].substring(4, ss[i].length());
+                        String serial_number = ss[i + 1].substring(6, ss[i + 1].length());
+                        String uname = ss[i + 2];
+                        String date = ss[i + 3];
+                        String stype = ss[i + 4];
+                        String income = ss[i + 5];
+                        String expend = ss[i + 6];
+                        String amount = ss[i + 7];
+                        String status = ss[i + 8];
+                        String detial = ss[i + 9];
+                        cunQu.setId(Integer.parseInt(id));
+                        cunQu.setSerial_number(serial_number);
+                        cunQu.setUname(uname);
+                        cunQu.setDate(date);
+                        cunQu.setStype(Integer.parseInt(stype));
+                        cunQu.setIncome(Double.parseDouble(income));
+                        cunQu.setExpend(Double.parseDouble(expend));
+                        cunQu.setAmount(Double.parseDouble(amount));
+                        cunQu.setStatus(Integer.parseInt(status));
+                        cunQu.setDetial(detial);
+                        cs.add(cunQu);
+                    }
+                    cqs.add(cs);
+                    listener.onReceivedData(API_ID_TEAMCQ, cqs, API_ID_ERROR);
+                }
+
             }
 
             @Override

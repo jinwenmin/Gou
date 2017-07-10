@@ -1,5 +1,6 @@
 package com.example.king.gou.ui;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -57,8 +58,7 @@ public class RegisterActivity extends AutoLayoutActivity implements HttpEngine.D
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
         initClick();
-        initYZM();
-        //RetrofitService.getInstance().getCaptCha(this, currentTimeMillis);
+       initYZM();
     }
 
     private void initClick() {
@@ -68,22 +68,27 @@ public class RegisterActivity extends AutoLayoutActivity implements HttpEngine.D
     }
 
     private void initYZM() {
-        long currentTimeMillis = System.currentTimeMillis();
+      /*  long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> maps = new HashMap<>();
         maps.put("t", currentTimeMillis + "");
         String reqkey = RxUtils.getInstance().getReqkey(maps, currentTimeMillis);
         String url = ApiInterface.HOST + "/captcha?AppClient=1&reqkey=" + reqkey + "&t=" + currentTimeMillis + "&t=" + currentTimeMillis;
-        Picasso.with(this).load(url).into(ImageYZM);
+        Picasso.with(this).load(url).into(ImageYZM);*/
+        long currentTimeMillis = System.currentTimeMillis();
+        RetrofitService.getInstance().getCaptCha(this, currentTimeMillis);
+        ImageView imgs = new ImageView(this);
+        Picasso.with(this).load(ApiInterface.HOST+"/captcha?t="+currentTimeMillis).into(imgs);
+   //     ImageYZM.addView(imgs);
+
     }
 
     @Override
     public void onReceivedData(int apiId, Object object, int errorId) {
         if (apiId == RetrofitService.API_ID_IMAGECHECK) {
             String imgs = (String) object;
-            //  img.addView(imgs);
-            ImageView imageView = new ImageView(this);
-            Picasso.with(this).load("http://vipfacaiflvbceshi.com/captcha?AppClient=1&reqkey=3fdd55a4c912988c3d62dffc962b0b0b&t=1499673696909&t=1499673690991").into(imageView);
-            img.addView(imageView);
+           //ImageYZM.addView(imgs);
+           Picasso.with(this).load(imgs).into(ImageYZM);
+
         }
     }
 
@@ -101,7 +106,7 @@ public class RegisterActivity extends AutoLayoutActivity implements HttpEngine.D
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.UpdataYZM:
-                initYZM();
+               initYZM();
                 break;
             case R.id._back:
                 finish();

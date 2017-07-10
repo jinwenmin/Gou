@@ -379,7 +379,7 @@ public interface ApiInterface {
 
     //修改安全密码
     @Headers("X-Requested-With: XMLHttpRequest")
-    @POST("/password-manage-save")
+    @POST("/security-password-save")
     Call<RestultInfo> getUpDataSafePwd(
             @Query("AppClient") int num,
             @Query("p0") String p0,//原安全密码，加密方式同登录密码
@@ -739,16 +739,15 @@ public interface ApiInterface {
     @Headers("X-Requested-With: XMLHttpRequest")
     @GET("/captcha")
     Call<Object> getCaptCha(
-            @Query("AppClient") int num,
-            @Query("t") long t1,//时间戳，用于防止验证码图片缓存
-            @Query("reqkey") String reqkey,
-            @Query("t") long t
+
+            @Query("t") long t1//时间戳，用于防止验证码图片缓存
+
     );
 //
 
     //58 验证码校验
     @Headers("X-Requested-With: XMLHttpRequest")
-    @GET("/captcha-check")
+    @POST("/captcha-check")
     Call<Object> getCaptChaCheck(
             @Query("AppClient") int num,
             @Query("u") String u,//用户名(如果有，主要用于获取预保留验证信息)
@@ -756,6 +755,24 @@ public interface ApiInterface {
             @Query("reqkey") String reqkey,
             @Query("t") long t
     );
-//
+    //51 个人报表充提记录
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/recharge-withdraw-list")
+    Call<Object> getTeamReChargeWithDrawList(
+            @Query("AppClient") int num,
+            @Query("page") int page,
+            @Query("rows") int rows,
+            @Query("sidx") String sidx,
+            @Query("sord") String sord,
+            @Query("from") String from,
+            @Query("to") String to,
+            @Query("name") String name,
+
+            @Query("type") int type,
+            @Query("team") int team,
+
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
 
 }
