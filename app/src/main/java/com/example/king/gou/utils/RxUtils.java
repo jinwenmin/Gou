@@ -6,7 +6,11 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.ref.SoftReference;
 import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
@@ -180,6 +184,31 @@ public class RxUtils {
 
         return url;
     }
+
+    public  Bitmap byteToBitmap(byte[] imgByte) {
+        InputStream input = null;
+        Bitmap bitmap = null;
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 8;
+        input = new ByteArrayInputStream(imgByte);
+        SoftReference softRef = new SoftReference(BitmapFactory.decodeStream(
+                input, null, options));
+        bitmap = (Bitmap) softRef.get();
+        if (imgByte != null) {
+            imgByte = null;
+        }
+
+        try {
+            if (input != null) {
+                input.close();
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
+
     public String getReqkey(Map<String, String> map, long currentTimeMillis) {
 
         String str = "AppClient=1";

@@ -130,6 +130,8 @@ public class CunQuActivity extends AutoLayoutActivity implements View.OnClickLis
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 RetrofitService.getInstance().getReChargeWithDrawList(CunQuActivity.this, 1, 100, "atid", "desc", timetext.getText().toString().trim(), timetext2.getText().toString().trim(), ids.get(i));
+                List<CunQu> c = new ArrayList<CunQu>();
+                rechargeDrawAdapter.getList(c);
             }
 
             @Override
@@ -221,6 +223,7 @@ public class CunQuActivity extends AutoLayoutActivity implements View.OnClickLis
                         Log.d("Date===", substring);
                         timetext2.setText(substring);
                         RetrofitService.getInstance().getReChargeWithDrawList(CunQuActivity.this, 1, 100, "atid", "desc", timetext.getText().toString().trim(), formatDate, ids.get(SpinnerType.getSelectedItemPosition()));
+
                     }
                 });
                 dialog2.show();

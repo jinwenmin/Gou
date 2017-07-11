@@ -1,5 +1,6 @@
 package com.example.king.gou.ui;
 
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
@@ -85,9 +86,10 @@ public class RegisterActivity extends AutoLayoutActivity implements HttpEngine.D
     @Override
     public void onReceivedData(int apiId, Object object, int errorId) {
         if (apiId == RetrofitService.API_ID_IMAGECHECK) {
-            String imgs = (String) object;
+            Bitmap imgs = (Bitmap) object;
            //ImageYZM.addView(imgs);
-           Picasso.with(this).load(imgs).into(ImageYZM);
+          // Picasso.with(this).load(imgs).into(ImageYZM);
+            ImageYZM.setImageBitmap(imgs);
 
         }
     }
@@ -134,10 +136,10 @@ public class RegisterActivity extends AutoLayoutActivity implements HttpEngine.D
                     Toasty.error(RegisterActivity.this, "用户昵称不可为空", 2000).show();
                     return;
                 }
-                if ("".equals(yzmCheck)) {
+                /*if ("".equals(yzmCheck)) {
                     Toasty.error(RegisterActivity.this, "验证码不可为空", 2000).show();
                     return;
-                }
+                }*/
                 if ("".equals(topcode)) {
                     Toasty.error(RegisterActivity.this, "上级推广码不可为空", 2000).show();
                     return;

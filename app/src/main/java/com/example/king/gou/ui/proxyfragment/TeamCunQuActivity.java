@@ -156,6 +156,7 @@ public class TeamCunQuActivity extends AutoLayoutActivity implements View.OnClic
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 RetrofitService.getInstance().getTeamReChargeWithDrawList(TeamCunQuActivity.this, 1, 100, "atid", "desc", TeamCunQutimetext.getText().toString().trim(), TeamCunQutimetext2.getText().toString().trim(), UserName.getText().toString().trim(), ids.get(i), teamid.get(Spinnerteam.getSelectedItemPosition()));
+
             }
 
             @Override
@@ -307,8 +308,11 @@ public class TeamCunQuActivity extends AutoLayoutActivity implements View.OnClic
                 cq = (List<List<CunQu>>) object;
                 InCome.setText(cq.get(0).get(0).getIncomes() + "");
                 Expend.setText(cq.get(0).get(0).getExpengs() + "");
-                rechargeDrawAdapter.getList(cq.get(1));
+                if (cq.size()>1) {
+                    rechargeDrawAdapter.getList(cq.get(1));
+                }
             }
+            CunQuListView.setAdapter(rechargeDrawAdapter);
         }
     }
 

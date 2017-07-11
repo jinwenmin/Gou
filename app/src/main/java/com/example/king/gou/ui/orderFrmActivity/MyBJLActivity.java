@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,51 +25,36 @@ import es.dmoral.toasty.Toasty;
 
 public class MyBJLActivity extends AutoLayoutActivity implements View.OnClickListener {
 
+
     @BindView(R.id._back)
     ImageView Back;
-    @BindView(R.id.MyBJLTop)
-    RelativeLayout MyBJLTop;
-    @BindView(R.id.MyBJLtimetext)
-    TextView MyBJLtimetext;
-    @BindView(R.id.MyBJLrelateTime1)
-    RelativeLayout MyBJLrelateTime1;
-    @BindView(R.id.MyBJLtimetext2)
-    TextView MyBJLtimetext2;
-    @BindView(R.id.MyBJLrelateTime2)
-    RelativeLayout MyBJLrelateTime2;
-    @BindView(R.id.MyBJLtimetext4)
-    TextView MyBJLtimetext4;
-    @BindView(R.id.MyBJLgameLotteryType4)
-    Spinner MyBJLgameLotteryType4;
-    @BindView(R.id.MyBJLrelateBank4)
-    RelativeLayout MyBJLrelateBank4;
-    @BindView(R.id.MyBJLtimetext3)
-    TextView MyBJLtimetext3;
-    @BindView(R.id.MyBJLgameLotteryType)
-    Spinner MyBJLgameLotteryType;
-    @BindView(R.id.MyBJLrelateBank3)
-    RelativeLayout MyBJLrelateBank3;
-    @BindView(R.id.MyBJLtimetext5)
-    TextView MyBJLtimetext5;
-    @BindView(R.id.MyBJLgameLotteryType2)
-    Spinner MyBJLgameLotteryType2;
-    @BindView(R.id.MyBJLrelateBank5)
-    RelativeLayout MyBJLrelateBank5;
+    @BindView(R.id.ActivityListTop)
+    RelativeLayout ActivityListTop;
+    @BindView(R.id.ActivityListtimetext)
+    TextView ActivityListtimetext;
+    @BindView(R.id.ActivityListrelateTime1)
+    RelativeLayout ActivityListrelateTime1;
+    @BindView(R.id.ActivityListtimetext2)
+    TextView ActivityListtimetext2;
+    @BindView(R.id.ActivityListrelateTime2)
+    RelativeLayout ActivityListrelateTime2;
+    @BindView(R.id.ActivityListrelateBank4)
+    RelativeLayout ActivityListrelateBank4;
     private DatePickerDialog datePickerDialog;
     private DatePickerDialog datePickerDialog2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_bjl);
+        setContentView(R.layout.activity_list);
         ButterKnife.bind(this);
         initClick();
         initDateDialog();
     }
 
     private void initClick() {
-        MyBJLrelateTime1.setOnClickListener(this);
-        MyBJLrelateTime2.setOnClickListener(this);
+        ActivityListrelateTime1.setOnClickListener(this);
+        ActivityListrelateTime2.setOnClickListener(this);
         Back.setOnClickListener(this);
     }
 
@@ -82,7 +66,7 @@ public class MyBJLActivity extends AutoLayoutActivity implements View.OnClickLis
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH) + 1;
         day = calendar.get(Calendar.DAY_OF_MONTH);
-        MyBJLtimetext.setText(year + "-" + month + "-" + day);
+        ActivityListtimetext.setText(year + "-" + month + "-" + day);
         //获取当前所有的毫秒数
         long times = System.currentTimeMillis();
         //加上一天的毫秒数就是明天的时间
@@ -91,37 +75,7 @@ public class MyBJLActivity extends AutoLayoutActivity implements View.OnClickLis
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println();
         Log.e("times", sdf.format(date));
-        MyBJLtimetext2.setText(sdf.format(date));
-        //第一个日期选择器
-        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                MyBJLtimetext.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
-                Long getdaytime = DateUtil.getInstance().toDate(year + "-" + (month + 1) + "-" + dayOfMonth) / 1000;
-                //第二个日期的时间
-                long l2 = DateUtil.getInstance().toDate(MyBJLtimetext2.getText().toString()) / 1000;
-                //第一个日期的时间
-                long l1 = DateUtil.getInstance().toDate(MyBJLtimetext.getText().toString()) / 1000;
-                if (l2 - l1 > 864000) {
-                    Toasty.warning(getApplicationContext(), "你的选择期限超过了10天", Toast.LENGTH_SHORT, true).show();
-                }
-                Log.e("现在时长", l2 + "  " + l1);
-            }
-        }, year, month, day);
-        //第二个日期选择器
-        datePickerDialog2 = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                MyBJLtimetext2.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
-                //第二个日期的时间
-                long l2 = DateUtil.getInstance().toDate(MyBJLtimetext2.getText().toString()) / 1000;
-                //第一个日期的时间
-                long l1 = DateUtil.getInstance().toDate(MyBJLtimetext.getText().toString()) / 1000;
-                if (l2 - l1 > 864000) {
-                    Toasty.warning(getApplicationContext(), "你的选择期限超过了10天", Toast.LENGTH_SHORT, true).show();
-                }
-            }
-        }, year, month, day);
+        ActivityListtimetext2.setText(sdf.format(date));
 
     }
 

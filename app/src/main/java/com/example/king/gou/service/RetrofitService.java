@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.pm.LabeledIntent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.AsyncTask;
 import android.provider.ContactsContract;
@@ -40,6 +41,7 @@ import com.squareup.okhttp.ResponseBody;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -58,6 +60,7 @@ import io.reactivex.ObservableSource;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 import it.sephiroth.android.library.picasso.Picasso;
+import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -113,7 +116,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_PROFITLOSS = 29;//彩票盈亏
     public static int API_ID_IMAGECHECK = 30;//获取验证图片信息
     public static int API_ID_TEAMCQ = 31;//团队充提记录
-
+    public static int API_ID_TEAMACCOUNTCHANGE = 32;//团队账变记录
     private Retrofit retrofit;
     private ApiInterface apiInterface;
     String sessionLoginId;
@@ -1746,6 +1749,8 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Headers headers = response.headers();
+
                 String s = response.body().toString();
                 Log.d("个人报表彩票盈亏", s);
                 String substring = s.substring(s.indexOf("records=") + 8, s.indexOf(".0, rows="));
@@ -1818,26 +1823,55 @@ public class RetrofitService extends HttpEngine {
 
     //获取验证码图片
     public void getCaptCha(final DataListener listener, long t) {
+        String httpUrl = ApiInterface.HOST + "/captcha?t=" + t;
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(httpUrl).get().build();
 
+        client.newCall(request).enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(okhttp3.Call call, IOException e) {
+                Log.d("Alex", "okhttp失败", e);
+                System.out.println("Alex" + "okhttp失败" + e.toString());
+
+
+            }
+
+            @Override
+            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+                System.out.println("Alex" + "okhttp成功" + response.body().string());
+                Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
+                System.out.println("Alex" + bitmap.toString());
+                // Log.d("Alex","okhttp成功"+response.body().string());
+                // Log.d("Alex",bitmap.toString());
+                listener.onReceivedData(API_ID_IMAGECHECK, bitmap, API_ID_ERROR);
+            }
+        });
         Map<String, String> maps = new HashMap<>();
         maps.put("t", t + "");
         String reqkey = RxUtils.getInstance().getReqkey(maps, t);
         Call<Object> captCha = apiInterface.getCaptCha(t);
         String s = captCha.request().toString();
+        String s1 = captCha.request().headers().toString();
         String yzm = s.substring(s.indexOf("url=") + 4, s.indexOf(", tag="));
         ImageView imageView = new ImageView(MyApp.getInstance().getContext());
         Picasso.with(MyApp.getInstance().getContext()).load(yzm).into(imageView);
         Log.d("获取验证码的完全请求体", s);
         Call<Object> clone = captCha.clone();
-
+/*
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
 
+                String s1 = response.body().toString();
+                byte[] ss = s1.getBytes();
+                Bitmap  bitmap =BitmapFactory.decodeStream(response.body().byteStream());
+                Headers headers = response.headers();
+                Log.d("获取验证码的完全请求体", headers + "");
+                Log.d("获取验证码的完全请求体BitMap", bitmap + "");
                 //    ImageView img= (ImageView) response.body();
                 //    Bitmap bitmap = RxUtils.getInstance().stringtoBitmap(response.body().toString());
                 Log.d("获取验证码图片", response.body().toString());
-                listener.onReceivedData(API_ID_IMAGECHECK, response.body().toString(), API_ID_ERROR);
+                listener.onReceivedData(API_ID_IMAGECHECK, response.body(), API_ID_ERROR);
                 //
             }
 
@@ -1845,7 +1879,7 @@ public class RetrofitService extends HttpEngine {
             public void onFailure(Call<Object> call, Throwable t) {
                 Log.d("获取验证码图片Error", t.toString());
             }
-        });
+        });*/
     }
 
     //验证码校验
@@ -1909,10 +1943,10 @@ public class RetrofitService extends HttpEngine {
                 String Records = s.substring(s.indexOf("records=") + 8, s.indexOf(".0, rows="));
                 int i1 = Integer.parseInt(Records);
                 String substring = s.substring(s.indexOf("rows=[") + 6, s.indexOf("], userdata="));
+                List<CunQu> cs = new ArrayList<CunQu>();
                 if (i1 > 0) {
                     //String substring1 = substring.substring(substring.indexOf("id=") + 3, substring.indexOf(", cell="));
                     String[] ss = substring.split(", ");
-                    List<CunQu> cs = new ArrayList<CunQu>();
                     for (int i = 0; i < ss.length; i = i + 10) {
                         Log.d("团队报表充提记录Split==", ss[i]);
                         CunQu cunQu = new CunQu();
@@ -1939,8 +1973,8 @@ public class RetrofitService extends HttpEngine {
                         cs.add(cunQu);
                     }
                     cqs.add(cs);
-                    listener.onReceivedData(API_ID_TEAMCQ, cqs, API_ID_ERROR);
                 }
+                listener.onReceivedData(API_ID_TEAMCQ, cqs, API_ID_ERROR);
 
             }
 
@@ -1949,5 +1983,132 @@ public class RetrofitService extends HttpEngine {
 
             }
         });
+    }
+
+    //查询团队报表彩票帐变
+    public void getTeamAccountChangeList(final DataListener listener, int page, int rows, String sidx, String sord, String from, final String to, int id, String name, int type, int stype, int model) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> maps = new HashMap<>();
+        maps.put("page", page + "");
+        maps.put("rows", rows + "");
+        maps.put("sidx", sidx + "");
+        maps.put("sord", sord + "");
+        maps.put("from", from + "");
+        maps.put("to", to + "");
+        maps.put("id", id + "");
+        maps.put("name", name + "");
+        maps.put("type", type + "");
+        maps.put("stype", stype + "");
+        maps.put("model", model + "");
+        String reqkey = RxUtils.getInstance().getReqkey(maps, currentTimeMillis);
+        Call<Object> accountChangeList = apiInterface.getTeamAccountChangeList(1, page, rows, sidx, sord, from, to, id, name, type, stype, model, reqkey, currentTimeMillis);
+        Call<Object> clone = accountChangeList.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                String s = response.body().toString();
+                List<List<AccountChange>> account = new ArrayList<List<AccountChange>>();
+                List<AccountChange> acs1 = new ArrayList<AccountChange>();
+                String substring = s.substring(s.indexOf("records=") + 8, s.indexOf(".0, rows="));
+                int ReCords = Integer.parseInt(substring);
+                String rows = s.substring(s.indexOf("rows=[") + 6, s.indexOf("], userdata="));
+                Log.d("查询团队报表彩票帐变", s + "");
+                AccountChange a = new AccountChange();
+                String as = s.substring(s.indexOf("userdata={amount=") + 17, s.indexOf(", name="));
+                a.setAmountss(Double.parseDouble(as));
+                acs1.add(a);
+                account.add(acs1);
+                int length = rows.length();
+                if (ReCords > 0) {
+                    String[] ss = rows.split(", ");
+                    List<AccountChange> acs2 = new ArrayList<AccountChange>();
+                    for (int i = 0; i < ss.length; i = i + 10) {
+                        AccountChange ac = new AccountChange();
+                        String id = ss[i].substring(4, ss[i].length());
+                        String uname = ss[i + 1].substring(6, ss[i + 1].length());
+                        String date = ss[i + 2].substring(0, ss[i + 2].length());
+                        String stype = ss[i + 3];
+                        String gname = ss[i + 4];
+                        String rname = ss[i + 5];
+                        String period = ss[i + 6];
+                        String model = ss[i + 7];
+                        String amount = ss[i + 8];
+                        String amounts = ss[i + 9].substring(0, ss[i + 9].length() - 3);
+                        ac.setId(Integer.parseInt(id));
+                        ac.setUname(uname);
+                        ac.setDate(date);
+                        ac.setStype(Integer.parseInt(stype));
+                        ac.setGname(gname);
+                        ac.setRname(rname);
+                        ac.setPeriod(period);
+                        ac.setModel(Integer.parseInt(model));
+                        ac.setAmount(Double.parseDouble(amount));
+                        ac.setAmounts(Double.parseDouble(amounts));
+                        acs2.add(ac);
+                        //Log.d("查询个人报表彩票帐变SS", acs.toString());
+                    }
+                    account.add(acs2);
+                    listener.onReceivedData(API_ID_TEAMACCOUNTCHANGE, account, API_ID_ERROR);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //新用户注册
+    public void getSignUp(DataListener listener, String u, String n, String p, String code, String c) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("u", u + "");
+        map.put("n", n + "");
+        map.put("p", p + "");
+        map.put("code", code + "");
+        map.put("c", c + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> signUp = apiInterface.getSignUp(1, u, n, p, code, c, reqkey, currentTimeMillis);
+        Call<Object> clone = signUp.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //个人报表活动记录
+    public void getActivityRecordList(DataListener listener, int page, int rows, String sidx, String sord, String from, String to, int type) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> maps = new HashMap<>();
+        maps.put("page", page + "");
+        maps.put("rows", rows + "");
+        maps.put("sidx", sidx + "");
+        maps.put("sord", sord + "");
+        maps.put("from", from + "");
+        maps.put("to", to + "");
+        maps.put("type", type + "");
+        String reqkey = RxUtils.getInstance().getReqkey(maps, currentTimeMillis);
+        Call<Object> activityRecordList = apiInterface.getActivityRecordList(1, page, rows, sidx, sord, from, to, type, reqkey, currentTimeMillis);
+        Call<Object> clone = activityRecordList.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("个人报表活动记录", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+
     }
 }

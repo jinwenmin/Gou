@@ -159,8 +159,11 @@ public class RechargeDrawAdapter extends BaseAdapter {
             ButterKnife.bind(this, view);
         }
     }
-    public void getList(List<CunQu> c){
-        cq=c;
+
+    public void getList(List<CunQu> c) {
+        cq.clear();
+        cq.addAll(c);
+
         notifyDataSetChanged();
     }
 }
