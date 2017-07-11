@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/ActivityListTop"
+        android:id="@+id/ProxyTop"
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_height"
         android:background="@color/top_background">
@@ -21,18 +21,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="活动记录"
+            android:text="团队活动记录"
             android:textColor="@android:color/white"
             android:textSize="@dimen/top_textsize" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/top_height"
+        android:layout_height="60px"
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:id="@+id/ActivityListrelateTime1"
+            android:id="@+id/ActivityTeamrelateTime1"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_marginRight="4px"
@@ -40,50 +40,13 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/ActivityListtimetext"
+                android:id="@+id/ActivityTeamtimetext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="6px"
-                android:text="2010-01-01"
-                android:textSize="30px" />
-
-            <ImageView
-                android:layout_width="50px"
-                android:layout_height="50px"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="6px"
-                android:background="@drawable/wuka_xiala"
-                android:textSize="30px" />
-
-            <View
-                android:layout_width="1px"
-                android:layout_height="60px"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@color/gray" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/ActivityListrelateTime2"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_marginRight="4px"
-            android:layout_weight="1"
-
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/ActivityListtimetext2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="6px"
-                android:text="2010-01-01"
-                android:textSize="30px" />
+                android:text="2010-01-01" />
 
             <ImageView
                 android:layout_width="50px"
@@ -102,7 +65,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/ActivityListrelateBank4"
+            android:id="@+id/ActivityTeamrelateTime2"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_marginRight="4px"
@@ -110,11 +73,29 @@
 
             android:orientation="horizontal">
 
-            <Spinner
-                android:id="@+id/SpinnerType"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"></Spinner>
+            <TextView
+                android:id="@+id/ActivityTeamtimetext2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="6px"
+                android:text="2010-01-20" />
 
+            <ImageView
+                android:layout_width="50px"
+                android:layout_height="50px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="6px"
+                android:background="@drawable/wuka_xiala" />
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="60px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@color/gray" />
         </RelativeLayout>
 
 
@@ -125,8 +106,60 @@
         android:layout_height="1px"
         android:background="@color/gray" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/SearchName"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="按用户名查询(可选)"
+            android:textSize="30px" />
+
+        <Button
+            android:id="@+id/ToSearchName"
+            android:layout_width="0px"
+            android:layout_height="80px"
+            android:layout_weight="2"
+            android:text="搜索"
+            android:textColor="@android:color/black"
+            android:textSize="30px" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80px"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/type"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></Spinner>
+
+        <Spinner
+            android:id="@+id/team"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></Spinner>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray" />
+
     <ListView
-        android:id="@+id/Activity_listView"
+        android:id="@+id/ActivityTeamList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></ListView>
 </LinearLayout>

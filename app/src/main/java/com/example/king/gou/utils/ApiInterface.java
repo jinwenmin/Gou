@@ -740,6 +740,7 @@ public interface ApiInterface {
             @Query("reqkey") String reqkey,
             @Query("t") long t
     );
+
     //51 个人报表充提记录
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/recharge-withdraw-list")
@@ -798,6 +799,7 @@ public interface ApiInterface {
             @Query("reqkey") String reqkey,
             @Query("t") long t
     );//82 查询团队报表彩票帐变
+
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/signup")
     Call<Object> getSignUp(
@@ -826,5 +828,26 @@ public interface ApiInterface {
             @Query("t") long t
     );
 
+    //52 个人报表活动记录
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/activity-record-list")
+    Call<Object> getActivityTeamRecordList(
+            @Query("AppClient") int num,
+            @Query("page") int page,
+            @Query("rows") int rows,
+            @Query("sidx") String sidx,
+            @Query("sord") String sord,
+            @Query("from") String from,
+            @Query("to") String to,
+            @Query("name") String name,
+            @Query("type") int type,/*查询类型
+                                        0：所有类型
+                                        22：活动奖金
+                                        29：亏损佣金
+                                        30：消费佣金*/
+            @Query("name") int team,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
 
 }

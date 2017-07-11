@@ -35,6 +35,10 @@ import com.example.king.gou.utils.ReceivedCookiesInterceptor;
 import com.example.king.gou.utils.RxUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.cache.CacheMode;
+import com.lzy.okgo.callback.BitmapCallback;
+import com.lzy.okgo.callback.StringCallback;
 import com.squareup.okhttp.ResponseBody;
 
 
@@ -117,6 +121,8 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_IMAGECHECK = 30;//获取验证图片信息
     public static int API_ID_TEAMCQ = 31;//团队充提记录
     public static int API_ID_TEAMACCOUNTCHANGE = 32;//团队账变记录
+    public static int API_ID_IMAGECHECKS = 33;//验证码校验
+    public static int API_ID_SIGNUP = 34;//验证码校验
     private Retrofit retrofit;
     private ApiInterface apiInterface;
     String sessionLoginId;
@@ -1824,71 +1830,40 @@ public class RetrofitService extends HttpEngine {
     //获取验证码图片
     public void getCaptCha(final DataListener listener, long t) {
         String httpUrl = ApiInterface.HOST + "/captcha?t=" + t;
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url(httpUrl).get().build();
+        OkGo.get(httpUrl)
+                .tag(this)
+                .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
+                .execute(new BitmapCallback() {
+                    @Override
+                    public void onSuccess(Bitmap bitmap, okhttp3.Call call, Response response) {
+                        listener.onReceivedData(API_ID_IMAGECHECK, bitmap, API_ID_ERROR);
+                    }
+                });
 
-        client.newCall(request).enqueue(new okhttp3.Callback() {
-            @Override
-            public void onFailure(okhttp3.Call call, IOException e) {
-                Log.d("Alex", "okhttp失败", e);
-                System.out.println("Alex" + "okhttp失败" + e.toString());
-
-
-            }
-
-            @Override
-            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
-                System.out.println("Alex" + "okhttp成功" + response.body().string());
-                Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
-                System.out.println("Alex" + bitmap.toString());
-                // Log.d("Alex","okhttp成功"+response.body().string());
-                // Log.d("Alex",bitmap.toString());
-                listener.onReceivedData(API_ID_IMAGECHECK, bitmap, API_ID_ERROR);
-            }
-        });
-        Map<String, String> maps = new HashMap<>();
-        maps.put("t", t + "");
-        String reqkey = RxUtils.getInstance().getReqkey(maps, t);
-        Call<Object> captCha = apiInterface.getCaptCha(t);
-        String s = captCha.request().toString();
-        String s1 = captCha.request().headers().toString();
-        String yzm = s.substring(s.indexOf("url=") + 4, s.indexOf(", tag="));
-        ImageView imageView = new ImageView(MyApp.getInstance().getContext());
-        Picasso.with(MyApp.getInstance().getContext()).load(yzm).into(imageView);
-        Log.d("获取验证码的完全请求体", s);
-        Call<Object> clone = captCha.clone();
-/*
-        clone.enqueue(new Callback<Object>() {
-            @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-
-                String s1 = response.body().toString();
-                byte[] ss = s1.getBytes();
-                Bitmap  bitmap =BitmapFactory.decodeStream(response.body().byteStream());
-                Headers headers = response.headers();
-                Log.d("获取验证码的完全请求体", headers + "");
-                Log.d("获取验证码的完全请求体BitMap", bitmap + "");
-                //    ImageView img= (ImageView) response.body();
-                //    Bitmap bitmap = RxUtils.getInstance().stringtoBitmap(response.body().toString());
-                Log.d("获取验证码图片", response.body().toString());
-                listener.onReceivedData(API_ID_IMAGECHECK, response.body(), API_ID_ERROR);
-                //
-            }
-
-            @Override
-            public void onFailure(Call<Object> call, Throwable t) {
-                Log.d("获取验证码图片Error", t.toString());
-            }
-        });*/
     }
 
     //验证码校验
-    public void getCaptChaCheck(DataListener listener, String u, String c) {
+    public void getCaptChaCheck(final DataListener listener, String u, String c) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> maps = new HashMap<>();
         maps.put("u", u);
         maps.put("c", c);
         String reqkey = RxUtils.getInstance().getReqkey(maps, currentTimeMillis);
+        String httpUrl = ApiInterface.HOST + "/captcha-check?AppClient=1&u=" + u + "&c=" + c + "&reqkey=" + reqkey + "&t=" + currentTimeMillis;
+        OkGo.post(httpUrl)
+                .tag(this)
+
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, okhttp3.Call call, Response response) {
+                        Gson gson = new Gson();
+                        RestultInfo restultInfo = gson.fromJson(s, RestultInfo.class);
+                        Log.d("验证返回", s);
+                        listener.onReceivedData(API_ID_IMAGECHECKS, restultInfo, API_ID_ERROR);
+                    }
+                });
+
+/*
         Call<Object> captChaCheck = apiInterface.getCaptChaCheck(1, u, c, reqkey, currentTimeMillis);
         Call<Object> clone = captChaCheck.clone();
         clone.enqueue(new Callback<Object>() {
@@ -1906,7 +1881,7 @@ public class RetrofitService extends HttpEngine {
             public void onFailure(Call<Object> call, Throwable t) {
 
             }
-        });
+        });*/
     }
 
 
@@ -2060,7 +2035,7 @@ public class RetrofitService extends HttpEngine {
     }
 
     //新用户注册
-    public void getSignUp(DataListener listener, String u, String n, String p, String code, String c) {
+    public void getSignUp(final DataListener listener, String u, String n, String p, String code, String c) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         map.put("u", u + "");
@@ -2069,7 +2044,20 @@ public class RetrofitService extends HttpEngine {
         map.put("code", code + "");
         map.put("c", c + "");
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> signUp = apiInterface.getSignUp(1, u, n, p, code, c, reqkey, currentTimeMillis);
+        String httpUrl = ApiInterface.HOST + "/signup?AppClient=1&u=" + u + "&n=" + n + "&p=" + p + "&code=" + code + "&c=" + c + "&reqkey=" + reqkey + "&t=" + currentTimeMillis;
+        OkGo.post(httpUrl)
+                .tag(this)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, okhttp3.Call call, Response response) {
+                        Gson gson = new Gson();
+                        RestultInfo restultInfo = gson.fromJson(s, RestultInfo.class);
+                        Log.d("注册返回信息验证", s);
+                        listener.onReceivedData(API_ID_SIGNUP, restultInfo, API_ID_ERROR);
+                    }
+                });
+
+       /* Call<Object> signUp = apiInterface.getSignUp(1, u, n, p, code, c, reqkey, currentTimeMillis);
         Call<Object> clone = signUp.clone();
         clone.enqueue(new Callback<Object>() {
             @Override
@@ -2081,7 +2069,7 @@ public class RetrofitService extends HttpEngine {
             public void onFailure(Call<Object> call, Throwable t) {
 
             }
-        });
+        });*/
     }
 
     //个人报表活动记录
@@ -2102,6 +2090,38 @@ public class RetrofitService extends HttpEngine {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
                 Log.d("个人报表活动记录", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    //团队报表活动记录
+    public void getActivityTeamRecordList(DataListener listener, int page, int rows, String sidx, String sord, String from, String to, String name, int type, int team) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> maps = new HashMap<>();
+        maps.put("page", page + "");
+        maps.put("rows", rows + "");
+        maps.put("sidx", sidx + "");
+        maps.put("sord", sord + "");
+        maps.put("from", from + "");
+        maps.put("to", to + "");
+        maps.put("name", name + "");
+        maps.put("type", type + "");
+        maps.put("team", team + "");
+        String reqkey = RxUtils.getInstance().getReqkey(maps, currentTimeMillis);
+        Call<Object> activityRecordList = apiInterface.getActivityTeamRecordList(1, page, rows, sidx, sord, from, to, name, type, team, reqkey, currentTimeMillis);
+        Call<Object> clone = activityRecordList.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                int code = response.code();
+                Log.d("团队报表活动记录Code", code + "");
+                Log.d("团队报表活动记录", response.body().toString());
             }
 
             @Override

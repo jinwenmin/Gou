@@ -40,7 +40,7 @@
         <activity android:name=".ui.orderFrmActivity.CunQuActivity" />
         <activity android:name=".ui.orderFrmActivity.GrzbActivity" />
         <activity android:name=".ui.orderFrmActivity.FanDianActivity" />
-        <activity android:name=".ui.orderFrmActivity.MyBJLActivity" />
+        <activity android:name=".ui.orderFrmActivity.MyActivityActivity" />
         <activity android:name=".ui.orderFrmActivity.ZhuanZhangjlActivity" />
         <activity android:name=".ui.proxyfragment.ProxyHomeActivity" />
         <activity android:name=".ui.proxyfragment.UserCenterActivity" />
@@ -50,7 +50,7 @@
         <activity android:name=".ui.proxyfragment.TeamGamejlActivity" />
         <activity android:name=".ui.proxyfragment.TeamZhuihaojlActivity" />
         <activity android:name=".ui.proxyfragment.TeamCunQuActivity" />
-        <activity android:name=".ui.proxyfragment.TeamBjlActivity" />
+        <activity android:name=".ui.proxyfragment.ActivityTeamActivity" />
         <activity android:name=".ui.SettingActivity" />
         <activity android:name=".ui.settingfragment.UpdatePwdActivity" />
         <activity android:name=".ui.settingfragment.UpdateMoneyPwdActivity" />

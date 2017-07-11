@@ -13,7 +13,7 @@ import com.example.king.gou.R;
 import com.example.king.gou.fragment.BaseFragment;
 import com.example.king.gou.ui.proxyfragment.ProxyHomeActivity;
 import com.example.king.gou.ui.proxyfragment.TeamBaoBiaoActivity;
-import com.example.king.gou.ui.proxyfragment.TeamBjlActivity;
+import com.example.king.gou.ui.proxyfragment.ActivityTeamActivity;
 import com.example.king.gou.ui.proxyfragment.TeamCunQuActivity;
 import com.example.king.gou.ui.proxyfragment.TeamGamejlActivity;
 import com.example.king.gou.ui.proxyfragment.TeamZBJLActivity;
@@ -118,10 +118,8 @@ public class ProxyFragment extends BaseFragment implements View.OnClickListener 
                 StartA(TeamCunQuActivity.class);
                 break;
             case R.id.proxy_TeamBjl:
-                StartA(TeamBjlActivity.class);
+                StartA(ActivityTeamActivity.class);
                 break;
-
-
         }
     }
 }

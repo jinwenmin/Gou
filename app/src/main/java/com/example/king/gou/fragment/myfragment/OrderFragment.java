@@ -17,7 +17,7 @@ import com.example.king.gou.ui.orderFrmActivity.GameJiluActivity;
 import com.example.king.gou.ui.orderFrmActivity.GrzbActivity;
 import com.example.king.gou.ui.orderFrmActivity.LotteryBaoBiaoActivity;
 import com.example.king.gou.ui.orderFrmActivity.LotteryLossActivity;
-import com.example.king.gou.ui.orderFrmActivity.MyBJLActivity;
+import com.example.king.gou.ui.orderFrmActivity.MyActivityActivity;
 import com.example.king.gou.ui.orderFrmActivity.ZhuanZhangjlActivity;
 import com.example.king.gou.ui.orderFrmActivity.ZhuiHaoActivity;
 
@@ -112,7 +112,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
                 StartA(FanDianActivity.class);
                 break;
             case R.id.GeRenbjl:
-                StartA(MyBJLActivity.class);
+                StartA(MyActivityActivity.class);
                 break;
             case R.id.ZhuanZhangjl:
                 StartA(ZhuanZhangjlActivity.class);

@@ -13,9 +13,12 @@ import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.RestultInfo;
 
+import com.example.king.gou.bean.UserInfo;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.utils.HttpEngine;
 import com.zhy.autolayout.AutoLayoutActivity;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,13 +38,14 @@ public class UpdateNickNameActivity extends AutoLayoutActivity implements View.O
     @BindView(R.id.UpDateCheck)
     Button UpDateCheck;
     String nickName;
-
+    List<UserInfo> userInfos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_nick_name);
         ButterKnife.bind(this);
-        OldUserNickName.setText(MyApp.getInstance().getUserNickName());
+        RetrofitService.getInstance().GetUserInfo(this);
+       // OldUserNickName.setText(MyApp.getInstance().getUserNickName());
         initCLick();
     }
 
@@ -81,6 +85,13 @@ public class UpdateNickNameActivity extends AutoLayoutActivity implements View.O
                     this.sendBroadcast(intent);
                 }
             }
+        }
+        if (RetrofitService.API_ID_USERINFO == apiId) {
+            userInfos = (List<UserInfo>) object;
+            UserInfo userInfo = userInfos.get(0);
+            OldUserNickName.setText(userInfo.getNname());
+
+
         }
     }
 
