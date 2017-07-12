@@ -137,6 +137,8 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 RetrofitService.getInstance().getGame(GameJiluActivity.this, 7, gameTypes1.get(i).getGid(), 0, 0);
                 Gid = gameTypes1.get(i).getGid();
+                RetrofitService.getInstance().getBettingDrawHistory(GameJiluActivity.this,gameTypes1.get(3).getGid());
+               // RetrofitService.getInstance().getBettingSync(GameJiluActivity.this,gameTypes1.get(i).getGid());
             }
 
             @Override

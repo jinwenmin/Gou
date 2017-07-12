@@ -14,6 +14,7 @@ import android.widget.ImageView;
 
 import com.example.king.gou.MyApp;
 import com.example.king.gou.bean.AccountChange;
+import com.example.king.gou.bean.BettingSync;
 import com.example.king.gou.bean.CunQu;
 import com.example.king.gou.bean.GameType;
 import com.example.king.gou.bean.Login;
@@ -123,6 +124,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_TEAMACCOUNTCHANGE = 32;//团队账变记录
     public static int API_ID_IMAGECHECKS = 33;//验证码校验
     public static int API_ID_SIGNUP = 34;//验证码校验
+    public static int API_ID_BETTINGSYNC = 35;//倒计时同步
     private Retrofit retrofit;
     private ApiInterface apiInterface;
     String sessionLoginId;
@@ -414,8 +416,10 @@ public class RetrofitService extends HttpEngine {
     //获取公告内容
     public void getNoticesContent(final DataListener listener, int id) {
         long currentTimeMillis = System.currentTimeMillis();
-        reqkey = "AppClient=1&id=" + id + "&t=" + currentTimeMillis;
-        Call<Object> noticesContent = apiInterface.getNoticesContent(id);
+        Map<String, String> map = new HashMap<>();
+        map.put("id", id + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> noticesContent = apiInterface.getNoticesContent(id, 1, reqkey, currentTimeMillis);
         String s = noticesContent.request().toString();
         Log.d("公告的全体", s);
         Call<Object> clone = noticesContent.clone();
@@ -879,6 +883,7 @@ public class RetrofitService extends HttpEngine {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
                 String s = response.body().toString();
+                Log.d("获取绑定的银行卡的银行数据S", s);
                 String Cards = s.substring(s.indexOf("cards=[") + 7, s.indexOf(", banks"));
                 String Banks = s.substring(s.indexOf("banks=[") + 7, s.indexOf("], provincials"));
                 String Privinces = s.substring(s.indexOf("provincials=[") + 13, s.indexOf("], locked"));
@@ -960,9 +965,11 @@ public class RetrofitService extends HttpEngine {
     //验证银行卡号
     public void getCheckCardNum(DataListener listener, String name, String card) {
         long currentTimeMillis = System.currentTimeMillis();
-        String r1 = "AppClient=1&name=" + name + "&card=" + card + "&t=" + currentTimeMillis;
-        String r2 = RxUtils.getInstance().md5(r1);
-        Call<Object> checkBankCardNum = apiInterface.getCheckBankCardNum(1, name, card, r2, currentTimeMillis);
+        Map<String, String> map = new HashMap<>();
+        map.put("name", name);
+        map.put("card", card);
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> checkBankCardNum = apiInterface.getCheckBankCardNum(1, name, card, reqkey, currentTimeMillis);
         Call<Object> clone = checkBankCardNum.clone();
         clone.enqueue(new Callback<Object>() {
             @Override
@@ -1024,13 +1031,22 @@ public class RetrofitService extends HttpEngine {
     //保存银行卡  应用场景：绑定新卡保存银行卡数据
     public void getSaveBankCard(final DataListener listener, int bank, int province_id, String province, int city_id, String city, String branch, String name, String card) {
         long currentTimeMillis = System.currentTimeMillis();
-        String r1 = "AppClient=1&bank=" + bank + "&province_id=" + province_id + "&province=" + province + "&city_id=" + city_id + "&city=" + city + "&branch=" + branch + "&name=" + name + "&card=" + card + "&t=" + currentTimeMillis;
-        String r2 = RxUtils.getInstance().md5(r1);
-        Call<RestultInfo> saveBankCard = apiInterface.getSaveBankCard(1, bank, province_id, province, city_id, city, branch, name, card, r2, currentTimeMillis);
+        Map<String, String> map = new HashMap<>();
+        map.put("bank", bank + "");
+        map.put("province_id", province_id + "");
+        map.put("province", province + "");
+        map.put("city_id", city_id + "");
+        map.put("city", city + "");
+        map.put("branch", branch + "");
+        map.put("name", name + "");
+        map.put("card", card + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<RestultInfo> saveBankCard = apiInterface.getSaveBankCard(1, bank, province_id, province, city_id, city, branch, name, card, reqkey, currentTimeMillis);
         Call<RestultInfo> clone = saveBankCard.clone();
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+                Log.d("保存银行卡返回的数据Code", response.code() + "");
                 Log.d("保存银行卡返回的数据", response.body().toString());
                 listener.onReceivedData(API_ID_SAVECARD, response.body(), API_ID_ERROR);
 
@@ -1423,7 +1439,11 @@ public class RetrofitService extends HttpEngine {
 
     //查询追号详情
     public void getKeepNumDeTails(final DataListener listener, int id) {
-        Call<Object> keepNumDetails = apiInterface.getKeepNumDetails(id);
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("id", id + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> keepNumDetails = apiInterface.getKeepNumDetails(id, 1, reqkey, currentTimeMillis);
         Call<Object> clone = keepNumDetails.clone();
         clone.enqueue(new Callback<Object>() {
             @Override
@@ -2043,8 +2063,9 @@ public class RetrofitService extends HttpEngine {
         map.put("p", p + "");
         map.put("code", code + "");
         map.put("c", c + "");
-        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        String httpUrl = ApiInterface.HOST + "/signup?AppClient=1&u=" + u + "&n=" + n + "&p=" + p + "&code=" + code + "&c=" + c + "&reqkey=" + reqkey + "&t=" + currentTimeMillis;
+        String t = "";
+        String reqkey = RxUtils.getInstance().getRegistersReqkey(map, t);
+        String httpUrl = ApiInterface.HOST + "/signup?AppClient=1&u=" + u + "&n=" + n + "&p=" + p + "&code=" + code + "&c=" + c + "&t=" + t + "&reqkey=" + reqkey;
         OkGo.post(httpUrl)
                 .tag(this)
                 .execute(new StringCallback() {
@@ -2054,6 +2075,12 @@ public class RetrofitService extends HttpEngine {
                         RestultInfo restultInfo = gson.fromJson(s, RestultInfo.class);
                         Log.d("注册返回信息验证", s);
                         listener.onReceivedData(API_ID_SIGNUP, restultInfo, API_ID_ERROR);
+                    }
+
+                    @Override
+                    public void onError(okhttp3.Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        Log.d("注册返回信息验证Error", e.toString());
                     }
                 });
 
@@ -2131,4 +2158,124 @@ public class RetrofitService extends HttpEngine {
         });
 
     }
+
+    //切换游戏/获取玩法数据(重点)
+    public void getSwitchGameList(DataListener listener, int id) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map map = new HashMap();
+        map.put("id", id + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> switchGameList = apiInterface.getSwitchGameList(id, 1, reqkey, currentTimeMillis);
+        Call<Object> clone = switchGameList.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                int code = response.code();
+                Log.d("切换游戏/获取玩法数据(重点)Code=", code + "");
+                if (code == 200) {
+                    Log.d("切换游戏/获取玩法数据(重点)", response.body().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    //同步倒计时时间
+    public void getBettingSync(final DataListener listener, int id) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("id", id + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> bettingSync = apiInterface.getBettingSync(1, id, reqkey, currentTimeMillis);
+        Call<Object> clone = bettingSync.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                if (response.code() == 200) {
+                    String msg = response.body().toString();
+                    Log.d("同步倒计时时间", msg);
+                    String msgs = msg.substring(msg.indexOf("rc=") + 3, msg.indexOf(", msg"));
+                    if ("true".equals(msg)) {
+                        BettingSync bettingSync = new BettingSync();
+                        String others = msg.substring(msg.indexOf("others={") + 8, msg.length() - 2);
+                        String condownTime = others.substring(others.indexOf("condownTime=") + 12, others.indexOf(", period"));
+                        String period = others.substring(others.indexOf("period=") + 7, others.indexOf(", gid"));
+                        String gid = others.substring(others.indexOf("gid=") + 4, others.indexOf(", drawTime"));
+                        String drawTime = others.substring(others.indexOf("drawTime=") + 9, others.indexOf(", count"));
+                        String count = others.substring(others.indexOf("count=") + 6, others.length());
+                        bettingSync.setCondownTime(Long.parseLong(condownTime));
+                        bettingSync.setPeriod(period);
+                        bettingSync.setGid(Integer.parseInt(gid));
+                        bettingSync.setDrawTime(Long.parseLong(drawTime));
+                        bettingSync.setCount(Integer.parseInt(count));
+                        listener.onReceivedData(API_ID_BETTINGSYNC, bettingSync, API_ID_ERROR);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    //88更新返点
+    public void getBettingUpdateRate(DataListener listener, int gid, double rate) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("gid", gid + "");
+        map.put("rate", rate + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> bettingUpdateRate = apiInterface.getBettingUpdateRate(1, gid, rate, reqkey, currentTimeMillis);
+        Call<Object> clone = bettingUpdateRate.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                if (response.code() == 200) {
+                    Log.d("88更新返点", response.body().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    //获取开奖历史记录
+    public void getBettingDrawHistory(DataListener listener, int id) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map map = new HashMap();
+        map.put("id", id + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> clone = apiInterface.getBettingDrawHistory(id, 1, reqkey, currentTimeMillis);
+        Log.d("获取开奖历史记录请求完全体", clone.request().toString() + "");
+        Call<Object> clone1 = clone.clone();
+
+        clone1.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("获取开奖历史记录Code", response.code() + "");
+                Log.d("获取开奖历史记录", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
 }

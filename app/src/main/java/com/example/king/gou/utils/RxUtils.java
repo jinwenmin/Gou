@@ -222,7 +222,19 @@ public class RxUtils {
         str = md5(str);
         return str;
     }
+    public String getRegistersReqkey(Map<String, String> map, String t) {
 
+        String str = "AppClient=1";
+        Map<String, String> resultMap = sortMapByKey(map);
+        for (Map.Entry<String, String> entry : resultMap.entrySet()) {
+            System.out.println("key==" + entry.getKey() + " " + entry.getValue());
+            str = str + "&" + entry.getKey() + "=" + entry.getValue();
+        }
+        str = str + "&t=" + t;
+        Log.d("key", str);
+        str = md5(str);
+        return str;
+    }
 
     public Bitmap stringtoBitmap(String string){
         //将字符串转换成Bitmap类型

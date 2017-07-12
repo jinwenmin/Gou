@@ -123,10 +123,13 @@ public interface ApiInterface {
 
     //公告列表
     @Headers("X-Requested-With: XMLHttpRequest")
+    @FormUrlEncoded
     @POST("/notice-view/{id}")
     Call<Object> getNoticesContent(
-
-            @Path("id") int id
+            @Field("AppClient") int num,
+            @Path("id") int id,
+            @Field("reqkey") String reqkey,
+            @Field("t") long t
 
     );
 
@@ -484,6 +487,7 @@ public interface ApiInterface {
 
     //投注单详情
     @Headers("X-Requested-With: XMLHttpRequest")
+    @FormUrlEncoded
     @POST("/betting-details/{id}")
     Call<Object> getBettingDetails(
             @Query("AppClient") int num,
@@ -550,9 +554,13 @@ public interface ApiInterface {
 
     //47 查询追号详情
     @Headers("X-Requested-With: XMLHttpRequest")
+    @FormUrlEncoded
     @POST("/auto-purchase-details/{id}")
     Call<Object> getKeepNumDetails(
-            @Path("id") int id//id为追号记录id
+            @Field("AppClient") int num,
+            @Path("id") int id,//id为追号记录id
+            @Field("reqkey") String reqkey,
+            @Field("t") long t
 
     );
 
@@ -819,11 +827,8 @@ public interface ApiInterface {
     @POST("/betting/sync")
     Call<Object> getBettingSync(
             @Query("AppClient") int num,
-            @Query("u") String u,
-            @Query("n") String n,
-            @Query("p") String p,
-            @Query("code") String code,
-            @Query("c") String c,
+            @Query("id") int id,
+
             @Query("reqkey") String reqkey,
             @Query("t") long t
     );
@@ -845,9 +850,54 @@ public interface ApiInterface {
                                         22：活动奖金
                                         29：亏损佣金
                                         30：消费佣金*/
-            @Query("name") int team,
+            @Query("team") int team,
             @Query("reqkey") String reqkey,
             @Query("t") long t
+    );
+
+    //85切换游戏/获取玩法数据(重点)
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @FormUrlEncoded
+    @POST("/switch-game/{id}")
+    /*?AppClient={AppClient}&reqkey={reqkey}&t={t}*/
+    Call<Object> getSwitchGameList(
+            @Field("AppClient") int num,
+            @Path("id") int id,
+            @Field("reqkey") String reqkey,
+            @Field("t") long t
+    );
+
+    //88更新返点
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/betting/update-rate")
+    Call<Object> getBettingUpdateRate(
+            @Query("AppClient") int num,
+            @Query("gid") int gid,
+            @Query("rate") double rate,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //89更新奖金类型
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @FormUrlEncoded
+    @POST("/betting/update-price-type/{id}")
+    Call<Object> getBettingUpdatePrice(
+            @Field("AppClient") int num,
+            @Path("id") int gid,//id 游戏gid
+            @Field("reqkey") String reqkey,
+            @Field("t") long t
+    );
+
+    //93获取开奖历史记录
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @FormUrlEncoded
+    @POST("/betting/draw-history/{id}")
+    Call<Object> getBettingDrawHistory(
+            @Path("id") int gid,//id 游戏gid
+            @Field("AppClient") int num,
+            @Field("reqkey") String reqkey,
+            @Field("t") long t
     );
 
 }

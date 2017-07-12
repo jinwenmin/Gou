@@ -74,6 +74,7 @@ public class RegisterActivity extends AutoLayoutActivity implements HttpEngine.D
         Back.setOnClickListener(this);
         UpdataYZM.setOnClickListener(this);
         SingUpId.setOnClickListener(this);
+        ImageYZM.setOnClickListener(this);
     }
 
     private void initYZM() {
@@ -114,6 +115,15 @@ public class RegisterActivity extends AutoLayoutActivity implements HttpEngine.D
             } else {
                 checkPwd = RxUtils.getInstance().HMACSHA256(checkPwd, name);
                 RetrofitService.getInstance().getSignUp(this, name, userNickname, checkPwd, topcode, yzmCheck);
+            }
+        }
+        if (apiId == RetrofitService.API_ID_SIGNUP) {
+            final RestultInfo restultInfo = (RestultInfo) object;
+            if (!restultInfo.isRc()) {
+                Toasty.error(this, restultInfo.getMsg(), 2000).show();
+            } else {
+                Toasty.success(this, "注册成功", 2000).show();
+                finish();
             }
         }
     }
@@ -173,6 +183,9 @@ public class RegisterActivity extends AutoLayoutActivity implements HttpEngine.D
                     return;
                 }
                 RetrofitService.getInstance().getCaptChaCheck(RegisterActivity.this, "", yzmCheck);
+                break;
+            case R.id.ImageYZM:
+                initYZM();
                 break;
 
         }

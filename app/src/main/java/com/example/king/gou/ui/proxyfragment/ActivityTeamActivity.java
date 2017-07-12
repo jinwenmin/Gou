@@ -87,9 +87,7 @@ public class ActivityTeamActivity extends AutoLayoutActivity implements View.OnC
         type.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                // RetrofitService.getInstance().getReChargeWithDrawList(CunQuActivity.this, 1, 100, "atid", "desc", timetext.getText().toString().trim(), timetext2.getText().toString().trim(), ids.get(i));
-                //List<CunQu> c = new ArrayList<CunQu>();
-                //rechargeDrawAdapter.getList(c);
+                initRetrofit();
             }
 
             @Override
@@ -97,6 +95,18 @@ public class ActivityTeamActivity extends AutoLayoutActivity implements View.OnC
 
             }
         });
+        team.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                initRetrofit();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
     }
 
     private void initSpinner() {
@@ -127,14 +137,15 @@ public class ActivityTeamActivity extends AutoLayoutActivity implements View.OnC
     }
 
     private void initRetrofit() {
-       // RetrofitService.getInstance().getActivityTeamRecordList(this, 1, 100, "serial_number", "desc", ActivityTeamtimetext.getText().toString().trim(), ActivityTeamtimetext2.getText().toString().trim(), SearchName.getText().toString().trim(), typeid.get(type.getSelectedItemPosition()), teamid.get(team.getSelectedItemPosition()));
-        RetrofitService.getInstance().getActivityTeamRecordList(this, 1, 100, "serial_number", "desc", "2011-02-02", "2017-07-11","", 0,0);
+        RetrofitService.getInstance().getActivityTeamRecordList(this, 1, 100, "serial_number", "desc", ActivityTeamtimetext.getText().toString().trim(), ActivityTeamtimetext2.getText().toString().trim(), SearchName.getText().toString().trim(), typeid.get(type.getSelectedItemPosition()), teamid.get(team.getSelectedItemPosition()));
+        //RetrofitService.getInstance().getActivityTeamRecordList(this, 1, 100, "serial_number", "desc", "2011-02-02", "2017-07-11","", 0,0);
     }
 
     private void initClick() {
         ActivityTeamrelateTime1.setOnClickListener(this);
         ActivityTeamrelateTime2.setOnClickListener(this);
         Back.setOnClickListener(this);
+        ToSearchName.setOnClickListener(this);
     }
 
     private void initDateDialog() {
@@ -183,6 +194,7 @@ public class ActivityTeamActivity extends AutoLayoutActivity implements View.OnC
                         String substring = formatDate.substring(0, 10);
                         Log.d("Date===", substring);
                         ActivityTeamtimetext.setText(substring);
+                        initRetrofit();
 
                     }
                 });
@@ -210,13 +222,16 @@ public class ActivityTeamActivity extends AutoLayoutActivity implements View.OnC
                         Log.d("Date===", substring);
                         ActivityTeamtimetext2.setText(substring);
                         // RetrofitService.getInstance().getReChargeWithDrawList(CunQuActivity.this, 1, 100, "atid", "desc", timetext.getText().toString().trim(), formatDate, ids.get(SpinnerType.getSelectedItemPosition()));
-
+                        initRetrofit();
                     }
                 });
                 dialog2.show();
                 break;
             case R.id._back:
                 finish();
+                break;
+            case R.id.ToSearchName:
+                initRetrofit();
                 break;
         }
     }
