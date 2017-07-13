@@ -14,7 +14,7 @@
         android:background="@color/top_background">
 
         <ImageView
-            android:id="@+id/_back"
+            android:id="@+id/SaveCard_back"
             android:layout_width="@dimen/top_back"
             android:layout_height="@dimen/top_back"
             android:layout_centerVertical="true"

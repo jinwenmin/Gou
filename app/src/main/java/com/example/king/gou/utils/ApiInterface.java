@@ -806,7 +806,7 @@ public interface ApiInterface {
                                             4：厘*/
             @Query("reqkey") String reqkey,
             @Query("t") long t
-    );//82 查询团队报表彩票帐变
+    );//注册
 
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/signup")
@@ -855,14 +855,335 @@ public interface ApiInterface {
             @Query("t") long t
     );
 
+    //61获取推广设置数据
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/get-share-data")
+    Call<Object> getShareData(
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+
+    //62推广设置-保存
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/generalize-save")
+    Call<Object> getGeneralizeSave(
+            @Query("AppClient") int num,//推广的返点，数值在0-12.5之间
+            @Query("l") double l,
+            @Query("reqkey") String reqkey,
+            @Query("t") int t/*推广的用户类型
+                                2：推广用户类型为代理用户
+                                3：推广用户类型为普通会员*/
+    );
+
+    //63 获取添加会员数据
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/adduser-data")
+    Call<Object> getAddUserData(
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //64 添加会员-保存
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/signup")
+    Call<Object> getVIPSignUpSave(
+            @Query("AppClient") int num,
+            @Query("u") String u,//用户名
+            @Query("n") String n,//昵称
+            @Query("l") double l,//添加会员所选的返点
+            @Query("code") String code,
+            @Query("t") String t,/*
+                                添加会员的类型；加密时需要放在最后
+                                2：推广用户类型为代理用户
+                                3：推广用户类型为普通会员
+                                  */
+            @Query("p") String p,//登录密码[需HmacSHA256加密]
+            @Query("c") String c,//添加会员标识，这里是[addnewuser]
+            @Query("reqkey") String reqkey
+
+    );
+
+    //65 会员统计
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/users-statistics")
+    Call<Object> getUserStatistics(
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+
+    );
+
+    //66 查询统计的用户信息
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/team-user-list")
+    Call<Object> getTeamUserList(
+            @Query("AppClient") int num,
+            @Query("page") int page,
+            @Query("rows") int rows,
+            @Query("sidx") String sidx,/*排序参数，这里是[uid]*/
+            @Query("sord") String sord,/*排序类型，这里是[desc]*/
+            @Query("type") int type,/*查询的数据类型，这里是1*/
+            @Query("stype") int stype,      /*
+                                            查询数据的类别
+                                            0：查询15天内未登录的用户
+                                            1：查询今日注册的用户
+                                            */
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+
+    );
+
+    //67 会员管理
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/team-user-list")
+    Call<Object> getTeamUserInfo(
+            @Query("AppClient") int num,
+            @Query("page") int page,
+            @Query("rows") int rows,
+            @Query("sidx") String sidx,/*排序参数，这里是[uid]*/
+            @Query("sord") String sord,/*排序类型，这里是[desc]*/
+            @Query("uid") int uid,//当前层级查询的最高用户uid；如默认查询就是当前登录的用户id，点击用户名查询下一级就是被点击用户的uid
+            @Query("u") String u,//查询条件用户名，这里是精确查询
+            @Query("b1") boolean b1,//查询余额范围的下限值
+            @Query("b2") boolean b2,//查询余额范围的上限值
+            @Query("l1") boolean l1,//查询返点范围的下限值
+            @Query("l2") boolean l2,//查询返点范围的上限值
+            @Query("t") int t,/*用户类型
+                                0：所有用户
+                                2：代理用户
+                                3：普通会员
+                                -1：在线用户*/
+            @Query("reqkey") String reqkey
+    );
+
+    //68 获取会员管理层级数据
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/team-users-parent/{uid}")
+    Call<Object> getTeamUsersParent(
+            @Path("uid") int uid,
+            @Field("AppClient") int num,
+            @Field("reqkey") String reqkey,
+            @Field("t") long t
+    );
+
+    //69 查询团队余额
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/team-balance-view")
+    Call<Object> getTeamBalanceView(
+            @Query("AppClient") int num,
+            @Query("uid") int uid,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //70 获取设置返点的数据
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/urebate-data")
+    Call<Object> getUreBateData(
+            @Query("AppClient") int num,
+            @Query("uid") int uid,//需要设置返点的用户id
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //71 设置新返点
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/team-user-rebate-save")
+    Call<RestultInfo> getTeamUserRebateSave(
+            @Query("AppClient") int num,
+            @Query("l") double l,//需要设置返点的用户id
+            @Query("uid") int uid,//需要调整的用户id
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //72 获取上级充值数据
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/srecharge-data")
+    Call<Object> getSreChargeData(
+            @Query("AppClient") int num,
+            @Query("uid") int uid,//需要设置返点的用户id
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //73 上级充值校验
+    /*应用场景：上级充值或日工资充值需要验证安全问题答案和安全密码*/
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/own-transfer-check")
+    Call<RestultInfo> getOwnReansferCheck(
+            @Query("AppClient") int num,
+            @Query("a") int a,//安全问题答案
+            @Query("p") int p,//安全密码[需经过HmacSHA256加密]
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //74 保存上级充值
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/own-transfer-trans")
+    Call<RestultInfo> getOwnReansferTrans(
+            @Query("AppClient") int num,
+            @Query("amount") double amount,//充值金额
+            @Query("name") String name,//充值的用户名
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //75 保存日工资充值
+    @Headers("X-Requested-With: XMLHttpRequest")
+
+    @POST("/daily-recharge-trans")
+    Call<RestultInfo> getDailyRechargeTrans(
+            @Query("AppClient") int num,
+            @Query("amount") double amount,//充值金额
+            @Query("name") String name,//充值的用户名
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //76 获取设置配额的数据
+    @Headers("X-Requested-With: XMLHttpRequest")
+
+    @POST("/tquota-data")
+    Call<Object> getTquotaData(
+            @Query("AppClient") int num,
+            @Query("uid") int uid,//调整配额的用户id
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //77 保存配额
+    @Headers("X-Requested-With: XMLHttpRequest")
+
+    @POST("/team-user-quota-save")
+    Call<RestultInfo> getTeamUserQuotaSave(
+            @Query("AppClient") int num,
+            @Query("page") int page,
+            @Query("rows") int rows,
+            @Query("sidx") String sidx,
+            @Query("sord") String sord,
+            @Query("uid") int uid,
+            @Query("from") String from,
+            @Query("to") String to,
+            @Query("id") int id,
+            @Query("stype") int stype,/*帐变类型
+                                        0：所有类型
+                                        1：加入游戏
+                                        2：投注返点
+                                        3：奖金派送
+                                        4：追号扣款
+                                        5：当期追号返款
+                                        6：游戏扣款
+                                        7：撤单返款
+                                        8：撤销返点
+                                        9：撤销派奖
+                                        10：上级充值
+                                        11：充值扣费
+                                        14：理赔充值
+                                        16：提款申请
+                                        17：提款失败
+                                        18：提款成功
+                                        19：在线充值
+                                        20：现金充值
+                                        21：充值手续费
+                                        22：促销充值
+                                        26：支付宝充值
+                                        31：转账汇款*/
+            @Query("model") int model,/*投注模式
+                                        0：全部模式
+                                        1：元
+                                        2：角
+                                        3：分
+                                        4：厘*/
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+
+    //78 帐变记录
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/capital-change-list")
+    Call<Object> getCapitalChangeList(
+            @Query("AppClient") int num,
+            @Query("data") String data,//提交的返点配额调整数据格式：
+            // 返点id:配额调整，例如[70:-3,71:6]说明：70是12.70返点的id，
+            // -3是12.70返点的配额减去3个，71是12.60返点的id，6是12.60的配额增加6个，
+            // 即调整配额可以增加也可以减少，负数代表扣减配额，正数代表增加配额
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //79 团队报表彩票投注
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/betting-list")
+    Call<Object> getTeamBettingList(
+            @Query("AppClient") int num,
+            @Query("page") int page,
+            @Query("rows") int rows,
+            @Query("sidx") String sidx,
+            @Query("sord") String sord,
+            @Query("from") String from,
+            @Query("to") String to,
+            @Query("name") String name,
+            @Query("status") int status,
+                                    /*投注单状态
+                                    -2：所有状态
+                                    -1：未开奖
+                                    0：未中奖
+                                    1：已派奖
+                                    2：本人撤单
+                                    3：管理员撤单
+                                    4：已过期
+                                    6：平台撤单*/
+
+            @Query("id") int id,
+            @Query("rid") int rid,
+            @Query("type") int type,
+                                /*查询类型
+                                0：个人查询
+                                2：团队查询*/
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //80团队报表彩票盈亏  当日和历史  81
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/profit-loss-list")
+    Call<Object> getTeamProfitLossList(
+            @Query("AppClient") int num,
+            @Query("page") int page,
+            @Query("rows") int rows,
+            @Query("sidx") String sidx,
+            @Query("sord") String sord,
+            @Query("from") String from,
+            @Query("to") String to,
+            @Query("name") String name,
+            @Query("uid") int uid,
+            @Query("gtype") int gtype,
+                            /*查询类型
+                            1：彩票娱乐场
+                            2：香港六合彩
+                            0：所有类型*/
+            @Query("stype") int stype,//查询数据类型，这里是[0]代表当日盈亏  1代表 历史
+            @Query("team") int team,//个人/团队报表
+            //0：个人
+            //2：团队
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
     //85切换游戏/获取玩法数据(重点)
     @Headers("X-Requested-With: XMLHttpRequest")
     @FormUrlEncoded
     @POST("/switch-game/{id}")
     /*?AppClient={AppClient}&reqkey={reqkey}&t={t}*/
     Call<Object> getSwitchGameList(
-            @Field("AppClient") int num,
             @Path("id") int id,
+            @Field("AppClient") int num,
             @Field("reqkey") String reqkey,
             @Field("t") long t
     );
@@ -898,6 +1219,86 @@ public interface ApiInterface {
             @Field("AppClient") int num,
             @Field("reqkey") String reqkey,
             @Field("t") long t
+    );
+
+    //90获取追号信息
+    @Headers("X-Requested-With: XMLHttpRequest")
+
+    @POST("/betting/auto-purchase")
+    Call<Object> getBettingAutoPurchase(
+            @Query("AppClient") int num,
+            @Query("id") int gid,//id 游戏gid
+            @Query("period") String period,//开始追号的期号
+            @Query("periods") int periods,//追号期数
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //91获取全部追号的期数
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/betting/auto-nums")
+    Call<Object> getBettingAutoNums(
+            @Query("AppClient") int num,
+            @Query("id") int gid,//id 游戏gid
+            @Query("period") String period,//开始追号的期号
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //92 同步上期开奖数据
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/betting/winning-number")
+    Call<Object> getBettingWinningNum(
+            @Query("AppClient") int num,
+            @Query("id") int gid,//id 游戏gid
+            @Query("period") String period,//上一期倒计时时的期号
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //94投注记录
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @FormUrlEncoded
+    @POST("/betting/betting-history/{id}")
+    Call<Object> getBettingHistorys(
+            @Path("id") int gid,//id 游戏gid
+            @Field("AppClient") int num,
+            @Field("page") int page,//当前分页数
+            @Field("reqkey") String reqkey,
+            @Field("t") long t
+    );
+
+    //95追号记录
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @FormUrlEncoded
+    @POST("/betting/rebuy-history/{id}")
+    Call<Object> getBettingRebuyHistorys(
+            @Path("id") int gid,//id 游戏gid
+            @Field("AppClient") int num,
+            @Field("page") int page,//当前分页数
+            @Field("reqkey") String reqkey,
+            @Field("t") long t
+    );
+
+    //96 验证安全问题
+    @Headers("X-Requested-With: XMLHttpRequest")
+
+    @POST("/security-question-check")
+    Call<Object> getSecurityQuestionCheck(
+            @Query("AppClient") int num,
+            @Query("a") String a,//当前分页数
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //97 验证安全问题
+    @Headers("X-Requested-With: XMLHttpRequest")
+
+    @POST("/token-signin")
+    Call<Object> getTokenSignin(
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
     );
 
 }

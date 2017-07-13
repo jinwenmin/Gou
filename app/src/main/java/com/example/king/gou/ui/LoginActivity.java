@@ -65,7 +65,7 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-
+        RetrofitService.getInstance().getTokenSignin(this);
         findViewById(R.id.login_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -260,7 +260,7 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rigisterUser:
-                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
                 break;
         }
     }

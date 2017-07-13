@@ -2166,6 +2166,7 @@ public class RetrofitService extends HttpEngine {
         map.put("id", id + "");
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
         Call<Object> switchGameList = apiInterface.getSwitchGameList(id, 1, reqkey, currentTimeMillis);
+        Log.d("切换游戏/获取玩法数据(重点)Code=", switchGameList.request().toString() + "");
         Call<Object> clone = switchGameList.clone();
         clone.enqueue(new Callback<Object>() {
             @Override
@@ -2276,6 +2277,64 @@ public class RetrofitService extends HttpEngine {
         });
 
 
+    }
+
+    //获取推广设置数据
+    public void getShareData(DataListener listener) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map map = new HashMap();
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> shareData = apiInterface.getShareData(1, reqkey, currentTimeMillis);
+        Call<Object> clone = shareData.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("获取推广设置数据", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+  //获取添加会员数据
+    public void getAddUserData(DataListener listener) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map map = new HashMap();
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> shareData = apiInterface.getAddUserData(1, reqkey, currentTimeMillis);
+        Call<Object> clone = shareData.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("获取添加会员数据", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+    //Token自动登录
+    public  void getTokenSignin(DataListener listener){
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String,String> map=new HashMap<>();
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> tokenSignin = apiInterface.getTokenSignin(1, reqkey, currentTimeMillis);
+        Call<Object> clone = tokenSignin.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("Token自动登录",response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
     }
 
 }

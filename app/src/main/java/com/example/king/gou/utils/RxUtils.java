@@ -142,8 +142,6 @@ public class RxUtils {
     }
 
 
-
-
     public static String byte2hex(byte[] b) {
         StringBuilder hs = new StringBuilder();
         String stmp;
@@ -171,7 +169,8 @@ public class RxUtils {
         String format = sdf.format(new Date(time));
         return format;
     }
-    public  String ZhToUtf(String zh) {
+
+    public String ZhToUtf(String zh) {
         if (zh == null) {
             return null;
         }
@@ -185,7 +184,7 @@ public class RxUtils {
         return url;
     }
 
-    public  Bitmap byteToBitmap(byte[] imgByte) {
+    public Bitmap byteToBitmap(byte[] imgByte) {
         InputStream input = null;
         Bitmap bitmap = null;
         BitmapFactory.Options options = new BitmapFactory.Options();
@@ -213,15 +212,18 @@ public class RxUtils {
 
         String str = "AppClient=1";
         Map<String, String> resultMap = sortMapByKey(map);
-        for (Map.Entry<String, String> entry : resultMap.entrySet()) {
-            System.out.println("key==" + entry.getKey() + " " + entry.getValue());
-            str = str + "&" + entry.getKey() + "=" + entry.getValue();
+        if (map.size() > 0) {
+            for (Map.Entry<String, String> entry : resultMap.entrySet()) {
+                System.out.println("key==" + entry.getKey() + " " + entry.getValue());
+                str = str + "&" + entry.getKey() + "=" + entry.getValue();
+            }
         }
         str = str + "&t=" + currentTimeMillis;
         Log.d("key", str);
         str = md5(str);
         return str;
     }
+
     public String getRegistersReqkey(Map<String, String> map, String t) {
 
         String str = "AppClient=1";
@@ -236,19 +238,20 @@ public class RxUtils {
         return str;
     }
 
-    public Bitmap stringtoBitmap(String string){
+    public Bitmap stringtoBitmap(String string) {
         //将字符串转换成Bitmap类型
-        Bitmap bitmap=null;
+        Bitmap bitmap = null;
         try {
-            byte[]bitmapArray;
-            bitmapArray= Base64.decode(string, Base64.DEFAULT);
-            bitmap= BitmapFactory.decodeByteArray(bitmapArray, 0, bitmapArray.length);
+            byte[] bitmapArray;
+            bitmapArray = Base64.decode(string, Base64.DEFAULT);
+            bitmap = BitmapFactory.decodeByteArray(bitmapArray, 0, bitmapArray.length);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return bitmap;
     }
+
     /**
      * 使用 Map按key进行排序
      *
@@ -292,7 +295,7 @@ public class RxUtils {
         return sortedMap;
     }
 
-    public  String FormatDate(Date date) {
+    public String FormatDate(Date date) {
         // 给定模式
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         // public final String format(Date date)

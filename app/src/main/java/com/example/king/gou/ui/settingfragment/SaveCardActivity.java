@@ -28,7 +28,7 @@ import es.dmoral.toasty.Toasty;
 
 public class SaveCardActivity extends AutoLayoutActivity implements View.OnClickListener, HttpEngine.DataListener {
 
-    @BindView(R.id._back)
+    @BindView(R.id.SaveCard_back)
     ImageView Back;
     @BindView(R.id.Top)
     RelativeLayout Top;
@@ -134,8 +134,8 @@ public class SaveCardActivity extends AutoLayoutActivity implements View.OnClick
                     Toasty.error(this, "不可为空", 2000).show();
                     return;
                 }
-                RetrofitService.getInstance().getCheckCardNum(this,UserName,CardNum);
-                //RetrofitService.getInstance().getSaveBankCard(this, BankId, PrivinceId, PrivinceName, CityId, CityName, Branch, UserName, CardNum);
+                //RetrofitService.getInstance().getCheckCardNum(this,UserName,CardNum);
+                RetrofitService.getInstance().getSaveBankCard(this, BankId, PrivinceId, PrivinceName, CityId, CityName, Branch, UserName, CardNum);
                 break;
         }
     }

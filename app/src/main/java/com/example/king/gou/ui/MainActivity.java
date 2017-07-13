@@ -193,6 +193,7 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
             @Override
             public void run() {
                 RetrofitService.getInstance().LoginState(MainActivity.this, login_uid, 1, 0, new String[]{String.valueOf(login_uid)}, 1);
+               // RetrofitService.getInstance().getTokenSignin(MainActivity.this);
 
             }
         };

@@ -18,6 +18,9 @@ public class UserInfo {
     String retainInfo;
     boolean hasSafetyPassword;
     boolean hasQuestions;
+    String question;
+    boolean shares;
+    int rtype;
 
     @Override
     public String toString() {
@@ -32,7 +35,34 @@ public class UserInfo {
                 ", retainInfo='" + retainInfo + '\'' +
                 ", hasSafetyPassword=" + hasSafetyPassword +
                 ", hasQuestions=" + hasQuestions +
+                ", question='" + question + '\'' +
+                ", shares=" + shares +
+                ", rtype=" + rtype +
                 '}';
+    }
+
+    public boolean isShares() {
+        return shares;
+    }
+
+    public void setShares(boolean shares) {
+        this.shares = shares;
+    }
+
+    public int getRtype() {
+        return rtype;
+    }
+
+    public void setRtype(int rtype) {
+        this.rtype = rtype;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
     }
 
     public String getUname() {

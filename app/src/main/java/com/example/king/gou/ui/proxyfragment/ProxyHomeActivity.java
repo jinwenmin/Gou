@@ -9,13 +9,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.king.gou.R;
+import com.example.king.gou.service.RetrofitService;
+import com.example.king.gou.utils.HttpEngine;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClickListener {
+public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClickListener, HttpEngine.DataListener {
 
     @BindView(R.id._back)
     ImageView Back;
@@ -59,6 +61,8 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_proxy_home);
         ButterKnife.bind(this);
+        RetrofitService.getInstance().getShareData(this);
+        RetrofitService.getInstance().getAddUserData(this);
         initClick();
     }
 
@@ -73,6 +77,22 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
                 finish();
                 break;
         }
+
+    }
+
+    @Override
+    public void onReceivedData(int apiId, Object object, int errorId) {
+
+
+    }
+
+    @Override
+    public void onRequestStart(int apiId) {
+
+    }
+
+    @Override
+    public void onRequestEnd(int apiId) {
 
     }
 }
