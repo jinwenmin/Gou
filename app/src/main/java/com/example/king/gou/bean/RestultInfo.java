@@ -7,6 +7,34 @@ package com.example.king.gou.bean;
 public class RestultInfo {
     boolean rc;
     String msg;
+    boolean state;
+    String message;
+
+    @Override
+    public String toString() {
+        return "RestultInfo{" +
+                "rc=" + rc +
+                ", msg='" + msg + '\'' +
+                ", state=" + state +
+                ", message='" + message + '\'' +
+                '}';
+    }
+
+    public boolean isState() {
+        return state;
+    }
+
+    public void setState(boolean state) {
+        this.state = state;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public boolean isRc() {
         return rc;
@@ -24,11 +52,4 @@ public class RestultInfo {
         this.msg = msg;
     }
 
-    @Override
-    public String toString() {
-        return "RestultInfo{" +
-                "rc=" + rc +
-                ", msg='" + msg + '\'' +
-                '}';
-    }
 }

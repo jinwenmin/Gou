@@ -1,17 +1,25 @@
 package com.example.king.gou.ui;
 
+import android.Manifest;
 import android.app.KeyguardManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.os.CancellationSignal;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bigkoo.alertview.AlertView;
 import com.example.king.gou.R;
@@ -116,8 +124,8 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
         LinearCheck1.setOnClickListener(this);
         getCardData.setOnClickListener(this);
         updateSafePwd.setOnClickListener(this);
-       /* manager = (FingerprintManager) this.getSystemService(Context.FINGERPRINT_SERVICE);
-        mKeyManager = (KeyguardManager) this.getSystemService(Context.KEYGUARD_SERVICE);
+ /*       manager = (FingerprintManager) this.getSystemService(Context.FINGERPRINT_SERVICE);
+        mKeyManager = (KeyguardManager) this.getSystemService(Context.KEYGUARD_SERVICE);*/
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -128,7 +136,7 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
                 }
             }
         });
-        Cursor cursor = writableDatabase.query("fingers", new String[]{"id", "isfinger"}, "id=?", new String[]{"1"}, null, null, null);
+       /* Cursor cursor = writableDatabase.query("fingers", new String[]{"id", "isfinger"}, "id=?", new String[]{"1"}, null, null, null);
         while (cursor.moveToNext()) {
             isfinger = cursor.getString(cursor.getColumnIndex("isfinger"));
             Log.d("这个isFInger==",isfinger);
@@ -179,7 +187,7 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
                 StartA(UpdateMoneyPwdActivity.class);
                 break;
             case R.id.LinearCheck1:
-               /* if (isFinger()) {
+                /*if (isFinger()) {
                     alertView = new AlertView(null, null, "取消", null, null, SettingActivity.this, AlertView.Style.Alert, SettingActivity.this);
                     contentView = LayoutInflater.from(getApplicationContext()).inflate(
                             R.layout.item_finger, null);
@@ -219,8 +227,8 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
     public void onRequestEnd(int apiId) {
 
     }
-/*
-    public boolean isFinger() {
+
+  /*  public boolean isFinger() {
 
         //android studio 上，没有这个会报错
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
@@ -305,8 +313,8 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
 
 
     }
-
-    *//**
+*/
+    /**
      * 锁屏密码
      *//*
     private void showAuthenticationScreen() {

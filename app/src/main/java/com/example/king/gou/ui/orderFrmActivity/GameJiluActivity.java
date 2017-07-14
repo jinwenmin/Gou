@@ -111,7 +111,6 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
         gamejlViewpager.setAdapter(myFrmPageAdapter);
         relateTime1.setClickable(true);
         initFragment();
-
         initClick();
         initViewpager();
         initDateDialog();

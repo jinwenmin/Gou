@@ -3,6 +3,7 @@ package com.example.king.gou.ui.proxyfragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -63,8 +64,8 @@ public class TeamBaoBiaoActivity extends AutoLayoutActivity implements View.OnCl
     List<String> statusName = new ArrayList<>();
     List<Integer> typeId = new ArrayList<>();
     List<String> typeName = new ArrayList<>();
-    List<GameType> gameTypes=new ArrayList<>();
-    List<GameType> gameTypes2=new ArrayList<>();
+    List<GameType> gameTypes = new ArrayList<>();
+    List<GameType> gameTypes2 = new ArrayList<>();
     ArrayAdapter<String> adapter1;
     ArrayAdapter<String> adapter2;
     ArrayAdapter<String> adapter3;
@@ -79,6 +80,59 @@ public class TeamBaoBiaoActivity extends AutoLayoutActivity implements View.OnCl
         initDateDialog();
         initSpinner();
         RetrofitService.getInstance().getGame(this, 4, 0, 0, 0);
+    }
+
+    private void initRetrofit() {
+        RetrofitService.getInstance().getTeamBettingList(this, 1, 100, "bid", "desc", TeamBettingtimetext.getText().toString().trim()+" 00:00:01", TeamBettingtimetext2.getText().toString().trim()+" 23:59:59", SearchName.getText().toString().trim(), statusId.get(SpinnerStatus.getSelectedItemPosition()), gameTypes.get(SpinnerGameId.getSelectedItemPosition()).getGid(), gameTypes2.get(SpinnerGameRid.getSelectedItemPosition()).getTid(), typeId.get(SpinnerType.getSelectedItemPosition()));
+
+    }
+
+    private void initSpinnerSelect() {
+        SpinnerGameId.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                RetrofitService.getInstance().getGame(TeamBaoBiaoActivity.this, 7, gameTypes.get(i).getGid(), 0, 0);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        SpinnerType.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                initRetrofit();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        SpinnerStatus.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                initRetrofit();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        SpinnerGameRid.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                initRetrofit();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
     }
 
     private void initSpinner() {
@@ -163,7 +217,7 @@ public class TeamBaoBiaoActivity extends AutoLayoutActivity implements View.OnCl
                         String substring = formatDate.substring(0, 10);
                         Log.d("Date===", substring);
                         TeamBettingtimetext.setText(substring);
-                        //RetrofitService.getInstance().getTeamReChargeWithDrawList(TeamCunQuActivity.this, 1, 100, "atid", "desc", TeamCunQutimetext.getText().toString().trim(), TeamCunQutimetext2.getText().toString().trim(), UserName.getText().toString().trim(), ids.get(Spinnertype.getSelectedItemPosition()), teamid.get(Spinnerteam.getSelectedItemPosition()));
+                        initRetrofit();
                     }
                 });
                 dialog.show();
@@ -188,7 +242,7 @@ public class TeamBaoBiaoActivity extends AutoLayoutActivity implements View.OnCl
                         String substring = formatDate.substring(0, 10);
                         Log.d("Date===", substring);
                         TeamBettingtimetext2.setText(substring);
-                        //RetrofitService.getInstance().getTeamReChargeWithDrawList(TeamCunQuActivity.this, 1, 100, "atid", "desc", TeamCunQutimetext.getText().toString().trim(), formatDate, UserName.getText().toString().trim(), ids.get(Spinnertype.getSelectedItemPosition()), teamid.get(Spinnerteam.getSelectedItemPosition()));
+                        initRetrofit();
                     }
                 });
                 dialog2.show();
@@ -224,11 +278,12 @@ public class TeamBaoBiaoActivity extends AutoLayoutActivity implements View.OnCl
                     types.add(gameTypes2.get(i).getName());
                     Log.d("gameTypes2", gameTypes2.get(i).getName());
                 }
-                adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, types);
+                adapter4 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, types);
                 //第三步：为适配器设置下拉列表下拉时的菜单样式。
-                adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                adapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 //第四步：将适配器添加到下拉列表上
-                SpinnerGameRid.setAdapter(adapter1);
+                SpinnerGameRid.setAdapter(adapter4);
+                initSpinnerSelect();
 
             }
         }

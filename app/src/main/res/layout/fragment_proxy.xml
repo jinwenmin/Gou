@@ -35,7 +35,7 @@
             android:layout_weight="1"
             android:drawableTop="@mipmap/ic_tuanduibaobiao"
             android:gravity="center_horizontal"
-            android:text="团队报表" />
+            android:text="团队投注" />
     </LinearLayout>
 
     <LinearLayout

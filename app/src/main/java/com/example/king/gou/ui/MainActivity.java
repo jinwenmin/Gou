@@ -108,7 +108,7 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
         Toast.makeText(MainActivity.this, "查询数据为：id=" + id + " \n name=" + name, Toast.LENGTH_LONG).show();
 
 
-       /* manager = (FingerprintManager) this.getSystemService(Context.FINGERPRINT_SERVICE);
+    /*    manager = (FingerprintManager) this.getSystemService(Context.FINGERPRINT_SERVICE);
         mKeyManager = (KeyguardManager) this.getSystemService(Context.KEYGUARD_SERVICE);
 */
         dataBaseFingerHelper = new DataBaseHelper(MainActivity.this, "fing.db", null, 1);

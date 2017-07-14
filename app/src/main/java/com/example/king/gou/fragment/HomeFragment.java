@@ -18,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+import com.bigkoo.alertview.AlertView;
+import com.bigkoo.alertview.OnItemClickListener;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.HomeGameAdapter;
 import com.example.king.gou.adapters.PageAdapter;
@@ -41,7 +43,7 @@ import it.sephiroth.android.library.picasso.Picasso;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends BaseFragment implements View.OnClickListener, HttpEngine.DataListener {
+public class HomeFragment extends BaseFragment implements View.OnClickListener, HttpEngine.DataListener, OnItemClickListener {
 
     @BindView(R.id.Erweima)
     ImageView Erweima;
@@ -77,6 +79,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     TextView HomeFragmentText;
     @BindView(R.id.MyGame)
     RelativeLayout MyGame;
+    private AlertView alertView;
+    // 一个自定义的布局，作为显示的内容
+    View contentView;
 
     public static HomeFragment newInstance() {
 
@@ -94,8 +99,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
         unbinder = ButterKnife.bind(this, view);
+        alertView = new AlertView(null, null, "确认", null, null, getContext(), AlertView.Style.Alert, this);
+        contentView = LayoutInflater.from(getContext()).inflate(
+                R.layout.item_homenotice, null);
+        alertView.addExtView(contentView);
         test.startScroll();
         HomeFragmentAddGame.setOnClickListener(this);
         recycler.setLayoutManager(new GridLayoutManager(getActivity(), 4));
@@ -157,25 +165,33 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     public void onReceivedData(int apiId, Object object, int errorId) {
         if (apiId == RetrofitService.API_ID_HOMENOTICE) {
             if (object != null) {
-                final String notice = (String) object;
-                TextView textView = new TextView(getActivity());
-                textView.setText(Html.fromHtml(notice));
-                Log.d("这个是首页的公告==", Html.fromHtml(notice) + "");
-                ArrayList<AdvertisementObject> notices = new ArrayList<AdvertisementObject>();
-                AdvertisementObject advertisementObject = new AdvertisementObject();
-                advertisementObject.info = Html.fromHtml(notice) + "";
-                notices.add(advertisementObject);
-                notices.add(advertisementObject);
-                MainScrollAd.setData(notices);
-                MainScrollAd.setTextSize(15);
-                MainScrollAd.setTimer(3000);
-                MainScrollAd.setOnItemClickListener(new BaseAutoScrollUpTextView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(int position) {
-                        Toast.makeText(getActivity(), Html.fromHtml(notice) + "", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                MainScrollAd.start();
+                final List<String> listnotice = (List<String>) object;
+                if ("0".equals(listnotice.get(1))) {
+                    TextView homeNotice = (TextView) contentView.findViewById(R.id.homeNoticeText);
+                    homeNotice.setText(Html.fromHtml(listnotice.get(0)));
+
+                    alertView.show();
+                } else {
+                    TextView textView = new TextView(getActivity());
+                    textView.setText(Html.fromHtml(listnotice.get(0)));
+                    Log.d("这个是首页的公告==", Html.fromHtml(listnotice.get(0)) + "");
+                    ArrayList<AdvertisementObject> notices = new ArrayList<AdvertisementObject>();
+                    AdvertisementObject advertisementObject = new AdvertisementObject();
+                    advertisementObject.info = Html.fromHtml(listnotice.get(0)) + "";
+                    notices.add(advertisementObject);
+                    notices.add(advertisementObject);
+                    MainScrollAd.setData(notices);
+                    MainScrollAd.setTextSize(15);
+                    MainScrollAd.setTimer(3000);
+                    MainScrollAd.setOnItemClickListener(new BaseAutoScrollUpTextView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(int position) {
+                            Toast.makeText(getActivity(), Html.fromHtml(listnotice.get(0)) + "", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    MainScrollAd.start();
+
+                }
             }
         }
     }
@@ -187,6 +203,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
     @Override
     public void onRequestEnd(int apiId) {
+
+    }
+
+    @Override
+    public void onItemClick(Object o, int position) {
 
     }
 }

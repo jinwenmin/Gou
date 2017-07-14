@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -17,12 +18,15 @@ import com.chaychan.viewlib.PowerfulEditText;
 import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.Login;
+import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.ui.settingfragment.UpDateFirstPwdActivity;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
 import com.google.gson.Gson;
 import com.zhy.autolayout.AutoLayoutActivity;
+
+import net.lemonsoft.lemonbubble.LemonBubble;
 
 import java.io.IOException;
 
@@ -66,6 +70,7 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         RetrofitService.getInstance().getTokenSignin(this);
+        LemonBubble.showRoundProgress(this, "验证账号登录状态中");
         findViewById(R.id.login_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -243,6 +248,18 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
                 Toast.makeText(LoginActivity.this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
             }
 
+        }
+        if (apiId == RetrofitService.API_ID_TOKENLOGIN) {
+            RestultInfo restultInfo = new RestultInfo();
+            restultInfo = (RestultInfo) object;
+            Log.d("LoginAcToken自动登录", restultInfo.toString());
+            if (restultInfo.isState()) {
+                LemonBubble.showRight(LoginActivity.this, "验证成功,自动登录", 2000);
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
+            } else {
+                LemonBubble.showError(this, "验证失败,请重新登陆", 2000);
+            }
         }
     }
 

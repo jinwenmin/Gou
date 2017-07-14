@@ -125,6 +125,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_IMAGECHECKS = 33;//验证码校验
     public static int API_ID_SIGNUP = 34;//验证码校验
     public static int API_ID_BETTINGSYNC = 35;//倒计时同步
+    public static int API_ID_TOKENLOGIN = 36;//TOKEN登陆
     private Retrofit retrofit;
     private ApiInterface apiInterface;
     String sessionLoginId;
@@ -802,9 +803,18 @@ public class RetrofitService extends HttpEngine {
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
                 String toString = response.body().toString();
                 Log.d("首页的公告==", toString);
-                String substring = toString.substring(toString.indexOf("content=") + 8, toString.indexOf(", user="));
-                listener.onReceivedData(API_ID_HOMENOTICE, substring, API_ID_ERROR);
-                Log.d("首页的公告2==", substring);
+                List<String> noti = new ArrayList<String>();
+                String Others = toString.substring(toString.indexOf("others={") + 8, toString.length() - 1);
+                if (Others.length() > 10) {
+                    String notice = toString.substring(toString.indexOf("content=") + 8, toString.indexOf(", user="));
+                    String sticky = toString.substring(toString.indexOf("sticky=") + 7, toString.length() - 4);
+                    noti.add(notice);
+                    noti.add(sticky);
+                    listener.onReceivedData(API_ID_HOMENOTICE, noti, API_ID_ERROR);
+                    Log.d("首页的公告2==", notice);
+
+                }
+
             }
 
             @Override
@@ -2298,7 +2308,8 @@ public class RetrofitService extends HttpEngine {
             }
         });
     }
-  //获取添加会员数据
+
+    //获取添加会员数据
     public void getAddUserData(DataListener listener) {
         long currentTimeMillis = System.currentTimeMillis();
         Map map = new HashMap();
@@ -2317,17 +2328,31 @@ public class RetrofitService extends HttpEngine {
             }
         });
     }
+
     //Token自动登录
-    public  void getTokenSignin(DataListener listener){
+    public void getTokenSignin(final DataListener listener) {
         long currentTimeMillis = System.currentTimeMillis();
-        Map<String,String> map=new HashMap<>();
+        Map<String, String> map = new HashMap<>();
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
         Call<Object> tokenSignin = apiInterface.getTokenSignin(1, reqkey, currentTimeMillis);
         Call<Object> clone = tokenSignin.clone();
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                Log.d("Token自动登录",response.body().toString());
+                if (response.code() == 200) {
+                    Log.d("Token自动登录", response.body().toString());
+                    RestultInfo restultInfo = new RestultInfo();
+                    String t = response.body().toString();
+                    String state = t.substring(t.indexOf("state=") + 6, t.indexOf(", message="));
+                    String message = t.substring(t.indexOf("message=") + 8, t.length() - 1);
+                    if ("true".equals(state)) {
+                        restultInfo.setState(true);
+                    } else {
+                        restultInfo.setState(false);
+                    }
+                    restultInfo.setMessage(message);
+                    listener.onReceivedData(API_ID_TOKENLOGIN, restultInfo, API_ID_ERROR);
+                }
             }
 
             @Override
@@ -2335,6 +2360,82 @@ public class RetrofitService extends HttpEngine {
 
             }
         });
+    }
+
+    //团队报表彩票投注
+    public void getTeamBettingList(DataListener listener, int page, int rows, String sidx, String sord, String from, String to, String name, int status, int id, int rid, int type) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> maps = new HashMap<>();
+        maps.put("page", page + "");
+        maps.put("rows", rows + "");
+        maps.put("sidx", sidx + "");
+        maps.put("sord", sord + "");
+        maps.put("from", from + "");
+        maps.put("to", to + "");
+        maps.put("name", name + "");
+        maps.put("status", status + "");
+        maps.put("id", id + "");
+        maps.put("rid", rid + "");
+        maps.put("type", type + "");
+        String reqkey = RxUtils.getInstance().getReqkey(maps, currentTimeMillis);
+        Call<Object> teamBettingList = apiInterface.getTeamBettingList(1, page, rows, sidx, sord, from, to, name, status, id, rid, type, reqkey, currentTimeMillis);
+        Call<Object> clone = teamBettingList.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                if (response.code() == 200) {
+                    String s = response.body().toString();
+                    Log.d("团队报表彩票投注", s);
+                    String totalElements = s.substring(s.indexOf("totalElements=") + 14, s.indexOf(".0, lastPage"));
+                    int to = Integer.parseInt(totalElements);
+                    if (to > 0) {
+                        String con = s.substring(s.indexOf("content=[") + 9, s.indexOf("], number="));
+                        String[] cs = con.split(", ");
+                        for (int i = 0; i < cs.length; i++) {
+                            Log.d("彩票报表Split", cs[i]);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Log.d("团队报表彩票投注Drror", t.toString());
+            }
+        });
+
+    }
+
+    //团队报表当日盈亏
+    public void getTeamProfitLossList(DataListener listener, int page, int rows, String sidx, String sord, String from, String to, String name, int uid, int gtype, int stype, int team) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> maps = new HashMap<>();
+        maps.put("page", page + "");
+        maps.put("rows", rows + "");
+        maps.put("sidx", sidx + "");
+        maps.put("sord", sord + "");
+        maps.put("from", from + "");
+        maps.put("to", to + "");
+        maps.put("name", name + "");
+        maps.put("uid", uid + "");
+        maps.put("gtype", gtype + "");
+        maps.put("stype", stype + "");
+        maps.put("team", team + "");
+        String reqkey = RxUtils.getInstance().getReqkey(maps, currentTimeMillis);
+        Call<Object> teamProfitLossList = apiInterface.getTeamProfitLossList(1, page, rows, sidx, sord, from, to, name, uid, gtype, stype, team, reqkey, currentTimeMillis);
+        Call<Object> clone = teamProfitLossList.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+
     }
 
 }
