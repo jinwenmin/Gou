@@ -93,6 +93,8 @@ public class TeamCunQuActivity extends AutoLayoutActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_cun_qu);
         ButterKnife.bind(this);
+        RetrofitService.getInstance().getUserStatistics(this);
+        RetrofitService.getInstance().getTeamUserList(this,1,100,"uid","desc",1,0);
         rechargeDrawAdapter = new RechargeDrawAdapter(this);
         CunQuListView.setAdapter(rechargeDrawAdapter);
         initClick();
@@ -308,7 +310,7 @@ public class TeamCunQuActivity extends AutoLayoutActivity implements View.OnClic
                 cq = (List<List<CunQu>>) object;
                 InCome.setText(cq.get(0).get(0).getIncomes() + "");
                 Expend.setText(cq.get(0).get(0).getExpengs() + "");
-                if (cq.size()>1) {
+                if (cq.size() > 1) {
                     rechargeDrawAdapter.getList(cq.get(1));
                 }
             }

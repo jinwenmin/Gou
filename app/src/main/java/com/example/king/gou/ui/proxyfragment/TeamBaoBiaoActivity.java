@@ -1,6 +1,7 @@
 package com.example.king.gou.ui.proxyfragment;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -8,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -16,9 +18,10 @@ import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnSureLisener;
 import com.codbking.widget.bean.DateType;
 import com.example.king.gou.R;
+import com.example.king.gou.adapters.TeamBettingAdapter;
 import com.example.king.gou.bean.GameType;
+import com.example.king.gou.bean.UserTeamBetting;
 import com.example.king.gou.service.RetrofitService;
-import com.example.king.gou.ui.orderFrmActivity.LotteryBaoBiaoActivity;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -70,12 +73,20 @@ public class TeamBaoBiaoActivity extends AutoLayoutActivity implements View.OnCl
     ArrayAdapter<String> adapter2;
     ArrayAdapter<String> adapter3;
     ArrayAdapter<String> adapter4;
+    List<UserTeamBetting> userTeamBettingLis = new ArrayList<>();
+    @BindView(R.id.TeamBettingListView)
+    ListView TeamBettingListView;
+    TeamBettingAdapter teamBettingAdapter;
+    @BindView(R.id.Swipe)
+    SwipeRefreshLayout Swipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.team_bettinglist);
         ButterKnife.bind(this);
+        teamBettingAdapter = new TeamBettingAdapter(this);
+        TeamBettingListView.setAdapter(teamBettingAdapter);
         initClick();
         initDateDialog();
         initSpinner();
@@ -83,7 +94,7 @@ public class TeamBaoBiaoActivity extends AutoLayoutActivity implements View.OnCl
     }
 
     private void initRetrofit() {
-        RetrofitService.getInstance().getTeamBettingList(this, 1, 100, "bid", "desc", TeamBettingtimetext.getText().toString().trim()+" 00:00:01", TeamBettingtimetext2.getText().toString().trim()+" 23:59:59", SearchName.getText().toString().trim(), statusId.get(SpinnerStatus.getSelectedItemPosition()), gameTypes.get(SpinnerGameId.getSelectedItemPosition()).getGid(), gameTypes2.get(SpinnerGameRid.getSelectedItemPosition()).getTid(), typeId.get(SpinnerType.getSelectedItemPosition()));
+        RetrofitService.getInstance().getTeamBettingList(this, 1, 100, "bid", "desc", TeamBettingtimetext.getText().toString().trim() + " 00:00:01", TeamBettingtimetext2.getText().toString().trim() + " 23:59:59", SearchName.getText().toString().trim(), statusId.get(SpinnerStatus.getSelectedItemPosition()), gameTypes.get(SpinnerGameId.getSelectedItemPosition()).getGid(), gameTypes2.get(SpinnerGameRid.getSelectedItemPosition()).getTid(), typeId.get(SpinnerType.getSelectedItemPosition()));
 
     }
 
@@ -170,6 +181,14 @@ public class TeamBaoBiaoActivity extends AutoLayoutActivity implements View.OnCl
         TeamBettingrelateTime1.setOnClickListener(this);
         TeamBettingrelateTime2.setOnClickListener(this);
         TeamBettingBack.setOnClickListener(this);
+        Swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                List<UserTeamBetting> uu = new ArrayList<UserTeamBetting>();
+                teamBettingAdapter.addList(uu);
+                initRetrofit();
+            }
+        });
     }
 
     private void initDateDialog() {
@@ -286,6 +305,11 @@ public class TeamBaoBiaoActivity extends AutoLayoutActivity implements View.OnCl
                 initSpinnerSelect();
 
             }
+        }
+        if (apiId == RetrofitService.API_ID_TEAMBETTING) {
+            userTeamBettingLis = (List<UserTeamBetting>) object;
+            teamBettingAdapter.addList(userTeamBettingLis);
+            Swipe.setRefreshing(false);
         }
     }
 

@@ -26,6 +26,7 @@ import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.bean.TouZhu;
 import com.example.king.gou.bean.UserAmount;
 import com.example.king.gou.bean.UserInfo;
+import com.example.king.gou.bean.UserTeamBetting;
 import com.example.king.gou.bean.ZhuiHao;
 import com.example.king.gou.bean.ZhuiHaoDetails;
 import com.example.king.gou.ui.MainActivity;
@@ -126,6 +127,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_SIGNUP = 34;//验证码校验
     public static int API_ID_BETTINGSYNC = 35;//倒计时同步
     public static int API_ID_TOKENLOGIN = 36;//TOKEN登陆
+    public static int API_ID_TEAMBETTING = 37;//团队报表彩票投注
     private Retrofit retrofit;
     private ApiInterface apiInterface;
     String sessionLoginId;
@@ -2363,7 +2365,7 @@ public class RetrofitService extends HttpEngine {
     }
 
     //团队报表彩票投注
-    public void getTeamBettingList(DataListener listener, int page, int rows, String sidx, String sord, String from, String to, String name, int status, int id, int rid, int type) {
+    public void getTeamBettingList(final DataListener listener, int page, int rows, String sidx, String sord, String from, String to, String name, int status, int id, int rid, int type) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> maps = new HashMap<>();
         maps.put("page", page + "");
@@ -2384,6 +2386,7 @@ public class RetrofitService extends HttpEngine {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
                 if (response.code() == 200) {
+                    List<UserTeamBetting> userBetting = new ArrayList<UserTeamBetting>();
                     String s = response.body().toString();
                     Log.d("团队报表彩票投注", s);
                     String totalElements = s.substring(s.indexOf("totalElements=") + 14, s.indexOf(".0, lastPage"));
@@ -2391,10 +2394,38 @@ public class RetrofitService extends HttpEngine {
                     if (to > 0) {
                         String con = s.substring(s.indexOf("content=[") + 9, s.indexOf("], number="));
                         String[] cs = con.split(", ");
-                        for (int i = 0; i < cs.length; i++) {
+
+                        for (int i = 0; i < cs.length; i = i + 12) {
+                            UserTeamBetting us = new UserTeamBetting();
+                            String bid = cs[i].substring(1, cs[i].length() - 2);
+                            String uid = cs[i + 1].substring(0, cs[i + 1].length() - 2);
+                            String uname = cs[i + 2];
+                            String date = cs[i + 3];
+                            String gname = cs[i + 4];
+                            String period = cs[i + 5];
+                            String rname = cs[i + 6];
+                            String picked_text = cs[i + 7];
+                            String amount = cs[i + 8];
+                            String prize = cs[i + 9];
+                            String winning_numbers = cs[i + 10];
+                            String status = cs[i + 11].substring(0, cs[i + 11].length() - 3);
                             Log.d("彩票报表Split", cs[i]);
+                            us.setBid(Integer.parseInt(bid));
+                            us.setUid(Integer.parseInt(uid));
+                            us.setUname(uname);
+                            us.setDate(date);
+                            us.setGname(gname);
+                            us.setPeriod(period);
+                            us.setRname(rname);
+                            us.setPicked_text(picked_text);
+                            us.setAmount(Double.parseDouble(amount));
+                            us.setPrize(Double.parseDouble(prize));
+                            us.setWinning_number(winning_numbers);
+                            us.setStatus(Integer.parseInt(status));
+                            userBetting.add(us);
                         }
                     }
+                    listener.onReceivedData(API_ID_TEAMBETTING, userBetting, API_ID_ERROR);
                 }
             }
 
@@ -2438,4 +2469,51 @@ public class RetrofitService extends HttpEngine {
 
     }
 
+    //会员统计
+    public void getUserStatistics(DataListener listener) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        final String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> userStatistics = apiInterface.getUserStatistics(1, reqkey, currentTimeMillis);
+        Call<Object> clone = userStatistics.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("会员统计", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //查询统计的用户信息
+    public void getTeamUserList(DataListener listener, int page, int rows, String sidx, String sord, int type, int stype) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("page", page + "");
+        map.put("rows", rows + "");
+        map.put("sidx", sidx + "");
+        map.put("sord", sord + "");
+        map.put("type", type + "");
+        map.put("stype", stype + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> teamUserList = apiInterface.getTeamUserList(1, page, rows, sidx, sord, type, stype, reqkey, currentTimeMillis);
+        Call<Object> clone = teamUserList.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("查询统计的用户信息", response.body().toString());
+
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+
+    }
 }
