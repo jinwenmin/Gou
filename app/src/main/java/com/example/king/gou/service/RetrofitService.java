@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.AsyncTask;
+import android.os.SystemClock;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.ImageView;
@@ -321,8 +322,8 @@ public class RetrofitService extends HttpEngine {
                 Gson gson = new GsonBuilder().setLenient().create();
                 Login body = response.body();
                 body.setSessionId(sessionLoginId);
-                listener.onReceivedData(API_ID_LOGIN, body, -1);
                 System.out.println("用户信息==" + body);
+                listener.onReceivedData(API_ID_LOGIN, body, -1);
                 listener.onRequestEnd(API_ID_LOGIN);
             }
 
@@ -2160,7 +2161,9 @@ public class RetrofitService extends HttpEngine {
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
                 int code = response.code();
                 Log.d("团队报表活动记录Code", code + "");
-                Log.d("团队报表活动记录", response.body().toString());
+                if (code == 200) {
+                    Log.d("团队报表活动记录", response.body().toString());
+                }
             }
 
             @Override
@@ -2507,6 +2510,507 @@ public class RetrofitService extends HttpEngine {
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
                 Log.d("查询统计的用户信息", response.body().toString());
 
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    //投注单 详情
+    public void getBettingDetails(DataListener listener, int id) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("id", id + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> bettingDetails = apiInterface.getBettingDetails(id, 1, reqkey, currentTimeMillis);
+        Call<Object> clone = bettingDetails.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //撤销投注单
+    public void getLotteryBetRevoke1(DataListener listener, int bid) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("bid", bid + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<RestultInfo> lotteryBetRevoke1 = apiInterface.getLotteryBetRevoke1(bid, 1, reqkey, currentTimeMillis);
+        Call<RestultInfo> clone = lotteryBetRevoke1.clone();
+        clone.enqueue(new Callback<RestultInfo>() {
+            @Override
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    //添加会员-保存
+    public void getVIPSignUpSave(DataListener listener, String u, String n, double l, String code, int t, String p, String c) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("u", u + "");
+        map.put("n", n + "");
+        map.put("l", l + "");
+        map.put("code", code + "");
+        map.put("p", p + "");
+        map.put("c", c + "");
+        String registersReqkey = RxUtils.getInstance().getRegistersReqkey(map, t);
+        Call<Object> vipSignUpSave = apiInterface.getVIPSignUpSave(1, u, n, l, code, t, p, c, registersReqkey);
+        Call<Object> clone = vipSignUpSave.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("添加会员-保存", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //会员管理
+    public void getTeamUserInfo(DataListener listener, int page, int rows, String sidx, String sord, int uid, String u, /*double b1, double b2, double l1, double l2,*/ int t) {
+        Map<String, String> map = new HashMap<>();
+        map.put("page", page + "");
+        map.put("rows", rows + "");
+        map.put("sidx", sidx + "");
+        map.put("sord", sord + "");
+        map.put("uid", uid + "");
+        map.put("u", u + "");
+      /*  map.put("b1", b1 + "");
+        map.put("b2", b2 + "");
+        map.put("l1", l1 + "");
+        map.put("l2", l2 + "");*/
+        String registersReqkey = RxUtils.getInstance().getRegistersReqkey(map, t);
+        Call<Object> teamUserInfo = apiInterface.getTeamUserInfo(1, page, rows, sidx, sord, uid, u, /*b1, b2, l1, l2,*/ t, registersReqkey);
+        Call<Object> clone = teamUserInfo.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("会员管理", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //获取会员管理层级数据
+    public void getTeamUsersParent(DataListener listener, int uid) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", uid + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> teamUsersParent = apiInterface.getTeamUsersParent(uid, 1, reqkey, currentTimeMillis);
+        Call<Object> clone = teamUsersParent.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //查询团队余额
+    public void getTeamBalanceView(DataListener listener, int uid) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", uid + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> teamBalanceView = apiInterface.getTeamBalanceView(1, uid, reqkey, currentTimeMillis);
+        Call<Object> clone = teamBalanceView.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("查询团队余额", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //获取设置返点的数据
+    public void getUreBateData(DataListener listener, int uid) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", uid + "");
+        final String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> ureBateData = apiInterface.getUreBateData(1, uid, reqkey, currentTimeMillis);
+        Call<Object> clone = ureBateData.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("获取设置返点的数据", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    //设置新返点
+    public void getTeamUserRebateSave(DataListener listener, double l, int uid) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("l", l + "");
+        map.put("uid", uid + "");
+        final String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<RestultInfo> TeamUserRebateSave = apiInterface.getTeamUserRebateSave(1, l, uid, reqkey, currentTimeMillis);
+        Call<RestultInfo> clone = TeamUserRebateSave.clone();
+        clone.enqueue(new Callback<RestultInfo>() {
+            @Override
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+                Log.d("设置新返点", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //获取上级充值数据
+    public void getSreChargeData(DataListener listener, int uid) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", uid + "");
+        final String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> SreChargeData = apiInterface.getSreChargeData(1, uid, reqkey, currentTimeMillis);
+        Call<Object> clone = SreChargeData.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("获取上级充值数据", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //上级充值校验
+    public void getOwnReansferCheck(DataListener listener, String a, String p) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("a", a + "");
+        map.put("p", p + "");
+        final String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<RestultInfo> OwnReansferCheck = apiInterface.getOwnReansferCheck(1, a, p, reqkey, currentTimeMillis);
+        Call<RestultInfo> clone = OwnReansferCheck.clone();
+        clone.enqueue(new Callback<RestultInfo>() {
+            @Override
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+                Log.d("上级充值校验", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //保存充值校验
+    public void getOwnReansferTrans(DataListener listener, double amount, String name) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("amount", amount + "");
+        map.put("name", name + "");
+        final String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<RestultInfo> OwnReansferTrans = apiInterface.getOwnReansferTrans(1, amount, name, reqkey, currentTimeMillis);
+        Call<RestultInfo> clone = OwnReansferTrans.clone();
+        clone.enqueue(new Callback<RestultInfo>() {
+            @Override
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+                Log.d("保存充值校验", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //保存日工资充值
+    public void getDailyRechargeTrans(DataListener listener, double amount, String name) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("amount", amount + "");
+        map.put("name", name + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<RestultInfo> dailyRechargeTrans = apiInterface.getDailyRechargeTrans(1, amount, name, reqkey, currentTimeMillis);
+        Call<RestultInfo> clone = dailyRechargeTrans.clone();
+        clone.enqueue(new Callback<RestultInfo>() {
+            @Override
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+                Log.d("保存日工资充值", response.toString());
+            }
+
+            @Override
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //获取设置配额的数据
+    public void getTquotaData(DataListener listener, int uid) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", uid + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> tquotaData = apiInterface.getTquotaData(1, uid, reqkey, currentTimeMillis);
+        Call<Object> clone = tquotaData.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("获取设置配额的数据", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //保存配额
+    public void getTeamUserQuotaSave(DataListener listener, int page, int rows, String sidx, String sord, int uid, String from, String to, int id, int stype, int model) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("page", page + "");
+        map.put("rows", rows + "");
+        map.put("sidx", sidx + "");
+        map.put("sord", sord + "");
+        map.put("uid", uid + "");
+        map.put("from", from + "");
+        map.put("to", to + "");
+        map.put("id", id + "");
+        map.put("stype", stype + "");
+        map.put("model", model + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<RestultInfo> teamUserQuotaSave = apiInterface.getTeamUserQuotaSave(1, page, rows, sidx, sord, uid, from, to, id, stype, model, reqkey, currentTimeMillis);
+        Call<RestultInfo> clone = teamUserQuotaSave.clone();
+        clone.enqueue(new Callback<RestultInfo>() {
+            @Override
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+                Log.d("保存配额", response.toString());
+
+            }
+
+            @Override
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+
+    //帐变记录
+    public void getCapitalChangeList(DataListener listener, String data) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("data", data + "");
+        final String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> capitalChangeList = apiInterface.getCapitalChangeList(1, data, reqkey, currentTimeMillis);
+        Call<Object> clone = capitalChangeList.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("帐变记录", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //跟新奖金类型
+    public void getBettingUpdatePrice(DataListener listener, int gid) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("gid", gid + "");
+        final String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> BettingUpdatePrice = apiInterface.getBettingUpdatePrice(gid, 1, reqkey, currentTimeMillis);
+        Call<Object> clone = BettingUpdatePrice.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("跟新奖金类型", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //获取追号信息
+    public void getBettingAutoPurchase(DataListener listener, int id, String period, int periods) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("id", id + "");
+        map.put("period", period + "");
+        map.put("periods", periods + "");
+        final String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> bettingAutoPurchase = apiInterface.getBettingAutoPurchase(1, id, period, periods, reqkey, currentTimeMillis);
+        Call<Object> clone = bettingAutoPurchase.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("获取追号信息", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //91获取全部追号的期数
+    public void getBettingAutoNums(DataListener listener, int id, String period) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("id", id + "");
+        map.put("period", period + "");
+        final String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> BettingAutoNums = apiInterface.getBettingAutoNums(1, id, period, reqkey, currentTimeMillis);
+        Call<Object> clone = BettingAutoNums.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("91获取全部追号的期数", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //同步上期开奖数据
+    public void getBettingWinningNum(DataListener listener, int id, String period) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("id", id + "");
+        map.put("period", period + "");
+        final String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> BettingWinningNum = apiInterface.getBettingWinningNum(1, id, period, reqkey, currentTimeMillis);
+        Call<Object> clone = BettingWinningNum.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("同步上期开奖数据", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //投注记录
+    public void getBettingHistorys(DataListener listener, int id, int page) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("id", id + "");
+        map.put("page", page + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> bettingHistorys = apiInterface.getBettingHistorys(id, 1, page, reqkey, currentTimeMillis);
+        Call<Object> clone = bettingHistorys.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("投注记录", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //追号记录
+    public void getBettingRebuyHistorys(DataListener listener, int id, int page) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("id", id + "");
+        map.put("page", page + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> bettingRebuyHistorys = apiInterface.getBettingRebuyHistorys(id, 1, page, reqkey, currentTimeMillis);
+        Call<Object> clone = bettingRebuyHistorys.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("追号记录", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //验证安全问题
+    public void getSecurityQuestionCheck(DataListener listener, String a) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("a", a + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> securityQuestionCheck = apiInterface.getSecurityQuestionCheck(1, a, reqkey, currentTimeMillis);
+        Call<Object> clone = securityQuestionCheck.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("验证安全问题", response.body().toString());
             }
 
             @Override

@@ -1,17 +1,20 @@
 package com.example.king.gou.fragment.gamefragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.MyAdapter;
 import com.example.king.gou.bean.GameIm;
 import com.example.king.gou.bean.GameImages;
 import com.example.king.gou.fragment.BaseFragment;
+import com.example.king.gou.ui.GameCenterActivity;
 import com.example.king.gou.utils.PinnedHeaderListView;
 
 import java.util.ArrayList;
@@ -66,6 +69,17 @@ public class LotteryFragment extends BaseFragment {
         MyAdapter adapter = new MyAdapter(getActivity(), imgs); // 布局里的控件id
         // 添加并且显示
         classifyMorelist.setAdapter(adapter);
+        classifyMorelist.setOnItemClickListener(new PinnedHeaderListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int section, int position, long id) {
+                startActivity(new Intent(getActivity(), GameCenterActivity.class));
+            }
+
+            @Override
+            public void onSectionClick(AdapterView<?> adapterView, View view, int section, long id) {
+
+            }
+        });
         return view;
     }
 

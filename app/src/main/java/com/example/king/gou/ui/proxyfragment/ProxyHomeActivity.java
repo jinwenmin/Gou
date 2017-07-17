@@ -61,8 +61,9 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_proxy_home);
         ButterKnife.bind(this);
-        RetrofitService.getInstance().getShareData(this);
-        RetrofitService.getInstance().getAddUserData(this);
+       // RetrofitService.getInstance().getShareData(this);
+       // RetrofitService.getInstance().getAddUserData(this);
+        RetrofitService.getInstance().getTeamUserInfo(this,1,100,"uid","desc",2047,"",0);
         initClick();
     }
 

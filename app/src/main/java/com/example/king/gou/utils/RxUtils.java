@@ -224,7 +224,7 @@ public class RxUtils {
         return str;
     }
 
-    public String getRegistersReqkey(Map<String, String> map, String t) {
+    public String getRegistersReqkey(Map<String, String> map, Object t) {
 
         String str = "AppClient=1";
         Map<String, String> resultMap = sortMapByKey(map);

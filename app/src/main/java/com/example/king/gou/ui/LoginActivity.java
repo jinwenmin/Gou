@@ -224,9 +224,11 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
                 edit.commit();
                 MyApp.getInstance().setUserName(Login_UserName);
                 if (Login_Pwd.equals("a123456")) {
+
                     startActivity(new Intent(LoginActivity.this, UpDateFirstPwdActivity.class));
 
                 } else {
+                    MyApp.getInstance().setUserUid(login.getUid());
                     startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
                 }
                 Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();

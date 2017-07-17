@@ -78,7 +78,7 @@
                     android:textSize="30px" />
 
                 <TextView
-                    android:id="@+id/text2"
+                    android:id="@+id/textPeriod"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -92,12 +92,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/text2"
+                    android:layout_toRightOf="@id/textPeriod"
                     android:text="期开奖:"
                     android:textSize="30px" />
 
                 <TextView
-                    android:id="@+id/text4"
+                    android:id="@+id/textTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -124,11 +124,12 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@id/MoneyCount"
-                    android:text="万发奖金:"
+                    android:text="玩法奖金:"
                     android:textSize="30px" />
             </RelativeLayout>
 
             <ProgressBar
+                android:id="@+id/GameCenterProgressBar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="8px"
@@ -141,7 +142,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/img"
+                    android:id="@+id/addGame"
                     android:layout_width="45px"
                     android:layout_height="45px"
                     android:layout_gravity="center_vertical"

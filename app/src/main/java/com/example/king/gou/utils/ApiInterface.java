@@ -219,10 +219,10 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("/profile-save")
     Call<RestultInfo> getNickNameChange(
-            @Field("AppClient") int num,
-            @Field("nickname") String nickname,//用户新昵称
-            @Field("reqkey") String reqkey,
-            @Field("t") long t
+            @Query("AppClient") int num,
+            @Query("nickname") String nickname,//用户新昵称
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
     );
 
     //强制修改初始密码
@@ -490,10 +490,10 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("/betting-details/{id}")
     Call<Object> getBettingDetails(
-            @Query("AppClient") int num,
             @Path("id") int id,//id为投注单bid
-            @Query("reqkey") String reqkey,
-            @Query("t") long t
+            @Field("AppClient") int num,
+            @Field("reqkey") String reqkey,
+            @Field("t") long t
     );
 
     //查询投注记录
@@ -527,12 +527,13 @@ public interface ApiInterface {
 
     //撤销投注单
     @Headers("X-Requested-With: XMLHttpRequest")
+    @FormUrlEncoded
     @POST("/lottery-bet-revoke/{bid}")
     Call<RestultInfo> getLotteryBetRevoke1(
-            @Query("AppClient") int num,
             @Path("bid") int id,//购彩单id
-            @Query("reqkey") String reqkey,
-            @Query("t") long t
+            @Field("AppClient") int num,
+            @Field("reqkey") String reqkey,
+            @Field("t") long t
     );
 
     //查询追号记录
@@ -895,7 +896,7 @@ public interface ApiInterface {
             @Query("n") String n,//昵称
             @Query("l") double l,//添加会员所选的返点
             @Query("code") String code,
-            @Query("t") String t,/*
+            @Query("t") int t,/*
                                 添加会员的类型；加密时需要放在最后
                                 2：推广用户类型为代理用户
                                 3：推广用户类型为普通会员
@@ -947,10 +948,10 @@ public interface ApiInterface {
             @Query("sord") String sord,/*排序类型，这里是[desc]*/
             @Query("uid") int uid,//当前层级查询的最高用户uid；如默认查询就是当前登录的用户id，点击用户名查询下一级就是被点击用户的uid
             @Query("u") String u,//查询条件用户名，这里是精确查询
-            @Query("b1") boolean b1,//查询余额范围的下限值
-            @Query("b2") boolean b2,//查询余额范围的上限值
-            @Query("l1") boolean l1,//查询返点范围的下限值
-            @Query("l2") boolean l2,//查询返点范围的上限值
+            /*@Query("b1") double b1,//查询余额范围的下限值
+            @Query("b2") double b2,//查询余额范围的上限值
+            @Query("l1") double l1,//查询返点范围的下限值
+            @Query("l2") double l2,//查询返点范围的上限值*/
             @Query("t") int t,/*用户类型
                                 0：所有用户
                                 2：代理用户
@@ -961,6 +962,7 @@ public interface ApiInterface {
 
     //68 获取会员管理层级数据
     @Headers("X-Requested-With: XMLHttpRequest")
+    @FormUrlEncoded
     @POST("/team-users-parent/{uid}")
     Call<Object> getTeamUsersParent(
             @Path("uid") int uid,
@@ -1016,8 +1018,8 @@ public interface ApiInterface {
     @POST("/own-transfer-check")
     Call<RestultInfo> getOwnReansferCheck(
             @Query("AppClient") int num,
-            @Query("a") int a,//安全问题答案
-            @Query("p") int p,//安全密码[需经过HmacSHA256加密]
+            @Query("a") String a,//安全问题答案
+            @Query("p") String p,//安全密码[需经过HmacSHA256加密]
             @Query("reqkey") String reqkey,
             @Query("t") long t
     );
@@ -1047,7 +1049,6 @@ public interface ApiInterface {
 
     //76 获取设置配额的数据
     @Headers("X-Requested-With: XMLHttpRequest")
-
     @POST("/tquota-data")
     Call<Object> getTquotaData(
             @Query("AppClient") int num,
@@ -1204,8 +1205,8 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("/betting/update-price-type/{id}")
     Call<Object> getBettingUpdatePrice(
-            @Field("AppClient") int num,
             @Path("id") int gid,//id 游戏gid
+            @Field("AppClient") int num,
             @Field("reqkey") String reqkey,
             @Field("t") long t
     );
@@ -1227,7 +1228,7 @@ public interface ApiInterface {
     @POST("/betting/auto-purchase")
     Call<Object> getBettingAutoPurchase(
             @Query("AppClient") int num,
-            @Query("id") int gid,//id 游戏gid
+            @Query("id") int id,//id 游戏gid
             @Query("period") String period,//开始追号的期号
             @Query("periods") int periods,//追号期数
             @Query("reqkey") String reqkey,
@@ -1282,7 +1283,6 @@ public interface ApiInterface {
 
     //96 验证安全问题
     @Headers("X-Requested-With: XMLHttpRequest")
-
     @POST("/security-question-check")
     Call<Object> getSecurityQuestionCheck(
             @Query("AppClient") int num,

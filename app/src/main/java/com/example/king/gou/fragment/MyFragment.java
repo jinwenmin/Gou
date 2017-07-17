@@ -28,9 +28,7 @@ import com.example.king.gou.bean.UserInfo;
 import com.example.king.gou.fragment.myfragment.OrderFragment;
 import com.example.king.gou.fragment.myfragment.ProxyFragment;
 import com.example.king.gou.service.RetrofitService;
-import com.example.king.gou.ui.GameCenterActivity;
 import com.example.king.gou.ui.LotteryZhuiHaoActivity;
-import com.example.king.gou.ui.MainActivity;
 import com.example.king.gou.ui.SettingActivity;
 import com.example.king.gou.ui.frmMyActivity.ChatUserActivity;
 import com.example.king.gou.ui.frmMyActivity.MessageActivity;
@@ -234,6 +232,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
             frmMyUserName.setText(userInfo.getUname());
             frmMyMoneyS.setText(userInfo.getSamount() + "");
             frmMyCount.setText(userInfo.getAmount() + "");
+            frmMyLottory.setText(userInfo.getRate() + "%");
 
         }
     }
