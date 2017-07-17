@@ -28,6 +28,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 /**
  * Created by king on 2017/5/29.
@@ -123,13 +124,13 @@ public interface ApiInterface {
 
     //公告列表
     @Headers("X-Requested-With: XMLHttpRequest")
-    @FormUrlEncoded
+ /*   @FormUrlEncoded*/
     @POST("/notice-view/{id}")
     Call<Object> getNoticesContent(
+            @Path("id") int id/*,
             @Field("AppClient") int num,
-            @Path("id") int id,
             @Field("reqkey") String reqkey,
-            @Field("t") long t
+            @Field("t") long t*/
 
     );
 
@@ -890,7 +891,7 @@ public interface ApiInterface {
     //64 添加会员-保存
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/signup")
-    Call<Object> getVIPSignUpSave(
+    Call<RestultInfo> getVIPSignUpSave(
             @Query("AppClient") int num,
             @Query("u") String u,//用户名
             @Query("n") String n,//昵称
