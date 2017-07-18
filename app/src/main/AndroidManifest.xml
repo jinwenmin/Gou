@@ -83,7 +83,8 @@
         <activity android:name=".ui.orderFrmActivity.AccountChangeDetailActivity" />
         <activity android:name=".ui.orderFrmActivity.LotteryLossActivity" />
         <activity android:name=".ui.RegisterActivity" />
-        <activity android:name=".ui.proxyfragment.AddNewTeamUserActivity"></activity>
+        <activity android:name=".ui.proxyfragment.AddNewTeamUserActivity" />
+        <activity android:name=".ui.proxyfragment.TeamLotteryLossActivity"></activity>
     </application>
 
 </manifest>

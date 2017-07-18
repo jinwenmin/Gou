@@ -184,8 +184,8 @@ public class TeamBaoBiaoActivity extends AutoLayoutActivity implements View.OnCl
         Swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                List<UserTeamBetting> uu = new ArrayList<UserTeamBetting>();
-                teamBettingAdapter.addList(uu);
+               // List<UserTeamBetting> uu = new ArrayList<UserTeamBetting>();
+               // teamBettingAdapter.addList(uu);
                 initRetrofit();
             }
         });

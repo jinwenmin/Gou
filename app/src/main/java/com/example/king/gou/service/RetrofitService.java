@@ -133,6 +133,9 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_TEAMUSERINFO = 38;//会员管理
     public static int API_ID_ADDVIPCODE = 39;//推广码
     public static int API_ID_ADDCIPSAVE = 40;//添加会员保存
+    public static int API_ID_USERSTA = 41;//会员统计
+    public static int API_ID_TEAMUSERLIST = 42;//会员统计2
+
 
     private Retrofit retrofit;
     private ApiInterface apiInterface;
@@ -2332,11 +2335,11 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                if (response.code()==200) {
+                if (response.code() == 200) {
                     String s = response.body().toString();
                     Log.d("获取添加会员数据", s);
                     String Code = s.substring(s.indexOf("code=") + 5, s.indexOf(", rate="));
-                    listener.onReceivedData(API_ID_ADDVIPCODE,Code,API_ID_ERROR);
+                    listener.onReceivedData(API_ID_ADDVIPCODE, Code, API_ID_ERROR);
 
                 }
             }
@@ -2448,7 +2451,7 @@ public class RetrofitService extends HttpEngine {
 
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
-                Log.d("团队报表彩票投注Drror", t.toString());
+                Log.d("团队报表彩票投注Error", t.toString());
             }
         });
 
@@ -2475,7 +2478,7 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-
+                Log.d("团队报表当日或历史盈亏", response.body().toString());
             }
 
             @Override
@@ -2487,7 +2490,7 @@ public class RetrofitService extends HttpEngine {
     }
 
     //会员统计
-    public void getUserStatistics(DataListener listener) {
+    public void getUserStatistics(final DataListener listener) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         final String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
@@ -2496,7 +2499,23 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                Log.d("会员统计", response.body().toString());
+                if (response.code() == 200) {
+                    String s = response.body().toString();
+                    Log.d("会员统计", s);
+                    String headCount = s.substring(s.indexOf("headcount=") + 10, s.indexOf(".0, onlinecount="));
+                    String onlineCount = s.substring(s.indexOf("onlinecount=") + 12, s.indexOf(".0, amounts="));
+                    String amount = s.substring(s.indexOf("amounts=") + 8, s.indexOf(", months="));
+                    String month = s.substring(s.indexOf("months=") + 7, s.indexOf(".0, todays="));
+                    String todays = s.substring(s.indexOf("todays=") + 7, s.length() - 4);
+                    List<String> UserSta = new ArrayList<String>();
+                    UserSta.add(headCount);
+                    UserSta.add(onlineCount);
+                    UserSta.add(amount);
+                    UserSta.add(month);
+                    UserSta.add(todays);
+                    listener.onReceivedData(API_ID_USERSTA, UserSta, API_ID_ERROR);
+                }
+
             }
 
             @Override
@@ -2507,7 +2526,7 @@ public class RetrofitService extends HttpEngine {
     }
 
     //查询统计的用户信息
-    public void getTeamUserList(DataListener listener, int page, int rows, String sidx, String sord, int type, int stype) {
+    public void getTeamUserList(final DataListener listener, int page, int rows, String sidx, String sord, int type, int stype) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         map.put("page", page + "");
@@ -2522,7 +2541,54 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                Log.d("查询统计的用户信息", response.body().toString());
+
+                if (response.code() == 200) {
+                    List<List<TeamUserInfo>> ts = new ArrayList<List<TeamUserInfo>>();
+                    String s = response.body().toString();
+                    Log.d("查询统计的用户信息", s);
+                    String totalElements = s.substring(s.indexOf("totalElements=") + 14, s.indexOf(".0, firstPage"));
+                    List<TeamUserInfo> t = new ArrayList<TeamUserInfo>();
+                    TeamUserInfo teamUserInfo1 = new TeamUserInfo();
+                    teamUserInfo1.setTotalElements(Integer.parseInt(totalElements));
+                    t.add(teamUserInfo1);
+                    ts.add(t);
+                    if (Integer.parseInt(totalElements) > 0) {
+                        List<TeamUserInfo> t1 = new ArrayList<TeamUserInfo>();
+                        String Content = s.substring(s.indexOf("content=[") + 9, s.indexOf("], number="));
+                        String[] cs = Content.split(", ");
+                        for (int i = 0; i < cs.length; i = i + 12) {
+                            Log.d("会员管理Split", cs[i]);
+                            TeamUserInfo team = new TeamUserInfo();
+                            String uid = cs[i].substring(1, cs[i].length() - 2);
+                            String mine = cs[i + 1].substring(0, cs[i + 1].length() - 2);
+                            String utype = cs[i + 2].substring(0, cs[i + 2].length() - 2);
+                            String name = cs[i + 3];
+                            String amount = cs[i + 4];
+                            String rebate_id = cs[i + 5].substring(0, cs[i + 5].length() - 2);
+                            String rate = cs[i + 6];
+                            String created = cs[i + 7];
+                            String login = cs[i + 8];
+                            String rtype = cs[i + 9].substring(0, cs[i + 9].length() - 2);
+                            String status = cs[i + 10].substring(0, cs[i + 10].length() - 2);
+                            String zu = cs[i + 11].substring(0, cs[i + 11].length() - 3);
+                            team.setUid(Integer.parseInt(uid));
+                            team.setMine(Integer.parseInt(mine));
+                            team.setUtype(Integer.parseInt(utype));
+                            team.setName(name);
+                            team.setAmount(Double.parseDouble(amount));
+                            team.setRebate_id(Integer.parseInt(rebate_id));
+                            team.setRate(Double.parseDouble(rate));
+                            team.setCreated(created);
+                            team.setLogin(login);
+                            team.setRtype(Integer.parseInt(rtype));
+                            team.setStatus(Integer.parseInt(status));
+                            team.setZu(Integer.parseInt(zu));
+                            t1.add(team);
+                        }
+                        ts.add(t1);
+                    }
+                    listener.onReceivedData(API_ID_TEAMUSERLIST, ts, API_ID_ERROR);
+                }
 
             }
 
@@ -2593,9 +2659,9 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
-                if (response.code()==200) {
+                if (response.code() == 200) {
                     Log.d("添加会员-保存", response.body().toString());
-                    listener.onReceivedData(API_ID_ADDCIPSAVE,response.body(),API_ID_ERROR);
+                    listener.onReceivedData(API_ID_ADDCIPSAVE, response.body(), API_ID_ERROR);
                 }
             }
 
@@ -2670,7 +2736,7 @@ public class RetrofitService extends HttpEngine {
                         }
                         ts.add(t1);
                     }
-                    listener.onReceivedData(API_ID_TEAMUSERINFO,ts,API_ID_ERROR);
+                    listener.onReceivedData(API_ID_TEAMUSERINFO, ts, API_ID_ERROR);
                 }
             }
 

@@ -17,13 +17,14 @@ import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
+import com.zhy.autolayout.AutoLayoutActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
 
 
-public class AddNewTeamUserActivity extends AppCompatActivity implements View.OnClickListener, HttpEngine.DataListener {
+public class AddNewTeamUserActivity extends AutoLayoutActivity implements View.OnClickListener, HttpEngine.DataListener {
 
     @BindView(R.id._back)
     ImageView Back;
@@ -109,6 +110,11 @@ public class AddNewTeamUserActivity extends AppCompatActivity implements View.On
         }
         if (!addUserNewPwd.equals(addUserCheckPwd)) {
             Toasty.error(AddNewTeamUserActivity.this, "密码和确认密码不一致", 2000).show();
+            return;
+        }
+        Double addUserR = Double.parseDouble(addUserRate);
+        if(addUserR<  0||addUserR>12.6) {
+            Toasty.error(AddNewTeamUserActivity.this, "返点不符合规则", 2000).show();
             return;
         }
         String pwd = RxUtils.getInstance().HMACSHA256(addUserNewPwd, addUserName);

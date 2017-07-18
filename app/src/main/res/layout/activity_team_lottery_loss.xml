@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.example.king.gou.ui.orderFrmActivity.LotteryLossActivity">
 
     <RelativeLayout
-        android:id="@+id/TeamBettingTop"
+        android:id="@+id/LotteryLossTop"
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_height"
         android:background="@color/top_background">
 
         <ImageView
-            android:id="@+id/TeamBetting_back"
+            android:id="@+id/LotteryLoss_back"
             android:layout_width="@dimen/top_back"
             android:layout_height="@dimen/top_back"
             android:layout_centerVertical="true"
@@ -21,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="团队报表彩票投注"
+            android:text="团队报表彩票盈亏"
             android:textColor="@android:color/white"
             android:textSize="@dimen/top_textsize" />
     </RelativeLayout>
@@ -32,7 +35,7 @@
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:id="@+id/TeamBettingrelateTime1"
+            android:id="@+id/relateTime1"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_marginRight="4px"
@@ -40,24 +43,25 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/TeamBettingtimetext"
+                android:id="@+id/timetext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="6px"
-                android:text="2010-01-01" />
+                android:text="2010-01-01"
+                android:textSize="30px" />
 
             <ImageView
                 android:layout_width="50px"
                 android:layout_height="50px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="6px"
+                android:layout_marginRight="10px"
                 android:background="@drawable/wuka_xiala" />
 
             <View
-                android:layout_width="1px"
+                android:layout_width="2px"
                 android:layout_height="60px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
@@ -65,7 +69,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/TeamBettingrelateTime2"
+            android:id="@+id/relateTime2"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_marginRight="4px"
@@ -74,23 +78,29 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/TeamBettingtimetext2"
+                android:id="@+id/timetext2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="6px"
-                android:text="2010-01-20" />
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:text="6666-66-66"
+                android:textSize="30px" />
 
             <ImageView
                 android:layout_width="50px"
                 android:layout_height="50px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="6px"
+                android:layout_marginRight="10px"
                 android:background="@drawable/wuka_xiala" />
 
-
+            <View
+                android:layout_width="2px"
+                android:layout_height="60px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@color/gray" />
         </RelativeLayout>
 
 
@@ -103,46 +113,48 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80px">
+        android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/SearchName"
+            android:id="@+id/UserName"
             android:layout_width="0px"
             android:layout_height="wrap_content"
-            android:layout_weight="8"
+            android:layout_gravity="center"
+            android:layout_weight="7"
             android:background="@null"
             android:gravity="center"
             android:hint="按用户名查询(可选)"
-            android:textSize="30px" />
+            android:textSize="35px" />
+
 
         <Button
-            android:id="@+id/ToSearchName"
+            android:id="@+id/SearchUserName"
             android:layout_width="0px"
-            android:layout_height="80px"
-            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
             android:text="搜索"
-            android:textColor="@android:color/black"
             android:textSize="30px" />
+
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/gray" />
+        android:background="@color/gray"></View>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80px"
+        android:layout_height="60px"
         android:orientation="horizontal">
 
         <Spinner
-            android:id="@+id/SpinnerStatus"
+            android:id="@+id/TLotteryLossUid"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"></Spinner>
 
         <Spinner
-            android:id="@+id/SpinnerType"
+            android:id="@+id/TLotteryLossGtype"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"></Spinner>
@@ -151,21 +163,21 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/gray" />
+        android:background="@color/gray"></View>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80px"
+        android:layout_height="60px"
         android:orientation="horizontal">
 
         <Spinner
-            android:id="@+id/SpinnerGameId"
+            android:id="@+id/TLotteryLossStype"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"></Spinner>
 
         <Spinner
-            android:id="@+id/SpinnerGameRid"
+            android:id="@+id/TLotteryLossTeam"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"></Spinner>
@@ -174,17 +186,68 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/gray" />
+        android:background="@color/gray"></View>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/Swipe"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ListView
-            android:id="@+id/TeamBettingListView"
+        <LinearLayout
+            android:id="@+id/Linear1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+            android:layout_height="50px"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:orientation="horizontal">
 
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="投注汇总: "
+                    android:textColor="@android:color/black"
+                    android:textSize="30px" />
+
+                <TextView
+                    android:id="@+id/Expend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="0.000"
+                    android:textSize="30px" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="奖金汇总: "
+                    android:textColor="@android:color/black"
+                    android:textSize="30px" />
+
+                <TextView
+                    android:id="@+id/InCome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="0.000"
+                    android:textSize="30px" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

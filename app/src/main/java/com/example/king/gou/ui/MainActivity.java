@@ -37,12 +37,15 @@ import com.bigkoo.alertview.OnItemClickListener;
 import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.LoginState;
+import com.example.king.gou.bean.TeamUserInfo;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.utils.DataBaseHelper;
 import com.example.king.gou.utils.HttpEngine;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -87,12 +90,14 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
     String name = null;
     String isfinger;
     SQLiteDatabase databaseFinger;
+    List<List<TeamUserInfo>> ts = new ArrayList<List<TeamUserInfo>>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        RetrofitService.getInstance().getTeamUserInfo(this, 1, 100, "uid", "desc", MyApp.getInstance().getUserUid(), "", 0);
         RetrofitService.getInstance().getChatUser(this);
         dataBaseHelper = new DataBaseHelper(MainActivity.this, "yigou.db", null, 1);
         /* 创建两张表 */
@@ -193,7 +198,7 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
             @Override
             public void run() {
                 RetrofitService.getInstance().LoginState(MainActivity.this, login_uid, 1, 0, new String[]{String.valueOf(login_uid)}, 1);
-               // RetrofitService.getInstance().getTokenSignin(MainActivity.this);
+                // RetrofitService.getInstance().getTokenSignin(MainActivity.this);
 
             }
         };
@@ -213,6 +218,14 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
         if (apiId == RetrofitService.API_ID_LOGINSTATE) {
             LoginState loginState = (LoginState) object;
             System.out.println("用户状态信息==" + loginState.toString());
+        }
+        if (apiId == RetrofitService.API_ID_TEAMUSERINFO) {
+            ts = (List<List<TeamUserInfo>>) object;
+            if (ts.size() > 1) {
+                List<TeamUserInfo> teamUserInfos = ts.get(1);
+
+                MyApp.getInstance().setUids(teamUserInfos);
+            }
         }
     }
 

@@ -66,9 +66,9 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_tuanduiyxjl"
+            android:drawableTop="@mipmap/ic_caipiaobaobiao"
             android:gravity="center_horizontal"
-            android:text="团队游戏记录" />
+            android:text="团队彩票盈亏" />
     </LinearLayout>
 
     <LinearLayout

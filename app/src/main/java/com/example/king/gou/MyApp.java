@@ -3,11 +3,13 @@ package com.example.king.gou;
 import android.app.Application;
 import android.content.Context;
 
+import com.example.king.gou.bean.TeamUserInfo;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.cookie.store.PersistentCookieStore;
 
+import java.util.List;
 import java.util.logging.Level;
 
 /**
@@ -22,6 +24,15 @@ public class MyApp extends Application {
     private String UserNickName;
     private String UserName;
     private int UserUid;
+    private List<TeamUserInfo> Uids;
+
+    public List<TeamUserInfo> getUids() {
+        return Uids;
+    }
+
+    public void setUids(List<TeamUserInfo> uids) {
+        Uids = uids;
+    }
 
     public int getUserUid() {
         return UserUid;

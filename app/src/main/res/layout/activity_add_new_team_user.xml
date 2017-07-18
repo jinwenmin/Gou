@@ -80,7 +80,9 @@
             android:hint="请输入昵称"
             android:singleLine="true"
             android:textSize="35px" />
-    </LinearLayout><LinearLayout
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20px">
@@ -95,14 +97,14 @@
             android:textSize="35px" />
 
         <EditText
-            android:inputType="number"
             android:id="@+id/AddUserRate"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="7"
             android:background="@null"
             android:gravity="center"
-            android:hint="请输入返点数"
+            android:hint="范围0.0~12.6"
+            android:inputType="numberDecimal"
             android:singleLine="true"
             android:textSize="35px" />
     </LinearLayout>
@@ -196,10 +198,10 @@
         android:orientation="horizontal">
 
         <RadioButton
-            android:checked="true"
             android:id="@+id/radioTeam1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:text="代理用户" />
 
         <RadioButton
