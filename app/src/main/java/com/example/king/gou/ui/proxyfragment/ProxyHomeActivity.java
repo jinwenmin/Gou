@@ -2,7 +2,9 @@ package com.example.king.gou.ui.proxyfragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +17,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bigkoo.alertview.AlertView;
+import com.bigkoo.alertview.OnItemClickListener;
 import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.TeamUserInfoAdapter;
@@ -30,7 +34,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClickListener, HttpEngine.DataListener {
+public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClickListener, HttpEngine.DataListener, OnItemClickListener {
 
 
     List<List<TeamUserInfo>> ts = new ArrayList<List<TeamUserInfo>>();
@@ -55,12 +59,19 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
     List<Integer> tId = new ArrayList<>();
     List<String> tName = new ArrayList<>();
     int uid;
+    private AlertView alertView;
+    // 一个自定义的布局，作为显示的内容
+    View contentView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_proxy);
         ButterKnife.bind(this);
+        alertView = new AlertView(null, null, "确认", null, null, this, AlertView.Style.Alert, this);
+        contentView = LayoutInflater.from(this).inflate(
+                R.layout.item_homenotice, null);
+        alertView.addExtView(contentView);
         adapter = new TeamUserInfoAdapter(this);
         ActivityProxyListView.setAdapter(adapter);
         initSpinner();
@@ -122,14 +133,14 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
                 Toast.makeText(ProxyHomeActivity.this,
                         "查询团队余额",
                         Toast.LENGTH_SHORT).show();
-                RetrofitService.getInstance().getTeamBalanceView(this,uid);
+                RetrofitService.getInstance().getTeamBalanceView(this, uid);
                 break;
 
             case 1:
                 Toast.makeText(ProxyHomeActivity.this,
                         "设置返点",
                         Toast.LENGTH_SHORT).show();
-                RetrofitService.getInstance().getUreBateData(this,uid);
+                RetrofitService.getInstance().getUreBateData(this, uid);
                 break;
 
             case 2:
@@ -189,6 +200,12 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
             startActivity(intent);
             finish();
         }
+        if (apiId == RetrofitService.API_ID_TEAMBALANCEVIEW) {
+            String TeamAmount = (String) object;
+            TextView homeNotice = (TextView) contentView.findViewById(R.id.homeNoticeText);
+            homeNotice.setText(TeamAmount);
+            alertView.show();
+        }
 
     }
 
@@ -199,6 +216,11 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
 
     @Override
     public void onRequestEnd(int apiId) {
+
+    }
+
+    @Override
+    public void onItemClick(Object o, int position) {
 
     }
 }

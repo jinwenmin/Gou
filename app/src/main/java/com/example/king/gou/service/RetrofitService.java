@@ -135,6 +135,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_ADDCIPSAVE = 40;//添加会员保存
     public static int API_ID_USERSTA = 41;//会员统计
     public static int API_ID_TEAMUSERLIST = 42;//会员统计2
+    public static int API_ID_TEAMBALANCEVIEW = 43;//查询会员余额
 
 
     private Retrofit retrofit;
@@ -2695,7 +2696,16 @@ public class RetrofitService extends HttpEngine {
                     List<List<TeamUserInfo>> ts = new ArrayList<List<TeamUserInfo>>();
                     String s = response.body().toString();
                     Log.d("会员管理", s);
-                    String totalElements = s.substring(s.indexOf("totalElements=") + 14, s.indexOf(".0, firstPage"));
+                    String substring = s.substring(s.indexOf("], ") + 3, s.length() - 1);
+                    String[] split = substring.split(", ");
+                    String totalElements="";
+                    for (int i = 0; i < split.length; i++) {
+                        Log.d("会员管理Split", split[i]);
+                        if (split[i].contains("totalElements=")) {
+                            totalElements = split[i].substring(split[i].indexOf("totalElements=") + 14, split[i].length()-2);
+                        }
+                    }
+
                     List<TeamUserInfo> t = new ArrayList<TeamUserInfo>();
                     TeamUserInfo teamUserInfo1 = new TeamUserInfo();
                     teamUserInfo1.setTotalElements(Integer.parseInt(totalElements));
@@ -2769,7 +2779,7 @@ public class RetrofitService extends HttpEngine {
     }
 
     //查询团队余额
-    public void getTeamBalanceView(DataListener listener, int uid) {
+    public void getTeamBalanceView(final DataListener listener, int uid) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         map.put("uid", uid + "");
@@ -2779,7 +2789,17 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                Log.d("TeamU查询团队余额", response.body().toString());
+                if (response.code() == 200) {
+                    String TeamAmount = "";
+                    String msg = response.body().toString();
+                    Log.d("TeamU查询团队余额", msg);
+                    String rc = msg.substring(msg.indexOf("rc=") + 3, msg.indexOf(", msg="));
+                    if ("true".equals(rc)) {
+                        TeamAmount = msg.substring(msg.indexOf("msg=") + 4, msg.indexOf(", id"));
+                    }
+                    listener.onReceivedData(API_ID_TEAMBALANCEVIEW, TeamAmount, API_ID_ERROR);
+                }
+
             }
 
             @Override

@@ -169,7 +169,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 if ("0".equals(listnotice.get(1))) {
                     TextView homeNotice = (TextView) contentView.findViewById(R.id.homeNoticeText);
                     homeNotice.setText(Html.fromHtml(listnotice.get(0)));
-
                     alertView.show();
                 } else {
                     TextView textView = new TextView(getActivity());
