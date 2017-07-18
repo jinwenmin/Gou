@@ -2779,7 +2779,7 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                Log.d("查询团队余额", response.body().toString());
+                Log.d("TeamU查询团队余额", response.body().toString());
             }
 
             @Override
@@ -2800,7 +2800,7 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                Log.d("获取设置返点的数据", response.body().toString());
+                Log.d("TeamU获取设置返点的数据", response.body().toString());
             }
 
             @Override

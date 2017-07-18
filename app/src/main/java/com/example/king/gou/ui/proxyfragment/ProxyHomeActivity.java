@@ -2,12 +2,18 @@ package com.example.king.gou.ui.proxyfragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
@@ -41,6 +47,14 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
     View view;
     @BindView(R.id.TeamUserBtn)
     Button TeamUserBtn;
+    @BindView(R.id.view2)
+    View view2;
+    @BindView(R.id.ProxyHomeSpinner)
+    Spinner ProxyHomeSpinner;
+    ArrayAdapter<String> adapter2;
+    List<Integer> tId = new ArrayList<>();
+    List<String> tName = new ArrayList<>();
+    int uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +63,100 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
         ButterKnife.bind(this);
         adapter = new TeamUserInfoAdapter(this);
         ActivityProxyListView.setAdapter(adapter);
+        initSpinner();
         // RetrofitService.getInstance().getShareData(this);
         // RetrofitService.getInstance().getAddUserData(this);4
-        RetrofitService.getInstance().getTeamUserInfo(this, 1, 100, "uid", "desc", MyApp.getInstance().getUserUid(), "", 0);
+
         initClick();
+    }
+
+    private void initSpinner() {
+        tId.add(0);
+        tId.add(2);
+        tId.add(3);
+        tId.add(-1);
+        tName.add("所有用户");
+        tName.add("代理用户");
+        tName.add("普通会员");
+        tName.add("在线用户");
+        adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tName);
+        //第三步：为适配器设置下拉列表下拉时的菜单样式。
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //第四步：将适配器添加到下拉列表上
+        ProxyHomeSpinner.setAdapter(adapter2);
+        ProxyHomeSpinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                RetrofitService.getInstance().getTeamUserInfo(ProxyHomeActivity.this, 1, 100, "uid", "desc", MyApp.getInstance().getUserUid(), "", tId.get(i));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void ItemOnLongClick1() {
+//注：setOnCreateContextMenuListener是与下面onContextItemSelected配套使用的
+        ActivityProxyListView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                menu.add(0, 0, 0, "查询团队余额");
+                menu.add(0, 1, 0, "设置返点");
+                menu.add(0, 2, 0, "对比");
+
+            }
+        });
+
+    }    // 长按菜单响应函数
+
+    public boolean onContextItemSelected(MenuItem item) {
+
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
+                .getMenuInfo();
+
+
+        switch (item.getItemId()) {
+            case 0:
+                // 添加操作
+                Toast.makeText(ProxyHomeActivity.this,
+                        "查询团队余额",
+                        Toast.LENGTH_SHORT).show();
+                RetrofitService.getInstance().getTeamBalanceView(this,uid);
+                break;
+
+            case 1:
+                Toast.makeText(ProxyHomeActivity.this,
+                        "设置返点",
+                        Toast.LENGTH_SHORT).show();
+                RetrofitService.getInstance().getUreBateData(this,uid);
+                break;
+
+            case 2:
+                Toast.makeText(ProxyHomeActivity.this,
+                        "对比",
+                        Toast.LENGTH_SHORT).show();
+                break;
+
+            default:
+                break;
+        }
+        return false;
     }
 
     private void initClick() {
         Back.setOnClickListener(this);
         TeamUserBtn.setOnClickListener(this);
+        ActivityProxyListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (ts.size() > 1) {
+                    uid = ts.get(1).get(i).getUid();
+                    ItemOnLongClick1();
+                }
+                return false;
+            }
+        });
     }
 
     @Override
