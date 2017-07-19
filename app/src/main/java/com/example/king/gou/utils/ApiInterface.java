@@ -112,6 +112,26 @@ public interface ApiInterface {
             @Query("t") long t
     );
 
+    //活动列表
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/activity-notices-view")
+    Call<Object> getActivityNoticesView(
+            @Query("AppClient") int num,
+            @Query("id") int id,//活动id
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //报名参加活动
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/activity-user-apply")
+    Call<Object> getActivityUserApply(
+            @Query("AppClient") int num,
+            @Query("id") int id,//活动id
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
     //公告列表
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-notices")

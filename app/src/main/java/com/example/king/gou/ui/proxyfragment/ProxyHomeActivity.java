@@ -151,8 +151,9 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
             public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
                 menu.add(0, 0, 0, "查询团队余额");
                 menu.add(0, 1, 0, "设置返点");
-              //  menu.add(0, 3, 0, "获得上级充值数据");
+                //  menu.add(0, 3, 0, "获得上级充值数据");
                 menu.add(0, 2, 0, "保存上级充值");
+                menu.add(0, 3, 0, "保存日工资充值");
 
             }
         });
@@ -178,7 +179,7 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
                /* Toast.makeText(ProxyHomeActivity.this,
                         "获得上级充值数据",
                         Toast.LENGTH_SHORT).show();*/
-                  RetrofitService.getInstance().getSreChargeData(this, uid);
+                RetrofitService.getInstance().getSreChargeData(this, uid);
                 break;
             case 3:
 
@@ -273,7 +274,33 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
         }
         if (apiId == RetrofitService.API_ID_SRECHARGE) {
             sreCharge = (SreCharge) object;
-           /* if (sreCharge.getStype() == 0) {
+            if (sreCharge.getStype() == 0) {
+                Toasty.error(this, "没有充值权限", 2000).show();
+                return;
+            }
+            if (sreCharge.getStype() == 1) {
+                Toasty.success(this, "直属下级可充值", 2000).show();
+            }
+            if (sreCharge.getStype() == 2) {
+                Toasty.success(this, "所有下级可充值", 2000).show();
+            }
+
+            proxyName = ((TextView) contentView2.findViewById(R.id.proxy_name));
+            proxyName.setText(sreCharge.getRuser());
+            setTrans = ((EditText) contentView2.findViewById(R.id.Proxy_setTrans));
+            SreChargeMin = sreCharge.getMin1();
+            SreChargeMax = sreCharge.getMax1();
+            amounts1 = sreCharge.getAmounts1();
+            if (amounts1 < SreChargeMax) {
+                SreChargeMax = amounts1;
+            }
+            setTrans.setHint("充值范围:" + SreChargeMin + "~" + SreChargeMax);
+            alertView2.show();
+            isS = "Show2";
+        }
+        if (apiId == RetrofitService.API_ID_SRECHARGE2) {
+            sreCharge = (SreCharge) object;
+          /*  if (sreCharge.getStype() == 0) {
                 Toasty.error(this, "没有充值权限", 2000).show();
                 return;
             }
@@ -295,7 +322,7 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
             }
             setTrans.setHint("充值范围:" + SreChargeMin + "~" + SreChargeMax);
             alertView2.show();
-            isS = "Show2";
+            isS = "Show3";
         }
         if (apiId == RetrofitService.API_ID_OWNTRANSFER) {
             if (object != null) {
@@ -356,6 +383,24 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
                         return;
                     }
                     RetrofitService.getInstance().getOwnReansferTrans(this, editV, proxyName.getText().toString().trim());
+                    setTrans.setText("");
+                }
+            }
+        }
+        if ("Show3".equals(isS)) {
+            if (position == AlertView.CANCELPOSITION) {
+                Log.d("工资充值测试AlertView", "取消");
+                alertView2.dismiss();
+            } else {
+                Log.d("工资充值测试AlertView", "确认");
+                String trim = setTrans.getText().toString().trim();
+                if (!"".equals(trim)) {
+                    double editV = Double.parseDouble(trim);
+                    if (editV > SreChargeMax || editV < SreChargeMin) {
+                        Toasty.error(this, "充值金额不在范围内", 2000).show();
+                        return;
+                    }
+                    RetrofitService.getInstance().getDailyRechargeTrans(this, editV, proxyName.getText().toString().trim());
                     setTrans.setText("");
                 }
             }

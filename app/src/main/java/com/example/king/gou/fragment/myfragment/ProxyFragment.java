@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.king.gou.R;
 import com.example.king.gou.fragment.BaseFragment;
 import com.example.king.gou.ui.proxyfragment.ProxyHomeActivity;
+import com.example.king.gou.ui.proxyfragment.TeamActivityActivity;
 import com.example.king.gou.ui.proxyfragment.TeamBaoBiaoActivity;
 import com.example.king.gou.ui.proxyfragment.ActivityTeamActivity;
 import com.example.king.gou.ui.proxyfragment.TeamCunQuActivity;
@@ -110,11 +111,12 @@ public class ProxyFragment extends BaseFragment implements View.OnClickListener 
                 StartA(TeamZBJLActivity.class);
                 break;
             case R.id.proxy_GameJl:
-               // StartA(TeamGamejlActivity.class);
+                // StartA(TeamGamejlActivity.class);
                 StartA(TeamLotteryLossActivity.class);
                 break;
             case R.id.proxy_TeamZhuiHao:
-                StartA(TeamZhuihaojlActivity.class);
+                //StartA(TeamZhuihaojlActivity.class);
+                StartA(TeamActivityActivity.class);
                 break;
             case R.id.proxy_TeamCunQu:
                 StartA(TeamCunQuActivity.class);

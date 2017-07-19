@@ -83,7 +83,7 @@
             android:layout_weight="1"
             android:drawableTop="@mipmap/ic_tuanduizhjl"
             android:gravity="center_horizontal"
-            android:text="团队追号记录" />
+            android:text="活动列表" />
 
         <TextView
             android:id="@+id/proxy_TeamCunQu"

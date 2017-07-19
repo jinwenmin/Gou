@@ -28,6 +28,7 @@ import com.example.king.gou.bean.SetRate;
 import com.example.king.gou.bean.SreCharge;
 import com.example.king.gou.bean.TeamUserInfo;
 import com.example.king.gou.bean.TouZhu;
+import com.example.king.gou.bean.UserActivity;
 import com.example.king.gou.bean.UserAmount;
 import com.example.king.gou.bean.UserInfo;
 import com.example.king.gou.bean.UserTeamBetting;
@@ -141,7 +142,10 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_UREBATEDATA = 44;//查询会员返点
     public static int API_ID_SETRATESAVE = 45;//查询会员返点
     public static int API_ID_SRECHARGE = 46;//获取上级充值数据
-    public static int API_ID_OWNTRANSFER = 47;//给下级充值
+    public static int API_ID_SRECHARGE2 = 47;//获取上级充值数据
+    public static int API_ID_OWNTRANSFER = 48;//给下级充值
+    public static int API_ID_ACTIVITYLIST = 49;//获取活动列表
+    public static int API_ID_ACTIVITYDETAIL = 50;//获取活动详情
 
 
     private Retrofit retrofit;
@@ -376,16 +380,31 @@ public class RetrofitService extends HttpEngine {
     }
 
     //获取活动列表
-    public void GetActivityList(DataListener listener) {
+    public void GetActivityList(final DataListener listener) {
         long currentTimeMillis = System.currentTimeMillis();
-        reqkey = "AppClient=1&t=" + currentTimeMillis;
-        reqkey = RxUtils.getInstance().md5(reqkey);
+        Map<String, String> map = new HashMap<>();
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
         Call<Object> activityList = apiInterface.getActivityList(1, reqkey, currentTimeMillis);
         Call<Object> clone = activityList.clone();
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                Log.d("获取活动列表", response.body() + "");
+                if (response.code() == 200) {
+                    String s = response.body().toString();
+                    Log.d("获取活动列表", s + "");
+                    String acs = s.substring(1, s.length() - 1);
+                    String[] ac = acs.split(", ");
+                    List<UserActivity> uac = new ArrayList<UserActivity>();
+                    for (int i = 0; i < ac.length; i = i + 2) {
+                        String aid = ac[i].substring(1, ac[i].length() - 2);
+                        String name = ac[i + 1].substring(0, ac[i + 1].length() - 1);
+                        UserActivity uc = new UserActivity();
+                        uc.setAid(Integer.parseInt(aid));
+                        uc.setName(name);
+                        uac.add(uc);
+                    }
+                    listener.onReceivedData(API_ID_ACTIVITYLIST, uac, API_ID_ERROR);
+                }
             }
 
             @Override
@@ -393,8 +412,69 @@ public class RetrofitService extends HttpEngine {
 
             }
         });
+    }
 
+    //获取活动详情
+    public void getActivityNoticesView(final DataListener listener, int id) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("id", id + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> activityNoticesView = apiInterface.getActivityNoticesView(1, id, reqkey, currentTimeMillis);
+        Call<Object> clone = activityNoticesView.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                if (response.code()==200) {
+                    String s = response.body().toString();
+                    Log.d("获取活动详情", s);
+                    String rc = s.substring(s.indexOf("rc=") + 3, s.indexOf(", msg="));
+                    if ("true".equals(rc)) {
+                        UserActivity uc=new UserActivity();
+                        String msg = s.substring(s.indexOf("msg=") + 4, s.indexOf(", id="));
+                        String others = s.substring(s.indexOf("others=") + 7, s.length() - 3);
+                        uc.setMsg(msg);
+                        uc.setOthers(Integer.parseInt(others));
+                        listener.onReceivedData(API_ID_ACTIVITYDETAIL,uc,API_ID_ERROR);
+                    }
 
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+ //报名参加活动
+    public void getActivityUserApply(final DataListener listener, int id) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("id", id + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> activityUserApply = apiInterface.getActivityUserApply(1, id, reqkey, currentTimeMillis);
+        Call<Object> clone = activityUserApply.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                if (response.code()==200) {
+                    String s = response.body().toString();
+                    Log.d("获取活动详情", s);
+                    String rc = s.substring(s.indexOf("rc=") + 3, s.indexOf(", msg="));
+                    if ("true".equals(rc)) {
+                        String msg = s.substring(s.indexOf("msg=") + 4, s.indexOf(", id="));
+                        listener.onReceivedData(API_ID_ACTIVITYDETAIL,msg,API_ID_ERROR);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
     }
 
     //获取公告
@@ -2932,6 +3012,7 @@ public class RetrofitService extends HttpEngine {
                     sreCharge.setStype(Integer.parseInt(stype));
                     sreCharge.setDtype(Boolean.parseBoolean(dtype));
                     listener.onReceivedData(API_ID_SRECHARGE, sreCharge, API_ID_ERROR);
+                    listener.onReceivedData(API_ID_SRECHARGE2, sreCharge, API_ID_ERROR);
                 }
 
             }
@@ -2979,7 +3060,7 @@ public class RetrofitService extends HttpEngine {
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
                 if (response.code() == 200) {
                     Log.d("保存充值校验", response.body().toString());
-                    listener.onReceivedData(API_ID_OWNTRANSFER,response.body(),API_ID_ERROR);
+                    listener.onReceivedData(API_ID_OWNTRANSFER, response.body(), API_ID_ERROR);
                 }
             }
 
@@ -3002,7 +3083,7 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
-                Log.d("保存日工资充值", response.toString());
+                Log.d("保存日工资充值", response.body().toString());
             }
 
             @Override
