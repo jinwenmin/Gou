@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="保存上级充值"
+        android:textSize="35px" />
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="充值对象："
+            android:textSize="35px" />
+
+        <TextView
+            android:id="@+id/proxy_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="XXXX"
+            android:textSize="35px" />
+
+    </LinearLayout>
+
+    <EditText
+
+        android:id="@+id/Proxy_setTrans"
+        android:layout_width="match_parent"
+        android:layout_height="60px"
+        android:layout_marginBottom="10px"
+        android:layout_marginLeft="20px"
+        android:layout_marginRight="20px"
+        android:layout_marginTop="10px"
+        android:background="@drawable/edit_user_pwd_bg"
+        android:gravity="center"
+        android:textSize="30px" />
+</LinearLayout>

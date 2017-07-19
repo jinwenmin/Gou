@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="设置新返点"
+        android:textSize="35px" />
+
+    <EditText
+        android:id="@+id/Proxy_setRate"
+        android:layout_width="match_parent"
+        android:layout_height="50px"
+        android:layout_marginBottom="10px"
+        android:layout_marginLeft="100px"
+        android:layout_marginRight="100px"
+        android:layout_marginTop="10px"
+        android:background="@drawable/edit_user_pwd_bg"
+        android:gravity="center"
+        android:textSize="35px" />
+</LinearLayout>

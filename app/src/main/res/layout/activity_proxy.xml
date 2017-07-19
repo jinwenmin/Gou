@@ -74,6 +74,9 @@
         android:background="@color/gray" />
 
     <Button
+        android:layout_marginBottom="10px"
+        android:layout_marginLeft="10px"
+        android:layout_marginRight="10px"
         android:id="@+id/TeamUserBtn"
         android:layout_width="match_parent"
         android:layout_height="80px"

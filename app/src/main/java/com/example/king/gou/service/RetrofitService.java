@@ -24,6 +24,8 @@ import com.example.king.gou.bean.LotteryLoss;
 import com.example.king.gou.bean.MapsIdAndValue;
 import com.example.king.gou.bean.RestultInfo;
 
+import com.example.king.gou.bean.SetRate;
+import com.example.king.gou.bean.SreCharge;
 import com.example.king.gou.bean.TeamUserInfo;
 import com.example.king.gou.bean.TouZhu;
 import com.example.king.gou.bean.UserAmount;
@@ -136,6 +138,10 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_USERSTA = 41;//会员统计
     public static int API_ID_TEAMUSERLIST = 42;//会员统计2
     public static int API_ID_TEAMBALANCEVIEW = 43;//查询会员余额
+    public static int API_ID_UREBATEDATA = 44;//查询会员返点
+    public static int API_ID_SETRATESAVE = 45;//查询会员返点
+    public static int API_ID_SRECHARGE = 46;//获取上级充值数据
+    public static int API_ID_OWNTRANSFER = 47;//给下级充值
 
 
     private Retrofit retrofit;
@@ -2698,11 +2704,11 @@ public class RetrofitService extends HttpEngine {
                     Log.d("会员管理", s);
                     String substring = s.substring(s.indexOf("], ") + 3, s.length() - 1);
                     String[] split = substring.split(", ");
-                    String totalElements="";
+                    String totalElements = "";
                     for (int i = 0; i < split.length; i++) {
                         Log.d("会员管理Split", split[i]);
                         if (split[i].contains("totalElements=")) {
-                            totalElements = split[i].substring(split[i].indexOf("totalElements=") + 14, split[i].length()-2);
+                            totalElements = split[i].substring(split[i].indexOf("totalElements=") + 14, split[i].length() - 2);
                         }
                     }
 
@@ -2810,7 +2816,7 @@ public class RetrofitService extends HttpEngine {
     }
 
     //获取设置返点的数据
-    public void getUreBateData(DataListener listener, int uid) {
+    public void getUreBateData(final DataListener listener, int uid) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         map.put("uid", uid + "");
@@ -2820,7 +2826,28 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                Log.d("TeamU获取设置返点的数据", response.body().toString());
+                if (response.code() == 200) {
+                    String s = response.body().toString();
+                    Log.d("TeamU获取设置返点的数据", s);
+                    String others = s.substring(s.indexOf("others=") + 7, s.length() - 2);
+                    String[] split = others.split(", ");
+                    String max = "";
+                    String min = "";
+                    for (int i = 0; i < split.length; i++) {
+                        Log.d("TeamU获取设置返点的数据Split", split[i]);
+                        if (split[i].contains("mxrate=")) {
+                            max = split[i].substring(split[i].indexOf("mxrate=") + 7, split[i].length());
+                        }
+                        if (split[i].contains("mnrate=")) {
+                            min = split[i].substring(split[i].indexOf("mnrate=") + 7, split[i].length());
+                        }
+                    }
+                    SetRate setRate = new SetRate();
+                    setRate.setMxrate(Double.parseDouble(max));
+                    setRate.setMnrate(Double.parseDouble(min));
+                    Log.d("TeamU获取设置返点的数据String", setRate.toString());
+                    listener.onReceivedData(API_ID_UREBATEDATA, setRate, API_ID_ERROR);
+                }
             }
 
             @Override
@@ -2832,7 +2859,7 @@ public class RetrofitService extends HttpEngine {
 
 
     //设置新返点
-    public void getTeamUserRebateSave(DataListener listener, double l, int uid) {
+    public void getTeamUserRebateSave(final DataListener listener, double l, int uid) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         map.put("l", l + "");
@@ -2843,18 +2870,22 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
-                Log.d("设置新返点", response.body().toString());
+                if (response.code() == 200) {
+                    String s = response.body().toString();
+                    Log.d("设置新返点", response.body().toString());
+                    listener.onReceivedData(API_ID_SETRATESAVE, response.body(), API_ID_ERROR);
+                }
             }
 
             @Override
             public void onFailure(Call<RestultInfo> call, Throwable t) {
-
+                Log.d("设置新返点", t.toString());
             }
         });
     }
 
     //获取上级充值数据
-    public void getSreChargeData(DataListener listener, int uid) {
+    public void getSreChargeData(final DataListener listener, int uid) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         map.put("uid", uid + "");
@@ -2864,7 +2895,45 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                Log.d("获取上级充值数据", response.body().toString());
+                if (response.code() == 200) {
+                    String s = response.body().toString();
+                    Log.d("获取上级充值数据", s);
+                    String others = s.substring(s.indexOf("others={") + 8, s.length() - 2);
+                    String[] so = others.split(", ");
+                    for (int i = 0; i < so.length; i++) {
+                        Log.d("获取上级充值数据Split", so[i]);
+                    }
+                    int i = 0;
+                    String ruser = so[i].substring(so[i].indexOf("ruser=") + 6, so[i].length());
+                    String username = so[i + 1].substring(so[i + 1].indexOf("username=") + 9, so[i + 1].length());
+                    String haspass = so[i + 2].substring(so[i + 2].indexOf("haspass=") + 8, so[i + 2].length());
+                    String hassqas = so[i + 3].substring(so[i + 3].indexOf("hassqas=") + 8, so[i + 3].length());
+                    String q = so[i + 4].substring(so[i + 4].indexOf("q=") + 2, so[i + 4].length());
+                    String amounts1 = so[i + 5].substring(so[i + 5].indexOf("amounts1=") + 9, so[i + 5].length());
+                    String min1 = so[i + 6].substring(so[i + 6].indexOf("min1=") + 5, so[i + 6].length());
+                    String max1 = so[i + 7].substring(so[i + 7].indexOf("max1=") + 5, so[i + 7].length());
+                    String amounts2 = so[i + 8].substring(so[i + 8].indexOf("amounts2=") + 9, so[i + 8].length());
+                    String min2 = so[i + 9].substring(so[i + 9].indexOf("min2=") + 5, so[i + 9].length());
+                    String max2 = so[i + 10].substring(so[i + 10].indexOf("max2=") + 5, so[i + 10].length());
+                    String stype = so[i + 11].substring(so[i + 11].indexOf("stype=") + 6, so[i + 11].length() - 2);
+                    String dtype = so[i + 12].substring(so[i + 12].indexOf("dtype=") + 6, so[i + 12].length());
+                    SreCharge sreCharge = new SreCharge();
+                    sreCharge.setRuser(ruser);
+                    sreCharge.setUsername(username);
+                    sreCharge.setHaspass(Boolean.parseBoolean(haspass));
+                    sreCharge.setHassqas(Boolean.parseBoolean(hassqas));
+                    sreCharge.setQ(q);
+                    sreCharge.setAmounts1(Double.parseDouble(amounts1));
+                    sreCharge.setAmounts2(Double.parseDouble(amounts2));
+                    sreCharge.setMin1(Double.parseDouble(min1));
+                    sreCharge.setMin2(Double.parseDouble(min2));
+                    sreCharge.setMax1(Double.parseDouble(max1));
+                    sreCharge.setMax2(Double.parseDouble(max2));
+                    sreCharge.setStype(Integer.parseInt(stype));
+                    sreCharge.setDtype(Boolean.parseBoolean(dtype));
+                    listener.onReceivedData(API_ID_SRECHARGE, sreCharge, API_ID_ERROR);
+                }
+
             }
 
             @Override
@@ -2897,7 +2966,7 @@ public class RetrofitService extends HttpEngine {
     }
 
     //保存充值校验
-    public void getOwnReansferTrans(DataListener listener, double amount, String name) {
+    public void getOwnReansferTrans(final DataListener listener, double amount, String name) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         map.put("amount", amount + "");
@@ -2908,7 +2977,10 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
-                Log.d("保存充值校验", response.body().toString());
+                if (response.code() == 200) {
+                    Log.d("保存充值校验", response.body().toString());
+                    listener.onReceivedData(API_ID_OWNTRANSFER,response.body(),API_ID_ERROR);
+                }
             }
 
             @Override
