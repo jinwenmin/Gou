@@ -103,4 +103,37 @@
             android:gravity="center_horizontal"
             android:text="团队百家乐报表" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/GameMoney"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/ic_zhuanzhangjilu"
+            android:gravity="center_horizontal"
+            android:text="游戏奖金" />
+
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/ic_tuanduicunqukuan"
+            android:gravity="center_horizontal"
+            android:text="团队存取款记录"
+            android:visibility="invisible" />
+
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/ic_tuanduibaijialebaobiao"
+            android:gravity="center_horizontal"
+            android:text="团队百家乐报表"
+            android:visibility="invisible" />
+    </LinearLayout>
 </LinearLayout>

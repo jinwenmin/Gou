@@ -17,11 +17,13 @@ import com.example.king.gou.MyApp;
 import com.example.king.gou.bean.AccountChange;
 import com.example.king.gou.bean.BettingSync;
 import com.example.king.gou.bean.CunQu;
+import com.example.king.gou.bean.GamePrize;
 import com.example.king.gou.bean.GameType;
 import com.example.king.gou.bean.Login;
 import com.example.king.gou.bean.LoginState;
 import com.example.king.gou.bean.LotteryLoss;
 import com.example.king.gou.bean.MapsIdAndValue;
+import com.example.king.gou.bean.RecordList;
 import com.example.king.gou.bean.RestultInfo;
 
 import com.example.king.gou.bean.SetRate;
@@ -146,6 +148,8 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_OWNTRANSFER = 48;//给下级充值
     public static int API_ID_ACTIVITYLIST = 49;//获取活动列表
     public static int API_ID_ACTIVITYDETAIL = 50;//获取活动详情
+    public static int API_ID_GAMEPRIZE = 51;//游戏奖金
+    public static int API_ID_RECORDLIST = 52;//开奖记录
 
 
     private Retrofit retrofit;
@@ -425,17 +429,17 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                if (response.code()==200) {
+                if (response.code() == 200) {
                     String s = response.body().toString();
                     Log.d("获取活动详情", s);
                     String rc = s.substring(s.indexOf("rc=") + 3, s.indexOf(", msg="));
                     if ("true".equals(rc)) {
-                        UserActivity uc=new UserActivity();
+                        UserActivity uc = new UserActivity();
                         String msg = s.substring(s.indexOf("msg=") + 4, s.indexOf(", id="));
                         String others = s.substring(s.indexOf("others=") + 7, s.length() - 3);
                         uc.setMsg(msg);
                         uc.setOthers(Integer.parseInt(others));
-                        listener.onReceivedData(API_ID_ACTIVITYDETAIL,uc,API_ID_ERROR);
+                        listener.onReceivedData(API_ID_ACTIVITYDETAIL, uc, API_ID_ERROR);
                     }
 
                 }
@@ -447,7 +451,8 @@ public class RetrofitService extends HttpEngine {
             }
         });
     }
- //报名参加活动
+
+    //报名参加活动
     public void getActivityUserApply(final DataListener listener, int id) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
@@ -458,13 +463,13 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                if (response.code()==200) {
+                if (response.code() == 200) {
                     String s = response.body().toString();
                     Log.d("获取活动详情", s);
                     String rc = s.substring(s.indexOf("rc=") + 3, s.indexOf(", msg="));
                     if ("true".equals(rc)) {
                         String msg = s.substring(s.indexOf("msg=") + 4, s.indexOf(", id="));
-                        listener.onReceivedData(API_ID_ACTIVITYDETAIL,msg,API_ID_ERROR);
+                        listener.onReceivedData(API_ID_ACTIVITYDETAIL, msg, API_ID_ERROR);
                     }
 
                 }
@@ -742,17 +747,132 @@ public class RetrofitService extends HttpEngine {
     }
 
     //奖金详情
-    public void GetPrizeDetails(DataListener listener, int rows, int page, int id, int rid) {
-        Call<Object> prizeDetails = apiInterface.getPrizeDetails(rows, page, "grid", "asc", id, rid);
-        Call<Object> clone = prizeDetails.clone();
-        clone.enqueue(new Callback<Object>() {
+    public void GetPrizeDetails(final DataListener listener, int rows, int page, String sidx, String sord, int id, int rid) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("rows", rows + "");
+        map.put("page", page + "");
+        map.put("sidx", sidx + "");
+        map.put("sord", sord + "");
+        map.put("id", id + "");
+        map.put("rid", rid + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Map<String, Object>> prizeDetails = apiInterface.getPrizeDetails(1, rows, page, sidx, sord, id, rid, reqkey, currentTimeMillis);
+        Call<Map<String, Object>> clone = prizeDetails.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                Log.d("获取奖金详情", response.body() + "");
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
+                List<GamePrize> gamePrizeList = new ArrayList<GamePrize>();
+                Map<String, Object> body = response.body();
+                Log.d("获取奖金详情", body + "");
+                double totalElements = 0;
+                List<Object> con = null;
+                if (body.size() > 0) {
+                    for (Map.Entry<String, Object> entry : body.entrySet()) {
+                        System.out.println("key==" + entry.getKey() + " " + entry.getValue());
+                        if ("totalElements".equals(entry.getKey())) {
+                            totalElements = (double) entry.getValue();
+                        }
+                        if ("content".equals(entry.getKey())) {
+                            con = (List<Object>) entry.getValue();
+                        }
+                    }
+                }
+                if (totalElements > 0) {
+
+                    for (int i = 0; i < con.size(); i++) {
+                        List<Object> o = (List<Object>) con.get(i);
+                        for (int i1 = 0; i1 < o.size(); i1 = i1 + 6) {
+                            GamePrize gamePrize = new GamePrize();
+                            String s1 = o.get(i1) + "";
+                            String s = s1.substring(0, s1.length() - 2);
+                            gamePrize.setGrid(Integer.parseInt(s));
+                            gamePrize.setGameName(o.get(i1 + 1) + "");
+                            gamePrize.setRuleType(o.get(i1 + 2) + "");
+                            gamePrize.setRuleName(o.get(i1 + 3) + "");
+                            gamePrize.setPrize(o.get(i1 + 4) + "");
+                            gamePrize.setUserRate((Double) o.get(i1 + 5));
+                            gamePrizeList.add(gamePrize);
+                            Log.d("获取奖金详情String", gamePrize.toString());
+                        }
+                    }
+                }
+                listener.onReceivedData(API_ID_GAMEPRIZE, gamePrizeList, API_ID_ERROR);
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+            }
+        });
+    }
+
+
+    //游戏开奖记录
+    public void getRecordList(final DataListener listener, int rows, int page, String sidx, String sord, int id, String period, String start, String end) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("rows", rows + "");
+        map.put("page", page + "");
+        map.put("sidx", sidx + "");
+        map.put("sord", sord + "");
+        map.put("id", id + "");
+        map.put("period", period + "");
+        map.put("start", start + "");
+        map.put("end", end + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Map<String, Object>> recordList = apiInterface.getRecordList(1, rows, page, sidx, sord, id, period, start, end, reqkey, currentTimeMillis);
+        Call<Map<String, Object>> clone = recordList.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
+            @Override
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
+                if (response.code() == 200) {
+                    Log.d("游戏开奖记录", response.body().toString());
+                    List<RecordList> rc = new ArrayList<RecordList>();
+                    double totalElements = 0;
+                    List<List<String>> con = null;
+                    Map<String, Object> body = response.body();
+                    List<String> c = new ArrayList<String>();
+                    if (body.size() > 0) {
+                        for (Map.Entry<String, Object> entry : body.entrySet()) {
+                            System.out.println("key==" + entry.getKey() + " " + entry.getValue());
+                            if ("totalElements".equals(entry.getKey())) {
+                                totalElements = (double) entry.getValue();
+                            }
+                            if ("content".equals(entry.getKey())) {
+                                con = (List<List<String>>) entry.getValue();
+                            }
+                        }
+                        Log.d("游戏开奖记录totalElements==", totalElements + "");
+                        if (totalElements > 0) {
+
+                                for (int i = 0; i < con.size(); i++) {
+                                    Log.d("游戏开奖记录ConListrSize==", con.size() + "");
+                                    List<String> o = con.get(i);
+                                    for (int i1 = 0; i1 < o.size(); i=i1+5) {
+                                        Log.d("游戏开奖记录OListrSize==", o.size() + "");
+                                        String s = "";
+                                        String   s1 = String.valueOf(o.get(i1));
+                                        String  s2 = s1.substring(0, s1.length() - 2);
+                                        RecordList recordList1 = new RecordList();
+                                        recordList1.setGid(Integer.parseInt(s2));
+                                        recordList1.setGameName(o.get(i1 + 1));
+                                        recordList1.setPeriod(o.get(i1 + 2));
+                                        recordList1.setWinningNumber(o.get(i1 + 3));
+                                        recordList1.setDrawDate(o.get(i1 + 4));
+                                        rc.add(recordList1);
+                                    }
+
+                                }
+
+                        }
+                    }
+                    listener.onReceivedData(API_ID_RECORDLIST, rc, API_ID_ERROR);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
 
             }
         });
@@ -2487,18 +2607,27 @@ public class RetrofitService extends HttpEngine {
         maps.put("rid", rid + "");
         maps.put("type", type + "");
         String reqkey = RxUtils.getInstance().getReqkey(maps, currentTimeMillis);
-        Call<Object> teamBettingList = apiInterface.getTeamBettingList(1, page, rows, sidx, sord, from, to, name, status, id, rid, type, reqkey, currentTimeMillis);
-        Call<Object> clone = teamBettingList.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<Map<String, Object>> teamBettingList = apiInterface.getTeamBettingList(1, page, rows, sidx, sord, from, to, name, status, id, rid, type, reqkey, currentTimeMillis);
+        Call<Map<String, Object>> clone = teamBettingList.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 if (response.code() == 200) {
-                    List<UserTeamBetting> userBetting = new ArrayList<UserTeamBetting>();
                     String s = response.body().toString();
                     Log.d("团队报表彩票投注", s);
-                    String totalElements = s.substring(s.indexOf("totalElements=") + 14, s.indexOf(".0, firstPage"));
-                    int to = Integer.parseInt(totalElements);
-                    if (to > 0) {
+                    String str = null;
+                    double totalElements = 0;
+
+                    for (Map.Entry<String, Object> entry : response.body().entrySet()) {
+                        System.out.println("key==" + entry.getKey() + " " + entry.getValue());
+                        str = str + "&" + entry.getKey() + "=" + entry.getValue();
+                        if ("totalElements".equals(entry.getKey())) {
+                            totalElements = (double) entry.getValue();
+                        }
+                        Log.d("团队报表彩票投注", str);
+                    }
+                    List<UserTeamBetting> userBetting = new ArrayList<UserTeamBetting>();
+                    if (totalElements > 0) {
                         String con = s.substring(s.indexOf("content=[") + 9, s.indexOf("], number="));
                         String[] cs = con.split(", ");
 
@@ -2537,7 +2666,7 @@ public class RetrofitService extends HttpEngine {
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
                 Log.d("团队报表彩票投注Error", t.toString());
             }
         });

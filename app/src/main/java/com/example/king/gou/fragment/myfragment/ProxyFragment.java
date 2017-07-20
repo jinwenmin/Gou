@@ -11,15 +11,14 @@ import android.widget.TextView;
 
 import com.example.king.gou.R;
 import com.example.king.gou.fragment.BaseFragment;
+import com.example.king.gou.ui.proxyfragment.ActivityTeamActivity;
+import com.example.king.gou.ui.proxyfragment.GameReWardActivity;
 import com.example.king.gou.ui.proxyfragment.ProxyHomeActivity;
 import com.example.king.gou.ui.proxyfragment.TeamActivityActivity;
 import com.example.king.gou.ui.proxyfragment.TeamBaoBiaoActivity;
-import com.example.king.gou.ui.proxyfragment.ActivityTeamActivity;
 import com.example.king.gou.ui.proxyfragment.TeamCunQuActivity;
-import com.example.king.gou.ui.proxyfragment.TeamGamejlActivity;
 import com.example.king.gou.ui.proxyfragment.TeamLotteryLossActivity;
 import com.example.king.gou.ui.proxyfragment.TeamZBJLActivity;
-import com.example.king.gou.ui.proxyfragment.TeamZhuihaojlActivity;
 import com.example.king.gou.ui.proxyfragment.UserCenterActivity;
 import com.example.king.gou.ui.proxyfragment.VIPManActivity;
 
@@ -52,6 +51,8 @@ public class ProxyFragment extends BaseFragment implements View.OnClickListener 
     TextView proxyTeamCunQu;
     @BindView(R.id.proxy_TeamBjl)
     TextView proxyTeamBjl;
+    @BindView(R.id.GameMoney)
+    TextView GameMoney;
 
     public static ProxyFragment newInstance() {
 
@@ -78,6 +79,7 @@ public class ProxyFragment extends BaseFragment implements View.OnClickListener 
         proxyTeamZhuiHao.setOnClickListener(this);
         proxyTeamCunQu.setOnClickListener(this);
         proxyTeamBjl.setOnClickListener(this);
+        GameMoney.setOnClickListener(this);
         return view;
     }
 
@@ -123,6 +125,9 @@ public class ProxyFragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.proxy_TeamBjl:
                 StartA(ActivityTeamActivity.class);
+                break;
+            case R.id.GameMoney:
+                StartA(GameReWardActivity.class);
                 break;
         }
     }

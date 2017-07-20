@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import retrofit2.Call;
@@ -176,12 +177,34 @@ public interface ApiInterface {
     //获取奖金详情
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/prize-details-list")
-    Call<Object> getPrizeDetails(@Query("rows") int rows,
-                                 @Query("page") int page,
-                                 @Query("sidx") String sidx,
-                                 @Query("sord") String sord,
-                                 @Query("id") int id,
-                                 @Query("rid") int rid
+    Call<Map<String,Object>> getPrizeDetails(
+            @Query("AppClient") int a,
+            @Query("rows") int rows,
+            @Query("page") int page,
+            @Query("sidx") String sidx,
+            @Query("sord") String sord,
+            @Query("id") int id,
+            @Query("rid") int rid,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+
+   //查询游戏的开奖记录
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/lottery-record-list")
+    Call<Map<String,Object>> getRecordList(
+            @Query("AppClient") int a,
+            @Query("rows") int rows,
+            @Query("page") int page,
+            @Query("sidx") String sidx,
+            @Query("sord") String sord,
+            @Query("id") int id,
+            @Query("period") String period,
+            @Query("start") String start,
+            @Query("end") String end,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
     );
 
     //找回密码接口
@@ -1142,7 +1165,7 @@ public interface ApiInterface {
     //79 团队报表彩票投注
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/betting-list")
-    Call<Object> getTeamBettingList(
+    Call<Map<String, Object>> getTeamBettingList(
             @Query("AppClient") int num,
             @Query("page") int page,
             @Query("rows") int rows,

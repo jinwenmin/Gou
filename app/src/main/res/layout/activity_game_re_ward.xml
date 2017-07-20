@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.king.gou.ui.proxyfragment.GameReWardActivity">
+
+    <RelativeLayout
+        android:id="@+id/GameReWardTop"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_height"
+        android:background="@color/top_background">
+
+        <ImageView
+            android:id="@+id/GameReWard_back"
+            android:layout_width="@dimen/top_back"
+            android:layout_height="@dimen/top_back"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="奖金详情列表"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/top_textsize" />
+
+        <TextView
+            android:id="@+id/Record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5px"
+            android:text="开奖记录"
+            android:textColor="@android:color/white"
+            android:textSize="40px" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60px">
+
+        <Spinner
+            android:id="@+id/SpinnerGame"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></Spinner>
+
+        <Spinner
+            android:id="@+id/SpinnerGid"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></Spinner>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray" />
+
+    <ListView
+        android:id="@+id/GamePrizeListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+</LinearLayout>
