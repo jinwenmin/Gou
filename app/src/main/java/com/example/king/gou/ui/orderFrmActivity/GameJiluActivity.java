@@ -404,15 +404,15 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
 
                     }
                 }
-                allFragment.getList(ts);
-                noBuyFragment.getList(t1);
-                noOpenFragment.getList(t2);
-                killOrderFragment.getList(t3);
-                manKillOrderFragment.getList(t4);
-                overDueFragment.getList(t5);
-                nowinFragment.getList(t6);
-                terraceKillFragment.getList(t7);
-                paiJiangFragment.getList(t8);
+                allFragment.adapter.addListView(ts);
+                noBuyFragment.adapter.addListView(t1);
+                noOpenFragment.adapter.addListView(t2);
+                killOrderFragment.adapter.addListView(t3);
+                manKillOrderFragment.adapter.addListView(t4);
+                overDueFragment.adapter.addListView(t5);
+                nowinFragment.adapter.addListView(t6);
+                terraceKillFragment.adapter.addListView(t7);
+                paiJiangFragment.adapter.addListView(t8);
             }
         }
     }

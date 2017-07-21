@@ -30,7 +30,7 @@ public class NoBuyFragment extends BaseFragment {
     @BindView(R.id.Gamelist)
     ListView Gamelist;
     Unbinder unbinder;
-    TouZhuAdapter adapter;
+   public TouZhuAdapter adapter;
     List<TouZhu> touzhu=new ArrayList<>();
 
     @Override
@@ -41,7 +41,7 @@ public class NoBuyFragment extends BaseFragment {
         unbinder = ButterKnife.bind(this, view);
         adapter = new TouZhuAdapter(getActivity());
         Gamelist.setAdapter(adapter);
-        adapter.addListView(touzhu);
+      //  adapter.addListView(touzhu);
         return view;
     }
 
@@ -49,7 +49,7 @@ public class NoBuyFragment extends BaseFragment {
         if (ts.size() != 0) {
             //adapter.addListView(ts);
             touzhu = ts;
-            adapter.addListView(touzhu);
+          //  adapter.addListView(touzhu);
         }
     }
 

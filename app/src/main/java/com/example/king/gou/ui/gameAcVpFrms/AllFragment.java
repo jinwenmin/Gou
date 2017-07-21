@@ -39,7 +39,7 @@ public class AllFragment extends BaseFragment implements HttpEngine.DataListener
     ListView AllList;
     Unbinder unbinder;
     List<TouZhu> touzhu=new ArrayList<>();
-    TouZhuAdapter adapter;
+    public TouZhuAdapter adapter;
 
 
 
@@ -53,7 +53,7 @@ public class AllFragment extends BaseFragment implements HttpEngine.DataListener
         unbinder = ButterKnife.bind(this, view);
         adapter = new TouZhuAdapter(getActivity());
         AllList.setAdapter(adapter);
-        adapter.addListView(touzhu);
+       // adapter.addListView(touzhu);
         Log.d("AllFragment===", "运行过了 ");
         return view;
     }

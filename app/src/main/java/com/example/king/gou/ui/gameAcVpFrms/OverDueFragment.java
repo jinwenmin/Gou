@@ -30,7 +30,7 @@ public class OverDueFragment extends BaseFragment {
     @BindView(R.id.Gamelist)
     ListView Gamelist;
     Unbinder unbinder;
-    TouZhuAdapter adapter;
+    public  TouZhuAdapter adapter;
 List<TouZhu> touzhu=new ArrayList<>();
     public OverDueFragment() {
         // Required empty public constructor
@@ -45,7 +45,7 @@ List<TouZhu> touzhu=new ArrayList<>();
         unbinder = ButterKnife.bind(this, view);
         adapter = new TouZhuAdapter(getActivity());
         Gamelist.setAdapter(adapter);
-        adapter.addListView(touzhu);
+        //adapter.addListView(touzhu);
         return view;
     }
 

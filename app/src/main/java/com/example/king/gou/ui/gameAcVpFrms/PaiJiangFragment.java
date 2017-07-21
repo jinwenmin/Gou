@@ -30,7 +30,7 @@ public class PaiJiangFragment extends BaseFragment {
     @BindView(R.id.Gamelist)
     ListView Gamelist;
     Unbinder unbinder;
-    TouZhuAdapter adapter;
+    public  TouZhuAdapter adapter;
     List<TouZhu> touzhu=new ArrayList<>();
 
     public PaiJiangFragment() {
@@ -46,7 +46,7 @@ public class PaiJiangFragment extends BaseFragment {
         unbinder = ButterKnife.bind(this, view);
         adapter = new TouZhuAdapter(getActivity());
         Gamelist.setAdapter(adapter);
-        adapter.addListView(touzhu);
+       // adapter.addListView(touzhu);
         return view;
     }
 
