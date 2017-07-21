@@ -93,12 +93,7 @@
                 android:layout_marginRight="6px"
                 android:background="@drawable/wuka_xiala" />
 
-            <View
-                android:layout_width="1px"
-                android:layout_height="60px"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@color/gray" />
+
         </RelativeLayout>
 
 
@@ -120,7 +115,7 @@
             android:layout_weight="8"
             android:background="@null"
             android:gravity="center"
-            android:hint="按用户名查询(可选)"
+            android:hint="开奖期号(可选)"
             android:textSize="30px" />
 
         <Button
@@ -139,6 +134,7 @@
         android:background="@color/gray" />
 
     <Spinner
+        android:layout_gravity="center"
         android:id="@+id/GameName"
         android:layout_width="match_parent"
         android:layout_height="60px"

@@ -56,6 +56,7 @@ public class NoOpenFragment extends BaseFragment {
         if (ts.size() != 0) {
             touzhu = ts;
             //adapter.addListView(ts);
+            adapter.addListView(touzhu);
         }
     }
 

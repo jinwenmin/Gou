@@ -37,7 +37,7 @@
             android:layout_marginRight="5px"
             android:text="开奖记录"
             android:textColor="@android:color/white"
-            android:textSize="40px" />
+            android:textSize="30px" />
     </RelativeLayout>
 
     <LinearLayout

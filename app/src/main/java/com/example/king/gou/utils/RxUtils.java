@@ -15,6 +15,7 @@ import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -236,6 +237,14 @@ public class RxUtils {
         Log.d("key", str);
         str = md5(str);
         return str;
+    }
+
+    //Double转换成int
+    public int getInt(Object object) {
+        DecimalFormat df = new DecimalFormat("######0");
+        String format = df.format(object);
+        int i = Integer.parseInt(format);
+        return i;
     }
 
     public Bitmap stringtoBitmap(String string) {

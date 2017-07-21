@@ -182,7 +182,8 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
                 RetrofitService.getInstance().getSreChargeData(this, uid);
                 break;
             case 3:
-
+                //  RetrofitService.getInstance().getTquotaData(this, uid);
+                RetrofitService.getInstance().getTeamUsersParent(this, uid);
                 RetrofitService.getInstance().getSreChargeData(this, uid);
                 /*proxyName = ((TextView) contentView2.findViewById(R.id.proxy_name));
                 proxyName.setText(name);

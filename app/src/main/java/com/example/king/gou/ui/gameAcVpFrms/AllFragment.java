@@ -87,6 +87,7 @@ public class AllFragment extends BaseFragment implements HttpEngine.DataListener
         if (ts.size() != 0) {
            // adapter.addListView(ts);
             touzhu=ts;
+            adapter.addListView(touzhu);
         }
 
     }

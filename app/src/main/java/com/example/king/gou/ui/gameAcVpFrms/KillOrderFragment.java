@@ -65,6 +65,7 @@ public class KillOrderFragment extends BaseFragment {
         if (ts.size() != 0) {
             // adapter.addListView(ts);
             touzhu = ts;
+            adapter.addListView(touzhu);
         }
 
     }

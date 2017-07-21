@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -116,7 +117,7 @@ public interface ApiInterface {
     //活动列表
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/activity-notices-view")
-    Call<Object> getActivityNoticesView(
+    Call<Map<String, Object>> getActivityNoticesView(
             @Query("AppClient") int num,
             @Query("id") int id,//活动id
             @Query("reqkey") String reqkey,
@@ -126,7 +127,7 @@ public interface ApiInterface {
     //报名参加活动
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/activity-user-apply")
-    Call<Object> getActivityUserApply(
+    Call<Map<String, Object>> getActivityUserApply(
             @Query("AppClient") int num,
             @Query("id") int id,//活动id
             @Query("reqkey") String reqkey,
@@ -136,7 +137,7 @@ public interface ApiInterface {
     //公告列表
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-notices")
-    Call<Object> getNotices(
+    Call<List<List<Object>>> getNotices(
             @Query("AppClient") int num,
             @Query("reqkey") String reqkey,
             @Query("t") long t
@@ -147,18 +148,22 @@ public interface ApiInterface {
     @Headers("X-Requested-With: XMLHttpRequest")
  /*   @FormUrlEncoded*/
     @POST("/notice-view/{id}")
-    Call<Object> getNoticesContent(
-            @Path("id") int id/*,
-            @Field("AppClient") int num,
-            @Field("reqkey") String reqkey,
-            @Field("t") long t*/
+    Call<Map<String, Object>> getNoticesContent(
+            @Path("id") int id,
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
 
     );
 
     //获取玩法
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-rules_description/{tid}")
-    Call<Object> getGameType(@Path("tid") int tid);
+    Call<Object> getGameType(@Path("tid") int tid,
+                             @Query("AppClient") int num,
+                             @Query("reqkey") String reqkey,
+                             @Query("t") long t
+                             );
 
     //获取游戏
     @Headers("X-Requested-With: XMLHttpRequest")
@@ -177,7 +182,7 @@ public interface ApiInterface {
     //获取奖金详情
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/prize-details-list")
-    Call<Map<String,Object>> getPrizeDetails(
+    Call<Map<String, Object>> getPrizeDetails(
             @Query("AppClient") int a,
             @Query("rows") int rows,
             @Query("page") int page,
@@ -190,10 +195,10 @@ public interface ApiInterface {
     );
 
 
-   //查询游戏的开奖记录
+    //查询游戏的开奖记录
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/lottery-record-list")
-    Call<Map<String,Object>> getRecordList(
+    Call<Map<String, Object>> getRecordList(
             @Query("AppClient") int a,
             @Query("rows") int rows,
             @Query("page") int page,
@@ -253,14 +258,9 @@ public interface ApiInterface {
 
     );
 
-    //用户信息页面修改昵称
-    String[] str = new String[]{
-            "X-Requested-With: XMLHttpRequest",
-            "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"
-    };
+
 
     @Headers("X-Requested-With: XMLHttpRequest")
-    @FormUrlEncoded
     @POST("/profile-save")
     Call<RestultInfo> getNickNameChange(
             @Query("AppClient") int num,
@@ -531,13 +531,12 @@ public interface ApiInterface {
 
     //投注单详情
     @Headers("X-Requested-With: XMLHttpRequest")
-    @FormUrlEncoded
     @POST("/betting-details/{id}")
     Call<Object> getBettingDetails(
             @Path("id") int id,//id为投注单bid
-            @Field("AppClient") int num,
-            @Field("reqkey") String reqkey,
-            @Field("t") long t
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
     );
 
     //查询投注记录
@@ -571,13 +570,13 @@ public interface ApiInterface {
 
     //撤销投注单
     @Headers("X-Requested-With: XMLHttpRequest")
-    @FormUrlEncoded
+
     @POST("/lottery-bet-revoke/{bid}")
     Call<RestultInfo> getLotteryBetRevoke1(
             @Path("bid") int id,//购彩单id
-            @Field("AppClient") int num,
-            @Field("reqkey") String reqkey,
-            @Field("t") long t
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
     );
 
     //查询追号记录
@@ -599,13 +598,12 @@ public interface ApiInterface {
 
     //47 查询追号详情
     @Headers("X-Requested-With: XMLHttpRequest")
-    @FormUrlEncoded
     @POST("/auto-purchase-details/{id}")
     Call<Object> getKeepNumDetails(
-            @Field("AppClient") int num,
             @Path("id") int id,//id为追号记录id
-            @Field("reqkey") String reqkey,
-            @Field("t") long t
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
 
     );
 
@@ -964,7 +962,7 @@ public interface ApiInterface {
     //66 查询统计的用户信息
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/team-user-list")
-    Call<Object> getTeamUserList(
+    Call<Map<String, Object>> getTeamUserList(
             @Query("AppClient") int num,
             @Query("page") int page,
             @Query("rows") int rows,
@@ -984,7 +982,7 @@ public interface ApiInterface {
     //67 会员管理
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/team-user-list")
-    Call<Object> getTeamUserInfo(
+    Call<Map<String, Object>> getTeamUserInfo(
             @Query("AppClient") int num,
             @Query("page") int page,
             @Query("rows") int rows,
@@ -1006,13 +1004,12 @@ public interface ApiInterface {
 
     //68 获取会员管理层级数据
     @Headers("X-Requested-With: XMLHttpRequest")
-    @FormUrlEncoded
     @POST("/team-users-parent/{uid}")
     Call<Object> getTeamUsersParent(
             @Path("uid") int uid,
-            @Field("AppClient") int num,
-            @Field("reqkey") String reqkey,
-            @Field("t") long t
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
     );
 
     //69 查询团队余额
@@ -1094,7 +1091,7 @@ public interface ApiInterface {
     //76 获取设置配额的数据
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/tquota-data")
-    Call<Object> getTquotaData(
+    Call<Map<String, Object>> getTquotaData(
             @Query("AppClient") int num,
             @Query("uid") int uid,//调整配额的用户id
             @Query("reqkey") String reqkey,
@@ -1223,14 +1220,14 @@ public interface ApiInterface {
 
     //85切换游戏/获取玩法数据(重点)
     @Headers("X-Requested-With: XMLHttpRequest")
-    @FormUrlEncoded
+
     @POST("/switch-game/{id}")
-    /*?AppClient={AppClient}&reqkey={reqkey}&t={t}*/
+
     Call<Object> getSwitchGameList(
             @Path("id") int id,
-            @Field("AppClient") int num,
-            @Field("reqkey") String reqkey,
-            @Field("t") long t
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
     );
 
     //88更新返点
@@ -1246,24 +1243,22 @@ public interface ApiInterface {
 
     //89更新奖金类型
     @Headers("X-Requested-With: XMLHttpRequest")
-    @FormUrlEncoded
     @POST("/betting/update-price-type/{id}")
     Call<Object> getBettingUpdatePrice(
             @Path("id") int gid,//id 游戏gid
-            @Field("AppClient") int num,
-            @Field("reqkey") String reqkey,
-            @Field("t") long t
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
     );
 
     //93获取开奖历史记录
     @Headers("X-Requested-With: XMLHttpRequest")
-    @FormUrlEncoded
     @POST("/betting/draw-history/{id}")
     Call<Object> getBettingDrawHistory(
             @Path("id") int gid,//id 游戏gid
-            @Field("AppClient") int num,
-            @Field("reqkey") String reqkey,
-            @Field("t") long t
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
     );
 
     //90获取追号信息
@@ -1303,26 +1298,25 @@ public interface ApiInterface {
 
     //94投注记录
     @Headers("X-Requested-With: XMLHttpRequest")
-    @FormUrlEncoded
+
     @POST("/betting/betting-history/{id}")
     Call<Object> getBettingHistorys(
             @Path("id") int gid,//id 游戏gid
-            @Field("AppClient") int num,
-            @Field("page") int page,//当前分页数
-            @Field("reqkey") String reqkey,
-            @Field("t") long t
+            @Query("AppClient") int num,
+            @Query("page") int page,//当前分页数
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
     );
 
     //95追号记录
     @Headers("X-Requested-With: XMLHttpRequest")
-    @FormUrlEncoded
     @POST("/betting/rebuy-history/{id}")
     Call<Object> getBettingRebuyHistorys(
             @Path("id") int gid,//id 游戏gid
-            @Field("AppClient") int num,
-            @Field("page") int page,//当前分页数
-            @Field("reqkey") String reqkey,
-            @Field("t") long t
+            @Query("AppClient") int num,
+            @Query("page") int page,//当前分页数
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
     );
 
     //96 验证安全问题

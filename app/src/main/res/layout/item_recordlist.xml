@@ -29,14 +29,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="期号："
-            android:textSize="35px" />
+            android:textSize="30px" />
 
         <TextView
             android:id="@+id/period"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="XXX"
-            android:textSize="35px" />
+            android:textSize="30px" />
 
 
     </LinearLayout>
@@ -52,14 +52,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="开奖时间："
-            android:textSize="35px" />
+            android:textSize="30px" />
 
         <TextView
             android:id="@+id/drawDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="XXX"
-            android:textSize="35px" />
+            android:textSize="30px" />
     </LinearLayout>
 
     <LinearLayout
@@ -74,13 +74,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="中奖号码："
-            android:textSize="35px" />
+            android:textSize="30px" />
 
         <TextView
             android:id="@+id/winningNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="000"
-            android:textSize="35px" />
+            android:textSize="30px" />
     </LinearLayout>
 </LinearLayout>

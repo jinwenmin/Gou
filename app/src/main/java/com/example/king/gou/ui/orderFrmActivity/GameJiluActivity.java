@@ -136,8 +136,8 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 RetrofitService.getInstance().getGame(GameJiluActivity.this, 7, gameTypes1.get(i).getGid(), 0, 0);
                 Gid = gameTypes1.get(i).getGid();
-                RetrofitService.getInstance().getSwitchGameList(GameJiluActivity.this,gameTypes1.get(3).getGid());
-               // RetrofitService.getInstance().getBettingSync(GameJiluActivity.this,gameTypes1.get(i).getGid());
+                RetrofitService.getInstance().getSwitchGameList(GameJiluActivity.this, gameTypes1.get(3).getGid());
+                // RetrofitService.getInstance().getBettingSync(GameJiluActivity.this,gameTypes1.get(i).getGid());
             }
 
             @Override
@@ -354,7 +354,7 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
                 List<String> types = new ArrayList<>();
                 for (int i = 0; i < gameTypes2.size(); i++) {
                     types.add(gameTypes2.get(i).getName());
-                    Log.d("gameTypes2",gameTypes2.get(i).getName());
+                    Log.d("gameTypes2", gameTypes2.get(i).getName());
                 }
                 adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, types);
                 //第三步：为适配器设置下拉列表下拉时的菜单样式。
@@ -366,7 +366,6 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
         if (apiId == RetrofitService.API_ID_TOUZHUSEAR) {
             if (object != null) {
                 ts = (ArrayList<TouZhu>) object;
-                Log.d("游戏数据", ts.get(0).getName());
                 List<TouZhu> t1 = new ArrayList<>();
                 List<TouZhu> t2 = new ArrayList<>();
                 List<TouZhu> t3 = new ArrayList<>();
@@ -375,33 +374,35 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
                 List<TouZhu> t6 = new ArrayList<>();
                 List<TouZhu> t7 = new ArrayList<>();
                 List<TouZhu> t8 = new ArrayList<>();
+                if (ts.size() > 0) {
+                    Log.d("游戏数据", ts.get(0).getName());
+                    for (int i = 0; i < ts.size(); i++) {
+                        if (ts.get(i).getStatus() == 0) {
+                            t1.add(ts.get(i));
+                        }
+                        if (ts.get(i).getStatus() == 1) {
+                            t2.add(ts.get(i));
+                        }
+                        if (ts.get(i).getStatus() == 2) {
+                            t3.add(ts.get(i));
+                        }
+                        if (ts.get(i).getStatus() == 3) {
+                            t4.add(ts.get(i));
+                        }
+                        if (ts.get(i).getStatus() == 4) {
+                            t5.add(ts.get(i));
+                        }
+                        if (ts.get(i).getStatus() == 5) {
+                            t6.add(ts.get(i));
+                        }
+                        if (ts.get(i).getStatus() == 6) {
+                            t7.add(ts.get(i));
+                        }
+                        if (ts.get(i).getStatus() == 7) {
+                            t8.add(ts.get(i));
+                        }
 
-                for (int i = 0; i < ts.size(); i++) {
-                    if (ts.get(i).getStatus() == 0) {
-                        t1.add(ts.get(i));
                     }
-                    if (ts.get(i).getStatus() == 1) {
-                        t2.add(ts.get(i));
-                    }
-                    if (ts.get(i).getStatus() == 2) {
-                        t3.add(ts.get(i));
-                    }
-                    if (ts.get(i).getStatus() == 3) {
-                        t4.add(ts.get(i));
-                    }
-                    if (ts.get(i).getStatus() == 4) {
-                        t5.add(ts.get(i));
-                    }
-                    if (ts.get(i).getStatus() == 5) {
-                        t6.add(ts.get(i));
-                    }
-                    if (ts.get(i).getStatus() == 6) {
-                        t7.add(ts.get(i));
-                    }
-                    if (ts.get(i).getStatus() == 7) {
-                        t8.add(ts.get(i));
-                    }
-
                 }
                 allFragment.getList(ts);
                 noBuyFragment.getList(t1);
