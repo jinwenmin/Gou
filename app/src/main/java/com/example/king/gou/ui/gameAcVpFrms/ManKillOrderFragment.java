@@ -3,6 +3,7 @@ package com.example.king.gou.ui.gameAcVpFrms;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,8 +44,8 @@ List<TouZhu> touzhu=new ArrayList<>();
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_man_kill_order, container, false);
         unbinder = ButterKnife.bind(this, view);
-        adapter = new TouZhuAdapter(getActivity());
-        Gamelist.setAdapter(adapter);
+
+        Log.d("ManKillOrderFragment===", "运行过了 ");
         //adapter.addListView(touzhu);
         return view;
     }
@@ -58,6 +59,8 @@ List<TouZhu> touzhu=new ArrayList<>();
     public void getList(List<TouZhu> ts) {
         if (ts.size() != 0) {
             //adapter.addListView(ts);
+            adapter = new TouZhuAdapter(getActivity());
+            Gamelist.setAdapter(adapter);
             touzhu=ts;
             adapter.addListView(touzhu);
         }

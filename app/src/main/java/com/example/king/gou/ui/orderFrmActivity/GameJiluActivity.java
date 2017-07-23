@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import com.codbking.widget.OnSureLisener;
 import com.codbking.widget.bean.DateType;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.MyFrmPageAdapter;
+import com.example.king.gou.adapters.TouZhuAdapter;
 import com.example.king.gou.bean.GameType;
 import com.example.king.gou.bean.TouZhu;
 import com.example.king.gou.fragment.BaseFragment;
@@ -67,12 +69,6 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
     RelativeLayout relateTime2;
     @BindView(R.id.timetext3)
     EditText timetext3;
-    @BindView(R.id.relateBank3)
-    RelativeLayout relateBank3;
-    @BindView(R.id.gamejl_tablayout)
-    TabLayout gamejlTablayout;
-    @BindView(R.id.gamejl_viewpager)
-    ViewPager gamejlViewpager;
     MyFrmPageAdapter myFrmPageAdapter;
     @BindView(R.id.SearchQiHao)
     Button SearchQiHao;
@@ -80,35 +76,40 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
     Spinner gameType1;
     @BindView(R.id.gameType2)
     Spinner gameType2;
+    @BindView(R.id.GameJiluSpinner)
+    Spinner GameJiluSpinner;
+    List<List<TouZhu>> tss;
+    @BindView(R.id.GameJiLuListView)
+    ListView GameJiLuListView;
 
-    private DatePickerDialog datePickerDialog;
-    private DatePickerDialog datePickerDialog2;
+    private ArrayAdapter<String> adapter1;
     String date1;
     String date2;
     List<GameType> gameTypes1 = new ArrayList<>();
     List<GameType> gameTypes2 = new ArrayList<>();
     private ArrayAdapter<String> adapter;
     int Gid = 0;
-    ArrayList<TouZhu> ts;
+    List<TouZhu> ts;
     AllFragment allFragment;
-    private NoBuyFragment noBuyFragment;
-    private NoOpenFragment noOpenFragment;
-    private KillOrderFragment killOrderFragment;
-    private ManKillOrderFragment manKillOrderFragment;
-    private OverDueFragment overDueFragment;
-    private NoWinFragment nowinFragment;
-    private TerraceKillFragment terraceKillFragment;
-    private PaiJiangFragment paiJiangFragment;
+    NoBuyFragment noBuyFragment;
+    NoOpenFragment noOpenFragment;
+    KillOrderFragment killOrderFragment;
+    ManKillOrderFragment manKillOrderFragment;
+    OverDueFragment overDueFragment;
+    NoWinFragment nowinFragment;
+    TerraceKillFragment terraceKillFragment;
+    PaiJiangFragment paiJiangFragment;
+    List<String> tits = new ArrayList<>();
+    public TouZhuAdapter touZhuAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_jilu);
         ButterKnife.bind(this);
+        touZhuAdapter = new TouZhuAdapter(this);
+        GameJiLuListView.setAdapter(touZhuAdapter);
         RetrofitService.getInstance().getGame(this, 4, 0, 0, 0);
-        myFrmPageAdapter = new MyFrmPageAdapter(getSupportFragmentManager());
-        gamejlTablayout.setupWithViewPager(gamejlViewpager);
-        gamejlViewpager.setAdapter(myFrmPageAdapter);
         relateTime1.setClickable(true);
         initFragment();
         initClick();
@@ -127,6 +128,7 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
         nowinFragment = new NoWinFragment();
         terraceKillFragment = new TerraceKillFragment();
         paiJiangFragment = new PaiJiangFragment();
+
     }
 
 
@@ -151,8 +153,8 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
                 String time1;
                 String time2;
                 if (date1 == null || date2 == null) {
-                    time1 = timetext.getText().toString().trim() + " 00:00:01";
-                    time2 = timetext2.getText().toString().trim() + " 23:59:59";
+                    time1 = timetext.getText().toString().trim() ;
+                    time2 = timetext2.getText().toString().trim();
                 } else {
                     time1 = date1;
                     time2 = date2;
@@ -172,7 +174,6 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
     private void initClick() {
         relateTime1.setOnClickListener(this);
         relateTime2.setOnClickListener(this);
-        relateBank3.setOnClickListener(this);
         gamejlBack.setOnClickListener(this);
         SearchQiHao.setOnClickListener(this);
     }
@@ -196,43 +197,12 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
         System.out.println();
         Log.e("times", sdf.format(date));
         timetext2.setText(sdf.format(date));
-        //第一个日期选择器
-        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                timetext.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
-                Long getdaytime = DateUtil.getInstance().toDate(year + "-" + (month + 1) + "-" + dayOfMonth) / 1000;
-                //第二个日期的时间
-                long l2 = DateUtil.getInstance().toDate(timetext2.getText().toString()) / 1000;
-                //第一个日期的时间
-                long l1 = DateUtil.getInstance().toDate(timetext.getText().toString()) / 1000;
-                if (l2 - l1 > 864000) {
-                    Toasty.warning(getApplicationContext(), "你的选择期限超过了10天", Toast.LENGTH_SHORT, true).show();
-                }
-                Log.e("现在时长", l2 + "  " + l1);
-            }
-        }, year, month, day);
-        //第二个日期选择器
-        datePickerDialog2 = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                timetext2.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
-                //第二个日期的时间
-                long l2 = DateUtil.getInstance().toDate(timetext2.getText().toString()) / 1000;
-                //第一个日期的时间
-                long l1 = DateUtil.getInstance().toDate(timetext.getText().toString()) / 1000;
-                if (l2 - l1 > 864000) {
-                    Toasty.warning(getApplicationContext(), "你的选择期限超过了10天", Toast.LENGTH_SHORT, true).show();
-                }
-            }
-        }, year, month, day);
-
     }
 
     //实例化 Viewpager
     private void initViewpager() {
         List<BaseFragment> fragments = new ArrayList<>();
-        List<String> tits = new ArrayList<>();
+
         fragments.add(allFragment);
         fragments.add(noBuyFragment);
         fragments.add(noOpenFragment);
@@ -251,7 +221,7 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
         tits.add("未中奖");
         tits.add("平台撤单");
         tits.add("已派奖");
-        myFrmPageAdapter.addFrmList(fragments, tits);
+
     }
 
     @Override
@@ -280,6 +250,12 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
                         String substring = formatDate.substring(0, 10);
                         Log.d("Date===", substring);
                         timetext.setText(substring);
+                        String searText = timetext3.getText().toString().trim();
+                        int gid = gameTypes1.get(gameType1.getSelectedItemPosition()).getGid();
+                        int tid = gameTypes2.get(gameType2.getSelectedItemPosition()).getTid();
+                        RetrofitService.getInstance().getBettingRecord(GameJiluActivity.this, 1, 100, "serial_number", "desc", timetext.getText().toString().trim(),timetext2.getText().toString().trim(), gid, tid, -1, "", searText);
+
+
                     }
                 });
                 dialog.show();
@@ -306,6 +282,11 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
                         String substring = formatDate.substring(0, 10);
                         Log.d("Date===", substring);
                         timetext2.setText(substring);
+                        String searText = timetext3.getText().toString().trim();
+                        int gid = gameTypes1.get(gameType1.getSelectedItemPosition()).getGid();
+                        int tid = gameTypes2.get(gameType2.getSelectedItemPosition()).getTid();
+                        RetrofitService.getInstance().getBettingRecord(GameJiluActivity.this, 1, 100, "serial_number", "desc", timetext.getText().toString().trim(),timetext2.getText().toString().trim(), gid, tid, -1, "", searText);
+
                     }
                 });
                 dialog2.show();
@@ -374,6 +355,7 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
                 List<TouZhu> t6 = new ArrayList<>();
                 List<TouZhu> t7 = new ArrayList<>();
                 List<TouZhu> t8 = new ArrayList<>();
+                Log.d("游戏数据Size", ts.size() + "");
                 if (ts.size() > 0) {
                     Log.d("游戏数据", ts.get(0).getName());
                     for (int i = 0; i < ts.size(); i++) {
@@ -404,15 +386,44 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
 
                     }
                 }
-                allFragment.adapter.addListView(ts);
-                noBuyFragment.adapter.addListView(t1);
-                noOpenFragment.adapter.addListView(t2);
-                killOrderFragment.adapter.addListView(t3);
-                manKillOrderFragment.adapter.addListView(t4);
-                overDueFragment.adapter.addListView(t5);
-                nowinFragment.adapter.addListView(t6);
-                terraceKillFragment.adapter.addListView(t7);
-                paiJiangFragment.adapter.addListView(t8);
+                tss = new ArrayList<>();
+                tss.add(ts);
+                for (int i = 0; i < ts.size(); i++) {
+                    Log.d("GameTs", ts.get(i).toString() + "");
+                }
+                Log.d("SpinerTouZhuTsSize", ts.size() + "");
+                tss.add(t1);
+                tss.add(t2);
+                tss.add(t3);
+                tss.add(t4);
+                tss.add(t5);
+                tss.add(t6);
+                tss.add(t7);
+                tss.add(t8);
+                List<TouZhu> touZhus = tss.get(0);
+
+                Log.d("SpinerTouZhuSize", tss.get(0).size() + "");
+                for (int i = 0; i < touZhus.size(); i++) {
+                    Log.d("SpinerTouZhu", touZhus.get(i).toString());
+                }
+                adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tits);
+                //第三步：为适配器设置下拉列表下拉时的菜单样式。
+                adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                //第四步：将适配器添加到下拉列表上
+                GameJiluSpinner.setAdapter(adapter1);
+                GameJiluSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        Log.d("SpinerTouZhuposition", position + "");
+                        touZhuAdapter.addListView(tss.get(position));
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
             }
         }
     }

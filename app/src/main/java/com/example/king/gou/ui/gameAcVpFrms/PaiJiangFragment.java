@@ -3,6 +3,7 @@ package com.example.king.gou.ui.gameAcVpFrms;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,8 +45,8 @@ public class PaiJiangFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_pai_jiang, container, false);
         unbinder = ButterKnife.bind(this, view);
-        adapter = new TouZhuAdapter(getActivity());
-        Gamelist.setAdapter(adapter);
+
+        Log.d("PaiJiangFragment===", "运行过了 ");
        // adapter.addListView(touzhu);
         return view;
     }
@@ -53,6 +54,8 @@ public class PaiJiangFragment extends BaseFragment {
     public void getList(List<TouZhu> ts) {
         if (ts.size() != 0) {
             //adapter.addListView(ts);
+            adapter = new TouZhuAdapter(getActivity());
+            Gamelist.setAdapter(adapter);
             touzhu = ts;
             adapter.addListView(touzhu);
         }

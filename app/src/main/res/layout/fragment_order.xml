@@ -84,7 +84,7 @@
             android:layout_weight="1"
             android:drawableTop="@mipmap/ic_baijialebaobiao"
             android:gravity="center_horizontal"
-            android:text="个人百家乐报表" />
+            android:text="活动记录" />
 
         <TextView
             android:id="@+id/ZhuanZhangjl"

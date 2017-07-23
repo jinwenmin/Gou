@@ -103,7 +103,7 @@
                 android:background="@color/gray" />
         </RelativeLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/relateBank3"
             android:layout_width="0px"
             android:layout_height="match_parent"
@@ -114,23 +114,26 @@
 
             <EditText
                 android:id="@+id/timetext3"
-                android:layout_width="wrap_content"
+                android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="6px"
+                android:layout_weight="7"
                 android:background="@null"
                 android:hint="请输入期号"
-                android:textSize="30px" />
+                android:singleLine="true"
+                android:textSize="20px" />
 
             <Button
                 android:id="@+id/SearchQiHao"
-                android:layout_width="80px"
+                android:layout_width="0px"
                 android:layout_height="60px"
                 android:layout_toRightOf="@id/timetext3"
+                android:layout_weight="4"
                 android:text="确定"
-                android:textSize="15px" />
+                android:textSize="20px" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
 
     </LinearLayout>
@@ -172,19 +175,18 @@
         android:layout_height="1px"
         android:background="@color/gray" />
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/gamejl_tablayout"
+    <Spinner
+        android:id="@+id/GameJiluSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="60px"></Spinner>
+
+    <View
         android:layout_width="match_parent"
-        android:layout_height="60px"
-        app:tabMode="scrollable">
+        android:layout_height="1px"
+        android:background="@color/gray" />
 
-    </android.support.design.widget.TabLayout>
-
-    <android.support.v4.view.ViewPager
-
-        android:id="@+id/gamejl_viewpager"
+    <ListView
+        android:id="@+id/GameJiLuListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        4
-    </android.support.v4.view.ViewPager>
+        android:layout_height="match_parent"></ListView>
 </LinearLayout>

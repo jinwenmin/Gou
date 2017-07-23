@@ -3,6 +3,7 @@ package com.example.king.gou.ui.gameAcVpFrms;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,7 @@ public class KillOrderFragment extends BaseFragment {
         unbinder = ButterKnife.bind(this, view);
         adapter = new TouZhuAdapter(getActivity());
         Gamelist.setAdapter(adapter);
+        Log.d("KillOrderFragment===", "运行过了 ");
         //adapter.addListView(touzhu);
         return view;
     }

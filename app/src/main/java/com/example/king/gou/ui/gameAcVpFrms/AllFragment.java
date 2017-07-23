@@ -51,8 +51,7 @@ public class AllFragment extends BaseFragment implements HttpEngine.DataListener
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_all, container, false);
         unbinder = ButterKnife.bind(this, view);
-        adapter = new TouZhuAdapter(getActivity());
-        AllList.setAdapter(adapter);
+
        // adapter.addListView(touzhu);
         Log.d("AllFragment===", "运行过了 ");
         return view;
@@ -86,6 +85,8 @@ public class AllFragment extends BaseFragment implements HttpEngine.DataListener
     public void getList(List<TouZhu> ts) {
         if (ts.size() != 0) {
            // adapter.addListView(ts);
+            adapter = new TouZhuAdapter(getActivity());
+            AllList.setAdapter(adapter);
             touzhu=ts;
             adapter.addListView(touzhu);
         }

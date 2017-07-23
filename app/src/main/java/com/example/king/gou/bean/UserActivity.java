@@ -8,7 +8,8 @@ public class UserActivity {
     int aid;
     String name;
     int others;
-String msg;
+    String msg;
+    int id;
 
     @Override
     public String toString() {
@@ -17,7 +18,16 @@ String msg;
                 ", name='" + name + '\'' +
                 ", others=" + others +
                 ", msg='" + msg + '\'' +
+                ", id=" + id +
                 '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getMsg() {

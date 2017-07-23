@@ -108,7 +108,7 @@ public interface ApiInterface {
     //活动列表
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-activitys")
-    Call<Object> getActivityList(
+    Call<List<List<Object>>> getActivityList(
             @Query("AppClient") int num,
             @Query("reqkey") String reqkey,
             @Query("t") long t
@@ -163,7 +163,7 @@ public interface ApiInterface {
                              @Query("AppClient") int num,
                              @Query("reqkey") String reqkey,
                              @Query("t") long t
-                             );
+    );
 
     //获取游戏
     @Headers("X-Requested-With: XMLHttpRequest")
@@ -253,11 +253,25 @@ public interface ApiInterface {
 
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/activity-notices-check")
-    Call<Object> getActivityCheck(@Query("id") int id,//活动id
-                                  @Query("alid") int alid//活动层级id
+    Call<Object> getActivityCheck(
+            @Query("AppClient") int num,
+            @Query("id") int id,//活动id
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
 
     );
+    //领取活动奖金加aid
 
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/activity-notices-check")
+    Call<Object> getActivityCheckAid(
+            @Query("AppClient") int num,
+            @Query("id") int id,//活动id
+            @Query("alid") int alid,//活动层级id
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+
+    );
 
 
     @Headers("X-Requested-With: XMLHttpRequest")
@@ -285,7 +299,7 @@ public interface ApiInterface {
     //获取安全问题
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-questions")
-    Call<Object> getSafeQues(
+    Call<List<List<Object>>> getSafeQues(
             @Query("AppClient") int num,
             @Query("reqkey") String reqkey,
             @Query("t") long t
@@ -294,7 +308,11 @@ public interface ApiInterface {
     //获取首页的公告或者滚动栏
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/notice-view-pop")
-    Call<Object> getHomeNotice();
+    Call<Map<String,Object>> getHomeNotice(
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
 
     //修改登录密码
     @Headers("X-Requested-With: XMLHttpRequest")
@@ -542,7 +560,7 @@ public interface ApiInterface {
     //查询投注记录
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/betting-record-list")
-    Call<Object> getBettingRecordList(
+    Call<Map<String, Object>> getBettingRecordList(
             @Query("AppClient") int num,
             @Query("page") int page,//查询的页码
             @Query("rows") int rows,//每页查询的记录数
@@ -1222,7 +1240,6 @@ public interface ApiInterface {
     @Headers("X-Requested-With: XMLHttpRequest")
 
     @POST("/switch-game/{id}")
-
     Call<Object> getSwitchGameList(
             @Path("id") int id,
             @Query("AppClient") int num,

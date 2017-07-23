@@ -1,6 +1,5 @@
 package com.example.king.gou.ui.orderFrmActivity;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,7 +16,6 @@ import com.codbking.widget.OnSureLisener;
 import com.codbking.widget.bean.DateType;
 import com.example.king.gou.R;
 import com.example.king.gou.service.RetrofitService;
-import com.example.king.gou.ui.proxyfragment.TeamCunQuActivity;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -35,6 +33,8 @@ import butterknife.ButterKnife;
 public class MyActivityActivity extends AutoLayoutActivity implements View.OnClickListener, HttpEngine.DataListener {
 
 
+    List<Integer> ids = new ArrayList<>();
+    List<String> types = new ArrayList<>();
     @BindView(R.id._back)
     ImageView Back;
     @BindView(R.id.ActivityListTop)
@@ -47,16 +47,12 @@ public class MyActivityActivity extends AutoLayoutActivity implements View.OnCli
     TextView ActivityListtimetext2;
     @BindView(R.id.ActivityListrelateTime2)
     RelativeLayout ActivityListrelateTime2;
-    @BindView(R.id.ActivityListrelateBank4)
-    RelativeLayout ActivityListrelateBank4;
     @BindView(R.id.SpinnerType)
     Spinner SpinnerType;
+    @BindView(R.id.ActivityListrelateBank4)
+    RelativeLayout ActivityListrelateBank4;
     @BindView(R.id.Activity_listView)
     ListView ActivityListView;
-    private DatePickerDialog datePickerDialog;
-    private DatePickerDialog datePickerDialog2;
-    List<Integer> ids = new ArrayList<>();
-    List<String> types = new ArrayList<>();
     private ArrayAdapter<String> adapter1;
 
     @Override
@@ -127,7 +123,7 @@ public class MyActivityActivity extends AutoLayoutActivity implements View.OnCli
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.MyBJLrelateTime1:
+            case R.id.ActivityListrelateTime1:
                 DatePickDialog dialog = new DatePickDialog(this);
                 //设置上下年分限制
                 dialog.setYearLimt(5);
@@ -152,7 +148,7 @@ public class MyActivityActivity extends AutoLayoutActivity implements View.OnCli
                 });
                 dialog.show();
                 break;
-            case R.id.MyBJLrelateTime2:
+            case R.id.ActivityListrelateTime2:
                 //datePickerDialog2.show();
                 DatePickDialog dialog2 = new DatePickDialog(this);
                 //设置上下年分限制
