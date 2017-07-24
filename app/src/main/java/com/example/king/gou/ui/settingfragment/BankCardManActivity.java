@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.CardAdapter;
+import com.example.king.gou.bean.CardsData;
 import com.example.king.gou.bean.MapsIdAndValue;
 import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.service.RetrofitService;
@@ -39,6 +40,7 @@ public class BankCardManActivity extends AutoLayoutActivity implements SlideCutL
     @BindView(R.id.BindCardBtn)
     Button BindCardBtn;
     List<List<MapsIdAndValue>> MapsBank;
+    List<List<CardsData>> cs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,9 @@ public class BankCardManActivity extends AutoLayoutActivity implements SlideCutL
             case R.id.BindCardBtn:
                 startActivity(new Intent(BankCardManActivity.this, SaveCardActivity.class));
                 break;
+            case R.id._back:
+                finish();
+                break;
         }
     }
 
@@ -82,7 +87,7 @@ public class BankCardManActivity extends AutoLayoutActivity implements SlideCutL
                 RestultInfo restultInfo = (RestultInfo) object;
                 if (restultInfo.isRc() == true) {
                     Toasty.success(this, restultInfo.getMsg(), 2000).show();
-                   // BindCardBtn.setVisibility(View.GONE);
+                    // BindCardBtn.setVisibility(View.GONE);
 
                 } else {
                     Toasty.error(this, restultInfo.getMsg(), 2000).show();
@@ -91,15 +96,17 @@ public class BankCardManActivity extends AutoLayoutActivity implements SlideCutL
         }
         if (apiId == RetrofitService.API_ID_CARDDATAS) {
             if (object != null) {
-                MapsBank = (List<List<MapsIdAndValue>>) object;
+               /* MapsBank = (List<List<MapsIdAndValue>>) object;
                 List<MapsIdAndValue> mapsBank = MapsBank.get(2);
                 String locked = mapsBank.get(1).getLocked();
                 if ("true".equals(locked)) {
                     //BindCardBtn.setVisibility(View.GONE);
                 } else {
                     BindCardBtn.setVisibility(View.VISIBLE);
-                }
-                cardAdapter.addCards(mapsBank);
+                }*/
+                cs = (List<List<CardsData>>) object;
+                List<CardsData> cardsDatas = cs.get(0);
+                cardAdapter.addCards(cardsDatas);
             }
         }
     }

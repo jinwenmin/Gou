@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RadioGroup
+        android:id="@+id/select_radiogroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:checked="true"
+            android:id="@+id/Radio1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20px"
+            android:text="充值送  5% ， 消费充值本金的10倍"
+            android:textSize="30px" />
+
+        <RadioButton
+            android:id="@+id/Radio2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20px"
+            android:text="充值送 10% ， 消费充值本金的15倍"
+            android:textSize="30px" />
+
+        <RadioButton
+            android:id="@+id/Radio3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20px"
+            android:text="充值送  20% ， 消费充值本金的20倍"
+            android:textSize="30px" />
+
+        <RadioButton
+            android:id="@+id/Radio4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20px"
+            android:text="充值送  30% ， 消费充值本金的30倍"
+            android:textSize="30px" />
+
+        <RadioButton
+            android:id="@+id/Radio5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20px"
+            android:text="充值送  50% ， 消费充值本金的50倍"
+            android:textSize="30px" />
+
+        <RadioButton
+            android:id="@+id/Radio6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20px"
+            android:text="充值送  100% ， 消费充值本金的80倍"
+            android:textSize="30px" />
+    </RadioGroup>
+</LinearLayout>

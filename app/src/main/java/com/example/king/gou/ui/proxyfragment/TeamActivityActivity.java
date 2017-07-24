@@ -49,8 +49,9 @@ public class TeamActivityActivity extends AutoLayoutActivity implements HttpEngi
         TeamActivityListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(TeamActivityActivity.this,ActivityDetailsActivity.class);
-                intent.putExtra("aid",uc.get(position).getAid());
+                Intent intent = new Intent(TeamActivityActivity.this, ActivityDetailsActivity.class);
+                intent.putExtra("aid", uc.get(position).getAid());
+                intent.putExtra("name", uc.get(position).getName());
                 startActivity(intent);
             }
         });

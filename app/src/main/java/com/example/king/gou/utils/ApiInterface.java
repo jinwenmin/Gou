@@ -253,7 +253,7 @@ public interface ApiInterface {
 
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/activity-notices-check")
-    Call<Object> getActivityCheck(
+    Call<RestultInfo> getActivityCheck(
             @Query("AppClient") int num,
             @Query("id") int id,//活动id
             @Query("reqkey") String reqkey,
@@ -349,7 +349,7 @@ public interface ApiInterface {
     //获取绑定银行卡数据
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-card-datas")
-    Call<Object> getCardDatas(
+    Call<Map<String,Object>> getCardDatas(
             @Query("AppClient") int num,
             @Query("reqkey") String reqkey,
             @Query("t") long t
@@ -370,7 +370,7 @@ public interface ApiInterface {
     //获取省市级联
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-city-datas")
-    Call<Object> getPrivens(
+    Call<List<List<Object>>> getPrivens(
             @Query("AppClient") int num,
             @Query("id") int id,//省份id
             @Query("reqkey") String reqkey,
@@ -421,7 +421,7 @@ public interface ApiInterface {
     //请求地址：/get-withdraw-datas
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-withdraw-datas")
-    Call<Object> getWithDrawData(
+    Call<Map<String,Object>> getWithDrawData(
             @Query("AppClient") int num,
             @Query("reqkey") String reqkey,
             @Query("t") long t

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.king.gou.ui.frmMyActivity.WithDrawActivity">
+
+    <RelativeLayout
+        android:id="@+id/WithDrawTop"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_height"
+        android:background="@color/top_background">
+
+        <ImageView
+            android:id="@+id/_back"
+            android:layout_width="@dimen/top_back"
+            android:layout_height="@dimen/top_back"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="提现申请"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/top_textsize" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10px"
+        android:layout_marginTop="10px"
+        android:text="请选择一张银行卡作为到款卡"
+        android:textSize="30px" />
+
+
+    <Spinner
+        android:id="@+id/SpinnerWithDarw"
+        android:layout_width="match_parent"
+        android:layout_height="80px"
+        android:layout_marginTop="20px"></Spinner>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50px"
+        android:layout_marginTop="20px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10px"
+            android:layout_marginTop="10px"
+            android:gravity="center_vertical"
+            android:text="请输入取款金额："
+            android:textSize="30px" />
+
+        <EditText
+            android:id="@+id/WithDrawAmount"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="取款金额"
+            android:textSize="30px" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/TiJiao"
+        android:layout_width="match_parent"
+        android:layout_height="80px"
+        android:layout_margin="30px"
+        android:background="@drawable/recharge_btn"
+        android:text="提交"
+        android:textColor="@color/my_btn_color"
+        android:textSize="40px" />
+</LinearLayout>

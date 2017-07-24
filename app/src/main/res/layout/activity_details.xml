@@ -20,20 +20,21 @@
             android:src="@drawable/ic_back" />
 
         <TextView
+            android:id="@+id/ActivityTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="活动详情"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/top_textsize" />
+            android:textSize="40px" />
         <TextView
             android:id="@+id/InjoinAc"
             android:layout_marginRight="10px"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:textColor="@android:color/white"
-            android:text="参加活动"
-            android:textSize="40px"
+            android:text=""
+            android:textSize="30px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>

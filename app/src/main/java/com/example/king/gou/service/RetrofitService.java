@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import com.example.king.gou.MyApp;
 import com.example.king.gou.bean.AccountChange;
 import com.example.king.gou.bean.BettingSync;
+import com.example.king.gou.bean.CardsData;
 import com.example.king.gou.bean.CunQu;
 import com.example.king.gou.bean.GamePrize;
 import com.example.king.gou.bean.GameType;
@@ -35,6 +36,7 @@ import com.example.king.gou.bean.UserActivity;
 import com.example.king.gou.bean.UserAmount;
 import com.example.king.gou.bean.UserInfo;
 import com.example.king.gou.bean.UserTeamBetting;
+import com.example.king.gou.bean.WithDraw;
 import com.example.king.gou.bean.ZhuiHao;
 import com.example.king.gou.bean.ZhuiHaoDetails;
 import com.example.king.gou.ui.MainActivity;
@@ -152,7 +154,9 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_ACTIVITYDETAIL = 50;//获取活动详情
     public static int API_ID_GAMEPRIZE = 51;//游戏奖金
     public static int API_ID_RECORDLIST = 52;//开奖记录
-    public static int API_ID_JOINACTIVITY = 52;//开奖记录
+    public static int API_ID_JOINACTIVITY = 53;//开奖记录
+    public static int API_ID_DRAWMONEY = 54;//领取活动奖金
+    public static int API_ID_WITHDRAW = 55;//获取提现数据
 
 
     private Retrofit retrofit;
@@ -990,24 +994,25 @@ public class RetrofitService extends HttpEngine {
     }
 
     //领取活动奖金
-    public void getActivityCheck(DataListener listener, int id) {
+    public void getActivityCheck(final DataListener listener, int id) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         map.put("id", id + "");
 
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> clone = apiInterface.getActivityCheck(1, id, reqkey, currentTimeMillis).clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<RestultInfo> clone = apiInterface.getActivityCheck(1, id, reqkey, currentTimeMillis).clone();
+        clone.enqueue(new Callback<RestultInfo>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                if (response.code()==200) {
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+                if (response.code() == 200) {
                     Log.d("领取活动奖金", response.body().toString());
+                    listener.onReceivedData(API_ID_DRAWMONEY, response.body(), API_ID_ERROR);
                 }
 
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
 
             }
         });
@@ -1025,7 +1030,9 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-
+                if (response.code() == 200) {
+                    Log.d("领取活动奖金AID", response.body().toString());
+                }
 
             }
 
@@ -1264,14 +1271,87 @@ public class RetrofitService extends HttpEngine {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> clone = apiInterface.getCardDatas(1, reqkey, currentTimeMillis).clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<Map<String, Object>> clone = apiInterface.getCardDatas(1, reqkey, currentTimeMillis).clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 if (response.code() == 200) {
                     String s = response.body().toString();
                     Log.d("获取绑定的银行卡的银行数据S", s);
-                    String Cards = s.substring(s.indexOf("cards=[") + 7, s.indexOf(", banks"));
+                    Map<String, Object> map = response.body();
+                    List<List<Object>> cards = new ArrayList<>();
+                    List<List<Object>> banks = new ArrayList<>();
+                    List<List<Object>> provincials = new ArrayList<>();
+                    boolean locked = false;
+                    List<List<CardsData>> cs = new ArrayList<List<CardsData>>();
+                    List<CardsData> cardss = new ArrayList<CardsData>();
+                    List<CardsData> bankss = new ArrayList<CardsData>();
+                    List<CardsData> provincess = new ArrayList<CardsData>();
+                    List<CardsData> lockedss = new ArrayList<CardsData>();
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if ("cards".equals(entry.getKey())) {
+                                cards = (List<List<Object>>) entry.getValue();
+                            }
+                            if ("banks".equals(entry.getKey())) {
+                                banks = (List<List<Object>>) entry.getValue();
+                            }
+                            if ("provincials".equals(entry.getKey())) {
+                                provincials = (List<List<Object>>) entry.getValue();
+                            }
+                            if ("locked".equals(entry.getKey())) {
+                                locked = (boolean) entry.getValue();
+
+                            }
+                        }
+                    }
+                    for (int i = 0; i < cards.size(); i++) {
+                        List<Object> o = cards.get(i);
+                        if (o.size() > 0) {
+                            CardsData cardsData = new CardsData();
+                            double cardid = (double) o.get(0);
+                            String holders_name = (String) o.get(1);
+                            String bank_name = (String) o.get(2);
+                            String account_number = (String) o.get(3);
+                            String binding_time = (String) o.get(4);
+                            cardsData.setCardid(RxUtils.getInstance().getInt(cardid));
+                            cardsData.setHolders_name(holders_name);
+                            cardsData.setBank_name(bank_name);
+                            cardsData.setAccount_number(account_number);
+                            cardsData.setBinding_time(binding_time);
+                            cardss.add(cardsData);
+                        }
+                    }
+                    for (int i = 0; i < banks.size(); i++) {
+                        List<Object> o = banks.get(i);
+                        if (o.size() > 0) {
+                            CardsData cardsData = new CardsData();
+                            double bankid = (double) o.get(0);
+                            String bankname = (String) o.get(1);
+                            cardsData.setBankid(RxUtils.getInstance().getInt(bankid));
+                            cardsData.setBankname(bankname);
+                            bankss.add(cardsData);
+                        }
+                    }
+                    for (int i = 0; i < provincials.size(); i++) {
+                        List<Object> o = provincials.get(i);
+                        if (o.size() > 0) {
+                            CardsData cardsData = new CardsData();
+                            double provinceId = (double) o.get(0);
+                            String provincename = (String) o.get(1);
+                            cardsData.setProvince_id(RxUtils.getInstance().getInt(provinceId));
+                            cardsData.setProvincename(provincename);
+                            provincess.add(cardsData);
+                        }
+                    }
+                    CardsData cardsData = new CardsData();
+                    cardsData.setLocked(locked);
+                    lockedss.add(cardsData);
+                    cs.add(cardss);
+                    cs.add(bankss);
+                    cs.add(provincess);
+                    cs.add(lockedss);
+                   /* String Cards = s.substring(s.indexOf("cards=[") + 7, s.indexOf(", banks"));
                     String Banks = s.substring(s.indexOf("banks=[") + 7, s.indexOf("], provincials"));
                     String Privinces = s.substring(s.indexOf("provincials=[") + 13, s.indexOf("], locked"));
                     String Locked = s.substring(s.indexOf("locked=") + 7, s.length() - 1);
@@ -1337,14 +1417,14 @@ public class RetrofitService extends HttpEngine {
                     CardDatas.add(mapCard);
                     String values = CardDatas.get(0).get(1).getValues();
                     String values1 = CardDatas.get(1).get(1).getValues();
-                    Log.d("获取银行卡所需的数据返回", values + "    " + values1);
-                    listener.onReceivedData(API_ID_CARDDATAS, CardDatas, API_ID_ERROR);
+                    Log.d("获取银行卡所需的数据返回", values + "    " + values1);*/
+                    listener.onReceivedData(API_ID_CARDDATAS, cs, API_ID_ERROR);
 
                 }
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
 
             }
         });
@@ -1382,13 +1462,27 @@ public class RetrofitService extends HttpEngine {
         map.put("id", id + "");
 
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> objectCall = apiInterface.getPrivens(1, id, reqkey, currentTimeMillis).clone();
-        objectCall.enqueue(new Callback<Object>() {
+        Call<List<List<Object>>> objectCall = apiInterface.getPrivens(1, id, reqkey, currentTimeMillis).clone();
+        objectCall.enqueue(new Callback<List<List<Object>>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<List<List<Object>>> call, retrofit2.Response<List<List<Object>>> response) {
                 if (response.code() == 200) {
                     String string = response.body().toString();
-                    String citys = string.substring(1, string.length() - 1);
+                    Log.d("获取省市联动", string);
+                    List<List<Object>> list = response.body();
+                    List<CardsData> city = new ArrayList<CardsData>();
+                    for (int i = 0; i < list.size(); i++) {
+                        List<Object> o = list.get(i);
+                        if (o.size() > 0) {
+                            CardsData c = new CardsData();
+                            double city_id = (double) o.get(0);
+                            String cityName = (String) o.get(1);
+                            c.setCity_id(RxUtils.getInstance().getInt(city_id));
+                            c.setCityName(cityName);
+                            city.add(c);
+                        }
+                    }
+                /*    String citys = string.substring(1, string.length() - 1);
                     String[] split = citys.split(",");
                     List<MapsIdAndValue> Citys = new ArrayList<MapsIdAndValue>();
                     for (int i = 0; i < split.length; i = i + 2) {
@@ -1400,16 +1494,16 @@ public class RetrofitService extends HttpEngine {
                         mapsIdAndValue.setValues(cityName);
                         Log.d("城市id+name", cityId + "    " + cityName);
                         Citys.add(mapsIdAndValue);
-                    }
-                    listener.onReceivedData(API_ID_GETCITYS, Citys, API_ID_ERROR);
-                    Log.d("获取省市联动", string);
+                    }*/
+                    listener.onReceivedData(API_ID_GETCITYS, city, API_ID_ERROR);
+
 
                 }
 
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<List<List<Object>>> call, Throwable t) {
 
             }
         });
@@ -1442,8 +1536,8 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+                Log.d("保存银行卡返回的数据Code", response.code() + "");
                 if (response.code() == 200) {
-                    Log.d("保存银行卡返回的数据Code", response.code() + "");
                     Log.d("保存银行卡返回的数据", response.body().toString());
                     listener.onReceivedData(API_ID_SAVECARD, response.body(), API_ID_ERROR);
                 }
@@ -1459,21 +1553,81 @@ public class RetrofitService extends HttpEngine {
     }
 
     //获取提现数据
-    public void getWithDrawDatas(DataListener listener) {
+    public void getWithDrawDatas(final DataListener listener) {
         long currentTimeMillis = System.currentTimeMillis();
-        String r1 = "AppClient=1&t=" + currentTimeMillis;
-        String r2 = RxUtils.getInstance().md5(r1);
-        Call<Object> clone = apiInterface.getWithDrawData(1, r2, currentTimeMillis).clone();
-        clone.enqueue(new Callback<Object>() {
+        Map<String, String> map = new HashMap<>();
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Map<String, Object>> clone = apiInterface.getWithDrawData(1, reqkey, currentTimeMillis).clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 if (response.code() == 200) {
                     Log.d("获取提现数据", response.body().toString());
+                    Map<String, Object> map = response.body();
+                    List<List<Object>> cards = new ArrayList<>();
+                    boolean freeze = false;
+                    boolean notime = false;
+                    String start = null;
+                    String end = null;
+                    double nums = 0;
+                    double amounts = 0;
+                    List<List<WithDraw>> ws = new ArrayList<List<WithDraw>>();
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if ("freeze".equals(entry.getKey())) {
+                                freeze = (boolean) entry.getValue();
+                            }
+                            if ("notime".equals(entry.getKey())) {
+                                notime = (boolean) entry.getValue();
+                            }
+                            if ("start".equals(entry.getKey())) {
+                                start = (String) entry.getValue();
+                            }
+                            if ("end".equals(entry.getKey())) {
+                                end = (String) entry.getValue();
+                            }
+                            if ("nums".equals(entry.getKey())) {
+                                nums = (double) entry.getValue();
+                            }
+                            if ("amounts".equals(entry.getKey())) {
+                                amounts = (double) entry.getValue();
+                            }if ("cards".equals(entry.getKey())) {
+                                cards = (List<List<Object>>) entry.getValue();
+                            }
+                        }
+                    }
+                    List<WithDraw> w = new ArrayList<WithDraw>();
+                    WithDraw withDraw = new WithDraw();
+                    withDraw.setFreeze(freeze);
+                    withDraw.setNotime(notime);
+                    withDraw.setStart(start);
+                    withDraw.setEnd(end);
+                    withDraw.setNums(RxUtils.getInstance().getInt(nums));
+                    withDraw.setAmounts(BigDecimal.valueOf(amounts));
+                    w.add(withDraw);
+                    ws.add(w);
+                    List<WithDraw> w2 = new ArrayList<WithDraw>();
+
+                    for (int i = 0; i < cards.size(); i++) {
+                        List<Object> o = cards.get(i);
+                        if (o.size() > 0) {
+                            WithDraw withD = new WithDraw();
+                            double aid = (double) o.get(0);
+                            String cardNumber = (String) o.get(1);
+                            String holders_name = (String) o.get(2);
+                            withD.setAid(RxUtils.getInstance().getInt(aid));
+                            withD.setCardNumber(cardNumber);
+                            withD.setHolders_name(holders_name);
+                            w2.add(withD);
+                        }
+                    }
+                    ws.add(w2);
+                    listener.onReceivedData(API_ID_WITHDRAW, ws, API_ID_ERROR);
                 }
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
 
             }
         });

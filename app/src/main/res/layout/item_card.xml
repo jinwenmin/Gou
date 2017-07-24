@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="200px"
-            android:text="神仙哥哥"
+            android:text=""
             android:textColor="@color/color_f"
             android:textSize="25px" />
 

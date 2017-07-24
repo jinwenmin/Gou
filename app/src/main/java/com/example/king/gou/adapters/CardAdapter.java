@@ -1,6 +1,7 @@
 package com.example.king.gou.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.king.gou.R;
+import com.example.king.gou.bean.CardsData;
 import com.example.king.gou.bean.MapsIdAndValue;
 
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ import butterknife.ButterKnife;
  */
 
 public class CardAdapter extends BaseAdapter {
-    List<MapsIdAndValue> cards;
+    List<CardsData> cards;
     Context context;
     LayoutInflater layoutInflater;
 
@@ -58,7 +60,7 @@ public class CardAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        String s = cards.get(position).getCardNum();
+        String s = cards.get(position).getAccount_number();
         if (s.length() > 4) {
             String substring = s.substring(0, 4);
             String substring1 = s.substring(s.length() - 4, s.length());
@@ -66,11 +68,23 @@ public class CardAdapter extends BaseAdapter {
         } else {
             viewHolder.cardNumber.setText(s);
         }
-        if (!"".equals(cards.get(position).getBank())) {
-            viewHolder.cardBankname.setText(cards.get(position).getBank());
+        if (!"".equals(cards.get(position).getBank_name())) {
+            viewHolder.cardBankname.setText(cards.get(position).getBank_name());
         }
-        if (!"".equals(cards.get(position).getValues())) {
-            viewHolder.cardItemUsername.setText(cards.get(position).getValues());
+        if (!"".equals(cards.get(position).getHolders_name())) {
+            String name = cards.get(position).getHolders_name();
+            Log.d("name.length", name.length() + "");
+            if (name.length() > 1) {
+                name = name.substring(name.length() - 1, name.length());
+                String x = "";
+               /* for (int i = 0; i < name.length() - 1; i++) {
+                    x = x + "*";
+                }*/
+                name = "**" + name;
+                viewHolder.cardItemUsername.setText(name);
+            }
+
+
         }
         return convertView;
     }
@@ -88,7 +102,7 @@ public class CardAdapter extends BaseAdapter {
         }
     }
 
-    public void addCards(List<MapsIdAndValue> ca) {
+    public void addCards(List<CardsData> ca) {
         cards = ca;
         notifyDataSetChanged();
     }

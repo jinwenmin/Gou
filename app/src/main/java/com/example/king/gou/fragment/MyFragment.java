@@ -11,6 +11,7 @@ import android.provider.Settings;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.example.king.gou.R;
 import com.example.king.gou.adapters.MyFrmPageAdapter;
 import com.example.king.gou.bean.UserAmount;
 import com.example.king.gou.bean.UserInfo;
+import com.example.king.gou.bean.WithDraw;
 import com.example.king.gou.fragment.myfragment.OrderFragment;
 import com.example.king.gou.fragment.myfragment.ProxyFragment;
 import com.example.king.gou.service.RetrofitService;
@@ -34,9 +36,11 @@ import com.example.king.gou.ui.frmMyActivity.ChatUserActivity;
 import com.example.king.gou.ui.frmMyActivity.MessageActivity;
 import com.example.king.gou.ui.frmMyActivity.NoticeActivity;
 import com.example.king.gou.ui.frmMyActivity.ReChargeActivity;
+import com.example.king.gou.ui.frmMyActivity.WithDrawActivity;
 import com.example.king.gou.ui.frmMyActivity.ZhuanZhangActivity;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
+import com.zhy.autolayout.utils.L;
 
 
 import java.util.ArrayList;
@@ -102,6 +106,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
     List<UserAmount> userAmount;
     List<UserInfo> userInfos;
     private Broadcast broad;
+    List<List<WithDraw>> ws = new ArrayList<>();
+    List<WithDraw> datas = new ArrayList<>();
+    List<WithDraw> cards = new ArrayList<>();
 
     public static MyFragment newInstance() {
 
@@ -196,7 +203,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
                 startActivity(new Intent(getActivity(), ReChargeActivity.class));
                 break;
             case R.id.ToQukuan:
-                startActivity(new Intent(getActivity(), LotteryZhuiHaoActivity.class));
+                // startActivity(new Intent(getActivity(), WithDrawActivity.class));
+                RetrofitService.getInstance().getWithDrawDatas(this);
                 break;
             case R.id.ToZhuanZhang:
                 startActivity(new Intent(getActivity(), ZhuanZhangActivity.class));
@@ -234,6 +242,26 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
             frmMyCount.setText(userInfo.getAmount() + "");
             frmMyLottory.setText(userInfo.getRate() + "%");
 
+        }
+        if (apiId == RetrofitService.API_ID_WITHDRAW) {
+            if (object != null) {
+                ws = (List<List<WithDraw>>) object;
+                datas = ws.get(0);
+                cards = ws.get(1);
+                if (datas.size()>0) {
+                    Log.d("提现参数：判断是否冻结用户充提",datas.get(0).isFreeze()+"");
+                    Log.d("提现参数：判断是否在可提现时间内",datas.get(0).isNotime()+"");
+                    Log.d("提现参数：可提现开始时间",datas.get(0).getStart()+"");
+                    Log.d("提现参数：可提现结束时间",datas.get(0).getEnd()+"");
+                    Log.d("提现参数：剩余可提现次数",datas.get(0).getNums()+"");
+                    Log.d("提现参数：可提现金额",datas.get(0).getAmounts()+"");
+                }
+                for (int i = 0; i < cards.size(); i++) {
+                    Log.d("提现参数：收款银行卡id",cards.get(i).getAid()+"");
+                    Log.d("提现参数：银行卡信息",cards.get(i).getCardNumber()+"");
+                    Log.d("提现参数：持卡人",cards.get(i).getHolders_name()+"");
+                }
+            }
         }
     }
 

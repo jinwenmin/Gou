@@ -88,7 +88,8 @@
         <activity android:name=".ui.proxyfragment.TeamActivityActivity" />
         <activity android:name=".ui.proxyfragment.ActivityDetailsActivity" />
         <activity android:name=".ui.proxyfragment.GameReWardActivity" />
-        <activity android:name=".ui.proxyfragment.RecordListActivity"></activity>
+        <activity android:name=".ui.proxyfragment.RecordListActivity" />
+        <activity android:name=".ui.frmMyActivity.WithDrawActivity"></activity>
     </application>
 
 </manifest>

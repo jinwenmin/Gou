@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.example.king.gou.R;
+import com.example.king.gou.bean.CardsData;
 import com.example.king.gou.bean.MapsIdAndValue;
 import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.service.RetrofitService;
@@ -63,6 +64,11 @@ public class SaveCardActivity extends AutoLayoutActivity implements View.OnClick
     String Branch;
     String UserName;
     String CardNum;
+    List<List<CardsData>> cs = new ArrayList<>();
+    List<CardsData> bankss = new ArrayList<>();
+    List<CardsData> provincess = new ArrayList<>();
+    List<CardsData> cityss = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +84,7 @@ public class SaveCardActivity extends AutoLayoutActivity implements View.OnClick
         SpinnnerBank.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                BankId = maps.get(0).get(position).getId();
+                BankId = bankss.get(0).getBankid();
 
             }
 
@@ -90,10 +96,9 @@ public class SaveCardActivity extends AutoLayoutActivity implements View.OnClick
         SpinnerPrivince.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                RetrofitService.getInstance().getPrivens(SaveCardActivity.this, mapsPrivinces.get(position).getId());
-                Log.d("城市id==", mapsPrivinces.get(position).getId() + "");
-                PrivinceId = mapsPrivinces.get(position).getId();
-                PrivinceName = mapsPrivinces.get(position).getValues();
+                RetrofitService.getInstance().getPrivens(SaveCardActivity.this, provincess.get(position).getProvince_id());
+                Log.d("城市id==", provincess.get(position).getProvince_id() + "");
+
             }
 
             @Override
@@ -104,8 +109,8 @@ public class SaveCardActivity extends AutoLayoutActivity implements View.OnClick
         SpinnerCity.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                CityId = Citys.get(position).getId();
-                CityName = Citys.get(position).getValues();
+                CityId = cityss.get(position).getCity_id();
+                CityName = cityss.get(position).getCityName();
             }
 
             @Override
@@ -123,7 +128,7 @@ public class SaveCardActivity extends AutoLayoutActivity implements View.OnClick
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id._back:
+            case R.id.SaveCard_back:
                 finish();
                 break;
             case R.id.BindCardBtn:
@@ -135,7 +140,7 @@ public class SaveCardActivity extends AutoLayoutActivity implements View.OnClick
                     return;
                 }
                 //RetrofitService.getInstance().getCheckCardNum(this,UserName,CardNum);
-                RetrofitService.getInstance().getSaveBankCard(this, BankId, PrivinceId, PrivinceName, CityId, CityName, Branch, UserName, CardNum);
+                RetrofitService.getInstance().getSaveBankCard(this, BankId, provincess.get(SpinnerPrivince.getSelectedItemPosition()).getProvince_id(), provincess.get(SpinnerPrivince.getSelectedItemPosition()).getProvincename(), CityId, CityName, Branch, UserName, CardNum);
                 break;
         }
     }
@@ -144,8 +149,28 @@ public class SaveCardActivity extends AutoLayoutActivity implements View.OnClick
     public void onReceivedData(int apiId, Object object, int errorId) {
         if (apiId == RetrofitService.API_ID_CARDDATAS) {
             if (object != null) {
-                maps = (List<List<MapsIdAndValue>>) object;
-                List<MapsIdAndValue> mapsBank = new ArrayList<MapsIdAndValue>();
+                cs = (List<List<CardsData>>) object;
+                bankss = cs.get(1);
+                provincess = cs.get(2);
+                List<String> bankname = new ArrayList<>();
+                List<String> province = new ArrayList<>();
+                for (int i = 0; i < bankss.size(); i++) {
+                    bankname.add(bankss.get(i).getBankname());
+                }
+                for (int i = 0; i < provincess.size(); i++) {
+                    province.add(provincess.get(i).getProvincename());
+                }
+                adapterBank = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, bankname);
+                //第三步：为适配器设置下拉列表下拉时的菜单样式。
+                adapterBank.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                SpinnnerBank.setAdapter(adapterBank);
+
+                adapterPrivince = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, province);
+                adapterPrivince.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                SpinnerPrivince.setAdapter(adapterPrivince);
+
+
+               /* List<MapsIdAndValue> mapsBank = new ArrayList<MapsIdAndValue>();
                 mapsPrivinces = new ArrayList<MapsIdAndValue>();
                 mapsBank = maps.get(0);
                 mapsPrivinces = maps.get(1);
@@ -159,28 +184,24 @@ public class SaveCardActivity extends AutoLayoutActivity implements View.OnClick
                 }
                 //NewArrAdapter newArrAdapter=new NewArrAdapter(this,R.layout.spinner_item,banks);
                 // newArrAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                adapterBank = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, banks);
-                //第三步：为适配器设置下拉列表下拉时的菜单样式。
-                adapterBank.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                SpinnnerBank.setAdapter(adapterBank);
 
-                adapterPrivince = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Prinvince);
-                adapterPrivince.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                SpinnerPrivince.setAdapter(adapterPrivince);
+
+
+
                 List<MapsIdAndValue> mapsIdAndValues1 = maps.get(1);
                 String values = mapsBank.get(3).getValues();
                 String values1 = mapsIdAndValues1.get(5).getValues();
-                Log.d("获取银行卡所需的数据返回2", values + "    " + values1);
+                Log.d("获取银行卡所需的数据返回2", values + "    " + values1);*/
 
             }
         }
         if (apiId == RetrofitService.API_ID_GETCITYS) {
             if (object != null) {
-                Citys = (List<MapsIdAndValue>) object;
+                cityss = (List<CardsData>) object;
                 List<String> Cits = new ArrayList<>();
-                for (int i = 0; i < Citys.size(); i++) {
-                    Cits.add(Citys.get(i).getValues());
-                    Log.d("城市名称", Citys.get(i).getValues());
+                for (int i = 0; i < cityss.size(); i++) {
+                    Cits.add(cityss.get(i).getCityName());
+                    Log.d("城市名称", cityss.get(i).getCityName());
                 }
                 adapterCity = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Cits);
                 adapterCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
