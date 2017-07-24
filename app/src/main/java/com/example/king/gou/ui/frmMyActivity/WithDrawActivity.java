@@ -1,6 +1,7 @@
 package com.example.king.gou.ui.frmMyActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,6 +13,8 @@ import android.widget.Spinner;
 
 import com.example.king.gou.R;
 import com.example.king.gou.bean.CardsData;
+import com.example.king.gou.bean.RestultInfo;
+import com.example.king.gou.bean.WithDraw;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.utils.HttpEngine;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -22,6 +25,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 
 
 public class WithDrawActivity extends AutoLayoutActivity implements HttpEngine.DataListener, View.OnClickListener {
@@ -39,15 +43,36 @@ public class WithDrawActivity extends AutoLayoutActivity implements HttpEngine.D
     List<List<CardsData>> cs = new ArrayList<>();
     private ArrayAdapter<String> adapterCard;
     List<String> cardData = new ArrayList<>();
-    List<CardsData> cardsDatas=new ArrayList<>();
+    List<CardsData> cardsDatas = new ArrayList<>();
+
+    String amounts;
+    List<WithDraw> wd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_with_draw);
         ButterKnife.bind(this);
+        amounts = getIntent().getStringExtra("amounts");
+        wd = (List<WithDraw>) getIntent().getSerializableExtra("banks");
+        WithDrawAmount.setHint("最大取款金额为:" + amounts);
         RetrofitService.getInstance().getCardDatas(this);
-initClick();
+        initClick();
+        initSpinner();
+    }
 
+    private void initSpinner() {
+        List<String> UserBank = new ArrayList<>();
+        for (int i = 0; i < wd.size(); i++) {
+            String cardinfo = wd.get(i).getCardNumber();
+            cardinfo = cardinfo.substring(cardinfo.indexOf("银行卡信息: ") + 7, cardinfo.length());
+            UserBank.add(cardinfo);
+        }
+        adapterCard = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, UserBank);
+        //第三步：为适配器设置下拉列表下拉时的菜单样式。
+        adapterCard.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        SpinnerWithDarw.setAdapter(adapterCard);
+        initSpinnerSelect();
     }
 
     private void initClick() {
@@ -72,25 +97,17 @@ initClick();
 
     @Override
     public void onReceivedData(int apiId, Object object, int errorId) {
-        if (apiId == RetrofitService.API_ID_CARDDATAS) {
+        if (apiId == RetrofitService.API_ID_WITHDRAWCREATE) {
             if (object != null) {
-
-                cs = (List<List<CardsData>>) object;
-                cardsDatas= cs.get(0);
-                for (int i = 0; i < cardsDatas.size(); i++) {
-                    String account_number = cardsDatas.get(i).getAccount_number();
-                    String start = account_number.substring(0, 4);
-                    String end = account_number.substring(account_number.length() - 4, account_number.length());
-                    String num = start + "***********" + end;
-                    cardData.add(num);
+                RestultInfo restultInfo = (RestultInfo) object;
+                Log.d("WithDarwMsg", restultInfo.getMsg()+"");
+                if (restultInfo.isRc()) {
+                    Toasty.success(this, restultInfo.getMsg(), 2000).show();
+                    finish();
                 }
-
-
-                adapterCard = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, cardData);
-                //第三步：为适配器设置下拉列表下拉时的菜单样式。
-                adapterCard.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                SpinnerWithDarw.setAdapter(adapterCard);
-                initSpinnerSelect();
+                if (!restultInfo.isRc()) {
+                    Toasty.error(this, restultInfo.getMsg(), 2000).show();
+                }
             }
         }
     }
@@ -111,7 +128,11 @@ initClick();
             case R.id.TiJiao:
                 String m = WithDrawAmount.getText().toString().trim();
                 BigDecimal money = BigDecimal.valueOf(Double.parseDouble(m));
-                RetrofitService.getInstance().getWithDrawCreates(this,cardsDatas.get(SpinnerWithDarw.getSelectedItemPosition()).getCardid(),money);
+                if (Double.parseDouble(money + "") < 0 || Double.parseDouble(money + "") > Double.parseDouble(amounts)) {
+                    Toasty.error(this, "提现金额不符合取款范围", 2000).show();
+                    return;
+                }
+                RetrofitService.getInstance().getWithDrawCreates(this, wd.get(SpinnerWithDarw.getSelectedItemPosition()).getAid(), money);
         }
     }
 }

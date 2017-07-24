@@ -157,6 +157,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_JOINACTIVITY = 53;//开奖记录
     public static int API_ID_DRAWMONEY = 54;//领取活动奖金
     public static int API_ID_WITHDRAW = 55;//获取提现数据
+    public static int API_ID_WITHDRAWCREATE = 56;//提交提现申请
 
 
     private Retrofit retrofit;
@@ -1591,7 +1592,8 @@ public class RetrofitService extends HttpEngine {
                             }
                             if ("amounts".equals(entry.getKey())) {
                                 amounts = (double) entry.getValue();
-                            }if ("cards".equals(entry.getKey())) {
+                            }
+                            if ("cards".equals(entry.getKey())) {
                                 cards = (List<List<Object>>) entry.getValue();
                             }
                         }
@@ -1637,16 +1639,19 @@ public class RetrofitService extends HttpEngine {
 
     //添加提现申请
     //  应用场景：提现验证通过后创建提现申请
-    public void getWithDrawCreates(DataListener listener, int aid, BigDecimal amount) {
+    public void getWithDrawCreates(final DataListener listener, int aid, BigDecimal amount) {
         long currentTimeMillis = System.currentTimeMillis();
-        String r1 = "AppClient=1&aid=" + aid + "&amount=" + amount + "&t=" + currentTimeMillis;
-        String r2 = RxUtils.getInstance().md5(r1);
-        Call<RestultInfo> clone = apiInterface.getWithDrawCreate(1, aid, amount, r2, currentTimeMillis).clone();
+        Map<String, String> map = new HashMap<>();
+        map.put("aid", aid + "");
+        map.put("amount", amount + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<RestultInfo> clone = apiInterface.getWithDrawCreate(1, aid, amount, reqkey, currentTimeMillis).clone();
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
                 if (response.code() == 200) {
                     Log.d("提交申请返回的", response.body().toString());
+                    listener.onReceivedData(API_ID_WITHDRAWCREATE, response.body(), API_ID_ERROR);
                 }
 
             }

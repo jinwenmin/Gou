@@ -43,6 +43,8 @@ import com.example.king.gou.utils.RxUtils;
 import com.zhy.autolayout.utils.L;
 
 
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -52,6 +54,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import es.dmoral.toasty.Toasty;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -203,7 +206,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
                 startActivity(new Intent(getActivity(), ReChargeActivity.class));
                 break;
             case R.id.ToQukuan:
-                // startActivity(new Intent(getActivity(), WithDrawActivity.class));
+                //
                 RetrofitService.getInstance().getWithDrawDatas(this);
                 break;
             case R.id.ToZhuanZhang:
@@ -248,19 +251,54 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
                 ws = (List<List<WithDraw>>) object;
                 datas = ws.get(0);
                 cards = ws.get(1);
-                if (datas.size()>0) {
-                    Log.d("提现参数：判断是否冻结用户充提",datas.get(0).isFreeze()+"");
-                    Log.d("提现参数：判断是否在可提现时间内",datas.get(0).isNotime()+"");
-                    Log.d("提现参数：可提现开始时间",datas.get(0).getStart()+"");
-                    Log.d("提现参数：可提现结束时间",datas.get(0).getEnd()+"");
-                    Log.d("提现参数：剩余可提现次数",datas.get(0).getNums()+"");
-                    Log.d("提现参数：可提现金额",datas.get(0).getAmounts()+"");
+                BigDecimal amounts = null;
+                if (datas.size() > 0) {
+                    boolean freeze = datas.get(0).isFreeze();
+                    boolean notime = datas.get(0).isNotime();
+                    String start = datas.get(0).getStart();
+                    String end = datas.get(0).getEnd();
+                    int nums = datas.get(0).getNums();
+                 amounts   = datas.get(0).getAmounts();
+                    Log.d("提现参数：判断是否冻结用户充提", freeze + "");
+                    Log.d("提现参数：判断是否在可提现时间内", notime + "");
+                    Log.d("提现参数：可提现开始时间", start + "");
+                    Log.d("提现参数：可提现结束时间", end + "");
+                    Log.d("提现参数：剩余可提现次数", nums + "");
+                    Log.d("提现参数：可提现金额", amounts + "");
+                    if (!freeze) {
+                        Toasty.error(getContext(), "用户被冻结，无法提现", 2000).show();
+                        return;
+                    }
+                    if (!notime) {
+                        Toasty.error(getContext(), "不在提现时间段内，无法提现", 2000).show();
+                        Toasty.info(getContext(), "提现时间为" + start + "-" + end, 2000).show();
+                        return;
+                    }
+                    if (nums <= 0) {
+                        Toasty.error(getContext(), "提现次数用完，无法提现", 2000).show();
+                        return;
+                    }
+                    if (Double.parseDouble(amounts + "") <= 0) {
+                        Toasty.error(getContext(), "可提取金额不大于零，无法提现", 2000).show();
+                        return;
+                    }
                 }
+                ArrayList<WithDraw> banks = new ArrayList<>();
                 for (int i = 0; i < cards.size(); i++) {
-                    Log.d("提现参数：收款银行卡id",cards.get(i).getAid()+"");
-                    Log.d("提现参数：银行卡信息",cards.get(i).getCardNumber()+"");
-                    Log.d("提现参数：持卡人",cards.get(i).getHolders_name()+"");
+
+                    Log.d("提现参数：收款银行卡id", cards.get(i).getAid() + "");
+                    Log.d("提现参数：银行卡信息", cards.get(i).getCardNumber() + "");
+                    Log.d("提现参数：持卡人", cards.get(i).getHolders_name() + "");
+                    WithDraw withDraw = new WithDraw();
+                    withDraw.setAid(cards.get(i).getAid());
+                    withDraw.setCardNumber(cards.get(i).getCardNumber());
+                    withDraw.setHolders_name(cards.get(i).getHolders_name());
+                    banks.add(withDraw);
                 }
+                Intent intent = new Intent(getActivity(), WithDrawActivity.class);
+                intent.putExtra("amounts", amounts + "");
+                intent.putExtra("banks",(Serializable)banks);
+                startActivity(intent);
             }
         }
     }

@@ -1,12 +1,13 @@
 package com.example.king.gou.bean;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  * Created by Administrator on 2017/7/24.
  */
 
-public class WithDraw {
+public class WithDraw implements Serializable{
     boolean freeze;
     boolean notime;
     String start;
