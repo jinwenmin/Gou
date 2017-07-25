@@ -712,7 +712,7 @@ public interface ApiInterface {
     //51 个人报表充提记录
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/recharge-withdraw-list")
-    Call<Object> getReChargeWithDrawList(
+    Call<Map<String,Object>> getReChargeWithDrawList(
             @Query("AppClient") int num,
             @Query("page") int page,
             @Query("rows") int rows,

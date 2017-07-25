@@ -1,22 +1,18 @@
 package com.example.king.gou.ui.orderFrmActivity;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnSureLisener;
@@ -37,7 +33,6 @@ import com.example.king.gou.ui.gameAcVpFrms.NoWinFragment;
 import com.example.king.gou.ui.gameAcVpFrms.OverDueFragment;
 import com.example.king.gou.ui.gameAcVpFrms.PaiJiangFragment;
 import com.example.king.gou.ui.gameAcVpFrms.TerraceKillFragment;
-import com.example.king.gou.utils.DateUtil;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -50,7 +45,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import es.dmoral.toasty.Toasty;
 
 
 public class GameJiluActivity extends AutoLayoutActivity implements View.OnClickListener, HttpEngine.DataListener {
@@ -81,8 +75,13 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
     List<List<TouZhu>> tss;
     @BindView(R.id.GameJiLuListView)
     ListView GameJiLuListView;
+    @BindView(R.id.relateBank3)
+    LinearLayout relateBank3;
+    @BindView(R.id.RebuySpinner)
+    Spinner RebuySpinner;
 
     private ArrayAdapter<String> adapter1;
+    private ArrayAdapter<String> adapterRebuy;
     String date1;
     String date2;
     List<GameType> gameTypes1 = new ArrayList<>();
@@ -90,17 +89,12 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
     private ArrayAdapter<String> adapter;
     int Gid = 0;
     List<TouZhu> ts;
-    AllFragment allFragment;
-    NoBuyFragment noBuyFragment;
-    NoOpenFragment noOpenFragment;
-    KillOrderFragment killOrderFragment;
-    ManKillOrderFragment manKillOrderFragment;
-    OverDueFragment overDueFragment;
-    NoWinFragment nowinFragment;
-    TerraceKillFragment terraceKillFragment;
-    PaiJiangFragment paiJiangFragment;
+
     List<String> tits = new ArrayList<>();
+    List<Integer> titsname = new ArrayList<>();
     public TouZhuAdapter touZhuAdapter;
+    List<String> rebuys = new ArrayList<>();
+    List<String> rebuyName = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,35 +105,17 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
         GameJiLuListView.setAdapter(touZhuAdapter);
         RetrofitService.getInstance().getGame(this, 4, 0, 0, 0);
         relateTime1.setClickable(true);
-        initFragment();
         initClick();
-        initViewpager();
         initDateDialog();
         initSpinner();
-    }
-
-    private void initFragment() {
-        allFragment = new AllFragment();
-        noBuyFragment = new NoBuyFragment();
-        noOpenFragment = new NoOpenFragment();
-        killOrderFragment = new KillOrderFragment();
-        manKillOrderFragment = new ManKillOrderFragment();
-        overDueFragment = new OverDueFragment();
-        nowinFragment = new NoWinFragment();
-        terraceKillFragment = new TerraceKillFragment();
-        paiJiangFragment = new PaiJiangFragment();
 
     }
 
-
-    private void initSpinner() {
+    private void initSpinnerSelect() {
         gameType1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 RetrofitService.getInstance().getGame(GameJiluActivity.this, 7, gameTypes1.get(i).getGid(), 0, 0);
-                Gid = gameTypes1.get(i).getGid();
-                RetrofitService.getInstance().getSwitchGameList(GameJiluActivity.this, gameTypes1.get(3).getGid());
-                // RetrofitService.getInstance().getBettingSync(GameJiluActivity.this,gameTypes1.get(i).getGid());
             }
 
             @Override
@@ -147,20 +123,11 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
 
             }
         });
+
         gameType2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String time1;
-                String time2;
-                if (date1 == null || date2 == null) {
-                    time1 = timetext.getText().toString().trim() ;
-                    time2 = timetext2.getText().toString().trim();
-                } else {
-                    time1 = date1;
-                    time2 = date2;
-                }
-
-                RetrofitService.getInstance().getBettingRecord(GameJiluActivity.this, 1, 100, "serial_number", "desc", time1, time2, Gid, gameTypes2.get(i).getTid(), -1, "", "");
+                initRetrofit();
             }
 
             @Override
@@ -168,6 +135,81 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
 
             }
         });
+        RebuySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                initRetrofit();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        GameJiluSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                List<TouZhu> touZhus = tss.get(position);
+                touZhuAdapter.addListView(touZhus);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+    }
+
+    private void initRetrofit() {
+        String time1 = timetext.getText().toString().trim();
+        String time2 = timetext2.getText().toString().trim();
+        String searString = timetext3.getText().toString().trim();
+        int status = titsname.get(GameJiluSpinner.getSelectedItemPosition());
+        String rebuy = rebuyName.get(RebuySpinner.getSelectedItemPosition());
+        int gid = gameTypes1.get(gameType1.getSelectedItemPosition()).getGid();
+        int tid = gameTypes2.get(gameType2.getSelectedItemPosition()).getTid();
+        RetrofitService.getInstance().getBettingRecord(GameJiluActivity.this, 1, 100, "serial_number", "desc", time1, time2, gid, tid, status, "", searString);
+        //RetrofitService.getInstance().getBettingRecord(GameJiluActivity.this, 1, 100, "serial_number", "desc", time1, time2, gid, tid, -1, "", searText);
+    }
+
+
+    private void initSpinner() {
+        rebuys.add("");
+        rebuys.add("0");
+        rebuys.add("1");
+        rebuyName.add("全部");
+        rebuyName.add("不是追号");
+        rebuyName.add("是追号");
+        adapterRebuy = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, rebuyName);
+        //第三步：为适配器设置下拉列表下拉时的菜单样式。
+        adapterRebuy.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //第四步：将适配器添加到下拉列表上
+        RebuySpinner.setAdapter(adapterRebuy);
+        titsname.add(-1);
+        titsname.add(0);
+        titsname.add(1);
+        titsname.add(2);
+        titsname.add(3);
+        titsname.add(4);
+        titsname.add(5);
+        titsname.add(6);
+        titsname.add(7);
+        tits.add("全部");
+        tits.add("未购买");
+        tits.add("未开奖");
+        tits.add("本人撤单");
+        tits.add("管理员撤单");
+        tits.add("已过期");
+        tits.add("未中奖");
+        tits.add("平台撤单");
+        tits.add("已派奖");
+        adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tits);
+        //第三步：为适配器设置下拉列表下拉时的菜单样式。
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //第四步：将适配器添加到下拉列表上
+        GameJiluSpinner.setAdapter(adapter1);
     }
 
 
@@ -199,31 +241,6 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
         timetext2.setText(sdf.format(date));
     }
 
-    //实例化 Viewpager
-    private void initViewpager() {
-        List<BaseFragment> fragments = new ArrayList<>();
-
-        fragments.add(allFragment);
-        fragments.add(noBuyFragment);
-        fragments.add(noOpenFragment);
-        fragments.add(killOrderFragment);
-        fragments.add(manKillOrderFragment);
-        fragments.add(overDueFragment);
-        fragments.add(nowinFragment);
-        fragments.add(terraceKillFragment);
-        fragments.add(paiJiangFragment);
-        tits.add("全部");
-        tits.add("未购买");
-        tits.add("未开奖");
-        tits.add("本人撤单");
-        tits.add("管理员撤单");
-        tits.add("已过期");
-        tits.add("未中奖");
-        tits.add("平台撤单");
-        tits.add("已派奖");
-
-    }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -253,7 +270,7 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
                         String searText = timetext3.getText().toString().trim();
                         int gid = gameTypes1.get(gameType1.getSelectedItemPosition()).getGid();
                         int tid = gameTypes2.get(gameType2.getSelectedItemPosition()).getTid();
-                        RetrofitService.getInstance().getBettingRecord(GameJiluActivity.this, 1, 100, "serial_number", "desc", timetext.getText().toString().trim(),timetext2.getText().toString().trim(), gid, tid, -1, "", searText);
+                        initRetrofit();
 
 
                     }
@@ -285,7 +302,7 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
                         String searText = timetext3.getText().toString().trim();
                         int gid = gameTypes1.get(gameType1.getSelectedItemPosition()).getGid();
                         int tid = gameTypes2.get(gameType2.getSelectedItemPosition()).getTid();
-                        RetrofitService.getInstance().getBettingRecord(GameJiluActivity.this, 1, 100, "serial_number", "desc", timetext.getText().toString().trim(),timetext2.getText().toString().trim(), gid, tid, -1, "", searText);
+                        initRetrofit();
 
                     }
                 });
@@ -307,7 +324,7 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
                 String searText = timetext3.getText().toString().trim();
                 int gid = gameTypes1.get(gameType1.getSelectedItemPosition()).getGid();
                 int tid = gameTypes2.get(gameType2.getSelectedItemPosition()).getTid();
-                RetrofitService.getInstance().getBettingRecord(GameJiluActivity.this, 1, 100, "serial_number", "desc", time1, time2, gid, tid, -1, "", searText);
+
                 break;
         }
     }
@@ -326,7 +343,18 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 //第四步：将适配器添加到下拉列表上
                 gameType1.setAdapter(adapter);
-                RetrofitService.getInstance().getGame(GameJiluActivity.this, 7, gameTypes1.get(0).getGid(), 0, 0);
+                gameType1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        RetrofitService.getInstance().getGame(GameJiluActivity.this, 7, gameTypes1.get(i).getGid(), 0, 0);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+
             }
         }
         if (apiId == RetrofitService.API_ID_GAME7) {
@@ -342,6 +370,7 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 //第四步：将适配器添加到下拉列表上
                 gameType2.setAdapter(adapter);
+                initSpinnerSelect();
             }
         }
         if (apiId == RetrofitService.API_ID_TOUZHUSEAR) {
@@ -406,23 +435,8 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
                 for (int i = 0; i < touZhus.size(); i++) {
                     Log.d("SpinerTouZhu", touZhus.get(i).toString());
                 }
-                adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tits);
-                //第三步：为适配器设置下拉列表下拉时的菜单样式。
-                adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                //第四步：将适配器添加到下拉列表上
-                GameJiluSpinner.setAdapter(adapter1);
-                GameJiluSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        Log.d("SpinerTouZhuposition", position + "");
-                        touZhuAdapter.addListView(tss.get(position));
-                    }
+                touZhuAdapter.addListView(touZhus);
 
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
 
             }
         }

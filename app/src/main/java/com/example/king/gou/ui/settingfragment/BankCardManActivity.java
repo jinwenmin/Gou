@@ -58,6 +58,7 @@ public class BankCardManActivity extends AutoLayoutActivity implements SlideCutL
         nocardList.setRemoveListener(this);
         CardLock.setOnClickListener(this);
         BindCardBtn.setOnClickListener(this);
+        Back.setOnClickListener(this);
     }
 
     @Override

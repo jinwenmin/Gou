@@ -11,6 +11,7 @@ import android.provider.Settings;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bigkoo.alertview.AlertView;
+import com.bigkoo.alertview.OnItemClickListener;
 import com.example.king.gou.MyApp;
 
 import com.example.king.gou.R;
@@ -38,6 +41,7 @@ import com.example.king.gou.ui.frmMyActivity.NoticeActivity;
 import com.example.king.gou.ui.frmMyActivity.ReChargeActivity;
 import com.example.king.gou.ui.frmMyActivity.WithDrawActivity;
 import com.example.king.gou.ui.frmMyActivity.ZhuanZhangActivity;
+import com.example.king.gou.ui.settingfragment.BankCardManActivity;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
 import com.zhy.autolayout.utils.L;
@@ -59,7 +63,7 @@ import es.dmoral.toasty.Toasty;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MyFragment extends BaseFragment implements View.OnClickListener, HttpEngine.DataListener {
+public class MyFragment extends BaseFragment implements View.OnClickListener, HttpEngine.DataListener, OnItemClickListener {
 
 
     @BindView(R.id.frmMyKeFu)
@@ -112,6 +116,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
     List<List<WithDraw>> ws = new ArrayList<>();
     List<WithDraw> datas = new ArrayList<>();
     List<WithDraw> cards = new ArrayList<>();
+    private AlertView alertView;
+    // 一个自定义的布局，作为显示的内容
+    View contentView;
 
     public static MyFragment newInstance() {
 
@@ -129,7 +136,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my, container, false);
         unbinder = ButterKnife.bind(this, view);
-
+        alertView = new AlertView(null, null, "取消", new String[]{"确认"}, null, getContext(), AlertView.Style.Alert, this);
+        contentView = LayoutInflater.from(getContext()).inflate(
+                R.layout.item_homenotice, null);
+        alertView.addExtView(contentView);
         broad = new Broadcast();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("action.NickName");
@@ -258,7 +268,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
                     String start = datas.get(0).getStart();
                     String end = datas.get(0).getEnd();
                     int nums = datas.get(0).getNums();
-                 amounts   = datas.get(0).getAmounts();
+                    amounts = datas.get(0).getAmounts();
                     Log.d("提现参数：判断是否冻结用户充提", freeze + "");
                     Log.d("提现参数：判断是否在可提现时间内", notime + "");
                     Log.d("提现参数：可提现开始时间", start + "");
@@ -269,7 +279,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
                         Toasty.error(getContext(), "用户被冻结，无法提现", 2000).show();
                         return;
                     }
-                    if (!notime) {
+                    if (notime) {
                         Toasty.error(getContext(), "不在提现时间段内，无法提现", 2000).show();
                         Toasty.info(getContext(), "提现时间为" + start + "-" + end, 2000).show();
                         return;
@@ -295,10 +305,16 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
                     withDraw.setHolders_name(cards.get(i).getHolders_name());
                     banks.add(withDraw);
                 }
-                Intent intent = new Intent(getActivity(), WithDrawActivity.class);
-                intent.putExtra("amounts", amounts + "");
-                intent.putExtra("banks",(Serializable)banks);
-                startActivity(intent);
+                if (banks.size() == 0) {
+                    TextView homeNotice = (TextView) contentView.findViewById(R.id.homeNoticeText);
+                    homeNotice.setText(Html.fromHtml("用户还未绑定银行卡,是否前往绑定银行卡"));
+                    alertView.show();
+                } else {
+                    Intent intent = new Intent(getActivity(), WithDrawActivity.class);
+                    intent.putExtra("amounts", amounts + "");
+                    intent.putExtra("banks", (Serializable) banks);
+                    startActivity(intent);
+                }
             }
         }
     }
@@ -311,6 +327,14 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
     @Override
     public void onRequestEnd(int apiId) {
 
+    }
+
+    @Override
+    public void onItemClick(Object o, int position) {
+        if (position != AlertView.CANCELPOSITION) {
+            startActivity(new Intent(getActivity(), BankCardManActivity.class));
+
+        }
     }
 
     private class Broadcast extends BroadcastReceiver {

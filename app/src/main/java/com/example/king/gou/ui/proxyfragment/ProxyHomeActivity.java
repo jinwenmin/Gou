@@ -336,6 +336,17 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
                 }
 
             }
+        }  if (apiId == RetrofitService.API_ID_DAILYRECHARGE) {
+            if (object != null) {
+                RestultInfo restultInfo = (RestultInfo) object;
+                if (restultInfo.isRc()) {
+                    Toasty.success(this, restultInfo.getMsg(), 2000).show();
+                }
+                if (!restultInfo.isRc()) {
+                    Toasty.error(this, restultInfo.getMsg(), 2000).show();
+                }
+
+            }
         }
     }
 

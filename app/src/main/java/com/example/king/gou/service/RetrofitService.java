@@ -158,6 +158,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_DRAWMONEY = 54;//领取活动奖金
     public static int API_ID_WITHDRAW = 55;//获取提现数据
     public static int API_ID_WITHDRAWCREATE = 56;//提交提现申请
+    public static int API_ID_DAILYRECHARGE = 57;//日工资充值
 
 
     private Retrofit retrofit;
@@ -2300,56 +2301,85 @@ public class RetrofitService extends HttpEngine {
         map.put("to", to + "");
         map.put("type", type + "");
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> reChargeWithDrawList = apiInterface.getReChargeWithDrawList(1, page, rows, sidx, sord, from, to, type, reqkey, currentTimeMillis);
-        Call<Object> clone = reChargeWithDrawList.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<Map<String, Object>> reChargeWithDrawList = apiInterface.getReChargeWithDrawList(1, page, rows, sidx, sord, from, to, type, reqkey, currentTimeMillis);
+        Call<Map<String, Object>> clone = reChargeWithDrawList.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 if (response.code() == 200) {
                     String s = response.body().toString();
                     Log.d("个人报表充提记录", s);
+                    Map<String, Object> map = response.body();
+                    Map<String, Object> userdata = new HashMap<>();
+                    List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
+                    List<Object> cell = new ArrayList<>();
                     List<List<CunQu>> cqs = new ArrayList<List<CunQu>>();
+                    double income = 0;
+                    double expend = 0;
+                    double records = 0;
+                    String id = null;
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if ("userdata".equals(entry.getKey())) {
+                                userdata = (Map<String, Object>) entry.getValue();
+                            }
+                            if ("records".equals(entry.getKey())) {
+                                records = (double) entry.getValue();
+                            }
+                            if ("rows".equals(entry.getKey())) {
+                                rows = (List<Map<String, Object>>) entry.getValue();
+                            }
+                        }
+                    }
+                    if (userdata.size() > 0) {
+                        for (Map.Entry<String, Object> entry : userdata.entrySet()) {
+                            if ("income".equals(entry.getKey())) {
+                                income = (double) entry.getValue();
+                            }
+                            if ("expend".equals(entry.getKey())) {
+                                expend = (double) entry.getValue();
+                            }
+                        }
+                    }
+
                     List<CunQu> ccs = new ArrayList<CunQu>();
-                    String incomes = s.substring(s.indexOf("userdata={income=") + 17, s.indexOf(", expend"));
-                    String expends = s.substring(s.indexOf("expend=") + 7, s.indexOf(", serial_number="));
                     CunQu c = new CunQu();
-                    c.setIncomes(Double.parseDouble(incomes));
-                    c.setExpengs(Double.parseDouble(expends));
+                    c.setIncomes(income);
+                    c.setExpengs(expend);
                     ccs.add(c);
                     cqs.add(ccs);
-                    String substring = s.substring(s.indexOf("rows=[") + 6, s.indexOf("], userdata="));
-                    if (substring.length() > 10) {
-                        //String substring1 = substring.substring(substring.indexOf("id=") + 3, substring.indexOf(", cell="));
-                        String[] ss = substring.split(", ");
-                        List<CunQu> cs = new ArrayList<CunQu>();
-                        for (int i = 0; i < ss.length; i = i + 10) {
-                            Log.d("个人报表充提记录Split==", ss[i]);
-                            CunQu cunQu = new CunQu();
-                            String id = ss[i].substring(4, ss[i].length());
-                            String serial_number = ss[i + 1].substring(6, ss[i + 1].length());
-                            String uname = ss[i + 2];
-                            String date = ss[i + 3];
-                            String stype = ss[i + 4];
-                            String income = ss[i + 5];
-                            String expend = ss[i + 6];
-                            String amount = ss[i + 7];
-                            String status = ss[i + 8];
-                            String detial = ss[i + 9];
-                            cunQu.setId(Integer.parseInt(id));
-                            cunQu.setSerial_number(serial_number);
-                            cunQu.setUname(uname);
-                            cunQu.setDate(date);
-                            cunQu.setStype(Integer.parseInt(stype));
-                            cunQu.setIncome(Double.parseDouble(income));
-                            cunQu.setExpend(Double.parseDouble(expend));
-                            cunQu.setAmount(Double.parseDouble(amount));
-                            cunQu.setStatus(Integer.parseInt(status));
-                            cunQu.setDetial(detial);
-                            cs.add(cunQu);
+                    List<CunQu> cs = new ArrayList<CunQu>();
+                    if (records > 0) {
+                        for (int i = 0; i < rows.size(); i++) {
+                            Map<String, Object> o = rows.get(i);
+                            if (o.size() > 0) {
+                                for (Map.Entry<String, Object> entry : o.entrySet()) {
+                                    if ("id".equals(entry.getKey())) {
+                                        id = (String) entry.getValue();
+                                    }
+                                    if ("cell".equals(entry.getKey())) {
+                                        cell = (List<Object>) entry.getValue();
+                                        if (cell.size() > 0) {
+                                            CunQu cunQu = new CunQu();
+                                            cunQu.setId(Integer.parseInt(id));
+                                            cunQu.setSerial_number((String) cell.get(0));
+                                            cunQu.setUname((String) cell.get(1));
+                                            cunQu.setDate((String) cell.get(2));
+                                            cunQu.setStype((Integer.parseInt((String) cell.get(3))));
+                                            cunQu.setIncome(Double.parseDouble((String) cell.get(4)));
+                                            cunQu.setExpend(Double.parseDouble(((String) cell.get(5))));
+                                            cunQu.setAmount(Double.parseDouble(((String) cell.get(6))));
+                                            cunQu.setStatus((Integer.parseInt((String) cell.get(7))));
+                                            cunQu.setDetial((String) cell.get(8));
+                                            cs.add(cunQu);
+                                            Log.d("个人报表充提记录String", cunQu.toString());
+                                        }
+                                    }
+                                }
+                            }
                         }
-                        cqs.add(cs);
-
                     }
+                    cqs.add(cs);
                     listener.onReceivedData(API_ID_RECHARGEDRAW, cqs, API_ID_ERROR);
                 }
 
@@ -2357,13 +2387,14 @@ public class RetrofitService extends HttpEngine {
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
 
             }
         });
     }
 
     //个人报表彩票投注
+
     public void getBettingList(DataListener listener, int page, int rows, String sidx, String sord, String from, final String to, int id, int rid, int status) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> maps = new HashMap<>();
@@ -3686,7 +3717,7 @@ public class RetrofitService extends HttpEngine {
     }
 
     //保存日工资充值
-    public void getDailyRechargeTrans(DataListener listener, double amount, String name) {
+    public void getDailyRechargeTrans(final DataListener listener, double amount, String name) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         map.put("amount", amount + "");
@@ -3699,6 +3730,7 @@ public class RetrofitService extends HttpEngine {
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
                 if (response.code() == 200) {
                     Log.d("保存日工资充值", response.body().toString());
+                    listener.onReceivedData(API_ID_DAILYRECHARGE,response.body(),API_ID_ERROR);
                 }
 
             }
