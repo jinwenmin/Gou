@@ -9,13 +9,20 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.king.gou.R;
+import com.example.king.gou.bean.GameType;
 import com.example.king.gou.fragment.FindFragment;
+import com.example.king.gou.service.RetrofitService;
+import com.example.king.gou.ui.orderFrmActivity.GameJiluActivity;
+import com.example.king.gou.utils.HttpEngine;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.ArrayList;
@@ -25,7 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class GameCenterActivity extends AutoLayoutActivity {
+public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine.DataListener {
 
     @BindView(R.id.vpId)
     ViewPager vpId;
@@ -57,13 +64,14 @@ public class GameCenterActivity extends AutoLayoutActivity {
 
     Handler handler = new Handler();
     int i = 100;
+    List<GameType> gameTypes1 = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_center);
         ButterKnife.bind(this);
-
+        RetrofitService.getInstance().getGame(this, 4, 0, 0, 0);
         initData();
 
         ViewPAdapter adapter = new ViewPAdapter(getSupportFragmentManager(), fragmentList, pageTitle);
@@ -93,6 +101,29 @@ public class GameCenterActivity extends AutoLayoutActivity {
             }
         };
         handler.postDelayed(runnable, TIME); // 在初始化方法里.
+
+    }
+
+    @Override
+    public void onReceivedData(int apiId, Object object, int errorId) {
+        if (apiId == RetrofitService.API_ID_GAME4) {
+            if (object != null) {
+                gameTypes1 = (List<GameType>) object;
+                for (int i1 = 0; i1 < gameTypes1.size(); i1++) {
+                    RetrofitService.getInstance().getSwitchGameList(this, gameTypes1.get(i1).getGid());
+                }
+            }
+
+        }
+    }
+
+    @Override
+    public void onRequestStart(int apiId) {
+
+    }
+
+    @Override
+    public void onRequestEnd(int apiId) {
 
     }
 

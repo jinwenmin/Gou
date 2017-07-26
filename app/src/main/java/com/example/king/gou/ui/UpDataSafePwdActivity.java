@@ -82,6 +82,10 @@ public class UpDataSafePwdActivity extends AutoLayoutActivity implements View.On
                     Toasty.error(this, "新密码不能为初始密码", 2000).show();
                     return;
                 }
+                if (newpwd.length()>14||newpwd.length()<6) {
+                    Toasty.error(this,"密码长度不正确",2000).show();
+                    return;
+                }
                 RetrofitService.getInstance().getUpDataSafePwd(this, oldpwd256, newpwd256, email);
                 break;
         }

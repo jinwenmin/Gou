@@ -25,36 +25,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="修改登录密码"
+            android:text="重置密码"
             android:textColor="@android:color/white"
             android:textSize="@dimen/top_textsize" />
     </RelativeLayout>
 
-    <LinearLayout
+    <RadioGroup
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:id="@+id/ResetPwdRadioG"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30px"
-        android:background="@android:color/white"
-        android:padding="20px">
+        android:layout_height="wrap_content">
 
-        <TextView
+        <RadioButton
+            android:text="重置登录密码"
+            android:id="@+id/ResetPwdRadioB1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="当前密码"
-            android:textColor="@android:color/black"
-            android:textSize="30px" />
+            android:layout_height="wrap_content" />
 
-        <EditText
-            android:inputType="textPassword"
-            android:id="@+id/UpdataPwdOldPwd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:gravity="center"
-            android:hint="请输入当前的密码"
-            android:textSize="30px" />
-    </LinearLayout>
+        <RadioButton
+            android:text="重置安全密码"
+            android:id="@+id/ResetPwdRadioB2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RadioGroup>
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -87,13 +82,13 @@
             android:textSize="30px" />
 
         <EditText
-            android:inputType="textPassword"
-            android:id="@+id/UpdataPwdNewPwd"
+            android:id="@+id/ResetNewPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
             android:gravity="center"
             android:hint="6-14位字符 由数字和字母组成"
+            android:inputType="textPassword"
             android:textSize="30px" />
     </LinearLayout>
 
@@ -113,13 +108,13 @@
             android:textSize="30px" />
 
         <EditText
-            android:inputType="textPassword"
-            android:id="@+id/UpdataPwdCheckNewPwd"
+            android:id="@+id/ResetCheckNewPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
             android:gravity="center"
             android:hint="与新密码保持一致"
+            android:inputType="textPassword"
             android:textSize="30px" />
     </LinearLayout>
 

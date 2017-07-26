@@ -1,28 +1,26 @@
 package com.example.king.gou.ui;
 
-import android.Manifest;
 import android.app.KeyguardManager;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.os.CancellationSignal;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bigkoo.alertview.AlertView;
+import com.bigkoo.alertview.OnItemClickListener;
 import com.example.king.gou.R;
+import com.example.king.gou.bean.RestultInfo;
+import com.example.king.gou.bean.UserInfo;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.ui.settingfragment.BankCardManActivity;
 import com.example.king.gou.ui.settingfragment.MoneyProtectActivity;
@@ -33,11 +31,14 @@ import com.example.king.gou.utils.DataBaseHelper;
 import com.example.king.gou.utils.HttpEngine;
 import com.zhy.autolayout.AutoLayoutActivity;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 
 
-public class SettingActivity extends AutoLayoutActivity implements View.OnClickListener, HttpEngine.DataListener {
+public class SettingActivity extends AutoLayoutActivity implements View.OnClickListener, HttpEngine.DataListener, OnItemClickListener {
 
     @BindView(R.id._back)
     ImageView Back;
@@ -101,6 +102,8 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
     RelativeLayout getCardData;
     @BindView(R.id.updateSafePwd)
     RelativeLayout updateSafePwd;
+    @BindView(R.id.ResetPwd)
+    RelativeLayout ResetPwd;
     private AlertView alertView;
     ; // 一个自定义的布局，作为显示的内容
     View contentView;
@@ -109,6 +112,12 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
     DataBaseHelper dataBaseHelper;
     SQLiteDatabase writableDatabase;
     String isfinger;
+    private AlertView alertViewAnswer;
+    // 一个自定义的布局，作为显示的内容
+    View contentViewAnswer;
+    List<UserInfo> userInfos;
+    TextView SafeQues;
+    private EditText answerQues;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,14 +125,11 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
         initDataHelper();
-        Back.setOnClickListener(this);
-        SettingUpdataPwd.setOnClickListener(this);
-        updateMoneyPwd.setOnClickListener(this);
-        updateNickName.setOnClickListener(this);
-        PwdProtect.setOnClickListener(this);
-        LinearCheck1.setOnClickListener(this);
-        getCardData.setOnClickListener(this);
-        updateSafePwd.setOnClickListener(this);
+        alertViewAnswer = new AlertView(null, null, "取消", new String[]{"确认"}, null, this, AlertView.Style.Alert, this);
+        contentViewAnswer = LayoutInflater.from(this).inflate(
+                R.layout.reset_pwdcheck, null);
+        alertViewAnswer.addExtView(contentViewAnswer);
+        initClick();
  /*       manager = (FingerprintManager) this.getSystemService(Context.FINGERPRINT_SERVICE);
         mKeyManager = (KeyguardManager) this.getSystemService(Context.KEYGUARD_SERVICE);*/
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -147,6 +153,20 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
                 switch1.setChecked(false);
             }
         }*/
+    }
+
+    private void initClick() {
+
+        Back.setOnClickListener(this);
+        SettingUpdataPwd.setOnClickListener(this);
+        updateMoneyPwd.setOnClickListener(this);
+        updateNickName.setOnClickListener(this);
+        PwdProtect.setOnClickListener(this);
+        LinearCheck1.setOnClickListener(this);
+        getCardData.setOnClickListener(this);
+        updateSafePwd.setOnClickListener(this);
+        ResetPwd.setOnClickListener(this);
+
     }
 
     private void initDataHelper() {
@@ -174,7 +194,7 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.Setting_UpdataPwd:
-                  StartA(UpdatePwdActivity.class);
+                StartA(UpdatePwdActivity.class);
                 //StartA(CheckSafePwdActivity.class);
                 break;
             case R.id.Pwd_protect:
@@ -210,12 +230,42 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
             case R.id._back:
                 finish();
                 break;
+            case R.id.ResetPwd:
+                RetrofitService.getInstance().GetUserInfo(this);
+                break;
         }
     }
 
     @Override
     public void onReceivedData(int apiId, Object object, int errorId) {
+        if (apiId == RetrofitService.API_ID_USERINFO) {
+            if (object != null) {
+                userInfos = (List<UserInfo>) object;
+                SafeQues = (TextView) contentViewAnswer.findViewById(R.id.SafeQues);
+                answerQues = ((EditText) contentViewAnswer.findViewById(R.id.AnswerQues));
+                if (userInfos.get(0).isHasQuestions()) {
+                    SafeQues.setText(userInfos.get(0).getQuestion());
+                }
+                if (!userInfos.get(0).isHasQuestions()) {
+                    Toasty.error(this, "未设置安全问题", 2000).show();
+                    return;
+                }
+                alertViewAnswer.show();
+            }
 
+        }
+        if (apiId == RetrofitService.API_ID_SAFEPWDCHECK) {
+            if (object != null) {
+                RestultInfo restultInfo = (RestultInfo) object;
+                if (restultInfo.isRc()) {
+
+                }
+                if (!restultInfo.isRc()) {
+                    Toasty.error(this, restultInfo.getMsg(), 2000).show();
+                    return;
+                }
+            }
+        }
     }
 
     @Override
@@ -225,6 +275,22 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
 
     @Override
     public void onRequestEnd(int apiId) {
+
+    }
+
+    @Override
+    public void onItemClick(Object o, int position) {
+        if (position != AlertView.CANCELPOSITION) {
+            String Answer = answerQues.getText().toString().trim();
+            if (Answer == null || "".equals(Answer)) {
+                Toasty.error(this, "问题答案不能为空", 2000).show();
+                return;
+            }
+            RetrofitService.getInstance().getSecurityQuestionCheck(this, Answer);
+        }
+        if (position == AlertView.CANCELPOSITION) {
+            alertViewAnswer.dismiss();
+        }
 
     }
 

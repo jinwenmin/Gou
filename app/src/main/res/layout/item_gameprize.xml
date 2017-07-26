@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:text="游戏名称"
             android:textColor="@android:color/black"
-            android:textSize="40px" />
+            android:textSize="35px" />
     </LinearLayout>
 
     <LinearLayout
@@ -29,14 +29,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="玩法类型："
-            android:textSize="35px" />
+            android:textSize="25px" />
 
         <TextView
             android:id="@+id/ruleName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="XXX"
-            android:textSize="35px" />
+            android:textSize="25px" />
     </LinearLayout>
 
     <LinearLayout
@@ -51,13 +51,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="基础奖金："
-            android:textSize="35px" />
+            android:textSize="25px" />
 
         <TextView
             android:id="@+id/prize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="000"
-            android:textSize="35px" />
+            android:textSize="25px" />
     </LinearLayout>
 </LinearLayout>

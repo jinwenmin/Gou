@@ -89,7 +89,8 @@
         <activity android:name=".ui.proxyfragment.ActivityDetailsActivity" />
         <activity android:name=".ui.proxyfragment.GameReWardActivity" />
         <activity android:name=".ui.proxyfragment.RecordListActivity" />
-        <activity android:name=".ui.frmMyActivity.WithDrawActivity"></activity>
+        <activity android:name=".ui.frmMyActivity.WithDrawActivity" />
+        <activity android:name=".ui.settingfragment.ResetPwdActivity"></activity>
     </application>
 
 </manifest>

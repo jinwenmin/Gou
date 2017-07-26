@@ -159,6 +159,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_WITHDRAW = 55;//获取提现数据
     public static int API_ID_WITHDRAWCREATE = 56;//提交提现申请
     public static int API_ID_DAILYRECHARGE = 57;//日工资充值
+    public static int API_ID_SAFEPWDCHECK = 58;//验证安全问题
 
 
     private Retrofit retrofit;
@@ -1127,7 +1128,7 @@ public class RetrofitService extends HttpEngine {
                         }
                     }
                     listener.onReceivedData(API_ID_SAFEQUES, Safe, API_ID_ERROR);
-                    Log.d("安全问题是2==", substring);
+                    Log.d("安全问题是2==", ques);
                 }
 
             }
@@ -4002,24 +4003,25 @@ public class RetrofitService extends HttpEngine {
     }
 
     //验证安全问题
-    public void getSecurityQuestionCheck(DataListener listener, String a) {
+    public void getSecurityQuestionCheck(final DataListener listener, String a) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         map.put("a", a + "");
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> securityQuestionCheck = apiInterface.getSecurityQuestionCheck(1, a, reqkey, currentTimeMillis);
-        Call<Object> clone = securityQuestionCheck.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<RestultInfo> securityQuestionCheck = apiInterface.getSecurityQuestionCheck(1, a, reqkey, currentTimeMillis);
+        Call<RestultInfo> clone = securityQuestionCheck.clone();
+        clone.enqueue(new Callback<RestultInfo>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
                 if (response.code() == 200) {
                     Log.d("验证安全问题", response.body().toString());
+                    listener.onReceivedData(API_ID_SAFEPWDCHECK,response.body(),API_ID_ERROR);
                 }
 
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
 
             }
         });

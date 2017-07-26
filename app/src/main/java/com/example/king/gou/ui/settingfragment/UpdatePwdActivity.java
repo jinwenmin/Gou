@@ -65,6 +65,10 @@ public class UpdatePwdActivity extends AutoLayoutActivity implements View.OnClic
                     String hmacshaOld = RxUtils.getInstance().HMACSHA256(oldPwd, MyApp.getInstance().getUserName());
                     Log.d("加密后的原密码", hmacshaOld);
                     String pwd = RxUtils.getInstance().HMACSHA256(newPwd, MyApp.getInstance().getUserName());
+                    if (newPwd.length()>14||newPwd.length()<6) {
+                        Toasty.error(this,"密码长度不正确",2000).show();
+                        return;
+                    }
                     Log.d("加密后的修改过的密码", pwd);
                     RetrofitService.getInstance().getUpDataPwd(this, hmacshaOld, pwd);
 

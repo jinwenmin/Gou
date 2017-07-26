@@ -67,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30px"
-        android:text="密码由6至16个字符组成 \n不能为初始密码"
+        android:text="密码由6至14个字符组成 \n不能为初始密码"
         android:textSize="25px" />
 
     <LinearLayout
@@ -91,7 +91,7 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:gravity="center"
-            android:hint="输入新安全密码"
+            android:hint="6-14位字符 由数字和字母组成"
             android:textSize="30px" />
     </LinearLayout>
 
@@ -116,7 +116,7 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:gravity="center"
-            android:hint="确认新安全密码"
+            android:hint="与新密码保持一致"
             android:textSize="30px" />
     </LinearLayout>
 

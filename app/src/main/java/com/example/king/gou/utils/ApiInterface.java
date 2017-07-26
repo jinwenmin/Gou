@@ -1339,9 +1339,9 @@ public interface ApiInterface {
     //96 验证安全问题
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/security-question-check")
-    Call<Object> getSecurityQuestionCheck(
+    Call<RestultInfo> getSecurityQuestionCheck(
             @Query("AppClient") int num,
-            @Query("a") String a,//当前分页数
+            @Query("a") String a,//安全问题
             @Query("reqkey") String reqkey,
             @Query("t") long t
     );

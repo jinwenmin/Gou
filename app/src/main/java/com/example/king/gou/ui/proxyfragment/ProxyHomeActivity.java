@@ -301,7 +301,7 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
         }
         if (apiId == RetrofitService.API_ID_SRECHARGE2) {
             sreCharge = (SreCharge) object;
-          /*  if (sreCharge.getStype() == 0) {
+            if (sreCharge.getStype() == 0) {
                 Toasty.error(this, "没有充值权限", 2000).show();
                 return;
             }
@@ -310,7 +310,7 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
             }
             if (sreCharge.getStype() == 2) {
                 Toasty.success(this, "所有下级可充值", 2000).show();
-            }*/
+            }
 
             proxyName = ((TextView) contentView2.findViewById(R.id.proxy_name));
             proxyName.setText(sreCharge.getRuser());

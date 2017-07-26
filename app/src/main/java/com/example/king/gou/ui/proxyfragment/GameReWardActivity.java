@@ -44,6 +44,7 @@ public class GameReWardActivity extends AutoLayoutActivity implements View.OnCli
     @BindView(R.id.Record)
     TextView Record;
     private ArrayAdapter<String> adapter;
+    private ArrayAdapter<String> adapter1;
     List<GamePrize> gp = new ArrayList<>();
     GamePrizeAdapter gamePrizeAdapter;
 
@@ -127,11 +128,11 @@ public class GameReWardActivity extends AutoLayoutActivity implements View.OnCli
                     types.add(gameTypes2.get(i).getName());
                     Log.d("gameTypes2", gameTypes2.get(i).getName());
                 }
-                adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, types);
+                adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, types);
                 //第三步：为适配器设置下拉列表下拉时的菜单样式。
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 //第四步：将适配器添加到下拉列表上
-                SpinnerGid.setAdapter(adapter);
+                SpinnerGid.setAdapter(adapter1);
                 initSpinner();
             }
         }
