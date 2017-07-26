@@ -14,6 +14,7 @@
         android:textSize="40px"></TextView>
 
     <EditText
+        android:singleLine="true"
         android:id="@+id/AnswerQues"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

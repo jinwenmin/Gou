@@ -160,6 +160,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_WITHDRAWCREATE = 56;//提交提现申请
     public static int API_ID_DAILYRECHARGE = 57;//日工资充值
     public static int API_ID_SAFEPWDCHECK = 58;//验证安全问题
+    public static int API_ID_RESETPWD = 59;//重置密码
 
 
     private Retrofit retrofit;
@@ -1667,7 +1668,7 @@ public class RetrofitService extends HttpEngine {
     }
 
     //修改安全密码
-    public void getUpDataSafePwd(DataListener listener, String p0, String p1, String email) {
+    public void getUpDataSafePwd(final DataListener listener, String p0, String p1, String email) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         map.put("p0", p0);
@@ -1680,6 +1681,7 @@ public class RetrofitService extends HttpEngine {
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
                 if (response.code() == 200) {
                     Log.d("修改安全密码返回的数据", response.body().toString());
+                    listener.onReceivedData(API_ID_RESETPWD,response.body(),API_ID_ERROR);
                 }
 
             }

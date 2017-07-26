@@ -38,6 +38,7 @@
         android:layout_height="wrap_content">
 
         <RadioButton
+            android:checked="true"
             android:text="重置登录密码"
             android:id="@+id/ResetPwdRadioB1"
             android:layout_width="wrap_content"
@@ -119,7 +120,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/UpDataPwdClick"
+        android:id="@+id/ResetClick"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="80px"

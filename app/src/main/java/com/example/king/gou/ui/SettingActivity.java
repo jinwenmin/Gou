@@ -24,6 +24,7 @@ import com.example.king.gou.bean.UserInfo;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.ui.settingfragment.BankCardManActivity;
 import com.example.king.gou.ui.settingfragment.MoneyProtectActivity;
+import com.example.king.gou.ui.settingfragment.ResetPwdActivity;
 import com.example.king.gou.ui.settingfragment.UpdateMoneyPwdActivity;
 import com.example.king.gou.ui.settingfragment.UpdateNickNameActivity;
 import com.example.king.gou.ui.settingfragment.UpdatePwdActivity;
@@ -258,7 +259,7 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
             if (object != null) {
                 RestultInfo restultInfo = (RestultInfo) object;
                 if (restultInfo.isRc()) {
-
+                    startActivity(new Intent(SettingActivity.this, ResetPwdActivity.class));
                 }
                 if (!restultInfo.isRc()) {
                     Toasty.error(this, restultInfo.getMsg(), 2000).show();
