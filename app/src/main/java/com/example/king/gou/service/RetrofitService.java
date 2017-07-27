@@ -161,6 +161,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_DAILYRECHARGE = 57;//日工资充值
     public static int API_ID_SAFEPWDCHECK = 58;//验证安全问题
     public static int API_ID_RESETPWD = 59;//重置密码
+    public static int API_ID_UPDATASAFEPWD = 60;//修改安全密码
 
 
     private Retrofit retrofit;
@@ -288,7 +289,10 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                System.out.println("登出的日志==" + response.body().toString());
+                if (response.code()==200) {
+
+                    Log.d("登出的日志==" , response.body().toString());
+                }
             }
 
             @Override
@@ -1681,7 +1685,7 @@ public class RetrofitService extends HttpEngine {
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
                 if (response.code() == 200) {
                     Log.d("修改安全密码返回的数据", response.body().toString());
-                    listener.onReceivedData(API_ID_RESETPWD,response.body(),API_ID_ERROR);
+                    listener.onReceivedData(API_ID_UPDATASAFEPWD,response.body(),API_ID_ERROR);
                 }
 
             }
@@ -1696,7 +1700,7 @@ public class RetrofitService extends HttpEngine {
     }
 
     //重置安全密码 或者 登陆密码
-    public void getResetPwd(DataListener listener, int type, String p) {
+    public void getResetPwd(final DataListener listener, int type, String p) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         map.put("type", type + "");
@@ -1708,6 +1712,7 @@ public class RetrofitService extends HttpEngine {
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
                 if (response.code() == 200) {
                     Log.d("重置安全密码或者登陆密码", response.body().toString());
+                    listener.onReceivedData(API_ID_RESETPWD,response.body(),API_ID_ERROR);
                 }
             }
 

@@ -60,19 +60,30 @@ public class UpdatePwdActivity extends AutoLayoutActivity implements View.OnClic
                 String oldPwd = UpdataPwdOldPwd.getText().toString().trim();
                 String newPwd = UpdataPwdNewPwd.getText().toString().trim();
                 String newPwdCheck = UpdataPwdCheckNewPwd.getText().toString().trim();
-                if (oldPwd != null && newPwd != null && newPwdCheck != null && newPwd.equals(newPwdCheck)) {
-                    Log.d("修改密码界面用户名", MyApp.getInstance().getUserName());
-                    String hmacshaOld = RxUtils.getInstance().HMACSHA256(oldPwd, MyApp.getInstance().getUserName());
-                    Log.d("加密后的原密码", hmacshaOld);
-                    String pwd = RxUtils.getInstance().HMACSHA256(newPwd, MyApp.getInstance().getUserName());
-                    if (newPwd.length()>14||newPwd.length()<6) {
-                        Toasty.error(this,"密码长度不正确",2000).show();
-                        return;
-                    }
-                    Log.d("加密后的修改过的密码", pwd);
-                    RetrofitService.getInstance().getUpDataPwd(this, hmacshaOld, pwd);
-
+                if ("".equals(oldPwd)) {
+                    Toasty.error(this, "原密码不能为空", 2000).show();
+                    return;
                 }
+                if ("".equals(newPwd) || "".equals(newPwdCheck)) {
+                    Toasty.error(this, "新密码或确认密码不能为空", 2000).show();
+                    return;
+                }
+                if (!newPwd.equals(newPwdCheck)) {
+                    Toasty.error(this, "新安全密码跟确认密码不一致", 2000).show();
+                    return;
+                }
+                if ("a123456".equals(newPwd)) {
+                    Toasty.error(this, "新密码不能为初始密码", 2000).show();
+                    return;
+                }
+                if (newPwd.length() > 14 || newPwdCheck.length() < 6) {
+                    Toasty.error(this, "密码长度不正确", 2000).show();
+                    return;
+                }
+                String hmacshaOld = RxUtils.getInstance().HMACSHA256(oldPwd, MyApp.getInstance().getUserName());
+                String pwd = RxUtils.getInstance().HMACSHA256(newPwd, MyApp.getInstance().getUserName());
+                Log.d("加密后的修改过的密码", pwd);
+                RetrofitService.getInstance().getUpDataPwd(this, hmacshaOld, pwd);
 
 
                 break;
@@ -84,8 +95,10 @@ public class UpdatePwdActivity extends AutoLayoutActivity implements View.OnClic
         if (apiId == RetrofitService.API_ID_UPDATAPWD) {
             if (object != null) {
                 restultInfo = (RestultInfo) object;
-                if (restultInfo.isRc() == true) {
-                    Toasty.info(UpdatePwdActivity.this, restultInfo.getMsg(), 2000).show();
+                if (restultInfo.isRc()) {
+                    Toasty.success(UpdatePwdActivity.this, restultInfo.getMsg(), 2000).show();
+                }if (!restultInfo.isRc()) {
+                    Toasty.error(UpdatePwdActivity.this, restultInfo.getMsg(), 2000).show();
                 }
             }
         }

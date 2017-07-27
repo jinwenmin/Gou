@@ -46,6 +46,7 @@
             android:textSize="30px" />
 
         <EditText
+            android:singleLine="true"
             android:inputType="textPassword"
             android:id="@+id/UpdataPwdOldPwd"
             android:layout_width="match_parent"
@@ -87,6 +88,7 @@
             android:textSize="30px" />
 
         <EditText
+            android:singleLine="true"
             android:inputType="textPassword"
             android:id="@+id/UpdataPwdNewPwd"
             android:layout_width="match_parent"
@@ -113,6 +115,7 @@
             android:textSize="30px" />
 
         <EditText
+            android:singleLine="true"
             android:inputType="textPassword"
             android:id="@+id/UpdataPwdCheckNewPwd"
             android:layout_width="match_parent"

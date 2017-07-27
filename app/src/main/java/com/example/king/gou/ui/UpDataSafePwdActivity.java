@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 
 import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
+import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
@@ -73,6 +74,7 @@ public class UpDataSafePwdActivity extends AutoLayoutActivity implements View.On
                 }
                 if (!newpwd.equals(newpwdCheck)) {
                     Toasty.error(this, "新安全密码跟确认密码不一致", 2000).show();
+                    return;
                 }
                 if ("".equals(email)) {
                     Toasty.error(this, "绑定的邮箱不能为空", 2000).show();
@@ -82,8 +84,8 @@ public class UpDataSafePwdActivity extends AutoLayoutActivity implements View.On
                     Toasty.error(this, "新密码不能为初始密码", 2000).show();
                     return;
                 }
-                if (newpwd.length()>14||newpwd.length()<6) {
-                    Toasty.error(this,"密码长度不正确",2000).show();
+                if (newpwd.length() > 14 || newpwd.length() < 6) {
+                    Toasty.error(this, "密码长度不正确", 2000).show();
                     return;
                 }
                 RetrofitService.getInstance().getUpDataSafePwd(this, oldpwd256, newpwd256, email);
@@ -93,7 +95,19 @@ public class UpDataSafePwdActivity extends AutoLayoutActivity implements View.On
 
     @Override
     public void onReceivedData(int apiId, Object object, int errorId) {
-
+        if (apiId == RetrofitService.API_ID_UPDATASAFEPWD) {
+            if (object != null) {
+                RestultInfo restultInfo = (RestultInfo) object;
+                if (restultInfo.isRc()) {
+                    Toasty.success(this, restultInfo.getMsg(), 2000).show();
+                    return;
+                }
+                if (!restultInfo.isRc()) {
+                    Toasty.error(this, restultInfo.getMsg(), 2000).show();
+                    return;
+                }
+            }
+        }
     }
 
     @Override

@@ -46,6 +46,8 @@
             android:textSize="30px" />
 
         <EditText
+            android:singleLine="true"
+            android:inputType="textPassword"
             android:id="@+id/UpdataPwdOldPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,6 +88,8 @@
             android:textSize="30px" />
 
         <EditText
+            android:singleLine="true"
+            android:inputType="textPassword"
             android:id="@+id/UpdataSafePwdNewPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -111,6 +115,8 @@
             android:textSize="30px" />
 
         <EditText
+            android:singleLine="true"
+            android:inputType="textPassword"
             android:id="@+id/UpdataSafePwdCheck"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -136,6 +142,7 @@
             android:textSize="30px" />
 
         <EditText
+            android:singleLine="true"
             android:id="@+id/UpdataSafepwdEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -107,6 +107,15 @@ public class UpDateFirstPwdActivity extends AutoLayoutActivity implements View.O
                     Toasty.error(UpDateFirstPwdActivity.this, "请输入正确的邮箱地址", 2000).show();
                     return;
                 }
+
+                if (newPwd.length() > 14 || newPwd.length() < 6) {
+                    Toasty.error(this, "登陆密码长度不正确", 2000).show();
+                    return;
+                }if (SafePwd.length() > 14 || SafePwd.length() < 6) {
+                    Toasty.error(this, "安全密码长度不正确", 2000).show();
+                    return;
+                }
+
                 String oldPwd256 = RxUtils.getInstance().HMACSHA256(oldPwd, MyApp.getInstance().getUserName());
                 String newpwd256 = RxUtils.getInstance().HMACSHA256(newPwd, MyApp.getInstance().getUserName());
                 String Safe256 = RxUtils.getInstance().HMACSHA256(SafePwd, MyApp.getInstance().getUserName());

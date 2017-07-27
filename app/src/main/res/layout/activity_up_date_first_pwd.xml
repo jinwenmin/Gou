@@ -68,10 +68,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30px"
-        android:text="密码由6至16个字符组成"
+        android:text="密码由6至14个字符组成"
         android:textSize="25px" />
 
     <TextView
+        android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30px"
@@ -100,7 +101,7 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:gravity="center"
-            android:hint="输入新密码"
+            android:hint="6-14位字符 由数字和字母组成"
             android:textSize="30px" />
     </LinearLayout>
 
@@ -153,7 +154,7 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:gravity="center"
-            android:hint="输入安全密码"
+            android:hint="6-14位字符 由数字和字母组成 "
             android:textSize="30px" />
     </LinearLayout>
 
