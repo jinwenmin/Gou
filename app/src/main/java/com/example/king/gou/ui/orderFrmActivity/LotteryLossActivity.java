@@ -55,8 +55,8 @@ public class LotteryLossActivity extends AutoLayoutActivity implements View.OnCl
     String date2;
     @BindView(R.id.Expend)
     TextView Expend;
-    @BindView(R.id.InCome)
-    TextView InCome;
+    @BindView(R.id.ProfitLoss)
+    TextView ProfitLoss;
     @BindView(R.id.Linear1)
     LinearLayout Linear1;
     @BindView(R.id.LotteryLossListView)
@@ -80,8 +80,8 @@ public class LotteryLossActivity extends AutoLayoutActivity implements View.OnCl
     private void initSpinner() {
         List<String> gtype = new ArrayList<>();
         gtype.add("所有类型");
-        gtype.add("彩票娱乐场");
         gtype.add("香港六合彩");
+        gtype.add("彩票娱乐场");
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, gtype);
         //第三步：为适配器设置下拉列表下拉时的菜单样式。
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -194,8 +194,10 @@ public class LotteryLossActivity extends AutoLayoutActivity implements View.OnCl
         if (apiId == RetrofitService.API_ID_PROFITLOSS) {
             losses = (List<List<LotteryLoss>>) object;
             List<LotteryLoss> lotteryLosses = losses.get(0);
-            InCome.setText(lotteryLosses.get(0).getWinning_amounts() + "");
-            Expend.setText(lotteryLosses.get(0).getBetting_amounts() + "");
+            if (lotteryLosses.size()>0) {
+                ProfitLoss.setText(lotteryLosses.get(0).getProfit_loss() + "");
+                Expend.setText(lotteryLosses.get(0).getBetting_amounts() + "");
+            }
             if (losses.size() == 2) {
                 List<LotteryLoss> lotteryLosses1 = losses.get(1);
                 profitLossAdapter.getList(lotteryLosses1);

@@ -652,7 +652,7 @@ public interface ApiInterface {
     //50 查询个人报表彩票帐变
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/account-change-list")
-    Call<Object> getAccountChangeList(
+    Call<Map<String,Object>> getAccountChangeList(
             @Query("AppClient") int num,
             @Query("page") int page,
             @Query("rows") int rows,
@@ -761,7 +761,7 @@ public interface ApiInterface {
     //54 个人报表彩票盈亏
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/profit-loss-list")
-    Call<Object> getProfitLossList(
+    Call<Map<String,Object>> getProfitLossList(
             @Query("AppClient") int num,
             @Query("page") int page,
             @Query("rows") int rows,

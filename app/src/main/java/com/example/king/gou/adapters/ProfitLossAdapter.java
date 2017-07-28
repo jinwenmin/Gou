@@ -65,6 +65,13 @@ public class ProfitLossAdapter extends BaseAdapter {
         viewHolder.profitLoss.setText(ls.get(i).getProfit_loss() + "");
         viewHolder.rebateAmount.setText(ls.get(i).getRebate_amount() + "");
         viewHolder.winningAmount.setText(ls.get(i).getWinning_amount() + "");
+        int type = ls.get(i).getType();
+        if (type == 1) {
+            viewHolder.bettingType.setText("彩票娱乐场");
+        }
+        if (type == 2) {
+            viewHolder.bettingType.setText("香港六合彩");
+        }
         return view;
     }
 
@@ -73,6 +80,8 @@ public class ProfitLossAdapter extends BaseAdapter {
         TextView bettingAmount;
         @BindView(R.id.winning_amount)
         TextView winningAmount;
+        @BindView(R.id.betting_type)
+        TextView bettingType;
         @BindView(R.id.rebate_amount)
         TextView rebateAmount;
         @BindView(R.id.profit_loss)
