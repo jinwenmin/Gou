@@ -90,16 +90,16 @@
                         android:layout_margin="20px"
                         android:text="昵称:"
                         android:textColor="@android:color/black"
-                        android:textSize="35px" />
+                        android:textSize="30px" />
 
                     <TextView
                         android:id="@+id/frmMyNickName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20px"
-                        android:text="UserNickName"
+                        android:text=""
                         android:textColor="@android:color/black"
-                        android:textSize="35px" />
+                        android:textSize="30px" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -116,16 +116,16 @@
                         android:layout_marginRight="20px"
                         android:text="用户名:"
                         android:textColor="@android:color/black"
-                        android:textSize="35px" />
+                        android:textSize="30px" />
 
                     <TextView
                         android:id="@+id/frmMyUserName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
-                        android:text="UserName"
+                        android:text=""
                         android:textColor="@android:color/black"
-                        android:textSize="35px" />
+                        android:textSize="30px" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -144,15 +144,15 @@
                         android:layout_marginRight="20px"
                         android:text="彩票返点:"
                         android:textColor="@android:color/black"
-                        android:textSize="35px" />
+                        android:textSize="30px" />
 
                     <TextView
                         android:id="@+id/frmMyLottory"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="12.7%"
+                        android:text=""
                         android:textColor="@android:color/black"
-                        android:textSize="35px" />
+                        android:textSize="30px" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -171,15 +171,15 @@
                         android:layout_height="wrap_content"
                         android:text="账户总额:"
                         android:textColor="@android:color/black"
-                        android:textSize="35px" />
+                        android:textSize="30px" />
 
                     <TextView
                         android:id="@+id/frmMyCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="88888"
+                        android:text=""
                         android:textColor="@android:color/black"
-                        android:textSize="35px" />
+                        android:textSize="30px" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -197,15 +197,15 @@
                         android:layout_height="wrap_content"
                         android:text="可提金额:"
                         android:textColor="@android:color/black"
-                        android:textSize="35px" />
+                        android:textSize="30px" />
 
                     <TextView
                         android:id="@+id/frmMyMoneyS"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0.0"
+                        android:text=""
                         android:textColor="@android:color/black"
-                        android:textSize="35px" />
+                        android:textSize="30px" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -286,6 +286,7 @@
                 android:id="@+id/frmMyTablayout"
                 android:layout_width="match_parent"
                 android:layout_height="60px"
+                android:background="@android:color/white"
                 android:layout_below="@id/frmMyTopInfo">
 
             </android.support.design.widget.TabLayout>
