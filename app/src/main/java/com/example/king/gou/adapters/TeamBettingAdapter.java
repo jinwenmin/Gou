@@ -72,7 +72,7 @@ public class TeamBettingAdapter extends BaseAdapter {
             viewHolder.lotteryType2.setText(u.getRname());
         }
         if (!"".equals(u.getPeriod())) {
-            viewHolder.lotteryDate.setText(u.getPeriod());
+            viewHolder.lotteryDate.setText(u.getDate());
         }
         viewHolder.TouZhuMoney.setText(u.getAmount() + "");
         viewHolder.ZhongJiangMoney.setText(u.getPrize() + "");
