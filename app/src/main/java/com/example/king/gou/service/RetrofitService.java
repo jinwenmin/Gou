@@ -318,15 +318,17 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                listener.onRequestStart(API_ID_LOGINSTATE);
-                //获取cookie
-                String sessionId = getSessionCookie(response.headers().get("Set-Cookie"));
+                if (response.code()==200) {
+                    listener.onRequestStart(API_ID_LOGINSTATE);
+                    //获取cookie
+                    String sessionId = getSessionCookie(response.headers().get("Set-Cookie"));
+                    System.out.println("Cookie登录状态==" + sessionId);
+                    System.out.println("用户信息登录状态==" + response.body());
+                    LoginState loginS = new LoginState();
+                    loginS.setSessionId(sessionId);
+                    listener.onReceivedData(API_ID_LOGINSTATE, loginS, API_ID_ERROR);
 
-                System.out.println("Cookie登录状态==" + sessionId);
-                System.out.println("用户信息登录状态==" + response.body());
-                LoginState loginS = new LoginState();
-                loginS.setSessionId(sessionId);
-                listener.onReceivedData(API_ID_LOGINSTATE, loginS, API_ID_ERROR);
+                }
 
             }
 

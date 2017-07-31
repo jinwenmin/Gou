@@ -3,6 +3,7 @@ package com.example.king.gou.ui;
 import android.Manifest;
 import android.app.Activity;
 import android.app.KeyguardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -139,23 +140,14 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
-
+        manager = FingerprintManagerCompat.from(this);
+        mKeyguardManager = (KeyguardManager) this.getSystemService(Context.KEYGUARD_SERVICE);
         initDataHelper();
         alertViewAnswer = new AlertView(null, null, "取消", new String[]{"确认"}, null, this, AlertView.Style.Alert, this);
         contentViewAnswer = LayoutInflater.from(this).inflate(
                 R.layout.reset_pwdcheck, null);
         alertViewAnswer.addExtView(contentViewAnswer);
         initClick();
-        switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b == true) {
-                    writableDatabase.execSQL("insert into fingers(isfinger) values('true')");
-                } else {
-                    writableDatabase.execSQL("insert into fingers(isfinger) values('false')");
-                }
-            }
-        });
 
     }
 
@@ -339,16 +331,18 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
                 fingerText.setText("指纹识别成功");
                 fingerText.setTextColor(Color.rgb(0, 150, 136));
                 fingerImg.setImageResource(R.drawable.ic_fingerprint_success);
-                SharedPreferences f = getSharedPreferences("finger", Activity.MODE_PRIVATE);
+                SharedPreferences f = getSharedPreferences("Finger", Activity.MODE_PRIVATE);
                 SharedPreferences.Editor edit = f.edit();
-                edit.putBoolean("finger", true);
-                edit.commit();
-                if (switch1.isChecked()) {
 
+
+                if (switch1.isChecked()) {
                     switch1.setChecked(false);
+                    edit.putBoolean("finger", false);
                 } else {
                     switch1.setChecked(true);
+                    edit.putBoolean("finger", true);
                 }
+                edit.commit();
                 alertView.dismiss();
             }
 
@@ -357,7 +351,11 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
              */
             @Override
             public void onAuthenticationFailed() {
-                Toasty.error(SettingActivity.this, "指纹识别失败", Toast.LENGTH_SHORT).show();
+                fingerText.setText("指纹验证失败,请重试");
+                fingerText.setTextColor(Color.rgb(244, 81, 30));
+                fingerImg.setImageResource(R.drawable.ic_fingerprint_error);
+                Toast.makeText(SettingActivity.this, "指纹识别失败", Toast.LENGTH_SHORT).show();
+                alertView.dismiss();
             }
 
             /**

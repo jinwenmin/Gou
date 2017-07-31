@@ -1,9 +1,20 @@
 package com.example.king.gou.fragment;
 
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.KeyguardManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -20,13 +31,16 @@ import android.widget.Toast;
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.HomeGameAdapter;
 import com.example.king.gou.adapters.PageAdapter;
 import com.example.king.gou.bean.AdvertisementObject;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.ui.AddGameActivity;
+import com.example.king.gou.ui.MainActivity;
 import com.example.king.gou.utils.BaseAutoScrollUpTextView;
+import com.example.king.gou.utils.FingerPrintUtils;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.MainScrollUpAdvertisementView;
 import com.example.king.gou.utils.MarqueeText;
@@ -38,6 +52,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import es.dmoral.toasty.Toasty;
 import it.sephiroth.android.library.picasso.Picasso;
 
 /**
@@ -82,6 +97,17 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     private AlertView alertView;
     // 一个自定义的布局，作为显示的内容
     View contentView;
+    private AlertView alertView1;
+    // 一个自定义的布局，作为显示的内容
+    View contentView1;
+    private final static String TAG = "MainActivity";
+    private SharedPreferences Finger;
+    FingerprintManagerCompat manager;
+    KeyguardManager mKeyguardManager;
+    private FingerPrintUtils fingerPrintUiHelper;
+    private ImageView fingerImg;
+    private TextView fingerText;
+    String show = null;
 
     public static HomeFragment newInstance() {
 
@@ -100,15 +126,43 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         unbinder = ButterKnife.bind(this, view);
+        mKeyguardManager = (KeyguardManager) getActivity().getSystemService(Context.KEYGUARD_SERVICE);
+        manager = FingerprintManagerCompat.from(getActivity());
+        Finger = getActivity().getSharedPreferences("Finger", Activity.MODE_PRIVATE);
+        boolean finger = Finger.getBoolean("finger", false);
+        Log.d("Finger==", finger + "");
+        if (finger) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (isSatisfactionFingerprint()) {
+                    alertView1 = new AlertView(null, null, "取消", null, null, getActivity(), AlertView.Style.Alert, this);
+                    contentView1 = LayoutInflater.from(getContext()).inflate(
+                            R.layout.item_finger, null);
+                    alertView1.addExtView(contentView1);
+                    fingerImg = ((ImageView) contentView1.findViewById(R.id.fingerImg));
+                    fingerText = ((TextView) contentView1.findViewById(R.id.fingerText));
+                    alertView1.show();
+                    show = "1";
+                    initFingerPrint();
+                }
+            } else {
+                Toasty.info(getActivity(), "系统版本过低不支持指纹识别...", Toast.LENGTH_SHORT).show();
+            }
+        }
+        if (!finger) {
+
+        }
+
         alertView = new AlertView(null, null, "确认", null, null, getContext(), AlertView.Style.Alert, this);
         contentView = LayoutInflater.from(getContext()).inflate(
                 R.layout.item_homenotice, null);
         alertView.addExtView(contentView);
+
+
         test.startScroll();
         HomeFragmentAddGame.setOnClickListener(this);
         recycler.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         header.attachTo(recycler, true);
-        RetrofitService.getInstance().getHomeNotice(this);
+
         initImgs();
         HomeGameAdapter adapter = new HomeGameAdapter(getActivity());
         recycler.setAdapter(adapter);
@@ -117,6 +171,101 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         initScrollView();
         return view;
     }
+
+
+    /**
+     * 判断是否满足设置指纹的条件
+     *
+     * @return true 满足 false 不满足
+     */
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    public boolean isSatisfactionFingerprint() {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(getActivity(), "请开启指纹识别权限", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        //硬件是否支持指纹识别
+        if (!manager.isHardwareDetected()) {
+            Toast.makeText(getActivity(), "您手机不支持指纹识别功能", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        //手机是否开启锁屏密码
+        if (!mKeyguardManager.isKeyguardSecure()) {
+            Toast.makeText(getActivity(), "请开启开启锁屏密码，并录入指纹后再尝试", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        //是否有指纹录入
+        if (!manager.hasEnrolledFingerprints()) {
+            Toast.makeText(getActivity(), "您还未录入指纹", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+
+    public void notice() {
+        RetrofitService.getInstance().getHomeNotice(this);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    private void initFingerPrint() {
+        fingerPrintUiHelper = new FingerPrintUtils(getActivity());
+        fingerPrintUiHelper.setFingerPrintListener(new FingerprintManagerCompat.AuthenticationCallback() {
+            /**
+             * 指纹识别成功
+             *
+             * @param result
+             */
+            @Override
+            public void onAuthenticationSucceeded(FingerprintManagerCompat.AuthenticationResult result) {
+                fingerText.setText("指纹识别成功");
+                fingerText.setTextColor(Color.rgb(0, 150, 136));
+                fingerImg.setImageResource(R.drawable.ic_fingerprint_success);
+                Toast.makeText(getActivity(), "指纹识别成功", Toast.LENGTH_SHORT).show();
+
+                alertView.dismiss();
+                notice();
+            }
+
+            /**
+             * 指纹识别失败调用
+             */
+            @Override
+            public void onAuthenticationFailed() {
+                fingerText.setText("指纹验证失败,请重试");
+                fingerText.setTextColor(Color.rgb(244, 81, 30));
+                fingerImg.setImageResource(R.drawable.ic_fingerprint_error);
+                Toast.makeText(getActivity(), "指纹识别失败", Toast.LENGTH_SHORT).show();
+                alertView.dismiss();
+
+            }
+
+            /**
+             *
+             * @param helpMsgId
+             * @param helpString
+             *
+             */
+            @Override
+            public void onAuthenticationHelp(int helpMsgId, CharSequence helpString) {
+                Toast.makeText(getActivity(), helpString, Toast.LENGTH_SHORT).show();
+            }
+
+            /**
+             * 多次指纹密码验证错误后，进入此方法；并且，不能短时间内调用指纹验证
+             *
+             * @param errMsgId  最多的错误次数
+             * @param errString 错误的信息反馈
+             */
+            @Override
+            public void onAuthenticationError(int errMsgId, CharSequence errString) {
+                //具体等多长时间为测试
+                Log.i(TAG, "errMsgId=" + errMsgId + "-----errString" + errString);
+                Toast.makeText(getActivity(), "指纹识别出错次数过多，稍后重试", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     private void initImgs() {
 
@@ -170,6 +319,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                     TextView homeNotice = (TextView) contentView.findViewById(R.id.homeNoticeText);
                     homeNotice.setText(Html.fromHtml(listnotice.get(0)));
                     alertView.show();
+                    show = "0";
                 } else {
                     TextView textView = new TextView(getActivity());
                     textView.setText(Html.fromHtml(listnotice.get(0)));
@@ -207,6 +357,15 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
     @Override
     public void onItemClick(Object o, int position) {
-
+        if ("0".equals(show)) {
+            if (AlertView.CANCELPOSITION == position) {
+                alertView.dismiss();
+            }
+        }
+        if ("1".equals(show)) {
+            if (position == AlertView.CANCELPOSITION) {
+                alertView1.dismiss();
+            }
+        }
     }
 }

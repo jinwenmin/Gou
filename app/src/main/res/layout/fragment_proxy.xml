@@ -5,135 +5,146 @@
     android:orientation="vertical"
     tools:context="com.example.king.gou.fragment.myfragment.OrderFragment">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/proxy_home"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_dailishouye"
-            android:gravity="center_horizontal"
-            android:text="代理首页" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/proxy_userCenter"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_kaihuzhongxin"
-            android:gravity="center_horizontal"
-            android:text="开户中心" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/proxy_TeamBaoBiao"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_tuanduibaobiao"
-            android:gravity="center_horizontal"
-            android:text="团队投注" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/proxy_home"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/ic_dailishouye"
+                    android:gravity="center_horizontal"
+                    android:text="代理首页" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/proxy_userCenter"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/ic_kaihuzhongxin"
+                    android:gravity="center_horizontal"
+                    android:text="开户中心" />
 
-        <TextView
-            android:id="@+id/proxy_VipMan"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_huiyuanguanli"
-            android:gravity="center_horizontal"
-            android:text="会员管理" />
+                <TextView
+                    android:id="@+id/proxy_TeamBaoBiao"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/ic_tuanduibaobiao"
+                    android:gravity="center_horizontal"
+                    android:text="团队投注" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/proxy_TeamZhangBian"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_tuanduizbjl"
-            android:gravity="center_horizontal"
-            android:text="团队帐变记录" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/proxy_GameJl"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_caipiaobaobiao"
-            android:gravity="center_horizontal"
-            android:text="团队彩票盈亏" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/proxy_VipMan"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/ic_huiyuanguanli"
+                    android:gravity="center_horizontal"
+                    android:text="会员管理" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/proxy_TeamZhangBian"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/ic_tuanduizbjl"
+                    android:gravity="center_horizontal"
+                    android:text="团队帐变记录" />
 
-        <TextView
-            android:id="@+id/proxy_TeamZhuiHao"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_tuanduizhjl"
-            android:gravity="center_horizontal"
-            android:text="活动列表" />
+                <TextView
+                    android:id="@+id/proxy_GameJl"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/ic_caipiaobaobiao"
+                    android:gravity="center_horizontal"
+                    android:text="团队彩票盈亏" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/proxy_TeamCunQu"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_tuanduicunqukuan"
-            android:gravity="center_horizontal"
-            android:text="团队存取款记录" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/proxy_TeamBjl"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_tuanduibaijialebaobiao"
-            android:gravity="center_horizontal"
-            android:text="团队活动报表" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/proxy_TeamZhuiHao"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/ic_tuanduizhjl"
+                    android:gravity="center_horizontal"
+                    android:text="活动列表" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/proxy_TeamCunQu"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/ic_tuanduicunqukuan"
+                    android:gravity="center_horizontal"
+                    android:text="团队存取款记录" />
 
-        <TextView
-            android:id="@+id/GameMoney"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_zhuanzhangjilu"
-            android:gravity="center_horizontal"
-            android:text="游戏奖金" />
+                <TextView
+                    android:id="@+id/proxy_TeamBjl"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/ic_tuanduibaijialebaobiao"
+                    android:gravity="center_horizontal"
+                    android:text="团队活动报表" />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_tuanduicunqukuan"
-            android:gravity="center_horizontal"
-            android:text="团队存取款记录"
-            android:visibility="invisible" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_tuanduibaijialebaobiao"
-            android:gravity="center_horizontal"
-            android:text="团队百家乐报表"
-            android:visibility="invisible" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/GameMoney"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/ic_zhuanzhangjilu"
+                    android:gravity="center_horizontal"
+                    android:text="游戏奖金" />
+
+                <TextView
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/ic_tuanduicunqukuan"
+                    android:gravity="center_horizontal"
+                    android:text="团队存取款记录"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/ic_tuanduibaijialebaobiao"
+                    android:gravity="center_horizontal"
+                    android:text="团队百家乐报表"
+                    android:visibility="invisible" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

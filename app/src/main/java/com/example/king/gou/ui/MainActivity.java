@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -93,33 +94,21 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
     String name = null;
     String isfinger;
     SQLiteDatabase databaseFinger;
-
     List<List<TeamUserInfo>> ts = new ArrayList<List<TeamUserInfo>>();
-    private FingerPrintUtils fingerPrintUiHelper;
     private final static int REQUEST_CODE_FINGER = 0;
-    private final static String TAG = "MainActivity";
-    private SharedPreferences Finger;
-    FingerprintManagerCompat manager;
-    KeyguardManager mKeyguardManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
         RetrofitService.getInstance().getTeamUserInfo(this, 1, 100, "uid", "desc", MyApp.getInstance().getUserUid(), "", 0);
         RetrofitService.getInstance().getChatUser(this);
         login_userinfo = getSharedPreferences("login_userinfo", Activity.MODE_PRIVATE);
         login_uid = login_userinfo.getInt("login_uid", 0);
-        Finger = getSharedPreferences("Finger", Activity.MODE_PRIVATE);
-        boolean finger = Finger.getBoolean("finger", false);
 
-        if (finger) {
-            initFinger();
-        }
-        if (!finger) {
-
-        }
         login_sessionid = login_userinfo.getString("login_sessionid", "");
         Log.i("测试信息==", login_sessionid);
 
@@ -136,6 +125,18 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
         mFragmentTransaction.hide(mFragments[2]);
         mFragmentTransaction.hide(mFragments[3]);
         mFragmentTransaction.commit();
+        Drawable home = getResources().getDrawable(R.drawable.select_home);
+        home.setBounds(0, 0, 130, 130);
+        Drawable game = getResources().getDrawable(R.drawable.select_game);
+        game.setBounds(0, 0, 130, 130);
+        Drawable find = getResources().getDrawable(R.drawable.select_find);
+        find.setBounds(0, 0, 130, 130);
+        Drawable my = getResources().getDrawable(R.drawable.select_my);
+        my.setBounds(0, 0, 130, 130);
+        HomeFrmRadioBtn.setCompoundDrawables(null, home, null, null);
+        GameFrmRadioBtn.setCompoundDrawables(null, game, null, null);
+        FindFrmBtn.setCompoundDrawables(null, find, null, null);
+        MyFrmBtn.setCompoundDrawables(null, my, null, null);
         MainActivityGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
@@ -159,7 +160,7 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
         });
     }
 
-    private void initFinger() {
+   /* private void initFinger() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (isSatisfactionFingerprint()) {
                 alertView = new AlertView(null, null, "取消", null, null, MainActivity.this, AlertView.Style.Alert, MainActivity.this);
@@ -174,7 +175,7 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
         } else {
             Toasty.info(MainActivity.this, "系统版本过低不支持指纹识别...", Toast.LENGTH_SHORT).show();
         }
-    }
+    }*/
 
     private void initTimer() {
         timer = new Timer();
@@ -350,7 +351,7 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
      * 判断是否满足设置指纹的条件
      *
      * @return true 满足 false 不满足
-     */
+     *//*
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public boolean isSatisfactionFingerprint() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
@@ -380,44 +381,54 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
     private void initFingerPrint() {
         fingerPrintUiHelper = new FingerPrintUtils(this);
         fingerPrintUiHelper.setFingerPrintListener(new FingerprintManagerCompat.AuthenticationCallback() {
-            /**
-             * 指纹识别成功
-             *
-             * @param result
-             */
+            *//**
+     * 指纹识别成功
+     *
+     * @param result
+     *//*
             @Override
             public void onAuthenticationSucceeded(FingerprintManagerCompat.AuthenticationResult result) {
-                Toasty.success(MainActivity.this, "指纹识别成功", Toast.LENGTH_SHORT).show();
+                fingerText.setText("指纹识别成功");
+                fingerText.setTextColor(Color.rgb(0, 150, 136));
+                fingerImg.setImageResource(R.drawable.ic_fingerprint_success);
+                Toast.makeText(MainActivity.this, "指纹识别成功", Toast.LENGTH_SHORT).show();
 
                 alertView.dismiss();
+
             }
 
-            /**
-             * 指纹识别失败调用
-             */
+            *//**
+     * 指纹识别失败调用
+     *//*
             @Override
             public void onAuthenticationFailed() {
-                Toasty.error(MainActivity.this, "指纹识别失败", Toast.LENGTH_SHORT).show();
-                finish();
+                fingerText.setText("指纹验证失败,请重试");
+                fingerText.setTextColor(Color.rgb(244, 81, 30));
+                fingerImg.setImageResource(R.drawable.ic_fingerprint_error);
+                Toast.makeText(MainActivity.this, "指纹识别失败", Toast.LENGTH_SHORT).show();
+                alertView.dismiss();
+
             }
 
-            /**
-             *
-             * @param helpMsgId
-             * @param helpString
-             *
-             */
+            *//**
+     *
+     * @param helpMsgId
+     * @param helpString
+     *
+     *//*
             @Override
             public void onAuthenticationHelp(int helpMsgId, CharSequence helpString) {
                 Toast.makeText(MainActivity.this, helpString, Toast.LENGTH_SHORT).show();
             }
 
-            /**
-             * 多次指纹密码验证错误后，进入此方法；并且，不能短时间内调用指纹验证
-             *
-             * @param errMsgId  最多的错误次数
-             * @param errString 错误的信息反馈
-             */
+            */
+
+    /**
+     * 多次指纹密码验证错误后，进入此方法；并且，不能短时间内调用指纹验证
+     *
+     * @param
+     * @param
+     *//*
             @Override
             public void onAuthenticationError(int errMsgId, CharSequence errString) {
                 //具体等多长时间为测试
@@ -426,7 +437,7 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
             }
         });
     }
-
+*/
     @Override
     public void onItemClick(Object o, int position) {
 
