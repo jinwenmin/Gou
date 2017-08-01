@@ -289,8 +289,8 @@ public interface ApiInterface {
     Call<RestultInfo> getUpdateFirstPwd(
             @Query("AppClient") int num,
             @Query("p0") String p0,//初始密码
-            @Query("p0") String p1,//新密码
-            @Query("p0") String p2,//安全密码
+            @Query("p1") String p1,//新密码
+            @Query("p2") String p2,//安全密码
             @Query("email") String email,//邮箱
             @Query("reqkey") String reqkey,
             @Query("t") long t
@@ -833,7 +833,7 @@ public interface ApiInterface {
     //82 查询团队报表彩票帐变
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/account-change-list")
-    Call<Object> getTeamAccountChangeList(
+    Call<Map<String,Object>> getTeamAccountChangeList(
             @Query("AppClient") int num,
             @Query("page") int page,
             @Query("rows") int rows,
@@ -1213,7 +1213,7 @@ public interface ApiInterface {
     //80团队报表彩票盈亏  当日和历史  81
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/profit-loss-list")
-    Call<Object> getTeamProfitLossList(
+    Call<Map<String,Object>> getTeamProfitLossList(
             @Query("AppClient") int num,
             @Query("page") int page,
             @Query("rows") int rows,

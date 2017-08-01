@@ -95,13 +95,47 @@ public class AccountsAdapter extends BaseAdapter {
             if (acs.get(position).getDate() != null) {
                 viewHolder.ChangeDate.setText(acs.get(position).getDate());
             }
+            if (acs.get(position).getUname() != null) {
+                viewHolder.ChangeUser.setText(acs.get(position).getUname());
+            }
+            if (acs.get(position).getModel() != 0) {
+                if (acs.get(position).getModel() == 1) {
+                    viewHolder.ChangeModel.setText("元");
+                }
+                if (acs.get(position).getModel() == 2) {
+                    viewHolder.ChangeModel.setText("角");
+                }
+                if (acs.get(position).getModel() == 3) {
+                    viewHolder.ChangeModel.setText("分");
+                }
+                if (acs.get(position).getModel() == 4) {
+                    viewHolder.ChangeModel.setText("厘");
+                }
+            }
+            if (acs.get(position).getPeriod()!=null) {
+                viewHolder.ChangePeriod.setText(acs.get(position).getPeriod());
+            }
         }
         return convertView;
     }
 
+
+    public void getList(List<AccountChange> ac) {
+        acs = ac;
+        notifyDataSetChanged();
+    }
+
     static class ViewHolder {
+        @BindView(R.id.ChangeUser)
+        TextView ChangeUser;
+        @BindView(R.id.ChangeModel)
+        TextView ChangeModel;
+        @BindView(R.id.textView9)
+        TextView textView9;
         @BindView(R.id.Stype)
         TextView Stype;
+        @BindView(R.id.ChangePeriod)
+        TextView ChangePeriod;
         @BindView(R.id.Gname)
         TextView Gname;
         @BindView(R.id.Rname)
@@ -114,9 +148,5 @@ public class AccountsAdapter extends BaseAdapter {
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
-    }
-    public void getList(List<AccountChange> ac){
-        acs=ac;
-        notifyDataSetChanged();
     }
 }

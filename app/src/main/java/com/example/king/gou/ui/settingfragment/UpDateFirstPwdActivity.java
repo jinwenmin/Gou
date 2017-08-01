@@ -130,7 +130,8 @@ public class UpDateFirstPwdActivity extends AutoLayoutActivity implements View.O
             if (object != null) {
                 RestultInfo restultInfo = (RestultInfo) object;
                 if (restultInfo.isRc() == true) {
-                    Toasty.error(UpDateFirstPwdActivity.this, restultInfo.getMsg(), 2000).show();
+                    Toasty.success(UpDateFirstPwdActivity.this, restultInfo.getMsg(), 2000).show();
+                    finish();
                 } else {
                     Toasty.error(UpDateFirstPwdActivity.this, restultInfo.getMsg(), 2000).show();
                 }

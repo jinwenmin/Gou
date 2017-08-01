@@ -146,7 +146,7 @@ public class TeamLotteryLossActivity extends AutoLayoutActivity implements View.
     private void initRetrofit() {
         String t1 = timetext.getText().toString().trim();
         String t2 = timetext2.getText().toString().trim();
-        String searName = SearchUserName.getText().toString().trim();
+        String searName = UserName.getText().toString().trim();
         int uid = UidIds.get(TLotteryLossUid.getSelectedItemPosition());
         int Gtypeid = TLotteryLossGtype.getSelectedItemPosition();
         int StypeId = TLotteryLossStype.getSelectedItemPosition();
@@ -157,7 +157,7 @@ public class TeamLotteryLossActivity extends AutoLayoutActivity implements View.
     private void initClick() {
         relateTime1.setOnClickListener(this);
         relateTime2.setOnClickListener(this);
-
+        SearchUserName.setOnClickListener(this);
     }
 
     private void initSpinner() {
@@ -277,6 +277,9 @@ public class TeamLotteryLossActivity extends AutoLayoutActivity implements View.
                     }
                 });
                 dialog2.show();
+                break;
+            case R.id.SearchName:
+                initRetrofit();
                 break;
         }
     }

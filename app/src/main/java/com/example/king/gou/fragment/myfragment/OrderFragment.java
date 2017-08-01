@@ -2,6 +2,7 @@ package com.example.king.gou.fragment.myfragment;
 
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -67,6 +68,36 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_order, container, false);
         unbinder = ButterKnife.bind(this, view);
+        Drawable yxjl = getResources().getDrawable(R.drawable.ic_youxijilu);
+        yxjl.setBounds(0, 0, 200, 200);
+        Drawable zhjl = getResources().getDrawable(R.drawable.ic_zhuihaojilu);
+        zhjl.setBounds(0, 0, 200, 200);
+        Drawable cpbb = getResources().getDrawable(R.drawable.ic_caipiaobaobiao);
+        cpbb.setBounds(0, 0, 200, 200);
+        Drawable cqjl = getResources().getDrawable(R.drawable.ic_cunqukuanjilu);
+        cqjl.setBounds(0, 0, 200, 200);
+        Drawable zbjl = getResources().getDrawable(R.drawable.ic_zhangbianjilu);
+        zbjl.setBounds(0, 0, 200, 200);
+        Drawable fdjl = getResources().getDrawable(R.drawable.ic_fandianjilu);
+        fdjl.setBounds(0, 0, 200, 200);
+        Drawable bjlbb = getResources().getDrawable(R.drawable.ic_baijialebaobiao);
+        bjlbb.setBounds(0, 0, 200, 200);
+        Drawable zzjl = getResources().getDrawable(R.drawable.ic_zhuanzhangjilu);
+        zzjl.setBounds(0, 0, 200, 200);
+        Drawable cpyk = getResources().getDrawable(R.drawable.ic_caipiaobaobiao);
+        cpyk.setBounds(0, 0, 200, 200);
+
+        YouXijl.setCompoundDrawables(null, yxjl, null, null);
+        ZhuiHaojl.setCompoundDrawables(null, zhjl, null, null);
+        CaiPiaobb.setCompoundDrawables(null, cpbb, null, null);
+        CunQujl.setCompoundDrawables(null, cqjl, null, null);
+        GeRenzb.setCompoundDrawables(null, zbjl, null, null);
+        FanDianjl.setCompoundDrawables(null, fdjl, null, null);
+        GeRenbjl.setCompoundDrawables(null, bjlbb, null, null);
+        ZhuanZhangjl.setCompoundDrawables(null, zzjl, null, null);
+        CaiPiaoyk.setCompoundDrawables(null, cpyk, null, null);
+
+
         YouXijl.setOnClickListener(this);
         ZhuiHaojl.setOnClickListener(this);
         CaiPiaobb.setOnClickListener(this);

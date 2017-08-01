@@ -318,7 +318,7 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
-                if (response.code()==200) {
+                if (response.code() == 200) {
                     listener.onRequestStart(API_ID_LOGINSTATE);
                     //获取cookie
                     String sessionId = getSessionCookie(response.headers().get("Set-Cookie"));
@@ -1093,20 +1093,24 @@ public class RetrofitService extends HttpEngine {
         map.put("p2", p2);
         map.put("email", email);
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<RestultInfo> clone = apiInterface.getUpdateFirstPwd(1, p0, p1, p2, email, reqkey, currentTimeMillis).clone();
+        Call<RestultInfo> updateFirstPwd = apiInterface.getUpdateFirstPwd(1, p0, p1, p2, email, reqkey, currentTimeMillis);
+        String s = updateFirstPwd.request().toString();
+        Log.d("强制修改初始密码的结果请求", s);
+        Call<RestultInfo> clone = updateFirstPwd.clone();
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+                Log.d("强制修改初始密码的结果Code", response.code() + "");
                 if (response.code() == 200) {
-                    listener.onReceivedData(API_ID_UPDATAFIRSTPWD, response.body(), API_ID_ERROR);
                     Log.d("强制修改初始密码的结果", response.body().toString());
+                    listener.onReceivedData(API_ID_UPDATAFIRSTPWD, response.body(), API_ID_ERROR);
 
                 }
             }
 
             @Override
             public void onFailure(Call<RestultInfo> call, Throwable t) {
-
+                Log.d("强制修改初始密码的结果Error", t.toString());
             }
         });
 
@@ -1361,73 +1365,7 @@ public class RetrofitService extends HttpEngine {
                     cs.add(bankss);
                     cs.add(provincess);
                     cs.add(lockedss);
-                   /* String Cards = s.substring(s.indexOf("cards=[") + 7, s.indexOf(", banks"));
-                    String Banks = s.substring(s.indexOf("banks=[") + 7, s.indexOf("], provincials"));
-                    String Privinces = s.substring(s.indexOf("provincials=[") + 13, s.indexOf("], locked"));
-                    String Locked = s.substring(s.indexOf("locked=") + 7, s.length() - 1);
 
-                    Log.d("获取绑定的银行卡的全部数据", response.body().toString());
-                    Log.d("获取绑定的银行卡的银行数据", Banks);
-                    String[] split = Banks.split(",");
-                    List<List<MapsIdAndValue>> CardDatas = new ArrayList<List<MapsIdAndValue>>();
-                    List<MapsIdAndValue> Mapsbank = new ArrayList<MapsIdAndValue>();
-                    for (int i = 0; i < split.length; i = i + 2) {
-                        Log.d("银行信息==", split[i] + "     " + split[i].length());
-                        MapsIdAndValue mapBank = new MapsIdAndValue();
-
-                        String substring = split[i].substring(split[i].indexOf("[") + 1, split[i].length());
-                        String substring1 = substring.substring(0, substring.length() - 2);
-                        int i1 = Integer.parseInt(substring1);
-                        mapBank.setId(i1);
-                        Log.d("银行id==", i1 + "");
-
-                        String substring2 = split[i + 1].substring(1, split[i + 1].length() - 1);
-                        Log.d("银行Value==", substring2);
-                        mapBank.setValues(substring2);
-
-                        Mapsbank.add(mapBank);
-                    }
-                    String[] prinvin = Privinces.split(",");
-                    List<MapsIdAndValue> MapsPrivince = new ArrayList<MapsIdAndValue>();
-
-                    for (int i = 0; i < prinvin.length; i = i + 2) {
-                        MapsIdAndValue maps = new MapsIdAndValue();
-                        String substring = prinvin[i].substring(prinvin[i].indexOf("[") + 1, prinvin[i].length());
-                        String substring1 = substring.substring(0, substring.length() - 2);
-                        int i1 = Integer.parseInt(substring1);
-                        maps.setId(i1);
-                        Log.d("省份id==", i1 + "");
-                        String substring2 = prinvin[i + 1].substring(1, prinvin[i + 1].length() - 1);
-                        Log.d("省份Value==", substring2);
-                        maps.setValues(substring2);
-
-                        MapsPrivince.add(maps);
-                    }
-                    String[] splitCards = Cards.split(",");
-                    List<MapsIdAndValue> mapCard = new ArrayList<MapsIdAndValue>();
-                    for (int i = 0; i < splitCards.length; i = i + 5) {
-                        MapsIdAndValue maps = new MapsIdAndValue();
-                        String CardId = splitCards[i].substring(splitCards[i].indexOf("[") + 1, splitCards[i].length() - 2);
-                        int CardIntId = Integer.parseInt(CardId);
-                        maps.setId(CardIntId);
-                        String Cardname = splitCards[i + 1].substring(1, splitCards[i + 1].length());
-                        maps.setValues(Cardname);
-                        String BankName = splitCards[i + 2].substring(1, splitCards[i + 2].length());
-                        maps.setBank(BankName);
-                        String CardNum = splitCards[i + 3].substring(1, splitCards[i + 3].length());
-                        maps.setCardNum(CardNum);
-                        String Time = splitCards[i + 4].substring(1, splitCards[i + 4].length());
-                        maps.setTime(Time);
-                        Log.d("银行卡号信息", maps.toString());
-                        mapCard.add(maps);
-                        maps.setLocked(Locked);
-                    }
-                    CardDatas.add(Mapsbank);
-                    CardDatas.add(MapsPrivince);
-                    CardDatas.add(mapCard);
-                    String values = CardDatas.get(0).get(1).getValues();
-                    String values1 = CardDatas.get(1).get(1).getValues();
-                    Log.d("获取银行卡所需的数据返回", values + "    " + values1);*/
                     listener.onReceivedData(API_ID_CARDDATAS, cs, API_ID_ERROR);
 
                 }
@@ -2806,27 +2744,104 @@ public class RetrofitService extends HttpEngine {
         maps.put("rows", rows + "");
         maps.put("sidx", sidx + "");
         maps.put("sord", sord + "");
-        maps.put("from", from + "");
-        maps.put("to", to + "");
+        maps.put("from", to + "");
+        maps.put("to", from + "");
         maps.put("id", id + "");
         maps.put("name", name + "");
         maps.put("type", type + "");
         maps.put("stype", stype + "");
         maps.put("model", model + "");
         String reqkey = RxUtils.getInstance().getReqkey(maps, currentTimeMillis);
-        Call<Object> accountChangeList = apiInterface.getTeamAccountChangeList(1, page, rows, sidx, sord, from, to, id, name, type, stype, model, reqkey, currentTimeMillis);
-        Call<Object> clone = accountChangeList.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<Map<String, Object>> accountChangeList = apiInterface.getTeamAccountChangeList(1, page, rows, sidx, sord, to, from, id, name, type, stype, model, reqkey, currentTimeMillis);
+        String s = accountChangeList.request().toString();
+        Log.d("查询团队报表彩票帐变请求", s + "");
+        Call<Map<String, Object>> clone = accountChangeList.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 if (response.code() == 200) {
                     String s = response.body().toString();
+                    Log.d("查询团队报表彩票帐变", s + "");
                     List<List<AccountChange>> account = new ArrayList<List<AccountChange>>();
+                    Map<String, Object> map = response.body();
+                    List<Object> rows = new ArrayList<>();
+                    Map<String, Object> userdata = new HashMap<>();
+                    double records = 0;
+                    double amountAll = 0;
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if ("records".equals(entry.getKey())) {
+                                records = (double) entry.getValue();
+                            }
+                            if ("rows".equals(entry.getKey())) {
+                                rows = (List<Object>) entry.getValue();
+                            }
+                            if ("userdata".equals(entry.getKey())) {
+                                userdata = (Map<String, Object>) entry.getValue();
+                            }
+                        }
+                    }
                     List<AccountChange> acs1 = new ArrayList<AccountChange>();
+                    if (userdata.size() > 0) {
+                        AccountChange ac = new AccountChange();
+                        for (Map.Entry<String, Object> entry : userdata.entrySet()) {
+                            if ("amount".equals(entry.getKey())) {
+                                amountAll = (double) entry.getValue();
+                                ac.setAmountss(amountAll);
+                                acs1.add(ac);
+                            }
+                        }
+                    }
+                    account.add(acs1);
+                    List<AccountChange> acs2 = new ArrayList<AccountChange>();
+                    if (records > 0) {
+                        for (int i = 0; i < rows.size(); i++) {
+                            String id = null;
+                            List<Object> cell = new ArrayList<>();
+                            Map<String, Object> o = (Map<String, Object>) rows.get(i);
+                            if (o.size() > 0) {
+                                for (Map.Entry<String, Object> entry : o.entrySet()) {
+                                    if ("id".equals(entry.getKey())) {
+                                        id = (String) entry.getValue();
+                                    }
+                                    if ("cell".equals(entry.getKey())) {
+                                        cell = (List<Object>) entry.getValue();
+                                    }
+                                }
+                            }
+
+                            for (int j = 0; j < cell.size(); j = j + 9) {
+                                String uname = (String) cell.get(j);
+                                String date = (String) cell.get(j + 1);
+                                String stype = (String) cell.get(j + 2);
+                                String gname = (String) cell.get(j + 3);
+                                String rname = (String) cell.get(j + 4);
+                                String period = (String) cell.get(j + 5);
+                                String model = (String) cell.get(j + 6);
+                                String amount = (String) cell.get(j + 7);
+                                String amounts = (String) cell.get(j + 8);
+                                AccountChange ac = new AccountChange();
+                                ac.setId(Integer.parseInt(id));
+                                ac.setUname(uname);
+                                ac.setDate(date);
+                                ac.setStype(Integer.parseInt(stype));
+                                ac.setGname(gname);
+                                ac.setRname(rname);
+                                ac.setPeriod(period);
+                                ac.setModel(Integer.parseInt(model));
+                                ac.setAmount(Double.parseDouble(amount));
+                                ac.setAmounts(Double.parseDouble(amounts));
+                                acs2.add(ac);
+                            }
+                        }
+
+
+                    }
+                    account.add(acs2);
+/* List<AccountChange> acs1 = new ArrayList<AccountChange>();
                     String substring = s.substring(s.indexOf("records=") + 8, s.indexOf(".0, rows="));
                     int ReCords = Integer.parseInt(substring);
                     String rows = s.substring(s.indexOf("rows=[") + 6, s.indexOf("], userdata="));
-                    Log.d("查询团队报表彩票帐变", s + "");
                     AccountChange a = new AccountChange();
                     String as = s.substring(s.indexOf("userdata={amount=") + 17, s.indexOf(", name="));
                     a.setAmountss(Double.parseDouble(as));
@@ -2863,14 +2878,13 @@ public class RetrofitService extends HttpEngine {
                         }
                         account.add(acs2);
 
-                    }
+                    }*/
                     listener.onReceivedData(API_ID_TEAMACCOUNTCHANGE, account, API_ID_ERROR);
                 }
-
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
 
             }
         });
@@ -3288,19 +3302,119 @@ public class RetrofitService extends HttpEngine {
         maps.put("stype", stype + "");
         maps.put("team", team + "");
         String reqkey = RxUtils.getInstance().getReqkey(maps, currentTimeMillis);
-        Call<Object> teamProfitLossList = apiInterface.getTeamProfitLossList(1, page, rows, sidx, sord, from, to, name, uid, gtype, stype, team, reqkey, currentTimeMillis);
-        Call<Object> clone = teamProfitLossList.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<Map<String, Object>> teamProfitLossList = apiInterface.getTeamProfitLossList(1, page, rows, sidx, sord, from, to, name, uid, gtype, stype, team, reqkey, currentTimeMillis);
+        String s = teamProfitLossList.request().toString();
+        Log.d("团队报表当日或历史盈亏请求", s);
+        Call<Map<String, Object>> clone = teamProfitLossList.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 if (response.code() == 200) {
                     Log.d("团队报表当日或历史盈亏", response.body().toString());
+                    Map<String, Object> map = response.body();
+                    double records = 0;
+                    List<Object> rows = new ArrayList<>();
+                    Map<String, Object> userdata = new HashMap<>();
+                    List<List<LotteryLoss>> loss = new ArrayList<List<LotteryLoss>>();
+                    List<LotteryLoss> los1 = new ArrayList<LotteryLoss>();
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if ("records".equals(entry.getKey())) {
+                                records = (double) entry.getValue();
+                            }
+                            if ("rows".equals(entry.getKey())) {
+                                rows = (List<Object>) entry.getValue();
+                            }
+                            if ("userdata".equals(entry.getKey())) {
+                                userdata = (Map<String, Object>) entry.getValue();
+                            }
+                        }
+                        double activity_amount = 0;
+                        double activity_amount2 = 0;
+                        double recharge_amount = 0;
+                        double withdraw_amount = 0;
+                        double rebate_amount = 0;
+                        double profit_loss = 0;
+                        double betting_amount = 0;
+                        double winning_amount = 0;
+                        if (userdata.size() > 0) {
+                            for (Map.Entry<String, Object> entry : userdata.entrySet()) {
+                                if ("activity_amount".equals(entry.getKey())) {
+                                    activity_amount = (double) entry.getValue();
+                                }
+                                if ("activity_amount2".equals(entry.getKey())) {
+                                    activity_amount2 = (double) entry.getValue();
+                                }
+                                if ("recharge_amount".equals(entry.getKey())) {
+                                    recharge_amount = (double) entry.getValue();
+                                }
+                                if ("withdraw_amount".equals(entry.getKey())) {
+                                    withdraw_amount = (double) entry.getValue();
+                                }
+                                if ("rebate_amount".equals(entry.getKey())) {
+                                    rebate_amount = (double) entry.getValue();
+                                }
+                                if ("profit_loss".equals(entry.getKey())) {
+                                    profit_loss = (double) entry.getValue();
+                                }
+                                if ("betting_amount".equals(entry.getKey())) {
+                                    betting_amount = (double) entry.getValue();
+                                }
+                                if ("winning_amount".equals(entry.getKey())) {
+                                    winning_amount = (double) entry.getValue();
+                                }
+                                LotteryLoss l = new LotteryLoss();
+                                l.setActivity_amount(activity_amount);
+                                l.setActivity_amount2(activity_amount2);
+                                l.setRecharge_amount(recharge_amount);
+                                l.setWithdraw_amount(withdraw_amount);
+                                l.setRebate_amount(rebate_amount);
+                                l.setProfit_loss(profit_loss);
+                                l.setBetting_amount(betting_amount);
+                                l.setWinning_amount(winning_amount);
+                                los1.add(l);
+                            }
+                        }
+                    }
+                    loss.add(los1);
+                    if (records > 0) {
+                        for (int i = 0; i < rows.size(); i++) {
+                            Map<String, Object> o = (Map<String, Object>) rows.get(i);
+                            String id = null;
+                            List<Object> cell = new ArrayList<>();
+                            if (o.size() > 0) {
+                                for (Map.Entry<String, Object> entry : o.entrySet()) {
+                                    if ("id".equals(entry.getKey())) {
+                                        id = (String) entry.getValue();
+                                    }
+                                    if ("cell".equals(entry.getKey())) {
+                                        cell = (List<Object>) entry.getValue();
+                                    }
+                                }
+                            }
+                            if (cell.size() > 0) {
+                                for (int j = 0; j < cell.size(); j = j + 11) {
+                                    String uname = (String) cell.get(i);
+                                    String recharge_amount = (String) cell.get(i + 1);
+                                    String withdraw_amount = (String) cell.get(i + 2);
+                                    String betting_amount = (String) cell.get(i + 3);
+                                    String rebate_amount = (String) cell.get(i + 4);
+                                    String winning_amount = (String) cell.get(i + 5);
+                                    String activity_amount = (String) cell.get(i + 6);
+                                    String activity_amount2 = (String) cell.get(i + 7);
+                                    String profit_loss = (String) cell.get(i + 8);
+                                    String type = (String) cell.get(i + 9);
+                                    String counts = (String) cell.get(i + 10);
+                                }
+                            }
+                        }
+                    }
                 }
 
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
 
             }
         });

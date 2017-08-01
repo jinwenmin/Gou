@@ -12,6 +12,11 @@ public class LotteryLoss {
     double betting_amounts;
     double rebate_amount;
     double profit_loss;
+    double recharge_amount;
+    double withdraw_amount;
+    double activity_amount;
+    double activity_amount2;
+    int counts;
 
     @Override
     public String toString() {
@@ -23,8 +28,53 @@ public class LotteryLoss {
                 ", betting_amounts=" + betting_amounts +
                 ", rebate_amount=" + rebate_amount +
                 ", profit_loss=" + profit_loss +
+                ", recharge_amount=" + recharge_amount +
+                ", withdraw_amount=" + withdraw_amount +
+                ", activity_amount=" + activity_amount +
+                ", activity_amount2=" + activity_amount2 +
+                ", counts=" + counts +
                 ", winning_amounts=" + winning_amounts +
                 '}';
+    }
+
+    public double getRecharge_amount() {
+        return recharge_amount;
+    }
+
+    public void setRecharge_amount(double recharge_amount) {
+        this.recharge_amount = recharge_amount;
+    }
+
+    public double getWithdraw_amount() {
+        return withdraw_amount;
+    }
+
+    public void setWithdraw_amount(double withdraw_amount) {
+        this.withdraw_amount = withdraw_amount;
+    }
+
+    public double getActivity_amount() {
+        return activity_amount;
+    }
+
+    public void setActivity_amount(double activity_amount) {
+        this.activity_amount = activity_amount;
+    }
+
+    public double getActivity_amount2() {
+        return activity_amount2;
+    }
+
+    public void setActivity_amount2(double activity_amount2) {
+        this.activity_amount2 = activity_amount2;
+    }
+
+    public int getCounts() {
+        return counts;
+    }
+
+    public void setCounts(int counts) {
+        this.counts = counts;
     }
 
     public double getProfit_loss() {

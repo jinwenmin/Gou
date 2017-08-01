@@ -15,7 +15,7 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_youxijilu"
+            android:drawableTop="@drawable/ic_youxijilu"
             android:gravity="center_horizontal"
             android:text="游戏记录" />
 
@@ -24,7 +24,7 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_zhuihaojilu"
+            android:drawableTop="@drawable/ic_zhuihaojilu"
             android:gravity="center_horizontal"
             android:text="追号记录" />
 
@@ -33,7 +33,7 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_caipiaobaobiao"
+            android:drawableTop="@drawable/ic_caipiaobaobiao"
             android:gravity="center_horizontal"
             android:text="彩票报表" />
     </LinearLayout>
@@ -48,7 +48,7 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_cunqukuanjilu"
+            android:drawableTop="@drawable/ic_cunqukuanjilu"
             android:gravity="center_horizontal"
             android:text="存取款记录" />
 
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
 
-            android:drawableTop="@mipmap/ic_zhangbianjilu"
+            android:drawableTop="@drawable/ic_zhangbianjilu"
             android:gravity="center_horizontal"
             android:text="个人账变记录" />
 
@@ -67,7 +67,7 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_fandianjilu"
+            android:drawableTop="@drawable/ic_fandianjilu"
             android:gravity="center_horizontal"
             android:text="返点记录" />
     </LinearLayout>
@@ -82,7 +82,7 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_baijialebaobiao"
+            android:drawableTop="@drawable/ic_baijialebaobiao"
             android:gravity="center_horizontal"
             android:text="活动记录" />
 
@@ -91,7 +91,7 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_zhuanzhangjilu"
+            android:drawableTop="@drawable/ic_zhuanzhangjilu"
             android:gravity="center_horizontal"
             android:text="转账记录" />
 
@@ -100,7 +100,7 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/ic_caipiaobaobiao"
+            android:drawableTop="@drawable/ic_caipiaobaobiao"
             android:gravity="center_horizontal"
             android:text="彩票盈亏" />
     </LinearLayout>

@@ -226,7 +226,7 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
                 if (Login_Pwd.equals("a123456")) {
 
                     startActivity(new Intent(LoginActivity.this, UpDateFirstPwdActivity.class));
-
+                    return;
                 } else {
                     MyApp.getInstance().setUserUid(login.getUid());
                     startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));

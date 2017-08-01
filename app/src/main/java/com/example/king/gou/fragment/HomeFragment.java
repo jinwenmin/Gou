@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -107,7 +108,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     private FingerPrintUtils fingerPrintUiHelper;
     private ImageView fingerImg;
     private TextView fingerText;
+    private ImageView fingerImg1;
+    private TextView fingerText1;
     String show = null;
+    boolean finger;
 
     public static HomeFragment newInstance() {
 
@@ -126,38 +130,21 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         unbinder = ButterKnife.bind(this, view);
+        RetrofitService.getInstance().GetUserInfo(this);
         mKeyguardManager = (KeyguardManager) getActivity().getSystemService(Context.KEYGUARD_SERVICE);
         manager = FingerprintManagerCompat.from(getActivity());
         Finger = getActivity().getSharedPreferences("Finger", Activity.MODE_PRIVATE);
-        boolean finger = Finger.getBoolean("finger", false);
+        finger = Finger.getBoolean("finger", false);
         Log.d("Finger==", finger + "");
-        if (finger) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (isSatisfactionFingerprint()) {
-                    alertView1 = new AlertView(null, null, "取消", null, null, getActivity(), AlertView.Style.Alert, this);
-                    contentView1 = LayoutInflater.from(getContext()).inflate(
-                            R.layout.item_finger, null);
-                    alertView1.addExtView(contentView1);
-                    fingerImg = ((ImageView) contentView1.findViewById(R.id.fingerImg));
-                    fingerText = ((TextView) contentView1.findViewById(R.id.fingerText));
-                    alertView1.show();
-                    show = "1";
-                    initFingerPrint();
-                }
-            } else {
-                Toasty.info(getActivity(), "系统版本过低不支持指纹识别...", Toast.LENGTH_SHORT).show();
-            }
-        }
-        if (!finger) {
+        alertView1 = new AlertView(null, null, "取消", null, null, getContext(), AlertView.Style.Alert, this);
+        contentView1 = LayoutInflater.from(getContext()).inflate(R.layout.item_finger, null);
+        alertView1.addExtView(contentView1);
 
-        }
 
         alertView = new AlertView(null, null, "确认", null, null, getContext(), AlertView.Style.Alert, this);
         contentView = LayoutInflater.from(getContext()).inflate(
                 R.layout.item_homenotice, null);
         alertView.addExtView(contentView);
-
-
         test.startScroll();
         HomeFragmentAddGame.setOnClickListener(this);
         recycler.setLayoutManager(new GridLayoutManager(getActivity(), 4));
@@ -218,12 +205,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
              */
             @Override
             public void onAuthenticationSucceeded(FingerprintManagerCompat.AuthenticationResult result) {
-                fingerText.setText("指纹识别成功");
-                fingerText.setTextColor(Color.rgb(0, 150, 136));
-                fingerImg.setImageResource(R.drawable.ic_fingerprint_success);
+                fingerText1.setText("指纹识别成功");
+                fingerText1.setTextColor(Color.rgb(0, 150, 136));
+                fingerImg1.setImageResource(R.drawable.ic_fingerprint_success);
                 Toast.makeText(getActivity(), "指纹识别成功", Toast.LENGTH_SHORT).show();
-
-                alertView.dismiss();
+                alertView1.dismiss();
+                SystemClock.sleep(2000);
                 notice();
             }
 
@@ -232,9 +219,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
              */
             @Override
             public void onAuthenticationFailed() {
-                fingerText.setText("指纹验证失败,请重试");
-                fingerText.setTextColor(Color.rgb(244, 81, 30));
-                fingerImg.setImageResource(R.drawable.ic_fingerprint_error);
+                fingerText1.setText("指纹验证失败,请重试");
+                fingerText1.setTextColor(Color.rgb(244, 81, 30));
+                fingerImg1.setImageResource(R.drawable.ic_fingerprint_error);
                 Toast.makeText(getActivity(), "指纹识别失败", Toast.LENGTH_SHORT).show();
                 alertView.dismiss();
 
@@ -343,6 +330,26 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 }
             }
         }
+        if (apiId == RetrofitService.API_ID_USERINFO) {
+            if (object != null) {
+                if (finger) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (isSatisfactionFingerprint()) {
+                            fingerImg1 = ((ImageView) contentView1.findViewById(R.id.fingerImg));
+                            fingerText1 = ((TextView) contentView1.findViewById(R.id.fingerText));
+                            alertView1.show();
+                            show = "1";
+                            initFingerPrint();
+                        }
+                    } else {
+                        Toasty.info(getActivity(), "系统版本过低不支持指纹识别...", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                if (!finger) {
+                    notice();
+                }
+            }
+        }
     }
 
     @Override
@@ -368,4 +375,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             }
         }
     }
+
+
 }

@@ -123,7 +123,7 @@
             android:layout_weight="7"
             android:background="@null"
             android:gravity="center"
-            android:hint="按用户名查询(可选)"
+            android:hint="按用户id查询(可选)"
             android:textSize="35px" />
 
 

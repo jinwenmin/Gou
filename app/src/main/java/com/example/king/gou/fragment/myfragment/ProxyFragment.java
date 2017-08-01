@@ -2,6 +2,7 @@ package com.example.king.gou.fragment.myfragment;
 
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -70,6 +71,40 @@ public class ProxyFragment extends BaseFragment implements View.OnClickListener 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_proxy, container, false);
         unbinder = ButterKnife.bind(this, view);
+        Drawable dlsy = getResources().getDrawable(R.drawable.ic_dailishouye);
+        dlsy.setBounds(0, 0, 200, 200);
+        Drawable khzx = getResources().getDrawable(R.drawable.ic_kaihuzhongxin);
+        khzx.setBounds(0, 0, 200, 200);
+        Drawable tdtz = getResources().getDrawable(R.drawable.ic_tuanduibaobiao);
+        tdtz.setBounds(0, 0, 200, 200);
+        Drawable hygl = getResources().getDrawable(R.drawable.ic_huiyuanguanli);
+        hygl.setBounds(0, 0, 200, 200);
+        Drawable tdzb = getResources().getDrawable(R.drawable.ic_tuanduizbjl);
+        tdzb.setBounds(0, 0, 200, 200);
+        Drawable tdyk = getResources().getDrawable(R.drawable.ic_caipiaobaobiao);
+        tdyk.setBounds(0, 0, 200, 200);
+        Drawable hdlb = getResources().getDrawable(R.drawable.ic_tuanduizhjl);
+        hdlb.setBounds(0, 0, 200, 200);
+        Drawable tdcq = getResources().getDrawable(R.drawable.ic_tuanduicunqukuan);
+        tdcq.setBounds(0, 0, 200, 200);
+        Drawable tdhdbb = getResources().getDrawable(R.drawable.ic_tuanduibaijialebaobiao);
+        tdhdbb.setBounds(0, 0, 200, 200);
+        Drawable yxjj = getResources().getDrawable(R.drawable.ic_zhuanzhangjilu);
+        yxjj.setBounds(0, 0, 200, 200);
+
+
+        proxyHome.setCompoundDrawables(null, dlsy, null, null);
+        proxyUserCenter.setCompoundDrawables(null, khzx, null, null);
+        proxyTeamBaoBiao.setCompoundDrawables(null, tdtz, null, null);
+        proxyVipMan.setCompoundDrawables(null, hygl, null, null);
+        proxyTeamZhangBian.setCompoundDrawables(null, tdzb, null, null);
+        proxyGameJl.setCompoundDrawables(null, tdyk, null, null);
+        proxyTeamZhuiHao.setCompoundDrawables(null, hdlb, null, null);
+        proxyTeamCunQu.setCompoundDrawables(null, tdcq, null, null);
+        proxyTeamBjl.setCompoundDrawables(null, tdhdbb, null, null);
+        GameMoney.setCompoundDrawables(null, yxjj, null, null);
+
+
         proxyHome.setOnClickListener(this);
         proxyUserCenter.setOnClickListener(this);
         proxyTeamBaoBiao.setOnClickListener(this);

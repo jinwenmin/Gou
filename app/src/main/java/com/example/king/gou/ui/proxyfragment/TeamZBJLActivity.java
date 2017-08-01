@@ -99,8 +99,12 @@ public class TeamZBJLActivity extends AutoLayoutActivity implements View.OnClick
         initDateDialog();
         initSpinner();
 
+
     }
 
+    private void initRetrofit() {
+        RetrofitService.getInstance().getTeamAccountChangeList(TeamZBJLActivity.this, 1, 100, "atid", "desc", getTime1(), getTime2(), getGameId(), getUserName(), gettypeId(), getStype(), getModel());
+    }
 
 
     private String getTime2() {
@@ -130,11 +134,12 @@ public class TeamZBJLActivity extends AutoLayoutActivity implements View.OnClick
     private int getModel() {
         return SpinnerModel.getSelectedItemPosition();
     }
+
     private void initSpinnerSelect() {
         SpinnerType.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                RetrofitService.getInstance().getTeamAccountChangeList(TeamZBJLActivity.this, 1, 100, "atid", "desc", getTime1(), getTime2(), ListgameTypes.get(SpinnerGameId.getSelectedItemPosition()).getGid(), getUserName(), gettypeId(), getStype(), getModel());
+                initRetrofit();
             }
 
             @Override
@@ -146,7 +151,7 @@ public class TeamZBJLActivity extends AutoLayoutActivity implements View.OnClick
         SpinnerStype.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                RetrofitService.getInstance().getTeamAccountChangeList(TeamZBJLActivity.this, 1, 100, "atid", "desc", getTime1(), getTime2(), ListgameTypes.get(SpinnerGameId.getSelectedItemPosition()).getGid(), getUserName(), gettypeId(), getStype(), getModel());
+                initRetrofit();
             }
 
             @Override
@@ -158,7 +163,7 @@ public class TeamZBJLActivity extends AutoLayoutActivity implements View.OnClick
         SpinnerModel.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                RetrofitService.getInstance().getTeamAccountChangeList(TeamZBJLActivity.this, 1, 100, "atid", "desc", getTime1(), getTime2(), getGameId(), getUserName(), gettypeId(), getStype(), getModel());
+                initRetrofit();
             }
 
             @Override
@@ -169,7 +174,7 @@ public class TeamZBJLActivity extends AutoLayoutActivity implements View.OnClick
         SpinnerGameId.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                RetrofitService.getInstance().getTeamAccountChangeList(TeamZBJLActivity.this, 1, 100, "atid", "desc", getTime1(), getTime2(), getGameId(), getUserName(), gettypeId(), getStype(), getModel());
+                initRetrofit();
             }
 
             @Override
@@ -179,6 +184,7 @@ public class TeamZBJLActivity extends AutoLayoutActivity implements View.OnClick
         });
 
     }
+
     private void initSpinner() {
         ids.add(0);
         ids.add(2);
@@ -240,36 +246,7 @@ public class TeamZBJLActivity extends AutoLayoutActivity implements View.OnClick
         System.out.println();
         Log.e("times", sdf.format(date));
         TeamZBJLtimetext2.setText(sdf.format(date));
-        //第一个日期选择器
-        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                TeamZBJLtimetext.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
-                Long getdaytime = DateUtil.getInstance().toDate(year + "-" + (month + 1) + "-" + dayOfMonth) / 1000;
-                //第二个日期的时间
-                long l2 = DateUtil.getInstance().toDate(TeamZBJLtimetext2.getText().toString()) / 1000;
-                //第一个日期的时间
-                long l1 = DateUtil.getInstance().toDate(TeamZBJLtimetext.getText().toString()) / 1000;
-                if (l2 - l1 > 864000) {
-                    Toasty.warning(getApplicationContext(), "你的选择期限超过了10天", Toast.LENGTH_SHORT, true).show();
-                }
-                Log.e("现在时长", l2 + "  " + l1);
-            }
-        }, year, month, day);
-        //第二个日期选择器
-        datePickerDialog2 = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                TeamZBJLtimetext2.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
-                //第二个日期的时间
-                long l2 = DateUtil.getInstance().toDate(TeamZBJLtimetext2.getText().toString()) / 1000;
-                //第一个日期的时间
-                long l1 = DateUtil.getInstance().toDate(TeamZBJLtimetext.getText().toString()) / 1000;
-                if (l2 - l1 > 864000) {
-                    Toasty.warning(getApplicationContext(), "你的选择期限超过了10天", Toast.LENGTH_SHORT, true).show();
-                }
-            }
-        }, year, month, day);
+
 
     }
 
@@ -277,6 +254,7 @@ public class TeamZBJLActivity extends AutoLayoutActivity implements View.OnClick
         TeamZBJLrelateTime1.setOnClickListener(this);
         TeamZBJLrelateTime2.setOnClickListener(this);
         Back.setOnClickListener(this);
+        ToSearchName.setOnClickListener(this);
     }
 
     @Override
@@ -304,7 +282,7 @@ public class TeamZBJLActivity extends AutoLayoutActivity implements View.OnClick
                         String substring = formatDate.substring(0, 10);
                         Log.d("Date===", substring);
                         TeamZBJLtimetext.setText(substring);
-                        RetrofitService.getInstance().getTeamAccountChangeList(TeamZBJLActivity.this, 1, 100, "atid", "desc", getTime1(), getTime2(), getGameId(), getUserName(), gettypeId(), getStype(), getModel());
+                        initRetrofit();
                     }
                 });
                 dialog.show();
@@ -331,7 +309,7 @@ public class TeamZBJLActivity extends AutoLayoutActivity implements View.OnClick
                         String substring = formatDate.substring(0, 10);
                         Log.d("Date===", substring);
                         TeamZBJLtimetext2.setText(substring);
-                        RetrofitService.getInstance().getTeamAccountChangeList(TeamZBJLActivity.this, 1, 100, "atid", "desc", getTime1(), getTime2(), getGameId(), getUserName(), gettypeId(), getStype(), getModel());
+                        initRetrofit();
 
                     }
                 });
@@ -339,6 +317,9 @@ public class TeamZBJLActivity extends AutoLayoutActivity implements View.OnClick
                 break;
             case R.id._back:
                 finish();
+                break;
+            case R.id.ToSearchName:
+                initRetrofit();
                 break;
         }
     }
@@ -359,12 +340,16 @@ public class TeamZBJLActivity extends AutoLayoutActivity implements View.OnClick
             initSpinnerSelect();
         }
 
-        if (apiId == RetrofitService.API_ID_ACCOUNTCHANGE) {
+        if (apiId == RetrofitService.API_ID_TEAMACCOUNTCHANGE) {
 
             if (object != null) {
                 acs = (List<List<AccountChange>>) object;
-                accountsAdapter.getList(acs.get(1));
-                ChangeAmount.setText("总计：" + acs.get(0).get(0).getAmountss() + "");
+                if (acs.size()>0) {
+                    accountsAdapter.getList(acs.get(1));
+                    if (acs.get(0).size()>0) {
+                        ChangeAmount.setText("总计：" + acs.get(0).get(0).getAmountss() + "");
+                    }
+                }
             }
         }
     }
