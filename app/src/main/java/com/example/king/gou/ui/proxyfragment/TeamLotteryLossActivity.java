@@ -21,6 +21,7 @@ import com.codbking.widget.OnSureLisener;
 import com.codbking.widget.bean.DateType;
 import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
+import com.example.king.gou.bean.LotteryLoss;
 import com.example.king.gou.bean.TeamUserInfo;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.utils.DateUtil;
@@ -82,6 +83,7 @@ public class TeamLotteryLossActivity extends AutoLayoutActivity implements View.
     private ArrayAdapter<String> adapterGtype;
     private ArrayAdapter<String> adapterStype;
     private ArrayAdapter<String> adapterTeam;
+    List<List<LotteryLoss>> loss = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -286,7 +288,16 @@ public class TeamLotteryLossActivity extends AutoLayoutActivity implements View.
 
     @Override
     public void onReceivedData(int apiId, Object object, int errorId) {
-
+        if (apiId == RetrofitService.API_ID_LOTTERYLOSS) {
+            if (object != null) {
+                loss = (List<List<LotteryLoss>>) object;
+                if (loss.size() > 0) {
+                    List<LotteryLoss> lotteryLosses = loss.get(0);
+                    Expend.setText(lotteryLosses.get(0).getBetting_amount() + "");
+                    InCome.setText(lotteryLosses.get(0).getProfit_loss() + "");
+                }
+            }
+        }
     }
 
     @Override

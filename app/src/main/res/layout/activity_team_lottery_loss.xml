@@ -236,7 +236,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="奖金汇总: "
+                    android:text="盈亏汇总: "
                     android:textColor="@android:color/black"
                     android:textSize="30px" />
 

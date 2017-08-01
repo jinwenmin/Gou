@@ -162,6 +162,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_SAFEPWDCHECK = 58;//验证安全问题
     public static int API_ID_RESETPWD = 59;//重置密码
     public static int API_ID_UPDATASAFEPWD = 60;//修改安全密码
+    public static int API_ID_LOTTERYLOSS = 61;//团队盈亏
 
 
     private Retrofit retrofit;
@@ -3287,7 +3288,7 @@ public class RetrofitService extends HttpEngine {
     }
 
     //团队报表当日盈亏
-    public void getTeamProfitLossList(DataListener listener, int page, int rows, String sidx, String sord, String from, String to, String name, int uid, int gtype, int stype, int team) {
+    public void getTeamProfitLossList(final DataListener listener, int page, int rows, String sidx, String sord, String from, String to, String name, int uid, int gtype, int stype, int team) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> maps = new HashMap<>();
         maps.put("page", page + "");
@@ -3372,11 +3373,13 @@ public class RetrofitService extends HttpEngine {
                                 l.setProfit_loss(profit_loss);
                                 l.setBetting_amount(betting_amount);
                                 l.setWinning_amount(winning_amount);
+                                Log.d("团队报表当日或历史盈亏String", l.toString());
                                 los1.add(l);
                             }
                         }
                     }
                     loss.add(los1);
+                    List<LotteryLoss> ls2=new ArrayList<LotteryLoss>();
                     if (records > 0) {
                         for (int i = 0; i < rows.size(); i++) {
                             Map<String, Object> o = (Map<String, Object>) rows.get(i);
@@ -3405,10 +3408,25 @@ public class RetrofitService extends HttpEngine {
                                     String profit_loss = (String) cell.get(i + 8);
                                     String type = (String) cell.get(i + 9);
                                     String counts = (String) cell.get(i + 10);
+                                    LotteryLoss ls = new LotteryLoss();
+                                    ls.setUname(uname);
+                                    ls.setRecharge_amount(Double.parseDouble(recharge_amount));
+                                    ls.setWithdraw_amount(Double.parseDouble(withdraw_amount));
+                                    ls.setBetting_amount(Double.parseDouble(betting_amount));
+                                    ls.setRebate_amount(Double.parseDouble(rebate_amount));
+                                    ls.setWinning_amount(Double.parseDouble(winning_amount));
+                                    ls.setActivity_amount(Double.parseDouble(activity_amount));
+                                    ls.setActivity_amount2(Double.parseDouble(activity_amount2));
+                                    ls.setProfit_loss(Double.parseDouble(profit_loss));
+                                    ls.setType(Integer.parseInt(type));
+                                    ls.setCounts(Integer.parseInt(counts));
+                                    ls2.add(ls);
                                 }
                             }
                         }
                     }
+                    loss.add(ls2);
+                    listener.onReceivedData(API_ID_LOTTERYLOSS,loss,API_ID_ERROR);
                 }
 
             }
