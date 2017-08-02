@@ -314,29 +314,39 @@ public class RetrofitService extends HttpEngine {
                            int gets
     ) {
 
-        Call<Object> loginState = apiInterface.getLoginState(luid, uonline, type, ids, gets);
+        Call<Map<String, Object>> loginState = apiInterface.getLoginState(luid, uonline, type, ids, gets);
         System.out.println("登录信息=" + luid + " " + uonline + " " + type + " " + ids + " " + gets);
-        Call<Object> clone = loginState.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<Map<String, Object>> clone = loginState.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 if (response.code() == 200) {
-                    listener.onRequestStart(API_ID_LOGINSTATE);
+
                     //获取cookie
                     String sessionId = getSessionCookie(response.headers().get("Set-Cookie"));
                     System.out.println("Cookie登录状态==" + sessionId);
-                    System.out.println("用户信息登录状态==" + response.body());
-                    LoginState loginS = new LoginState();
-                    loginS.setSessionId(sessionId);
-                    listener.onReceivedData(API_ID_LOGINSTATE, loginS, API_ID_ERROR);
+                    System.out.println("用户信息登录状态=" + response.body());
+                    Map<String, Object> map = response.body();
+                    String uname = null;
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if ("uname".equals(entry.getKey())) {
+                                uname = (String) entry.getValue();
+                            }
+                        }
+                    }
+                /*    LoginState loginS = new LoginState();
+                    loginS.setSessionId(sessionId);*/
+                    listener.onReceivedData(API_ID_LOGINSTATE, uname, API_ID_ERROR);
 
                 }
 
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
                 System.out.println("登录状态错误信息==" + t.toString());
+                listener.onReceivedData(API_ID_LOGINSTATE, null, API_ID_ERROR);
             }
         });
 
@@ -3035,36 +3045,72 @@ public class RetrofitService extends HttpEngine {
         Map<String, String> map = new HashMap<>();
         map.put("id", id + "");
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> bettingSync = apiInterface.getBettingSync(1, id, reqkey, currentTimeMillis);
-        Call<Object> clone = bettingSync.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<Map<String, Object>> bettingSync = apiInterface.getBettingSync(1, id, reqkey, currentTimeMillis);
+        Call<Map<String, Object>> clone = bettingSync.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 if (response.code() == 200) {
                     String msg = response.body().toString();
                     Log.d("同步倒计时时间", msg);
-                    String msgs = msg.substring(msg.indexOf("rc=") + 3, msg.indexOf(", msg"));
-                    if ("true".equals(msg)) {
-                        BettingSync bettingSync = new BettingSync();
-                        String others = msg.substring(msg.indexOf("others={") + 8, msg.length() - 2);
-                        String condownTime = others.substring(others.indexOf("condownTime=") + 12, others.indexOf(", period"));
-                        String period = others.substring(others.indexOf("period=") + 7, others.indexOf(", gid"));
-                        String gid = others.substring(others.indexOf("gid=") + 4, others.indexOf(", drawTime"));
-                        String drawTime = others.substring(others.indexOf("drawTime=") + 9, others.indexOf(", count"));
-                        String count = others.substring(others.indexOf("count=") + 6, others.length());
-                        bettingSync.setCondownTime(Long.parseLong(condownTime));
-                        bettingSync.setPeriod(period);
-                        bettingSync.setGid(Integer.parseInt(gid));
-                        bettingSync.setDrawTime(Long.parseLong(drawTime));
-                        bettingSync.setCount(Integer.parseInt(count));
-                        listener.onReceivedData(API_ID_BETTINGSYNC, bettingSync, API_ID_ERROR);
+                    Map<String, Object> map = response.body();
+                    boolean rc = false;
+                    double id = 0;
+                    Map<String, Object> others = new HashMap<>();
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if ("rc".equals(entry.getKey())) {
+                                rc = (boolean) entry.getValue();
+                            }
+                            if ("id".equals(entry.getKey())) {
+                                id = (double) entry.getValue();
+                            }
+                            if ("others".equals(entry.getKey())) {
+                                others = (Map<String, Object>) entry.getValue();
+                            }
+                        }
                     }
+                    BettingSync bettingSync = new BettingSync();
+                    if (rc) {
+                        if (others.size() > 0) {
+                            double condownTime = 0;
+                            double gid = 0;
+                            String period = null;
+                            String drawTime = null;
+                            double count = 0;
+                            for (Map.Entry<String, Object> entry : others.entrySet()) {
+                                if ("condownTime".equals(entry.getKey())) {
+                                    condownTime = (double) entry.getValue();
+                                }
+                                if ("gid".equals(entry.getKey())) {
+                                    gid = (double) entry.getValue();
+                                }
+                                if ("period".equals(entry.getKey())) {
+                                    period = (String) entry.getValue();
+                                }
+                                if ("drawTime".equals(entry.getKey())) {
+                                    drawTime = (String) entry.getValue();
+                                }
+                                if ("count".equals(entry.getKey())) {
+                                    count = (double) entry.getValue();
+                                }
+                            }
+
+                            bettingSync.setCondownTime((long) condownTime);
+                            bettingSync.setPeriod(period);
+                            bettingSync.setGid(RxUtils.getInstance().getInt(gid));
+                            bettingSync.setDrawTime(Long.parseLong(drawTime));
+                            bettingSync.setCount(RxUtils.getInstance().getInt(count));
+                        }
+                    }
+                    listener.onReceivedData(API_ID_BETTINGSYNC, bettingSync, API_ID_ERROR);
+
 
                 }
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
 
             }
         });

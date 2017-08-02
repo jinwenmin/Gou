@@ -64,7 +64,7 @@ public interface ApiInterface {
     //登陆状态查询
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/chat-message")
-    Call<Object> getLoginState(
+    Call<Map<String,Object>> getLoginState(
 
             @Query("luid") int luid,
             @Query("uonline") int uonline,
@@ -886,7 +886,7 @@ public interface ApiInterface {
 
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/betting/sync")
-    Call<Object> getBettingSync(
+    Call<Map<String,Object>> getBettingSync(
             @Query("AppClient") int num,
             @Query("id") int id,
 

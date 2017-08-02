@@ -18,9 +18,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.king.gou.R;
+import com.example.king.gou.adapters.DrawHistoryAdapter;
+import com.example.king.gou.bean.BettingSync;
+import com.example.king.gou.bean.RecordList;
 import com.example.king.gou.fragment.FindFragment;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.utils.HttpEngine;
+import com.example.king.gou.utils.RxUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.ArrayList;
@@ -65,11 +69,13 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     private int TIME = 1000;  //每隔1s执行一次.
 
     Handler handler = new Handler();
-    int i = 100;
     private int gid;
     private int position;
     private int section;
     private String name;
+    List<RecordList> rcs = new ArrayList<RecordList>();
+    BettingSync bs = new BettingSync();
+    DrawHistoryAdapter drawHistoryAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,12 +96,16 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         RetrofitService.getInstance().getSwitchGameList(this, gid);
         RetrofitService.getInstance().getBettingSync(this, gid);
         RetrofitService.getInstance().getBettingDrawHistory(this, gid);
+
         initClick();
         initData();
 
         ViewPAdapter adapter = new ViewPAdapter(getSupportFragmentManager(), fragmentList, pageTitle);
         vpId.setAdapter(adapter);
         toolbar_tab.setupWithViewPager(vpId);
+        drawHistoryAdapter = new DrawHistoryAdapter(this);
+        GameCenterListView.setAdapter(drawHistoryAdapter);
+
     }
 
     private void initClick() {
@@ -106,30 +116,41 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         fragmentList.add(FindFragment.newInstance());
         fragmentList.add(FindFragment.newInstance());
         fragmentList.add(FindFragment.newInstance());
-        pageTitle.add("换个");
-        pageTitle.add("ziix");
-        pageTitle.add("ziix");
-        GameCenterProgressBar.setMax(i);
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    handler.postDelayed(this, TIME);
+        pageTitle.add("汪瀚");
+        pageTitle.add("是个");
+        pageTitle.add("傻逼");
 
-                    GameCenterProgressBar.setProgress(i--);
-                    Log.i("print", "1-------------");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        handler.postDelayed(runnable, TIME); // 在初始化方法里.
 
     }
 
     @Override
     public void onReceivedData(int apiId, Object object, int errorId) {
-
+        if (apiId == RetrofitService.API_ID_HISTORYGAME) {
+            if (object != null) {
+                rcs = (List<RecordList>) object;
+                drawHistoryAdapter.addList(rcs);
+            }
+        }
+        if (apiId == RetrofitService.API_ID_BETTINGSYNC) {
+            if (object != null) {
+                bs = (BettingSync) object;
+                final int[] anInt = {RxUtils.getInstance().getInt(bs.getCondownTime())};
+                GameCenterProgressBar.setMax(anInt[0]);
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            handler.postDelayed(this, TIME);
+                            GameCenterProgressBar.setProgress(anInt[0]--);
+                            Log.i("print",anInt[0]+"");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                handler.postDelayed(runnable, TIME); // 在初始化方法里.
+            }
+        }
     }
 
     @Override

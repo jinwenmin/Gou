@@ -2,8 +2,10 @@ package com.example.king.gou.ui;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.KeyguardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -17,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CancellationSignal;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.PersistableBundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
@@ -26,9 +29,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -105,7 +110,7 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
         ButterKnife.bind(this);
 
         RetrofitService.getInstance().getTeamUserInfo(this, 1, 100, "uid", "desc", MyApp.getInstance().getUserUid(), "", 0);
-        RetrofitService.getInstance().getChatUser(this);
+
         login_userinfo = getSharedPreferences("login_userinfo", Activity.MODE_PRIVATE);
         login_uid = login_userinfo.getInt("login_uid", 0);
 
@@ -161,7 +166,6 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
     }
 
 
-
     private void initTimer() {
         timer = new Timer();
         final TimerTask timerTask = new TimerTask() {
@@ -186,8 +190,28 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
     @Override
     public void onReceivedData(int apiId, Object object, int errorId) {
         if (apiId == RetrofitService.API_ID_LOGINSTATE) {
-            LoginState loginState = (LoginState) object;
-            System.out.println("用户状态信息==" + loginState.toString());
+            String uname = (String) object;
+
+            if (uname == null) {
+                Intent intent=new Intent(MainActivity.this,LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  //注意本行的FLAG设置
+                startActivity(intent);
+               finish();
+              /*  AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                AlertDialog dialog = builder.setMessage("APP登录失效")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        }).create();
+                dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                dialog.setCanceledOnTouchOutside(false);//点击屏幕不消失
+                if (!dialog.isShowing()) {//此时提示框未显示
+                    dialog.show();
+                }*/
+
+
+            }
         }
         if (apiId == RetrofitService.API_ID_TEAMUSERINFO) {
             ts = (List<List<TeamUserInfo>>) object;
