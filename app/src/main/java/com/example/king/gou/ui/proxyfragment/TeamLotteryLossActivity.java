@@ -1,30 +1,28 @@
 package com.example.king.gou.ui.proxyfragment;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnSureLisener;
 import com.codbking.widget.bean.DateType;
 import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
+import com.example.king.gou.adapters.ProfitLossAdapter;
 import com.example.king.gou.bean.LotteryLoss;
 import com.example.king.gou.bean.TeamUserInfo;
 import com.example.king.gou.service.RetrofitService;
-import com.example.king.gou.utils.DateUtil;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -37,7 +35,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import es.dmoral.toasty.Toasty;
 
 
 public class TeamLotteryLossActivity extends AutoLayoutActivity implements View.OnClickListener, HttpEngine.DataListener {
@@ -72,6 +69,8 @@ public class TeamLotteryLossActivity extends AutoLayoutActivity implements View.
     TextView InCome;
     @BindView(R.id.Linear1)
     LinearLayout Linear1;
+    @BindView(R.id.teamProfitLossList)
+    ListView teamProfitLossList;
     private List<TeamUserInfo> uids = new ArrayList<>();
     List<Integer> UidIds = new ArrayList<>();
     List<String> UserNickNames = new ArrayList<>();
@@ -85,11 +84,15 @@ public class TeamLotteryLossActivity extends AutoLayoutActivity implements View.
     private ArrayAdapter<String> adapterTeam;
     List<List<LotteryLoss>> loss = new ArrayList<>();
 
+    ProfitLossAdapter profitLossAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_lottery_loss);
         ButterKnife.bind(this);
+        profitLossAdapter = new ProfitLossAdapter(this);
+        teamProfitLossList.setAdapter(profitLossAdapter);
         uids = MyApp.getInstance().getUids();
         initClick();
         initSpinner();
@@ -280,7 +283,7 @@ public class TeamLotteryLossActivity extends AutoLayoutActivity implements View.
                 });
                 dialog2.show();
                 break;
-            case R.id.SearchName:
+            case R.id.SearchUserName:
                 initRetrofit();
                 break;
         }
@@ -295,6 +298,10 @@ public class TeamLotteryLossActivity extends AutoLayoutActivity implements View.
                     List<LotteryLoss> lotteryLosses = loss.get(0);
                     Expend.setText(lotteryLosses.get(0).getBetting_amount() + "");
                     InCome.setText(lotteryLosses.get(0).getProfit_loss() + "");
+                }
+                if (loss.size() == 2) {
+                    List<LotteryLoss> lotteryLosses = loss.get(1);
+                    profitLossAdapter.getList(lotteryLosses);
                 }
             }
         }

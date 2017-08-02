@@ -72,16 +72,21 @@ public class ProfitLossAdapter extends BaseAdapter {
         if (type == 2) {
             viewHolder.bettingType.setText("香港六合彩");
         }
+        viewHolder.Uname.setText(ls.get(i).getUname());
+
         return view;
     }
 
+
     static class ViewHolder {
-        @BindView(R.id.betting_amount)
-        TextView bettingAmount;
+        @BindView(R.id.Uname)
+        TextView Uname;
         @BindView(R.id.winning_amount)
         TextView winningAmount;
         @BindView(R.id.betting_type)
         TextView bettingType;
+        @BindView(R.id.betting_amount)
+        TextView bettingAmount;
         @BindView(R.id.rebate_amount)
         TextView rebateAmount;
         @BindView(R.id.profit_loss)

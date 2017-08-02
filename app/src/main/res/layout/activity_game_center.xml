@@ -20,10 +20,11 @@
             android:src="@drawable/ic_back" />
 
         <TextView
+            android:id="@+id/GameCentertitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="设置"
+            android:text="游戏中心"
             android:textColor="@android:color/white"
             android:textSize="@dimen/top_textsize" />
     </RelativeLayout>
@@ -58,6 +59,7 @@
                     android:orientation="vertical">
 
                     <ListView
+                        android:id="@+id/GameCenterListView"
                         android:layout_width="match_parent"
                         android:layout_height="300px"></ListView>
                 </LinearLayout>
@@ -75,7 +77,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="距"
-                    android:textSize="30px" />
+                    android:textSize="25px" />
 
                 <TextView
                     android:id="@+id/textPeriod"
@@ -85,7 +87,7 @@
                     android:layout_toRightOf="@id/text1"
                     android:text="XXX"
                     android:textColor="@color/top_background"
-                    android:textSize="30px" />
+                    android:textSize="25px" />
 
                 <TextView
                     android:id="@+id/text3"
@@ -94,7 +96,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/textPeriod"
                     android:text="期开奖:"
-                    android:textSize="30px" />
+                    android:textSize="25px" />
 
                 <TextView
                     android:id="@+id/textTime"
@@ -103,7 +105,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/text3"
                     android:text="0:00"
-                    android:textSize="30px" />
+                    android:textSize="25px" />
 
                 <ImageView
                     android:layout_width="70px"

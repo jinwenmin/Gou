@@ -163,6 +163,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_RESETPWD = 59;//重置密码
     public static int API_ID_UPDATASAFEPWD = 60;//修改安全密码
     public static int API_ID_LOTTERYLOSS = 61;//团队盈亏
+    public static int API_ID_HISTORYGAME = 62;//历史投注的开奖记录
 
 
     private Retrofit retrofit;
@@ -3096,26 +3097,35 @@ public class RetrofitService extends HttpEngine {
     }
 
     //获取开奖历史记录
-    public void getBettingDrawHistory(DataListener listener, int id) {
+    public void getBettingDrawHistory(final DataListener listener, int id) {
         long currentTimeMillis = System.currentTimeMillis();
         Map map = new HashMap();
-
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> clone = apiInterface.getBettingDrawHistory(id, 1, reqkey, currentTimeMillis);
+        Call<List<Object>> clone = apiInterface.getBettingDrawHistory(id, 1, reqkey, currentTimeMillis);
         Log.d("获取开奖历史记录请求完全体", clone.request().toString() + "");
-        Call<Object> clone1 = clone.clone();
+        Call<List<Object>> clone1 = clone.clone();
 
-        clone1.enqueue(new Callback<Object>() {
+        clone1.enqueue(new Callback<List<Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<List<Object>> call, retrofit2.Response<List<Object>> response) {
+                Log.d("获取开奖历史记录Code", response.code() + "");
                 if (response.code() == 200) {
-                    Log.d("获取开奖历史记录Code", response.code() + "");
                     Log.d("获取开奖历史记录", response.body().toString());
+                    List<Object> list = response.body();
+                    List<RecordList> rcs = new ArrayList<RecordList>();
+                    for (int i = 0; i < list.size(); i++) {
+                        List<String> o = (List<String>) list.get(i);
+                        RecordList rc = new RecordList();
+                        rc.setPeriod(o.get(0));
+                        rc.setWinningNumber(o.get(1));
+                        rcs.add(rc);
+                    }
+                    listener.onReceivedData(API_ID_HISTORYGAME, rcs, API_ID_ERROR);
                 }
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<List<Object>> call, Throwable t) {
 
             }
         });
@@ -3330,6 +3340,11 @@ public class RetrofitService extends HttpEngine {
                                 userdata = (Map<String, Object>) entry.getValue();
                             }
                         }
+
+                    }
+
+
+                    if (userdata.size() > 0) {
                         double activity_amount = 0;
                         double activity_amount2 = 0;
                         double recharge_amount = 0;
@@ -3338,48 +3353,49 @@ public class RetrofitService extends HttpEngine {
                         double profit_loss = 0;
                         double betting_amount = 0;
                         double winning_amount = 0;
-                        if (userdata.size() > 0) {
-                            for (Map.Entry<String, Object> entry : userdata.entrySet()) {
-                                if ("activity_amount".equals(entry.getKey())) {
-                                    activity_amount = (double) entry.getValue();
-                                }
-                                if ("activity_amount2".equals(entry.getKey())) {
-                                    activity_amount2 = (double) entry.getValue();
-                                }
-                                if ("recharge_amount".equals(entry.getKey())) {
-                                    recharge_amount = (double) entry.getValue();
-                                }
-                                if ("withdraw_amount".equals(entry.getKey())) {
-                                    withdraw_amount = (double) entry.getValue();
-                                }
-                                if ("rebate_amount".equals(entry.getKey())) {
-                                    rebate_amount = (double) entry.getValue();
-                                }
-                                if ("profit_loss".equals(entry.getKey())) {
-                                    profit_loss = (double) entry.getValue();
-                                }
-                                if ("betting_amount".equals(entry.getKey())) {
-                                    betting_amount = (double) entry.getValue();
-                                }
-                                if ("winning_amount".equals(entry.getKey())) {
-                                    winning_amount = (double) entry.getValue();
-                                }
-                                LotteryLoss l = new LotteryLoss();
-                                l.setActivity_amount(activity_amount);
-                                l.setActivity_amount2(activity_amount2);
-                                l.setRecharge_amount(recharge_amount);
-                                l.setWithdraw_amount(withdraw_amount);
-                                l.setRebate_amount(rebate_amount);
-                                l.setProfit_loss(profit_loss);
-                                l.setBetting_amount(betting_amount);
-                                l.setWinning_amount(winning_amount);
-                                Log.d("团队报表当日或历史盈亏String", l.toString());
-                                los1.add(l);
+                        for (Map.Entry<String, Object> entry : userdata.entrySet()) {
+
+                            if ("activity_amount".equals(entry.getKey())) {
+                                activity_amount = (double) entry.getValue();
                             }
+                            if ("activity_amount2".equals(entry.getKey())) {
+                                activity_amount2 = (double) entry.getValue();
+                            }
+                            if ("recharge_amount".equals(entry.getKey())) {
+                                recharge_amount = (double) entry.getValue();
+                            }
+                            if ("withdraw_amount".equals(entry.getKey())) {
+                                withdraw_amount = (double) entry.getValue();
+                            }
+                            if ("rebate_amount".equals(entry.getKey())) {
+                                rebate_amount = (double) entry.getValue();
+                            }
+                            if ("profit_loss".equals(entry.getKey())) {
+                                profit_loss = (double) entry.getValue();
+                            }
+                            if ("betting_amount".equals(entry.getKey())) {
+                                betting_amount = (double) entry.getValue();
+                            }
+                            if ("winning_amount".equals(entry.getKey())) {
+                                winning_amount = (double) entry.getValue();
+                            }
+
                         }
+                        LotteryLoss l = new LotteryLoss();
+                        l.setActivity_amount(activity_amount);
+                        l.setActivity_amount2(activity_amount2);
+                        l.setRecharge_amount(recharge_amount);
+                        l.setWithdraw_amount(withdraw_amount);
+                        l.setRebate_amount(rebate_amount);
+                        l.setProfit_loss(profit_loss);
+                        l.setBetting_amount(betting_amount);
+                        l.setWinning_amount(winning_amount);
+                        Log.d("团队报表当日或历史盈亏String", l.toString());
+                        los1.add(l);
                     }
+
                     loss.add(los1);
-                    List<LotteryLoss> ls2=new ArrayList<LotteryLoss>();
+                    List<LotteryLoss> ls2 = new ArrayList<LotteryLoss>();
                     if (records > 0) {
                         for (int i = 0; i < rows.size(); i++) {
                             Map<String, Object> o = (Map<String, Object>) rows.get(i);
@@ -3409,6 +3425,7 @@ public class RetrofitService extends HttpEngine {
                                     String type = (String) cell.get(i + 9);
                                     String counts = (String) cell.get(i + 10);
                                     LotteryLoss ls = new LotteryLoss();
+                                    ls.setId(Integer.parseInt(id));
                                     ls.setUname(uname);
                                     ls.setRecharge_amount(Double.parseDouble(recharge_amount));
                                     ls.setWithdraw_amount(Double.parseDouble(withdraw_amount));
@@ -3426,7 +3443,7 @@ public class RetrofitService extends HttpEngine {
                         }
                     }
                     loss.add(ls2);
-                    listener.onReceivedData(API_ID_LOTTERYLOSS,loss,API_ID_ERROR);
+                    listener.onReceivedData(API_ID_LOTTERYLOSS, loss, API_ID_ERROR);
                 }
 
             }

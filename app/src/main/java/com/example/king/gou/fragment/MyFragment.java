@@ -150,26 +150,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
         map.put("bbb", "333");
         map.put("zzz", "444");
         map.put("ppp", "555");
-        //  RxUtils.getInstance().getReqkey(map);
-        //RetrofitService.getInstance().getGame(this, 1, 0, 0, 0);
-        // RetrofitService.getInstance().getGame(this, 2, 0, 0, 0);
-        //RetrofitService.getInstance().getGame(this, 3, 0, 0, 0);
-        //RetrofitService.getInstance().getGame(this, 4, 0, 0, 0);
-        //RetrofitService.getInstance().getGame(this, 5, 1, 0, 0);
-        // RetrofitService.getInstance().getGame(this, 6, 2, 0, 0);
-        RetrofitService.getInstance().getGame(this, 7, 2, 0, 0);
-        SystemClock.sleep(3000);
-        //    RetrofitService.getInstance().getGame(this, 8, 2, 62, 0);
-        //  RetrofitService.getInstance().getGame(this, 5, 1, 0, 0);
-        //RetrofitService.getInstance().getBettingRecord(this, 1, 10, "serial_number", "desc", "2017-01-01 22:01:01", "2017-01-06 22:01:01", 2, 166, -1, "", "");
-        RetrofitService.getInstance();
 
         myFrmPageAdapter = new MyFrmPageAdapter(getChildFragmentManager());
         RetrofitService.getInstance().LoginUserAmount(this);
         RetrofitService.getInstance().GetUserInfo(this);
         RetrofitService.getInstance().getSafeQues(this);
-        //  RetrofitService.getInstance().GetPrizeDetails(this, 100, 1);
-        // RetrofitService.getInstance().getGametype(this);
+
         initFrms();
         frmMyViewpager.setAdapter(myFrmPageAdapter);
         frmMyTablayout.setupWithViewPager(frmMyViewpager);

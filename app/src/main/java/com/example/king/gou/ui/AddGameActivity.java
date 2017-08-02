@@ -2,12 +2,17 @@ package com.example.king.gou.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.MyAdapter;
+import com.example.king.gou.bean.AccountChange;
 import com.example.king.gou.bean.GameIm;
 import com.example.king.gou.bean.GameImages;
+import com.example.king.gou.bean.GameType;
+import com.example.king.gou.service.RetrofitService;
+import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.PinnedHeaderListView;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -19,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class AddGameActivity extends AutoLayoutActivity {
+public class AddGameActivity extends AutoLayoutActivity implements HttpEngine.DataListener {
 
     @BindView(R.id.listView)
     ListView listView;
@@ -41,13 +46,14 @@ public class AddGameActivity extends AutoLayoutActivity {
     private String klcName[] = new String[]{"1分彩", "2分彩", "吉祥快乐8", "腾讯分分彩"};
     private int dpc[] = new int[]{R.drawable.ic_35, R.drawable.ic_3d, R.drawable.ic_6hc};
     private String dpcName[] = new String[]{"排列三、五", "福彩3D", "香港六合彩"};
-
+    List<GameType> ListgameTypes = new ArrayList<GameType>();
+    List<List<AccountChange>> acs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_game);
         ButterKnife.bind(this);
-
+        RetrofitService.getInstance().getGame(this,4,0,0,0);
         getdatas();
         // 配置适配器
         MyAdapter adapter = new MyAdapter(this, imgs); // 布局里的控件id
@@ -126,4 +132,24 @@ public class AddGameActivity extends AutoLayoutActivity {
         return imgs;
     }
 
+    @Override
+    public void onReceivedData(int apiId, Object object, int errorId) {
+        if (apiId == RetrofitService.API_ID_GAME4) {
+            ListgameTypes = (List<GameType>) object;
+            List<String> list = new ArrayList<>();
+            for (int i = 0; i < ListgameTypes.size(); i++) {
+                list.add(ListgameTypes.get(i).getName());
+            }
+        }
+    }
+
+    @Override
+    public void onRequestStart(int apiId) {
+
+    }
+
+    @Override
+    public void onRequestEnd(int apiId) {
+
+    }
 }

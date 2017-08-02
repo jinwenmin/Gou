@@ -17,6 +17,7 @@ public class LotteryLoss {
     double activity_amount;
     double activity_amount2;
     int counts;
+int id;
 
     @Override
     public String toString() {
@@ -33,8 +34,17 @@ public class LotteryLoss {
                 ", activity_amount=" + activity_amount +
                 ", activity_amount2=" + activity_amount2 +
                 ", counts=" + counts +
+                ", id=" + id +
                 ", winning_amounts=" + winning_amounts +
                 '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public double getRecharge_amount() {

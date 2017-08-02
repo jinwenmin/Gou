@@ -1,5 +1,6 @@
 package com.example.king.gou.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
@@ -10,18 +11,15 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.king.gou.R;
-import com.example.king.gou.bean.GameType;
 import com.example.king.gou.fragment.FindFragment;
 import com.example.king.gou.service.RetrofitService;
-import com.example.king.gou.ui.orderFrmActivity.GameJiluActivity;
 import com.example.king.gou.utils.HttpEngine;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -32,7 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine.DataListener {
+public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine.DataListener, View.OnClickListener {
 
     @BindView(R.id.vpId)
     ViewPager vpId;
@@ -60,23 +58,48 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     ImageView addGame;
     @BindView(R.id.gameCenter_coordinatorlayout)
     CoordinatorLayout gameCenterCoordinatorlayout;
+    @BindView(R.id.GameCentertitle)
+    TextView GameCentertitle;
+    @BindView(R.id.GameCenterListView)
+    ListView GameCenterListView;
     private int TIME = 1000;  //每隔1s执行一次.
 
     Handler handler = new Handler();
     int i = 100;
-    List<GameType> gameTypes1 = new ArrayList<>();
+    private int gid;
+    private int position;
+    private int section;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_center);
         ButterKnife.bind(this);
-        RetrofitService.getInstance().getGame(this, 4, 0, 0, 0);
+        Intent intent = getIntent();
+        gid = intent.getIntExtra("gid", 0);
+        position = intent.getIntExtra("position", 0);
+        section = intent.getIntExtra("section", 0);
+        name = intent.getStringExtra("name");
+        GameCentertitle.setText(name);
+        Log.d("GameCenterGid==", gid + "");
+        Log.d("GameCenterName==", name + "");
+        Log.d("GameCenterPosition==", position + "");
+        Log.d("GameCenterSection==", section + "");
+
+        RetrofitService.getInstance().getSwitchGameList(this, gid);
+        RetrofitService.getInstance().getBettingSync(this, gid);
+        RetrofitService.getInstance().getBettingDrawHistory(this, gid);
+        initClick();
         initData();
 
         ViewPAdapter adapter = new ViewPAdapter(getSupportFragmentManager(), fragmentList, pageTitle);
         vpId.setAdapter(adapter);
         toolbar_tab.setupWithViewPager(vpId);
+    }
+
+    private void initClick() {
+        Back.setOnClickListener(this);
     }
 
     private void initData() {
@@ -106,15 +129,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
 
     @Override
     public void onReceivedData(int apiId, Object object, int errorId) {
-        if (apiId == RetrofitService.API_ID_GAME4) {
-            if (object != null) {
-                gameTypes1 = (List<GameType>) object;
-                for (int i1 = 0; i1 < gameTypes1.size(); i1++) {
-                    RetrofitService.getInstance().getSwitchGameList(this, gameTypes1.get(i1).getGid());
-                }
-            }
 
-        }
     }
 
     @Override
@@ -125,6 +140,16 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     @Override
     public void onRequestEnd(int apiId) {
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id._back:
+
+                finish();
+                break;
+        }
     }
 
     class ViewPAdapter extends FragmentPagerAdapter {

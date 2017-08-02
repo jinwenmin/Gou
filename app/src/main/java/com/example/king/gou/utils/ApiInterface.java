@@ -1271,7 +1271,7 @@ public interface ApiInterface {
     //93获取开奖历史记录
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/betting/draw-history/{id}")
-    Call<Object> getBettingDrawHistory(
+    Call<List<Object>> getBettingDrawHistory(
             @Path("id") int gid,//id 游戏gid
             @Query("AppClient") int num,
             @Query("reqkey") String reqkey,

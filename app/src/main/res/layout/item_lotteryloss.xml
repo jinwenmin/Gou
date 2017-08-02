@@ -14,20 +14,20 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="投注总额: "
+                android:text="用户名: "
                 android:textColor="@android:color/black"
                 android:textSize="30px" />
 
             <TextView
-                android:id="@+id/betting_amount"
+                android:id="@+id/Uname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="XXXX"
                 android:textSize="30px" />
+
 
         </LinearLayout>
 
@@ -39,7 +39,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="中奖: "
+                android:text="中奖金额: "
                 android:textColor="@android:color/black"
                 android:textSize="30px" />
 
@@ -80,7 +80,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="invisible"
+
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1">
@@ -88,12 +88,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="中奖: "
+                android:text="投注总额: "
                 android:textColor="@android:color/black"
                 android:textSize="30px" />
 
             <TextView
-
+                android:id="@+id/betting_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="XXXX"
@@ -118,7 +118,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="返点: "
+                android:text="返点金额: "
                 android:textColor="@android:color/black"
                 android:textSize="30px" />
 
@@ -138,7 +138,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="游戏盈亏: "
+                android:text="彩票总盈亏: "
                 android:textColor="@android:color/black"
                 android:textSize="30px" />
 
