@@ -690,7 +690,7 @@ public interface ApiInterface {
     //52 个人报表活动记录
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/activity-record-list")
-    Call<Object> getActivityRecordList(
+    Call<Map<String,Object>> getActivityRecordList(
             @Query("AppClient") int num,
             @Query("page") int page,
             @Query("rows") int rows,
@@ -897,7 +897,7 @@ public interface ApiInterface {
     //52 个人报表活动记录
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/activity-record-list")
-    Call<Object> getActivityTeamRecordList(
+    Call<Map<String,Object>> getActivityTeamRecordList(
             @Query("AppClient") int num,
             @Query("page") int page,
             @Query("rows") int rows,

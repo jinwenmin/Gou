@@ -73,6 +73,7 @@ public class DrawHistoryAdapter extends BaseAdapter {
         if (rcs.get(i).getWinningNumber() != null) {
             String win = rcs.get(i).getWinningNumber();
             String[] sp = win.split(",");
+            viewHolder.GameCenterNum.removeAllViews();
             for (int j = 0; j < sp.length; j++) {
                 View inflater = LayoutInflater.from(context).inflate(R.layout.item_num, null, false);
                 TextView num = (TextView) inflater.findViewById(R.id.num);

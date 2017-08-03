@@ -3,6 +3,7 @@ package com.example.king.gou.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -32,6 +33,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.drm.DrmStore.Playback.STOP;
 
 
 public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine.DataListener, View.OnClickListener {
@@ -76,6 +79,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     List<RecordList> rcs = new ArrayList<RecordList>();
     BettingSync bs = new BettingSync();
     DrawHistoryAdapter drawHistoryAdapter;
+    Runnable runnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,9 +120,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         fragmentList.add(FindFragment.newInstance());
         fragmentList.add(FindFragment.newInstance());
         fragmentList.add(FindFragment.newInstance());
-        pageTitle.add("汪瀚");
-        pageTitle.add("是个");
-        pageTitle.add("傻逼");
+        pageTitle.add("QQ");
+        pageTitle.add("WW");
+        pageTitle.add("EE");
 
 
     }
@@ -129,20 +133,34 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
             if (object != null) {
                 rcs = (List<RecordList>) object;
                 drawHistoryAdapter.addList(rcs);
+
             }
         }
         if (apiId == RetrofitService.API_ID_BETTINGSYNC) {
             if (object != null) {
                 bs = (BettingSync) object;
                 final int[] anInt = {RxUtils.getInstance().getInt(bs.getCondownTime())};
+                textPeriod.setText(bs.getPeriod());
+                textTime.setText(RxUtils.getInstance().getSecToTime(RxUtils.getInstance().getInt(bs.getCondownTime())));
                 GameCenterProgressBar.setMax(anInt[0]);
-                Runnable runnable = new Runnable() {
+                final int[] anInt1 = {RxUtils.getInstance().getInt(bs.getCondownTime())};
+                anInt1[0] = anInt1[0] - 1;
+                runnable = new Runnable() {
                     @Override
                     public void run() {
                         try {
                             handler.postDelayed(this, TIME);
                             GameCenterProgressBar.setProgress(anInt[0]--);
-                            Log.i("print",anInt[0]+"");
+                            int i = anInt1[0]--;
+                            String secToTime = RxUtils.getInstance().getSecToTime(i);
+                            textTime.setText(secToTime);
+                            Log.i("GameCentprint", anInt[0] + "");
+                            Log.i("GameCentTime", secToTime + "");
+                            if (anInt[0] < 0) {
+                                handler.removeCallbacks(runnable);
+                                RetrofitService.getInstance().getBettingDrawHistory(GameCenterActivity.this, gid);
+                                RetrofitService.getInstance().getBettingSync(GameCenterActivity.this, gid);
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -197,5 +215,11 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         public CharSequence getPageTitle(int position) {
             return arg1.get(position);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacks(runnable);
     }
 }

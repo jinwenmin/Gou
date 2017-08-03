@@ -8,58 +8,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10px"
-        android:layout_marginTop="10px">
+        android:layout_marginTop="10px"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="0px"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:text="帐变流水:"
+            android:textColor="@android:color/black"
+            android:textSize="25px"></TextView>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="用户名: "
-                android:textColor="@android:color/black"
-                android:textSize="25px" />
-
-            <TextView
-                android:id="@+id/Uname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="XXXX"
-                android:textSize="25px" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0px"
+        <TextView
+            android:id="@+id/serial_number"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="中奖金额: "
-                android:textColor="@android:color/black"
-                android:textSize="25px" />
-
-            <TextView
-                android:id="@+id/winning_amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="XXXX"
-                android:textSize="25px" />
-        </LinearLayout>
-
-
+            android:text=""
+            android:textSize="25px"></TextView>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10px"
-        android:layout_marginTop="10px">
+        android:layout_marginTop="10px"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0px"
@@ -69,21 +41,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="游戏类型: "
+                android:text="用户名:"
                 android:textColor="@android:color/black"
-                android:textSize="25px" />
+                android:textSize="25px"></TextView>
 
             <TextView
-                android:id="@+id/betting_type"
+                android:id="@+id/uname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="XXXX"
-                android:textSize="25px" />
-
+                android:text=""
+                android:textSize="25px"></TextView>
         </LinearLayout>
 
         <LinearLayout
-
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1">
@@ -91,27 +61,26 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="投注总额: "
+                android:text="活动类型:"
                 android:textColor="@android:color/black"
-                android:textSize="25px" />
+                android:textSize="25px"></TextView>
 
             <TextView
-                android:id="@+id/betting_amount"
+                android:id="@+id/stype"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="XXXX"
-                android:textSize="25px" />
+                android:text=""
+                android:textSize="25px"></TextView>
+
         </LinearLayout>
-
-
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10px"
         android:layout_marginLeft="10px"
-        android:layout_marginTop="10px">
+        android:layout_marginTop="10px"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0px"
@@ -121,16 +90,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="返点金额: "
+                android:text="活动时间:"
                 android:textColor="@android:color/black"
-                android:textSize="25px" />
+                android:textSize="25px"></TextView>
 
             <TextView
-                android:id="@+id/rebate_amount"
+                android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="XXXX"
-                android:textSize="25px" />
+                android:text=""
+                android:textSize="25px"></TextView>
         </LinearLayout>
 
         <LinearLayout
@@ -141,16 +110,47 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="彩票总盈亏: "
+                android:text="活动金额:"
                 android:textColor="@android:color/black"
-                android:textSize="25px" />
+                android:textSize="25px"></TextView>
 
             <TextView
-                android:id="@+id/profit_loss"
+                android:id="@+id/amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="XXXX"
-                android:textSize="25px" />
+                android:text=""
+                android:textSize="25px"></TextView>
+
         </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10px"
+        android:layout_marginTop="10px"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="明细说明:"
+                android:textColor="@android:color/black"
+                android:textSize="25px"></TextView>
+
+            <TextView
+                android:id="@+id/detial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="25px"></TextView>
+        </LinearLayout>
+
+
     </LinearLayout>
 </LinearLayout>

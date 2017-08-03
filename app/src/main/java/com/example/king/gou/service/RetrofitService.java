@@ -15,6 +15,7 @@ import android.widget.ImageView;
 
 import com.example.king.gou.MyApp;
 import com.example.king.gou.bean.AccountChange;
+import com.example.king.gou.bean.ActivityBean;
 import com.example.king.gou.bean.BettingSync;
 import com.example.king.gou.bean.CardsData;
 import com.example.king.gou.bean.CunQu;
@@ -164,6 +165,8 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_UPDATASAFEPWD = 60;//修改安全密码
     public static int API_ID_LOTTERYLOSS = 61;//团队盈亏
     public static int API_ID_HISTORYGAME = 62;//历史投注的开奖记录
+    public static int API_ID_MYACTIVITYLIST = 63;//个人活动记录
+    public static int API_ID_TEAMACTIVITYLIST = 64;//团队活动记录
 
 
     private Retrofit retrofit;
@@ -2948,7 +2951,7 @@ public class RetrofitService extends HttpEngine {
     }
 
     //个人报表活动记录
-    public void getActivityRecordList(DataListener listener, int page, int rows, String sidx, String sord, String from, String to, int type) {
+    public void getActivityRecordList(final DataListener listener, int page, int rows, String sidx, String sord, String from, String to, int type) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> maps = new HashMap<>();
         maps.put("page", page + "");
@@ -2959,19 +2962,92 @@ public class RetrofitService extends HttpEngine {
         maps.put("to", to + "");
         maps.put("type", type + "");
         String reqkey = RxUtils.getInstance().getReqkey(maps, currentTimeMillis);
-        Call<Object> activityRecordList = apiInterface.getActivityRecordList(1, page, rows, sidx, sord, from, to, type, reqkey, currentTimeMillis);
-        Call<Object> clone = activityRecordList.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<Map<String, Object>> activityRecordList = apiInterface.getActivityRecordList(1, page, rows, sidx, sord, from, to, type, reqkey, currentTimeMillis);
+        Call<Map<String, Object>> clone = activityRecordList.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 if (response.code() == 200) {
-
                     Log.d("个人报表活动记录", response.body().toString());
+
+                    Map<String, Object> map = response.body();
+                    double records = 0;
+                    List<Object> rows = new ArrayList<>();
+                    Map<String, Object> userdata = new HashMap<>();
+                    List<List<ActivityBean>> abs = new ArrayList<List<ActivityBean>>();
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if ("records".equals(entry.getKey())) {
+                                records = (double) entry.getValue();
+                            }
+                            if ("rows".equals(entry.getKey())) {
+                                rows = (List<Object>) entry.getValue();
+                            }
+                            if ("userdata".equals(entry.getKey())) {
+                                userdata = (Map<String, Object>) entry.getValue();
+                            }
+                        }
+                    }
+                    double samount = 0;
+                    List<ActivityBean> ab1 = new ArrayList<ActivityBean>();
+                    if (userdata.size() > 0) {
+                        ActivityBean a = new ActivityBean();
+                        for (Map.Entry<String, Object> entry : userdata.entrySet()) {
+                            if ("samount".equals(entry.getKey())) {
+                                samount = (double) entry.getValue();
+                            }
+                        }
+                        a.setSamount(samount);
+                        ab1.add(a);
+
+                    }
+                    List<ActivityBean> ab2 = new ArrayList<ActivityBean>();
+                    if (records > 0) {
+                        for (int i = 0; i < rows.size(); i++) {
+                            Map<String, Object> o = (Map<String, Object>) rows.get(i);
+                            if (o.size() > 0) {
+                                String id = null;
+                                List<String> cell = new ArrayList<String>();
+                                ActivityBean a = new ActivityBean();
+                                for (Map.Entry<String, Object> entry : o.entrySet()) {
+                                    if ("id".equals(entry.getKey())) {
+                                        id = (String) entry.getValue();
+                                    }
+                                    if ("cell".equals(entry.getKey())) {
+                                        cell = (List<String>) entry.getValue();
+                                    }
+                                }
+                                for (int j = 0; j < cell.size(); j = j + 7) {
+                                    String serial_number = cell.get(j);
+                                    String uname = cell.get(j + 1);
+                                    String date = cell.get(j + 2);
+                                    String stype = cell.get(j + 3);
+                                    String amount = cell.get(j + 4);
+                                    String amounts = cell.get(j + 5);
+                                    String detial = cell.get(j + 6);
+                                    a.setId(Integer.parseInt(id));
+                                    a.setSerial_number(serial_number);
+                                    a.setUname(uname);
+                                    a.setDate(date);
+                                    a.setStype(Integer.parseInt(stype));
+                                    a.setAmount(Double.parseDouble(amount));
+                                    a.setAmounts(Double.parseDouble(amounts));
+                                    a.setDetial(detial);
+                                    Log.d("个人报表活动记录a", a.toString()+"");
+                                }
+                                ab2.add(a);
+                            }
+                        }
+                    }
+                    abs.add(ab1);
+                    abs.add(ab2);
+                    listener.onReceivedData(API_ID_MYACTIVITYLIST, abs, API_ID_ERROR);
+
                 }
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
 
             }
         });
@@ -2979,7 +3055,7 @@ public class RetrofitService extends HttpEngine {
     }
 
     //团队报表活动记录
-    public void getActivityTeamRecordList(DataListener listener, int page, int rows, String sidx, String sord, String from, String to, String name, int type, int team) {
+    public void getActivityTeamRecordList(final DataListener listener, int page, int rows, String sidx, String sord, String from, String to, String name, int type, int team) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> maps = new HashMap<>();
         maps.put("page", page + "");
@@ -2992,20 +3068,94 @@ public class RetrofitService extends HttpEngine {
         maps.put("type", type + "");
         maps.put("team", team + "");
         String reqkey = RxUtils.getInstance().getReqkey(maps, currentTimeMillis);
-        Call<Object> activityRecordList = apiInterface.getActivityTeamRecordList(1, page, rows, sidx, sord, from, to, name, type, team, reqkey, currentTimeMillis);
-        Call<Object> clone = activityRecordList.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<Map<String,Object>> activityRecordList = apiInterface.getActivityTeamRecordList(1, page, rows, sidx, sord, from, to, name, type, team, reqkey, currentTimeMillis);
+        Call<Map<String,Object>> clone = activityRecordList.clone();
+        clone.enqueue(new Callback<Map<String,Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String,Object>> call, retrofit2.Response<Map<String,Object>> response) {
                 int code = response.code();
                 Log.d("团队报表活动记录Code", code + "");
-                if (code == 200) {
+                if (response.code() == 200) {
                     Log.d("团队报表活动记录", response.body().toString());
+
+                    Map<String, Object> map = response.body();
+                    double records = 0;
+                    List<Object> rows = new ArrayList<>();
+                    Map<String, Object> userdata = new HashMap<>();
+                    List<List<ActivityBean>> abs = new ArrayList<List<ActivityBean>>();
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if ("records".equals(entry.getKey())) {
+                                records = (double) entry.getValue();
+                            }
+                            if ("rows".equals(entry.getKey())) {
+                                rows = (List<Object>) entry.getValue();
+                            }
+                            if ("userdata".equals(entry.getKey())) {
+                                userdata = (Map<String, Object>) entry.getValue();
+                            }
+                        }
+                    }
+                    double samount = 0;
+                    List<ActivityBean> ab1 = new ArrayList<ActivityBean>();
+                    if (userdata.size() > 0) {
+                        ActivityBean a = new ActivityBean();
+                        for (Map.Entry<String, Object> entry : userdata.entrySet()) {
+                            if ("samount".equals(entry.getKey())) {
+                                samount = (double) entry.getValue();
+                            }
+                        }
+                        a.setSamount(samount);
+                        ab1.add(a);
+
+                    }
+                    List<ActivityBean> ab2 = new ArrayList<ActivityBean>();
+                    if (records > 0) {
+                        for (int i = 0; i < rows.size(); i++) {
+                            Map<String, Object> o = (Map<String, Object>) rows.get(i);
+                            if (o.size() > 0) {
+                                String id = null;
+                                List<String> cell = new ArrayList<String>();
+                                ActivityBean a = new ActivityBean();
+                                for (Map.Entry<String, Object> entry : o.entrySet()) {
+                                    if ("id".equals(entry.getKey())) {
+                                        id = (String) entry.getValue();
+                                    }
+                                    if ("cell".equals(entry.getKey())) {
+                                        cell = (List<String>) entry.getValue();
+                                    }
+                                }
+                                for (int j = 0; j < cell.size(); j = j + 7) {
+                                    String serial_number = cell.get(j);
+                                    String uname = cell.get(j + 1);
+                                    String date = cell.get(j + 2);
+                                    String stype = cell.get(j + 3);
+                                    String amount = cell.get(j + 4);
+                                    String amounts = cell.get(j + 5);
+                                    String detial = cell.get(j + 6);
+                                    a.setId(Integer.parseInt(id));
+                                    a.setSerial_number(serial_number);
+                                    a.setUname(uname);
+                                    a.setDate(date);
+                                    a.setStype(Integer.parseInt(stype));
+                                    a.setAmount(Double.parseDouble(amount));
+                                    a.setAmounts(Double.parseDouble(amounts));
+                                    a.setDetial(detial);
+                                    Log.d("团队报表活动记录a", a.toString()+"");
+                                }
+                                ab2.add(a);
+                            }
+                        }
+                    }
+                    abs.add(ab1);
+                    abs.add(ab2);
+                    listener.onReceivedData(API_ID_TEAMACTIVITYLIST, abs, API_ID_ERROR);
+
                 }
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String,Object>> call, Throwable t) {
 
             }
         });

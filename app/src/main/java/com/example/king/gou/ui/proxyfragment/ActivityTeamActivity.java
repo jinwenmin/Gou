@@ -1,29 +1,26 @@
 package com.example.king.gou.ui.proxyfragment;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnSureLisener;
 import com.codbking.widget.bean.DateType;
 import com.example.king.gou.R;
-import com.example.king.gou.bean.CunQu;
+import com.example.king.gou.adapters.ActivityAdapter;
+import com.example.king.gou.bean.ActivityBean;
 import com.example.king.gou.service.RetrofitService;
-import com.example.king.gou.ui.orderFrmActivity.CunQuActivity;
-import com.example.king.gou.utils.DateUtil;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -36,7 +33,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import es.dmoral.toasty.Toasty;
 
 
 public class ActivityTeamActivity extends AutoLayoutActivity implements View.OnClickListener, HttpEngine.DataListener {
@@ -62,20 +58,28 @@ public class ActivityTeamActivity extends AutoLayoutActivity implements View.OnC
     Spinner type;
     @BindView(R.id.team)
     Spinner team;
-    @BindView(R.id.ActivityTeamList)
-    ListView ActivityTeamList;
+
     List<Integer> typeid = new ArrayList<>();
     List<Integer> teamid = new ArrayList<>();
     List<String> typeName = new ArrayList<>();
     List<String> teamName = new ArrayList<>();
+    @BindView(R.id.samount)
+    TextView samount;
+    @BindView(R.id.L1)
+    LinearLayout L1;
+    @BindView(R.id.Activity_listView)
+    ListView ActivityListView;
     private ArrayAdapter<String> adapter;
     private ArrayAdapter<String> adapter1;
-
+    ActivityAdapter activityAdapter;
+    List<List<ActivityBean>> abs = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_list);
         ButterKnife.bind(this);
+        activityAdapter = new ActivityAdapter(this);
+        ActivityListView.setAdapter(activityAdapter);
         initClick();
         initDateDialog();
         initSpinner();
@@ -238,7 +242,19 @@ public class ActivityTeamActivity extends AutoLayoutActivity implements View.OnC
 
     @Override
     public void onReceivedData(int apiId, Object object, int errorId) {
-
+        if (apiId == RetrofitService.API_ID_TEAMACTIVITYLIST) {
+            if (object != null) {
+                abs = (List<List<ActivityBean>>) object;
+                if (abs.size() > 0) {
+                    List<ActivityBean> activityBeen = abs.get(0);
+                    samount.setText(activityBeen.get(0).getSamount() + "");
+                }
+                if (abs.size() == 2) {
+                    List<ActivityBean> activityBeen = abs.get(1);
+                    activityAdapter.getList(activityBeen);
+                }
+            }
+        }
     }
 
     @Override

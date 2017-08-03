@@ -77,7 +77,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="距"
-                    android:textSize="25px" />
+                    android:textSize="20px" />
 
                 <TextView
                     android:id="@+id/textPeriod"
@@ -87,7 +87,7 @@
                     android:layout_toRightOf="@id/text1"
                     android:text="XXX"
                     android:textColor="@color/top_background"
-                    android:textSize="25px" />
+                    android:textSize="20px" />
 
                 <TextView
                     android:id="@+id/text3"
@@ -96,7 +96,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/textPeriod"
                     android:text="期开奖:"
-                    android:textSize="25px" />
+                    android:textSize="20px" />
 
                 <TextView
                     android:id="@+id/textTime"
@@ -105,12 +105,13 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/text3"
                     android:text="0:00"
-                    android:textSize="25px" />
+                    android:textSize="20px" />
 
                 <ImageView
-                    android:layout_width="70px"
+                    android:layout_width="50px"
                     android:layout_height="50px"
-                    android:layout_centerInParent="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
                     android:src="@drawable/shake_on_green" />
 
                 <TextView
@@ -119,7 +120,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="85,000元" />
+                    android:text="85,000元"
+                    android:textSize="20px" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -127,7 +129,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@id/MoneyCount"
                     android:text="玩法奖金:"
-                    android:textSize="30px" />
+                    android:textSize="23px" />
             </RelativeLayout>
 
             <ProgressBar
@@ -203,9 +205,10 @@
 
         <android.support.v4.view.ViewPager
             android:id="@+id/vpId"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffff"
+            android:background="@drawable/home_bg"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
@@ -245,9 +248,10 @@
                 android:textSize="35px" />
 
             <TextView
+
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_gravity="end|center"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="余额:0.000元"
@@ -277,7 +281,7 @@
                     android:layout_marginLeft="30px"
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
-                    android:background="@drawable/login_btn_bg"
+                    android:background="@drawable/gamecenter_btn"
                     android:gravity="center"
                     android:text="清除"
                     android:textColor="@android:color/white"
@@ -290,7 +294,7 @@
                     android:layout_marginLeft="30px"
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
-                    android:background="@drawable/login_btn_bg"
+                    android:background="@drawable/gamecenter_btn"
                     android:gravity="center"
                     android:text="机选"
                     android:textColor="@android:color/white"
@@ -341,7 +345,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_centerInParent="true"
-                        android:background="@drawable/login_btn_bg"
+                        android:background="@drawable/gamecenter_btn"
                         android:gravity="center"
                         android:text="添加号码"
                         android:textColor="@android:color/white"

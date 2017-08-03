@@ -28,15 +28,15 @@
 
         android:layout_width="0px"
         android:layout_height="match_parent"
-        android:layout_margin="10px"
+        android:layout_margin="5px"
         android:layout_weight="3"
-        android:gravity="center"
+
         android:orientation="horizontal">
 
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
+
             android:listSelector="@null"
             android:scrollbars="none">
 
@@ -44,8 +44,8 @@
                 android:id="@+id/GameCenterNum"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
+
+
                 android:orientation="horizontal">
 
             </LinearLayout>

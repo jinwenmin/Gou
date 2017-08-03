@@ -193,10 +193,10 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
             String uname = (String) object;
 
             if (uname == null) {
-                Intent intent=new Intent(MainActivity.this,LoginActivity.class);
+               /* Intent intent=new Intent(MainActivity.this,LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  //注意本行的FLAG设置
                 startActivity(intent);
-               finish();
+               finish();*/
               /*  AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 AlertDialog dialog = builder.setMessage("APP登录失效")
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {

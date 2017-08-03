@@ -40,6 +40,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textSize="25px"
                 android:id="@+id/ActivityTeamtimetext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,6 +75,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textSize="25px"
                 android:id="@+id/ActivityTeamtimetext2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -137,7 +139,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80px"
+        android:layout_height="60px"
         android:orientation="horizontal">
 
         <Spinner
@@ -158,8 +160,37 @@
         android:layout_height="1px"
         android:background="@color/gray" />
 
-    <ListView
-        android:id="@+id/ActivityTeamList"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/L1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="汇总金额："
+                android:textColor="@android:color/black"
+                android:textSize="30px" />
+
+            <TextView
+                android:id="@+id/samount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="30px" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/Activity_listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/L1"></ListView>
+    </RelativeLayout>
 </LinearLayout>
