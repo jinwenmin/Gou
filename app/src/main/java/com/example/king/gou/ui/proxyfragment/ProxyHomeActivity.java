@@ -154,6 +154,7 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
                 //  menu.add(0, 3, 0, "获得上级充值数据");
                 menu.add(0, 2, 0, "保存上级充值");
                 menu.add(0, 3, 0, "保存日工资充值");
+                menu.add(0, 4, 0, "帐变记录");
 
             }
         });
@@ -190,6 +191,11 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
                 setTrans = ((EditText) contentView2.findViewById(R.id.Proxy_setTrans));
                 alertView2.show();*/
 
+                break;
+            case 4:
+             Intent intent=new Intent(ProxyHomeActivity.this,VIPAccountChangeActivity.class);
+                intent.putExtra("uid",uid);
+                startActivity(intent);
                 break;
 
             default:
@@ -336,7 +342,8 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
                 }
 
             }
-        }  if (apiId == RetrofitService.API_ID_DAILYRECHARGE) {
+        }
+        if (apiId == RetrofitService.API_ID_DAILYRECHARGE) {
             if (object != null) {
                 RestultInfo restultInfo = (RestultInfo) object;
                 if (restultInfo.isRc()) {

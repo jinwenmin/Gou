@@ -7,8 +7,8 @@ import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,6 +26,7 @@ import com.zhy.autolayout.AutoLayoutActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
+import tyrantgit.explosionfield.ExplosionField;
 
 
 public class ActivityDetailsActivity extends AutoLayoutActivity implements HttpEngine.DataListener, View.OnClickListener, OnItemClickListener {
@@ -45,16 +46,29 @@ public class ActivityDetailsActivity extends AutoLayoutActivity implements HttpE
     JoinActivity joinActivity;
     @BindView(R.id.ActivityTitle)
     TextView ActivityTitle;
+    @BindView(R.id.Bigegg)
+    ImageView Bigegg;
+    @BindView(R.id.Re1)
+    RelativeLayout Re1;
     private AlertView alertView;
     // 一个自定义的布局，作为显示的内容
     View contentView;
     final int[] alid = {0};
+    private ExplosionField mExplosionField;
+    private AlertView alertView1;
+    // 一个自定义的布局，作为显示的内容
+    View contentView1;
+
+    private AlertView alertView2;
+    // 一个自定义的布局，作为显示的内容
+    View contentView2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         ButterKnife.bind(this);
+        mExplosionField = ExplosionField.attach2Window(this);
         initClick();
         Intent intent = getIntent();
         aid = intent.getIntExtra("aid", 0);
@@ -64,12 +78,51 @@ public class ActivityDetailsActivity extends AutoLayoutActivity implements HttpE
         contentView = LayoutInflater.from(this).inflate(
                 R.layout.select_alid, null);
         alertView.addExtView(contentView);
+
+        alertView1 = new AlertView(null, null, null, null, null, this, AlertView.Style.Alert, this);
+        contentView1 = LayoutInflater.from(this).inflate(
+                R.layout.item_reward, null);
+        alertView1.addExtView(contentView1);
+        ImageView egg = (ImageView) contentView1.findViewById(R.id.egg);
+        addListener(Bigegg);
+        //  alertView1.show();
+
+        alertView2 = new AlertView(null, null, null, new String[]{"确认"}, null, this, AlertView.Style.Alert, this);
+        contentView2 = LayoutInflater.from(this).inflate(
+                R.layout.item_reward_money, null);
+        TextView money = (TextView) contentView2.findViewById(R.id.reward_money);
+        money.setText("获得奖金99999元");
+        alertView2.addExtView(contentView2);
+
+
         RetrofitService.getInstance().getActivityNoticesView(ActivityDetailsActivity.this, aid);
     }
 
     private void initClick() {
         Back.setOnClickListener(this);
         InjoinAc.setOnClickListener(this);
+    }
+
+    //砸蛋效果
+    private void addListener(View root) {
+        if (root instanceof ViewGroup) {
+            ViewGroup parent = (ViewGroup) root;
+            for (int i = 0; i < parent.getChildCount(); i++) {
+                addListener(parent.getChildAt(i));
+            }
+        } else {
+            root.setClickable(true);
+            root.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertView1.dismiss();
+                    Re1.setVisibility(View.GONE);
+                    RetrofitService.getInstance().getActivityCheck(ActivityDetailsActivity.this, aid);
+                    mExplosionField.explode(v);
+                    v.setOnClickListener(null);
+                }
+            });
+        }
     }
 
     @Override
@@ -173,6 +226,12 @@ public class ActivityDetailsActivity extends AutoLayoutActivity implements HttpE
                 finish();
                 break;
             case R.id.InjoinAc:
+                if ("立即砸蛋".equals(InjoinAc.getText().toString().trim())) {
+
+                    Re1.setVisibility(View.VISIBLE);
+                    Bigegg.setVisibility(View.VISIBLE);
+                    return;
+                }
                 if (uc.getOthers() == 0) {
                     if ("报名参加".equals(InjoinAc.getText().toString().trim())) {
                         RetrofitService.getInstance().getActivityUserApply(this, aid);
@@ -181,6 +240,7 @@ public class ActivityDetailsActivity extends AutoLayoutActivity implements HttpE
                     if ("立即领取".equals(InjoinAc.getText().toString().trim())) {
                         if (id != 6) {
                             RetrofitService.getInstance().getActivityCheck(this, aid);
+
                         }
                         return;
                     }
@@ -189,8 +249,7 @@ public class ActivityDetailsActivity extends AutoLayoutActivity implements HttpE
                     if ("立即领取".equals(InjoinAc.getText().toString().trim())) {
                         if (id != 6) {
                             RetrofitService.getInstance().getActivityCheck(this, aid);
-                        }
-                        else if (id == 6) {
+                        } else if (id == 6) {
                             RadioGroup radioGroup = (RadioGroup) contentView.findViewById(R.id.select_radiogroup);
                             radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                                 @Override

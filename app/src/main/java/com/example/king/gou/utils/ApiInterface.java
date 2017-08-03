@@ -64,7 +64,7 @@ public interface ApiInterface {
     //登陆状态查询
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/chat-message")
-    Call<Map<String,Object>> getLoginState(
+    Call<Map<String, Object>> getLoginState(
 
             @Query("luid") int luid,
             @Query("uonline") int uonline,
@@ -308,7 +308,7 @@ public interface ApiInterface {
     //获取首页的公告或者滚动栏
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/notice-view-pop")
-    Call<Map<String,Object>> getHomeNotice(
+    Call<Map<String, Object>> getHomeNotice(
             @Query("AppClient") int num,
             @Query("reqkey") String reqkey,
             @Query("t") long t
@@ -349,7 +349,7 @@ public interface ApiInterface {
     //获取绑定银行卡数据
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-card-datas")
-    Call<Map<String,Object>> getCardDatas(
+    Call<Map<String, Object>> getCardDatas(
             @Query("AppClient") int num,
             @Query("reqkey") String reqkey,
             @Query("t") long t
@@ -421,7 +421,7 @@ public interface ApiInterface {
     //请求地址：/get-withdraw-datas
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-withdraw-datas")
-    Call<Map<String,Object>> getWithDrawData(
+    Call<Map<String, Object>> getWithDrawData(
             @Query("AppClient") int num,
             @Query("reqkey") String reqkey,
             @Query("t") long t
@@ -652,7 +652,7 @@ public interface ApiInterface {
     //50 查询个人报表彩票帐变
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/account-change-list")
-    Call<Map<String,Object>> getAccountChangeList(
+    Call<Map<String, Object>> getAccountChangeList(
             @Query("AppClient") int num,
             @Query("page") int page,
             @Query("rows") int rows,
@@ -690,7 +690,7 @@ public interface ApiInterface {
     //52 个人报表活动记录
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/activity-record-list")
-    Call<Map<String,Object>> getActivityRecordList(
+    Call<Map<String, Object>> getActivityRecordList(
             @Query("AppClient") int num,
             @Query("page") int page,
             @Query("rows") int rows,
@@ -712,7 +712,7 @@ public interface ApiInterface {
     //51 个人报表充提记录
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/recharge-withdraw-list")
-    Call<Map<String,Object>> getReChargeWithDrawList(
+    Call<Map<String, Object>> getReChargeWithDrawList(
             @Query("AppClient") int num,
             @Query("page") int page,
             @Query("rows") int rows,
@@ -761,7 +761,7 @@ public interface ApiInterface {
     //54 个人报表彩票盈亏
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/profit-loss-list")
-    Call<Map<String,Object>> getProfitLossList(
+    Call<Map<String, Object>> getProfitLossList(
             @Query("AppClient") int num,
             @Query("page") int page,
             @Query("rows") int rows,
@@ -833,7 +833,7 @@ public interface ApiInterface {
     //82 查询团队报表彩票帐变
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/account-change-list")
-    Call<Map<String,Object>> getTeamAccountChangeList(
+    Call<Map<String, Object>> getTeamAccountChangeList(
             @Query("AppClient") int num,
             @Query("page") int page,
             @Query("rows") int rows,
@@ -886,7 +886,7 @@ public interface ApiInterface {
 
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/betting/sync")
-    Call<Map<String,Object>> getBettingSync(
+    Call<Map<String, Object>> getBettingSync(
             @Query("AppClient") int num,
             @Query("id") int id,
 
@@ -897,7 +897,7 @@ public interface ApiInterface {
     //52 个人报表活动记录
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/activity-record-list")
-    Call<Map<String,Object>> getActivityTeamRecordList(
+    Call<Map<String, Object>> getActivityTeamRecordList(
             @Query("AppClient") int num,
             @Query("page") int page,
             @Query("rows") int rows,
@@ -1167,12 +1167,18 @@ public interface ApiInterface {
     //78 帐变记录
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/capital-change-list")
-    Call<Object> getCapitalChangeList(
+    Call<Map<String,Object>> getCapitalChangeList(
             @Query("AppClient") int num,
-            @Query("data") String data,//提交的返点配额调整数据格式：
-            // 返点id:配额调整，例如[70:-3,71:6]说明：70是12.70返点的id，
-            // -3是12.70返点的配额减去3个，71是12.60返点的id，6是12.60的配额增加6个，
-            // 即调整配额可以增加也可以减少，负数代表扣减配额，正数代表增加配额
+            @Query("page") int page,
+            @Query("rows") int rows,
+            @Query("sidx") String sidx,
+            @Query("sord") String sord,
+            @Query("uid") int uid,
+            @Query("from") String from,
+            @Query("to") String to,
+            @Query("id") int id,
+            @Query("stype") int stype,
+            @Query("model") int model,
             @Query("reqkey") String reqkey,
             @Query("t") long t
     );
@@ -1213,7 +1219,7 @@ public interface ApiInterface {
     //80团队报表彩票盈亏  当日和历史  81
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/profit-loss-list")
-    Call<Map<String,Object>> getTeamProfitLossList(
+    Call<Map<String, Object>> getTeamProfitLossList(
             @Query("AppClient") int num,
             @Query("page") int page,
             @Query("rows") int rows,

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20px"
+        android:layout_marginTop="10px"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="订单号: "
+                android:textColor="@android:color/black"
+                android:textSize="25px" />
+
+            <TextView
+                android:singleLine="true"
+                android:id="@+id/AccountChangeOrder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XXX"
+                android:textSize="20px" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="投注期号: "
+                android:textColor="@android:color/black"
+                android:textSize="25px" />
+
+            <TextView
+                android:singleLine="true"
+                android:id="@+id/AccountChangePeriod"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XXX"
+                android:textSize="20px" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20px"
+        android:layout_marginTop="10px"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="帐变时间: "
+                android:textColor="@android:color/black"
+                android:textSize="25px" />
+
+            <TextView
+                android:singleLine="true"
+                android:id="@+id/AccountChangeDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XXX"
+                android:textSize="20px" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="游戏名称: "
+                android:textColor="@android:color/black"
+                android:textSize="25px" />
+
+            <TextView
+                android:singleLine="true"
+                android:id="@+id/AccountChangeGame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XXX"
+                android:textSize="20px" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20px"
+        android:layout_marginTop="10px"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="帐变类型: "
+                android:textColor="@android:color/black"
+                android:textSize="25px" />
+
+            <TextView
+                android:singleLine="true"
+                android:id="@+id/AccountChangeType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XXX"
+                android:textSize="20px" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="帐变模式: "
+                android:textColor="@android:color/black"
+                android:textSize="25px" />
+
+            <TextView
+                android:singleLine="true"
+                android:id="@+id/AccountChangeModel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XXX"
+                android:textSize="20px" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="20px"
+        android:layout_marginTop="10px"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="交易金额: "
+                android:textColor="@android:color/black"
+                android:textSize="25px" />
+
+            <TextView
+                android:id="@+id/ChangeAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XXX"
+                android:singleLine="true"
+                android:textSize="20px" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="余额: "
+                android:textColor="@android:color/black"
+                android:textSize="25px" />
+
+            <TextView
+                android:singleLine="true"
+                android:id="@+id/MyAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XXX"
+                android:textSize="20px" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20px"
+       >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="备注: "
+            android:textColor="@android:color/black"
+            android:textSize="25px" />
+
+        <TextView
+            android:id="@+id/Detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="XXX"
+            android:textSize="20px" />
+
+    </LinearLayout>
+</LinearLayout>

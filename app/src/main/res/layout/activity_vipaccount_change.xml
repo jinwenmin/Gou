@@ -5,16 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.king.gou.ui.proxyfragment.TeamZBJLActivity">
+    tools:context="com.example.king.gou.ui.proxyfragment.VIPAccountChangeActivity">
 
     <RelativeLayout
-        android:id="@+id/ProxyTop"
+        android:id="@+id/VIPACTop"
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_height"
         android:background="@color/top_background">
 
         <ImageView
-            android:id="@+id/_back"
+            android:id="@+id/LotteryLoss_back"
             android:layout_width="@dimen/top_back"
             android:layout_height="@dimen/top_back"
             android:layout_centerVertical="true"
@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="团队帐变记录"
+            android:text="帐变记录"
             android:textColor="@android:color/white"
             android:textSize="@dimen/top_textsize" />
     </RelativeLayout>
@@ -35,7 +35,7 @@
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:id="@+id/TeamZBJLrelateTime1"
+            android:id="@+id/relateTime1"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_marginRight="4px"
@@ -43,24 +43,25 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/TeamZBJLtimetext"
+                android:id="@+id/timetext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="6px"
-                android:text="2010-01-01" />
+                android:text="2010-01-01"
+                android:textSize="30px" />
 
             <ImageView
                 android:layout_width="50px"
                 android:layout_height="50px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="6px"
+                android:layout_marginRight="10px"
                 android:background="@drawable/wuka_xiala" />
 
             <View
-                android:layout_width="1px"
+                android:layout_width="2px"
                 android:layout_height="60px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
@@ -68,7 +69,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/TeamZBJLrelateTime2"
+            android:id="@+id/relateTime2"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_marginRight="4px"
@@ -77,31 +78,25 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/TeamZBJLtimetext2"
+                android:id="@+id/timetext2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="6px"
-                android:text="2010-01-20" />
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:text="6666-66-66"
+                android:textSize="30px" />
 
             <ImageView
                 android:layout_width="50px"
                 android:layout_height="50px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="6px"
+                android:layout_marginRight="10px"
                 android:background="@drawable/wuka_xiala" />
 
-            <View
-                android:layout_width="1px"
-                android:layout_height="60px"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@color/gray" />
+
         </RelativeLayout>
-
-
     </LinearLayout>
 
     <View
@@ -111,108 +106,51 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/SearchName"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="8"
-            android:background="@null"
-            android:gravity="center"
-            android:hint="按用户名查询(可选)"
-            android:textSize="30px" />
-
-        <Button
-            android:id="@+id/ToSearchName"
-            android:layout_width="0px"
-            android:layout_height="80px"
-            android:layout_weight="2"
-            android:text="搜索"
-            android:textColor="@android:color/black"
-            android:textSize="30px" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/gray" />
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/gray" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60px"
-        android:layout_margin="10px"
-
-        android:orientation="horizontal">
+        android:layout_height="60px">
 
         <Spinner
-            android:id="@+id/SpinnerGameId"
+            android:id="@+id/SpinnerGame"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"></Spinner>
-
-        <Spinner
-            android:id="@+id/SpinnerType"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"></Spinner>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/gray" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60px"
-        android:layout_margin="10px"
-
-        android:orientation="horizontal">
 
         <Spinner
             android:id="@+id/SpinnerStype"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"></Spinner>
-
-        <Spinner
-            android:id="@+id/SpinnerModel"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"></Spinner>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/gray" />
-    <RelativeLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/ChangeAmount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:gravity="center_horizontal"
-            android:text="总计：0"
-            android:textColor="@color/top_background"
-            android:textSize="40px" />
-        <ListView
-            android:layout_above="@id/ChangeAmount"
-            android:id="@+id/TeamListView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:layout_height="60px">
 
-        </ListView>
+        <Spinner
+            android:id="@+id/SpinnerModel"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></Spinner>
 
+        <Spinner
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="invisible"></Spinner>
+    </LinearLayout>
 
-    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray" />
+
+    <ListView
+        android:id="@+id/vipAccountChangeListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+
 </LinearLayout>

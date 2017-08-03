@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.king.gou.ui.proxyfragment.ActivityDetailsActivity">
+
     <RelativeLayout
         android:id="@+id/ActivityTop"
         android:layout_width="match_parent"
@@ -27,21 +28,42 @@
             android:text="活动详情"
             android:textColor="@android:color/white"
             android:textSize="40px" />
+
         <TextView
             android:id="@+id/InjoinAc"
-            android:layout_marginRight="10px"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:textColor="@android:color/white"
-            android:text=""
-            android:textSize="30px"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10px"
+            android:text=""
+            android:textColor="@android:color/white"
+            android:textSize="30px" />
     </RelativeLayout>
+
     <TextView
         android:id="@+id/ActivityDetail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="15px"
-        />
-</LinearLayout>
+        android:layout_below="@id/ActivityTop"
+        android:layout_margin="15px" />
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/Re1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ActivityTop"
+        android:alpha="0.3"
+        android:background="#B5B5B5">
+
+
+    </RelativeLayout>
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/Bigegg"
+        android:layout_width="match_parent"
+        android:layout_height="400px"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/bigegg" />
+</RelativeLayout>

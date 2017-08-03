@@ -37,6 +37,7 @@ import com.example.king.gou.bean.UserActivity;
 import com.example.king.gou.bean.UserAmount;
 import com.example.king.gou.bean.UserInfo;
 import com.example.king.gou.bean.UserTeamBetting;
+import com.example.king.gou.bean.VIPAccountChange;
 import com.example.king.gou.bean.WithDraw;
 import com.example.king.gou.bean.ZhuiHao;
 import com.example.king.gou.bean.ZhuiHaoDetails;
@@ -167,6 +168,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_HISTORYGAME = 62;//历史投注的开奖记录
     public static int API_ID_MYACTIVITYLIST = 63;//个人活动记录
     public static int API_ID_TEAMACTIVITYLIST = 64;//团队活动记录
+    public static int API_ID_VIPACCCHANGE = 65;//会员帐变记录
 
 
     private Retrofit retrofit;
@@ -1023,7 +1025,6 @@ public class RetrofitService extends HttpEngine {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         map.put("id", id + "");
-
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
         Call<RestultInfo> clone = apiInterface.getActivityCheck(1, id, reqkey, currentTimeMillis).clone();
         clone.enqueue(new Callback<RestultInfo>() {
@@ -3033,7 +3034,7 @@ public class RetrofitService extends HttpEngine {
                                     a.setAmount(Double.parseDouble(amount));
                                     a.setAmounts(Double.parseDouble(amounts));
                                     a.setDetial(detial);
-                                    Log.d("个人报表活动记录a", a.toString()+"");
+                                    Log.d("个人报表活动记录a", a.toString() + "");
                                 }
                                 ab2.add(a);
                             }
@@ -3068,11 +3069,11 @@ public class RetrofitService extends HttpEngine {
         maps.put("type", type + "");
         maps.put("team", team + "");
         String reqkey = RxUtils.getInstance().getReqkey(maps, currentTimeMillis);
-        Call<Map<String,Object>> activityRecordList = apiInterface.getActivityTeamRecordList(1, page, rows, sidx, sord, from, to, name, type, team, reqkey, currentTimeMillis);
-        Call<Map<String,Object>> clone = activityRecordList.clone();
-        clone.enqueue(new Callback<Map<String,Object>>() {
+        Call<Map<String, Object>> activityRecordList = apiInterface.getActivityTeamRecordList(1, page, rows, sidx, sord, from, to, name, type, team, reqkey, currentTimeMillis);
+        Call<Map<String, Object>> clone = activityRecordList.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Map<String,Object>> call, retrofit2.Response<Map<String,Object>> response) {
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 int code = response.code();
                 Log.d("团队报表活动记录Code", code + "");
                 if (response.code() == 200) {
@@ -3141,7 +3142,7 @@ public class RetrofitService extends HttpEngine {
                                     a.setAmount(Double.parseDouble(amount));
                                     a.setAmounts(Double.parseDouble(amounts));
                                     a.setDetial(detial);
-                                    Log.d("团队报表活动记录a", a.toString()+"");
+                                    Log.d("团队报表活动记录a", a.toString() + "");
                                 }
                                 ab2.add(a);
                             }
@@ -3155,7 +3156,7 @@ public class RetrofitService extends HttpEngine {
             }
 
             @Override
-            public void onFailure(Call<Map<String,Object>> call, Throwable t) {
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
 
             }
         });
@@ -4317,24 +4318,71 @@ public class RetrofitService extends HttpEngine {
 
 
     //帐变记录
-    public void getCapitalChangeList(DataListener listener, String data) {
+    public void getCapitalChangeList(final DataListener listener, int page, int rows, String sidx, String sord, int uid, String from, String to, int id, int stype, int model) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
-        map.put("data", data + "");
+        map.put("page", page + "");
+        map.put("rows", rows + "");
+        map.put("sidx", sidx + "");
+        map.put("sord", sord + "");
+        map.put("uid", uid + "");
+        map.put("from", from + "");
+        map.put("to", to + "");
+        map.put("id", id + "");
+        map.put("stype", stype + "");
+        map.put("model", model + "");
         final String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> capitalChangeList = apiInterface.getCapitalChangeList(1, data, reqkey, currentTimeMillis);
-        Call<Object> clone = capitalChangeList.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<Map<String, Object>> capitalChangeList = apiInterface.getCapitalChangeList(1, page, rows, sidx, sord, uid, from, to, id, stype, model, reqkey, currentTimeMillis);
+        Call<Map<String, Object>> clone = capitalChangeList.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 if (response.code() == 200) {
                     Log.d("帐变记录", response.body().toString());
+                    Map<String, Object> map = response.body();
+                    List<Object> content = new ArrayList<>();
+                    List<VIPAccountChange> vp = new ArrayList<VIPAccountChange>();
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if ("content".equals(entry.getKey())) {
+                                content = (List<Object>) entry.getValue();
+                            }
+                        }
+                    }
+                    for (int i = 0; i < content.size(); i++) {
+                        List<Object> o = (List<Object>) content.get(i);
+                        for (int j = 0; j < o.size(); j = j + 10) {
+                            double atid = (double) o.get(j);
+                            String serial_number = (String) o.get(j + 1);
+                            String draw_period = (String) o.get(j + 2);
+                            String time = (String) o.get(j + 3);
+                            String game = (String) o.get(j + 4);
+                            double type = (double) o.get(j + 5);
+                            double price_unit = (double) o.get(j + 6);
+                            double amount = (double) o.get(j + 7);
+                            double balance = (double) o.get(j + 8);
+                            String remark = (String) o.get(j + 9);
+                            VIPAccountChange v = new VIPAccountChange();
+                            v.setAtid(RxUtils.getInstance().getInt(atid));
+                            v.setSerial_number(serial_number);
+                            v.setDraw_period(draw_period);
+                            v.setTime(time);
+                            v.setGame(game);
+                            v.setType(RxUtils.getInstance().getInt(type));
+                            v.setPrice_unit(RxUtils.getInstance().getInt(price_unit));
+                            v.setAmount(amount);
+                            v.setBalance(balance);
+                            v.setRemark(remark);
+                            vp.add(v);
+                        }
+                    }
+                    listener.onReceivedData(API_ID_VIPACCCHANGE,vp,API_ID_ERROR);
                 }
 
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
 
             }
         });
