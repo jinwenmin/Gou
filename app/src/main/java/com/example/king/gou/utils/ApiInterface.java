@@ -919,7 +919,7 @@ public interface ApiInterface {
     //61获取推广设置数据
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-share-data")
-    Call<Object> getShareData(
+    Call<Map<String,Object>> getShareData(
             @Query("AppClient") int num,
             @Query("reqkey") String reqkey,
             @Query("t") long t

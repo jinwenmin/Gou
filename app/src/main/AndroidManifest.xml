@@ -93,7 +93,8 @@
         <activity android:name=".ui.proxyfragment.RecordListActivity" />
         <activity android:name=".ui.frmMyActivity.WithDrawActivity" />
         <activity android:name=".ui.settingfragment.ResetPwdActivity" />
-        <activity android:name=".ui.proxyfragment.VIPAccountChangeActivity"></activity>
+        <activity android:name=".ui.proxyfragment.VIPAccountChangeActivity" />
+        <activity android:name=".ui.proxyfragment.ShareDataActivity"></activity>
     </application>
 
 </manifest>

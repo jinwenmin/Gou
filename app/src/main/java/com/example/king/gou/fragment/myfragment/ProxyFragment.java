@@ -15,6 +15,7 @@ import com.example.king.gou.fragment.BaseFragment;
 import com.example.king.gou.ui.proxyfragment.ActivityTeamActivity;
 import com.example.king.gou.ui.proxyfragment.GameReWardActivity;
 import com.example.king.gou.ui.proxyfragment.ProxyHomeActivity;
+import com.example.king.gou.ui.proxyfragment.ShareDataActivity;
 import com.example.king.gou.ui.proxyfragment.TeamActivityActivity;
 import com.example.king.gou.ui.proxyfragment.TeamBaoBiaoActivity;
 import com.example.king.gou.ui.proxyfragment.TeamCunQuActivity;
@@ -136,7 +137,8 @@ public class ProxyFragment extends BaseFragment implements View.OnClickListener 
                 StartA(ProxyHomeActivity.class);
                 break;
             case R.id.proxy_userCenter:
-                StartA(UserCenterActivity.class);
+               // StartA(UserCenterActivity.class);
+                StartA(ShareDataActivity.class);
                 break;
             case R.id.proxy_TeamBaoBiao:
                 StartA(TeamBaoBiaoActivity.class);

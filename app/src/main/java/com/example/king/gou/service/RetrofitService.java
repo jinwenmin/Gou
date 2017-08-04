@@ -30,6 +30,7 @@ import com.example.king.gou.bean.RecordList;
 import com.example.king.gou.bean.RestultInfo;
 
 import com.example.king.gou.bean.SetRate;
+import com.example.king.gou.bean.ShareData;
 import com.example.king.gou.bean.SreCharge;
 import com.example.king.gou.bean.TeamUserInfo;
 import com.example.king.gou.bean.TouZhu;
@@ -169,6 +170,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_MYACTIVITYLIST = 63;//个人活动记录
     public static int API_ID_TEAMACTIVITYLIST = 64;//团队活动记录
     public static int API_ID_VIPACCCHANGE = 65;//会员帐变记录
+    public static int API_ID_SHAREDATA = 66;//推广设置
 
 
     private Retrofit retrofit;
@@ -3331,23 +3333,88 @@ public class RetrofitService extends HttpEngine {
     }
 
     //获取推广设置数据
-    public void getShareData(DataListener listener) {
+    public void getShareData(final DataListener listener) {
         long currentTimeMillis = System.currentTimeMillis();
         Map map = new HashMap();
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> shareData = apiInterface.getShareData(1, reqkey, currentTimeMillis);
-        Call<Object> clone = shareData.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<Map<String, Object>> shareData = apiInterface.getShareData(1, reqkey, currentTimeMillis);
+        Call<Map<String, Object>> clone = shareData.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 if (response.code() == 200) {
                     Log.d("获取推广设置数据", response.body().toString());
+                    Map<String, Object> map = response.body();
+                    Map<String, Object> others = new HashMap<>();
+                    List<List<ShareData>> sds = new ArrayList<List<ShareData>>();
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if ("others".equals(entry.getKey())) {
+                                others = (Map<String, Object>) entry.getValue();
+                            }
+                        }
+                    }
+                    List<ShareData> sd = new ArrayList<ShareData>();
+                    sds.add(sd);
+                    List<Object> glist = new ArrayList<>();
+                    if (others.size() > 0) {
+                        double uid = 0;
+                        double rebate_id = 0;
+                        double rate = 0;
+                        double mxrate = 0;
+                        boolean checked = false;
+
+                        for (Map.Entry<String, Object> entry : others.entrySet()) {
+                            if ("uid".equals(entry.getKey())) {
+                                uid = (double) entry.getValue();
+                            }
+                            if ("checked".equals(entry.getKey())) {
+                                checked = (boolean) entry.getValue();
+                            }
+                            if ("rebate_id".equals(entry.getKey())) {
+                                rebate_id = (double) entry.getValue();
+                            }
+                            if ("rate".equals(entry.getKey())) {
+                                rate = (double) entry.getValue();
+                            }
+                            if ("mxrate".equals(entry.getKey())) {
+                                mxrate = (double) entry.getValue();
+                            }
+                            if ("glist".equals(entry.getKey())) {
+                                glist = (List<Object>) entry.getValue();
+                            }
+                        }
+                        ShareData sd2 = new ShareData();
+                        sd2.setChecked(checked);
+                        sd2.setUid(RxUtils.getInstance().getInt(uid));
+                        sd2.setRebate_id(RxUtils.getInstance().getInt(rebate_id));
+                        sd2.setRate(RxUtils.getInstance().getInt(rate));
+                        sd2.setMxrate(RxUtils.getInstance().getInt(mxrate));
+                        sd.add(sd2);
+
+                    }
+                    List<ShareData> sd1 = new ArrayList<ShareData>();
+                    for (int i = 0; i < glist.size(); i++) {
+                        List<Object> o = (List<Object>) glist.get(i);
+                        for (int j = 0; j < o.size(); j=j+3) {
+                            String name = (String) o.get(j);
+                            double grate = (double) o.get(j + 1);
+                            double offset = (double) o.get(j + 2);
+                            ShareData s = new ShareData();
+                            s.setName(name);
+                            s.setGrate(grate);
+                            s.setOffset(offset);
+                            sd1.add(s);
+                        }
+                    }
+                    sds.add(sd1);
+                    listener.onReceivedData(API_ID_SHAREDATA, sds, API_ID_ERROR);
                 }
 
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
 
             }
         });
@@ -4376,7 +4443,7 @@ public class RetrofitService extends HttpEngine {
                             vp.add(v);
                         }
                     }
-                    listener.onReceivedData(API_ID_VIPACCCHANGE,vp,API_ID_ERROR);
+                    listener.onReceivedData(API_ID_VIPACCCHANGE, vp, API_ID_ERROR);
                 }
 
             }
