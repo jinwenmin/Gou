@@ -71,6 +71,7 @@ public class GamePrizeAdapter extends BaseAdapter {
         if (!"".equals(gp.get(i).getPrize())) {
             viewHolder.prize.setText(Html.fromHtml(gp.get(i).getPrize()));
         }
+        viewHolder.rate.setText(gp.get(i).getUserRate() + "");
         return view;
     }
 
@@ -81,6 +82,8 @@ public class GamePrizeAdapter extends BaseAdapter {
         TextView ruleName;
         @BindView(R.id.prize)
         TextView prize;
+        @BindView(R.id.rate)
+        TextView rate;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

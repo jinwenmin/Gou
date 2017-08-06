@@ -79,7 +79,7 @@
     <!--游戏大厅-->
     <fragment
         android:id="@+id/fragment_game"
-        android:name="com.example.king.gou.fragment.GameFragment"
+        android:name="com.example.king.gou.fragment.gamefragments.LotteryFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/MainActivity_group" />

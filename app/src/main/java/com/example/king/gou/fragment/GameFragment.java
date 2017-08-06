@@ -70,13 +70,13 @@ public class GameFragment extends Fragment {
         List<String> tits = new ArrayList<>();
         List<BaseFragment> fragments = new ArrayList<>();
         tits.add("彩票大厅");
-        tits.add("真人娱乐");
-        tits.add("电子游艺");
-        tits.add("体育博弈");
+       // tits.add("真人娱乐");
+      //  tits.add("电子游艺");
+       // tits.add("体育博弈");
         fragments.add(LotteryFragment.newInstance());
-        fragments.add(BetFragment.newInstance());
-        fragments.add(EleGameFragment.newInstance());
-        fragments.add(SportsFragment.newInstance());
+     //   fragments.add(BetFragment.newInstance());
+      //  fragments.add(EleGameFragment.newInstance());
+      //  fragments.add(SportsFragment.newInstance());
         adapter.addFrmList(fragments, tits);
 
     }

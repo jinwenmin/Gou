@@ -293,7 +293,7 @@ public class RetrofitService extends HttpEngine {
         Long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> signout = apiInterface.getSignout(1, reqkey, currentTimeMillis);
+        Call<Object> signout = apiInterface.getSignout(/*1, reqkey, currentTimeMillis*/);
         Call<Object> clone = signout.clone();
         clone.enqueue(new Callback<Object>() {
             @Override

@@ -64,6 +64,10 @@ public class GamePrize {
         this.prize = prize;
     }
 
+    public double getUserRate() {
+        return userRate;
+    }
+
     public void setUserRate(double userRate) {
         this.userRate = userRate;
     }

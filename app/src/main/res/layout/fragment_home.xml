@@ -14,10 +14,11 @@
         android:background="@color/top_background">
 
         <ImageView
+            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="60px"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_home_logo" />
+            android:src="@mipmap/home_logo" />
 
         <ImageView
             android:id="@+id/Erweima"
@@ -85,6 +86,7 @@
                 android:layout_height="wrap_content">
 
                 <HorizontalScrollView
+                    android:visibility="gone"
                     android:id="@+id/home_scroll1"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"

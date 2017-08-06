@@ -108,7 +108,7 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        MyApp.getInstance().addActivitys(this);
         RetrofitService.getInstance().getTeamUserInfo(this, 1, 100, "uid", "desc", MyApp.getInstance().getUserUid(), "", 0);
 
         login_userinfo = getSharedPreferences("login_userinfo", Activity.MODE_PRIVATE);
@@ -131,13 +131,13 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
         mFragmentTransaction.hide(mFragments[3]);
         mFragmentTransaction.commit();
         Drawable home = getResources().getDrawable(R.drawable.select_home);
-        home.setBounds(0, 0, 130, 130);
+        home.setBounds(0, 0, 100, 100);
         Drawable game = getResources().getDrawable(R.drawable.select_game);
-        game.setBounds(0, 0, 130, 130);
+        game.setBounds(0, 0, 100, 100);
         Drawable find = getResources().getDrawable(R.drawable.select_find);
-        find.setBounds(0, 0, 130, 130);
+        find.setBounds(0, 0, 100, 100);
         Drawable my = getResources().getDrawable(R.drawable.select_my);
-        my.setBounds(0, 0, 130, 130);
+        my.setBounds(0, 0, 100, 100);
         HomeFrmRadioBtn.setCompoundDrawables(null, home, null, null);
         GameFrmRadioBtn.setCompoundDrawables(null, game, null, null);
         FindFrmBtn.setCompoundDrawables(null, find, null, null);

@@ -8,7 +8,9 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.cookie.store.PersistentCookieStore;
+import com.zhy.autolayout.AutoLayoutActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -25,6 +27,20 @@ public class MyApp extends Application {
     private String UserName;
     private int UserUid;
     private List<TeamUserInfo> Uids;
+    List<AutoLayoutActivity> activities;
+
+    public void addActivitys(AutoLayoutActivity a) {
+        if (activities == null) {
+            activities = new ArrayList<>();
+        }
+        activities.add(a);
+    }
+
+    public void finishActivity() {
+        for (int i = 0; i < activities.size(); i++) {
+            activities.get(i).finish();
+        }
+    }
 
     public List<TeamUserInfo> getUids() {
         return Uids;

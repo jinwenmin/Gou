@@ -69,6 +69,7 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         RetrofitService.getInstance().getTokenSignin(this);
         LemonBubble.showRoundProgress(this, "验证账号登录状态中");
         findViewById(R.id.login_btn).setOnClickListener(new View.OnClickListener() {

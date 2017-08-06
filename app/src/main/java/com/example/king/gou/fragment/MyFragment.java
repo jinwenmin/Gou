@@ -144,19 +144,13 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("action.NickName");
         getActivity().registerReceiver(broad, intentFilter);
-        Map<String, String> map = new HashMap<>();
-        map.put("aaa", "111");
-        map.put("ccc", "222");
-        map.put("bbb", "333");
-        map.put("zzz", "444");
-        map.put("ppp", "555");
 
         myFrmPageAdapter = new MyFrmPageAdapter(getChildFragmentManager());
         RetrofitService.getInstance().LoginUserAmount(this);
         RetrofitService.getInstance().GetUserInfo(this);
         RetrofitService.getInstance().getSafeQues(this);
 
-        initFrms();
+     //   initFrms();
         frmMyViewpager.setAdapter(myFrmPageAdapter);
         frmMyTablayout.setupWithViewPager(frmMyViewpager);
 
@@ -240,6 +234,15 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
             frmMyMoneyS.setText(userInfo.getSamount() + "");
             frmMyCount.setText(userInfo.getAmount() + "");
             frmMyLottory.setText(userInfo.getRate() + "%");
+            List<BaseFragment> fragments = new ArrayList<>();
+            List<String> titls = new ArrayList<>();
+            fragments.add(OrderFragment.newInstance());
+            titls.add("订单报表");
+            if (userInfo.isShares()) {
+                fragments.add(ProxyFragment.newInstance());
+                titls.add("代理管理");
+            }
+            myFrmPageAdapter.addFrmList(fragments, titls);
 
         }
         if (apiId == RetrofitService.API_ID_WITHDRAW) {

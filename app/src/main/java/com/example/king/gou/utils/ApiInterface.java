@@ -55,10 +55,19 @@ public interface ApiInterface {
     //登出有日志
     @Headers("X-Requested-With: XMLHttpRequest")
     @GET("/logout")
-    Call<Object> getSignout(
-            @Query("AppClient") int num,
+    Call<Object> getLogout(
+           /* @Query("AppClient") int num,
             @Query("reqkey") String reqkey,
-            @Query("t") long t
+            @Query("t") long t*/
+    );
+
+    //登出无日志
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @GET("/signout")
+    Call<Object> getSignout(
+           /* @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t*/
     );
 
     //登陆状态查询
@@ -919,7 +928,7 @@ public interface ApiInterface {
     //61获取推广设置数据
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-share-data")
-    Call<Map<String,Object>> getShareData(
+    Call<Map<String, Object>> getShareData(
             @Query("AppClient") int num,
             @Query("reqkey") String reqkey,
             @Query("t") long t
@@ -1167,7 +1176,7 @@ public interface ApiInterface {
     //78 帐变记录
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/capital-change-list")
-    Call<Map<String,Object>> getCapitalChangeList(
+    Call<Map<String, Object>> getCapitalChangeList(
             @Query("AppClient") int num,
             @Query("page") int page,
             @Query("rows") int rows,

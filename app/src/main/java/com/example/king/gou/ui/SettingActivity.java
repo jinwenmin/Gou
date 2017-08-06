@@ -7,10 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -19,7 +17,7 @@ import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.CompoundButton;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -29,10 +27,12 @@ import android.widget.Toast;
 
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.bean.UserInfo;
 import com.example.king.gou.service.RetrofitService;
+import com.example.king.gou.ui.settingfragment.AboutUsActivity;
 import com.example.king.gou.ui.settingfragment.BankCardManActivity;
 import com.example.king.gou.ui.settingfragment.MoneyProtectActivity;
 import com.example.king.gou.ui.settingfragment.ResetPwdActivity;
@@ -114,6 +114,14 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
     RelativeLayout updateSafePwd;
     @BindView(R.id.ResetPwd)
     RelativeLayout ResetPwd;
+    @BindView(R.id.Setting_img22)
+    ImageView SettingImg22;
+    @BindView(R.id.Setting_img23)
+    ImageView SettingImg23;
+    @BindView(R.id.Aboutus)
+    RelativeLayout Aboutus;
+    @BindView(R.id.LogOut)
+    Button LogOut;
     private AlertView alertView;
     ; // 一个自定义的布局，作为显示的内容
     View contentView;
@@ -140,6 +148,7 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         manager = FingerprintManagerCompat.from(this);
         mKeyguardManager = (KeyguardManager) this.getSystemService(Context.KEYGUARD_SERVICE);
         initDataHelper();
@@ -162,7 +171,8 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
         getCardData.setOnClickListener(this);
         updateSafePwd.setOnClickListener(this);
         ResetPwd.setOnClickListener(this);
-
+        Aboutus.setOnClickListener(this);
+        LogOut.setOnClickListener(this);
     }
 
     private void initDataHelper() {
@@ -224,6 +234,22 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
                 break;
             case R.id.ResetPwd:
                 RetrofitService.getInstance().GetUserInfo(this);
+                break;
+            case R.id.Aboutus:
+                StartA(AboutUsActivity.class);
+                break;
+            case R.id.LogOut:
+                Log.d("退出Sett=", "退出Sett");
+                RetrofitService.getInstance().LogOut();
+                //MyApp.getInstance().finishActivity();
+             /*   Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                this.startActivity(intent);
+
+                System.exit(0);*/
+                //Intent intent = new Intent("action.Finish");
+               // this.sendBroadcast(intent);
                 break;
         }
     }
