@@ -55,11 +55,7 @@ public interface ApiInterface {
     //登出有日志
     @Headers("X-Requested-With: XMLHttpRequest")
     @GET("/logout")
-    Call<Object> getLogout(
-           /* @Query("AppClient") int num,
-            @Query("reqkey") String reqkey,
-            @Query("t") long t*/
-    );
+    Call<Object> getLogout(  );
 
     //登出无日志
     @Headers("X-Requested-With: XMLHttpRequest")
@@ -1320,7 +1316,7 @@ public interface ApiInterface {
     //92 同步上期开奖数据
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/betting/winning-number")
-    Call<Object> getBettingWinningNum(
+    Call<Map<String,Object>> getBettingWinningNum(
             @Query("AppClient") int num,
             @Query("id") int gid,//id 游戏gid
             @Query("period") String period,//上一期倒计时时的期号

@@ -171,6 +171,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_TEAMACTIVITYLIST = 64;//团队活动记录
     public static int API_ID_VIPACCCHANGE = 65;//会员帐变记录
     public static int API_ID_SHAREDATA = 66;//推广设置
+    public static int API_ID_BETTINGWINNUM = 67;//同步上期开奖数据
 
 
     private Retrofit retrofit;
@@ -289,11 +290,35 @@ public class RetrofitService extends HttpEngine {
                   }).compose(RxUtils.<LoginState>rxHelper());
 
       }*/
-    public void LogOut() {
+    public void Signout() {
         Long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
         Call<Object> signout = apiInterface.getSignout(/*1, reqkey, currentTimeMillis*/);
+        Call<Object> clone = signout.clone();
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                if (response.code() == 200) {
+
+                    Log.d("登出的没日志==", response.body().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+    public void LogOut() {
+        Long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Object> signout = apiInterface.getLogout(/*1, reqkey, currentTimeMillis*/);
         Call<Object> clone = signout.clone();
         clone.enqueue(new Callback<Object>() {
             @Override
@@ -3396,7 +3421,7 @@ public class RetrofitService extends HttpEngine {
                     List<ShareData> sd1 = new ArrayList<ShareData>();
                     for (int i = 0; i < glist.size(); i++) {
                         List<Object> o = (List<Object>) glist.get(i);
-                        for (int j = 0; j < o.size(); j=j+3) {
+                        for (int j = 0; j < o.size(); j = j + 3) {
                             String name = (String) o.get(j);
                             double grate = (double) o.get(j + 1);
                             double offset = (double) o.get(j + 2);
@@ -4531,25 +4556,68 @@ public class RetrofitService extends HttpEngine {
     }
 
     //同步上期开奖数据
-    public void getBettingWinningNum(DataListener listener, int id, String period) {
+    public void getBettingWinningNum(final DataListener listener, int id, String period) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         map.put("id", id + "");
         map.put("period", period + "");
         final String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> BettingWinningNum = apiInterface.getBettingWinningNum(1, id, period, reqkey, currentTimeMillis);
-        Call<Object> clone = BettingWinningNum.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<Map<String, Object>> BettingWinningNum = apiInterface.getBettingWinningNum(1, id, period, reqkey, currentTimeMillis);
+        Call<Map<String, Object>> clone = BettingWinningNum.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 if (response.code() == 200) {
                     Log.d("同步上期开奖数据", response.body().toString());
+                    Map<String, Object> map = response.body();
+                    boolean rc = false;
+                    double id = 0;
+                    Map<String, Object> others = new HashMap<>();
+                    BettingSync bettingSync=new BettingSync();
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if ("rc".equals(entry.getKey())) {
+                                rc = (boolean) entry.getValue();
+                            }
+                            if ("id".equals(entry.getKey())) {
+                                id = (double) entry.getValue();
+                            }
+                            if ("others".equals(entry.getKey())) {
+                                others = (Map<String, Object>) entry.getValue();
+                            }
+
+                        }
+                    }
+                    bettingSync.setRc(rc);
+                    bettingSync.setGid(RxUtils.getInstance().getInt(id));
+                    if (others.size() > 0) {
+                        String property=null;
+                        String period=null;
+                        String winningNumber=null;
+                        for (Map.Entry<String, Object> entry : others.entrySet()) {
+                            if ("property".equals(entry.getKey())) {
+                                property = (String) entry.getValue();
+                            }
+                            if ("period".equals(entry.getKey())) {
+                                period = (String) entry.getValue();
+                            }
+                            if ("winningNumber".equals(entry.getKey())) {
+                                winningNumber = (String) entry.getValue();
+                            }
+                        }
+                        bettingSync.setProperty(property);
+                        bettingSync.setPeriod(period);
+                        bettingSync.setWinningNumber(winningNumber);
+                    }
+                    if (rc) {
+                        listener.onReceivedData(API_ID_BETTINGWINNUM, bettingSync, API_ID_ERROR);
+                    }
                 }
 
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
 
             }
         });

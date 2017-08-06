@@ -11,12 +11,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.DrawHistoryAdapter;
@@ -30,9 +32,12 @@ import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 
 import static android.drm.DrmStore.Playback.STOP;
 
@@ -72,6 +77,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     private int TIME = 1000;  //每隔1s执行一次.
 
     Handler handler = new Handler();
+
     private int gid;
     private int position;
     private int section;
@@ -80,6 +86,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     BettingSync bs = new BettingSync();
     DrawHistoryAdapter drawHistoryAdapter;
     Runnable runnable;
+
+    private Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +135,20 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
 
     }
 
+    private void initTimer() {
+        timer = new Timer();
+        final TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                RetrofitService.getInstance().getBettingWinningNum(GameCenterActivity.this, gid, bs.getPeriod());
+                // RetrofitService.getInstance().getTokenSignin(MainActivity.this);
+
+            }
+        };
+        timer.schedule(timerTask, 0, 1000);
+
+    }
+
     @Override
     public void onReceivedData(int apiId, Object object, int errorId) {
         if (apiId == RetrofitService.API_ID_HISTORYGAME) {
@@ -158,8 +180,12 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             Log.i("GameCentTime", secToTime + "");
                             if (anInt[0] < 0) {
                                 handler.removeCallbacks(runnable);
-                                RetrofitService.getInstance().getBettingDrawHistory(GameCenterActivity.this, gid);
-                                RetrofitService.getInstance().getBettingSync(GameCenterActivity.this, gid);
+                                Toast toast = Toasty.warning(GameCenterActivity.this, "第" + bs.getPeriod() + "期开奖中", Toast.LENGTH_SHORT);
+                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                toast.show();
+                                initTimer();
+                                //  RetrofitService.getInstance().getBettingDrawHistory(GameCenterActivity.this, gid);
+                                //  RetrofitService.getInstance().getBettingSync(GameCenterActivity.this, gid);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -168,6 +194,17 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 };
                 handler.postDelayed(runnable, TIME); // 在初始化方法里.
             }
+        }
+        if (apiId == RetrofitService.API_ID_BETTINGWINNUM) {
+
+            timer.cancel();
+            RetrofitService.getInstance().getBettingSync(this, gid);
+            RetrofitService.getInstance().getBettingDrawHistory(this, gid);
+
+           /* if (object!=null) {
+                BettingSync bettingSync= (BettingSync) object;
+                bettingSync
+            }*/
         }
     }
 
@@ -221,5 +258,6 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     protected void onDestroy() {
         super.onDestroy();
         handler.removeCallbacks(runnable);
+
     }
 }

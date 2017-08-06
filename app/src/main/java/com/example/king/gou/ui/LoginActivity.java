@@ -71,7 +71,7 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
         ButterKnife.bind(this);
         MyApp.getInstance().addActivitys(this);
         RetrofitService.getInstance().getTokenSignin(this);
-        LemonBubble.showRoundProgress(this, "验证账号登录状态中");
+       // LemonBubble.showRoundProgress(this, "验证账号登录状态中");
         findViewById(R.id.login_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -257,11 +257,11 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
             restultInfo = (RestultInfo) object;
             Log.d("LoginAcToken自动登录", restultInfo.toString());
             if (restultInfo.isState()) {
-                LemonBubble.showRight(LoginActivity.this, "验证成功,自动登录", 2000);
+               // LemonBubble.showRight(LoginActivity.this, "验证成功,自动登录", 2000);
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
             } else {
-                LemonBubble.showError(this, "验证失败,请重新登陆", 2000);
+                //LemonBubble.showError(this, "验证失败,请重新登陆", 2000);
             }
         }
     }

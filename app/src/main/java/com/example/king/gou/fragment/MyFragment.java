@@ -200,8 +200,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
                 RetrofitService.getInstance().getWithDrawDatas(this);
                 break;
             case R.id.ToZhuanZhang:
-                //startActivity(new Intent(getActivity(), ZhuanZhangActivity.class));
-                RetrofitService.getInstance().LogOut();
+                startActivity(new Intent(getActivity(), ZhuanZhangActivity.class));
+
                 break;
             case R.id.frmMySetting:
                 startActivity(new Intent(getActivity(), SettingActivity.class));

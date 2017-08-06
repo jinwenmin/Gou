@@ -10,16 +10,46 @@ public class BettingSync {
     long drawTime;
     long condownTime;
     int count;
+    String property;
+    String winningNumber;
+boolean rc;
 
     @Override
-    public String  toString() {
+    public String toString() {
         return "BettingSync{" +
                 "gid=" + gid +
                 ", period='" + period + '\'' +
                 ", drawTime=" + drawTime +
                 ", condownTime=" + condownTime +
                 ", count=" + count +
+                ", property='" + property + '\'' +
+                ", winningNumber='" + winningNumber + '\'' +
+                ", rc=" + rc +
                 '}';
+    }
+
+    public boolean isRc() {
+        return rc;
+    }
+
+    public void setRc(boolean rc) {
+        this.rc = rc;
+    }
+
+    public String getProperty() {
+        return property;
+    }
+
+    public void setProperty(String property) {
+        this.property = property;
+    }
+
+    public String getWinningNumber() {
+        return winningNumber;
+    }
+
+    public void setWinningNumber(String winningNumber) {
+        this.winningNumber = winningNumber;
     }
 
     public int getGid() {
