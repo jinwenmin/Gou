@@ -48,7 +48,7 @@ public class ResetPwdActivity extends AutoLayoutActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_pwd);
-        ButterKnife.bind(this);
+        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
         initClick();
         ResetPwdRadioG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

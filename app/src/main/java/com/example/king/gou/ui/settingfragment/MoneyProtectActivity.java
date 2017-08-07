@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.utils.HttpEngine;
@@ -48,6 +49,7 @@ public class MoneyProtectActivity extends AutoLayoutActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_money_protect);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         RetrofitService.getInstance().getSafeQues(this);
         initClick();
     }

@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.ZhuihaoTZAdapter;
 import com.example.king.gou.bean.RestultInfo;
@@ -51,7 +52,7 @@ public class ZhuiHaoTouZhuActivity extends AutoLayoutActivity implements HttpEng
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zhui_hao_tou_zhu);
-        ButterKnife.bind(this);
+        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
         zhuihaoTZAdapter = new ZhuihaoTZAdapter(this);
         ZhuiHaoTZListView.setAdapter(zhuihaoTZAdapter);
         Intent intent = getIntent();

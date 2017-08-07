@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.ZhuiHaoAdapter;
 import com.example.king.gou.bean.ZhuiHao;
@@ -45,6 +46,7 @@ public class ZhuiHaoActivity extends AutoLayoutActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zhui_hao);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         zhuiHaoAdapter = new ZhuiHaoAdapter(this);
         ZhuiHaoListView.setAdapter(zhuiHaoAdapter);
         long currentTimeMillis = System.currentTimeMillis();

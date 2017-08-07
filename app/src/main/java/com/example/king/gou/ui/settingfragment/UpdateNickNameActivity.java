@@ -44,6 +44,7 @@ public class UpdateNickNameActivity extends AutoLayoutActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_nick_name);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         RetrofitService.getInstance().GetUserInfo(this);
        // OldUserNickName.setText(MyApp.getInstance().getUserNickName());
         initCLick();

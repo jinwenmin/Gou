@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnSureLisener;
 import com.codbking.widget.bean.DateType;
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.ProfitLossAdapter;
 import com.example.king.gou.bean.LotteryLoss;
@@ -69,7 +70,7 @@ public class LotteryLossActivity extends AutoLayoutActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lottery_loss);
-        ButterKnife.bind(this);
+        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
         profitLossAdapter = new ProfitLossAdapter(this);
         LotteryLossListView.setAdapter(profitLossAdapter);
         initDateDialog();

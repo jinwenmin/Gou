@@ -193,6 +193,10 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
             String uname = (String) object;
 
             if (uname == null) {
+                Intent intent=new Intent(MainActivity.this,LoginActivity.class);
+                intent.putExtra("LogOut","errorout");
+                startActivity(intent);
+                MyApp.getInstance().finishActivity();
                /* Intent intent=new Intent(MainActivity.this,LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  //注意本行的FLAG设置
                 startActivity(intent);

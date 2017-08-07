@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -62,6 +63,7 @@ public class TixianAppliActivity extends AutoLayoutActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tixian_appli);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         initClick();
 
     }

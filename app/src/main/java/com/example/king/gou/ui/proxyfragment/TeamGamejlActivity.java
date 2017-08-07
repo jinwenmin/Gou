@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.utils.DateUtil;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -59,6 +60,7 @@ public class TeamGamejlActivity extends AutoLayoutActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_gamejl);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         initClick();
         initDateDialog();
     }

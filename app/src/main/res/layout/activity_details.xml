@@ -42,12 +42,17 @@
     </RelativeLayout>
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/ActivityDetail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/ActivityTop"
         android:layout_margin="15px" />
-
+    <WebView
+        android:layout_below="@id/ActivityTop"
+        android:id="@+id/ActivityWeb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></WebView>
     <RelativeLayout
         android:visibility="gone"
         android:id="@+id/Re1"
@@ -66,4 +71,5 @@
         android:layout_height="400px"
         android:layout_centerInParent="true"
         android:src="@mipmap/bigegg" />
+
 </RelativeLayout>

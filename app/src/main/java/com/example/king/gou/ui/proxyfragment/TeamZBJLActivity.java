@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnSureLisener;
 import com.codbking.widget.bean.DateType;
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.AccountsAdapter;
 import com.example.king.gou.bean.AccountChange;
@@ -91,8 +92,9 @@ public class TeamZBJLActivity extends AutoLayoutActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_zbjl);
-        RetrofitService.getInstance().getGame(this, 4, 0, 0, 0);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
+        RetrofitService.getInstance().getGame(this, 4, 0, 0, 0);
         accountsAdapter = new AccountsAdapter(this);
         TeamListView.setAdapter(accountsAdapter);
         initClick();

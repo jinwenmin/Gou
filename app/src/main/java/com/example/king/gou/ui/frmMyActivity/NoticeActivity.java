@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.NoticeAdapter;
 import com.example.king.gou.service.RetrofitService;
@@ -40,6 +41,7 @@ public class NoticeActivity extends AutoLayoutActivity implements HttpEngine.Dat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         initClick();
         adapter = new NoticeAdapter(this);
         NoticeListView.setAdapter(adapter);

@@ -12,6 +12,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -63,6 +64,7 @@ public class UserCenterActivity extends AutoLayoutActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_center);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
 initClick();
         userCenterGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

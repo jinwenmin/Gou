@@ -95,7 +95,15 @@ public class RxUtils {
         }
         return "";
     }
+    public String fmtString(String str){
+        String notice = "";
+        try{
+            notice = URLEncoder.encode(str, "utf-8");
+        }catch(UnsupportedEncodingException ex){
 
+        }
+        return notice;
+    }
     public String SHA256(String value) {
 
         try {

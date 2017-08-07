@@ -40,6 +40,7 @@ public class MyApp extends Application {
         for (int i = 0; i < activities.size(); i++) {
             activities.get(i).finish();
         }
+        activities.clear();
     }
 
     public List<TeamUserInfo> getUids() {

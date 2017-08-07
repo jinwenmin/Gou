@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnSureLisener;
 import com.codbking.widget.bean.DateType;
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.AccountsAdapter;
 import com.example.king.gou.bean.AccountChange;
@@ -86,6 +87,7 @@ public class GrzbActivity extends AutoLayoutActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grzb);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         adapter = new AccountsAdapter(this);
         GRZBListView.setAdapter(adapter);
         initClick();

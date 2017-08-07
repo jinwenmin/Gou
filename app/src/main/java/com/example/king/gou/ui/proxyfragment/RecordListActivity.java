@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnSureLisener;
 import com.codbking.widget.bean.DateType;
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.RecordListAdapter;
 import com.example.king.gou.bean.GameType;
@@ -71,7 +72,7 @@ public class RecordListActivity extends AutoLayoutActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_list);
-        ButterKnife.bind(this);
+        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
         recordListAdapter = new RecordListAdapter(this);
         RecordList.setAdapter(recordListAdapter);
         initCLick();

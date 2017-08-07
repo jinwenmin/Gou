@@ -8,6 +8,7 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -33,7 +34,7 @@ public class MessageActivity extends AutoLayoutActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
         ButterKnife.bind(this);
-
+        MyApp.getInstance().addActivitys(this);
         initClick();
     }
 

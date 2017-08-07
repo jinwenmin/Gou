@@ -32,6 +32,7 @@ import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -69,9 +70,19 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        Intent intent = getIntent();
+        String logOut = intent.getStringExtra("LogOut");
+        if ("logout".equals(logOut)) {
+            Toasty.info(this,"正常退出,请重新登陆",2000).show();
+        }
+         else if("errorout".equals(logOut)) {
+            Toasty.info(this,"登录异常,请重新登陆",2000).show();
+        }else{
+            RetrofitService.getInstance().getTokenSignin(this);
+        }
         MyApp.getInstance().addActivitys(this);
-        RetrofitService.getInstance().getTokenSignin(this);
-       // LemonBubble.showRoundProgress(this, "验证账号登录状态中");
+
+        // LemonBubble.showRoundProgress(this, "验证账号登录状态中");
         findViewById(R.id.login_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -257,7 +268,7 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
             restultInfo = (RestultInfo) object;
             Log.d("LoginAcToken自动登录", restultInfo.toString());
             if (restultInfo.isState()) {
-               // LemonBubble.showRight(LoginActivity.this, "验证成功,自动登录", 2000);
+                // LemonBubble.showRight(LoginActivity.this, "验证成功,自动登录", 2000);
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
             } else {

@@ -48,6 +48,7 @@ public class AutoLayoutActivity extends AppCompatActivity {
          intentFilter = new IntentFilter();
         intentFilter.addAction("action.Finish");
         this.registerReceiver(broad, intentFilter);*/
+
         View view = null;
         if (name.equals(LAYOUT_FRAMELAYOUT)) {
             view = new AutoFrameLayout(context, attrs);

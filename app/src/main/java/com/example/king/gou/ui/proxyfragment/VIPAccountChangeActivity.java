@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnSureLisener;
 import com.codbking.widget.bean.DateType;
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.VIPAccountChangeAdapter;
 import com.example.king.gou.bean.GameType;
@@ -71,7 +72,7 @@ public class VIPAccountChangeActivity extends AutoLayoutActivity implements View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vipaccount_change);
-        ButterKnife.bind(this);
+        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
         vipAccountChangeAdapter = new VIPAccountChangeAdapter(this);
         vipAccountChangeListView.setAdapter(vipAccountChangeAdapter);
         uid = getIntent().getIntExtra("uid", 0);
