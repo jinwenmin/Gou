@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -34,7 +35,7 @@ public class AboutUsWebActivity extends AutoLayoutActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us_web);
-        ButterKnife.bind(this);
+        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
         Intent intent = getIntent();
         title = intent.getStringExtra("title");
         web = intent.getStringExtra("web");

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnSureLisener;
 import com.codbking.widget.bean.DateType;
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.ActivityAdapter;
 import com.example.king.gou.bean.ActivityBean;
@@ -78,6 +79,7 @@ public class ActivityTeamActivity extends AutoLayoutActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_list);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         activityAdapter = new ActivityAdapter(this);
         ActivityListView.setAdapter(activityAdapter);
         initClick();

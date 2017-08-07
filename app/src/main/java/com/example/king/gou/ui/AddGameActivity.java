@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.MyAdapter;
 import com.example.king.gou.bean.AccountChange;
@@ -53,6 +54,7 @@ public class AddGameActivity extends AutoLayoutActivity implements HttpEngine.Da
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_game);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         RetrofitService.getInstance().getGame(this,4,0,0,0);
         getdatas();
         // 配置适配器

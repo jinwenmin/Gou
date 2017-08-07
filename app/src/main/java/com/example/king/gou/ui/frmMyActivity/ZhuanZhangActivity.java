@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -24,6 +25,7 @@ public class ZhuanZhangActivity extends AutoLayoutActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zhuan_zhang);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         initClick();
     }
 

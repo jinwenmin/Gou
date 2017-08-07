@@ -7,6 +7,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.ShareDataAdapter;
 import com.example.king.gou.bean.ShareData;
@@ -46,7 +47,7 @@ public class ShareDataActivity extends AutoLayoutActivity implements HttpEngine.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_data);
-        ButterKnife.bind(this);
+        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
         adapter = new ShareDataAdapter(this);
         ShareList.setAdapter(adapter);
         initClick();

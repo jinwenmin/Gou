@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.AccountChange;
 import com.example.king.gou.bean.ZhuiHao;
@@ -46,7 +47,7 @@ public class AccountChangeDetailActivity extends AutoLayoutActivity implements V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_change_detail);
-        ButterKnife.bind(this);
+        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
         gamejlBack.setOnClickListener(this);
         Intent intent = getIntent();
         ac = (AccountChange) intent.getSerializableExtra("Account");

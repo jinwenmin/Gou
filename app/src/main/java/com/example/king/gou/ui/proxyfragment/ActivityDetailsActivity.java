@@ -8,6 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -15,12 +18,14 @@ import android.widget.TextView;
 
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.JoinActivity;
 import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.bean.UserActivity;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.utils.HttpEngine;
+import com.example.king.gou.utils.RxUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import butterknife.BindView;
@@ -50,6 +55,8 @@ public class ActivityDetailsActivity extends AutoLayoutActivity implements HttpE
     ImageView Bigegg;
     @BindView(R.id.Re1)
     RelativeLayout Re1;
+    @BindView(R.id.ActivityWeb)
+    WebView ActivityWeb;
     private AlertView alertView;
     // 一个自定义的布局，作为显示的内容
     View contentView;
@@ -68,6 +75,7 @@ public class ActivityDetailsActivity extends AutoLayoutActivity implements HttpE
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         mExplosionField = ExplosionField.attach2Window(this);
         initClick();
         Intent intent = getIntent();
@@ -129,7 +137,16 @@ public class ActivityDetailsActivity extends AutoLayoutActivity implements HttpE
     public void onReceivedData(int apiId, Object object, int errorId) {
         if (apiId == RetrofitService.API_ID_ACTIVITYDETAIL) {
             uc = (UserActivity) object;
-            ActivityDetail.setText(Html.fromHtml(uc.getMsg()));
+            //ActivityWeb.loadData(RxUtils.getInstance().fmtString(uc.getMsg()), "text/html", "utf-8");
+            WebSettings settings = ActivityWeb.getSettings();
+            settings.setUseWideViewPort(true);
+            settings.setLoadWithOverviewMode(true);
+            settings.setJavaScriptEnabled(true);
+            settings.setSupportZoom(true);
+            settings.setBuiltInZoomControls(true);
+            ActivityWeb.setWebChromeClient(new WebChromeClient());
+            ActivityWeb.loadDataWithBaseURL("about:blank", uc.getMsg(), "text/html", "utf-8", null);
+            //ActivityDetail.setText(Html.fromHtml(uc.getMsg()));
             id = uc.getId();
             Log.d("ActivityDetailId", id + "");
             Log.d("ActivityDetailgetOthers", uc.getOthers() + "");
@@ -221,7 +238,9 @@ public class ActivityDetailsActivity extends AutoLayoutActivity implements HttpE
 
     @Override
     public void onClick(View v) {
+
         switch (v.getId()) {
+
             case R.id._back:
                 finish();
                 break;

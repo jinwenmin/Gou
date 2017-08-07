@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -47,6 +48,7 @@ public class TouZhuResultActivity extends AutoLayoutActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tou_zhu_result);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         initClick();
     }
 

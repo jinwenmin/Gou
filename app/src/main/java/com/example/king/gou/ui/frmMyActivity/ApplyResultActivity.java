@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -78,6 +79,7 @@ public class ApplyResultActivity extends AutoLayoutActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apply_result);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         initClick();
     }
 

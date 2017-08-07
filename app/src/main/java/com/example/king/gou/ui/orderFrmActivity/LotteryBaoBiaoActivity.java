@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnSureLisener;
 import com.codbking.widget.bean.DateType;
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.GameType;
 import com.example.king.gou.service.RetrofitService;
@@ -66,6 +67,7 @@ public class LotteryBaoBiaoActivity extends AutoLayoutActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lottery_bao_biao);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         RetrofitService.getInstance().getGame(this, 4, 0, 0, 0);
         initSpinner();
         initClick();

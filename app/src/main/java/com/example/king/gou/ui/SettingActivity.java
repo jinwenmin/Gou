@@ -29,10 +29,11 @@ import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
 import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
+import com.example.king.gou.bean.Login;
 import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.bean.UserInfo;
 import com.example.king.gou.service.RetrofitService;
-import com.example.king.gou.ui.settingfragment.AboutUsActivity;
+
 import com.example.king.gou.ui.settingfragment.BankCardManActivity;
 import com.example.king.gou.ui.settingfragment.MoneyProtectActivity;
 import com.example.king.gou.ui.settingfragment.ResetPwdActivity;
@@ -236,12 +237,15 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
                 RetrofitService.getInstance().GetUserInfo(this);
                 break;
             case R.id.Aboutus:
-                StartA(AboutUsActivity.class);
+             //   StartA(AboutUsActivity.class);
                 break;
             case R.id.LogOut:
                 Log.d("退出Sett=", "退出Sett");
                 RetrofitService.getInstance().LogOut();
-                //MyApp.getInstance().finishActivity();
+                Intent intent=new Intent(SettingActivity.this, LoginActivity.class);
+                intent.putExtra("LogOut","logout");
+                startActivity(intent);
+                MyApp.getInstance().finishActivity();
              /*   Intent intent = new Intent(Intent.ACTION_MAIN);
                 intent.addCategory(Intent.CATEGORY_HOME);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

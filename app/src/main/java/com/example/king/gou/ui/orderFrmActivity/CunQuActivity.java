@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnSureLisener;
 import com.codbking.widget.bean.DateType;
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.RechargeDrawAdapter;
 import com.example.king.gou.bean.CunQu;
@@ -73,6 +74,7 @@ public class CunQuActivity extends AutoLayoutActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cun_qu);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         rechargeDrawAdapter = new RechargeDrawAdapter(this);
         CunQuListView.setAdapter(rechargeDrawAdapter);
         initClick();

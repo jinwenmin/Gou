@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.ChatUsersAdapter;
 import com.example.king.gou.bean.MapsIdAndValue;
@@ -39,7 +40,7 @@ public class ChatUserActivity extends AutoLayoutActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_user);
-        ButterKnife.bind(this);
+        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
         RetrofitService.getInstance().getChatUser(this);
         chatUsersAdapter = new ChatUsersAdapter(this);
         CharUserListView.setAdapter(chatUsersAdapter);

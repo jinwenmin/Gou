@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -26,6 +27,7 @@ public class TikuanInfoActivity extends AutoLayoutActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tikuan_info);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         initClick();
     }
 

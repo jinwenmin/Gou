@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.CardsData;
 import com.example.king.gou.bean.MapsIdAndValue;
@@ -74,7 +75,7 @@ public class SaveCardActivity extends AutoLayoutActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save_card);
-        ButterKnife.bind(this);
+        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
         RetrofitService.getInstance().getCardDatas(this);
         initClick();
         initOnItemClick();

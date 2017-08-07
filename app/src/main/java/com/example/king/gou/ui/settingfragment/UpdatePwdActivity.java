@@ -42,6 +42,7 @@ public class UpdatePwdActivity extends AutoLayoutActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_updata_pwd);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         initClick();
     }
 

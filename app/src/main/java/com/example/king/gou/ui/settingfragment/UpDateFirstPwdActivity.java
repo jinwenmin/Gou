@@ -47,6 +47,7 @@ public class UpDateFirstPwdActivity extends AutoLayoutActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_up_date_first_pwd);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         UpDateEmail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
 
         UpDataFirstPwd.setOnClickListener(this);

@@ -41,7 +41,7 @@ public class UpDataSafePwdActivity extends AutoLayoutActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_up_data_safe_pwd);
-        ButterKnife.bind(this);
+        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
         initClick();
     }
 

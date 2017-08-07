@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.utils.HttpEngine;
@@ -36,6 +37,7 @@ public class NoticeContentActivity extends AutoLayoutActivity implements HttpEng
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice_content);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         Intent intent = getIntent();
         int uid = intent.getIntExtra("uid", 0);
         RetrofitService.getInstance().getNoticesContent(this, uid);

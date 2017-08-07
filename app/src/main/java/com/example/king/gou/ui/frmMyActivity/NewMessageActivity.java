@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -55,6 +56,7 @@ public class NewMessageActivity extends AutoLayoutActivity implements OnItemClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_message);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         alertView = new AlertView(null, null, "取消", null, new String[]{"完成"}, this, AlertView.Style.Alert, this);
         contentView = LayoutInflater.from(getApplicationContext()).inflate(
                 R.layout.mess_select_user, null);

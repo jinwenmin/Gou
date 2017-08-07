@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.ui.BaseActivity;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -53,6 +54,7 @@ public class ReChargeActivity extends AutoLayoutActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_re_charge);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         initClick();
 
     }

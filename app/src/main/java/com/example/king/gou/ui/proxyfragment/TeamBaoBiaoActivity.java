@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnSureLisener;
 import com.codbking.widget.bean.DateType;
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.TeamBettingAdapter;
 import com.example.king.gou.bean.GameType;
@@ -85,6 +86,7 @@ public class TeamBaoBiaoActivity extends AutoLayoutActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.team_bettinglist);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         teamBettingAdapter = new TeamBettingAdapter(this);
         TeamBettingListView.setAdapter(teamBettingAdapter);
         initClick();

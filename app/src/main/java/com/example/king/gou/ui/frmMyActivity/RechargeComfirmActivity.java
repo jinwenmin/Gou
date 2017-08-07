@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -45,6 +46,7 @@ public class RechargeComfirmActivity extends AutoLayoutActivity implements View.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recharge_comfirm);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         initCLick();
 
     }

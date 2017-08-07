@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.TeamUserInfoAdapter;
 import com.example.king.gou.bean.TeamUserInfo;
@@ -65,6 +66,7 @@ public class VIPManActivity extends AutoLayoutActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vipman);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         adapter = new TeamUserInfoAdapter(this);
         VIPManListView.setAdapter(adapter);
         RetrofitService.getInstance().getUserStatistics(this);

@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.DrawHistoryAdapter;
 import com.example.king.gou.bean.BettingSync;
@@ -94,6 +95,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_center);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         Intent intent = getIntent();
         gid = intent.getIntExtra("gid", 0);
         position = intent.getIntExtra("position", 0);

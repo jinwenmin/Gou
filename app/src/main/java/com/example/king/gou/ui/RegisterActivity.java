@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.service.RetrofitService;
@@ -65,7 +66,7 @@ public class RegisterActivity extends AutoLayoutActivity implements HttpEngine.D
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        ButterKnife.bind(this);
+        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
         initClick();
         initYZM();
     }

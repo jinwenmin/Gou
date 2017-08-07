@@ -90,7 +90,7 @@ public class TeamLotteryLossActivity extends AutoLayoutActivity implements View.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_lottery_loss);
-        ButterKnife.bind(this);
+        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
         profitLossAdapter = new ProfitLossAdapter(this);
         teamProfitLossList.setAdapter(profitLossAdapter);
         uids = MyApp.getInstance().getUids();

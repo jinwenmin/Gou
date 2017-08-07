@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.CardAdapter;
 import com.example.king.gou.bean.CardsData;
@@ -46,7 +47,7 @@ public class BankCardManActivity extends AutoLayoutActivity implements SlideCutL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank_card_man);
-        ButterKnife.bind(this);
+        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
         RetrofitService.getInstance().getCardDatas(this);
         cardAdapter = new CardAdapter(this);
         nocardList.setAdapter(cardAdapter);

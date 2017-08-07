@@ -93,6 +93,7 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_proxy);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         alertView = new AlertView(null, null, null, new String[]{"确认"}, null, this, AlertView.Style.Alert, this);
         contentView = LayoutInflater.from(this).inflate(
                 R.layout.item_homenotice, null);
@@ -193,8 +194,8 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
 
                 break;
             case 4:
-             Intent intent=new Intent(ProxyHomeActivity.this,VIPAccountChangeActivity.class);
-                intent.putExtra("uid",uid);
+                Intent intent = new Intent(ProxyHomeActivity.this, VIPAccountChangeActivity.class);
+                intent.putExtra("uid", uid);
                 startActivity(intent);
                 break;
 

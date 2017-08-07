@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.codbking.widget.DatePickDialog;
 import com.codbking.widget.OnSureLisener;
 import com.codbking.widget.bean.DateType;
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.MyFrmPageAdapter;
 import com.example.king.gou.adapters.TouZhuAdapter;
@@ -101,6 +102,7 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_jilu);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         touZhuAdapter = new TouZhuAdapter(this);
         GameJiLuListView.setAdapter(touZhuAdapter);
         RetrofitService.getInstance().getGame(this, 4, 0, 0, 0);

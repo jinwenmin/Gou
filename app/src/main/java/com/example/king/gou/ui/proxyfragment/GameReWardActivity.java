@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.GamePrizeAdapter;
 import com.example.king.gou.bean.GamePrize;
@@ -52,7 +53,7 @@ public class GameReWardActivity extends AutoLayoutActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_re_ward);
-        ButterKnife.bind(this);
+        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
         gamePrizeAdapter = new GamePrizeAdapter(this);
         GamePrizeListView.setAdapter(gamePrizeAdapter);
         initCLick();

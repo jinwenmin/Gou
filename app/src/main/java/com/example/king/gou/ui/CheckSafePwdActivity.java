@@ -38,6 +38,7 @@ public class CheckSafePwdActivity extends AutoLayoutActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_safe_pwd);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         initClick();
     }
 

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.CardsData;
 import com.example.king.gou.bean.RestultInfo;
@@ -52,7 +53,7 @@ public class WithDrawActivity extends AutoLayoutActivity implements HttpEngine.D
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_with_draw);
-        ButterKnife.bind(this);
+        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
         amounts = getIntent().getStringExtra("amounts");
         wd = (List<WithDraw>) getIntent().getSerializableExtra("banks");
         WithDrawAmount.setHint("最大取款金额为:" + amounts);

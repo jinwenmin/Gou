@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.ZhuiHao;
 import com.example.king.gou.bean.ZhuiHaoDetails;
@@ -70,7 +71,7 @@ public class ZhuiHaoDetailActivity extends AutoLayoutActivity implements HttpEng
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zhui_hao_detail);
-        ButterKnife.bind(this);
+        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
         Intent intent = getIntent();
         zh = (ZhuiHao) intent.getSerializableExtra("ZH");
         id.setText(zh.getId() + "");
