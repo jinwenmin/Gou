@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/SafeQues"
+        android:layout_width="match_parent"
+        android:layout_height="60px"
+        android:layout_margin="10px"
+        android:gravity="center"
+        android:text="验证安全密码"
+        android:textSize="40px"></TextView>
+
+    <EditText
+        android:id="@+id/AnswerQues"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10px"
+        android:background="@drawable/edit_user_pwd_bg"
+        android:gravity="center"
+        android:inputType="textPassword"
+        android:hint="请输入安全密码"
+        android:padding="10px"
+        android:singleLine="true"
+        android:textSize="30px" />
+</LinearLayout>

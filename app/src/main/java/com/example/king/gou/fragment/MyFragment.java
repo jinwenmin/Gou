@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -27,6 +28,7 @@ import com.example.king.gou.MyApp;
 
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.MyFrmPageAdapter;
+import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.bean.UserAmount;
 import com.example.king.gou.bean.UserInfo;
 import com.example.king.gou.bean.WithDraw;
@@ -116,9 +118,14 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
     List<List<WithDraw>> ws = new ArrayList<>();
     List<WithDraw> datas = new ArrayList<>();
     List<WithDraw> cards = new ArrayList<>();
-    private AlertView alertView;
+    private AlertView alertViewSafe;
     // 一个自定义的布局，作为显示的内容
+    View contentViewSafe;
+
+    private AlertView alertView;
+    ; // 一个自定义的布局，作为显示的内容
     View contentView;
+    String show = "0";
 
     public static MyFragment newInstance() {
 
@@ -140,6 +147,13 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
         contentView = LayoutInflater.from(getContext()).inflate(
                 R.layout.item_homenotice, null);
         alertView.addExtView(contentView);
+
+        alertViewSafe = new AlertView(null, null, "取消", new String[]{"确认"}, null, getContext(), AlertView.Style.Alert, this);
+        contentViewSafe = LayoutInflater.from(getContext()).inflate(
+                R.layout.item_safepwd, null);
+        alertViewSafe.addExtView(contentViewSafe);
+
+
         broad = new Broadcast();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("action.NickName");
@@ -150,7 +164,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
         RetrofitService.getInstance().GetUserInfo(this);
         RetrofitService.getInstance().getSafeQues(this);
 
-     //   initFrms();
+        //   initFrms();
         frmMyViewpager.setAdapter(myFrmPageAdapter);
         frmMyTablayout.setupWithViewPager(frmMyViewpager);
 
@@ -197,7 +211,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
                 break;
             case R.id.ToQukuan:
                 //
-                RetrofitService.getInstance().getWithDrawDatas(this);
+                alertViewSafe.show();
+                show = "2";
+                //RetrofitService.getInstance().getWithDrawDatas(this);
                 break;
             case R.id.ToZhuanZhang:
                 startActivity(new Intent(getActivity(), ZhuanZhangActivity.class));
@@ -298,11 +314,22 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
                     TextView homeNotice = (TextView) contentView.findViewById(R.id.homeNoticeText);
                     homeNotice.setText(Html.fromHtml("用户还未绑定银行卡,是否前往绑定银行卡"));
                     alertView.show();
+                    show = "1";
                 } else {
                     Intent intent = new Intent(getActivity(), WithDrawActivity.class);
                     intent.putExtra("amounts", amounts + "");
                     intent.putExtra("banks", (Serializable) banks);
                     startActivity(intent);
+                }
+            }
+        }if (apiId == RetrofitService.API_ID_SAFEPWD) {
+            if (object != null) {
+                RestultInfo    restultInfo = (RestultInfo) object;
+                if (restultInfo.isRc() == true) {
+                    RetrofitService.getInstance().getWithDrawDatas(this);
+                }if (restultInfo.isRc() == false) {
+                    Toasty.error(getActivity(),restultInfo.getMsg(),2000).show();
+                    return;
                 }
             }
         }
@@ -320,10 +347,26 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
 
     @Override
     public void onItemClick(Object o, int position) {
-        if (position != AlertView.CANCELPOSITION) {
-            startActivity(new Intent(getActivity(), BankCardManActivity.class));
+        if ("1".equals(show)) {
+            if (position != AlertView.CANCELPOSITION) {
+                startActivity(new Intent(getActivity(), BankCardManActivity.class));
+
+            }
+        }
+        if ("2".equals(show)) {
+            if (position != AlertView.CANCELPOSITION) {
+                EditText safepwd = (EditText) contentViewSafe.findViewById(R.id.AnswerQues);
+                String pwd = safepwd.getText().toString().trim();
+                if ("".equals(pwd)) {
+                    Toasty.error(getActivity(),"安全密码不可为空",2000).show();
+                    return;
+                }
+                String hmacsha256 = RxUtils.getInstance().HMACSHA256(pwd, MyApp.getInstance().getUserName());
+                RetrofitService.getInstance().getCheckSafePwd(this, hmacsha256);
+            }
 
         }
+
     }
 
     private class Broadcast extends BroadcastReceiver {

@@ -71,7 +71,9 @@ public class CheckSafePwdActivity extends AutoLayoutActivity implements View.OnC
             if (object != null) {
                 restultInfo = (RestultInfo) object;
                 if (restultInfo.isRc() == false) {
-                    Toasty.info(this, restultInfo.getMsg(), 2000).show();
+                    Toasty.error(this, restultInfo.getMsg(), 2000).show();
+                }if (restultInfo.isRc() == true) {
+                    Toasty.success(this, restultInfo.getMsg(), 2000).show();
                 }
             }
         }

@@ -147,6 +147,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
 
             }
         };
+
         timer.schedule(timerTask, 0, 1000);
 
     }
@@ -198,8 +199,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
             }
         }
         if (apiId == RetrofitService.API_ID_BETTINGWINNUM) {
-
-            timer.cancel();
+            if (timer!=null) {
+                timer.cancel();
+            }
             RetrofitService.getInstance().getBettingSync(this, gid);
             RetrofitService.getInstance().getBettingDrawHistory(this, gid);
 
@@ -260,6 +262,6 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     protected void onDestroy() {
         super.onDestroy();
         handler.removeCallbacks(runnable);
-
+        timer.cancel();
     }
 }

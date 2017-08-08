@@ -26,6 +26,7 @@ import com.example.king.gou.bean.Login;
 import com.example.king.gou.bean.LoginState;
 import com.example.king.gou.bean.LotteryLoss;
 import com.example.king.gou.bean.MapsIdAndValue;
+import com.example.king.gou.bean.Message;
 import com.example.king.gou.bean.RecordList;
 import com.example.king.gou.bean.RestultInfo;
 
@@ -172,6 +173,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_VIPACCCHANGE = 65;//会员帐变记录
     public static int API_ID_SHAREDATA = 66;//推广设置
     public static int API_ID_BETTINGWINNUM = 67;//同步上期开奖数据
+    public static int API_ID_CHATLIST = 68;//获取聊天消息
 
 
     private Retrofit retrofit;
@@ -1767,7 +1769,7 @@ public class RetrofitService extends HttpEngine {
     }
 
     //获得消息列表
-    public void getChatList(DataListener listener, int page, int rows, String sidx, String sord, int send_uid, String from, String to) {
+    public void getChatList(final DataListener listener, int page, int rows, String sidx, String sord, int send_uid, String from, String to) {
         long currentTimeMillis = System.currentTimeMillis();
 
         Map<String, String> map = new HashMap<>();
@@ -1779,17 +1781,55 @@ public class RetrofitService extends HttpEngine {
         map.put("from", from + "");
         map.put("to", to + "");
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> clone = apiInterface.getChatList(1, page, rows, sidx, sord, send_uid, from, to, reqkey, currentTimeMillis).clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<Map<String, Object>> clone = apiInterface.getChatList(1, page, rows, sidx, sord, send_uid, from, to, reqkey, currentTimeMillis).clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 if (response.code() == 200) {
                     Log.d("获取消息列表", response.body().toString());
+                    Map<String, Object> map = response.body();
+                    double number = 0;
+                    List<Object> content = new ArrayList<>();
+                    List<Message> msgs = new ArrayList<Message>();
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if ("content".equals(entry.getKey())) {
+                                content = (List<Object>) entry.getValue();
+                            }
+                            if ("number".equals(entry.getKey())) {
+                                number = (double) entry.getValue();
+                            }
+                        }
+                    }
+                    if (number > 0) {
+                        for (int i = 0; i < content.size(); i = i + 8) {
+                            List<Object> o = (List<Object>) content.get(i);
+                            Message msg = new Message();
+                            double o1 = (double) o.get(i);
+                            String o2 = (String) o.get(i + 1);
+                            String o3 = (String) o.get(i + 2);
+                            String o4 = (String) o.get(i + 3);
+                            String o5 = (String) o.get(i + 4);
+                            String o6 = (String) o.get(i + 5);
+                            double o7 = (double) o.get(i + 6);
+                            double o8 = (double) o.get(i + 7);
+                            msg.setChat_id(RxUtils.getInstance().getInt(o1));
+                            msg.setTitle(o2);
+                            msg.setContent(o3);
+                            msg.setSname(o4);
+                            msg.setUname(o5);
+                            msg.setChat_date(o6);
+                            msg.setReaded(RxUtils.getInstance().getInt(o7));
+                            msg.setIs_alert(RxUtils.getInstance().getInt(o8));
+                            msgs.add(msg);
+                        }
+                    }
+                    listener.onReceivedData(API_ID_CHATLIST, msgs, API_ID_ERROR);
                 }
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
 
             }
         });
@@ -4573,7 +4613,7 @@ public class RetrofitService extends HttpEngine {
                     boolean rc = false;
                     double id = 0;
                     Map<String, Object> others = new HashMap<>();
-                    BettingSync bettingSync=new BettingSync();
+                    BettingSync bettingSync = new BettingSync();
                     if (map.size() > 0) {
                         for (Map.Entry<String, Object> entry : map.entrySet()) {
                             if ("rc".equals(entry.getKey())) {
@@ -4591,9 +4631,9 @@ public class RetrofitService extends HttpEngine {
                     bettingSync.setRc(rc);
                     bettingSync.setGid(RxUtils.getInstance().getInt(id));
                     if (others.size() > 0) {
-                        String property=null;
-                        String period=null;
-                        String winningNumber=null;
+                        String property = null;
+                        String period = null;
+                        String winningNumber = null;
                         for (Map.Entry<String, Object> entry : others.entrySet()) {
                             if ("property".equals(entry.getKey())) {
                                 property = (String) entry.getValue();

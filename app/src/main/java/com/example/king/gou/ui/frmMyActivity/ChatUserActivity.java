@@ -1,7 +1,9 @@
 package com.example.king.gou.ui.frmMyActivity;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -17,8 +19,7 @@ import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.lang.reflect.Field;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,15 +36,28 @@ public class ChatUserActivity extends AutoLayoutActivity implements View.OnClick
     ListView CharUserListView;
     List<MapsIdAndValue> CharUser;
     ChatUsersAdapter chatUsersAdapter;
+    @BindView(R.id.img)
+    ImageView img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_user);
-        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
+        ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         RetrofitService.getInstance().getChatUser(this);
         chatUsersAdapter = new ChatUsersAdapter(this);
         CharUserListView.setAdapter(chatUsersAdapter);
+        try {
+            Field field = R.drawable.class.getDeclaredField("i01");
+            int resId = Integer.parseInt(field.get(null).toString());
+            Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), resId);
+            //img.setBackgroundResource(resId);
+            //img.setImageResource(resId);
+            img.setImageBitmap(bitmap);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         initClick();
     }
 
@@ -52,6 +66,10 @@ public class ChatUserActivity extends AutoLayoutActivity implements View.OnClick
         CharUserListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent=new Intent(ChatUserActivity.this,GetSendMsgActivity.class);
+                intent.putExtra("id",CharUser.get(i).getId());
+                intent.putExtra("name",CharUser.get(i).getValues());
+                startActivity(intent);
                 String dates = RxUtils.getInstance().Dates(0);
                 String dates1 = RxUtils.getInstance().Dates(System.currentTimeMillis());
                 RetrofitService.getInstance().getChatList(ChatUserActivity.this, 1, 100, "chat_date", "desc", CharUser.get(i).getId(), dates, dates1);

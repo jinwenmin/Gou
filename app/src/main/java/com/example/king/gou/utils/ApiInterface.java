@@ -493,7 +493,7 @@ public interface ApiInterface {
     //查询消息列表
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/message-manage-list")
-    Call<Object> getChatList(
+    Call<Map<String,Object>> getChatList(
 
             @Query("AppClient") int num,
 

@@ -43,6 +43,7 @@ import com.example.king.gou.ui.settingfragment.UpdatePwdActivity;
 import com.example.king.gou.utils.DataBaseHelper;
 import com.example.king.gou.utils.FingerPrintUtils;
 import com.example.king.gou.utils.HttpEngine;
+import com.example.king.gou.utils.RxUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.List;
@@ -134,6 +135,12 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
     private AlertView alertViewAnswer;
     // 一个自定义的布局，作为显示的内容
     View contentViewAnswer;
+
+    private AlertView alertViewSafe;
+    // 一个自定义的布局，作为显示的内容
+    View contentViewSafe;
+
+
     List<UserInfo> userInfos;
     TextView SafeQues;
     private EditText answerQues;
@@ -143,6 +150,7 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
     private final static int REQUEST_CODE_FINGER = 0;
     private final static String TAG = "MainActivity";
     private SharedPreferences Finger;
+    String show = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,10 +161,16 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
         manager = FingerprintManagerCompat.from(this);
         mKeyguardManager = (KeyguardManager) this.getSystemService(Context.KEYGUARD_SERVICE);
         initDataHelper();
+
         alertViewAnswer = new AlertView(null, null, "取消", new String[]{"确认"}, null, this, AlertView.Style.Alert, this);
         contentViewAnswer = LayoutInflater.from(this).inflate(
                 R.layout.reset_pwdcheck, null);
         alertViewAnswer.addExtView(contentViewAnswer);
+
+        alertViewSafe = new AlertView(null, null, "取消", new String[]{"确认"}, null, this, AlertView.Style.Alert, this);
+        contentViewSafe = LayoutInflater.from(this).inflate(
+                R.layout.item_safepwd, null);
+        alertViewSafe.addExtView(contentViewSafe);
         initClick();
 
     }
@@ -200,7 +214,9 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
                 //StartA(CheckSafePwdActivity.class);
                 break;
             case R.id.Pwd_protect:
-                StartA(MoneyProtectActivity.class);
+                alertViewSafe.show();
+                show = "3";
+
                 break;
             case R.id.update_NickName:
                 StartA(UpdateNickNameActivity.class);
@@ -218,6 +234,7 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
                         fingerImg = ((ImageView) contentView.findViewById(R.id.fingerImg));
                         fingerText = ((TextView) contentView.findViewById(R.id.fingerText));
                         alertView.show();
+                        show = "1";
                         initFingerPrint();
                     }
                 } else {
@@ -237,13 +254,13 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
                 RetrofitService.getInstance().GetUserInfo(this);
                 break;
             case R.id.Aboutus:
-             //   StartA(AboutUsActivity.class);
+                //   StartA(AboutUsActivity.class);
                 break;
             case R.id.LogOut:
                 Log.d("退出Sett=", "退出Sett");
                 RetrofitService.getInstance().LogOut();
-                Intent intent=new Intent(SettingActivity.this, LoginActivity.class);
-                intent.putExtra("LogOut","logout");
+                Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+                intent.putExtra("LogOut", "logout");
                 startActivity(intent);
                 MyApp.getInstance().finishActivity();
              /*   Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -253,7 +270,7 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
 
                 System.exit(0);*/
                 //Intent intent = new Intent("action.Finish");
-               // this.sendBroadcast(intent);
+                // this.sendBroadcast(intent);
                 break;
         }
     }
@@ -288,6 +305,18 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
                 }
             }
         }
+        if (apiId == RetrofitService.API_ID_SAFEPWD) {
+            if (object != null) {
+                RestultInfo    restultInfo = (RestultInfo) object;
+                if (restultInfo.isRc() == true) {
+                    StartA(MoneyProtectActivity.class);
+                    return;
+                }if (restultInfo.isRc() == false) {
+                    Toasty.error(this,restultInfo.getMsg(),2000).show();
+                    return;
+                }
+            }
+        }
     }
 
     @Override
@@ -302,14 +331,32 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
 
     @Override
     public void onItemClick(Object o, int position) {
-        if (position != AlertView.CANCELPOSITION) {
-            String Answer = answerQues.getText().toString().trim();
-            if (Answer == null || "".equals(Answer)) {
-                Toasty.error(this, "问题答案不能为空", 2000).show();
-                return;
-            }
-            RetrofitService.getInstance().getSecurityQuestionCheck(this, Answer);
+        if ("1".equals(show)) {
+
         }
+        if ("2".equals(show)) {
+            if (position != AlertView.CANCELPOSITION) {
+                String Answer = answerQues.getText().toString().trim();
+                if (Answer == null || "".equals(Answer)) {
+                    Toasty.error(this, "问题答案不能为空", 2000).show();
+                    return;
+                }
+                RetrofitService.getInstance().getSecurityQuestionCheck(this, Answer);
+            }
+        }
+        if ("3".equals(show)) {
+            if (position != AlertView.CANCELPOSITION) {
+                EditText safepwd = (EditText) contentViewSafe.findViewById(R.id.AnswerQues);
+                String pwd = safepwd.getText().toString().trim();
+                if ("".equals(pwd)) {
+                    Toasty.error(this,"安全密码不可为空",2000).show();
+                    return;
+                }
+                String hmacsha256 = RxUtils.getInstance().HMACSHA256(pwd, MyApp.getInstance().getUserName());
+                RetrofitService.getInstance().getCheckSafePwd(this, hmacsha256);
+            }
+        }
+
         if (position == AlertView.CANCELPOSITION) {
             alertViewAnswer.dismiss();
         }

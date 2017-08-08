@@ -69,7 +69,7 @@ public class MoneyProtectActivity extends AutoLayoutActivity implements View.OnC
                 String selectedItem = (String) SpinnerQues1.getSelectedItem();
                 Log.d("选中的问题", selectedItem);
                 String SaveEditeText = SavePwdProtectEdittext.getText().toString().trim();
-                if (SaveEditeText == null) {
+                if (SaveEditeText == null || "".equals(SaveEditeText)) {
                     Toasty.error(MoneyProtectActivity.this, "答案不能为空", 2000).show();
                     return;
                 }
