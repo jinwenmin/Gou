@@ -531,7 +531,7 @@ public interface ApiInterface {
 
     //发送聊天信息
     @Headers("X-Requested-With: XMLHttpRequest")
-    @POST("/message-manage-loads")
+    @POST("/chat-message-send")
     Call<Object> getSendMsg(
             @Query("AppClient") int num,
             @Query("id") int id,//聊天消息id

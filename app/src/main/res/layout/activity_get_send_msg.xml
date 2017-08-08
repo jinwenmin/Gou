@@ -38,13 +38,16 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
         <EditText
+            android:id="@+id/EditMsg"
+            android:textSize="30px"
             android:singleLine="true"
             android:layout_marginLeft="5px"
             android:layout_marginRight="5px"
             android:layout_gravity="center"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:background="@drawable/edit_user_pwd_bg"
             android:layout_weight="7"
+            android:paddingLeft="10px"
             android:layout_width="0px"
             android:layout_height="70px" />
         <ImageView
@@ -53,6 +56,7 @@
             android:layout_width="60px"
             android:layout_height="60px" />
         <Button
+            android:id="@+id/sendMessage"
             android:textSize="30px"
             android:gravity="center"
             android:textColor="@android:color/white"

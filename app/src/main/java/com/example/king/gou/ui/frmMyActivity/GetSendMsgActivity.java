@@ -2,6 +2,9 @@ package com.example.king.gou.ui.frmMyActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -20,9 +23,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 
 
-public class GetSendMsgActivity extends AutoLayoutActivity implements HttpEngine.DataListener {
+public class GetSendMsgActivity extends AutoLayoutActivity implements HttpEngine.DataListener, View.OnClickListener {
 
     @BindView(R.id._back)
     ImageView Back;
@@ -35,7 +39,11 @@ public class GetSendMsgActivity extends AutoLayoutActivity implements HttpEngine
     @BindView(R.id.getSendMsgListView)
     ListView getSendMsgListView;
     MessageGetAdapter adapter;
-
+    @BindView(R.id.sendMessage)
+    Button sendMessage;
+    @BindView(R.id.EditMsg)
+    EditText EditMsg;
+    int id=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,13 +52,18 @@ public class GetSendMsgActivity extends AutoLayoutActivity implements HttpEngine
         getSendMsgListView.setDividerHeight(0);
         adapter = new MessageGetAdapter(this);
         getSendMsgListView.setAdapter(adapter);
+        initClick();
         Intent intent = getIntent();
-        int id = intent.getIntExtra("id", 0);
+       id = intent.getIntExtra("id", 0);
         String name = intent.getStringExtra("name");
         title.setText("与" + name + "聊天中");
         String dates = RxUtils.getInstance().Dates(0);
         String dates1 = RxUtils.getInstance().Dates(System.currentTimeMillis());
         RetrofitService.getInstance().getChatList(GetSendMsgActivity.this, 1, 100, "chat_date", "desc", id, dates, dates1);
+    }
+
+    private void initClick() {
+        sendMessage.setOnClickListener(this);
     }
 
     @Override
@@ -71,5 +84,19 @@ public class GetSendMsgActivity extends AutoLayoutActivity implements HttpEngine
     @Override
     public void onRequestEnd(int apiId) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.sendMessage:
+                String editMsg = EditMsg.getText().toString().trim();
+                if (editMsg==null) {
+                    Toasty.error(this,"请输入聊天信息",2000).show();
+                    return;
+                }
+                RetrofitService.getInstance().getSendMsg(this,id,"普通聊天消息",editMsg);
+                break;
+        }
     }
 }

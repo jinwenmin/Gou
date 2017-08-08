@@ -1802,17 +1802,17 @@ public class RetrofitService extends HttpEngine {
                         }
                     }
                     if (number > 0) {
-                        for (int i = 0; i < content.size(); i = i + 8) {
-                            List<Object> o = (List<Object>) content.get(i);
+                        for (int i = content.size(); i > 0; i--) {
+                            List<Object> o = (List<Object>) content.get(i-1);
                             Message msg = new Message();
-                            double o1 = (double) o.get(i);
-                            String o2 = (String) o.get(i + 1);
-                            String o3 = (String) o.get(i + 2);
-                            String o4 = (String) o.get(i + 3);
-                            String o5 = (String) o.get(i + 4);
-                            String o6 = (String) o.get(i + 5);
-                            double o7 = (double) o.get(i + 6);
-                            double o8 = (double) o.get(i + 7);
+                            double o1 = (double) o.get(0);
+                            String o2 = (String) o.get(1);
+                            String o3 = (String) o.get(2);
+                            String o4 = (String) o.get(3);
+                            String o5 = (String) o.get(4);
+                            String o6 = (String) o.get(5);
+                            double o7 = (double) o.get(6);
+                            double o8 = (double) o.get(7);
                             msg.setChat_id(RxUtils.getInstance().getInt(o1));
                             msg.setTitle(o2);
                             msg.setContent(o3);
@@ -1900,7 +1900,7 @@ public class RetrofitService extends HttpEngine {
 
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
-
+                Log.d("发送聊天信息Error", t.toString());
             }
         });
     }
