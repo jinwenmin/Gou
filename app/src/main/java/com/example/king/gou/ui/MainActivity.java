@@ -84,7 +84,7 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
     private Timer timer;
     private String login_sessionid;
     private AlertView alertView;
-    ; // 一个自定义的布局，作为显示的内容
+     // 一个自定义的布局，作为显示的内容
     View contentView;
     private ImageView fingerImg;
     private TextView fingerText;
@@ -92,7 +92,7 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
     KeyguardManager mKeyManager;
     private final static int REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS = 0;
     DataBaseHelper dataBaseHelper;
-    DataBaseHelper dataBaseFingerHelper;
+    DataBaseHelper dataBaseFingerHelpoer;
 
     String id = null;
 

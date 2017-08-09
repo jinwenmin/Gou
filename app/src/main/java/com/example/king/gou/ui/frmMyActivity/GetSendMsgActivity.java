@@ -7,8 +7,9 @@ import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -16,13 +17,15 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.bigkoo.alertview.AlertView;
+import com.bigkoo.alertview.OnItemClickListener;
 import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
-import com.example.king.gou.adapters.MessageGetAdapter;
+import com.example.king.gou.adapters.IconGridViewAdapter;
+import com.example.king.gou.bean.Icons;
 import com.example.king.gou.bean.Message;
 import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.service.RetrofitService;
-import com.example.king.gou.ui.MainActivity;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -38,7 +41,7 @@ import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
 
 
-public class GetSendMsgActivity extends AutoLayoutActivity implements HttpEngine.DataListener, View.OnClickListener {
+public class GetSendMsgActivity extends AutoLayoutActivity implements HttpEngine.DataListener, View.OnClickListener, OnItemClickListener {
 
     @BindView(R.id._back)
     ImageView Back;
@@ -51,8 +54,7 @@ public class GetSendMsgActivity extends AutoLayoutActivity implements HttpEngine
     @BindView(R.id.getSendMsgListView)
     ListView getSendMsgListView;
     // MessageGetAdapter adapter;
-    @BindView(R.id.sendMessage)
-    ImageView sendMessage;
+
     @BindView(R.id.EditMsg)
     EditText EditMsg;
     int id = 0;
@@ -61,6 +63,10 @@ public class GetSendMsgActivity extends AutoLayoutActivity implements HttpEngine
     @BindView(R.id.getSendScroll)
     ScrollView getSendScroll;
     String editMsg;
+    @BindView(R.id.AddIcon)
+    ImageView AddIcon;
+    @BindView(R.id.sendMessage)
+    ImageView sendMessage;
     private Timer timer;
     List<Message> msgs = new ArrayList<>();
     String[] iconName = new String[]{"[/大笑]", "[/抓狂]", "[/大哭]", "[/拜托]", "[/鄙视]", "[/不屑]", "[/愕然]", "[/眼红]", "[/很拽]", "[/好色]",
@@ -69,6 +75,10 @@ public class GetSendMsgActivity extends AutoLayoutActivity implements HttpEngine
     int[] icon = new int[]{R.drawable.i01, R.drawable.i02, R.drawable.i03, R.drawable.i04, R.drawable.i05, R.drawable.i06, R.drawable.i07, R.drawable.i08, R.drawable.i09, R.drawable.i10,
             R.drawable.i11, R.drawable.i12, R.drawable.i13, R.drawable.i14, R.drawable.i15, R.drawable.i16, R.drawable.i17, R.drawable.i18, R.drawable.i19, R.drawable.i20,
             R.drawable.i21, R.drawable.i22, R.drawable.i23, R.drawable.i24, R.drawable.i25, R.drawable.i26, R.drawable.i27,};
+    private AlertView alertView;
+    // 一个自定义的布局，作为显示的内容
+    View contentView;
+    IconGridViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +90,9 @@ public class GetSendMsgActivity extends AutoLayoutActivity implements HttpEngine
         GetSendMsgLinear.setFocusable(true);
         getSendScroll.setVerticalScrollBarEnabled(false);
         getSendScroll.fullScroll(ScrollView.FOCUS_DOWN);
+        initAlert();
+
+
         //   adapter = new MessageGetAdapter(this);
         //  getSendMsgListView.setAdapter(adapter);
         initClick();
@@ -93,9 +106,41 @@ public class GetSendMsgActivity extends AutoLayoutActivity implements HttpEngine
         initTimer();
     }
 
+    private void initAlert() {
+        alertView = new AlertView(null, null, "取消", null, null, this, AlertView.Style.Alert, this);
+        contentView = LayoutInflater.from(this).inflate(
+                R.layout.item_icons, null);
+        alertView.addExtView(contentView);
+
+        GridView iconGrid = (GridView) contentView.findViewById(R.id.icon_View);
+
+        iconGrid.setNumColumns(9);
+        adapter = new IconGridViewAdapter(this);
+        iconGrid.setAdapter(adapter);
+        List<Icons> iconses = new ArrayList<>();
+        for (int i = 0; i < 27; i++) {
+            Icons ic = new Icons();
+            ic.setIconImg(icon[i]);
+            ic.setIconName(iconName[i]);
+            iconses.add(ic);
+        }
+        adapter.addList(iconses);
+        iconGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                EditMsg.setText(EditMsg.getText().toString() + iconName[position]);
+                EditMsg.setSelection(EditMsg.getText().toString().length());
+                Log.d("表情名称为", iconName[position]);
+
+                //alertView.dismiss();
+            }
+        });
+    }
+
     private void initClick() {
         sendMessage.setOnClickListener(this);
         Back.setOnClickListener(this);
+        AddIcon.setOnClickListener(this);
     }
 
     private void initTimer() {
@@ -178,7 +223,14 @@ public class GetSendMsgActivity extends AutoLayoutActivity implements HttpEngine
                     View view = LayoutInflater.from(this).inflate(R.layout.item_msg_send, null, false);
                     TextView sendMsg = (TextView) view.findViewById(R.id.SendMsg);
                     TextView SendTime = (TextView) view.findViewById(R.id.SendMsgTimer);
-                    sendMsg.setText(editMsg);
+
+                    for (int k = 0; k < iconName.length; k++) {
+                        if (editMsg.contains(iconName[k])) {
+                            editMsg = editMsg.replace(iconName[k], "<img src=\"" + icon[k] + "\" />");
+                        }
+                    }
+
+                    sendMsg.setText(Html.fromHtml(editMsg, imageGetter, null));
                     Date date = new Date();
                     RxUtils.getInstance().FormatDate(date);
                     SendTime.setText(RxUtils.getInstance().FormatDate(date));
@@ -235,7 +287,7 @@ public class GetSendMsgActivity extends AutoLayoutActivity implements HttpEngine
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.sendMessage:
-                editMsg = EditMsg.getText().toString().trim();
+                editMsg = EditMsg.getText().toString();
                 if (editMsg == null || "".equals(editMsg)) {
                     Toasty.error(this, "请输入聊天信息", 2000).show();
                     return;
@@ -246,6 +298,9 @@ public class GetSendMsgActivity extends AutoLayoutActivity implements HttpEngine
             case R.id._back:
                 finish();
                 break;
+            case R.id.AddIcon:
+                alertView.show();
+                break;
         }
     }
 
@@ -255,5 +310,10 @@ public class GetSendMsgActivity extends AutoLayoutActivity implements HttpEngine
         if (timer != null) {
             timer.cancel();
         }
+    }
+
+    @Override
+    public void onItemClick(Object o, int position) {
+
     }
 }

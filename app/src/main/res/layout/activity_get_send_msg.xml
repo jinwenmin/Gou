@@ -55,6 +55,7 @@
             android:textSize="30px" />
 
         <ImageView
+            android:id="@+id/AddIcon"
             android:layout_width="60px"
             android:layout_height="60px"
             android:layout_gravity="center"
