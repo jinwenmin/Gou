@@ -532,7 +532,7 @@ public interface ApiInterface {
     //发送聊天信息
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/chat-message-send")
-    Call<Object> getSendMsg(
+    Call<RestultInfo> getSendMsg(
             @Query("AppClient") int num,
             @Query("id") int id,//聊天消息id
             @Query("title") String title, //聊天消息id
@@ -544,7 +544,7 @@ public interface ApiInterface {
     //轮询读取新消息
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/message-manage-getnew")
-    Call<Object> getNewMsg(
+    Call<List<List<Object>>> getNewMsg(
             @Query("AppClient") int num,
             @Query("id") int id,//聊天对象uid
             @Query("reqkey") String reqkey,

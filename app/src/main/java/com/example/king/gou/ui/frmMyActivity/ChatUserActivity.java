@@ -3,12 +3,15 @@ package com.example.king.gou.ui.frmMyActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
@@ -36,8 +39,8 @@ public class ChatUserActivity extends AutoLayoutActivity implements View.OnClick
     ListView CharUserListView;
     List<MapsIdAndValue> CharUser;
     ChatUsersAdapter chatUsersAdapter;
-    @BindView(R.id.img)
-    ImageView img;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,27 +51,40 @@ public class ChatUserActivity extends AutoLayoutActivity implements View.OnClick
         RetrofitService.getInstance().getChatUser(this);
         chatUsersAdapter = new ChatUsersAdapter(this);
         CharUserListView.setAdapter(chatUsersAdapter);
+       /* final String sText1 = "测试图片信息：<img src=\"" + R.drawable.i01 + "\" />";
+        text.setText();
         try {
             Field field = R.drawable.class.getDeclaredField("i01");
             int resId = Integer.parseInt(field.get(null).toString());
             Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), resId);
             //img.setBackgroundResource(resId);
             //img.setImageResource(resId);
-            img.setImageBitmap(bitmap);
+            //img.setImageBitmap(bitmap);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
         initClick();
     }
+
+    final Html.ImageGetter imageGetter = new Html.ImageGetter() {
+
+        public Drawable getDrawable(String source) {
+            Drawable drawable = null;
+            int rId = Integer.parseInt(source);
+            drawable = getResources().getDrawable(rId);
+            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+            return drawable;
+        }
+    };
 
     private void initClick() {
         Back.setOnClickListener(this);
         CharUserListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent=new Intent(ChatUserActivity.this,GetSendMsgActivity.class);
-                intent.putExtra("id",CharUser.get(i).getId());
-                intent.putExtra("name",CharUser.get(i).getValues());
+                Intent intent = new Intent(ChatUserActivity.this, GetSendMsgActivity.class);
+                intent.putExtra("id", CharUser.get(i).getId());
+                intent.putExtra("name", CharUser.get(i).getValues());
                 startActivity(intent);
                 String dates = RxUtils.getInstance().Dates(0);
                 String dates1 = RxUtils.getInstance().Dates(System.currentTimeMillis());

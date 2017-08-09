@@ -24,6 +24,7 @@
             android:layout_marginStart="11dp" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/Status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,7 +36,7 @@
             android:textSize="25px" />
 
         <TextView
-            android:id="@+id/MsgTimer"
+            android:id="@+id/SendMsgTimer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -51,7 +52,7 @@
 
             android:layout_width="600px"
             android:layout_height="1px"
-            android:layout_below="@id/MsgTimer"
+            android:layout_below="@id/SendMsgTimer"
             android:layout_centerInParent="true"
             android:background="@android:color/white" />
 

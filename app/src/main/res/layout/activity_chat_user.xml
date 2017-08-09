@@ -32,9 +32,6 @@
         android:layout_height="match_parent"
         ></ListView>
 
-    <ImageView
 
-        android:id="@+id/img"
-        android:layout_width="100px"
-        android:layout_height="100px" />
+
 </LinearLayout>

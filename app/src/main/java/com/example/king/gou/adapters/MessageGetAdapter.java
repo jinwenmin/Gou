@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.Message;
 
@@ -60,65 +59,36 @@ public class MessageGetAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder viewHolder;
-        ViewHolderSend viewHolderSend;
-        Message m = msgs.get(i);
-        if (MyApp.getInstance().getUserName().equals(m.getSname())) {
-            if (view == null) {
-                view = inflater.inflate(R.layout.item_msg_send, viewGroup, false);
-                viewHolderSend = new ViewHolderSend(view);
-                view.setTag(viewHolderSend);
-            } else {
-                viewHolderSend = (ViewHolderSend) view.getTag();
-            }
-            if (m.getReaded() == 0) {
-                viewHolderSend.Status.setText("未读");
-            }
-            if (m.getReaded() == 1) {
-                viewHolderSend.Status.setText("已读");
-            }
-            if (!"".equals(m.getIs_alert())) {
-                viewHolderSend.MsgTimer.setText(m.getChat_date());
-            }
-            if (!"".equals(m.getContent())) {
-                for (int i1 = 0; i1 < icon.length; i1++) {
-                    //icon[i1]
-                }
-                viewHolderSend.SendMsg.setText(m.getContent());
-            }
+        if (view == null) {
+            view = inflater.inflate(R.layout.item_msg_get, viewGroup, false);
+            viewHolder = new ViewHolder(view);
+            view.setTag(viewHolder);
         } else {
-            if (view == null) {
-                view = inflater.inflate(R.layout.item_msg_get, viewGroup, false);
-                viewHolder = new ViewHolder(view);
-                view.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) view.getTag();
-            }
-            if (m.getReaded() == 0) {
-                viewHolder.Status.setText("未读");
-            }
-            if (m.getReaded() == 1) {
-                viewHolder.Status.setText("已读");
-            }
-            if (!"".equals(m.getIs_alert())) {
-                viewHolder.MsgTimer.setText(m.getChat_date());
-            }
-            if (!"".equals(m.getContent())) {
-                for (int i1 = 0; i1 < icon.length; i1++) {
-                    //icon[i1]
-                }
-                viewHolder.GetMsg.setText(m.getContent());
-            }
+            viewHolder = (ViewHolder) view.getTag();
         }
-
-
-
+        Message m = msgs.get(i);
+        if (m.getReaded() == 0) {
+            viewHolder.Status.setText("未读");
+        }
+        if (m.getReaded() == 1) {
+            viewHolder.Status.setText("已读");
+        }
+        if (!"".equals(m.getIs_alert())) {
+            viewHolder.MsgTimer.setText(m.getChat_date());
+        }
+        if (!"".equals(m.getContent())) {
+            for (int i1 = 0; i1 < icon.length; i1++) {
+                //icon[i1]
+            }
+            viewHolder.GetMsg.setText(m.getContent());
+        }
         return view;
     }
 
     static class ViewHolder {
         @BindView(R.id.Status)
         TextView Status;
-        @BindView(R.id.MsgTimer)
+        @BindView(R.id.GetMsgTimer)
         TextView MsgTimer;
         @BindView(R.id.View)
         android.view.View View;
@@ -126,21 +96,6 @@ public class MessageGetAdapter extends BaseAdapter {
         TextView GetMsg;
 
         ViewHolder(android.view.View view) {
-            ButterKnife.bind(this, view);
-        }
-    }
-
-    static class ViewHolderSend {
-        @BindView(R.id.Status)
-        TextView Status;
-        @BindView(R.id.MsgTimer)
-        TextView MsgTimer;
-        @BindView(R.id.View)
-        android.view.View View;
-        @BindView(R.id.SendMsg)
-        TextView SendMsg;
-
-        ViewHolderSend(android.view.View view) {
             ButterKnife.bind(this, view);
         }
     }

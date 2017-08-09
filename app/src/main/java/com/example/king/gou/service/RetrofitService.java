@@ -174,6 +174,8 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_SHAREDATA = 66;//推广设置
     public static int API_ID_BETTINGWINNUM = 67;//同步上期开奖数据
     public static int API_ID_CHATLIST = 68;//获取聊天消息
+    public static int API_ID_SENDMSG = 70;//获取聊天消息
+    public static int API_ID_GETNEWMSG = 71;//轮询消息
 
 
     private Retrofit retrofit;
@@ -1803,7 +1805,7 @@ public class RetrofitService extends HttpEngine {
                     }
                     if (number > 0) {
                         for (int i = content.size(); i > 0; i--) {
-                            List<Object> o = (List<Object>) content.get(i-1);
+                            List<Object> o = (List<Object>) content.get(i - 1);
                             Message msg = new Message();
                             double o1 = (double) o.get(0);
                             String o2 = (String) o.get(1);
@@ -1882,47 +1884,64 @@ public class RetrofitService extends HttpEngine {
     }
 
     //发送聊天信息
-    public void getSendMsg(DataListener listener, int id, String title, String msg) {
+    public void getSendMsg(final DataListener listener, int id, String title, String msg) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         map.put("id", id + "");
         map.put("title", title + "");
         map.put("msg", msg + "");
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> clone = apiInterface.getSendMsg(1, id, title, msg, reqkey, currentTimeMillis).clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<RestultInfo> clone = apiInterface.getSendMsg(1, id, title, msg, reqkey, currentTimeMillis).clone();
+        clone.enqueue(new Callback<RestultInfo>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
                 if (response.code() == 200) {
                     Log.d("发送聊天信息", response.body().toString());
+                    listener.onReceivedData(API_ID_SENDMSG, response.body(), API_ID_ERROR);
                 }
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
                 Log.d("发送聊天信息Error", t.toString());
             }
         });
     }
 
     //轮询获取新消息
-    public void getNewMsg(DataListener listener, int id) {
+    public void getNewMsg(final DataListener listener, int id) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
-
+        map.put("id", id + "");
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> clone = apiInterface.getNewMsg(1, id, reqkey, currentTimeMillis).clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<List<List<Object>>> clone = apiInterface.getNewMsg(1, id, reqkey, currentTimeMillis).clone();
+        clone.enqueue(new Callback<List<List<Object>>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<List<List<Object>>> call, retrofit2.Response<List<List<Object>>> response) {
                 if (response.code() == 200) {
                     Log.d("轮询获取新消息", response.body().toString());
+                    List<List<Object>> list = response.body();
+                    List<Message> messages=new ArrayList<Message>();
+                    for (int i = 0; i < list.size(); i++) {
+                        List<Object> megs = list.get(i);
+                        double id = (double) megs.get(0);
+                        String  uname = (String) megs.get(1);
+                        String  date = (String) megs.get(2);
+                        String  content = (String) megs.get(3);
+                        Message message=new Message();
+                        message.setChat_id(RxUtils.getInstance().getInt(id));
+                        message.setUname(uname);
+                        message.setChat_date(date);
+                        message.setContent(content);
+                        messages.add(message);
+                    }
+                    listener.onReceivedData(API_ID_GETNEWMSG,messages,API_ID_ERROR);
                 }
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
-
+            public void onFailure(Call<List<List<Object>>> call, Throwable t) {
+                Log.d("轮询获取新消息Error", t.toString());
             }
         });
     }

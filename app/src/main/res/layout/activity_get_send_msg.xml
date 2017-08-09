@@ -36,41 +36,64 @@
         android:layout_width="match_parent"
         android:layout_height="80px"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:orientation="horizontal">
+
         <EditText
             android:id="@+id/EditMsg"
-            android:textSize="30px"
-            android:singleLine="true"
+            android:layout_width="0px"
+            android:layout_height="70px"
+            android:layout_gravity="center"
             android:layout_marginLeft="5px"
             android:layout_marginRight="5px"
-            android:layout_gravity="center"
-            android:gravity="center_vertical"
-            android:background="@drawable/edit_user_pwd_bg"
             android:layout_weight="7"
+            android:background="@drawable/edit_user_pwd_bg"
+            android:gravity="center_vertical"
             android:paddingLeft="10px"
-            android:layout_width="0px"
-            android:layout_height="70px" />
+            android:singleLine="true"
+            android:textSize="30px" />
+
         <ImageView
-          android:background="@drawable/btn"
-            android:layout_gravity="center"
             android:layout_width="60px"
-            android:layout_height="60px" />
-        <Button
-            android:id="@+id/sendMessage"
-            android:textSize="30px"
-            android:gravity="center"
-            android:textColor="@android:color/white"
-            android:text="发送"
-            android:background="@drawable/gamecenter_btn"
+            android:layout_height="60px"
             android:layout_gravity="center"
-            android:layout_width="100px"
-            android:layout_height="60px" />
+            android:background="@drawable/btn" />
+
+        <ImageView
+            android:id="@+id/sendMessage"
+            android:layout_width="60px"
+            android:layout_height="60px"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5px"
+            android:layout_marginRight="5px"
+            android:background="@mipmap/send_btn"
+            android:gravity="center"
+
+            android:textSize="30px" />
     </LinearLayout>
 
-    <ListView
+    <ScrollView
+        android:id="@+id/getSendScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/SendLinear"
         android:layout_below="@id/Top"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <LinearLayout
+            android:id="@+id/GetSendMsgLinear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"></LinearLayout>
+    </ScrollView>
+
+    <ListView
         android:id="@+id/getSendMsgListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/SendLinear"></ListView>
+        android:layout_above="@id/SendLinear"
+        android:layout_below="@id/Top"
+        android:visibility="gone"></ListView>
 </RelativeLayout>
