@@ -262,6 +262,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     protected void onDestroy() {
         super.onDestroy();
         handler.removeCallbacks(runnable);
-        timer.cancel();
+        if (timer!=null) {
+            timer.cancel();
+        }
     }
 }

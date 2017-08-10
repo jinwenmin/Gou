@@ -33,6 +33,7 @@ import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.bean.SetRate;
 import com.example.king.gou.bean.ShareData;
 import com.example.king.gou.bean.SreCharge;
+import com.example.king.gou.bean.SwitchGame;
 import com.example.king.gou.bean.TeamUserInfo;
 import com.example.king.gou.bean.TouZhu;
 import com.example.king.gou.bean.UserActivity;
@@ -1921,21 +1922,21 @@ public class RetrofitService extends HttpEngine {
                 if (response.code() == 200) {
                     Log.d("轮询获取新消息", response.body().toString());
                     List<List<Object>> list = response.body();
-                    List<Message> messages=new ArrayList<Message>();
+                    List<Message> messages = new ArrayList<Message>();
                     for (int i = 0; i < list.size(); i++) {
                         List<Object> megs = list.get(i);
                         double id = (double) megs.get(0);
-                        String  uname = (String) megs.get(1);
-                        String  date = (String) megs.get(2);
-                        String  content = (String) megs.get(3);
-                        Message message=new Message();
+                        String uname = (String) megs.get(1);
+                        String date = (String) megs.get(2);
+                        String content = (String) megs.get(3);
+                        Message message = new Message();
                         message.setChat_id(RxUtils.getInstance().getInt(id));
                         message.setUname(uname);
                         message.setChat_date(date);
                         message.setContent(content);
                         messages.add(message);
                     }
-                    listener.onReceivedData(API_ID_GETNEWMSG,messages,API_ID_ERROR);
+                    listener.onReceivedData(API_ID_GETNEWMSG, messages, API_ID_ERROR);
                 }
             }
 
@@ -3255,21 +3256,127 @@ public class RetrofitService extends HttpEngine {
         Map map = new HashMap();
 
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> switchGameList = apiInterface.getSwitchGameList(id, 1, reqkey, currentTimeMillis);
-        Log.d("切换游戏/获取玩法数据(重点)Code=", switchGameList.request().toString() + "");
-        Call<Object> clone = switchGameList.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<Map<String, Object>> switchGameList = apiInterface.getSwitchGameList(id, 1, reqkey, currentTimeMillis);
+        Log.d("切换游戏/获取玩法数据(重点)String=", switchGameList.request().toString() + "");
+        String s = switchGameList.request().toString();
+        String s1 = s.substring(s.indexOf("-game/") + 6, s.indexOf("?"));
+        Log.d("切换游戏/获取玩法数据(重点)s1=", s1 + "");
+        Call<Map<String, Object>> clone = switchGameList.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 int code = response.code();
                 Log.d("切换游戏/获取玩法数据(重点)Code=", code + "");
                 if (code == 200) {
                     Log.d("切换游戏/获取玩法数据(重点)", response.body().toString());
+                    Map<String, Object> map = response.body();
+                    double gid = 0;//游戏id
+                    String status = null;//游戏状态，不为1则游戏已暂停销售
+                    String gameName = null;//游戏名称
+                    Map<String, Object> zodiacs = new HashMap<>();//生肖号码数据，仅当gid=28游戏为六合彩时，才返回该数据
+                    double rebate = 0;//用户游戏返点，用于计算最高奖和显示最低奖投注返点
+                    double serverTime = 0;//服务器当前时间时间戳，用于倒计时校准等
+                    Map<String, Object> datas = new HashMap<>();//玩法数据
+                    String defaultGameRule = null;//默认玩法编码
+                    String howto = null;//默认玩法说明标签
+                    String example = null;//默认玩法[投注示例|开奖示例]
+                    String desc = null;//默认玩法说明
+                    double pricetype = 0;//默认奖金类型
+                    List<Object> priceTypes = new ArrayList<>();//默认玩法等级间隔系数，最低奖
+                    String property = null;//开奖号码性质
+                    String prePeriod = null;//开奖号码期号(上期开奖期号)
+                    String winningNumber = null;//逗号分隔的开奖号码
+                    String amount = null;//账户余额
+                    String period = null;//当前期号
+
+                    double count = 0;//未开奖期数
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if ("priceTypes".equals(entry.getKey())) {
+                                priceTypes = (List<Object>) entry.getValue();
+                            }
+                            if ("gid".equals(entry.getKey())) {
+                                gid = (double) entry.getValue();
+                            }
+                            if ("status".equals(entry.getKey())) {
+                                status = (String) entry.getValue();
+                            }
+                            if ("gameName".equals(entry.getKey())) {
+                                gameName = (String) entry.getValue();
+                            }
+                            if ("zodiacs".equals(entry.getKey())) {
+                                zodiacs = (Map<String, Object>) entry.getValue();
+                            }
+                            if ("rebate".equals(entry.getKey())) {
+                                rebate = (double) entry.getValue();
+                            }
+                            if ("serverTime".equals(entry.getKey())) {
+                                serverTime = (double) entry.getValue();
+                            }
+                            if ("datas".equals(entry.getKey())) {
+                                datas = (Map<String, Object>) entry.getValue();
+                            }
+                            if ("defaultGameRule".equals(entry.getKey())) {
+                                defaultGameRule = (String) entry.getValue();
+                            }
+                            if ("howto".equals(entry.getKey())) {
+                                howto = (String) entry.getValue();
+                            }
+                            if ("example".equals(entry.getKey())) {
+                                example = (String) entry.getValue();
+                            }
+                            if ("desc".equals(entry.getKey())) {
+                                desc = (String) entry.getValue();
+                            }
+                            if ("pricetype".equals(entry.getKey())) {
+                                pricetype = (double) entry.getValue();
+                            }
+                            if ("priceTypes".equals(entry.getKey())) {
+                                priceTypes = (List<Object>) entry.getValue();
+                            }
+                            if ("property".equals(entry.getKey())) {
+                                property = (String) entry.getValue();
+                            }
+                            if ("prePeriod".equals(entry.getKey())) {
+                                prePeriod = (String) entry.getValue();
+                            }
+                            if ("winningNumber".equals(entry.getKey())) {
+                                winningNumber = (String) entry.getValue();
+                            }
+                            if ("amount".equals(entry.getKey())) {
+                                amount = (String) entry.getValue();
+                            }
+                            if ("period".equals(entry.getKey())) {
+                                period = (String) entry.getValue();
+                            }
+                            if ("count".equals(entry.getKey())) {
+                                count = (double) entry.getValue();
+                            }
+                        }
+                    }
+                    SwitchGame switchGame = new SwitchGame();
+                    switchGame.setGid(RxUtils.getInstance().getInt(gid));
+                    switchGame.setStatus(Integer.parseInt(status));
+                    switchGame.setGameName(gameName);
+                    switchGame.setRebate(rebate);
+                    switchGame.setServerTime(serverTime);
+                    switchGame.setDefaultGameRule(defaultGameRule);
+                    switchGame.setHowto(howto);
+                    switchGame.setExample(example);
+                    switchGame.setDesc(desc);
+                    switchGame.setPricetype(RxUtils.getInstance().getInt(pricetype));
+                    switchGame.setProperty(property);
+                    switchGame.setPrePeriod(prePeriod);
+                    switchGame.setWinningNumber(winningNumber);
+                    switchGame.setAmount(Double.parseDouble(amount));
+                    switchGame.setPeriod(period);
+                    switchGame.setCount(RxUtils.getInstance().getInt(count));
+                    Log.d("切换游戏/获取玩法数据(重点)String", switchGame.toString());
                 }
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
 
             }
         });

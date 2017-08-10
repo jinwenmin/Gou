@@ -1251,7 +1251,7 @@ public interface ApiInterface {
     @Headers("X-Requested-With: XMLHttpRequest")
 
     @POST("/switch-game/{id}")
-    Call<Object> getSwitchGameList(
+    Call<Map<String,Object>> getSwitchGameList(
             @Path("id") int id,
             @Query("AppClient") int num,
             @Query("reqkey") String reqkey,

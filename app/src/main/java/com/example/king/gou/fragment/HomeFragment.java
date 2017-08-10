@@ -264,21 +264,24 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     private void initImgs() {
 
         ImageView img1 = new ImageView(getContext());
-        Picasso.with(getActivity()).load("file:///android_asset/banner1.webp").into(img1);
+        img1.setBackground(getResources().getDrawable(R.drawable.banner_0));
+        ImageView img2 = new ImageView(getContext());
+        img2.setBackground(getResources().getDrawable(R.drawable.banner_1));
+      /*  Picasso.with(getActivity()).load("file:///android_asset/banner1.webp").into(img1);
         ImageView img2 = new ImageView(getContext());
         Picasso.with(getActivity()).load("file:///android_asset/banner2.webp").into(img2);
         ImageView img3 = new ImageView(getContext());
         Picasso.with(getActivity()).load("file:///android_asset/banner3.webp").into(img3);
         ImageView img4 = new ImageView(getContext());
-        Picasso.with(getActivity()).load("file:///android_asset/banner4.webp").into(img4);
+        Picasso.with(getActivity()).load("file:///android_asset/banner4.webp").into(img4);*/
        /* img1.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         img2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         img3.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         img4.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));*/
         imgs.add(img1);
         imgs.add(img2);
-        imgs.add(img3);
-        imgs.add(img4);
+        //imgs.add(img3);
+      //  imgs.add(img4);
 
     }
 
