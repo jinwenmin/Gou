@@ -33,6 +33,7 @@ import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.bean.SetRate;
 import com.example.king.gou.bean.ShareData;
 import com.example.king.gou.bean.SreCharge;
+import com.example.king.gou.bean.SwitchG;
 import com.example.king.gou.bean.SwitchGame;
 import com.example.king.gou.bean.TeamUserInfo;
 import com.example.king.gou.bean.TouZhu;
@@ -177,6 +178,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_CHATLIST = 68;//获取聊天消息
     public static int API_ID_SENDMSG = 70;//获取聊天消息
     public static int API_ID_GETNEWMSG = 71;//轮询消息
+    public static int API_ID_SWITCHGAME = 72;//获取游戏玩法详情
 
 
     private Retrofit retrofit;
@@ -3251,7 +3253,7 @@ public class RetrofitService extends HttpEngine {
     }
 
     //切换游戏/获取玩法数据(重点)
-    public void getSwitchGameList(DataListener listener, int id) {
+    public void getSwitchGameList(final DataListener listener, int id) {
         long currentTimeMillis = System.currentTimeMillis();
         Map map = new HashMap();
 
@@ -3268,7 +3270,7 @@ public class RetrofitService extends HttpEngine {
                 int code = response.code();
                 Log.d("切换游戏/获取玩法数据(重点)Code=", code + "");
                 if (code == 200) {
-                    Log.d("切换游戏/获取玩法数据(重点)", response.body().toString());
+                    Log.d("RES切换游戏/获取玩法数据(重点)", response.body().toString());
                     Map<String, Object> map = response.body();
                     double gid = 0;//游戏id
                     String status = null;//游戏状态，不为1则游戏已暂停销售
@@ -3288,7 +3290,6 @@ public class RetrofitService extends HttpEngine {
                     String winningNumber = null;//逗号分隔的开奖号码
                     String amount = null;//账户余额
                     String period = null;//当前期号
-
                     double count = 0;//未开奖期数
                     if (map.size() > 0) {
                         for (Map.Entry<String, Object> entry : map.entrySet()) {
@@ -3372,6 +3373,125 @@ public class RetrofitService extends HttpEngine {
                     switchGame.setPeriod(period);
                     switchGame.setCount(RxUtils.getInstance().getInt(count));
                     Log.d("切换游戏/获取玩法数据(重点)String", switchGame.toString());
+                    double rate = 0;
+                    List<Object> list = new ArrayList<>();
+                    List<List<SwitchGame>> switchGames = new ArrayList<List<SwitchGame>>();
+                    //   List<List<List<SwitchGame>>> s = new ArrayList<List<List<SwitchGame>>>();
+                    List<SwitchG> sg = new ArrayList<SwitchG>();
+                    if (datas.size() > 0) {
+                        for (Map.Entry<String, Object> entry : datas.entrySet()) {
+                            if ("rate".equals(entry.getKey())) {
+                                rate = (double) entry.getValue();
+                            }
+                            if ("list".equals(entry.getKey())) {
+                                list = (List<Object>) entry.getValue();
+                            }
+                        }
+                    }
+                    /*List<SwitchGame> s1 = new ArrayList<SwitchGame>();
+                    List<SwitchGame> s2 = new ArrayList<SwitchGame>();
+                    List<SwitchGame> s3 = new ArrayList<SwitchGame>();*/
+                    for (int j = 0; j < list.size(); j++) {
+                        List<Object> o = (List<Object>) list.get(j);
+                        String id = (String) o.get(0);
+                        String nameOne = (String) o.get(1);
+
+                        Log.d("RES第一层", id + "   " + nameOne);
+                        SwitchG s = new SwitchG();
+                        s.setId1(id);
+                        s.setName1(nameOne);
+
+                /*        SwitchGame ss1 = new SwitchGame();
+                        ss1.setTid(Integer.parseInt(id));
+                        ss1.setGameName(nameOne);
+                        s1.add(ss1);*/
+                        if (!"null".equals(o.get(2))) {
+                            List<Object> o1 = new ArrayList<>();
+                            if (o.get(2) == null) {
+                                o1 = (List<Object>) o.get(3);
+                            } else {
+                                o1 = (List<Object>) o.get(2);
+                            }
+                            List<SwitchG.SwitchGa> ssg = new ArrayList<SwitchG.SwitchGa>();
+                            Log.d("RES第二层List", o1.toString() + "  XXX");
+                            for (int k = 0; k < o1.size(); k++) {
+                                List<Object> list2 = (List) o1.get(k);
+                                Object id2 = (Object) list2.get(0);
+                                Object name2 = (Object) list2.get(1);
+                                Log.d("RES第二层", id2 + "   " + name2);
+
+                                SwitchG.SwitchGa ssa = new SwitchG.SwitchGa();
+                                ssa.setId2(id2);
+                                ssa.setName2(name2);
+                                ssg.add(ssa);
+
+                             /*   SwitchGame ss2 = new SwitchGame();
+                                ss2.setTid(Integer.getInteger(id2));
+                                ss2.setGameName(name2);
+                                s2.add(ss2);*/
+                                List<Object> list3 = new ArrayList<>();
+                                if (list2.get(2) instanceof List) {
+                                    list3 = (List<Object>) list2.get(2);
+                                }
+                                List<SwitchG.SwitchGa.SwitchGam> sga = new ArrayList<SwitchG.SwitchGa.SwitchGam>();
+                                for (int l = 0; l < list3.size(); l++) {
+                                    List ll = (List) list3.get(l);
+                                    Object id3 = (Object) ll.get(0);
+                                    Object name3 = (Object) ll.get(1);
+                                    Log.d("RES第三层", id3 + "   " + name3);
+
+                                    SwitchG.SwitchGa.SwitchGam sssg = new SwitchG.SwitchGa.SwitchGam();
+                                    sssg.setId3(id3);
+                                    sssg.setName3(name3);
+                                    sga.add(sssg);
+
+                                 /*   SwitchGame ss3 = new SwitchGame();
+                                    ss3.setTid(RxUtils.getInstance().getInt(id3));
+                                    ss3.setGameName(name3);
+                                    s3.add(ss3);*/
+                                }
+                                ssa.setSwitchGams(sga);
+                                s.setSwitchGas(ssg);
+                            }
+                        } else {
+                            List<Object> o1 = (List<Object>) o.get(3);
+                            for (int k = 0; k < o1.size(); k++) {
+                                List<Object> list2 = (List) o1.get(k);
+                                Object id2 = (Object) list2.get(0);
+                                Object name2 = (Object) list2.get(1);
+                                Log.d("RE第二层", id2 + "   " + name2);
+                                List<SwitchG.SwitchGa> ssg = new ArrayList<SwitchG.SwitchGa>();
+                                SwitchG.SwitchGa ssa = new SwitchG.SwitchGa();
+                                ssa.setId2(id2);
+                                ssa.setName2(name2);
+                                ssg.add(ssa);
+                               /* SwitchGame ss2 = new SwitchGame();
+                                ss2.setTid(Integer.parseInt(id2));
+                                ss2.setGameName(name2);
+                                s2.add(ss2);*/
+                            }
+                        }
+                        sg.add(s);
+                    }
+                 /*   switchGames.add(s1);
+                    switchGames.add(s2);
+                    switchGames.add(s3);*/
+                    for (int i = 0; i < sg.size(); i++) {
+                        SwitchG switchG = sg.get(i);
+                        Log.d("RESSS第一层", sg.get(i).toString());
+                        for (int i1 = 0; i1 < switchG.getSwitchGas().size(); i1++) {
+                            Log.d("RESSS第二层", switchG.getSwitchGas().get(i1).toString());
+                            List<SwitchG.SwitchGa.SwitchGam> switchGams = switchG.getSwitchGas().get(i1).getSwitchGams();
+                            if (switchGams != null) {
+                                for (int i2 = 0; i2 < switchGams.size(); i2++) {
+                                    Log.d("RESSS第三层", switchGams.get(i2).toString());
+                                }
+                            }
+                        }
+
+
+                    }
+                    listener.onReceivedData(API_ID_SWITCHGAME, sg, API_ID_ERROR);
                 }
             }
 

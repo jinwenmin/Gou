@@ -142,47 +142,58 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60px"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/addGame"
-                    android:layout_width="45px"
-                    android:layout_height="45px"
-                    android:layout_gravity="center_vertical"
+                <Spinner
+                    android:id="@+id/SpinnerType1"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"></Spinner>
 
-                    android:src="@mipmap/drop_down" />
+                <Spinner
+                    android:id="@+id/SpinnerType2"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"></Spinner>
+                <!-- <ImageView
+                     android:id="@+id/addGame"
+                     android:layout_width="45px"
+                     android:layout_height="45px"
+                     android:layout_gravity="center_vertical"
 
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/toolbar_tab"
-                    android:layout_width="match_parent"
-                    android:layout_height="70px"
-                    android:layout_gravity="bottom"
+                     android:src="@mipmap/drop_down" />
 
-                    android:background="#ffffff"
-                    android:fillViewport="false"
-                    app:layout_scrollFlags="scroll"
-                    app:tabIndicatorColor="#0835f8"
-                    app:tabIndicatorHeight="4.0px"
-                    app:tabSelectedTextColor="#0835f8"
-                    app:tabTextColor="#ced0d3">
+                 <android.support.design.widget.TabLayout
+                     android:id="@+id/toolbar_tab"
+                     android:layout_width="match_parent"
+                     android:layout_height="70px"
+                     android:layout_gravity="bottom"
 
-                    <android.support.design.widget.TabItem
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="A" />
+                     android:background="#ffffff"
+                     android:fillViewport="false"
+                     app:layout_scrollFlags="scroll"
+                     app:tabIndicatorColor="#0835f8"
+                     app:tabIndicatorHeight="4.0px"
+                     app:tabSelectedTextColor="#0835f8"
+                     app:tabTextColor="#ced0d3">
 
-                    <android.support.design.widget.TabItem
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="B" />
+                     <android.support.design.widget.TabItem
+                         android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+                         android:text="A" />
 
-                    <android.support.design.widget.TabItem
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="C" />
+                     <android.support.design.widget.TabItem
+                         android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+                         android:text="B" />
 
-                </android.support.design.widget.TabLayout>
+                     <android.support.design.widget.TabItem
+                         android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+                         android:text="C" />
+
+                 </android.support.design.widget.TabLayout>-->
 
 
             </LinearLayout>
@@ -203,13 +214,13 @@
         <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
 
 
-        <android.support.v4.view.ViewPager
+        <!--<android.support.v4.view.ViewPager
             android:id="@+id/vpId"
 
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/home_bg"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
 
 
         <!--</android.support.v4.widget.NestedScrollView>-->
@@ -218,6 +229,7 @@
     </android.support.design.widget.CoordinatorLayout>
 
     <LinearLayout
+        android:id="@+id/gameCenterButtom"
         android:layout_width="match_parent"
         android:layout_height="130px"
         android:layout_alignParentBottom="true"
@@ -354,4 +366,19 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/GameCenterScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/gameCenterButtom"
+        android:layout_below="@id/gameCenter_coordinatorlayout">
+
+        <LinearLayout
+            android:id="@+id/GameCenterLinear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"></LinearLayout>
+    </ScrollView>
+
 </RelativeLayout>
