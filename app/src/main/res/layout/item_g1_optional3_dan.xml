@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10px"
+        android:background="@drawable/gamecenter_btn"
+        android:paddingLeft="25px"
+        android:paddingRight="25px"
+        android:text="数据"
+        android:textColor="@android:color/white"
+        android:textSize="35px" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10px"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/wan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="万位"
+            android:textSize="30px" />
+
+        <CheckBox
+            android:id="@+id/qian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="千位"
+            android:textSize="30px" />
+
+        <CheckBox
+            android:checked="true"
+            android:id="@+id/bai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="百位"
+            android:textSize="30px" />
+
+        <CheckBox
+            android:checked="true"
+            android:id="@+id/shi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="十位"
+            android:textSize="30px" />
+
+        <CheckBox
+            android:checked="true"
+            android:id="@+id/ge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="个位"
+            android:textSize="30px" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="您选择了  "
+            android:textSize="25px" />
+
+        <TextView
+            android:id="@+id/CheckNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:textSize="25px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  个位置, 系统自动根据位置组合成  "
+            android:textSize="25px" />
+
+        <TextView
+            android:id="@+id/FangAnNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textSize="25px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  个方案."
+            android:textSize="25px" />
+    </LinearLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="200px"
+        android:layout_gravity="left|top"
+        android:layout_margin="10px"
+        android:layout_marginTop="10px"
+        android:background="@drawable/linear_biankuang"
+        android:hint="请输入投注的号码"
+        android:padding="10px" />
+
+    <TextView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10px"
+        android:layout_marginTop="10px"
+        android:text="每一个号码之间请用一个 空格[ ]、逗号[,] 或者 分号[;] 隔开."
+        android:textSize="25px" />
+</LinearLayout>

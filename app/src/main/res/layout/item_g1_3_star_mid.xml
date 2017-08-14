@@ -20,7 +20,7 @@
             android:background="@drawable/gamecenter_btn"
             android:gravity="center"
             android:padding="5px"
-            android:text="百位"
+            android:text="千位"
             android:textSize="30px"
             android:textColor="@android:color/white" />
 
@@ -163,7 +163,7 @@
             android:background="@drawable/gamecenter_btn"
             android:gravity="center"
             android:padding="5px"
-            android:text="十位"
+            android:text="百位"
             android:textSize="30px"
             android:textColor="@android:color/white" />
 
@@ -306,7 +306,7 @@
             android:background="@drawable/gamecenter_btn"
             android:gravity="center"
             android:padding="5px"
-            android:text="个位"
+            android:text="十位"
             android:textSize="30px"
             android:textColor="@android:color/white" />
 
