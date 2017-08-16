@@ -127,7 +127,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         RetrofitService.getInstance().getSwitchGameList(this, gid);
         RetrofitService.getInstance().getBettingSync(this, gid);
         RetrofitService.getInstance().getBettingDrawHistory(this, gid);
-        View view = LayoutInflater.from(this).inflate(R.layout.item_g1_optional2, null, false);
+        View view = LayoutInflater.from(this).inflate(R.layout.item_g1_beijing10_dragon_tiger, null, false);
         GameCenterLinear.addView(view);
         initClick();
         initData();
