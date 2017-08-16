@@ -248,7 +248,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="0注"
-                android:textSize="35px" />
+                android:textSize="30px" />
 
             <TextView
                 android:layout_width="0px"
@@ -257,7 +257,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="共计0.0000元"
-                android:textSize="35px" />
+                android:textSize="30px" />
 
             <TextView
 

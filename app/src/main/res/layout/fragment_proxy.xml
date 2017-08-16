@@ -87,13 +87,23 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/GameMoney"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/ic_zhuanzhangjilu"
+                    android:gravity="center_horizontal"
+                    android:text="游戏奖金" />
+
+                <TextView
                     android:id="@+id/proxy_TeamZhuiHao"
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableTop="@mipmap/ic_tuanduizhjl"
                     android:gravity="center_horizontal"
-                    android:text="活动列表" />
+                    android:text="活动列表"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/proxy_TeamCunQu"
@@ -119,14 +129,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/GameMoney"
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableTop="@mipmap/ic_zhuanzhangjilu"
-                    android:gravity="center_horizontal"
-                    android:text="游戏奖金" />
 
                 <TextView
                     android:layout_width="0px"

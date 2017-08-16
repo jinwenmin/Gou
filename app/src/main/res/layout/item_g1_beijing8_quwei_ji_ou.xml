@@ -67,7 +67,7 @@
                     android:background="@drawable/item_gameselect1"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="偶(奇<偶)"
+                    android:text="偶(奇偶)"
                     android:textColor="@color/select_gamecolor1"
                     android:textSize="30px" />
 
