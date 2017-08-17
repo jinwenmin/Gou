@@ -152,6 +152,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
 
             }
         });
+
     }
 
     private void initSpinnerSelect() {
@@ -179,6 +180,17 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         adapterType2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //第四步：将适配器添加到下拉列表上
         SpinnerType2.setAdapter(adapterType2);
+        SpinnerType2.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void initClick() {
