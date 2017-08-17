@@ -10,6 +10,7 @@ import java.util.List;
 public class SwitchG {
     Object id1;
     Object name1;
+    String class_code1;
     List<SwitchGa> switchGas;
 
     @Override
@@ -17,8 +18,19 @@ public class SwitchG {
         return "SwitchG{" +
                 "id1=" + id1 +
                 ", name1=" + name1 +
+                ", class_code='" + class_code1 + '\'' +
+                ", switchGas=" + switchGas +
                 '}';
     }
+
+    public String getClass_code1() {
+        return class_code1;
+    }
+
+    public void setClass_code(String class_code1) {
+        this.class_code1 = class_code1;
+    }
+
 
     public List<SwitchGa> getSwitchGas() {
         return switchGas;
@@ -49,6 +61,7 @@ public class SwitchG {
     public static class SwitchGa {
         Object id2;
         Object name2;
+        String class_code2;
         List<SwitchGam> switchGams;
 
         @Override
@@ -56,7 +69,17 @@ public class SwitchG {
             return "SwitchGa{" +
                     "id2=" + id2 +
                     ", name2=" + name2 +
+                    ", class_code2='" + class_code2 + '\'' +
+                    ", switchGams=" + switchGams +
                     '}';
+        }
+
+        public String getClass_code2() {
+            return class_code2;
+        }
+
+        public void setClass_code2(String class_code2) {
+            this.class_code2 = class_code2;
         }
 
         public Object getId2() {
@@ -83,19 +106,29 @@ public class SwitchG {
             this.switchGams = switchGams;
         }
 
-      public static  class SwitchGam {
+        public static class SwitchGam {
             Object id3;
             Object name3;
+            String class_code3;
 
-          @Override
-          public String toString() {
-              return "SwitchGam{" +
-                      "id3=" + id3 +
-                      ", name3=" + name3 +
-                      '}';
-          }
+            @Override
+            public String toString() {
+                return "SwitchGam{" +
+                        "id3=" + id3 +
+                        ", name3=" + name3 +
+                        ", class_code3='" + class_code3 + '\'' +
+                        '}';
+            }
 
-          public Object getId3() {
+            public String getClass_code3() {
+                return class_code3;
+            }
+
+            public void setClass_code3(String class_code3) {
+                this.class_code3 = class_code3;
+            }
+
+            public Object getId3() {
                 return id3;
             }
 

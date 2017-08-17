@@ -3419,10 +3419,13 @@ public class RetrofitService extends HttpEngine {
                                 Object id2 = (Object) list2.get(0);
                                 Object name2 = (Object) list2.get(1);
                                 Log.d("RES第二层", id2 + "   " + name2);
-
                                 SwitchG.SwitchGa ssa = new SwitchG.SwitchGa();
                                 ssa.setId2(id2);
                                 ssa.setName2(name2);
+                                if (list2.get(2) instanceof String) {
+                                    String clacode = (String) list2.get(2);
+                                    ssa.setClass_code2(clacode);
+                                }
                                 ssg.add(ssa);
 
                              /*   SwitchGame ss2 = new SwitchGame();
@@ -3438,11 +3441,13 @@ public class RetrofitService extends HttpEngine {
                                     List ll = (List) list3.get(l);
                                     Object id3 = (Object) ll.get(0);
                                     Object name3 = (Object) ll.get(1);
+                                    String class_code3 = (String) ll.get(2);
                                     Log.d("RES第三层", id3 + "   " + name3);
 
                                     SwitchG.SwitchGa.SwitchGam sssg = new SwitchG.SwitchGa.SwitchGam();
                                     sssg.setId3(id3);
                                     sssg.setName3(name3);
+                                    sssg.setClass_code3(class_code3);
                                     sga.add(sssg);
 
                                  /*   SwitchGame ss3 = new SwitchGame();
@@ -3459,11 +3464,13 @@ public class RetrofitService extends HttpEngine {
                                 List<Object> list2 = (List) o1.get(k);
                                 Object id2 = (Object) list2.get(0);
                                 Object name2 = (Object) list2.get(1);
+                                String class_code2 = (String) list2.get(2);
                                 Log.d("RE第二层", id2 + "   " + name2);
                                 List<SwitchG.SwitchGa> ssg = new ArrayList<SwitchG.SwitchGa>();
                                 SwitchG.SwitchGa ssa = new SwitchG.SwitchGa();
                                 ssa.setId2(id2);
                                 ssa.setName2(name2);
+                                ssa.setClass_code2(class_code2);
                                 ssg.add(ssa);
                                /* SwitchGame ss2 = new SwitchGame();
                                 ss2.setTid(Integer.parseInt(id2));
