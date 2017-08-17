@@ -231,13 +231,122 @@
     <LinearLayout
         android:id="@+id/gameCenterButtom"
         android:layout_width="match_parent"
-        android:layout_height="130px"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40px">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10px"
+                android:background="@drawable/game_beishu_biankuang"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text11"
+                    android:layout_width="40px"
+                    android:layout_height="match_parent"
+                    android:background="#3A5FCD"
+                    android:gravity="center"
+                    android:text="－"
+                    android:textColor="@android:color/white"
+                    android:textSize="20px" />
+
+                <EditText
+                    android:id="@+id/edit1"
+                    android:layout_width="80px"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textSize="20px" />
+
+                <TextView
+
+                    android:layout_width="40px"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="#3A5FCD"
+                    android:gravity="center"
+                    android:text="+"
+                    android:textColor="@android:color/white"
+                    android:textSize="20px" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true">
+
+                <RadioGroup
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radion1"
+                        android:layout_width="40px"
+                        android:layout_height="40px"
+                        android:background="@drawable/item_gamemoney_type_select"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="元"
+                        android:textColor="@color/select_gamecolor1"
+                        android:textSize="30px" />
+
+                    <RadioButton
+                        android:id="@+id/radion2"
+                        android:layout_width="40px"
+                        android:layout_height="40px"
+                        android:background="@drawable/item_gamemoney_type_select"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="角"
+                        android:textColor="@color/select_gamecolor1"
+                        android:textSize="30px" />
+
+                    <RadioButton
+                        android:id="@+id/radion3"
+                        android:layout_width="40px"
+                        android:layout_height="40px"
+                        android:background="@drawable/item_gamemoney_type_select"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="分"
+                        android:textColor="@color/select_gamecolor1"
+                        android:textSize="30px" />
+
+                    <RadioButton
+                        android:id="@+id/radion4"
+                        android:layout_width="40px"
+                        android:layout_height="40px"
+                        android:background="@drawable/item_gamemoney_type_select"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="厘"
+                        android:textColor="@color/select_gamecolor1"
+                        android:textSize="30px" />
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <Spinner
+                android:layout_alignParentRight="true"
+                android:id="@+id/SpinnerMoney"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"></Spinner>
+        </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50px"
+            android:layout_height="40px"
             android:layout_margin="5px"
             android:orientation="horizontal">
 
@@ -248,7 +357,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="0注"
-                android:textSize="30px" />
+                android:textSize="25px" />
 
             <TextView
                 android:layout_width="0px"
@@ -257,7 +366,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="共计0.0000元"
-                android:textSize="30px" />
+                android:textSize="25px" />
 
             <TextView
 
@@ -267,7 +376,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="余额:0.000元"
-                android:textSize="35px" />
+                android:textSize="25px" />
         </LinearLayout>
 
         <View
@@ -277,7 +386,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="70px">
 
             <LinearLayout
 

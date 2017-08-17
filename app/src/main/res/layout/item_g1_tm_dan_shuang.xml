@@ -16,11 +16,11 @@
             android:layout_height="50px"
             android:layout_gravity="center"
             android:layout_margin="5px"
-            android:layout_weight="5"
+            android:layout_weight="4"
             android:background="@drawable/gamecenter_btn"
             android:gravity="center"
             android:padding="5px"
-            android:text="和值"
+            android:text="特码单双"
             android:textColor="@android:color/white"
             android:textSize="30px" />
 
@@ -37,57 +37,32 @@
 
                 <CheckBox
                     android:id="@+id/checkBoxOne_0"
-                    android:layout_width="100px"
+                    android:layout_width="150px"
                     android:layout_height="50px"
                     android:layout_margin="5px"
                     android:background="@drawable/item_gameselect1"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="大"
+                    android:text="特单"
                     android:textColor="@color/select_gamecolor1"
                     android:textSize="30px" />
 
                 <CheckBox
                     android:id="@+id/checkBoxOne_1"
-                    android:layout_width="100px"
-                    android:layout_height="50px"
-                    android:layout_margin="5px"
-
-                    android:background="@drawable/item_gameselect1"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="小 "
-                    android:textColor="@color/select_gamecolor1"
-                    android:textSize="30px" />
-
-                <CheckBox
-                    android:id="@+id/checkBoxOne_2"
-                    android:layout_width="100px"
+                    android:layout_width="150px"
                     android:layout_height="50px"
                     android:layout_margin="5px"
                     android:background="@drawable/item_gameselect1"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="单"
-                    android:textColor="@color/select_gamecolor1"
-                    android:textSize="30px" />
-
-                <CheckBox
-                    android:id="@+id/checkBoxOne_3"
-                    android:layout_width="100px"
-                    android:layout_height="50px"
-                    android:layout_margin="5px"
-
-                    android:background="@drawable/item_gameselect1"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="双"
+                    android:text="特双"
                     android:textColor="@color/select_gamecolor1"
                     android:textSize="30px" />
 
 
             </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>
