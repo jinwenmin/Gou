@@ -39,6 +39,7 @@
             android:textSize="30px" />
 
         <CheckBox
+            android:checked="true"
             android:id="@+id/bai"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -79,7 +80,7 @@
             android:id="@+id/CheckNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2"
+            android:text="3"
             android:textSize="25px" />
 
         <TextView

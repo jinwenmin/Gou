@@ -20,7 +20,7 @@
             android:background="@drawable/gamecenter_btn"
             android:gravity="center"
             android:padding="5px"
-            android:text="和值"
+            android:text="总和"
             android:textColor="@android:color/white"
             android:textSize="30px" />
 

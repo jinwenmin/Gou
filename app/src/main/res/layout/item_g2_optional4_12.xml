@@ -70,7 +70,7 @@
             android:id="@+id/CheckNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="3"
+            android:text="4"
             android:textSize="25px" />
 
         <TextView

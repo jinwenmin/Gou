@@ -127,8 +127,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         RetrofitService.getInstance().getSwitchGameList(this, gid);
         RetrofitService.getInstance().getBettingSync(this, gid);
         RetrofitService.getInstance().getBettingDrawHistory(this, gid);
-        View view = LayoutInflater.from(this).inflate(R.layout.item_g1_2_star_before, null, false);
-        GameCenterLinear.addView(view);
+
         initClick();
         initData();
         initSpinner1();
@@ -156,7 +155,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     }
 
     private void initSpinnerSelect() {
-        List<String> name = new ArrayList<>();
+        final List<String> name = new ArrayList<>();
+        final List<String> class_code = new ArrayList<>();
         List<SwitchG.SwitchGa> switchGas = sg.get(SpinnerType1.getSelectedItemPosition()).getSwitchGas();
         for (int i1 = 0; i1 < switchGas.size(); i1++) {
 
@@ -169,9 +169,11 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 List<SwitchG.SwitchGa.SwitchGam> switchGams = switchGas.get(i1).getSwitchGams();
                 for (int i2 = 0; i2 < switchGams.size(); i2++) {
                     name.add((String) switchGams.get(i2).getName3());
+                    class_code.add(switchGams.get(i2).getClass_code3());
                 }
             } else if (switchGams1.size() == 0) {
                 name.add((String) switchGas.get(i1).getName2());
+                class_code.add(switchGas.get(i1).getClass_code2());
             }
         }
 
@@ -183,7 +185,606 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         SpinnerType2.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String code = class_code.get(position);
+                GameCenterLinear.removeAllViews();
+                Log.d("Class_Code=", code);
+                View inte = new View(GameCenterActivity.this);
+                if ("star_5_duplex".equals(code)
+                        || "star_2_any_duplex".equals(code)
+                        || "star_4_any_duplex".equals(code)
+                        || "2min_star_5_duplex".equals(code)
+                        || "2min_star_2_any_duplex".equals(code)
+                        || "2min_star_4_any_duplex".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_5_star, null, false);
+                }
+                if ("star_5_single".equals(code)
+                        || "star_4_single".equals(code)
+                        || "star_3_next_single".equals(code)
+                        || "star_3_next_group_single".equals(code)
+                        || "star_3_next_group_single_6".equals(code)
+                        || "star_3_next_group_diverse".equals(code)
+                        || "star_3_prev_single".equals(code)
+                        || "star_3_prev_group_single".equals(code)
+                        || "star_3_prev_group_single_6".equals(code)
+                        || "star_3_prev_group_diverse".equals(code)
+                        || "star_3_midd_single".equals(code)
+                        || "star_3_midd_group_single".equals(code)
+                        || "star_3_midd_group_single_6".equals(code)
+                        || "star_3_midd_group_diverse".equals(code)
+                        || "star_2_next_single".equals(code)
+                        || "star_2_next_group_single".equals(code)
+                        || "star_2_prev_single".equals(code)
+                        || "star_2_prev_group_single".equals(code)
+                        || "star_3_any_duplex".equals(code)
+                        || "eleven_star_3_prev_single".equals(code)
+                        || "eleven_star_3_prev_group_single".equals(code)
+                        || "eleven_star_2_prev_single".equals(code)
+                        || "eleven_star_2_prev_group_single".equals(code)
+                        || "PK10_1st_2nd_single".equals(code)
+                        || "PK10_1st_2nd_3th_single".equals(code)
 
+                        || "eleven_any_one_single".equals(code)
+                        || "eleven_any_two_single".equals(code)
+                        || "eleven_any_three_single".equals(code)
+                        || "eleven_any_four_single".equals(code)
+                        || "eleven_any_five_single".equals(code)
+                        || "eleven_any_six_single".equals(code)
+                        || "eleven_any_seven_single".equals(code)
+                        || "eleven_any_eight_single".equals(code)
+
+
+                        || "2min_star_5_single".equals(code)
+                        || "2min_star_4_single".equals(code)
+                        || "2min_star_3_next_single".equals(code)
+                        || "2min_star_3_next_group_single".equals(code)
+                        || "2min_star_3_next_group_single_6".equals(code)
+                        || "2min_star_3_next_group_diverse".equals(code)
+                        || "2min_star_3_prev_single".equals(code)
+                        || "2min_star_3_prev_group_single".equals(code)
+                        || "2min_star_3_prev_group_single_6".equals(code)
+                        || "2min_star_3_prev_group_diverse".equals(code)
+                        || "2min_star_3_midd_single".equals(code)
+                        || "2min_star_3_midd_group_single".equals(code)
+                        || "2min_star_3_midd_group_single_6".equals(code)
+                        || "2min_star_3_midd_group_diverse".equals(code)
+                        || "2min_star_2_next_single".equals(code)
+                        || "2min_star_2_next_group_single".equals(code)
+                        || "2min_star_2_prev_single".equals(code)
+                        || "2min_star_2_prev_group_single".equals(code)
+                        || "2min_star_3_any_duplex".equals(code)
+
+
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2, null, false);
+                }
+                if ("star_5_group_120".equals(code) || "2min_star_5_group_120".equals(code)) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g3_120, null, false);
+                }
+                if (
+                        "star_5_group_60".equals(code)
+                                || "star_5_group_30".equals(code) || "2min_star_5_group_60".equals(code)
+                                || "2min_star_5_group_30".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g3_60_30, null, false);
+                }
+                if (
+                        "star_5_group_20".equals(code)
+                                || "2min_star_5_group_20".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g3_20, null, false);
+                }
+                if (
+                        "star_5_group_10".equals(code)
+                                || "2min_star_5_group_10".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g3_10, null, false);
+                }
+                if (
+                        "star_5_group_5".equals(code)
+                                || "2min_star_5_group_5".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g3_5, null, false);
+                }
+                if (
+                        "star_5_one".equals(code)
+                                || "star_5_two".equals(code)
+                                || "star_5_three".equals(code)
+                                || "star_5_four".equals(code) || "2min_star_5_one".equals(code)
+                                || "2min_star_5_two".equals(code)
+                                || "2min_star_5_three".equals(code)
+                                || "2min_star_5_four".equals(code)
+
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g4, null, false);
+                    TextView g4_name = (TextView) inte.findViewById(R.id.g4_name);
+                    g4_name.setText(name.get(position));
+                }
+                if (
+                        "star_4_duplex".equals(code)
+                                || "2min_star_4_duplex".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_4_star_after, null, false);
+                }
+                if (
+                        "star_4_group_24".equals(code)
+                                || "2min_star_4_group_24".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_4_star_after_24, null, false);
+                }
+                if (
+                        "star_4_group_12".equals(code)
+                                || "2min_star_4_group_12".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_4_star_after_12, null, false);
+                }
+                if (
+                        "star_4_group_6".equals(code)
+                                || "2min_star_4_group_6".equals(code)
+
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_4_star_after_6, null, false);
+                }
+                if ("star_4_group_4".equals(code) || "2min_star_4_group_4".equals(code)) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_4_star_after_4, null, false);
+                }
+                if ("star_3_next_duplex".equals(code) || "2min_star_3_next_duplex".equals(code)) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_3_star_after, null, false);
+                }
+                if (
+                        "star_3_next_sum".equals(code)
+                                || "star_3_prev_sum".equals(code)
+                                || "star_3_midd_sum".equals(code) || "2min_star_3_next_sum".equals(code)
+                                || "2min_star_3_prev_sum".equals(code)
+                                || "2min_star_3_midd_sum".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_3_star_he, null, false);
+                }
+                if (
+                        "star_3_next_sub".equals(code)
+                                || "star_3_prev_sub".equals(code)
+                                || "star_3_midd_sub".equals(code)
+                                || "star_2_next_sub".equals(code)
+                                || "star_2_prev_sub".equals(code) || "2min_star_3_next_sub".equals(code)
+                                || "2min_star_3_prev_sub".equals(code)
+                                || "2min_star_3_midd_sub".equals(code)
+                                || "2min_star_2_next_sub".equals(code)
+                                || "2min_star_2_prev_sub".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_3_star_kua, null, false);
+                }
+                if (
+                        "star_3_next_group_duplex".equals(code)
+                                || "star_3_next_group_duplex_6".equals(code)
+                                || "star_3_prev_group_duplex".equals(code)
+                                || "star_3_prev_group_duplex_6".equals(code)
+                                || "star_3_midd_group_duplex".equals(code)
+                                || "star_3_midd_group_duplex_6".equals(code)
+                                || "star_2_next_sub".equals(code)
+                                || "star_2_prev_group_duplex".equals(code)
+                                || "star_3_next_one_no_fix".equals(code)
+                                || "star_3_prev_one_no_fix".equals(code)
+                                || "star_3_next_two_no_fix".equals(code)
+                                || "star_3_prev_two_no_fix".equals(code)
+                                || "star_4_one_no_fix".equals(code)
+                                || "star_4_two_no_fix".equals(code)
+                                || "star_5_two_no_fix".equals(code)
+                                || "star_5_three_no_fix".equals(code)
+
+                                || "2min_star_3_next_group_duplex".equals(code)
+                                || "2min_star_3_next_group_duplex_6".equals(code)
+                                || "2min_star_3_prev_group_duplex".equals(code)
+                                || "2min_star_3_prev_group_duplex_6".equals(code)
+                                || "2min_star_3_midd_group_duplex".equals(code)
+                                || "2min_star_3_midd_group_duplex_6".equals(code)
+                                || "2min_star_2_next_sub".equals(code)
+                                || "2min_star_2_prev_group_duplex".equals(code)
+                                || "2min_star_3_next_one_no_fix".equals(code)
+                                || "2min_star_3_prev_one_no_fix".equals(code)
+                                || "2min_star_3_next_two_no_fix".equals(code)
+                                || "2min_star_3_prev_two_no_fix".equals(code)
+                                || "2min_star_4_one_no_fix".equals(code)
+                                || "2min_star_4_two_no_fix".equals(code)
+                                || "2min_star_5_two_no_fix".equals(code)
+                                || "2min_star_5_three_no_fix".equals(code)
+
+
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g4, null, false);
+                    TextView g4_name = (TextView) inte.findViewById(R.id.g4_name);
+                    g4_name.setText(name.get(position));
+                }
+                if (
+                        "star_3_next_group_sum".equals(code)
+                                || "star_3_prev_group_sum".equals(code)
+                                || "star_3_midd_group_sum".equals(code)
+                                || "2min_star_3_next_group_sum".equals(code)
+                                || "2min_star_3_prev_group_sum".equals(code)
+                                || "2min_star_3_midd_group_sum".equals(code)
+
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_3_star_he, null, false);
+                }
+                if (
+                        "star_3_next_group_any".equals(code)
+                                || "star_3_prev_group_any".equals(code)
+                                || "star_3_midd_group_any".equals(code)
+                                || "star_2_next_group_any".equals(code)
+                                || "star_2_prev_group_any".equals(code)
+
+                                || "2min_star_3_next_group_any".equals(code)
+                                || "2min_star_3_prev_group_any".equals(code)
+                                || "2min_star_3_midd_group_any".equals(code)
+                                || "2min_star_2_next_group_any".equals(code)
+                                || "2min_star_2_prev_group_any".equals(code)
+
+
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_3_star_after_baodan, null, false);
+                }
+                if (
+                        "star_3_prev_duplex".equals(code)
+                                || "2min_star_3_prev_duplex".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_3_star_before, null, false);
+                }
+                if (
+                        "star_3_midd_duplex".equals(code)
+                                || "2min_star_3_midd_duplex".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_3_star_mid, null, false);
+                }
+                if (
+                        "star_2_next_duplex".equals(code)
+                                || "2min_star_2_next_duplex".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_2_star_after, null, false);
+                }
+                if (
+                        "star_2_next_sum".equals(code)
+                                || "2min_star_2_next_sum".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_2_star_he1, null, false);
+                }
+                if (
+                        "star_2_next_group_sum".equals(code)
+                                || "star_2_prev_group_sum".equals(code)
+                                || "2min_star_2_next_group_sum".equals(code)
+                                || "2min_star_2_prev_group_sum".equals(code)
+
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_2_star_he2, null, false);
+                }
+                if (
+                        "star_2_prev_duplex".equals(code)
+                                || "2min_star_2_prev_duplex".equals(code)
+
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_2_star_before, null, false);
+                }
+                if (
+                        "star_2_prev_sum".equals(code)
+                                || "2min_star_2_prev_sum".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_2_star_he1, null, false);
+                }
+                if (
+                        "fix".equals(code)
+                                || "2min_fix".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_location, null, false);
+                }
+                if (
+                        "star_2_any_duplex".equals(code)
+                                || "2min_star_2_any_duplex".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_location, null, false);
+                }
+                if (
+                        "star_2_any_single".equals(code)
+                                || "2min_star_2_any_single".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_optional2, null, false);
+                }
+                if (
+                        "star_2_any_sum".equals(code)
+                                || "2min_star_2_any_sum".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_optional2_he, null, false);
+                }
+                if (
+                        "star_2_any_group_duplex".equals(code)
+                                || "2min_star_2_any_group_duplex".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_optional2_fu_3_6, null, false);
+                }
+                if (
+                        "star_2_any_group_single".equals(code)
+                                || "2min_star_2_any_group_single".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_optional3_dan_3_6_hun, null, false);
+                }
+                if (
+                        "star_2_any_group_sum".equals(code)
+                                || "2min_star_2_any_group_sum".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_optional2_he, null, false);
+                }
+                if (
+                        "star_3_any_single".equals(code)
+                                || "2min_star_3_any_single".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_optional3_dan, null, false);
+                }
+                if (
+                        "star_3_any_sum".equals(code)
+                                || "2min_star_3_any_sum".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_optional3_he, null, false);
+                }
+                if (
+                        "star_3_any_group_duplex".equals(code)
+                                || "star_3_any_group_duplex_6".equals(code) || "2min_star_3_any_group_duplex".equals(code)
+                                || "2min_star_3_any_group_duplex_6".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_optional3_fu_3_6, null, false);
+                }
+                if (
+                        "star_3_any_group_single".equals(code)
+                                || "star_3_any_group_single_6".equals(code)
+                                || "star_3_any_group_diverse".equals(code)
+                                || "2min_star_3_any_group_single".equals(code)
+                                || "2min_star_3_any_group_single_6".equals(code)
+                                || "2min_star_3_any_group_diverse".equals(code)
+
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_optional3_dan, null, false);
+                }
+                if (
+                        "star_3_any_group_sum".equals(code)
+                                || "2min_star_3_any_group_sum".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_optional3_he, null, false);
+                }
+                if (
+                        "star_4_any_single".equals(code)
+                                || "2min_star_4_any_single".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_optional4_dan, null, false);
+                }
+                if (
+                        "star_4_any_group_24".equals(code)
+                                || "star_4_any_group_6".equals(code)
+                                || "2min_star_4_any_group_24".equals(code)
+                                || "2min_star_4_any_group_6".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_optional4_24_6, null, false);
+                }
+                if (
+                        "star_4_any_group_12".equals(code)
+                                || "2min_star_4_any_group_12".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_optional4_12, null, false);
+                }
+                if (
+                        "star_4_any_group_4".equals(code)
+                                || "2min_star_4_any_group_4".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_optional4_4, null, false);
+                }
+                if (
+                        "star_2_prev_special".equals(code)
+                                || "2min_star_2_prev_special".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_quwei_2_before, null, false);
+                }
+                if (
+                        "star_2_next_special".equals(code)
+                                || "2min_star_2_next_special".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_quwei_2_after, null, false);
+                }
+                if (
+                        "star_3_prev_special".equals(code)
+                                || "2min_star_3_prev_special".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_quwei_3_before, null, false);
+                }
+                if (
+                        "star_3_next_special".equals(code)
+                                || "2min_star_3_next_special".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_quwei_3_after, null, false);
+                }
+                if (
+                        "banker_player".equals(code)
+                                || "2min_banker_player".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_ldle, null, false);
+                }
+                if (
+                        "equal".equals(code)
+                                || "2min_equal".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_flat, null, false);
+                }
+                if (
+                        "same_two".equals(code)
+                                || "2min_same_two".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_sub, null, false);
+                }
+                if (
+                        "same_three".equals(code)
+                                || "2min_same_three".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_leopard, null, false);
+                }
+                if (
+                        "heavenly_king".equals(code)
+                                || "2min_heavenly_king".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_king, null, false);
+                }
+                if (
+                        "sum_special".equals(code)
+                                || "2min_sum_special".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g3_sum_big_dan, null, false);
+                }
+                if (
+                        "toradora_wq".equals(code)
+                                || "toradora_wb".equals(code)
+                                || "toradora_ws".equals(code)
+                                || "toradora_wg".equals(code)
+                                || "toradora_qb".equals(code)
+                                || "toradora_qs".equals(code)
+                                || "toradora_qg".equals(code)
+                                || "toradora_bs".equals(code)
+                                || "toradora_bg".equals(code)
+                                || "toradora_sg".equals(code)
+                                || "2min_toradora_wq".equals(code)
+                                || "2min_toradora_wb".equals(code)
+                                || "2min_toradora_ws".equals(code)
+                                || "2min_toradora_wg".equals(code)
+                                || "2min_toradora_qb".equals(code)
+                                || "2min_toradora_qs".equals(code)
+                                || "2min_toradora_qg".equals(code)
+                                || "2min_toradora_bs".equals(code)
+                                || "2min_toradora_bg".equals(code)
+                                || "2min_toradora_sg".equals(code)
+
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_dragon_tiger, null, false);
+                }
+                if (
+                        "eleven_star_3_prev_duplex".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_3_star_11_5_zhi_fu, null, false);
+                }
+                if (
+                        "eleven_star_3_prev_group_duplex".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_3_star_11_5_zu_fu, null, false);
+                }
+                if (
+                        "eleven_star_2_prev_duplex".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_2_star_11_5_zhi_fu, null, false);
+                }
+                if (
+                        "eleven_star_2_prev_group_duplex".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_2_star_11_5_zu_fu, null, false);
+                }
+                if (
+                        "eleven_star_3_prev_no_fix".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_nolocation_11_5, null, false);
+                }
+                if (
+                        "eleven_fix".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_3_star_11_5_zhi_fu, null, false);
+                }
+                if (
+                        "eleven_even_or_odd".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_quwei_11_5_single_double, null, false);
+                }
+                if (
+                        "eleven_middle".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_quwei_11_5_caizhong, null, false);
+                }
+                if (
+                        "eleven_any_one_duplex".equals(code)
+                                || "eleven_any_two_duplex".equals(code)
+                                || "eleven_any_three_duplex".equals(code)
+                                || "eleven_any_four_duplex".equals(code)
+                                || "eleven_any_five_duplex".equals(code)
+                                || "eleven_any_six_duplex".equals(code)
+                                || "eleven_any_seven_duplex".equals(code)
+                                || "eleven_any_eight_duplex".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_quwei_11_5_optional_fu, null, false);
+                    TextView names = (TextView) inte.findViewById(R.id.name);
+                    names.setText(name.get(position));
+                }
+                if (
+                        "PK10_1st_duplex".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_beijing10_champion1, null, false);
+
+                }
+                if (
+                        "PK10_1st_2nd_duplex".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_beijing10_champion2_fu, null, false);
+
+                }
+                if (
+                        "PK10_1st_2nd_3th_duplex".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_beijing10_champion3_fu, null, false);
+
+                }
+                if (
+                        "PK10_1to5_duplex".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_beijing10_location_1_5, null, false);
+
+                }
+                if (
+                        "PK10_6to10_duplex".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_beijing10_location_6_10, null, false);
+
+                }
+                if (
+                        "PK10_1to10_duplex".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_beijing10_location_1_10, null, false);
+
+                }
+                if (
+                        "PK10_1st_special".equals(code)
+                                || "PK10_2st_special".equals(code)
+                                || "PK10_3st_special".equals(code)
+
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_beijing10_big_small, null, false);
+                    TextView names = (TextView) inte.findViewById(R.id.name);
+                    names.setText(name.get(position));
+
+                }
+                if (
+                        "PK10_1st_odd_even".equals(code)
+                                || "PK10_2nd_odd_even".equals(code)
+                                || "PK10_3th_odd_even".equals(code)
+
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_beijing10_dan_shuang, null, false);
+                    TextView names = (TextView) inte.findViewById(R.id.name);
+                    names.setText(name.get(position));
+
+                }
+                if (
+                        "PK10_1st_2nd_sum".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_beijing10_champion2_he, null, false);
+                }
+                if (
+                        "PK10_1st_2nd_special".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_beijing10_big_small_dan_shuang, null, false);
+                }
+                if (
+                        "PK10_toradora".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_beijing10_dragon_tiger, null, false);
+                }
+                GameCenterLinear.addView(inte);
             }
 
             @Override

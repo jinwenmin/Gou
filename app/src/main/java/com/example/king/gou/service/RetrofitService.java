@@ -3401,10 +3401,6 @@ public class RetrofitService extends HttpEngine {
                         s.setId1(id);
                         s.setName1(nameOne);
 
-                /*        SwitchGame ss1 = new SwitchGame();
-                        ss1.setTid(Integer.parseInt(id));
-                        ss1.setGameName(nameOne);
-                        s1.add(ss1);*/
                         if (!"null".equals(o.get(2))) {
                             List<Object> o1 = new ArrayList<>();
                             if (o.get(2) == null) {
@@ -3428,10 +3424,6 @@ public class RetrofitService extends HttpEngine {
                                 }
                                 ssg.add(ssa);
 
-                             /*   SwitchGame ss2 = new SwitchGame();
-                                ss2.setTid(Integer.getInteger(id2));
-                                ss2.setGameName(name2);
-                                s2.add(ss2);*/
                                 List<Object> list3 = new ArrayList<>();
                                 if (list2.get(2) instanceof List) {
                                     list3 = (List<Object>) list2.get(2);
@@ -3450,10 +3442,6 @@ public class RetrofitService extends HttpEngine {
                                     sssg.setClass_code3(class_code3);
                                     sga.add(sssg);
 
-                                 /*   SwitchGame ss3 = new SwitchGame();
-                                    ss3.setTid(RxUtils.getInstance().getInt(id3));
-                                    ss3.setGameName(name3);
-                                    s3.add(ss3);*/
                                 }
                                 ssa.setSwitchGams(sga);
                                 s.setSwitchGas(ssg);
@@ -3472,17 +3460,10 @@ public class RetrofitService extends HttpEngine {
                                 ssa.setName2(name2);
                                 ssa.setClass_code2(class_code2);
                                 ssg.add(ssa);
-                               /* SwitchGame ss2 = new SwitchGame();
-                                ss2.setTid(Integer.parseInt(id2));
-                                ss2.setGameName(name2);
-                                s2.add(ss2);*/
                             }
                         }
                         sg.add(s);
                     }
-                 /*   switchGames.add(s1);
-                    switchGames.add(s2);
-                    switchGames.add(s3);*/
                     for (int i = 0; i < sg.size(); i++) {
                         SwitchG switchG = sg.get(i);
                         Log.d("RESSS第一层", sg.get(i).toString());

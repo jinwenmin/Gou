@@ -142,60 +142,86 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60px"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <Spinner
-                    android:id="@+id/SpinnerType1"
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"></Spinner>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60px"
+                    android:orientation="horizontal">
 
-                <Spinner
-                    android:id="@+id/SpinnerType2"
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"></Spinner>
-                <!-- <ImageView
-                     android:id="@+id/addGame"
-                     android:layout_width="45px"
-                     android:layout_height="45px"
-                     android:layout_gravity="center_vertical"
+                    <Spinner
+                        android:id="@+id/SpinnerType1"
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"></Spinner>
 
-                     android:src="@mipmap/drop_down" />
+                    <Spinner
+                        android:id="@+id/SpinnerType2"
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"></Spinner>
 
-                 <android.support.design.widget.TabLayout
-                     android:id="@+id/toolbar_tab"
-                     android:layout_width="match_parent"
-                     android:layout_height="70px"
-                     android:layout_gravity="bottom"
+                    <!-- <ImageView
+                         android:id="@+id/addGame"
+                         android:layout_width="45px"
+                         android:layout_height="45px"
+                         android:layout_gravity="center_vertical"
 
-                     android:background="#ffffff"
-                     android:fillViewport="false"
-                     app:layout_scrollFlags="scroll"
-                     app:tabIndicatorColor="#0835f8"
-                     app:tabIndicatorHeight="4.0px"
-                     app:tabSelectedTextColor="#0835f8"
-                     app:tabTextColor="#ced0d3">
+                         android:src="@mipmap/drop_down" />
 
-                     <android.support.design.widget.TabItem
+                     <android.support.design.widget.TabLayout
+                         android:id="@+id/toolbar_tab"
                          android:layout_width="match_parent"
-                         android:layout_height="match_parent"
-                         android:text="A" />
+                         android:layout_height="70px"
+                         android:layout_gravity="bottom"
 
-                     <android.support.design.widget.TabItem
-                         android:layout_width="match_parent"
-                         android:layout_height="match_parent"
-                         android:text="B" />
+                         android:background="#ffffff"
+                         android:fillViewport="false"
+                         app:layout_scrollFlags="scroll"
+                         app:tabIndicatorColor="#0835f8"
+                         app:tabIndicatorHeight="4.0px"
+                         app:tabSelectedTextColor="#0835f8"
+                         app:tabTextColor="#ced0d3">
 
-                     <android.support.design.widget.TabItem
-                         android:layout_width="match_parent"
-                         android:layout_height="match_parent"
-                         android:text="C" />
+                         <android.support.design.widget.TabItem
+                             android:layout_width="match_parent"
+                             android:layout_height="match_parent"
+                             android:text="A" />
 
-                 </android.support.design.widget.TabLayout>-->
+                         <android.support.design.widget.TabItem
+                             android:layout_width="match_parent"
+                             android:layout_height="match_parent"
+                             android:text="B" />
+
+                         <android.support.design.widget.TabItem
+                             android:layout_width="match_parent"
+                             android:layout_height="match_parent"
+                             android:text="C" />
+
+                     </android.support.design.widget.TabLayout>-->
 
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ScrollView
+                        android:id="@+id/GameCenterScroll"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+
+                        android:layout_below="@id/gameCenter_coordinatorlayout">
+
+                        <LinearLayout
+                            android:id="@+id/GameCenterLinear"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"></LinearLayout>
+                    </ScrollView>
+                </LinearLayout>
             </LinearLayout>
 
 
@@ -338,10 +364,10 @@
             </LinearLayout>
 
             <Spinner
-                android:layout_alignParentRight="true"
                 android:id="@+id/SpinnerMoney"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"></Spinner>
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"></Spinner>
         </RelativeLayout>
 
         <LinearLayout
@@ -476,18 +502,5 @@
         </LinearLayout>
     </LinearLayout>
 
-    <ScrollView
-        android:id="@+id/GameCenterScroll"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/gameCenterButtom"
-        android:layout_below="@id/gameCenter_coordinatorlayout">
-
-        <LinearLayout
-            android:id="@+id/GameCenterLinear"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"></LinearLayout>
-    </ScrollView>
 
 </RelativeLayout>
