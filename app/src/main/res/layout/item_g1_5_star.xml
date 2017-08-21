@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/LinearWan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -19,8 +20,8 @@
             android:gravity="center"
             android:padding="5px"
             android:text="万位"
-            android:textSize="30px"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="30px" />
 
         <CheckBox
             android:id="@+id/checkBoxOne_0"
@@ -148,7 +149,81 @@
             android:textColor="@color/select_gamecolor"
             android:textSize="30px" />
     </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/select_1"
+        android:layout_width="wrap_content"
+        android:layout_height="50px"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10px"
+        android:layout_marginTop="10px"
+        android:background="@drawable/gameselect_biankuang"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="全"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="大"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="小"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="单"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="双"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:layout_marginRight="40px"
+            android:text="清"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearQian"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -162,8 +237,8 @@
             android:gravity="center"
             android:padding="5px"
             android:text="千位"
-            android:textSize="30px"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="30px" />
 
         <CheckBox
             android:id="@+id/checkBoxTwo_0"
@@ -291,7 +366,81 @@
             android:textColor="@color/select_gamecolor"
             android:textSize="30px" />
     </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/select_2"
+        android:layout_width="wrap_content"
+        android:layout_height="50px"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10px"
+        android:layout_marginTop="10px"
+        android:background="@drawable/gameselect_biankuang"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="全"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="大"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="小"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="单"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="双"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:layout_marginRight="40px"
+            android:text="清"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearBai"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -305,8 +454,8 @@
             android:gravity="center"
             android:padding="5px"
             android:text="百位"
-            android:textSize="30px"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="30px" />
 
         <CheckBox
             android:id="@+id/checkBoxThree_0"
@@ -434,7 +583,82 @@
             android:textColor="@color/select_gamecolor"
             android:textSize="30px" />
     </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/select_3"
+        android:layout_width="wrap_content"
+        android:layout_height="50px"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10px"
+        android:layout_marginTop="10px"
+        android:background="@drawable/gameselect_biankuang"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="全"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="大"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="小"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="单"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="双"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:layout_marginRight="40px"
+            android:text="清"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearShi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -448,8 +672,8 @@
             android:gravity="center"
             android:padding="5px"
             android:text="十位"
-            android:textSize="30px"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="30px" />
 
         <CheckBox
             android:id="@+id/checkBoxFour_0"
@@ -577,7 +801,82 @@
             android:textColor="@color/select_gamecolor"
             android:textSize="30px" />
     </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/select_4"
+        android:layout_width="wrap_content"
+        android:layout_height="50px"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10px"
+        android:layout_marginTop="10px"
+        android:background="@drawable/gameselect_biankuang"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="全"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="大"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="小"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="单"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="双"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:layout_marginRight="40px"
+            android:text="清"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearGe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -591,8 +890,8 @@
             android:gravity="center"
             android:padding="5px"
             android:text="个位"
-            android:textSize="30px"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="30px" />
 
         <CheckBox
             android:id="@+id/checkBoxFive_0"
@@ -719,5 +1018,77 @@
             android:text="9"
             android:textColor="@color/select_gamecolor"
             android:textSize="30px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/select_5"
+        android:layout_width="wrap_content"
+        android:layout_height="50px"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10px"
+        android:layout_marginTop="10px"
+        android:background="@drawable/gameselect_biankuang"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="全"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="大"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="小"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="单"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="双"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:layout_marginRight="40px"
+            android:text="清"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
     </LinearLayout>
 </LinearLayout>

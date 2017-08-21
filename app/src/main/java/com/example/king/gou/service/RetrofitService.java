@@ -714,13 +714,13 @@ public class RetrofitService extends HttpEngine {
         map.put("ptid", ptid + "");
 
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        final Call<Object> game = apiInterface.getGame(1, type, gid, tid, ptid, reqkey, currentTimeMillis);
+        final Call<List<Map<String, Object>>> game = apiInterface.getGame(1, type, gid, tid, ptid, reqkey, currentTimeMillis);
         final String s = game.request().toString();
         Log.d("获得游戏的请求体", s);
-        Call<Object> clone = game.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<List<Map<String, Object>>> clone = game.clone();
+        clone.enqueue(new Callback<List<Map<String, Object>>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<List<Map<String, Object>>> call, retrofit2.Response<List<Map<String, Object>>> response) {
                 if (response.code() == 200) {
                     Log.d("获取到的游戏====", response.body().toString());
                     String StringType = s.substring(s.indexOf("type=") + 5, s.indexOf("&gid"));
@@ -729,7 +729,7 @@ public class RetrofitService extends HttpEngine {
                     String s1 = response.body().toString();
                     String GameT = s1.substring(1, s1.length() - 1);
                     String[] split = GameT.split(",");
-                    if ("1".equals(StringType)) {
+                   /* if ("1".equals(StringType)) {
                         for (int i = 0; i < split.length; i = i + 2) {
                             GameType gameType = new GameType();
                             String GameName = split[i].substring(split[i].indexOf("name=") + 5, split[i].length());
@@ -740,8 +740,9 @@ public class RetrofitService extends HttpEngine {
                             // Log.d("Game游戏==", gameType.toString());
                             ListgameTypes.add(gameType);
                         }
-                    }
-                    if ("2".equals(StringType)) {
+                    }*/
+                    /*if ("2".equals(StringType)) {
+
                         for (int i = 0; i < split.length; i = i + 3) {
                             //Log.d("Game游戏Split=", split[i]);
                             GameType gameType = new GameType();
@@ -754,8 +755,8 @@ public class RetrofitService extends HttpEngine {
                             //  Log.d("Game游戏==", gameType.toString());
                             ListgameTypes.add(gameType);
                         }
-                    }
-                    if ("3".equals(StringType)) {
+                    }*/
+                    /*if ("3".equals(StringType)) {
                         for (int i = 0; i < split.length; i = i + 2) {
                             //Log.d("Game游戏Split=", split[i]);
                             GameType gameType = new GameType();
@@ -766,13 +767,39 @@ public class RetrofitService extends HttpEngine {
                             //  Log.d("Game游戏==", gameType.toString());
                             ListgameTypes.add(gameType);
                         }
-                    }
+                    }*/
                     if ("4".equals(StringType)) {
                         GameType g2 = new GameType();
                         g2.setGrid(0);
                         g2.setName("全部游戏");
                         ListgameTypes.add(g2);
-                        for (int i = 0; i < split.length; i = i + 3) {
+                        List<Map<String, Object>> lis = response.body();
+                        for (int i = 0; i < lis.size(); i++) {
+                            Map<String, Object> map = lis.get(i);
+                            double gid = 0;
+                            double group_id = 0;
+                            String name = null;
+                            if (map.size() > 0) {
+                                for (Map.Entry<String, Object> entry : map.entrySet()) {
+                                    if ("gid".equals(entry.getKey())) {
+                                        gid = (double) entry.getValue();
+                                    }
+                                    if ("group_id".equals(entry.getKey())) {
+                                        group_id = (double) entry.getValue();
+                                    }
+                                    if ("name".equals(entry.getKey())) {
+                                        name = (String) entry.getValue();
+                                    }
+                                }
+                            }
+                            GameType gameType = new GameType();
+                            gameType.setGid(RxUtils.getInstance().getInt(gid));
+                            gameType.setGroup_id(RxUtils.getInstance().getInt(group_id));
+                            gameType.setName(name);
+                            Log.d("Game游戏4==", gameType.toString());
+                            ListgameTypes.add(gameType);
+                        }
+                    /*    for (int i = 0; i < split.length; i = i + 3) {
                             //Log.d("Game游戏Split=", split[i]);
                             GameType gameType = new GameType();
                             String GameGid = split[i].substring(split[i].indexOf("gid=") + 4, split[i].length() - 2);
@@ -783,10 +810,10 @@ public class RetrofitService extends HttpEngine {
                             gameType.setName(GameName);
                             Log.d("Game游戏4==", gameType.toString());
                             ListgameTypes.add(gameType);
-                        }
+                        }*/
                         listener.onReceivedData(API_ID_GAME4, ListgameTypes, API_ID_ERROR);
                     }
-                    if ("5".equals(StringType)) {
+                 /*   if ("5".equals(StringType)) {
                         for (int i = 0; i < split.length; i = i + 4) {
                             // Log.d("Game游戏Split=", split[i]);
                             GameType gameType = new GameType();
@@ -802,7 +829,7 @@ public class RetrofitService extends HttpEngine {
                             // Log.d("Game游戏==", gameType.toString());
                         }
                         listener.onReceivedData(API_ID_GAME5, ListgameTypes, API_ID_ERROR);
-                    }
+                    }*/
                     if ("7".equals(StringType)) {
                         boolean flag = false;
                         Log.d("Split.leng=", split.length + "");
@@ -843,7 +870,7 @@ public class RetrofitService extends HttpEngine {
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<List<Map<String, Object>>> call, Throwable t) {
 
             }
         });

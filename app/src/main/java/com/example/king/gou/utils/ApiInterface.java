@@ -173,7 +173,7 @@ public interface ApiInterface {
     //获取游戏
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/get-game-datas")
-    Call<Object> getGame(
+    Call<List<Map<String, Object>>> getGame(
             @Query("AppClient") int num,
             @Query("type") int type,
             @Query("gid") int gid,

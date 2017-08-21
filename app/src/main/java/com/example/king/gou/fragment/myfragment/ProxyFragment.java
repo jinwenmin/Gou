@@ -2,12 +2,12 @@ package com.example.king.gou.fragment.myfragment;
 
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.king.gou.R;
@@ -21,7 +21,6 @@ import com.example.king.gou.ui.proxyfragment.TeamBaoBiaoActivity;
 import com.example.king.gou.ui.proxyfragment.TeamCunQuActivity;
 import com.example.king.gou.ui.proxyfragment.TeamLotteryLossActivity;
 import com.example.king.gou.ui.proxyfragment.TeamZBJLActivity;
-import com.example.king.gou.ui.proxyfragment.UserCenterActivity;
 import com.example.king.gou.ui.proxyfragment.VIPManActivity;
 
 import butterknife.BindView;
@@ -35,26 +34,26 @@ public class ProxyFragment extends BaseFragment implements View.OnClickListener 
 
 
     @BindView(R.id.proxy_home)
-    TextView proxyHome;
-    Unbinder unbinder;
+    LinearLayout proxyHome;
     @BindView(R.id.proxy_userCenter)
-    TextView proxyUserCenter;
+    LinearLayout proxyUserCenter;
     @BindView(R.id.proxy_TeamBaoBiao)
-    TextView proxyTeamBaoBiao;
+    LinearLayout proxyTeamBaoBiao;
     @BindView(R.id.proxy_VipMan)
-    TextView proxyVipMan;
+    LinearLayout proxyVipMan;
     @BindView(R.id.proxy_TeamZhangBian)
-    TextView proxyTeamZhangBian;
+    LinearLayout proxyTeamZhangBian;
     @BindView(R.id.proxy_GameJl)
-    TextView proxyGameJl;
+    LinearLayout proxyGameJl;
+    @BindView(R.id.GameMoney)
+    LinearLayout GameMoney;
+    @BindView(R.id.proxy_TeamCunQu)
+    LinearLayout proxyTeamCunQu;
+    @BindView(R.id.proxy_TeamBjl)
+    LinearLayout proxyTeamBjl;
     @BindView(R.id.proxy_TeamZhuiHao)
     TextView proxyTeamZhuiHao;
-    @BindView(R.id.proxy_TeamCunQu)
-    TextView proxyTeamCunQu;
-    @BindView(R.id.proxy_TeamBjl)
-    TextView proxyTeamBjl;
-    @BindView(R.id.GameMoney)
-    TextView GameMoney;
+    Unbinder unbinder;
 
     public static ProxyFragment newInstance() {
 
@@ -72,7 +71,7 @@ public class ProxyFragment extends BaseFragment implements View.OnClickListener 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_proxy, container, false);
         unbinder = ButterKnife.bind(this, view);
-        Drawable dlsy = getResources().getDrawable(R.drawable.ic_dailishouye);
+       /* Drawable dlsy = getResources().getDrawable(R.drawable.ic_dailishouye);
         dlsy.setBounds(0, 0, 200, 200);
         Drawable khzx = getResources().getDrawable(R.drawable.ic_kaihuzhongxin);
         khzx.setBounds(0, 0, 200, 200);
@@ -104,7 +103,7 @@ public class ProxyFragment extends BaseFragment implements View.OnClickListener 
         proxyTeamCunQu.setCompoundDrawables(null, tdcq, null, null);
         proxyTeamBjl.setCompoundDrawables(null, tdhdbb, null, null);
         GameMoney.setCompoundDrawables(null, yxjj, null, null);
-
+*/
 
         proxyHome.setOnClickListener(this);
         proxyUserCenter.setOnClickListener(this);
@@ -116,14 +115,10 @@ public class ProxyFragment extends BaseFragment implements View.OnClickListener 
         proxyTeamCunQu.setOnClickListener(this);
         proxyTeamBjl.setOnClickListener(this);
         GameMoney.setOnClickListener(this);
+
         return view;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 
     public void StartA(Class cls) {
         startActivity(new Intent(getActivity(), cls));
@@ -137,7 +132,7 @@ public class ProxyFragment extends BaseFragment implements View.OnClickListener 
                 StartA(ProxyHomeActivity.class);
                 break;
             case R.id.proxy_userCenter:
-               // StartA(UserCenterActivity.class);
+                // StartA(UserCenterActivity.class);
                 StartA(ShareDataActivity.class);
                 break;
             case R.id.proxy_TeamBaoBiao:
@@ -167,5 +162,11 @@ public class ProxyFragment extends BaseFragment implements View.OnClickListener 
                 StartA(GameReWardActivity.class);
                 break;
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

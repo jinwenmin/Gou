@@ -2,13 +2,12 @@ package com.example.king.gou.fragment.myfragment;
 
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import com.example.king.gou.R;
 import com.example.king.gou.fragment.BaseFragment;
@@ -33,24 +32,24 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
 
 
     @BindView(R.id.YouXijl)
-    TextView YouXijl;
+    LinearLayout YouXijl;
     @BindView(R.id.ZhuiHaojl)
-    TextView ZhuiHaojl;
+    LinearLayout ZhuiHaojl;
     @BindView(R.id.CaiPiaobb)
-    TextView CaiPiaobb;
+    LinearLayout CaiPiaobb;
     @BindView(R.id.CunQujl)
-    TextView CunQujl;
+    LinearLayout CunQujl;
     @BindView(R.id.GeRenzb)
-    TextView GeRenzb;
+    LinearLayout GeRenzb;
     @BindView(R.id.FanDianjl)
-    TextView FanDianjl;
+    LinearLayout FanDianjl;
     @BindView(R.id.GeRenbjl)
-    TextView GeRenbjl;
+    LinearLayout GeRenbjl;
     @BindView(R.id.ZhuanZhangjl)
-    TextView ZhuanZhangjl;
-    Unbinder unbinder;
+    LinearLayout ZhuanZhangjl;
     @BindView(R.id.CaiPiaoyk)
-    TextView CaiPiaoyk;
+    LinearLayout CaiPiaoyk;
+    Unbinder unbinder;
 
     public static OrderFragment newInstance() {
 
@@ -68,7 +67,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_order, container, false);
         unbinder = ButterKnife.bind(this, view);
-        Drawable yxjl = getResources().getDrawable(R.drawable.ic_youxijilu);
+       /* Drawable yxjl = getResources().getDrawable(R.drawable.ic_youxijilu);
         yxjl.setBounds(0, 0, 200, 200);
         Drawable zhjl = getResources().getDrawable(R.drawable.ic_zhuihaojilu);
         zhjl.setBounds(0, 0, 200, 200);
@@ -97,7 +96,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
         ZhuanZhangjl.setCompoundDrawables(null, zzjl, null, null);
         CaiPiaoyk.setCompoundDrawables(null, cpyk, null, null);
 
-
+*/
         YouXijl.setOnClickListener(this);
         ZhuiHaojl.setOnClickListener(this);
         CaiPiaobb.setOnClickListener(this);
@@ -107,6 +106,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
         GeRenbjl.setOnClickListener(this);
         ZhuanZhangjl.setOnClickListener(this);
         CaiPiaoyk.setOnClickListener(this);
+
         return view;
     }
 
