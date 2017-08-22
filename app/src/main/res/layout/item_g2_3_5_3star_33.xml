@@ -7,6 +7,7 @@
 
 
     <LinearLayout
+        android:id="@+id/LinearOne"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -163,4 +164,76 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/select_1"
+        android:layout_width="wrap_content"
+        android:layout_height="50px"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10px"
+        android:layout_marginTop="10px"
+        android:background="@drawable/gameselect_biankuang"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="全"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="大"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="小"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="单"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:text="双"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40px"
+            android:layout_marginRight="40px"
+            android:text="清"
+            android:textColor="@color/gray"
+            android:textSize="40px" />
+    </LinearLayout>
+
 </LinearLayout>

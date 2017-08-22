@@ -376,7 +376,6 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         || "2min_star_2_prev_group_single".equals(code)
 
 
-
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2, null, false);
                     final EditText g2_editText = (EditText) inte.findViewById(R.id.g2_EditText);
@@ -1199,6 +1198,36 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         "PK10_1to10_duplex".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_beijing10_location_1_10, null, false);
+                    LinearLayout Linear1 = (LinearLayout) inte.findViewById(R.id.Linear1);
+                    LinearLayout Linear2 = (LinearLayout) inte.findViewById(R.id.Linear2);
+                    LinearLayout Linear3 = (LinearLayout) inte.findViewById(R.id.Linear3);
+                    LinearLayout Linear4 = (LinearLayout) inte.findViewById(R.id.Linear4);
+                    LinearLayout Linear5 = (LinearLayout) inte.findViewById(R.id.Linear5);
+                    LinearLayout Linear6 = (LinearLayout) inte.findViewById(R.id.Linear5);
+                    LinearLayout Linear7 = (LinearLayout) inte.findViewById(R.id.Linear5);
+                    LinearLayout Linear8 = (LinearLayout) inte.findViewById(R.id.Linear5);
+                    LinearLayout Linear9 = (LinearLayout) inte.findViewById(R.id.Linear5);
+                    LinearLayout Linear10 = (LinearLayout) inte.findViewById(R.id.Linear5);
+                    LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
+                    LinearLayout select_2 = (LinearLayout) inte.findViewById(R.id.select_2);
+                    LinearLayout select_3 = (LinearLayout) inte.findViewById(R.id.select_3);
+                    LinearLayout select_4 = (LinearLayout) inte.findViewById(R.id.select_4);
+                    LinearLayout select_5 = (LinearLayout) inte.findViewById(R.id.select_5);
+                    LinearLayout select_6 = (LinearLayout) inte.findViewById(R.id.select_6);
+                    LinearLayout select_7 = (LinearLayout) inte.findViewById(R.id.select_7);
+                    LinearLayout select_8 = (LinearLayout) inte.findViewById(R.id.select_8);
+                    LinearLayout select_9 = (LinearLayout) inte.findViewById(R.id.select_9);
+                    LinearLayout select_10 = (LinearLayout) inte.findViewById(R.id.select_10);
+                    Select9(select_1, Linear1);
+                    Select9(select_2, Linear2);
+                    Select9(select_3, Linear3);
+                    Select9(select_4, Linear4);
+                    Select9(select_5, Linear5);
+                    Select9(select_6, Linear6);
+                    Select9(select_7, Linear7);
+                    Select9(select_8, Linear8);
+                    Select9(select_9, Linear9);
+                    Select9(select_10, Linear10);
 
                 }
                 if (
@@ -1342,6 +1371,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
 
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_3_5_3star_33, null, false);
+                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
+                    Select9(select_1,LinearOne);
 
                 }
                 if (
@@ -1349,7 +1381,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 || "3D_star_3_group_6_duplex".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_3_5_3star_36, null, false);
-
+                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
+                    Select9(select_1,LinearOne);
                 }
                 if (
                         "sequence_star_3_group_sum".equals(code)
@@ -1374,13 +1408,17 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
 
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_3_5_nolocation1, null, false);
-
+                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
+                    Select9(select_1,LinearOne);
                 }
                 if (
                         "sequence_choose_2_no_fix".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_3_5_nolocation2, null, false);
-
+                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
+                    Select9(select_1,LinearOne);
                 }
                 if (
                         "sequence_prev_special".equals(code)
@@ -1397,11 +1435,23 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         "3D_star_2_prev_duplex".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_3d_2_star_before, null, false);
+                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
+                    LinearLayout select_2 = (LinearLayout) inte.findViewById(R.id.select_2);
+                    Select9(select_1,LinearOne);
+                    Select9(select_2,LinearTwo);
                 }
                 if (
                         "3D_star_2_next_duplex".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_3d_2_star_after, null, false);
+                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
+                    LinearLayout select_2 = (LinearLayout) inte.findViewById(R.id.select_2);
+                    Select9(select_1,LinearOne);
+                    Select9(select_2,LinearTwo);
                 }
                 if (
                         "3D_next_special".equals(code)
