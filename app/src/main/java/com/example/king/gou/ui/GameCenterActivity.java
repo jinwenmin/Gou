@@ -7,6 +7,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.widget.NestedScrollView;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
@@ -41,6 +42,7 @@ import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -90,7 +92,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     @BindView(R.id.GameCenterLinear)
     LinearLayout GameCenterLinear;
     @BindView(R.id.GameCenterScroll)
-    ScrollView GameCenterScroll;
+    NestedScrollView GameCenterScroll;
     @BindView(R.id.cut)
     TextView cut;
     @BindView(R.id.edit1)
@@ -209,11 +211,17 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             ((CheckBox) view2.getChildAt(i1)).setChecked(true);
                         }
                     }
+
                     if (finalI == 3) {
                         for (int i1 = 1; i1 < view2.getChildCount(); i1++) {
                             ((CheckBox) view2.getChildAt(i1)).setChecked(false);
                         }
-                        start = 2;
+                        CheckBox cs = (CheckBox) view2.getChildAt(1);
+                        if ("01".equals(cs.getText().toString().trim())) {
+                            start = 1;
+                        } else {
+                            start = 2;
+                        }
                         length = view2.getChildCount();
                         for (int i1 = start; i1 < length; i1 = i1 + 2) {
                             ((CheckBox) view2.getChildAt(i1)).setChecked(true);
@@ -223,7 +231,13 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         for (int i1 = 1; i1 < view2.getChildCount(); i1++) {
                             ((CheckBox) view2.getChildAt(i1)).setChecked(false);
                         }
-                        start = 1;
+                        CheckBox cs = (CheckBox) view2.getChildAt(1);
+                        if ("01".equals(cs.getText().toString().trim())) {
+                            start = 2;
+                        } else {
+                            start = 1;
+                        }
+
                         length = view2.getChildCount();
                         for (int i1 = start; i1 < length; i1 = i1 + 2) {
                             ((CheckBox) view2.getChildAt(i1)).setChecked(true);
@@ -238,6 +252,151 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
             });
         }
 
+    }
+
+    public void Select10(LinearLayout view1, final LinearLayout view2) {
+        for (int i = 0; i < view1.getChildCount(); i++) {
+            final int finalI = i;
+            view1.getChildAt(i).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int start = 0;
+                    int length = 0;
+                    if (finalI == 0) {
+                        start = 1;
+                        length = view2.getChildCount();
+                        for (int i1 = start; i1 < length; i1++) {
+                            ((CheckBox) view2.getChildAt(i1)).setChecked(true);
+                        }
+                    }
+                    if (finalI == 1) {
+                        for (int i1 = 1; i1 < view2.getChildCount(); i1++) {
+                            ((CheckBox) view2.getChildAt(i1)).setChecked(false);
+                        }
+                        start = 6;
+                        length = view2.getChildCount();
+                        for (int i1 = start; i1 < length; i1++) {
+                            ((CheckBox) view2.getChildAt(i1)).setChecked(true);
+                        }
+                    }
+                    if (finalI == 2) {
+                        for (int i1 = 1; i1 < view2.getChildCount(); i1++) {
+                            ((CheckBox) view2.getChildAt(i1)).setChecked(false);
+                        }
+                        start = 1;
+                        length = 6;
+                        for (int i1 = start; i1 < length; i1++) {
+                            ((CheckBox) view2.getChildAt(i1)).setChecked(true);
+                        }
+                    }
+                    if (finalI == 3) {
+                        for (int i1 = 1; i1 < view2.getChildCount(); i1++) {
+                            ((CheckBox) view2.getChildAt(i1)).setChecked(false);
+                        }
+                        start = 1;
+                        length = view2.getChildCount();
+                        for (int i1 = start; i1 < length; i1 = i1 + 2) {
+                            ((CheckBox) view2.getChildAt(i1)).setChecked(true);
+                        }
+                    }
+                    if (finalI == 4) {
+                        for (int i1 = 1; i1 < view2.getChildCount(); i1++) {
+                            ((CheckBox) view2.getChildAt(i1)).setChecked(false);
+                        }
+                        start = 2;
+                        length = view2.getChildCount();
+                        for (int i1 = start; i1 < length; i1 = i1 + 2) {
+                            ((CheckBox) view2.getChildAt(i1)).setChecked(true);
+                        }
+                    }
+                    if (finalI == 5) {
+                        for (int i1 = 1; i1 < view2.getChildCount(); i1++) {
+                            ((CheckBox) view2.getChildAt(i1)).setChecked(false);
+                        }
+                    }
+                }
+            });
+        }
+
+    }
+
+    public void ClearCheckBox(LinearLayout lincheckBox) {
+        for (int i = 0; i < lincheckBox.getChildCount(); i++) {
+            ((CheckBox) lincheckBox.getChildAt(i)).setChecked(false);
+        }
+    }
+
+    public void Select80(LinearLayout linear, List<Integer> nums) {
+        List<Integer> nums1 = new ArrayList<>();
+        List<Integer> nums2 = new ArrayList<>();
+        for (int i = 0; i < nums.size(); i++) {
+            if (nums.get(i) < 41) {
+                nums1.add(nums.get(i));
+            }
+            if (nums.get(i) > 40) {
+                nums2.add(nums.get(i));
+            }
+        }
+
+        LinearLayout linearOne = (LinearLayout) linear.getChildAt(0);
+        LinearLayout linear1 = (LinearLayout) linearOne.getChildAt(1);
+        LinearLayout linearTwo = (LinearLayout) linear.getChildAt(1);
+        LinearLayout linear2 = (LinearLayout) linearTwo.getChildAt(1);
+
+        LinearLayout linear11 = (LinearLayout) linear1.getChildAt(0);
+        LinearLayout linear12 = (LinearLayout) linear1.getChildAt(1);
+        LinearLayout linear13 = (LinearLayout) linear1.getChildAt(2);
+        LinearLayout linear14 = (LinearLayout) linear1.getChildAt(3);
+        LinearLayout linear15 = (LinearLayout) linear1.getChildAt(4);
+
+        LinearLayout linear21 = (LinearLayout) linear2.getChildAt(0);
+        LinearLayout linear22 = (LinearLayout) linear2.getChildAt(1);
+        LinearLayout linear23 = (LinearLayout) linear2.getChildAt(2);
+        LinearLayout linear24 = (LinearLayout) linear2.getChildAt(3);
+        LinearLayout linear25 = (LinearLayout) linear2.getChildAt(4);
+        ClearCheckBox(linear11);
+        ClearCheckBox(linear12);
+        ClearCheckBox(linear13);
+        ClearCheckBox(linear14);
+        ClearCheckBox(linear15);
+        ClearCheckBox(linear21);
+        ClearCheckBox(linear22);
+        ClearCheckBox(linear23);
+        ClearCheckBox(linear24);
+        ClearCheckBox(linear25);
+        for (int i = 0; i < nums.size(); i++) {
+            int num = nums.get(i);
+            if (num < 9) {
+                ((CheckBox) linear11.getChildAt(num - 1)).setChecked(true);
+            }
+            if (num > 8 && num < 17) {
+                ((CheckBox) linear12.getChildAt(num - 9)).setChecked(true);
+            }
+            if (num > 16 && num < 25) {
+                ((CheckBox) linear13.getChildAt(num - 17)).setChecked(true);
+            }
+            if (num > 24 && num < 33) {
+                ((CheckBox) linear14.getChildAt(num - 25)).setChecked(true);
+            }
+            if (num > 32 && num < 41) {
+                ((CheckBox) linear15.getChildAt(num - 33)).setChecked(true);
+            }
+            if (num > 40 && num < 49) {
+                ((CheckBox) linear21.getChildAt(num - 41)).setChecked(true);
+            }
+            if (num > 48 && num < 57) {
+                ((CheckBox) linear22.getChildAt(num - 49)).setChecked(true);
+            }
+            if (num > 56 && num < 65) {
+                ((CheckBox) linear23.getChildAt(num - 57)).setChecked(true);
+            }
+            if (num > 64 && num < 73) {
+                ((CheckBox) linear24.getChildAt(num - 65)).setChecked(true);
+            }
+            if (num > 72 && num < 81) {
+                ((CheckBox) linear25.getChildAt(num - 73)).setChecked(true);
+            }
+        }
     }
 
     private void initSpinnerSelect() {
@@ -1203,11 +1362,11 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout Linear3 = (LinearLayout) inte.findViewById(R.id.Linear3);
                     LinearLayout Linear4 = (LinearLayout) inte.findViewById(R.id.Linear4);
                     LinearLayout Linear5 = (LinearLayout) inte.findViewById(R.id.Linear5);
-                    LinearLayout Linear6 = (LinearLayout) inte.findViewById(R.id.Linear5);
-                    LinearLayout Linear7 = (LinearLayout) inte.findViewById(R.id.Linear5);
-                    LinearLayout Linear8 = (LinearLayout) inte.findViewById(R.id.Linear5);
-                    LinearLayout Linear9 = (LinearLayout) inte.findViewById(R.id.Linear5);
-                    LinearLayout Linear10 = (LinearLayout) inte.findViewById(R.id.Linear5);
+                    LinearLayout Linear6 = (LinearLayout) inte.findViewById(R.id.Linear6);
+                    LinearLayout Linear7 = (LinearLayout) inte.findViewById(R.id.Linear7);
+                    LinearLayout Linear8 = (LinearLayout) inte.findViewById(R.id.Linear8);
+                    LinearLayout Linear9 = (LinearLayout) inte.findViewById(R.id.Linear9);
+                    LinearLayout Linear10 = (LinearLayout) inte.findViewById(R.id.Linear10);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
                     LinearLayout select_2 = (LinearLayout) inte.findViewById(R.id.select_2);
                     LinearLayout select_3 = (LinearLayout) inte.findViewById(R.id.select_3);
@@ -1353,6 +1512,17 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 || "kl8_any_seven".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_beijing8_optional1234567, null, false);
+                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout Linear = (LinearLayout) inte.findViewById(R.id.Linear);
+
+                    LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    Random rand = new Random();
+                    List<Integer> nums = new ArrayList<Integer>();
+                    for (int i = 0; i < 8; i++) {
+                        Log.d("随机数==", rand.nextInt(80) + 1 + "");
+                        nums.add(rand.nextInt(80) + 1);
+                    }
+                    Select80(Linear, nums);
                 }
                 if (
                         "kl8_five_elements".equals(code)
@@ -1373,7 +1543,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_3_5_3star_33, null, false);
                     LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
-                    Select9(select_1,LinearOne);
+                    Select9(select_1, LinearOne);
 
                 }
                 if (
@@ -1383,7 +1553,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_3_5_3star_36, null, false);
                     LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
-                    Select9(select_1,LinearOne);
+                    Select9(select_1, LinearOne);
                 }
                 if (
                         "sequence_star_3_group_sum".equals(code)
@@ -1410,7 +1580,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_3_5_nolocation1, null, false);
                     LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
-                    Select9(select_1,LinearOne);
+                    Select9(select_1, LinearOne);
                 }
                 if (
                         "sequence_choose_2_no_fix".equals(code)
@@ -1418,7 +1588,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_3_5_nolocation2, null, false);
                     LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
-                    Select9(select_1,LinearOne);
+                    Select9(select_1, LinearOne);
                 }
                 if (
                         "sequence_prev_special".equals(code)
@@ -1439,8 +1609,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
                     LinearLayout select_2 = (LinearLayout) inte.findViewById(R.id.select_2);
-                    Select9(select_1,LinearOne);
-                    Select9(select_2,LinearTwo);
+                    Select9(select_1, LinearOne);
+                    Select9(select_2, LinearTwo);
                 }
                 if (
                         "3D_star_2_next_duplex".equals(code)
@@ -1450,8 +1620,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
                     LinearLayout select_2 = (LinearLayout) inte.findViewById(R.id.select_2);
-                    Select9(select_1,LinearOne);
-                    Select9(select_2,LinearTwo);
+                    Select9(select_1, LinearOne);
+                    Select9(select_2, LinearTwo);
                 }
                 if (
                         "3D_next_special".equals(code)

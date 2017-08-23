@@ -55,7 +55,7 @@ public interface ApiInterface {
     //登出有日志
     @Headers("X-Requested-With: XMLHttpRequest")
     @GET("/logout")
-    Call<Object> getLogout(  );
+    Call<Object> getLogout();
 
     //登出无日志
     @Headers("X-Requested-With: XMLHttpRequest")
@@ -493,7 +493,7 @@ public interface ApiInterface {
     //查询消息列表
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/message-manage-list")
-    Call<Map<String,Object>> getChatList(
+    Call<Map<String, Object>> getChatList(
 
             @Query("AppClient") int num,
 
@@ -1251,9 +1251,25 @@ public interface ApiInterface {
     @Headers("X-Requested-With: XMLHttpRequest")
 
     @POST("/switch-game/{id}")
-    Call<Map<String,Object>> getSwitchGameList(
+    Call<Map<String, Object>> getSwitchGameList(
             @Path("id") int id,
             @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    ); //86切换游戏/获取玩法数据(重点)
+
+    @Headers("X-Requested-With: XMLHttpRequest")
+
+    @POST("/betting/submit/{gid}")
+    Call<Map<String, Object>> getSendBetting(
+            @Path("gid") int gid,
+            @Query("AppClient") int num,
+            @Query("vcode1") String vcode1,
+            @Query("ids") List<Map<String, Object>> ids,
+            @Query("period") String period,
+            @Query("array") List<Map<String, Object>> array,
+            @Query("amount") double amount,
+            @Query("stopByWin") int stopByWin,
             @Query("reqkey") String reqkey,
             @Query("t") long t
     );
@@ -1316,7 +1332,7 @@ public interface ApiInterface {
     //92 同步上期开奖数据
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/betting/winning-number")
-    Call<Map<String,Object>> getBettingWinningNum(
+    Call<Map<String, Object>> getBettingWinningNum(
             @Query("AppClient") int num,
             @Query("id") int gid,//id 游戏gid
             @Query("period") String period,//上一期倒计时时的期号

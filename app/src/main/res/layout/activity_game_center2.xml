@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:contentScrim="@color/colorPrimary">
+
+        <RelativeLayout
+            android:id="@+id/GameCenterTop"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/top_height"
+            android:background="@color/top_background">
+
+            <ImageView
+                android:id="@+id/_back"
+                android:layout_width="@dimen/top_back"
+                android:layout_height="@dimen/top_back"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_back" />
+
+            <TextView
+                android:id="@+id/GameCentertitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="游戏中心"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/top_textsize" />
+        </RelativeLayout>
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:collapsedTitleGravity="right"
+            app:contentScrim="@color/colorPrimary"
+            app:expandedTitleGravity="center"
+
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed|enterAlwaysCollapsed"
+            app:title="">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ListView
+                    android:id="@+id/GameCenterListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="300px"></ListView>
+            </LinearLayout>
+
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="距"
+                android:textSize="20px" />
+
+            <TextView
+                android:id="@+id/textPeriod"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/text1"
+                android:text="XXX"
+                android:textColor="@color/top_background"
+                android:textSize="20px" />
+
+            <TextView
+                android:id="@+id/text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/textPeriod"
+                android:text="期开奖:"
+                android:textSize="20px" />
+
+            <TextView
+                android:id="@+id/textTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/text3"
+                android:text="0:00"
+                android:textSize="20px" />
+
+            <ImageView
+                android:layout_width="50px"
+                android:layout_height="50px"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/shake_on_green" />
+
+            <TextView
+                android:id="@+id/MoneyCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="85,000元"
+                android:textSize="20px" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/MoneyCount"
+                android:text="玩法奖金:"
+                android:textSize="23px" />
+        </RelativeLayout>
+
+        <ProgressBar
+            android:id="@+id/GameCenterProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="8px"
+            android:max="200"
+            android:progress="30" />
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60px"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/SpinnerType1"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"></Spinner>
+
+                <Spinner
+                    android:id="@+id/SpinnerType2"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"></Spinner>
+
+
+            </LinearLayout>
+
+            <!--         <LinearLayout
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content">-->
+
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/GameCenterScroll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:layout_below="@id/gameCenter_coordinatorlayout">
+
+                <LinearLayout
+                    android:id="@+id/GameCenterLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="111"
+                        android:textSize="50px" />
+
+
+                </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
+            <!--           </LinearLayout>-->
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/gameCenterButtom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="50px"
+                    android:layout_marginLeft="10px"
+                    android:background="@drawable/game_beishu_biankuang"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/cut"
+                        android:layout_width="50px"
+                        android:layout_height="match_parent"
+                        android:background="#3A5FCD"
+                        android:gravity="center"
+                        android:text="－"
+                        android:textColor="@android:color/white"
+                        android:textSize="30px" />
+
+                    <TextView
+                        android:id="@+id/edit1"
+                        android:layout_width="80px"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textSize="20px" />
+
+                    <TextView
+                        android:id="@+id/add"
+                        android:layout_width="50px"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="#3A5FCD"
+                        android:gravity="center"
+                        android:text="+"
+                        android:textColor="@android:color/white"
+                        android:textSize="30px" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="50px"
+                    android:layout_centerInParent="true">
+
+                    <RadioGroup
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radion1"
+                            android:layout_width="70px"
+                            android:layout_height="70px"
+                            android:background="@drawable/item_gamemoney_type_select"
+                            android:button="@null"
+                            android:checked="true"
+                            android:gravity="center"
+                            android:text="元"
+                            android:textColor="@color/select_gamecolor1"
+                            android:textSize="30px" />
+
+                        <RadioButton
+                            android:id="@+id/radion2"
+                            android:layout_width="70px"
+                            android:layout_height="70px"
+                            android:background="@drawable/item_gamemoney_type_select"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:text="角"
+                            android:textColor="@color/select_gamecolor1"
+                            android:textSize="30px" />
+
+                        <RadioButton
+                            android:id="@+id/radion3"
+                            android:layout_width="70px"
+                            android:layout_height="70px"
+                            android:background="@drawable/item_gamemoney_type_select"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:text="分"
+                            android:textColor="@color/select_gamecolor1"
+                            android:textSize="30px" />
+
+                        <RadioButton
+                            android:id="@+id/radion4"
+                            android:layout_width="70px"
+                            android:layout_height="70px"
+                            android:background="@drawable/item_gamemoney_type_select"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:text="厘"
+                            android:textColor="@color/select_gamecolor1"
+                            android:textSize="30px" />
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <Spinner
+                    android:id="@+id/SpinnerMoney"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50px"
+                    android:layout_alignParentRight="true"></Spinner>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5px"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="0注"
+                    android:textSize="25px" />
+
+                <TextView
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="共计0.0000元"
+                    android:textSize="25px" />
+
+                <TextView
+
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="余额:0.000元"
+                    android:textSize="25px" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70px">
+
+                <LinearLayout
+
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2">
+
+                    <TextView
+
+                        android:layout_width="0px"
+                        android:layout_height="55px"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="30px"
+                        android:layout_marginRight="30px"
+                        android:layout_weight="1"
+                        android:background="@drawable/gamecenter_btn1"
+                        android:gravity="center"
+                        android:text="清除"
+                        android:textColor="@android:color/white"
+                        android:textSize="35px" />
+
+                    <TextView
+                        android:layout_width="0px"
+                        android:layout_height="55px"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="30px"
+                        android:layout_marginRight="30px"
+                        android:layout_weight="1"
+                        android:background="@drawable/gamecenter_btn1"
+                        android:gravity="center"
+                        android:text="机选"
+                        android:textColor="@android:color/white"
+                        android:textSize="35px" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3">
+
+                    <RelativeLayout
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2">
+
+                        <RelativeLayout
+                            android:layout_width="70px"
+                            android:layout_height="70px"
+                            android:layout_centerInParent="true">
+
+                            <ImageView
+                                android:layout_width="70px"
+                                android:layout_height="70px"
+                                android:src="@drawable/img_cart" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:background="@drawable/cart_num"
+                                android:paddingLeft="10px"
+                                android:paddingRight="10px"
+                                android:text="0"
+                                android:textColor="@android:color/white"
+                                android:textSize="20px" />
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:padding="5px">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/gamecenter_btn1"
+                            android:gravity="center"
+                            android:text="添加号码"
+                            android:textColor="@android:color/white"
+                            android:textSize="35px" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>

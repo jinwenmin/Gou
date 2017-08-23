@@ -5,10 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -33,16 +29,7 @@
                     android:textColor="@android:color/white"
                     android:textSize="30px" />
 
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="14"
-                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
 
                         <CheckBox
                             android:id="@+id/checkBoxOne_0"
@@ -172,9 +159,6 @@
                             android:textColor="@color/select_gamecolor"
                             android:textSize="30px" />
 
-
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -268,16 +252,7 @@
                     android:textColor="@android:color/white"
                     android:textSize="30px" />
 
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="14"
-                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
 
                         <CheckBox
                             android:id="@+id/checkBoxTwo_0"
@@ -408,8 +383,6 @@
                             android:textSize="30px" />
 
 
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -503,16 +476,6 @@
                     android:textColor="@android:color/white"
                     android:textSize="30px" />
 
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="14"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
 
                         <CheckBox
                             android:id="@+id/checkBoxThree_0"
@@ -643,8 +606,6 @@
                             android:textSize="30px" />
 
 
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -738,16 +699,6 @@
                     android:textColor="@android:color/white"
                     android:textSize="30px" />
 
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="14"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
 
                         <CheckBox
                             android:id="@+id/checkBoxFour_0"
@@ -878,8 +829,6 @@
                             android:textSize="30px" />
 
 
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -973,16 +922,6 @@
                     android:textColor="@android:color/white"
                     android:textSize="30px" />
 
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="14"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
 
                         <CheckBox
                             android:id="@+id/checkBoxFive_0"
@@ -1113,8 +1052,6 @@
                             android:textSize="30px" />
 
 
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -1208,16 +1145,6 @@
                     android:textColor="@android:color/white"
                     android:textSize="30px" />
 
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="14"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
 
                         <CheckBox
                             android:id="@+id/checkBoxSix_0"
@@ -1348,8 +1275,6 @@
                             android:textSize="30px" />
 
 
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -1443,16 +1368,6 @@
                     android:textColor="@android:color/white"
                     android:textSize="30px" />
 
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="14"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
 
                         <CheckBox
                             android:id="@+id/checkBoxSeven_0"
@@ -1583,8 +1498,6 @@
                             android:textSize="30px" />
 
 
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -1678,16 +1591,6 @@
                     android:textColor="@android:color/white"
                     android:textSize="30px" />
 
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="14"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
 
                         <CheckBox
                             android:id="@+id/checkBoxEight_0"
@@ -1818,8 +1721,6 @@
                             android:textSize="30px" />
 
 
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -1913,16 +1814,6 @@
                     android:textColor="@android:color/white"
                     android:textSize="30px" />
 
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="14"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
 
                         <CheckBox
                             android:id="@+id/checkBoxNine_0"
@@ -2053,8 +1944,6 @@
                             android:textSize="30px" />
 
 
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -2148,16 +2037,6 @@
                     android:textColor="@android:color/white"
                     android:textSize="30px" />
 
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="14"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
 
                         <CheckBox
                             android:id="@+id/checkBoxTen_0"
@@ -2288,8 +2167,6 @@
                             android:textSize="30px" />
 
 
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -2364,7 +2241,6 @@
                     android:textSize="40px" />
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
 
 
 </LinearLayout>

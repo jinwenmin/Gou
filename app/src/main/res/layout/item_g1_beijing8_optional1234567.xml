@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
+    android:id="@+id/Linear"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
 
     <LinearLayout
+        android:id="@+id/LinearOne"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -31,6 +32,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/Linear1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -134,6 +136,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/Linear2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -237,6 +240,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/Linear3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -340,6 +344,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/Linear4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -443,6 +448,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/Linear5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -549,6 +555,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/LinearTwo"
         android:layout_marginTop="20px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -574,6 +581,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/Linear6"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -677,6 +685,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/Linear7"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -780,6 +789,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/Linear8"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -883,6 +893,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/Linear9"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -986,6 +997,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/Linear10"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">

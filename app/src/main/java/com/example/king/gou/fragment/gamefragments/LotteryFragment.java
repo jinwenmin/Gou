@@ -385,6 +385,7 @@ public class LotteryFragment extends BaseFragment implements HttpEngine.DataList
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int section, int position, long id) {
                     Intent intent = new Intent(getActivity(), GameCenterActivity.class);
+                    // Intent intent = new Intent(getActivity(), DemoActivity.class);
                     intent.putExtra("gid", gids.get(section).get(position).getGid());
                     intent.putExtra("name", gids.get(section).get(position).getName());
                     intent.putExtra("position", position);
