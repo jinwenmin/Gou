@@ -28,6 +28,7 @@
         <LinearLayout
             android:layout_width="0px"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="35px"
             android:layout_weight="14"
             android:orientation="vertical">
 
@@ -556,9 +557,9 @@
 
     <LinearLayout
         android:id="@+id/LinearTwo"
-        android:layout_marginTop="20px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20px"
         android:orientation="horizontal">
 
         <TextView
@@ -577,6 +578,7 @@
         <LinearLayout
             android:layout_width="0px"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="35px"
             android:layout_weight="14"
             android:orientation="vertical">
 
@@ -1103,4 +1105,82 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10px"
+            android:text="上"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="35px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10px"
+            android:text="单"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="35px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10px"
+            android:text="上单"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="35px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10px"
+            android:text="上双"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="35px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10px"
+            android:text="混合"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="35px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10px"
+            android:text="下"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="35px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10px"
+            android:text="双"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="35px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10px"
+            android:text="下单"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="35px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10px"
+            android:text="下双"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="35px" />
+    </LinearLayout>
 </LinearLayout>

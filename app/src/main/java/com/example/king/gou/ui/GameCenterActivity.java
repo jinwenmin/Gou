@@ -327,15 +327,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     }
 
     public void Select80(LinearLayout linear, List<Integer> nums) {
-        List<Integer> nums1 = new ArrayList<>();
-        List<Integer> nums2 = new ArrayList<>();
+
         for (int i = 0; i < nums.size(); i++) {
-            if (nums.get(i) < 41) {
-                nums1.add(nums.get(i));
-            }
-            if (nums.get(i) > 40) {
-                nums2.add(nums.get(i));
-            }
+            Log.d("随机数循环",nums.get(i)+"");
         }
 
         LinearLayout linearOne = (LinearLayout) linear.getChildAt(0);
@@ -366,34 +360,44 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         ClearCheckBox(linear25);
         for (int i = 0; i < nums.size(); i++) {
             int num = nums.get(i);
+
             if (num < 9) {
+                Log.d("随机数<9",num+"");
                 ((CheckBox) linear11.getChildAt(num - 1)).setChecked(true);
             }
             if (num > 8 && num < 17) {
+                Log.d("随机数<17",num+"");
                 ((CheckBox) linear12.getChildAt(num - 9)).setChecked(true);
             }
             if (num > 16 && num < 25) {
+                Log.d("随机数<25",num+"");
                 ((CheckBox) linear13.getChildAt(num - 17)).setChecked(true);
             }
             if (num > 24 && num < 33) {
+                Log.d("随机数<33",num+"");
                 ((CheckBox) linear14.getChildAt(num - 25)).setChecked(true);
             }
             if (num > 32 && num < 41) {
+                Log.d("随机数<41",num+"");
                 ((CheckBox) linear15.getChildAt(num - 33)).setChecked(true);
             }
             if (num > 40 && num < 49) {
+                Log.d("随机数<49",num+"");
                 ((CheckBox) linear21.getChildAt(num - 41)).setChecked(true);
             }
             if (num > 48 && num < 57) {
                 ((CheckBox) linear22.getChildAt(num - 49)).setChecked(true);
             }
             if (num > 56 && num < 65) {
+                Log.d("随机数<65",num+"");
                 ((CheckBox) linear23.getChildAt(num - 57)).setChecked(true);
             }
             if (num > 64 && num < 73) {
+                Log.d("随机数<73",num+"");
                 ((CheckBox) linear24.getChildAt(num - 65)).setChecked(true);
             }
             if (num > 72 && num < 81) {
+                Log.d("随机数<81",num+"");
                 ((CheckBox) linear25.getChildAt(num - 73)).setChecked(true);
             }
         }
@@ -1513,16 +1517,21 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_beijing8_optional1234567, null, false);
                     LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout Linear = (LinearLayout) inte.findViewById(R.id.Linear);
-
+                    final LinearLayout Linear = (LinearLayout) inte.findViewById(R.id.Linear);
                     LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    Random rand = new Random();
-                    List<Integer> nums = new ArrayList<Integer>();
-                    for (int i = 0; i < 8; i++) {
-                        Log.d("随机数==", rand.nextInt(80) + 1 + "");
-                        nums.add(rand.nextInt(80) + 1);
-                    }
-                    Select80(Linear, nums);
+                    LinearLayout LinearThree = (LinearLayout) Linear.getChildAt(2);
+                    LinearThree.getChildAt(4).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Random rand = new Random();
+                            List<Integer> nums = new ArrayList<Integer>();
+                            for (int i = 0; i < 8; i++) {
+                                nums.add(rand.nextInt(80) + 1);
+                            }
+                            Select80(Linear, nums);
+                        }
+                    });
+
                 }
                 if (
                         "kl8_five_elements".equals(code)
