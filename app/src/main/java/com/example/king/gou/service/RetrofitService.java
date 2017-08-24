@@ -3279,6 +3279,49 @@ public class RetrofitService extends HttpEngine {
 
     }
 
+    /*@Path("gid") int gid,
+                @Query("AppClient") int num,
+                @Query("vcode1") String vcode1,
+                @Query("ids") List<Map<String, Object>> ids,
+                @Query("period") String period,
+                @Query("array") List<Map<String, Object>> array,
+                @Query("amount") double amount,
+                @Query("stopByWin") int stopByWin,
+                @Query("reqkey") String reqkey,
+                @Query("t") long t*/
+    //提交购彩单
+    public void getSendBetting(DataListener listener, int gid, String vcode1, List<Map<String, Object>> ids, String period, List<Map<String, Object>> array, double amount, int stopByWin) {
+        long currentThreadTimeMillis = System.currentTimeMillis();
+        Map map = new HashMap();
+        map.put("vcode1", vcode1 + "");
+        map.put("ids", ids + "");
+        map.put("period", period + "");
+        map.put("array", array + "");
+        map.put("amount", amount + "");
+        map.put("stopByWin", stopByWin + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentThreadTimeMillis);
+        Call<Map<String, Object>> sendBetting = apiInterface.getSendBetting(gid, 1, vcode1, ids, period, array, amount, stopByWin, reqkey, currentThreadTimeMillis);
+        String s = sendBetting.request().toString();
+        Log.d("提交购彩单的请求整体", s);
+        Call<Map<String, Object>> clone = sendBetting.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
+            @Override
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
+                int code = response.code();
+                Log.d("提交购彩单Code==", code + "");
+                if (code == 200) {
+                    Log.d("提交购彩单", response.body().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+                Log.d("提交购彩单Error", t.toString());
+            }
+        });
+
+    }
+
     //切换游戏/获取玩法数据(重点)
     public void getSwitchGameList(final DataListener listener, int id) {
         long currentTimeMillis = System.currentTimeMillis();

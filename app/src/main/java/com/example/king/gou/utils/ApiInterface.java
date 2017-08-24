@@ -1256,10 +1256,11 @@ public interface ApiInterface {
             @Query("AppClient") int num,
             @Query("reqkey") String reqkey,
             @Query("t") long t
-    ); //86切换游戏/获取玩法数据(重点)
+    );
+
+    //86提交购彩单(重点)
 
     @Headers("X-Requested-With: XMLHttpRequest")
-
     @POST("/betting/submit/{gid}")
     Call<Map<String, Object>> getSendBetting(
             @Path("gid") int gid,

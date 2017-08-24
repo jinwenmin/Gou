@@ -37,19 +37,19 @@
 
                 <CheckBox
                     android:id="@+id/checkBoxOne_0"
-                    android:layout_width="200px"
+                    android:layout_width="180px"
                     android:layout_height="50px"
                     android:layout_margin="5px"
                     android:background="@drawable/item_gameselect1"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="奇(奇>偶)"
+                    android:text="奇(奇&gt;偶)"
                     android:textColor="@color/select_gamecolor1"
                     android:textSize="30px" />
 
                 <CheckBox
                     android:id="@+id/checkBoxOne_1"
-                    android:layout_width="200px"
+                    android:layout_width="180px"
                     android:layout_height="50px"
                     android:layout_margin="5px"
                     android:background="@drawable/item_gameselect1"
@@ -61,13 +61,13 @@
 
                 <CheckBox
                     android:id="@+id/checkBoxOne_2"
-                    android:layout_width="200px"
+                    android:layout_width="180px"
                     android:layout_height="50px"
                     android:layout_margin="5px"
                     android:background="@drawable/item_gameselect1"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="偶(奇偶)"
+                    android:text="偶(奇&lt;偶)"
                     android:textColor="@color/select_gamecolor1"
                     android:textSize="30px" />
 

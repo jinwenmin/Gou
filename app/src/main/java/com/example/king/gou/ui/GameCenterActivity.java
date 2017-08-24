@@ -41,7 +41,10 @@ import com.example.king.gou.utils.RxUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -329,7 +332,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     public void Select80(LinearLayout linear, List<Integer> nums) {
 
         for (int i = 0; i < nums.size(); i++) {
-            Log.d("随机数循环",nums.get(i)+"");
+            Log.d("随机数循环", nums.get(i) + "");
         }
 
         LinearLayout linearOne = (LinearLayout) linear.getChildAt(0);
@@ -362,42 +365,42 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
             int num = nums.get(i);
 
             if (num < 9) {
-                Log.d("随机数<9",num+"");
+                Log.d("随机数<9", num + "");
                 ((CheckBox) linear11.getChildAt(num - 1)).setChecked(true);
             }
             if (num > 8 && num < 17) {
-                Log.d("随机数<17",num+"");
+                Log.d("随机数<17", num + "");
                 ((CheckBox) linear12.getChildAt(num - 9)).setChecked(true);
             }
             if (num > 16 && num < 25) {
-                Log.d("随机数<25",num+"");
+                Log.d("随机数<25", num + "");
                 ((CheckBox) linear13.getChildAt(num - 17)).setChecked(true);
             }
             if (num > 24 && num < 33) {
-                Log.d("随机数<33",num+"");
+                Log.d("随机数<33", num + "");
                 ((CheckBox) linear14.getChildAt(num - 25)).setChecked(true);
             }
             if (num > 32 && num < 41) {
-                Log.d("随机数<41",num+"");
+                Log.d("随机数<41", num + "");
                 ((CheckBox) linear15.getChildAt(num - 33)).setChecked(true);
             }
             if (num > 40 && num < 49) {
-                Log.d("随机数<49",num+"");
+                Log.d("随机数<49", num + "");
                 ((CheckBox) linear21.getChildAt(num - 41)).setChecked(true);
             }
             if (num > 48 && num < 57) {
                 ((CheckBox) linear22.getChildAt(num - 49)).setChecked(true);
             }
             if (num > 56 && num < 65) {
-                Log.d("随机数<65",num+"");
+                Log.d("随机数<65", num + "");
                 ((CheckBox) linear23.getChildAt(num - 57)).setChecked(true);
             }
             if (num > 64 && num < 73) {
-                Log.d("随机数<73",num+"");
+                Log.d("随机数<73", num + "");
                 ((CheckBox) linear24.getChildAt(num - 65)).setChecked(true);
             }
             if (num > 72 && num < 81) {
-                Log.d("随机数<81",num+"");
+                Log.d("随机数<81", num + "");
                 ((CheckBox) linear25.getChildAt(num - 73)).setChecked(true);
             }
         }
@@ -435,6 +438,31 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String code = class_code.get(position);
+                Map<String, Object> map = new HashMap();
+                map.put("pickedNumber", "1,2,3,4,5,6");
+                map.put("pickedText", "1,2,3,4,5,6");
+                map.put("location", "");
+                map.put("locationText", "");
+                map.put("num", 10);
+                map.put("classCode", code);
+                map.put("priceUnit", 1);
+                map.put("priceType", 1);
+                map.put("amount", 20);
+                map.put("multiple", 10);
+                map.put("amounts", 20);
+                map.put("multiples", 10);
+                map.put("vcode", "");
+
+                List<Map<String, Object>> ids = new ArrayList<>();
+                ids.add(map);
+                Map<String, Object> maps = new HashMap<String, Object>();
+                maps.put("period", bs.getPeriod());
+                maps.put("multiple", 10);
+                List<Map<String, Object>> array = new ArrayList<Map<String, Object>>();
+                array.add(maps);
+                RetrofitService.getInstance().getSendBetting(GameCenterActivity.this, gid, "", ids, bs.getPeriod(), array, 20, 1);
+
+
                 GameCenterLinear.removeAllViews();
                 Log.d("Class_Code=", code);
                 View inte = new View(GameCenterActivity.this);
@@ -1520,18 +1548,144 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     final LinearLayout Linear = (LinearLayout) inte.findViewById(R.id.Linear);
                     LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
                     LinearLayout LinearThree = (LinearLayout) Linear.getChildAt(2);
+                    LinearThree.getChildAt(0).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Random rand = new Random();
+                            List<Integer> nums = new ArrayList<Integer>();
+                            while (nums.size() < 8) {
+                                int num = rand.nextInt(40) + 1;
+                                if (!nums.contains(num)) {
+                                    nums.add(num);
+                                }
+                            }
+                            Select80(Linear, nums);
+                        }
+                    });
+                    LinearThree.getChildAt(1).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Random rand = new Random();
+                            List<Integer> nums = new ArrayList<Integer>();
+                            while (nums.size() < 8) {
+                                int num = rand.nextInt(80) + 1;
+                                if (num % 2 == 1) {
+                                    if (!nums.contains(num)) {
+                                        nums.add(num);
+                                    }
+                                }
+                            }
+                            Select80(Linear, nums);
+                        }
+                    });
+                    LinearThree.getChildAt(2).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Random rand = new Random();
+                            List<Integer> nums = new ArrayList<Integer>();
+                            while (nums.size() < 8) {
+                                int num = rand.nextInt(40) + 1;
+                                if (num % 2 == 1) {
+                                    if (!nums.contains(num)) {
+                                        nums.add(num);
+                                    }
+                                }
+                            }
+                            Select80(Linear, nums);
+                        }
+                    });
+                    LinearThree.getChildAt(3).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Random rand = new Random();
+                            List<Integer> nums = new ArrayList<Integer>();
+                            while (nums.size() < 8) {
+                                int num = rand.nextInt(40) + 1;
+                                if (num % 2 == 0) {
+                                    if (!nums.contains(num)) {
+                                        nums.add(num);
+                                    }
+                                }
+                            }
+                            Select80(Linear, nums);
+                        }
+                    });
                     LinearThree.getChildAt(4).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Random rand = new Random();
                             List<Integer> nums = new ArrayList<Integer>();
-                            for (int i = 0; i < 8; i++) {
-                                nums.add(rand.nextInt(80) + 1);
+                            while (nums.size() < 8) {
+                                int num = rand.nextInt(80) + 1;
+                                if (!nums.contains(num)) {
+                                    nums.add(num);
+                                }
                             }
                             Select80(Linear, nums);
                         }
                     });
-
+                    LinearThree.getChildAt(5).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Random rand = new Random();
+                            List<Integer> nums = new ArrayList<Integer>();
+                            while (nums.size() < 8) {
+                                int num = rand.nextInt(41) + 41;
+                                if (!nums.contains(num)) {
+                                    nums.add(num);
+                                }
+                            }
+                            Select80(Linear, nums);
+                        }
+                    });
+                    LinearThree.getChildAt(6).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Random rand = new Random();
+                            List<Integer> nums = new ArrayList<Integer>();
+                            while (nums.size() < 8) {
+                                int num = rand.nextInt(80) + 1;
+                                if (num % 2 == 0) {
+                                    if (!nums.contains(num)) {
+                                        nums.add(num);
+                                    }
+                                }
+                            }
+                            Select80(Linear, nums);
+                        }
+                    });
+                    LinearThree.getChildAt(7).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Random rand = new Random();
+                            List<Integer> nums = new ArrayList<Integer>();
+                            while (nums.size() < 8) {
+                                int num = rand.nextInt(41) + 41;
+                                if (num % 2 == 1) {
+                                    if (!nums.contains(num)) {
+                                        nums.add(num);
+                                    }
+                                }
+                            }
+                            Select80(Linear, nums);
+                        }
+                    });
+                    LinearThree.getChildAt(8).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Random rand = new Random();
+                            List<Integer> nums = new ArrayList<Integer>();
+                            while (nums.size() < 8) {
+                                int num = rand.nextInt(41) + 41;
+                                if (num % 2 == 0) {
+                                    if (!nums.contains(num)) {
+                                        nums.add(num);
+                                    }
+                                }
+                            }
+                            Select80(Linear, nums);
+                        }
+                    });
                 }
                 if (
                         "kl8_five_elements".equals(code)

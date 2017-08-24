@@ -37,37 +37,37 @@
 
                 <CheckBox
                     android:id="@+id/checkBoxOne_0"
-                    android:layout_width="200px"
+                    android:layout_width="180px"
                     android:layout_height="50px"
                     android:layout_margin="5px"
                     android:background="@drawable/item_gameselect1"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="上(上下)"
+                    android:text="上(上&gt;下)"
                     android:textColor="@color/select_gamecolor1"
                     android:textSize="30px" />
 
                 <CheckBox
                     android:id="@+id/checkBoxOne_1"
-                    android:layout_width="200px"
+                    android:layout_width="180px"
                     android:layout_height="50px"
                     android:layout_margin="5px"
                     android:background="@drawable/item_gameselect1"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="中(上下)"
+                    android:text="中(上=下)"
                     android:textColor="@color/select_gamecolor1"
                     android:textSize="30px" />
 
                 <CheckBox
                     android:id="@+id/checkBoxOne_2"
-                    android:layout_width="200px"
+                    android:layout_width="180px"
                     android:layout_height="50px"
                     android:layout_margin="5px"
                     android:background="@drawable/item_gameselect1"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="下(上下)"
+                    android:text="下(上&lt;下)"
                     android:textColor="@color/select_gamecolor1"
                     android:textSize="30px" />
 
