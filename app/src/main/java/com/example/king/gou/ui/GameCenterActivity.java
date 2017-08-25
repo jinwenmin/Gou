@@ -451,8 +451,25 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 map.put("multiple", 10);
                 map.put("amounts", 20);
                 map.put("multiples", 10);
-                map.put("vcode", "");
 
+                String s = RxUtils.getInstance().randomHexString(6);
+                Log.d("16进制==", s);
+
+
+                String vtext = ";" + "1,2,3,4,5,6" +
+                        ";" + "1,2,3,4,5,6" +
+                        ";" + "" +
+                        ";" + "" +
+                        ";" + "10" +
+                        ";" + code +
+                        ";" + "1" +
+                        ";" + "1" +
+                        ";" + "20" +
+                        ";" + "10" +
+                        ";" + "20" +
+                        ";" + "10";
+                String vcode = RxUtils.getInstance().SHA256(vtext);
+                map.put("vcode", "0" + vcode + s);
                 List<Map<String, Object>> ids = new ArrayList<>();
                 ids.add(map);
                 Map<String, Object> maps = new HashMap<String, Object>();

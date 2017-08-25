@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -95,15 +96,17 @@ public class RxUtils {
         }
         return "";
     }
-    public String fmtString(String str){
+
+    public String fmtString(String str) {
         String notice = "";
-        try{
+        try {
             notice = URLEncoder.encode(str, "utf-8");
-        }catch(UnsupportedEncodingException ex){
+        } catch (UnsupportedEncodingException ex) {
 
         }
         return notice;
     }
+
     public String SHA256(String value) {
 
         try {
@@ -233,7 +236,7 @@ public class RxUtils {
         return str;
     }
 
-    public  String getSecToTime(int time) {
+    public String getSecToTime(int time) {
         String timeStr = null;
         int hour = 0;
         int minute = 0;
@@ -266,6 +269,28 @@ public class RxUtils {
         return retStr;
     }
 
+    /**
+     * 获取16进制随机数
+     *
+     * @param len
+     * @return
+     * @throws
+     */
+    public String randomHexString(int len) {
+        try {
+            StringBuffer result = new StringBuffer();
+            for (int i = 0; i < len; i++) {
+                result.append(Integer.toHexString(new Random().nextInt(16)));
+            }
+            return result.toString().toUpperCase();
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+
+        }
+        return null;
+    }
 
     public String getRegistersReqkey(Map<String, String> map, Object t) {
 

@@ -2,6 +2,8 @@ package com.example.king.gou.fragment.gamefragments;
 
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -19,6 +21,7 @@ import com.example.king.gou.bean.GameType;
 import com.example.king.gou.fragment.BaseFragment;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.ui.GameCenterActivity;
+import com.example.king.gou.utils.DataBaseHelper;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.PinnedHeaderListView;
 
@@ -386,10 +389,25 @@ public class LotteryFragment extends BaseFragment implements HttpEngine.DataList
                 public void onItemClick(AdapterView<?> adapterView, View view, int section, int position, long id) {
                     Intent intent = new Intent(getActivity(), GameCenterActivity.class);
                     // Intent intent = new Intent(getActivity(), DemoActivity.class);
+                    DataBaseHelper dataBaseHelper = new DataBaseHelper(getActivity());
+
+                    SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
+                    db.execSQL("insert into games(name, img) values(?,?)", new Object[]{"游戏", R.drawable.i01});
+                    Cursor cursor = db.rawQuery("select * from games", null);
+
+                    while (cursor.moveToNext()) {
+
+                        String name = cursor.getString(1);//获取第二列的值
+                        int img = cursor.getInt(4);//获取第三列的值
+                        Log.d("游戏的数据库", name + "    " + img);
+                    }
+
+
                     intent.putExtra("gid", gids.get(section).get(position).getGid());
                     intent.putExtra("name", gids.get(section).get(position).getName());
                     intent.putExtra("position", position);
                     intent.putExtra("section", section);
+
                     startActivity(intent);
                 }
 

@@ -3302,6 +3302,11 @@ public class RetrofitService extends HttpEngine {
         String reqkey = RxUtils.getInstance().getReqkey(map, currentThreadTimeMillis);
         Call<Map<String, Object>> sendBetting = apiInterface.getSendBetting(gid, 1, vcode1, ids, period, array, amount, stopByWin, reqkey, currentThreadTimeMillis);
         String s = sendBetting.request().toString();
+        Request request = sendBetting.request();
+        List<String> list = request.url().encodedPathSegments();
+        for (int i = 0; i < list.size(); i++) {
+            Log.d("提交购彩单的请求整体URL", list.get(i));
+        }
         Log.d("提交购彩单的请求整体", s);
         Call<Map<String, Object>> clone = sendBetting.clone();
         clone.enqueue(new Callback<Map<String, Object>>() {

@@ -47,7 +47,7 @@ import com.example.king.gou.R;
 import com.example.king.gou.bean.LoginState;
 import com.example.king.gou.bean.TeamUserInfo;
 import com.example.king.gou.service.RetrofitService;
-import com.example.king.gou.utils.DataBaseHelper;
+
 import com.example.king.gou.utils.FingerPrintUtils;
 import com.example.king.gou.utils.HttpEngine;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -91,8 +91,7 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
 
     KeyguardManager mKeyManager;
     private final static int REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS = 0;
-    DataBaseHelper dataBaseHelper;
-    DataBaseHelper dataBaseFingerHelpoer;
+
 
     String id = null;
 

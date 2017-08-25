@@ -163,6 +163,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         PageAdapter pageAdapter = new PageAdapter(imgs);
         homeViewpager.setAdapter(pageAdapter);
         initScrollView();
+
+
         return view;
     }
 

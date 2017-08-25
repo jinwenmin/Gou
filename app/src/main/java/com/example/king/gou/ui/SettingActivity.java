@@ -40,7 +40,7 @@ import com.example.king.gou.ui.settingfragment.ResetPwdActivity;
 import com.example.king.gou.ui.settingfragment.UpdateMoneyPwdActivity;
 import com.example.king.gou.ui.settingfragment.UpdateNickNameActivity;
 import com.example.king.gou.ui.settingfragment.UpdatePwdActivity;
-import com.example.king.gou.utils.DataBaseHelper;
+
 import com.example.king.gou.utils.FingerPrintUtils;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
@@ -129,9 +129,6 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
     View contentView;
     private ImageView fingerImg;
     private TextView fingerText;
-    DataBaseHelper dataBaseHelper;
-    SQLiteDatabase writableDatabase;
-    String isfinger;
     private AlertView alertViewAnswer;
     // 一个自定义的布局，作为显示的内容
     View contentViewAnswer;
