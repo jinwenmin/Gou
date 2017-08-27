@@ -5,10 +5,11 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,33 +18,31 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.HorizontalScrollView;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
-import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.HomeGameAdapter;
+import com.example.king.gou.adapters.HomeGamesAdapters;
 import com.example.king.gou.adapters.PageAdapter;
 import com.example.king.gou.bean.AdvertisementObject;
+import com.example.king.gou.bean.HistoryGames;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.ui.AddGameActivity;
-import com.example.king.gou.ui.MainActivity;
+import com.example.king.gou.ui.GameCenterActivity;
 import com.example.king.gou.utils.BaseAutoScrollUpTextView;
+import com.example.king.gou.utils.DataBaseHelper;
 import com.example.king.gou.utils.FingerPrintUtils;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.MainScrollUpAdvertisementView;
@@ -64,40 +63,27 @@ import it.sephiroth.android.library.picasso.Picasso;
  */
 public class HomeFragment extends BaseFragment implements View.OnClickListener, HttpEngine.DataListener, OnItemClickListener {
 
+    List imgs = new ArrayList();
     @BindView(R.id.Erweima)
     ImageView Erweima;
     @BindView(R.id.home_top)
     RelativeLayout homeTop;
     @BindView(R.id.home_viewpager)
     RollPagerView homeViewpager;
-    @BindView(R.id.ScrollImg1)
-    ImageView ScrollImg1;
-    Unbinder unbinder;
-    @BindView(R.id.ScrollImg2)
-    ImageView ScrollImg2;
-    @BindView(R.id.ScrollImg3)
-    ImageView ScrollImg3;
-    @BindView(R.id.ScrollImg4)
-    ImageView ScrollImg4;
-    List imgs = new ArrayList();
-    @BindView(R.id.home_ralative)
-    RelativeLayout homeRalative;
-    @BindView(R.id.recycler)
-    RecyclerView recycler;
-    @BindView(R.id.header)
-    RecyclerViewHeader header;
-    @BindView(R.id.HomeFragment_addGame)
-    TextView HomeFragmentAddGame;
     @BindView(R.id.MainScrollAd)
     MainScrollUpAdvertisementView MainScrollAd;
     @BindView(R.id.test)
     MarqueeText test;
-    @BindView(R.id.home_scroll1)
-    HorizontalScrollView homeScroll1;
     @BindView(R.id.HomeFragment_Text)
     TextView HomeFragmentText;
+    @BindView(R.id.HomeFragment_addGame)
+    TextView HomeFragmentAddGame;
     @BindView(R.id.MyGame)
     RelativeLayout MyGame;
+    @BindView(R.id.HomeGridView)
+    GridView HomeGridView;
+    @BindView(R.id.home_ralative)
+    RelativeLayout homeRalative;
     private AlertView alertView;
     // 一个自定义的布局，作为显示的内容
     View contentView;
@@ -115,6 +101,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     private TextView fingerText1;
     String show = null;
     boolean finger;
+    SQLiteDatabase db;
+    HomeGameAdapter adapter;
+    HomeGamesAdapters adapters;
+    Unbinder unbinder;
 
     public static HomeFragment newInstance() {
 
@@ -133,8 +123,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         unbinder = ButterKnife.bind(this, view);
-
-
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(getActivity());
+        db = dataBaseHelper.getWritableDatabase();
 
 
         RetrofitService.getInstance().GetUserInfo(this);
@@ -154,18 +144,52 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         alertView.addExtView(contentView);
         test.startScroll();
         HomeFragmentAddGame.setOnClickListener(this);
-        recycler.setLayoutManager(new GridLayoutManager(getActivity(), 4));
-        header.attachTo(recycler, true);
+
 
         initImgs();
-        HomeGameAdapter adapter = new HomeGameAdapter(getActivity());
-        recycler.setAdapter(adapter);
+
+        Cursor cursor = db.rawQuery("select * from games order by count desc", null);
+        List<HistoryGames> hs = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            String name = cursor.getString(1);
+            int gid = cursor.getInt(2);
+            int img = cursor.getInt(3);
+            int count = cursor.getInt(4);
+            HistoryGames h = new HistoryGames();
+            h.setName(name);
+            h.setGid(gid);
+            h.setImg(img);
+            h.setCount(count);
+            hs.add(h);
+        }
+        adapters = new HomeGamesAdapters(getContext());
+        HomeGridView.setNumColumns(4);
+        HomeGridView.setAdapter(adapters);
+        HomeGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), GameCenterActivity.class);
+                HistoryGames item = (HistoryGames) adapters.getItem(position);
+                int gid = item.getGid();
+                String name = item.getName();
+                intent.putExtra("gid", gid);
+                intent.putExtra("name", name);
+                startActivity(intent);
+            }
+        });
+        adapters.addList(hs);
         PageAdapter pageAdapter = new PageAdapter(imgs);
         homeViewpager.setAdapter(pageAdapter);
         initScrollView();
 
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 
 
@@ -283,15 +307,38 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         imgs.add(img1);
         imgs.add(img2);
         //imgs.add(img3);
-      //  imgs.add(img4);
+        //  imgs.add(img4);
 
     }
 
     private void initScrollView() {
-        Picasso.with(getActivity()).load("file:///android_asset/ic_sports.webp").into(ScrollImg1);
+    /*    Picasso.with(getActivity()).load("file:///android_asset/ic_sports.webp").into(ScrollImg1);
         Picasso.with(getActivity()).load("file:///android_asset/ic_live_game.webp").into(ScrollImg2);
         Picasso.with(getActivity()).load("file:///android_asset/ic_electric.webp").into(ScrollImg3);
-        Picasso.with(getActivity()).load("file:///android_asset/ic_lottery.webp").into(ScrollImg4);
+        Picasso.with(getActivity()).load("file:///android_asset/ic_lottery.webp").into(ScrollImg4);*/
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        Log.d("重新显示", hidden + "");
+        if (!hidden) {
+            Cursor cursor = db.rawQuery("select * from games order by count desc", null);
+            List<HistoryGames> hs = new ArrayList<>();
+            while (cursor.moveToNext()) {
+                String name = cursor.getString(1);
+                int gid = cursor.getInt(2);
+                int img = cursor.getInt(3);
+                int count = cursor.getInt(4);
+                HistoryGames h = new HistoryGames();
+                h.setName(name);
+                h.setGid(gid);
+                h.setImg(img);
+                h.setCount(count);
+                hs.add(h);
+            }
+            adapters.addList(hs);
+        }
     }
 
     @Override

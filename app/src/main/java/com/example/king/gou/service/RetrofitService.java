@@ -3290,7 +3290,7 @@ public class RetrofitService extends HttpEngine {
                 @Query("reqkey") String reqkey,
                 @Query("t") long t*/
     //提交购彩单
-    public void getSendBetting(DataListener listener, int gid, String vcode1, List<Map<String, Object>> ids, String period, List<Map<String, Object>> array, double amount, int stopByWin) {
+    public void getSendBetting(DataListener listener, int gid, String vcode1, String ids, String period, String array, double amount, int stopByWin) {
         long currentThreadTimeMillis = System.currentTimeMillis();
         Map map = new HashMap();
         map.put("vcode1", vcode1 + "");
@@ -3300,13 +3300,11 @@ public class RetrofitService extends HttpEngine {
         map.put("amount", amount + "");
         map.put("stopByWin", stopByWin + "");
         String reqkey = RxUtils.getInstance().getReqkey(map, currentThreadTimeMillis);
-        Call<Map<String, Object>> sendBetting = apiInterface.getSendBetting(gid, 1, vcode1, ids, period, array, amount, stopByWin, reqkey, currentThreadTimeMillis);
+        Call<Map<String, Object>> sendBetting = apiInterface.getSendBetting(gid, 1, amount, array, ids, period,reqkey , stopByWin, currentThreadTimeMillis, vcode1);
         String s = sendBetting.request().toString();
         Request request = sendBetting.request();
         List<String> list = request.url().encodedPathSegments();
-        for (int i = 0; i < list.size(); i++) {
-            Log.d("提交购彩单的请求整体URL", list.get(i));
-        }
+
         Log.d("提交购彩单的请求整体", s);
         Call<Map<String, Object>> clone = sendBetting.clone();
         clone.enqueue(new Callback<Map<String, Object>>() {

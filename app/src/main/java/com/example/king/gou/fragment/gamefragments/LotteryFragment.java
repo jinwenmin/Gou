@@ -1,16 +1,20 @@
 package com.example.king.gou.fragment.gamefragments;
 
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.MyAdapter;
@@ -41,8 +45,17 @@ public class LotteryFragment extends BaseFragment implements HttpEngine.DataList
     @BindView(R.id.classify_morelist)
     PinnedHeaderListView classifyMorelist;
     Unbinder unbinder;
+    @BindView(R.id.RechargeFirmTop)
+    RelativeLayout RechargeFirmTop;
+    @BindView(R.id.img)
+    ImageView img;
     private List<GameImages> imgs = new ArrayList<>();
+    private int GameImgs[] = new int[]{
+            R.drawable.logo1, R.drawable.logo2, R.drawable.logo3, 0, 0, 0, R.drawable.logo7, R.drawable.logo8, R.drawable.logo9, R.drawable.logo10,
+            R.drawable.logo11, R.drawable.logo12, R.drawable.logo13, R.drawable.logo14, R.drawable.logo15, 0, 0, 0, R.drawable.logo19, R.drawable.logo20,
+            R.drawable.logo21, 0, R.drawable.logo23, R.drawable.logo24, R.drawable.logo25, R.drawable.logo26, R.drawable.logo27, R.drawable.logo28
 
+    };
     private int ssc[] = new int[]{R.drawable.ic_shishicai_cq, R.drawable.ic_shishicai_tj, R.drawable.ic_shishicai_xj, R.drawable.ic_shishicai_bj};
     private String sscName[] = new String[]{"重庆时时彩", "天津时时彩", "新疆时时彩", "北京时时彩"};
     private int jwssc[] = new int[]{R.drawable.ic_shishicai_hanguo, R.drawable.ic_shishicai_dongjing, R.drawable.ic_shishicai_jnd, R.drawable.ic_shishicai_twwf};
@@ -58,6 +71,7 @@ public class LotteryFragment extends BaseFragment implements HttpEngine.DataList
     List<GameType> ListgameTypes = new ArrayList<GameType>();
     List<List<AccountChange>> acs;
     List<List<GameIm>> gids = new ArrayList<>();
+    SQLiteDatabase db;
 
     public static LotteryFragment newInstance() {
 
@@ -76,6 +90,8 @@ public class LotteryFragment extends BaseFragment implements HttpEngine.DataList
         View view = inflater.inflate(R.layout.fragment_lottery, container, false);
         unbinder = ButterKnife.bind(this, view);
         RetrofitService.getInstance().getGame(this, 4, 0, 0, 0);
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(getActivity());
+        db = dataBaseHelper.getWritableDatabase();
        /* getdatas();
         // 配置适配器
         MyAdapter adapter = new MyAdapter(getActivity(), imgs); // 布局里的控件id
@@ -373,7 +389,6 @@ public class LotteryFragment extends BaseFragment implements HttpEngine.DataList
 
             }
             Log.d("GidsSize", gids.size() + "");
-
             imgs.add(gameTypes1);
             imgs.add(gameTypes2);
             imgs.add(gameTypes3);
@@ -387,24 +402,32 @@ public class LotteryFragment extends BaseFragment implements HttpEngine.DataList
             classifyMorelist.setOnItemClickListener(new PinnedHeaderListView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int section, int position, long id) {
+                    int count1=0;
+                    int gid = gids.get(section).get(position).getGid();
+                    Log.d("游戏中心Gid", gid + "");
+                    String name = gids.get(section).get(position).getName();
                     Intent intent = new Intent(getActivity(), GameCenterActivity.class);
-                    // Intent intent = new Intent(getActivity(), DemoActivity.class);
-                    DataBaseHelper dataBaseHelper = new DataBaseHelper(getActivity());
+                    Cursor cursor1 = db.rawQuery("select * from games where name=?", new String[]{name});
 
-                    SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
-                    db.execSQL("insert into games(name, img) values(?,?)", new Object[]{"游戏", R.drawable.i01});
-                    Cursor cursor = db.rawQuery("select * from games", null);
-
-                    while (cursor.moveToNext()) {
-
-                        String name = cursor.getString(1);//获取第二列的值
-                        int img = cursor.getInt(4);//获取第三列的值
-                        Log.d("游戏的数据库", name + "    " + img);
+                    while (cursor1.moveToNext()) {
+                       count1 = cursor1.getInt(4);
                     }
-
-
-                    intent.putExtra("gid", gids.get(section).get(position).getGid());
-                    intent.putExtra("name", gids.get(section).get(position).getName());
+                    Log.d("游戏的数据库Count", count1 + "");
+                    if (count1 == 0) {
+                        db.execSQL("insert into games(name,gid,img,count) values(?,?,?,?)", new Object[]{name, gid, GameImgs[gid - 1], 1});
+                    } else {
+                        db.execSQL("update games set count=? where name=?", new Object[]{count1 + 1,name});
+                    }
+                    Cursor cursor = db.rawQuery("select * from games", null);
+                    while (cursor.moveToNext()) {
+                        String Name = cursor.getString(1);
+                        int Gid = cursor.getInt(2);
+                        int Img = cursor.getInt(3);
+                        int Count = cursor.getInt(4);
+                        Log.d("游戏的数据库", Name + "  " + Gid + "  " + Img + "   " + Count);
+                    }
+                    intent.putExtra("gid", gid);
+                    intent.putExtra("name", name);
                     intent.putExtra("position", position);
                     intent.putExtra("section", section);
 

@@ -1,34 +1,40 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.king.gou.fragment.gamefragments.LotteryFragment">
 
-        <RelativeLayout
-            android:id="@+id/RechargeFirmTop"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/top_height"
-            android:background="@color/top_background">
+    <RelativeLayout
+        android:id="@+id/RechargeFirmTop"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_height"
+        android:background="@color/top_background">
 
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="游戏大厅"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/top_textsize" />
-        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="游戏大厅"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/top_textsize" />
+    </RelativeLayout>
 
 
-        <com.example.king.gou.utils.PinnedHeaderListView
-            android:id="@+id/classify_morelist"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:background="@drawable/home_bg"
-            android:cacheColorHint="#00000000"
-            android:divider="@null"
-            android:listSelector="#00000000" />
-</LinearLayout>
+    <com.example.king.gou.utils.PinnedHeaderListView
+        android:id="@+id/classify_morelist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:background="@drawable/home_bg"
+        android:cacheColorHint="#00000000"
+        android:divider="@null"
+        android:listSelector="#00000000" />
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="200px"
+        android:layout_height="200px"
+        android:layout_centerInParent="true" />
+</RelativeLayout>

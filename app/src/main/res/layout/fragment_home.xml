@@ -14,10 +14,10 @@
         android:background="@color/top_background">
 
         <ImageView
-            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="60px"
             android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
             android:src="@mipmap/home_logo" />
 
         <ImageView
@@ -45,132 +45,71 @@
         android:layout_height="300px"
         android:layout_below="@id/home_top"
         app:rollviewpager_play_delay="3000"></com.jude.rollviewpager.RollPagerView>
+
     <com.example.king.gou.utils.MainScrollUpAdvertisementView
         android:id="@+id/MainScrollAd"
         android:layout_width="fill_parent"
         android:layout_height="60px"
 
         android:layout_below="@id/home_top"></com.example.king.gou.utils.MainScrollUpAdvertisementView>
+
     <com.example.king.gou.utils.MarqueeText
         android:id="@+id/test"
-        android:visibility="gone"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/home_top"
         android:background="@android:color/holo_red_dark"
         android:ellipsize="marquee"
         android:singleLine="true"
-        android:layout_below="@id/home_top"
-        android:text="大家好，我是程序员小冰，欢迎关注微博：http://weibo.com/mcxiaobing"
+        android:text=""
         android:textColor="#000000"
-        android:textSize="20dp"></com.example.king.gou.utils.MarqueeText>
+        android:textSize="20dp"
+        android:visibility="gone"></com.example.king.gou.utils.MarqueeText>
 
-    <FrameLayout
+
+    <RelativeLayout
+        android:id="@+id/MyGame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/home_viewpager">
+        android:layout_height="@dimen/top_height"
+        android:layout_below="@id/home_viewpager"
+        android:background="@color/top_background">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|top" />
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8px"
+            android:text="我的游戏"
+            android:textColor="@android:color/white"
+            android:textSize="30px" />
 
-        <com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader
-            android:id="@+id/header"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/HomeFragment_Text"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|top">
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8px"
+            android:text="以下是经常使用的游戏类型"
+            android:textColor="@android:color/white"
+            android:textSize="30px" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/HomeFragment_addGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8px"
+            android:text="添加游戏"
+            android:textColor="@android:color/white"
+            android:visibility="gone" />
+    </RelativeLayout>
 
-                <HorizontalScrollView
-                    android:visibility="gone"
-                    android:id="@+id/home_scroll1"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginBottom="5px"
-                    android:layout_marginTop="5px"
-                    android:scrollbars="none">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:id="@+id/ScrollImg1"
-                            android:layout_width="300px"
-                            android:layout_height="150px"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="8px" />
-
-                        <ImageView
-
-                            android:id="@+id/ScrollImg2"
-                            android:layout_width="300px"
-                            android:layout_height="150px"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="8px" />
-
-                        <ImageView
-                            android:id="@+id/ScrollImg3"
-                            android:layout_width="300px"
-                            android:layout_height="150px"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="8px" />
-
-                        <ImageView
-                            android:id="@+id/ScrollImg4"
-                            android:layout_width="300px"
-                            android:layout_height="150px"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="8px" />
-                    </LinearLayout>
-                </HorizontalScrollView>
-
-                <RelativeLayout
-                    android:id="@+id/MyGame"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/top_height"
-                    android:layout_below="@id/home_scroll1"
-                    android:background="@color/top_background">
-
-                    <TextView
-                        android:textSize="30px"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="8px"
-                        android:text="我的游戏"
-                        android:textColor="@android:color/white" />
-
-                    <TextView
-                        android:id="@+id/HomeFragment_Text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="8px"
-                        android:text="以下是经常使用的游戏类型"
-                        android:textColor="@android:color/white"
-                        android:textSize="30px" />
-
-                    <TextView
-                        android:id="@+id/HomeFragment_addGame"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="8px"
-                        android:text="添加游戏"
-                        android:textColor="@android:color/white"
-                        android:visibility="gone" />
-                </RelativeLayout>
-            </RelativeLayout>
-        </com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader>
-
-    </FrameLayout>
+    <GridView
+        android:id="@+id/HomeGridView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/MyGame"
+        android:layout_gravity="center_horizontal|top" />
 </RelativeLayout>

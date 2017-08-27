@@ -31,6 +31,8 @@ import android.widget.Toast;
 import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.DrawHistoryAdapter;
+
+import com.example.king.gou.bean.Arrays;
 import com.example.king.gou.bean.BettingSync;
 import com.example.king.gou.bean.RecordList;
 import com.example.king.gou.bean.SwitchG;
@@ -38,6 +40,7 @@ import com.example.king.gou.fragment.FindFragment;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
+import com.google.gson.Gson;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.ArrayList;
@@ -439,18 +442,20 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String code = class_code.get(position);
                 Map<String, Object> map = new HashMap();
-                map.put("pickedNumber", "1,2,3,4,5,6");
-                map.put("pickedText", "1,2,3,4,5,6");
-                map.put("location", "");
+                map.put("pickedNumber", "123457");
+                map.put("multiples", 2);
                 map.put("locationText", "");
-                map.put("num", 10);
-                map.put("classCode", code);
                 map.put("priceUnit", 1);
-                map.put("priceType", 1);
                 map.put("amount", 20);
-                map.put("multiple", 10);
+                map.put("priceType", 1);
                 map.put("amounts", 20);
-                map.put("multiples", 10);
+                map.put("pickedText", "");
+                map.put("multiple", 2);
+                map.put("classCode", "");
+                map.put("location", "00000");
+                map.put("num", 10);
+                map.put("vcode", "");
+
 
                 String s = RxUtils.getInstance().randomHexString(6);
                 Log.d("16进制==", s);
@@ -469,15 +474,26 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         ";" + "20" +
                         ";" + "10";
                 String vcode = RxUtils.getInstance().SHA256(vtext);
-                map.put("vcode", "0" + vcode + s);
+
                 List<Map<String, Object>> ids = new ArrayList<>();
                 ids.add(map);
                 Map<String, Object> maps = new HashMap<String, Object>();
                 maps.put("period", bs.getPeriod());
-                maps.put("multiple", 10);
+                maps.put("multiple", 2);
                 List<Map<String, Object>> array = new ArrayList<Map<String, Object>>();
                 array.add(maps);
-                RetrofitService.getInstance().getSendBetting(GameCenterActivity.this, gid, "", ids, bs.getPeriod(), array, 20, 1);
+                Object[] arrays = new Object[]{maps};
+                List<Arrays> arrays1 = new ArrayList<Arrays>();
+                Arrays as = new Arrays();
+                as.setPeriod(bs.getPeriod());
+                as.setMultiple(2);
+                arrays1.add(as);
+                Gson gson = new Gson();
+                String s1 = gson.toJson(arrays1).toString();
+                String s2 = gson.toJson(map);
+                Log.d("提交购彩单Array", s1);
+                Log.d("提交购彩单Ids", s2);
+                RetrofitService.getInstance().getSendBetting(GameCenterActivity.this, gid, "", s2, bs.getPeriod(), s1, 0, 0);
 
 
                 GameCenterLinear.removeAllViews();
@@ -1535,8 +1551,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 }
                 if (
                         "kl8_parity_disk".equals(code)
-                                || "kl8_parity_disk_2".equals(code)
-                        ) {
+                                || "kl8_parity_disk_2".equals(code)) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_beijing8_quwei_ji_ou, null, false);
                 }
                 if (

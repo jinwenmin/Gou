@@ -1265,14 +1265,14 @@ public interface ApiInterface {
     Call<Map<String, Object>> getSendBetting(
             @Path("gid") int gid,
             @Query("AppClient") int num,
-            @Query("vcode1") String vcode1,
-            @Query("ids") List<Map<String, Object>> ids,
-            @Query("period") String period,
-            @Query("array") List<Map<String, Object>> array,
             @Query("amount") double amount,
-            @Query("stopByWin") int stopByWin,
+            @Query("array") String array,
+            @Query("ids") String ids,
+            @Query("period") String period,
             @Query("reqkey") String reqkey,
-            @Query("t") long t
+            @Query("stopByWin") int stopByWin,
+            @Query("t") long t,
+            @Query("vcode1") String vcode1
     );
 
     //88更新返点

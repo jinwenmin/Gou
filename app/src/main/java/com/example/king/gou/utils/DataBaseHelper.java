@@ -27,7 +27,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("CREATE TABLE IF NOT EXISTS games (id integer primary key autoincrement, name varchar(20), age INTEGER,img INTEGER)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS games (id integer primary key autoincrement, name varchar(20), gid INTEGER,img INTEGER,count INTEGER)");
 
     }
 
