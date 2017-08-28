@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/GameType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="玩法名称"
+        android:textSize="40px" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5px"
+        android:gravity="center">
+
+        <TextView
+
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30px"
+            android:layout_weight="3"
+            android:text="投注内容"
+            android:textColor="@android:color/black"
+            android:textSize="30px" />
+
+        <TextView
+            android:id="@+id/TouZhuContent"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:text="0 0 0 0 0 0 0 "
+            android:textColor="@android:color/black"
+            android:textSize="30px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5px">
+
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30px"
+            android:layout_weight="3"
+            android:text="注数："
+            android:textColor="@android:color/black"
+            android:textSize="30px" />
+
+        <TextView
+            android:id="@+id/Zhu"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:text="一共这么多注"
+            android:textColor="@android:color/black"
+            android:textSize="30px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5px">
+
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30px"
+            android:layout_weight="3"
+            android:text="总金额："
+            android:textColor="@android:color/black"
+            android:textSize="30px" />
+
+        <TextView
+            android:id="@+id/GameAmounts"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:text="一共这么多钱"
+            android:textColor="@android:color/black"
+            android:textSize="30px" />
+    </LinearLayout>
+</LinearLayout>

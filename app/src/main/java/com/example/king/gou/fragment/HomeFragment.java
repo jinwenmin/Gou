@@ -105,7 +105,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     HomeGameAdapter adapter;
     HomeGamesAdapters adapters;
     Unbinder unbinder;
+    private int GameImgs[] = new int[]{
+            R.drawable.logo1, R.drawable.logo2, R.drawable.logo3, 0, 0, 0, R.drawable.logo7, R.drawable.logo8, R.drawable.logo9, R.drawable.logo10,
+            R.drawable.logo11, R.drawable.logo12, R.drawable.logo13, R.drawable.logo14, R.drawable.logo15, 0, 0, 0, R.drawable.logo19, R.drawable.logo20,
+            R.drawable.logo21, 0, R.drawable.logo23, R.drawable.logo24, R.drawable.logo25, R.drawable.logo26, R.drawable.logo27, R.drawable.logo28
 
+    };
     public static HomeFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -172,6 +177,19 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 HistoryGames item = (HistoryGames) adapters.getItem(position);
                 int gid = item.getGid();
                 String name = item.getName();
+                int count1 = 0;
+                Log.d("游戏中心Gid", gid + "");
+                Cursor cursor1 = db.rawQuery("select * from games where name=?", new String[]{name});
+
+                while (cursor1.moveToNext()) {
+                    count1 = cursor1.getInt(4);
+                }
+                Log.d("游戏的数据库Count", count1 + "");
+                if (count1 == 0) {
+                    db.execSQL("insert into games(name,gid,img,count) values(?,?,?,?)", new Object[]{name, gid, GameImgs[gid - 1], 1});
+                } else {
+                    db.execSQL("update games set count=? where name=?", new Object[]{count1 + 1, name});
+                }
                 intent.putExtra("gid", gid);
                 intent.putExtra("name", name);
                 startActivity(intent);

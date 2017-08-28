@@ -3,6 +3,7 @@ package com.example.king.gou.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.IdRes;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -22,18 +23,20 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bigkoo.alertview.AlertView;
+import com.bigkoo.alertview.OnItemClickListener;
 import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.DrawHistoryAdapter;
-
 import com.example.king.gou.bean.Arrays;
 import com.example.king.gou.bean.BettingSync;
+import com.example.king.gou.bean.Ids;
 import com.example.king.gou.bean.RecordList;
 import com.example.king.gou.bean.SwitchG;
 import com.example.king.gou.fragment.FindFragment;
@@ -47,7 +50,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -57,14 +59,9 @@ import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
 
 
-public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine.DataListener, View.OnClickListener {
+public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine.DataListener, View.OnClickListener, OnItemClickListener {
 
-    /*    @BindView(R.id.vpId)
-        ViewPager vpId;
-        @BindView(R.id.toolbar_tab)
-        TabLayout toolbar_tab;*/
-    List<FindFragment> fragmentList = new ArrayList<>();
-    List<String> pageTitle = new ArrayList<>();
+
     @BindView(R.id._back)
     ImageView Back;
     @BindView(R.id.GameCenterTop)
@@ -83,8 +80,6 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     ProgressBar GameCenterProgressBar;
     /*  @BindView(R.id.addGame)
       ImageView addGame;*/
-    @BindView(R.id.GameCentertitle)
-    TextView GameCentertitle;
     @BindView(R.id.GameCenterListView)
     ListView GameCenterListView;
     @BindView(R.id.SpinnerType1)
@@ -115,6 +110,14 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     RadioButton radion4;
     @BindView(R.id.SpinnerMoney)
     Spinner SpinnerMoney;
+    @BindView(R.id.GameCentertitle)
+    TextView GameCentertitle;
+    @BindView(R.id.AddGameNumBtn)
+    RelativeLayout AddGameNumBtn;
+    @BindView(R.id.SendGameNum)
+    TextView SendGameNum;
+    @BindView(R.id.RadioGroupGameCenter)
+    RadioGroup RadioGroupGameCenter;
     private int TIME = 1000;  //每隔1s执行一次.
 
     Handler handler = new Handler();
@@ -133,7 +136,14 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
 
     private ArrayAdapter<String> adapterType1;
     private ArrayAdapter<String> adapterType2;
-
+    private AlertView alertView;
+    // 一个自定义的布局，作为显示的内容
+    View contentView;
+    View inte;
+    String code;
+    String GameTypeName = null;
+    int PriceUnit = 1;
+    List<Ids> listIds = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +151,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         setContentView(R.layout.activity_game_center);
         ButterKnife.bind(this);
         MyApp.getInstance().addActivitys(this);
+        inte = new View(GameCenterActivity.this);
         Intent intent = getIntent();
         gid = intent.getIntExtra("gid", 0);
         position = intent.getIntExtra("position", 0);
@@ -151,17 +162,16 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         Log.d("GameCenterName==", name + "");
         Log.d("GameCenterPosition==", position + "");
         Log.d("GameCenterSection==", section + "");
+        alertView = new AlertView(null, null, "取消", new String[]{"确认添加"}, null, this, AlertView.Style.Alert, this);
+        contentView = LayoutInflater.from(this).inflate(
+                R.layout.item_add_sendgame, null);
+        alertView.addExtView(contentView);
 
         RetrofitService.getInstance().getSwitchGameList(this, gid);
         RetrofitService.getInstance().getBettingSync(this, gid);
         RetrofitService.getInstance().getBettingDrawHistory(this, gid);
-
         initClick();
-        initData();
         initSpinner1();
-        ViewPAdapter adapter = new ViewPAdapter(getSupportFragmentManager(), fragmentList, pageTitle);
-      /*  vpId.setAdapter(adapter);
-        toolbar_tab.setupWithViewPager(vpId);*/
         drawHistoryAdapter = new DrawHistoryAdapter(this);
         GameCenterListView.setAdapter(drawHistoryAdapter);
 
@@ -440,20 +450,21 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         SpinnerType2.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String code = class_code.get(position);
+                code = class_code.get(position);
+                GameTypeName = name.get(position);
                 Map<String, Object> map = new HashMap();
-                map.put("pickedNumber", "123457");
-                map.put("multiples", 2);
+                map.put("pickedNumber", "125,268,1,3,4");
+                map.put("multiples", 1);
                 map.put("locationText", "");
-                map.put("priceUnit", 1);
-                map.put("amount", 20);
-                map.put("priceType", 1);
-                map.put("amounts", 20);
+                map.put("priceUnit", PriceUnit);
+                map.put("amount", 18);
+                map.put("priceType", 0);
+                map.put("amounts", 18);
                 map.put("pickedText", "");
-                map.put("multiple", 2);
-                map.put("classCode", "");
-                map.put("location", "00000");
-                map.put("num", 10);
+                map.put("multiple", 1);
+                map.put("classCode", code);
+                map.put("location", "");
+                map.put("num", 9);
                 map.put("vcode", "");
 
 
@@ -490,15 +501,15 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 arrays1.add(as);
                 Gson gson = new Gson();
                 String s1 = gson.toJson(arrays1).toString();
-                String s2 = gson.toJson(map);
+                String s2 = gson.toJson(ids);
                 Log.d("提交购彩单Array", s1);
                 Log.d("提交购彩单Ids", s2);
-                RetrofitService.getInstance().getSendBetting(GameCenterActivity.this, gid, "", s2, bs.getPeriod(), s1, 0, 0);
+                // RetrofitService.getInstance().getSendBetting(GameCenterActivity.this, gid, "", s2, bs.getPeriod(), "", 0, 0);
 
 
                 GameCenterLinear.removeAllViews();
                 Log.d("Class_Code=", code);
-                View inte = new View(GameCenterActivity.this);
+
                 if ("star_5_duplex".equals(code)
                         || "star_2_any_duplex".equals(code)
                         || "star_4_any_duplex".equals(code)
@@ -1902,18 +1913,27 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         Back.setOnClickListener(this);
         cut.setOnClickListener(this);
         add.setOnClickListener(this);
+        AddGameNumBtn.setOnClickListener(this);
+        RadioGroupGameCenter.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+                if (i == R.id.radion1) {
+                    PriceUnit = 1;
+                }
+                if (i == R.id.radion2) {
+                    PriceUnit = 2;
+                }
+                if (i == R.id.radion3) {
+                    PriceUnit = 3;
+                }
+                if (i == R.id.radion4) {
+                    PriceUnit = 4;
+                }
+                Log.d("PriceUnit", PriceUnit + "");
+            }
+        });
     }
 
-    private void initData() {
-        fragmentList.add(FindFragment.newInstance());
-        fragmentList.add(FindFragment.newInstance());
-        fragmentList.add(FindFragment.newInstance());
-        pageTitle.add("QQ");
-        pageTitle.add("WW");
-        pageTitle.add("EE");
-
-
-    }
 
     private void initTimer() {
         timer = new Timer();
@@ -2035,6 +2055,147 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 addintnum = addintnum + 1;
                 edit1.setText(addintnum + "");
                 break;
+            case R.id.AddGameNumBtn:
+                int nums = 0;
+                String pickedNumber = "";//投注内容，如果是单式选号，需要过滤掉不合法的投注内容
+                String pickedText = "";//投注文本，大部分时候等于pickedNumber，只有有中文的投注，才会不一样，如果相同，提交的时候为了节省提交数据大小，可以传空字符串，单式加密的时候必须是原内容
+                String location = "";//数字字符串，五个0或1组成，代表时时彩或分分彩任选玩法勾选的位置，0代表不勾选，1代表勾选
+                String locationText = "";//由"万千百十个"五个字其中几个组成，代表勾选的位置的文本
+                int Nums = Integer.parseInt(edit1.getText().toString().trim());//投注内容注数
+                String classCode = code;//玩法编码
+                int priceUnit = PriceUnit;//投注模式
+                //1：元；对应单注单价为￥2.000
+                //    2：角；对应单注单价为￥0.200
+                //  3：分；对应单注单价为￥0.020
+                //  4：厘；对应单注单价为￥0.002
+                int priceType = 0;//奖金类型
+                //0：最低奖
+                //1：最高奖
+                double amount = 0;//投注金额；计算方法为：单价[2/0.2/0.02/0.002] * 注数[num] * 倍数[multiple]
+                int multiple = 0;//投注倍数
+                double amounts = 0;//总投注金额，大都等于amount
+                int multiples = 0;//投注总倍数，大都等于multiple
+                String vcode = "";//每一单投注单加密秘钥
+                if (code.equals("star_5_duplex")) {
+                    final int[] count1 = {0};
+                    final int[] count2 = {0};
+                    final int[] count3 = {0};
+                    final int[] count4 = {0};
+                    final int[] count5 = {0};
+                    String wan = null;
+                    String qian = null;
+                    String bai = null;
+                    String shi = null;
+                    String ge = null;
+
+                    LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearWan);
+                    LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearQian);
+                    LinearLayout lin3 = (LinearLayout) inte.findViewById(R.id.LinearBai);
+                    LinearLayout lin4 = (LinearLayout) inte.findViewById(R.id.LinearShi);
+                    LinearLayout lin5 = (LinearLayout) inte.findViewById(R.id.LinearGe);
+                    for (int i = 1; i < lin1.getChildCount(); i++) {
+                        if (((CheckBox) lin1.getChildAt(i)).isChecked()) {
+                            count1[0]++;
+                            if (wan == null) {
+                                wan = ((CheckBox) lin1.getChildAt(i)).getText().toString();
+                            } else {
+                                wan = wan + ((CheckBox) lin1.getChildAt(i)).getText().toString();
+                            }
+                        }
+                    }
+                    for (int i = 1; i < lin2.getChildCount(); i++) {
+                        if (((CheckBox) lin2.getChildAt(i)).isChecked()) {
+                            count2[0]++;
+                            if (qian == null) {
+                                qian = ((CheckBox) lin2.getChildAt(i)).getText().toString();
+                            } else {
+                                qian = qian + ((CheckBox) lin2.getChildAt(i)).getText().toString();
+                            }
+                        }
+                    }
+                    for (int i = 1; i < lin3.getChildCount(); i++) {
+                        if (((CheckBox) lin3.getChildAt(i)).isChecked()) {
+                            count3[0]++;
+                            if (bai == null) {
+                                bai = ((CheckBox) lin3.getChildAt(i)).getText().toString();
+                            } else {
+                                bai = bai + ((CheckBox) lin3.getChildAt(i)).getText().toString();
+                            }
+                        }
+                    }
+                    for (int i = 1; i < lin4.getChildCount(); i++) {
+                        if (((CheckBox) lin4.getChildAt(i)).isChecked()) {
+                            count4[0]++;
+                            if (shi == null) {
+                                shi = ((CheckBox) lin4.getChildAt(i)).getText().toString();
+                            } else {
+                                shi = shi + ((CheckBox) lin4.getChildAt(i)).getText().toString();
+                            }
+                        }
+                    }
+                    for (int i = 1; i < lin5.getChildCount(); i++) {
+                        if (((CheckBox) lin5.getChildAt(i)).isChecked()) {
+                            count5[0]++;
+                            if (ge == null) {
+                                ge = ((CheckBox) lin5.getChildAt(i)).getText().toString();
+                            } else {
+                                ge = ge + ((CheckBox) lin5.getChildAt(i)).getText().toString();
+                            }
+                        }
+                    }
+                    Log.d("GameCenterrCount==", count1[0] + "   " + count2[0] + "   " + count3[0] + "   " + count4[0] + "   " + count5[0]);
+                    pickedNumber = wan + "," + qian + "," + bai + "," + shi + "," + ge;
+                    Log.d("GameCenterrText==", pickedNumber);
+                    nums = count1[0] * count2[0] * count3[0] * count4[0] * count5[0];
+                    TextView Zhu = (TextView) contentView.findViewById(R.id.Zhu);
+                    TextView Amounts = (TextView) contentView.findViewById(R.id.GameAmounts);
+                    TextView TouZhuContent = (TextView) contentView.findViewById(R.id.TouZhuContent);
+                    TextView GameType = (TextView) contentView.findViewById(R.id.GameType);
+                    GameType.setText(GameTypeName);
+                    TouZhuContent.setText(pickedNumber);
+                    Zhu.setText(nums + "");
+                    amount = nums * 2;
+                    if (PriceUnit == 2) {
+                        amount = amount / 10;
+                    }
+                    if (PriceUnit == 3) {
+                        amount = amount / 100;
+                    }
+                    if (PriceUnit == 4) {
+                        amount = amount / 1000;
+                    }
+                    Amounts.setText(amount + "");
+                }
+                if (nums == 0) {
+                    Toasty.error(GameCenterActivity.this, "投注注数为0,请重新投注", 2000).show();
+                    return;
+                }
+                Ids ids = new Ids();
+                ids.setPickedNumber(pickedNumber);
+                ids.setPickedText(pickedText);
+                ids.setLocation(location);
+                ids.setLocationText(locationText);
+                ids.setNum(Nums);
+                ids.setClassCode(classCode);
+                ids.setPriceUnit(PriceUnit);
+                ids.setPriceType(1);
+                ids.setAmount(amount);
+                ids.setMultiple(multiple);
+                ids.setAmounts(amount);
+                ids.setMultiples(multiple);
+                ids.setVcode(vcode);
+                listIds.add(ids);
+                alertView.show();
+                break;
+        }
+    }
+
+    @Override
+    public void onItemClick(Object o, int position) {
+        if (position != AlertView.CANCELPOSITION) {
+            String s = SendGameNum.getText().toString();
+            int num = Integer.parseInt(s);
+            SendGameNum.setText(num + 1 + "");
         }
     }
 

@@ -841,7 +841,41 @@ public class RetrofitService extends HttpEngine {
                             ListgameTypes.add(gameType1);
                             flag = true;
                         }
-                        if (split.length > 10) {
+                        List<Map<String, Object>> list7 = response.body();
+                        for (int i = 0; i < list7.size(); i++) {
+                            Map<String, Object> map7 = list7.get(i);
+                            String classCode = null;
+                            double gid = 0;
+                            double grid = 0;
+                            double tid = 0;
+                            String name = null;
+                            if (map7.size() > 0) {
+                                for (Map.Entry<String, Object> entry : map7.entrySet()) {
+                                    if ("gid".equals(entry.getKey())) {
+                                        gid = (double) entry.getValue();
+                                    }
+                                    if ("classCode".equals(entry.getKey())) {
+                                        classCode = (String) entry.getValue();
+                                    }
+                                    if ("name".equals(entry.getKey())) {
+                                        name = (String) entry.getValue();
+                                    }
+                                    if ("tid".equals(entry.getKey())) {
+                                        tid = (double) entry.getValue();
+                                    }
+                                    if ("grid".equals(entry.getKey())) {
+                                        grid = (double) entry.getValue();
+                                    }
+                                }
+                            }
+                            GameType gameType = new GameType();
+                            gameType.setGid(RxUtils.getInstance().getInt(gid));
+                            gameType.setName(name);
+                            gameType.setGrid(RxUtils.getInstance().getInt(grid));
+                            gameType.setTid(RxUtils.getInstance().getInt(tid));
+                            ListgameTypes.add(gameType);
+                        }
+                       /* if (split.length > 10) {
                             for (int i = 0; i < split.length; i = i + 4) {
                                 Log.d("Game游戏Split=", split[i]);
                                 GameType gameType = new GameType();
@@ -859,7 +893,7 @@ public class RetrofitService extends HttpEngine {
                             for (int i = 0; i < ListgameTypes.size(); i++) {
                                 Log.d("Game游戏77==", ListgameTypes.get(i).getName());
                             }
-                        }
+                        }*/
 
                         listener.onReceivedData(API_ID_GAME7, ListgameTypes, API_ID_ERROR);
                     }
