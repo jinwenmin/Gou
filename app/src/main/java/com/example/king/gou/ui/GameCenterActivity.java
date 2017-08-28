@@ -145,6 +145,26 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     int PriceUnit = 1;
     List<Ids> listIds = new ArrayList<>();
 
+    String pickedNumber = "";//投注内容，如果是单式选号，需要过滤掉不合法的投注内容
+    String pickedText = "";//投注文本，大部分时候等于pickedNumber，只有有中文的投注，才会不一样，如果相同，提交的时候为了节省提交数据大小，可以传空字符串，单式加密的时候必须是原内容
+    String location = "";//数字字符串，五个0或1组成，代表时时彩或分分彩任选玩法勾选的位置，0代表不勾选，1代表勾选
+    String locationText = "";//由"万千百十个"五个字其中几个组成，代表勾选的位置的文本
+    int Nums;//投注内容注数
+    String classCode = null;//玩法编码
+    int priceUnit = PriceUnit;//投注模式
+    //1：元；对应单注单价为￥2.000
+    //    2：角；对应单注单价为￥0.200
+    //  3：分；对应单注单价为￥0.020
+    //  4：厘；对应单注单价为￥0.002
+    int priceType = 0;//奖金类型
+    //0：最低奖
+    //1：最高奖
+    double amount = 0;//投注金额；计算方法为：单价[2/0.2/0.02/0.002] * 注数[num] * 倍数[multiple]
+    int multiple = 0;//投注倍数
+    double amounts = 0;//总投注金额，大都等于amount
+    int multiples = 0;//投注总倍数，大都等于multiple
+    String vcode = "";//每一单投注单加密秘钥
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -2057,25 +2077,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 break;
             case R.id.AddGameNumBtn:
                 int nums = 0;
-                String pickedNumber = "";//投注内容，如果是单式选号，需要过滤掉不合法的投注内容
-                String pickedText = "";//投注文本，大部分时候等于pickedNumber，只有有中文的投注，才会不一样，如果相同，提交的时候为了节省提交数据大小，可以传空字符串，单式加密的时候必须是原内容
-                String location = "";//数字字符串，五个0或1组成，代表时时彩或分分彩任选玩法勾选的位置，0代表不勾选，1代表勾选
-                String locationText = "";//由"万千百十个"五个字其中几个组成，代表勾选的位置的文本
-                int Nums = Integer.parseInt(edit1.getText().toString().trim());//投注内容注数
-                String classCode = code;//玩法编码
-                int priceUnit = PriceUnit;//投注模式
-                //1：元；对应单注单价为￥2.000
-                //    2：角；对应单注单价为￥0.200
-                //  3：分；对应单注单价为￥0.020
-                //  4：厘；对应单注单价为￥0.002
-                int priceType = 0;//奖金类型
-                //0：最低奖
-                //1：最高奖
-                double amount = 0;//投注金额；计算方法为：单价[2/0.2/0.02/0.002] * 注数[num] * 倍数[multiple]
-                int multiple = 0;//投注倍数
-                double amounts = 0;//总投注金额，大都等于amount
-                int multiples = 0;//投注总倍数，大都等于multiple
-                String vcode = "";//每一单投注单加密秘钥
+
                 if (code.equals("star_5_duplex")) {
                     final int[] count1 = {0};
                     final int[] count2 = {0};
@@ -2154,6 +2156,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     GameType.setText(GameTypeName);
                     TouZhuContent.setText(pickedNumber);
                     Zhu.setText(nums + "");
+                    Nums = Integer.parseInt(edit1.getText().toString().trim());
                     amount = nums * 2;
                     if (PriceUnit == 2) {
                         amount = amount / 10;
@@ -2163,28 +2166,18 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     }
                     if (PriceUnit == 4) {
                         amount = amount / 1000;
+
                     }
-                    Amounts.setText(amount + "");
+                    amount = amount * Nums;
+                    Amounts.setText(amount * Nums + "");
                 }
                 if (nums == 0) {
                     Toasty.error(GameCenterActivity.this, "投注注数为0,请重新投注", 2000).show();
                     return;
                 }
-                Ids ids = new Ids();
-                ids.setPickedNumber(pickedNumber);
-                ids.setPickedText(pickedText);
-                ids.setLocation(location);
-                ids.setLocationText(locationText);
-                ids.setNum(Nums);
-                ids.setClassCode(classCode);
-                ids.setPriceUnit(PriceUnit);
-                ids.setPriceType(1);
-                ids.setAmount(amount);
-                ids.setMultiple(multiple);
-                ids.setAmounts(amount);
-                ids.setMultiples(multiple);
-                ids.setVcode(vcode);
-                listIds.add(ids);
+                classCode = code;
+                multiple = Nums;
+
                 alertView.show();
                 break;
         }
@@ -2193,6 +2186,24 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     @Override
     public void onItemClick(Object o, int position) {
         if (position != AlertView.CANCELPOSITION) {
+            Ids ids = new Ids();
+            ids.setPickedNumber(pickedNumber);
+            ids.setPickedText(pickedText);
+            ids.setLocation(location);
+            ids.setLocationText(locationText);
+            ids.setNum(Nums);
+            ids.setClassCode(classCode);
+            ids.setPriceUnit(PriceUnit);
+            ids.setPriceType(1);
+            ids.setAmount(amount);
+            ids.setMultiple(multiple);
+            ids.setAmounts(amount);
+            ids.setMultiples(multiple);
+            ids.setVcode(vcode);
+            listIds.add(ids);
+            for (int i = 0; i < listIds.size(); i++) {
+                Log.d("购彩单的数据=", listIds.get(i).toString());
+            }
             String s = SendGameNum.getText().toString();
             int num = Integer.parseInt(s);
             SendGameNum.setText(num + 1 + "");

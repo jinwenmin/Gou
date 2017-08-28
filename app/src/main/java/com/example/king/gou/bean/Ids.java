@@ -134,4 +134,23 @@ public class Ids {
     public void setVcode(String vcode) {
         this.vcode = vcode;
     }
+
+    @Override
+    public String toString() {
+        return "Ids{" +
+                "pickedNumber='" + pickedNumber + '\'' +
+                ", pickedText='" + pickedText + '\'' +
+                ", location='" + location + '\'' +
+                ", locationText='" + locationText + '\'' +
+                ", num=" + num +
+                ", classCode='" + classCode + '\'' +
+                ", priceUnit=" + priceUnit +
+                ", priceType=" + priceType +
+                ", amount=" + amount +
+                ", multiple=" + multiple +
+                ", amounts=" + amounts +
+                ", multiples=" + multiples +
+                ", vcode='" + vcode + '\'' +
+                '}';
+    }
 }
