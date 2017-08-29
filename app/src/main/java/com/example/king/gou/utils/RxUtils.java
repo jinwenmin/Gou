@@ -306,6 +306,14 @@ public class RxUtils {
         return str;
     }
 
+    public int JieCheng(int n) {
+        int sum = 1;
+        for (int i = 1; i <= n; i++) {
+            sum = sum * i;
+        }
+        return sum;
+    }
+
     //Double转换成int
     public int getInt(Object object) {
         DecimalFormat df = new DecimalFormat("######0");

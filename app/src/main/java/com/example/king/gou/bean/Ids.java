@@ -1,10 +1,12 @@
 package com.example.king.gou.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2017/8/28.
  */
 
-public class Ids {
+public class Ids implements Serializable {
     String pickedNumber;//投注内容，如果是单式选号，需要过滤掉不合法的投注内容
     String pickedText;//投注文本，大部分时候等于pickedNumber，只有有中文的投注，才会不一样，如果相同，提交的时候为了节省提交数据大小，可以传空字符串，单式加密的时候必须是原内容
     String location;//数字字符串，五个0或1组成，代表时时彩或分分彩任选玩法勾选的位置，0代表不勾选，1代表勾选
@@ -30,6 +32,35 @@ public class Ids {
     // vtext = 0 + vtext + text16
     // 加密方法为：SHA256单值加密
     //加密结果为：vcode = 0 + SHA256加密结果 + text16
+    String gamename;
+
+    @Override
+    public String toString() {
+        return "Ids{" +
+                "pickedNumber='" + pickedNumber + '\'' +
+                ", pickedText='" + pickedText + '\'' +
+                ", location='" + location + '\'' +
+                ", locationText='" + locationText + '\'' +
+                ", num=" + num +
+                ", classCode='" + classCode + '\'' +
+                ", priceUnit=" + priceUnit +
+                ", priceType=" + priceType +
+                ", amount=" + amount +
+                ", multiple=" + multiple +
+                ", amounts=" + amounts +
+                ", multiples=" + multiples +
+                ", vcode='" + vcode + '\'' +
+                ", gamename='" + gamename + '\'' +
+                '}';
+    }
+
+    public String getGamename() {
+        return gamename;
+    }
+
+    public void setGamename(String gamename) {
+        this.gamename = gamename;
+    }
 
     public String getPickedNumber() {
         return pickedNumber;
@@ -135,22 +166,4 @@ public class Ids {
         this.vcode = vcode;
     }
 
-    @Override
-    public String toString() {
-        return "Ids{" +
-                "pickedNumber='" + pickedNumber + '\'' +
-                ", pickedText='" + pickedText + '\'' +
-                ", location='" + location + '\'' +
-                ", locationText='" + locationText + '\'' +
-                ", num=" + num +
-                ", classCode='" + classCode + '\'' +
-                ", priceUnit=" + priceUnit +
-                ", priceType=" + priceType +
-                ", amount=" + amount +
-                ", multiple=" + multiple +
-                ", amounts=" + amounts +
-                ", multiples=" + multiples +
-                ", vcode='" + vcode + '\'' +
-                '}';
-    }
 }

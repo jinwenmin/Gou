@@ -98,6 +98,7 @@
         <activity android:name=".ui.settingfragment.AboutUsActivity" />
         <activity android:name=".ui.settingfragment.AboutUsWebActivity" />
         <activity android:name=".ui.frmMyActivity.GetSendMsgActivity" />
+        <activity android:name=".ui.gameAcVpFrms.GameCartActivity"></activity>
     </application>
 
 </manifest>

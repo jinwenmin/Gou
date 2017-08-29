@@ -41,11 +41,13 @@ import com.example.king.gou.bean.RecordList;
 import com.example.king.gou.bean.SwitchG;
 import com.example.king.gou.fragment.FindFragment;
 import com.example.king.gou.service.RetrofitService;
+import com.example.king.gou.ui.gameAcVpFrms.GameCartActivity;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
 import com.google.gson.Gson;
 import com.zhy.autolayout.AutoLayoutActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,6 +59,8 @@ import java.util.TimerTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
+
+import static com.example.king.gou.R.id.wan;
 
 
 public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine.DataListener, View.OnClickListener, OnItemClickListener {
@@ -118,6 +122,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     TextView SendGameNum;
     @BindView(R.id.RadioGroupGameCenter)
     RadioGroup RadioGroupGameCenter;
+    @BindView(R.id.ToGameCert)
+    RelativeLayout ToGameCert;
+
     private int TIME = 1000;  //每隔1s执行一次.
 
     Handler handler = new Handler();
@@ -164,6 +171,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     double amounts = 0;//总投注金额，大都等于amount
     int multiples = 0;//投注总倍数，大都等于multiple
     String vcode = "";//每一单投注单加密秘钥
+    int nums = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1952,6 +1960,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 Log.d("PriceUnit", PriceUnit + "");
             }
         });
+        ToGameCert.setOnClickListener(this);
     }
 
 
@@ -2075,9 +2084,14 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 addintnum = addintnum + 1;
                 edit1.setText(addintnum + "");
                 break;
+            case R.id.ToGameCert:
+                Intent intent = new Intent(GameCenterActivity.this, GameCartActivity.class);
+                intent.putExtra("listids", (Serializable) listIds);
+                intent.putExtra("gid", gid);
+                intent.putExtra("period", bs.getPeriod());
+                startActivity(intent);
+                break;
             case R.id.AddGameNumBtn:
-                int nums = 0;
-
                 if (code.equals("star_5_duplex")) {
                     final int[] count1 = {0};
                     final int[] count2 = {0};
@@ -2149,13 +2163,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     pickedNumber = wan + "," + qian + "," + bai + "," + shi + "," + ge;
                     Log.d("GameCenterrText==", pickedNumber);
                     nums = count1[0] * count2[0] * count3[0] * count4[0] * count5[0];
-                    TextView Zhu = (TextView) contentView.findViewById(R.id.Zhu);
-                    TextView Amounts = (TextView) contentView.findViewById(R.id.GameAmounts);
-                    TextView TouZhuContent = (TextView) contentView.findViewById(R.id.TouZhuContent);
-                    TextView GameType = (TextView) contentView.findViewById(R.id.GameType);
-                    GameType.setText(GameTypeName);
-                    TouZhuContent.setText(pickedNumber);
-                    Zhu.setText(nums + "");
+
+
                     Nums = Integer.parseInt(edit1.getText().toString().trim());
                     amount = nums * 2;
                     if (PriceUnit == 2) {
@@ -2169,7 +2178,30 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
 
                     }
                     amount = amount * Nums;
-                    Amounts.setText(amount * Nums + "");
+
+                }
+                if (code.equals("star_5_group_120")) {
+                    int[] count120 = {0};
+                    String text120 = null;
+                    LinearLayout linear120 = (LinearLayout) inte.findViewById(R.id.Linear120);
+                    for (int i = 1; i < linear120.getChildCount(); i++) {
+                        if (((CheckBox) linear120.getChildAt(i)).isChecked()) {
+                            count120[0]++;
+                            if (text120 == null) {
+                                text120 = ((CheckBox) linear120.getChildAt(i)).getText().toString();
+                            } else {
+                                text120 = text120 + "," + ((CheckBox) linear120.getChildAt(i)).getText().toString();
+                            }
+                        }
+                    }
+                    Log.d("GameCenter120", text120);
+                    pickedNumber = text120;
+                    if (count120[0] > 4) {
+                        int nns = RxUtils.getInstance().JieCheng(count120[0]) / (RxUtils.getInstance().JieCheng(5) * RxUtils.getInstance().JieCheng(count120[0] - 5));
+                        Log.d("GameCenter120注", nns + "");
+                        nums = nns;
+                    }
+
                 }
                 if (nums == 0) {
                     Toasty.error(GameCenterActivity.this, "投注注数为0,请重新投注", 2000).show();
@@ -2177,6 +2209,14 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 }
                 classCode = code;
                 multiple = Nums;
+                TextView Zhu = (TextView) contentView.findViewById(R.id.Zhu);
+                TextView Amounts = (TextView) contentView.findViewById(R.id.GameAmounts);
+                TextView TouZhuContent = (TextView) contentView.findViewById(R.id.TouZhuContent);
+                TextView GameType = (TextView) contentView.findViewById(R.id.GameType);
+                GameType.setText(GameTypeName);
+                TouZhuContent.setText(pickedNumber);
+                Zhu.setText(nums + "");
+                Amounts.setText(amount * Nums + "");
 
                 alertView.show();
                 break;
@@ -2191,7 +2231,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
             ids.setPickedText(pickedText);
             ids.setLocation(location);
             ids.setLocationText(locationText);
-            ids.setNum(Nums);
+            ids.setNum(nums);
             ids.setClassCode(classCode);
             ids.setPriceUnit(PriceUnit);
             ids.setPriceType(1);
@@ -2200,13 +2240,13 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
             ids.setAmounts(amount);
             ids.setMultiples(multiple);
             ids.setVcode(vcode);
+            ids.setGamename(GameTypeName);
             listIds.add(ids);
-            for (int i = 0; i < listIds.size(); i++) {
-                Log.d("购彩单的数据=", listIds.get(i).toString());
-            }
+
             String s = SendGameNum.getText().toString();
             int num = Integer.parseInt(s);
             SendGameNum.setText(num + 1 + "");
+
         }
     }
 
