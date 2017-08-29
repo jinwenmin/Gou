@@ -480,7 +480,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 code = class_code.get(position);
                 GameTypeName = name.get(position);
-                Map<String, Object> map = new HashMap();
+              /*  Map<String, Object> map = new HashMap();
                 map.put("pickedNumber", "125,268,1,3,4");
                 map.put("multiples", 1);
                 map.put("locationText", "");
@@ -531,7 +531,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 String s1 = gson.toJson(arrays1).toString();
                 String s2 = gson.toJson(ids);
                 Log.d("提交购彩单Array", s1);
-                Log.d("提交购彩单Ids", s2);
+                Log.d("提交购彩单Ids", s2);*/
                 // RetrofitService.getInstance().getSendBetting(GameCenterActivity.this, gid, "", s2, bs.getPeriod(), "", 0, 0);
 
 
@@ -2165,19 +2165,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     nums = count1[0] * count2[0] * count3[0] * count4[0] * count5[0];
 
 
-                    Nums = Integer.parseInt(edit1.getText().toString().trim());
-                    amount = nums * 2;
-                    if (PriceUnit == 2) {
-                        amount = amount / 10;
-                    }
-                    if (PriceUnit == 3) {
-                        amount = amount / 100;
-                    }
-                    if (PriceUnit == 4) {
-                        amount = amount / 1000;
 
-                    }
-                    amount = amount * Nums;
 
                 }
                 if (code.equals("star_5_group_120")) {
@@ -2207,6 +2195,18 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     Toasty.error(GameCenterActivity.this, "投注注数为0,请重新投注", 2000).show();
                     return;
                 }
+                Nums = Integer.parseInt(edit1.getText().toString().trim());
+                amount = nums * 2;
+                if (PriceUnit == 2) {
+                    amount = amount / 10;
+                }
+                if (PriceUnit == 3) {
+                    amount = amount / 100;
+                }
+                if (PriceUnit == 4) {
+                    amount = amount / 1000;
+                }
+                amount = amount * Nums;
                 classCode = code;
                 multiple = Nums;
                 TextView Zhu = (TextView) contentView.findViewById(R.id.Zhu);
@@ -2216,9 +2216,10 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 GameType.setText(GameTypeName);
                 TouZhuContent.setText(pickedNumber);
                 Zhu.setText(nums + "");
-                Amounts.setText(amount * Nums + "");
-
-                alertView.show();
+                Amounts.setText(amount + "");
+                if (nums>0) {
+                    alertView.show();
+                }
                 break;
         }
     }
@@ -2242,7 +2243,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
             ids.setVcode(vcode);
             ids.setGamename(GameTypeName);
             listIds.add(ids);
-
+            for (int i = 0; i < listIds.size(); i++) {
+                Log.d("购彩单的数据=", listIds.get(i).toString());
+            }
             String s = SendGameNum.getText().toString();
             int num = Integer.parseInt(s);
             SendGameNum.setText(num + 1 + "");
