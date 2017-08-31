@@ -116,6 +116,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/LinearOne"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -208,15 +209,6 @@
                     android:text="6"
                     android:textColor="@color/select_gamecolor"
                     android:textSize="30px" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
                 <CheckBox
                     android:id="@+id/checkBoxOne_7"
                     android:layout_width="45px"
@@ -253,6 +245,15 @@
                     android:text="9"
                     android:textColor="@color/select_gamecolor"
                     android:textSize="30px" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LinearTwo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
 
                 <CheckBox
                     android:id="@+id/checkBoxOne_10"
@@ -304,15 +305,6 @@
                     android:text="13"
                     android:textColor="@color/select_gamecolor"
                     android:textSize="30px" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
                 <CheckBox
                     android:id="@+id/checkBoxOne_14"
                     android:layout_width="45px"
@@ -378,6 +370,8 @@
 
 
             </LinearLayout>
+
+
         </LinearLayout>
     </LinearLayout>
 

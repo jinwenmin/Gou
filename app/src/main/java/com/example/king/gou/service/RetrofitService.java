@@ -406,21 +406,25 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<Login>() {
             @Override
             public void onResponse(Call<Login> call, retrofit2.Response<Login> response) {
-                listener.onRequestStart(API_ID_LOGIN);
-                //获取cookie
-                sessionLoginId = getSessionCookie(response.headers().get("Set-Cookie"));
-                System.out.println("Cookie==" + sessionLoginId);
-                Gson gson = new GsonBuilder().setLenient().create();
-                Login body = response.body();
-                body.setSessionId(sessionLoginId);
-                System.out.println("用户信息==" + body);
-                listener.onReceivedData(API_ID_LOGIN, body, -1);
-                listener.onRequestEnd(API_ID_LOGIN);
+                System.out.println("用户信息Code==" + response.code());
+                if (response.code() == 200) {
+                    listener.onRequestStart(API_ID_LOGIN);
+                    //获取cookie
+                    sessionLoginId = getSessionCookie(response.headers().get("Set-Cookie"));
+                    System.out.println("Cookie==" + sessionLoginId);
+                    Gson gson = new GsonBuilder().setLenient().create();
+                    Login body = response.body();
+                    body.setSessionId(sessionLoginId);
+                    System.out.println("用户信息==" + body);
+                    listener.onReceivedData(API_ID_LOGIN, body, -1);
+                    listener.onRequestEnd(API_ID_LOGIN);
+                }
+
             }
 
             @Override
             public void onFailure(Call<Login> call, Throwable t) {
-
+                Log.d("用户信息Error", t.getMessage().toString());
             }
         });
     }
@@ -3334,7 +3338,7 @@ public class RetrofitService extends HttpEngine {
         map.put("amount", amount + "");
         map.put("stopByWin", stopByWin + "");
         String reqkey = RxUtils.getInstance().getReqkey(map, currentThreadTimeMillis);
-        Call<Map<String, Object>> sendBetting = apiInterface.getSendBetting(gid, 1, amount, array, ids, period,reqkey , stopByWin, currentThreadTimeMillis, vcode1);
+        Call<Map<String, Object>> sendBetting = apiInterface.getSendBetting(gid, 1, amount, array, ids, period, reqkey, stopByWin, currentThreadTimeMillis, vcode1);
         String s = sendBetting.request().toString();
         Request request = sendBetting.request();
         List<String> list = request.url().encodedPathSegments();

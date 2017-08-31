@@ -18,6 +18,8 @@ import com.example.king.gou.utils.SectionedBaseAdapter;
 import java.util.List;
 import java.util.Map;
 
+import it.sephiroth.android.library.picasso.Picasso;
+
 /**
  * Created by Administrator on 2017/6/6.
  */
@@ -70,6 +72,7 @@ public class MyAdapter extends SectionedBaseAdapter {
 
         int gameimg = gameIms.get(section).getGameIms().get(position).getGameimg();
         viewHolder.img.setBackgroundResource(gameimg);
+        // Picasso.with(context).load(gameimg).into(viewHolder.img);
         String imgText = gameIms.get(section).getGameIms().get(position).getImgText();
         viewHolder.name.setText(imgText);
         return convertView;

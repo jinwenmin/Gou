@@ -482,6 +482,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 code = class_code.get(position);
                 GameTypeName = name.get(position);
+                nums = 0;
               /*  Map<String, Object> map = new HashMap();
                 map.put("pickedNumber", "125,268,1,3,4");
                 map.put("multiples", 1);
@@ -541,12 +542,10 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 Log.d("Class_Code=", code);
 
                 if ("star_5_duplex".equals(code)
-                        || "star_2_any_duplex".equals(code)
-                        || "star_4_any_duplex".equals(code)
+
                         || "2min_star_5_duplex".equals(code)
                         || "2min_star_2_any_duplex".equals(code)
                         || "2min_star_4_any_duplex".equals(code)
-                        || "star_3_any_duplex".equals(code)
                         || "2min_star_3_any_duplex".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_5_star, null, false);
@@ -871,6 +870,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     Select9(select_1, LinearOne);
                     Select9(select_2, LinearTwo);
                 }
+
                 if ("star_3_next_duplex".equals(code)
                         || "2min_star_3_next_duplex".equals(code)
                         || "3D_star_3_duplex".equals(code)
@@ -1070,6 +1070,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 || "2min_fix".equals(code)
                                 || "sequence_fix".equals(code)
                                 || "star_2_any_duplex".equals(code)
+                                || "star_3_any_duplex".equals(code)
+                                || "star_4_any_duplex".equals(code)
                                 || "2min_star_2_any_duplex".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_location, null, false);
@@ -1799,6 +1801,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 }
                 if (
                         "sequence_star_2_prev_group_duplex".equals(code)
+                                || "star_2_next_group_duplex".equals(code)
+
                                 || "sequence_star_2_next_group_duplex".equals(code)
                                 || "3D_star_2_prev_group_duplex".equals(code)
                                 || "3D_star_2_next_group_duplex".equals(code)
@@ -2094,7 +2098,10 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 startActivity(intent);
                 break;
             case R.id.AddGameNumBtn:
-                if (code.equals("star_5_duplex")) {
+                if (
+                        code.equals("star_5_duplex")
+                                || code.equals("2min_star_5_duplex")
+                        ) {
                     final int[] count1 = {0};
                     final int[] count2 = {0};
                     final int[] count3 = {0};
@@ -2168,20 +2175,29 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
 
 
                 }
-                if (code.equals("star_5_group_120")
-                        || code.equals("star_4_group_24")
-                        || code.equals("star_4_group_6")
+                if (
+                        code.equals("star_5_group_120")
+                                || code.equals("2min_star_5_group_120")
+                                || code.equals("star_4_group_24")
+                                || code.equals("2min_star_4_group_24")
+                                || code.equals("star_4_group_6")
+                                || code.equals("2min_star_4_group_6")
 
                         ) {
                     int[] count120 = {0};
                     String text120 = null;
                     LinearLayout linear120 = null;
-                    if (code.equals("star_5_group_120")) {
+                    if (
+                            code.equals("star_5_group_120")
+                                    || code.equals("2min_star_5_group_120")
+                            ) {
                         linear120 = (LinearLayout) inte.findViewById(R.id.Linear120);
                     }
                     if (
                             code.equals("star_4_group_24")
+                                    || code.equals("2min_star_4_group_24")
                                     || code.equals("star_4_group_6")
+                                    || code.equals("2min_star_4_group_6")
                             ) {
                         linear120 = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     }
@@ -2197,19 +2213,28 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     }
                     Log.d("GameCenter120", text120);
                     pickedNumber = text120;
-                    if (code.equals("star_5_group_120")) {
+                    if (
+                            code.equals("star_5_group_120")
+                                    || code.equals("2min_star_5_group_120")
+                            ) {
                         if (count120[0] > 4) {
                             int nns = RxUtils.getInstance().JieCheng(count120[0]) / (RxUtils.getInstance().JieCheng(5) * RxUtils.getInstance().JieCheng(count120[0] - 5));
                             Log.d("GameCenter120注", nns + "");
                             nums = nns;
                         }
-                    } else if (code.equals("star_4_group_24")) {
+                    } else if (
+                            code.equals("star_4_group_24")
+                                    || code.equals("2min_star_4_group_24")
+                            ) {
                         if (count120[0] > 3) {
                             int nns = RxUtils.getInstance().JieCheng(count120[0]) / (RxUtils.getInstance().JieCheng(4) * RxUtils.getInstance().JieCheng(count120[0] - 4));
                             Log.d("GameCenter24注", nns + "");
                             nums = nns;
                         }
-                    } else if (code.equals("star_4_group_6")) {
+                    } else if (
+                            code.equals("star_4_group_6")
+                                    || code.equals("2min_star_4_group_6")
+                            ) {
                         if (count120[0] > 1) {
                             int nns = count120[0] * (count120[0] - 1) / 2;
                             Log.d("GameCenter6注", nns + "");
@@ -2219,7 +2244,12 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
 
 
                 }
-                if (code.equals("star_5_group_30") || code.equals("star_5_group_20")) {
+                if (
+                        code.equals("star_5_group_30")
+                                || code.equals("2min_star_5_group_30")
+                                || code.equals("star_5_group_20")
+                                || code.equals("2min_star_5_group_20")
+                        ) {
                     int[] count30_1 = {0};
                     int[] count30_2 = {0};
                     String text30_1 = null;
@@ -2258,16 +2288,28 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     }
                     Log.d("相同的个数", k + "");
                     pickedNumber = text30_1 + "," + text30_2;
-                    if (code.equals("star_5_group_30")) {
+                    if (
+                            code.equals("star_5_group_30")
+                                    || code.equals("2min_star_5_group_30")
+                            ) {
                         nums = count30_1[0] * (count30_1[0] - 1) * count30_2[0] / 2 - (count30_1[0] - 1) * k;
-                    } else if (code.equals("star_5_group_20")) {
+                    } else if (
+                            code.equals("star_5_group_20")
+                                    || code.equals("2min_star_5_group_20")
+                            ) {
                         nums = count30_2[0] * (count30_2[0] - 1) * count30_1[0] / 2 - (count30_2[0] - 1) * k;
                     }
                 }
-                if (code.equals("star_5_one") ||
-                        code.equals("star_5_two") ||
-                        code.equals("star_5_three") ||
-                        code.equals("star_5_four")) {
+                if (
+                        code.equals("star_5_one") ||
+                                code.equals("2min_star_5_one") ||
+                                code.equals("star_5_two") ||
+                                code.equals("2min_star_5_two") ||
+                                code.equals("star_5_three") ||
+                                code.equals("2min_star_5_three") ||
+                                code.equals("star_5_four") ||
+                                code.equals("2min_star_5_four")
+                        ) {
                     int[] count5 = {0};
                     String text5 = null;
                     LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
@@ -2284,7 +2326,10 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     pickedNumber = text5;
                     nums = count5[0];
                 }
-                if (code.equals("star_4_duplex")) {
+                if (
+                        code.equals("star_4_duplex")
+                                || code.equals("2min_star_4_duplex")
+                        ) {
 
                     final int[] count1 = {0};
                     final int[] count2 = {0};
@@ -2348,9 +2393,14 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     Log.d("GameCenterrText==", pickedNumber);
                     nums = count1[0] * count2[0] * count3[0] * count4[0];
                 }
+                //三星直选复式
                 if (
                         code.equals("star_3_next_duplex")
+                                || code.equals("2min_star_3_next_duplex")
                                 || code.equals("star_3_prev_duplex")
+                                || code.equals("2min_star_3_prev_duplex")
+                                || code.equals("star_3_midd_duplex")
+                                || code.equals("2min_star_3_midd_duplex")
 
                         ) {
                     final int[] count1 = {0};
@@ -2405,9 +2455,14 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     Log.d("GameCenterrText==", pickedNumber);
                     nums = count1[0] * count2[0] * count3[0];
                 }
+                //三星直选和值
                 if (
                         code.equals("star_3_next_sum")
+                                || code.equals("2min_star_3_next_sum")
                                 || code.equals("star_3_prev_sum")
+                                || code.equals("2min_star_3_prev_sum")
+                                || code.equals("star_3_midd_sum")
+                                || code.equals("2min_star_3_midd_sum")
                         ) {
                     LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
@@ -2442,7 +2497,15 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     pickedNumber = getheNums(str);
                     Log.d("3星和值和注", getheNums(str) + "            " + nums);
                 }
-                if (code.equals("star_3_next_sub")) {
+                //三星直选跨度
+                if (
+                        code.equals("star_3_next_sub")
+                                || code.equals("2min_star_3_next_sub")
+                                || code.equals("star_3_prev_sub")
+                                || code.equals("2min_star_3_prev_sub")
+                                || code.equals("star_3_midd_sub")
+                                || code.equals("2min_star_3_midd_sub")
+                        ) {
                     LinearLayout linear = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     final int[] count1 = {0};
                     List<String> kua = new ArrayList<>();
@@ -2458,9 +2521,20 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     pickedNumber = getheNums(kua);
                     Log.d("3星和值跨", getheNums(kua) + "            " + nums);
                 }
+                //三星复式 3 6
                 if (
                         code.equals("star_3_next_group_duplex")
+                                || code.equals("2min_star_3_next_group_duplex")
                                 || code.equals("star_3_next_group_duplex_6")
+                                || code.equals("2min_star_3_next_group_duplex_6")
+                                || code.equals("star_3_midd_group_duplex")
+                                || code.equals("2min_star_3_midd_group_duplex")
+                                || code.equals("star_3_prev_group_duplex")
+                                || code.equals("2min_star_3_prev_group_duplex")
+                                || code.equals("star_3_prev_group_duplex_6")
+                                || code.equals("2min_star_3_prev_group_duplex_6")
+                                || code.equals("star_3_midd_group_duplex_6")
+                                || code.equals("2min_star_3_midd_group_duplex_6")
 
                         ) {
                     final int[] count1 = {0};
@@ -2477,13 +2551,27 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         }
                     }
                     pickedNumber = str;
-                    if (code.equals("star_3_next_group_duplex")) {
+                    if (
+                            code.equals("star_3_next_group_duplex")
+                                    || code.equals("2min_star_3_next_group_duplex")
+                                    || code.equals("star_3_prev_group_duplex")
+                                    || code.equals("2min_star_3_prev_group_duplex")
+                                    || code.equals("star_3_midd_group_duplex")
+                                    || code.equals("2min_star_3_midd_group_duplex")
+                            ) {
                         if (count1[0] < 2) {
                             nums = 0;
                         } else {
                             nums = count1[0] * (count1[0] - 1);
                         }
-                    } else if (code.equals("star_3_next_group_duplex_6")) {
+                    } else if (
+                            code.equals("star_3_next_group_duplex_6")
+                                    || code.equals("2min_star_3_next_group_duplex_6")
+                                    || code.equals("star_3_prev_group_duplex_6")
+                                    || code.equals("2min_star_3_prev_group_duplex_6")
+                                    || code.equals("star_3_midd_group_duplex_6")
+                                    || code.equals("2min_star_3_midd_group_duplex_6")
+                            ) {
                         if (count1[0] < 3) {
                             nums = 0;
                         } else {
@@ -2495,7 +2583,15 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     }
 
                 }
-                if (code.equals("star_3_next_group_any")) {
+                //三星组选包胆
+                if (
+                        code.equals("star_3_next_group_any")
+                                || code.equals("2min_star_3_next_group_any")
+                                || code.equals("star_3_prev_group_any")
+                                || code.equals("2min_star_3_prev_group_any")
+                                || code.equals("star_3_midd_group_any")
+                                || code.equals("2min_star_3_midd_group_any")
+                        ) {
                     RadioGroup radiog1 = (RadioGroup) inte.findViewById(R.id.RadioG1);
                     for (int i = 0; i < radiog1.getChildCount(); i++) {
                         if (((RadioButton) radiog1.getChildAt(i)).isChecked()) {
@@ -2504,7 +2600,15 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     }
                     nums = 54;
                 }
-                if (code.equals("star_3_next_group_sum")) {
+                //三星组选和值
+                if (
+                        code.equals("star_3_next_group_sum")
+                                || code.equals("2min_star_3_next_group_sum")
+                                || code.equals("star_3_prev_group_sum")
+                                || code.equals("2min_star_3_prev_group_sum")
+                                || code.equals("star_3_midd_group_sum")
+                                || code.equals("2min_star_3_midd_group_sum")
+                        ) {
                     LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.Linear1);
                     LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.Linear2);
                     LinearLayout linear3 = (LinearLayout) inte.findViewById(R.id.Linear3);
@@ -2535,10 +2639,516 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     nums = getNumZuHe(ns);
                     pickedNumber = getheNums(str);
                 }
+                //二星直选复式
+                if (
+                        "star_2_next_duplex".equals(code)
+                                || "2min_star_2_next_duplex".equals(code)
+                                || "star_2_prev_duplex".equals(code)
+                                || "2min_star_2_prev_duplex".equals(code)
+                        ) {
+                    int count1 = 0;
+                    int count2 = 0;
+                    String str1 = null;
+                    String str2 = null;
+                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        if (at.isChecked()) {
+                            count1++;
+                            if (str1 == null) {
+                                str1 = at.getText().toString();
+                            } else {
+                                str1 = str1 + at.getText().toString();
+                            }
+                        }
+                    }
+                    for (int i = 1; i < LinearTwo.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                        if (at.isChecked()) {
+                            count2++;
+                            if (str2 == null) {
+                                str2 = at.getText().toString();
+                            } else {
+                                str2 = str2 + at.getText().toString();
+                            }
+                        }
+                    }
+                    nums = count1 * count2;
+                    pickedNumber = str1 + "," + str2;
+                }
+                //二星直选和值
+                if (
+                        code.equals("star_2_next_sum")
+                                || code.equals("2min_star_2_next_sum")
+                                || code.equals("star_2_prev_sum")
+                                || code.equals("2min_star_2_prev_sum")
+                        ) {
+                    List<Integer> ns = new ArrayList<>();
+                    List<String> nss = new ArrayList<>();
+                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        if (at.isChecked()) {
+                            int i1 = Integer.parseInt(at.getText().toString().trim());
+                            ns.add(i1);
+                            nss.add(at.getText().toString().trim());
+                        }
+                    }
+                    for (int i = 1; i < LinearTwo.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                        if (at.isChecked()) {
+                            int i1 = Integer.parseInt(at.getText().toString().trim());
+                            ns.add(i1);
+                            nss.add(at.getText().toString().trim());
+                        }
+                    }
+                    nums = getNumHe2(ns);
+                    pickedNumber = getheNums(nss);
+
+                }
+                //二星直选跨度
+                if (
+                        "star_2_next_sub".equals(code)
+                                || "2min_star_2_next_sub".equals(code)
+                                || "star_2_prev_sub".equals(code)
+                                || "2min_star_2_prev_sub".equals(code)
+                        ) {
+                    List<Integer> ns = new ArrayList<>();
+                    List<String> nss = new ArrayList<>();
+                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        if (at.isChecked()) {
+                            ns.add(Integer.parseInt(at.getText().toString()));
+                            nss.add(at.getText().toString());
+                        }
+                    }
+                    nums = getNumKua2(ns);
+                    pickedNumber = getheNums(nss);
+                }
+                //二星组选复式
+                if (
+                        "star_2_next_group_duplex".equals(code)
+                                || "2min_star_2_next_group_duplex".equals(code)
+                                || "star_2_prev_group_duplex".equals(code)
+                                || "2min_star_2_prev_group_duplex".equals(code)
+                                || "eleven_star_2_prev_group_duplex".equals(code)
+                        ) {
+                    int count1 = 0;
+                    String str = null;
+                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        if (at.isChecked()) {
+                            count1++;
+                            if (str == null) {
+                                str = at.getText().toString().trim();
+                            } else {
+                                str = str + "," + at.getText().toString().trim();
+                            }
+                        }
+
+                    }
+                    nums = count1 * (count1 - 1) / 2;
+                    pickedNumber = str;
+                }
+                //二星组选和值
+                if (
+                        "star_2_next_group_sum".equals(code)
+                                || "2min_star_2_next_group_sum".equals(code)
+                                || "star_2_prev_group_sum".equals(code)
+                                || "2min_star_2_prev_group_sum".equals(code)
+                        ) {
+                    List<Integer> ns = new ArrayList<>();
+                    List<String> nns = new ArrayList<>();
+                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        if (at.isChecked()) {
+                            ns.add(Integer.parseInt(at.getText().toString().trim()));
+                            nns.add(at.getText().toString().trim());
+                        }
+                    }
+                    for (int i = 1; i < LinearTwo.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                        if (at.isChecked()) {
+                            ns.add(Integer.parseInt(at.getText().toString().trim()));
+                            nns.add(at.getText().toString().trim());
+                        }
+                    }
+                    pickedNumber = getheNums(nns);
+                    nums = getNumHe22(ns);
+                }
+                //二星组选包胆
+                if (
+                        "star_2_next_group_any".equals(code)
+                                || "2min_star_2_next_group_any".equals(code)
+                                || "star_2_prev_group_any".equals(code)
+                                || "2min_star_2_prev_group_any".equals(code)
+                        ) {
+                    RadioGroup radiog1 = (RadioGroup) inte.findViewById(R.id.RadioG1);
+                    for (int i = 0; i < radiog1.getChildCount(); i++) {
+                        if (((RadioButton) radiog1.getChildAt(i)).isChecked()) {
+                            pickedNumber = ((RadioButton) radiog1.getChildAt(i)).getText().toString();
+                        }
+                    }
+                    nums = 9;
+                }
+                if (
+                        "fix".equals(code)
+                                || "2min_fix".equals(code)
+                                || "star_2_any_duplex".equals(code)
+                                || "2min_star_2_any_duplex".equals(code)
+                                || "star_3_any_duplex".equals(code)
+                                || "2min_star_3_any_duplex".equals(code)
+                                || "star_4_any_duplex".equals(code)
+                                || "2min_star_4_any_duplex".equals(code)
+
+                        ) {
+                    final int[] m1 = {0};
+                    final int[] m2 = {0};
+                    final int[] m3 = {0};
+                    final int[] m4 = {0};
+                    final int[] m5 = {0};
+                    String wan = "";
+                    String qian = "";
+                    String bai = "";
+                    String shi = "";
+                    String ge = "";
+
+                    LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    LinearLayout lin3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
+                    LinearLayout lin4 = (LinearLayout) inte.findViewById(R.id.LinearFour);
+                    LinearLayout lin5 = (LinearLayout) inte.findViewById(R.id.LinearFive);
+                    for (int i = 1; i < lin1.getChildCount(); i++) {
+                        if (((CheckBox) lin1.getChildAt(i)).isChecked()) {
+                            m1[0]++;
+                            if (wan == "") {
+                                wan = ((CheckBox) lin1.getChildAt(i)).getText().toString();
+                            } else {
+                                wan = wan + ((CheckBox) lin1.getChildAt(i)).getText().toString();
+                            }
+                        }
+                    }
+                    for (int i = 1; i < lin2.getChildCount(); i++) {
+                        if (((CheckBox) lin2.getChildAt(i)).isChecked()) {
+                            m2[0]++;
+                            if (qian == "") {
+                                qian = ((CheckBox) lin2.getChildAt(i)).getText().toString();
+                            } else {
+                                qian = qian + ((CheckBox) lin2.getChildAt(i)).getText().toString();
+                            }
+                        }
+                    }
+                    for (int i = 1; i < lin3.getChildCount(); i++) {
+                        if (((CheckBox) lin3.getChildAt(i)).isChecked()) {
+                            m3[0]++;
+                            if (bai == "") {
+                                bai = ((CheckBox) lin3.getChildAt(i)).getText().toString();
+                            } else {
+                                bai = bai + ((CheckBox) lin3.getChildAt(i)).getText().toString();
+                            }
+                        }
+                    }
+                    for (int i = 1; i < lin4.getChildCount(); i++) {
+                        if (((CheckBox) lin4.getChildAt(i)).isChecked()) {
+                            m4[0]++;
+                            if (shi == "") {
+                                shi = ((CheckBox) lin4.getChildAt(i)).getText().toString();
+                            } else {
+                                shi = shi + ((CheckBox) lin4.getChildAt(i)).getText().toString();
+                            }
+                        }
+                    }
+                    for (int i = 1; i < lin5.getChildCount(); i++) {
+                        if (((CheckBox) lin5.getChildAt(i)).isChecked()) {
+                            m5[0]++;
+                            if (ge == "") {
+                                ge = ((CheckBox) lin5.getChildAt(i)).getText().toString();
+                            } else {
+                                ge = ge + ((CheckBox) lin5.getChildAt(i)).getText().toString();
+                            }
+                        }
+                    }
+
+                    pickedNumber = wan + "," + qian + "," + bai + "," + shi + "," + ge;
+                    Log.d("GameCenterrText==", pickedNumber);
+                    if (
+                            "fix".equals(code)
+                                    || "2min_fix".equals(code)
+                            ) {
+                        nums = m1[0] + m2[0] + m3[0] + m4[0] + m5[0];
+                    }
+                    if (
+                            "star_2_any_duplex".equals(code)
+                                    || "2min_star_2_any_duplex".equals(code)
+                            ) {
+                        nums = m1[0] * (m2[0] + m3[0] + m4[0] + m5[0]) + m2[0] * (m3[0] + m4[0] + m5[0]) + m3[0] * (m4[0] + m5[0]) + m4[0] * m5[0];
+                    }
+                    if (
+                            "star_3_any_duplex".equals(code)
+                                    || "2min_star_3_any_duplex".equals(code)
+                            ) {
+                        nums = m1[0] * m2[0] * m3[0] + m1[0] * m2[0] * m4[0] + m1[0] * m2[0] * m5[0] + m1[0] * m3[0] * m4[0] + m1[0] * m3[0] * m5[0] + m1[0] * m4[0] * m5[0] + m2[0] * m3[0] * m4[0] + m2[0] * m3[0] * m5[0] + m2[0] * m4[0] * m5[0] + m3[0] * m4[0] * m5[0];
+                    }
+                    if (
+                            "star_4_any_duplex".equals(code)
+                                    || "2min_star_4_any_duplex".equals(code)
+                            ) {
+                        nums = m1[0] * m2[0] * m3[0] * m4[0] + m1[0] * m2[0] * m3[0] * m5[0] + m1[0] * m2[0] * m4[0] * m5[0] + m1[0] * m3[0] * m4[0] * m5[0] + m2[0] * m3[0] * m4[0] * m5[0];
+                    }
+                }
+                if (
+                        "star_3_next_one_no_fix".equals(code)
+                                || "2min_star_3_next_one_no_fix".equals(code)
+                                || "star_3_prev_one_no_fix".equals(code)
+                                || "2min_star_3_prev_one_no_fix".equals(code)
+                                || "star_4_one_no_fix".equals(code)
+                                || "2min_star_4_one_no_fix".equals(code)
+                                || "eleven_star_3_prev_no_fix".equals(code)
+
+                        ) {
+                    String str = "";
+                    int count = 0;
+                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        if (at.isChecked()) {
+                            count++;
+                            if (str == "") {
+                                str = at.getText().toString().trim();
+                            } else {
+                                str = str + "," + at.getText().toString().toString();
+                            }
+                        }
+                    }
+                    pickedNumber = str;
+                    nums = count;
+                }
+                //11 选五三码直选
+                if (
+                        "eleven_star_3_prev_duplex".equals(code)
+
+                        ) {
+                    String gn1[] = new String[11];
+                    int i1 = 0;
+                    String gn2[] = new String[11];
+                    int i2 = 0;
+                    String gn3[] = new String[11];
+                    int i3 = 0;
+                    int coun = 0;
+                    String str1 = "";
+                    String str2 = "";
+                    String str3 = "";
+                    LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    LinearLayout lin3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
+                    for (int i = 1; i < lin1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) lin1.getChildAt(i);
+                        if (at.isChecked()) {
+                            gn1[i1] = at.getText().toString().trim();
+                            if (str1 == "") {
+                                str1 = at.getText().toString().trim();
+                            } else {
+                                str1 = str1 + " " + at.getText().toString().trim();
+                            }
+                            i1++;
+                        }
+                    }
+                    for (int i = 1; i < lin2.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) lin2.getChildAt(i);
+                        if (at.isChecked()) {
+                            gn2[i2] = at.getText().toString().trim();
+                            if (str2 == "") {
+                                str2 = at.getText().toString().trim();
+                            } else {
+                                str2 = str2 + " " + at.getText().toString().trim();
+                            }
+                            i2++;
+                        }
+                    }
+                    for (int i = 1; i < lin3.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) lin3.getChildAt(i);
+                        if (at.isChecked()) {
+                            gn3[i3] = at.getText().toString().trim();
+                            if (str3 == "") {
+                                str3 = at.getText().toString().trim();
+                            } else {
+                                str3 = str3 + " " + at.getText().toString().trim();
+                            }
+                            i3++;
+                        }
+                    }
+                    int c1 = 0;
+                    int c2 = 0;
+                    int c3 = 0;
+                    for (int i = 0; i < gn1.length; i++) {
+                        if (gn1[i] != null) {
+                            Log.d("11选五三码直选1", gn1[i]);
+                            c1++;
+                        }
+                    }
+                    for (int i = 0; i < gn2.length; i++) {
+                        if (gn2[i] != null) {
+                            Log.d("11选五三码直选2", gn2[i]);
+                            c2++;
+                        }
+                    }
+                    for (int i = 0; i < gn3.length; i++) {
+                        if (gn3[i] != null) {
+                            Log.d("11选五三码直选3", gn3[i]);
+                            c3++;
+                        }
+                    }
+
+                    for (int i = 0; i < c1; i++) {
+                        for (int j = 0; j < c2; j++) {
+                            if (gn1[i] == gn2[j]) continue;
+                            else {
+                                for (int k = 0; k < c3; k++) {
+                                    if (gn1[i] == gn3[k] || gn2[j] == gn3[k]) continue;
+                                    else coun++;
+                                }
+                            }
+                        }
+                    }
+                    nums = coun;
+                    pickedNumber = str1 + "," + str2 + "," + str3;
+                }
+                if ("eleven_star_3_prev_group_duplex".equals(code)) {
+                    String str = "";
+                    int n = 0;
+                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        if (at.isChecked()) {
+                            n++;
+                            if (str == "") {
+                                str = at.getText().toString().trim();
+                            } else {
+                                str = str + "," + at.getText().toString().trim();
+                            }
+                        }
+                    }
+                    nums = n * (n - 1) * (n - 2) / 6;
+                    pickedNumber = str;
+                }
+                if ("eleven_star_2_prev_duplex".equals(code)) {
+                    String gn1[] = new String[11];
+                    int i1 = 0;
+                    String gn2[] = new String[11];
+                    int i2 = 0;
+
+                    int coun = 0;
+                    String str1 = "";
+                    String str2 = "";
+
+                    LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    LinearLayout lin3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
+                    for (int i = 1; i < lin1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) lin1.getChildAt(i);
+                        if (at.isChecked()) {
+                            gn1[i1] = at.getText().toString().trim();
+                            if (str1 == "") {
+                                str1 = at.getText().toString().trim();
+                            } else {
+                                str1 = str1 + " " + at.getText().toString().trim();
+                            }
+                            i1++;
+                        }
+                    }
+                    for (int i = 1; i < lin2.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) lin2.getChildAt(i);
+                        if (at.isChecked()) {
+                            gn2[i2] = at.getText().toString().trim();
+                            if (str2 == "") {
+                                str2 = at.getText().toString().trim();
+                            } else {
+                                str2 = str2 + " " + at.getText().toString().trim();
+                            }
+                            i2++;
+                        }
+                    }
+                    int c1 = 0;
+                    int c2 = 0;
+
+                    for (int i = 0; i < gn1.length; i++) {
+                        if (gn1[i] != null) {
+                            Log.d("11选五三码直选1", gn1[i]);
+                            c1++;
+                        }
+                    }
+                    for (int i = 0; i < gn2.length; i++) {
+                        if (gn2[i] != null) {
+                            Log.d("11选五三码直选2", gn2[i]);
+                            c2++;
+                        }
+                    }
+                    for (int i = 0; i < c1; i++) {
+                        for (int j = 0; j < c2; j++) {
+                            if (gn1[i] == gn2[j]) continue;
+                            coun += 1;
+                        }
+                    }
+                    nums = coun;
+                    pickedNumber = str1 + "," + str2;
+                }
+                if ("eleven_fix".equals(code)) {
+                    LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    LinearLayout lin3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
+                    int count = 0;
+                    String str1 = "";
+                    String str2 = "";
+                    String str3 = "";
+                    for (int i = 1; i < lin1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) lin1.getChildAt(i);
+                        if (at.isChecked()) {
+                            count++;
+                            if (str1 == "") {
+                                str1 = at.getText().toString().trim();
+                            } else {
+                                str1 = str1 + " " + at.getText().toString().trim();
+                            }
+
+                        }
+                    }
+                    for (int i = 1; i < lin2.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) lin2.getChildAt(i);
+                        if (at.isChecked()) {
+                            count++;
+                            if (str2 == "") {
+                                str2 = at.getText().toString().trim();
+                            } else {
+                                str2 = str2 + " " + at.getText().toString().trim();
+                            }
+
+                        }
+                    }
+                    for (int i = 1; i < lin3.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) lin3.getChildAt(i);
+                        if (at.isChecked()) {
+                            count++;
+                            if (str3 == "") {
+                                str3 = at.getText().toString().trim();
+                            } else {
+                                str3 = str3 + " " + at.getText().toString().trim();
+                            }
+                        }
+                    }
+                    nums = count;
+                    pickedNumber = str1 + "," + str2 + "," + str3;
+                }
                 if (nums == 0) {
                     Toasty.error(GameCenterActivity.this, "投注注数为0,请重新投注", 2000).show();
                     return;
                 }
+
                 Nums = Integer.parseInt(edit1.getText().toString().trim());
                 amount = nums * 2;
                 if (PriceUnit == 2) {
@@ -2566,6 +3176,121 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 }
                 break;
         }
+    }
+
+    public int getNumHe2(List<Integer> ns) {
+        int nss = 0;
+        for (int i = 0; i < ns.size(); i++) {
+            Integer n = ns.get(i);
+            if (n == 0 || n == 18) {
+                nss = nss + 1;
+            }
+            if (n == 1 || n == 17) {
+                nss = nss + 2;
+            }
+            if (n == 2 || n == 16) {
+                nss = nss + 3;
+            }
+            if (n == 3 || n == 15) {
+                nss = nss + 4;
+            }
+            if (n == 4 || n == 14) {
+                nss = nss + 5;
+            }
+            if (n == 5 || n == 13) {
+                nss = nss + 6;
+            }
+            if (n == 6 || n == 12) {
+                nss = nss + 7;
+            }
+            if (n == 7 || n == 11) {
+                nss = nss + 8;
+            }
+            if (n == 8 || n == 10) {
+                nss = nss + 9;
+            }
+            if (n == 9) {
+                nss = nss + 10;
+            }
+
+        }
+        return nss;
+    }
+
+    public int getNumHe22(List<Integer> ns) {
+        int nss = 0;
+        for (int i = 0; i < ns.size(); i++) {
+            Integer n = ns.get(i);
+
+            if (n == 1 || n == 17) {
+                nss = nss + 1;
+            }
+            if (n == 2 || n == 16) {
+                nss = nss + 1;
+            }
+            if (n == 3 || n == 15) {
+                nss = nss + 2;
+            }
+            if (n == 4 || n == 14) {
+                nss = nss + 2;
+            }
+            if (n == 5 || n == 13) {
+                nss = nss + 3;
+            }
+            if (n == 6 || n == 12) {
+                nss = nss + 3;
+            }
+            if (n == 7 || n == 11) {
+                nss = nss + 4;
+            }
+            if (n == 8 || n == 10) {
+                nss = nss + 4;
+            }
+            if (n == 9) {
+                nss = nss + 5;
+            }
+
+        }
+        return nss;
+    }
+
+    public int getNumKua2(List<Integer> ns) {
+        int nss = 0;
+        for (int i = 0; i < ns.size(); i++) {
+            Integer n = ns.get(i);
+            if (n == 0) {
+                nss = nss + 10;
+            }
+            if (n == 1) {
+                nss = nss + 18;
+            }
+            if (n == 2) {
+                nss = nss + 16;
+            }
+            if (n == 3) {
+                nss = nss + 14;
+            }
+            if (n == 4) {
+                nss = nss + 12;
+            }
+            if (n == 5) {
+                nss = nss + 10;
+            }
+            if (n == 6) {
+                nss = nss + 8;
+            }
+            if (n == 7) {
+                nss = nss + 6;
+            }
+            if (n == 8) {
+                nss = nss + 4;
+            }
+            if (n == 9) {
+                nss = nss + 2;
+            }
+
+        }
+        return nss;
     }
 
     public String getheNums(List<String> str) {
