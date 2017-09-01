@@ -31,6 +31,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/LinearOne"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -75,6 +76,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/LinearTwo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">

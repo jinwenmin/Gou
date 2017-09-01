@@ -153,7 +153,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
         initImgs();
 
-        Cursor cursor = db.rawQuery("select * from games order by count desc", null);
+       /* Cursor cursor = db.rawQuery("select * from games order by count desc", null);
         List<HistoryGames> hs = new ArrayList<>();
         while (cursor.moveToNext()) {
             String name = cursor.getString(1);
@@ -166,7 +166,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             h.setImg(img);
             h.setCount(count);
             hs.add(h);
-        }
+        }*/
         adapters = new HomeGamesAdapters(getContext());
         HomeGridView.setNumColumns(4);
         HomeGridView.setAdapter(adapters);
@@ -195,7 +195,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 startActivity(intent);
             }
         });
-        adapters.addList(hs);
+        // adapters.addList(hs);
         PageAdapter pageAdapter = new PageAdapter(imgs);
         homeViewpager.setAdapter(pageAdapter);
         initScrollView();
@@ -340,7 +340,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         Log.d("重新显示", hidden + "");
-        if (!hidden) {
+       /* if (!hidden) {
             Cursor cursor = db.rawQuery("select * from games order by count desc", null);
             List<HistoryGames> hs = new ArrayList<>();
             while (cursor.moveToNext()) {
@@ -356,7 +356,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 hs.add(h);
             }
             adapters.addList(hs);
-        }
+        }*/
     }
 
     @Override

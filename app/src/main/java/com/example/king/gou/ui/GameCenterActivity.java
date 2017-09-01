@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -1559,6 +1560,30 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         "k3_double_standard".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_jiangsu_2_same_bzxh, null, false);
+                    final LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    final LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        final int finalI = i;
+                        ((CheckBox) linear1.getChildAt(i)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    ((CheckBox) linear2.getChildAt(finalI)).setChecked(false);
+                                }
+                            }
+                        });
+                    }
+                    for (int i = 0; i < linear2.getChildCount(); i++) {
+                        final int finalI = i;
+                        ((CheckBox) linear2.getChildAt(i)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    ((CheckBox) linear1.getChildAt(finalI)).setChecked(false);
+                                }
+                            }
+                        });
+                    }
                 }
                 if (
                         "k3_different_3_standard".equals(code)
@@ -2402,6 +2427,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 || code.equals("2min_star_3_prev_duplex")
                                 || code.equals("star_3_midd_duplex")
                                 || code.equals("2min_star_3_midd_duplex")
+                                || code.equals("sequence_star_3_duplex")
 
                         ) {
                     final int[] count1 = {0};
@@ -2464,6 +2490,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 || code.equals("2min_star_3_prev_sum")
                                 || code.equals("star_3_midd_sum")
                                 || code.equals("2min_star_3_midd_sum")
+                                || code.equals("sequence_star_3_sum")
                         ) {
                     LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
@@ -2609,6 +2636,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 || code.equals("2min_star_3_prev_group_sum")
                                 || code.equals("star_3_midd_group_sum")
                                 || code.equals("2min_star_3_midd_group_sum")
+                                || code.equals("sequence_star_3_group_sum")
                         ) {
                     LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.Linear1);
                     LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.Linear2);
@@ -2646,6 +2674,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 || "2min_star_2_next_duplex".equals(code)
                                 || "star_2_prev_duplex".equals(code)
                                 || "2min_star_2_prev_duplex".equals(code)
+                                || "sequence_star_2_prev_duplex".equals(code)
+                                || "sequence_star_2_next_duplex".equals(code)
                         ) {
                     int count1 = 0;
                     int count2 = 0;
@@ -2736,6 +2766,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 || "star_2_prev_group_duplex".equals(code)
                                 || "2min_star_2_prev_group_duplex".equals(code)
                                 || "eleven_star_2_prev_group_duplex".equals(code)
+                                || "sequence_star_3_group_3_duplex".equals(code)
+                                || "sequence_star_2_prev_group_duplex".equals(code)
+                                || "sequence_star_2_next_group_duplex".equals(code)
                         ) {
                     int count1 = 0;
                     String str = null;
@@ -2752,7 +2785,12 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         }
 
                     }
-                    nums = count1 * (count1 - 1) / 2;
+                    if ("sequence_star_3_group_3_duplex".equals(code)) {
+                        nums = count1 * (count1 - 1);
+                    } else {
+
+                        nums = count1 * (count1 - 1) / 2;
+                    }
                     pickedNumber = str;
                 }
                 //二星组选和值
@@ -3680,10 +3718,14 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             }
                         }
                     }
+                    pickedText = str;
                     pickedNumber = str;
                     nums = count;
                 }
-                if ("PK10_1st_2nd_sum".equals(code)) {
+                if (
+                        "PK10_1st_2nd_sum".equals(code)
+                                || "k3_sum".equals(code)
+                        ) {
                     LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
                     String str = "";
@@ -3760,8 +3802,354 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     }
                     nums = count[0];
                     pickedNumber = str1[0] + "," + str2[0] + "," + str3[0] + "," + str4[0] + "," + str5[0];
+                }
+                if (
+                        "k3_triple_all".equals(code)
+                                || "k3_triple".equals(code)
+                                || "k3_double_simple".equals(code)
+                                || "k3_consecutives_3_all".equals(code)
+
+                        ) {
+                    LinearLayout linear = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    int count = 0;
+                    String str = "";
+                    for (int i = 0; i < linear.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear.getChildAt(i);
+                        if (at.isChecked()) {
+                            count++;
+                            if (str == "") {
+                                str = at.getText().toString().trim();
+                            } else {
+                                str = str + "," + at.getText().toString().trim();
+                            }
+                        }
+                    }
+                    pickedNumber = str;
+                    nums = count;
+                }
+                if (
+                        "k3_double_standard".equals(code)
 
 
+                        ) {
+                    final LinearLayout linear = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    final LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    int count = 0;
+                    String str = "";
+                    String str2 = "";
+                    for (int i = 0; i < linear.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear.getChildAt(i);
+                        if (at.isChecked()) {
+                            count++;
+                            if (str == "") {
+                                str = at.getText().toString().trim();
+                            } else {
+                                str = str + " " + at.getText().toString().trim();
+                            }
+                        }
+                    }
+                    for (int i = 0; i < linear2.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear2.getChildAt(i);
+                        if (at.isChecked()) {
+                            count++;
+                            if (str2 == "") {
+                                str2 = at.getText().toString().trim();
+                            } else {
+                                str2 = str2 + at.getText().toString().trim();
+                            }
+                        }
+                    }
+                    pickedNumber = str + "," + str2;
+                    nums = count;
+                }
+                if (
+                        "k3_different_3_standard".equals(code)
+                                || "k3_different_3_sum".equals(code)
+                                || "k3_different_2_standard".equals(code)
+                        ) {
+                    LinearLayout linear = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    int count = 0;
+                    String str = "";
+
+                    for (int i = 0; i < linear.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear.getChildAt(i);
+                        if (at.isChecked()) {
+                            count++;
+                            if (str == "") {
+                                str = at.getText().toString().trim();
+                            } else {
+                                str = str + "," + at.getText().toString().trim();
+                            }
+                        }
+                    }
+                    pickedNumber = str;
+                    if ("k3_different_3_standard".equals(code)) {
+                        nums = count * (count - 1) * (count - 2) / 6;
+                    }
+                    if ("k3_different_3_sum".equals(code)) {
+                        nums = count;
+                    }
+                    if ("k3_different_2_standard".equals(code)) {
+                        nums = count * (count - 1) / 2;
+                    }
+                }
+                if (
+                        "kl8_sum_even_odd".equals(code)
+                                || "kl8_sum_even_odd_2".equals(code)
+                                || "kl8_sum_max_min".equals(code)
+                                || "kl8_sum_max_min_2".equals(code)
+                                || "kl8_parity_disk".equals(code)
+                                || "kl8_parity_disk_2".equals(code)
+                                || "kl8_up_down".equals(code)
+                                || "kl8_up_down_2".equals(code)
+                                || "kl8_special".equals(code)
+                                || "kl8_special_2".equals(code)
+                        ) {
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    String str = "";
+                    int count = 0;
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        if (at.isChecked()) {
+                            count++;
+                            if (str == "") {
+
+                                if (
+                                        "kl8_sum_even_odd".equals(code)
+                                                || "kl8_sum_even_odd_2".equals(code)
+                                                || "kl8_sum_max_min".equals(code)
+                                                || "kl8_sum_max_min_2".equals(code)
+                                                || "kl8_parity_disk".equals(code)
+                                                || "kl8_parity_disk_2".equals(code)
+                                                || "kl8_up_down".equals(code)
+                                                || "kl8_up_down_2".equals(code)
+                                        ) {
+                                    str = String.valueOf(at.getText().toString().charAt(0));
+                                }
+                                if (
+                                        "kl8_special".equals(code)
+                                                || "kl8_special_2".equals(code)
+                                        ) {
+                                    str = at.getText().toString();
+                                }
+                            } else {
+                                if (
+                                        "kl8_sum_even_odd".equals(code)
+                                                || "kl8_sum_even_odd_2".equals(code)
+                                                || "kl8_sum_max_min".equals(code)
+                                                || "kl8_sum_max_min_2".equals(code)
+                                                || "kl8_parity_disk".equals(code)
+                                                || "kl8_parity_disk_2".equals(code)
+                                                || "kl8_up_down_2".equals(code)
+                                                || "kl8_up_down".equals(code)
+                                        ) {
+                                    str = str + "," + String.valueOf(at.getText().toString().charAt(0));
+                                }
+                                if (
+                                        "kl8_special".equals(code)
+                                                || "kl8_special_2".equals(code)
+                                        ) {
+                                    str = str + "," + at.getText().toString();
+                                }
+                            }
+                        }
+                    }
+                    nums = count;
+                    pickedNumber = str;
+                }
+                if (
+                        "kl8_any_one".equals(code)
+                                || "kl8_any_two".equals(code)
+                                || "kl8_any_three".equals(code)
+                                || "kl8_any_four".equals(code)
+                                || "kl8_any_five".equals(code)
+                                || "kl8_any_five".equals(code)
+                                || "kl8_any_seven".equals(code)
+                        ) {
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.Linear1);
+                    LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.Linear2);
+                    LinearLayout linear3 = (LinearLayout) inte.findViewById(R.id.Linear3);
+                    LinearLayout linear4 = (LinearLayout) inte.findViewById(R.id.Linear4);
+                    LinearLayout linear5 = (LinearLayout) inte.findViewById(R.id.Linear5);
+                    LinearLayout linear6 = (LinearLayout) inte.findViewById(R.id.Linear6);
+                    LinearLayout linear7 = (LinearLayout) inte.findViewById(R.id.Linear7);
+                    LinearLayout linear8 = (LinearLayout) inte.findViewById(R.id.Linear8);
+                    LinearLayout linear9 = (LinearLayout) inte.findViewById(R.id.Linear9);
+                    LinearLayout linear10 = (LinearLayout) inte.findViewById(R.id.Linear10);
+
+                    String str = "";
+                    int count = 0;
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        if (at.isChecked()) {
+                            count++;
+                            if (str == "") {
+                                str = at.getText().toString();
+                            } else {
+                                str = str + "," + at.getText().toString();
+                            }
+                        }
+                    }
+                    for (int i = 0; i < linear2.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear2.getChildAt(i);
+                        if (at.isChecked()) {
+                            count++;
+                            if (str == "") {
+                                str = at.getText().toString();
+                            } else {
+                                str = str + "," + at.getText().toString();
+                            }
+                        }
+                    }
+                    for (int i = 0; i < linear3.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear3.getChildAt(i);
+                        if (at.isChecked()) {
+                            count++;
+                            if (str == "") {
+                                str = at.getText().toString();
+                            } else {
+                                str = str + "," + at.getText().toString();
+                            }
+                        }
+                    }
+                    for (int i = 0; i < linear4.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear4.getChildAt(i);
+                        if (at.isChecked()) {
+                            count++;
+                            if (str == "") {
+                                str = at.getText().toString();
+                            } else {
+                                str = str + "," + at.getText().toString();
+                            }
+                        }
+                    }
+                    for (int i = 0; i < linear5.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear5.getChildAt(i);
+                        if (at.isChecked()) {
+                            count++;
+                            if (str == "") {
+                                str = at.getText().toString();
+                            } else {
+                                str = str + "," + at.getText().toString();
+                            }
+                        }
+                    }
+                    for (int i = 0; i < linear6.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear6.getChildAt(i);
+                        if (at.isChecked()) {
+                            count++;
+                            if (str == "") {
+                                str = at.getText().toString();
+                            } else {
+                                str = str + "," + at.getText().toString();
+                            }
+                        }
+                    }
+                    for (int i = 0; i < linear7.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear7.getChildAt(i);
+                        if (at.isChecked()) {
+                            count++;
+                            if (str == "") {
+                                str = at.getText().toString();
+                            } else {
+                                str = str + "," + at.getText().toString();
+                            }
+                        }
+                    }
+                    for (int i = 0; i < linear8.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear8.getChildAt(i);
+                        if (at.isChecked()) {
+                            count++;
+                            if (str == "") {
+                                str = at.getText().toString();
+                            } else {
+                                str = str + "," + at.getText().toString();
+                            }
+                        }
+                    }
+                    for (int i = 0; i < linear9.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear9.getChildAt(i);
+                        if (at.isChecked()) {
+                            count++;
+                            if (str == "") {
+                                str = at.getText().toString();
+                            } else {
+                                str = str + "," + at.getText().toString();
+                            }
+                        }
+                    }
+                    for (int i = 0; i < linear10.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear10.getChildAt(i);
+                        if (at.isChecked()) {
+                            count++;
+                            if (str == "") {
+                                str = at.getText().toString();
+                            } else {
+                                str = str + "," + at.getText().toString();
+                            }
+                        }
+                    }
+                    if ("kl8_any_two".equals(code)
+                            || "kl8_any_three".equals(code)
+                            || "kl8_any_four".equals(code)
+                            || "kl8_any_five".equals(code)
+                            || "kl8_any_five".equals(code)
+                            || "kl8_any_seven".equals(code)) {
+                        if (count > 8) {
+                            Toasty.info(GameCenterActivity.this, "最多只能选择8个号码位", 2000).show();
+                            return;
+                        }
+                    }
+                    pickedNumber = str;
+                    nums = count;
+                }
+                if ("kl8_five_elements".equals(code)) {
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    String str = "";
+                    int count = 0;
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        if (at.isChecked()) {
+                            count++;
+                            if (str == "") {
+                                str = String.valueOf(at.getText().toString().charAt(0));
+                            } else {
+                                str = str + "," + String.valueOf(at.getText().toString().charAt(0));
+                            }
+                        }
+                    }
+                    for (int i = 0; i < linear2.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear2.getChildAt(i);
+                        if (at.isChecked()) {
+                            count++;
+                            if (str == "") {
+                                str = String.valueOf(at.getText().toString().charAt(0));
+                            } else {
+                                str = str + "," + String.valueOf(at.getText().toString().charAt(0));
+                            }
+                        }
+                    }
+                    pickedNumber = str;
+                    nums = count;
+                }
+                if ("sequence_star_3_group_6_duplex".equals(code)) {
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    String str = "";
+                    int n = 0;
+                    for (int i = 1; i < linear1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        if (at.isChecked()) {
+                            n++;
+                            if (str == "") {
+                                str = at.getText().toString();
+                            } else {
+                                str = str + "," + at.getText().toString();
+                            }
+                        }
+                    }
+                    pickedNumber = str;
+                    nums = n * (n - 1) * (n - 2) / 6;
                 }
                 if (nums == 0) {
                     Toasty.error(GameCenterActivity.this, "投注注数为0,请重新投注", 2000).show();
@@ -3797,7 +4185,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         }
     }
 
-    public Map<String, Object> getLinearC(LinearLayout view) {
+    public List<Object> getLinearC(LinearLayout view) {
         String str = "";
         int c = 0;
         for (int i = 1; i < view.getChildCount(); i++) {
@@ -3807,14 +4195,14 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 if (str == "") {
                     str = at.getText().toString().trim();
                 } else {
-                    str = str + " " + at.getText().toString().trim();
+                    str = str + "," + at.getText().toString().trim();
                 }
             }
         }
-        Map<String, Object> map = new HashMap<>();
-        map.put("str", str);
-        map.put("c", c);
-        return map;
+        List<Object> lin = new ArrayList<>();
+        lin.add(str);
+        lin.add(c);
+        return lin;
     }
 
     public int getNumHe2(List<Integer> ns) {
