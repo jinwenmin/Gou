@@ -22,7 +22,7 @@
             android:padding="5px"
             android:text="特码大小单双"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <LinearLayout
             android:layout_width="0px"
@@ -31,6 +31,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/LinearOne"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -63,6 +64,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/LinearTwo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">

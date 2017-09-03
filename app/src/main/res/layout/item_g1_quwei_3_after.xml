@@ -31,6 +31,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/LinearOne"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -115,6 +116,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/LinearTwo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -197,6 +199,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/LinearThree"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
