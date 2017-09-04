@@ -546,9 +546,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 if ("star_5_duplex".equals(code)
 
                         || "2min_star_5_duplex".equals(code)
-                        || "2min_star_2_any_duplex".equals(code)
-                        || "2min_star_4_any_duplex".equals(code)
-                        || "2min_star_3_any_duplex".equals(code)
+
+
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_5_star, null, false);
                     final LinearLayout LinearWan = (LinearLayout) inte.findViewById(R.id.LinearWan);
@@ -1073,9 +1072,11 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 || "2min_fix".equals(code)
                                 || "sequence_fix".equals(code)
                                 || "star_2_any_duplex".equals(code)
-                                || "star_3_any_duplex".equals(code)
-                                || "star_4_any_duplex".equals(code)
                                 || "2min_star_2_any_duplex".equals(code)
+                                || "star_3_any_duplex".equals(code)
+                                || "2min_star_3_any_duplex".equals(code)
+                                || "star_4_any_duplex".equals(code)
+                                || "2min_star_4_any_duplex".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_location, null, false);
                     LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
@@ -1829,6 +1830,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 if (
                         "sequence_star_2_prev_group_duplex".equals(code)
                                 || "star_2_next_group_duplex".equals(code)
+                                || "2min_star_2_next_group_duplex".equals(code)
 
                                 || "sequence_star_2_next_group_duplex".equals(code)
                                 || "3D_star_2_prev_group_duplex".equals(code)
@@ -4086,7 +4088,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 || "kl8_any_three".equals(code)
                                 || "kl8_any_four".equals(code)
                                 || "kl8_any_five".equals(code)
-                                || "kl8_any_five".equals(code)
+                                || "kl8_any_six".equals(code)
                                 || "kl8_any_seven".equals(code)
                         ) {
                     LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.Linear1);
@@ -4216,15 +4218,64 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             || "kl8_any_three".equals(code)
                             || "kl8_any_four".equals(code)
                             || "kl8_any_five".equals(code)
-                            || "kl8_any_five".equals(code)
+                            || "kl8_any_six".equals(code)
                             || "kl8_any_seven".equals(code)) {
                         if (count > 8) {
                             Toasty.info(GameCenterActivity.this, "最多只能选择8个号码位", 2000).show();
                             return;
                         }
                     }
+                    if ("kl8_any_one".equals(code)) {
+                        if (count < 1) {
+                            Toasty.info(GameCenterActivity.this, "投注个数不够，请重新投注", 2000).show();
+                            return;
+                        }
+                        nums = count;
+                    }
+                    if ("kl8_any_two".equals(code)) {
+                        if (count < 2) {
+                            Toasty.info(GameCenterActivity.this, "投注个数不够，请重新投注", 2000).show();
+                            return;
+                        }
+                        nums = count * (count - 1) / 2;
+                    }
+                    if ("kl8_any_three".equals(code)) {
+                        if (count < 3) {
+                            Toasty.info(GameCenterActivity.this, "投注个数不够，请重新投注", 2000).show();
+                            return;
+                        }
+                        nums = count * (count - 1) * (count - 2) / 6;
+                    }
+                    if ("kl8_any_four".equals(code)) {
+                        if (count < 4) {
+                            Toasty.info(GameCenterActivity.this, "投注个数不够，请重新投注", 2000).show();
+                            return;
+                        }
+                        nums = count * (count - 1) * (count - 2) * (count - 3) / 24;
+                    }
+                    if ("kl8_any_five".equals(code)) {
+                        if (count < 5) {
+                            Toasty.info(GameCenterActivity.this, "投注个数不够，请重新投注", 2000).show();
+                            return;
+                        }
+                        nums = count * (count - 1) * (count - 2) * (count - 3) * (count - 4) / 120;
+                    }
+                    if ("kl8_any_six".equals(code)) {
+                        if (count < 6) {
+                            Toasty.info(GameCenterActivity.this, "投注个数不够，请重新投注", 2000).show();
+                            return;
+                        }
+                        nums = count * (count - 1) * (count - 2) * (count - 3) * (count - 4) * (count - 5) / 720;
+                    }
+                    if ("kl8_any_seven".equals(code)) {
+                        if (count < 7) {
+                            Toasty.info(GameCenterActivity.this, "投注个数不够，请重新投注", 2000).show();
+                            return;
+                        }
+                        nums = RxUtils.getInstance().JieCheng(count) / RxUtils.getInstance().JieCheng(7);
+                    }
                     pickedNumber = str;
-                    nums = count;
+
                 }
                 if ("kl8_five_elements".equals(code)) {
                     LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
@@ -4523,6 +4574,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 || "2min_star_4_group_4".equals(code)
                                 || "star_4_group_12".equals(code)
                                 || "2min_star_4_group_12".equals(code)
+                                || "2min_star_5_group_5".equals(code)
+                                || "star_5_group_5".equals(code)
                         ) {
                     LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
@@ -4596,18 +4649,22 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
                     String str = "";
                     String str2 = "";
-
+                    String strt1 = "";
+                    String strt2 = "";
                     int c1 = 0;
                     int c2 = 0;
 
                     for (int i = 0; i < linear1.getChildCount(); i++) {
                         CheckBox at = (CheckBox) linear1.getChildAt(i);
                         if (at.isChecked()) {
+
                             c1++;
                             if (str == "") {
-                                str = at.getText().toString();
+                                str = getBig(at.getText().toString());
+                                strt1 = at.getText().toString();
                             } else {
-                                str = str + at.getText().toString();
+                                str = str + getBig(at.getText().toString());
+                                strt1 = strt1 + at.getText().toString();
                             }
                         }
                     }
@@ -4616,14 +4673,17 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         if (at.isChecked()) {
                             c2++;
                             if (str2 == "") {
-                                str2 = at.getText().toString();
+                                str2 = getBig(at.getText().toString());
+                                strt2 = at.getText().toString();
                             } else {
-                                str2 = str2 + at.getText().toString();
+                                str2 = str2 + getBig(at.getText().toString());
+                                strt2 = strt2 + at.getText().toString();
                             }
                         }
                     }
                     nums = c1 * c2;
                     pickedNumber = str + "," + str2;
+                    pickedText = strt1 + "," + strt2;
                 }
                 if (
                         "star_3_prev_special".equals(code)
@@ -4637,6 +4697,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     String str = "";
                     String str2 = "";
                     String str3 = "";
+                    String strt1 = "";
+                    String strt2 = "";
+                    String strt3 = "";
                     int c1 = 0;
                     int c2 = 0;
                     int c3 = 0;
@@ -4646,8 +4709,10 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             c1++;
                             if (str == "") {
                                 str = at.getText().toString();
+                                strt1 = getBig(at.getText().toString());
                             } else {
                                 str = str + at.getText().toString();
+                                strt1 = strt1 + getBig(at.getText().toString());
                             }
                         }
                     }
@@ -4657,8 +4722,10 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             c2++;
                             if (str2 == "") {
                                 str2 = at.getText().toString();
+                                strt2 = getBig(at.getText().toString());
                             } else {
                                 str2 = str2 + at.getText().toString();
+                                strt2 = strt2 + getBig(at.getText().toString());
                             }
                         }
                     }
@@ -4668,13 +4735,16 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             c3++;
                             if (str3 == "") {
                                 str3 = at.getText().toString();
+                                strt3 = getBig(at.getText().toString());
                             } else {
                                 str3 = str3 + at.getText().toString();
+                                strt3 = strt3 + getBig(at.getText().toString());
                             }
                         }
                     }
                     nums = c1 * c2 * c3;
-                    pickedNumber = str + "," + str2 + "," + str3;
+                    pickedText = str + "," + str2 + "," + str3;
+                    pickedNumber = strt1 + "," + strt2 + "," + strt3;
                 }
                 if (
                         "banker_player".equals(code)
@@ -4692,7 +4762,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         ) {
                     LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     String str = "";
-
+                    String strt1 = "";
                     int c1 = 0;
 
                     for (int i = 0; i < linear1.getChildCount(); i++) {
@@ -4701,12 +4771,15 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             c1++;
                             if (str == "") {
                                 str = at.getText().toString();
+                                strt1 = getBaccarat(at.getText().toString());
                             } else {
                                 str = str + "," + at.getText().toString();
+                                strt1 = strt1 + "," + getBaccarat(at.getText().toString());
                             }
                         }
                     }
-                    pickedNumber = str;
+                    pickedNumber = strt1;
+                    pickedText = str;
                     nums = c1;
                 }
                 if (nums == 0) {
@@ -5045,6 +5118,32 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
             SendGameNum.setText(num + 1 + "");
 
         }
+    }
+
+    public String getBig(String n) {
+        if ("大".equals(n)) {
+            return "56789";
+        }
+        if ("小".equals(n)) {
+            return "01234";
+        }
+        if ("单".equals(n)) {
+            return "13579";
+        }
+        if ("双".equals(n)) {
+            return "02468";
+        }
+        return "";
+    }
+
+    public String getBaccarat(String n) {
+        if ("庄".equals(n) || "平".equals(n)) {
+            return "0";
+        }
+        if ("闲".equals(n)) {
+            return "1";
+        }
+        return "";
     }
 
     class ViewPAdapter extends FragmentPagerAdapter {
