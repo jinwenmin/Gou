@@ -3250,6 +3250,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
                     String str = "";
+                    String strt1 = "";
                     int count = 0;
                     for (int i = 0; i < linear1.getChildCount(); i++) {
                         CheckBox at = (CheckBox) linear1.getChildAt(i);
@@ -3257,8 +3258,10 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             count++;
                             if (str == "") {
                                 str = at.getText().toString().trim();
+                                strt1 = get11_5(at.getText().toString().trim());
                             } else {
                                 str = str + "," + at.getText().toString().trim();
+                                strt1 = strt1 + "," + get11_5(at.getText().toString().trim());
                             }
                         }
                     }
@@ -3268,12 +3271,15 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             count++;
                             if (str == "") {
                                 str = at.getText().toString().trim();
+                                strt1 = get11_5(at.getText().toString().trim());
                             } else {
                                 str = str + "," + at.getText().toString().trim();
+                                strt1 = strt1 + "," + get11_5(at.getText().toString().trim());
                             }
                         }
                     }
-                    pickedNumber = str;
+                    pickedNumber = strt1;
+                    pickedText = str;
                     nums = count;
                 }
                 if ("eleven_middle".equals(code)) {
@@ -3992,13 +3998,13 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         ) {
                     LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     String str = "";
+                    String strt1 = "";
                     int count = 0;
                     for (int i = 0; i < linear1.getChildCount(); i++) {
                         CheckBox at = (CheckBox) linear1.getChildAt(i);
                         if (at.isChecked()) {
                             count++;
                             if (str == "") {
-
                                 if (
                                         "kl8_sum_even_odd".equals(code)
                                                 || "kl8_sum_even_odd_2".equals(code)
@@ -4036,6 +4042,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                                 || "2min_toradora_sg".equals(code)
                                         ) {
                                     str = at.getText().toString();
+                                    strt1 = getDragon(at.getText().toString());
                                 }
                             } else {
                                 if (
@@ -4075,12 +4082,14 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                                 || "2min_toradora_sg".equals(code)
                                         ) {
                                     str = str + "," + at.getText().toString();
+                                    strt1 = strt1 + "," + getDragon(at.getText().toString());
                                 }
                             }
                         }
                     }
                     nums = count;
-                    pickedNumber = str;
+                    pickedNumber = strt1;
+                    pickedText = str;
                 }
                 if (
                         "kl8_any_one".equals(code)
@@ -4771,10 +4780,20 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             c1++;
                             if (str == "") {
                                 str = at.getText().toString();
-                                strt1 = getBaccarat(at.getText().toString());
+                                if ("sum_special".equals(code)
+                                        || "2min_sum_special".equals(code)) {
+                                    strt1 = getBig(at.getText().toString());
+                                } else {
+                                    strt1 = getBaccarat(at.getText().toString());
+                                }
                             } else {
                                 str = str + "," + at.getText().toString();
-                                strt1 = strt1 + "," + getBaccarat(at.getText().toString());
+                                if ("sum_special".equals(code)
+                                        || "2min_sum_special".equals(code)) {
+                                    strt1 = strt1 + "," + getBig(at.getText().toString());
+                                } else {
+                                    strt1 = strt1 + "," + getBaccarat(at.getText().toString());
+                                }
                             }
                         }
                     }
@@ -5120,6 +5139,28 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         }
     }
 
+    public String get11_5(String n) {
+        if ("5单0双".equals(n)) {
+            return "odd_5_even_0";
+        }
+        if ("4单1双".equals(n)) {
+            return "odd_4_even_1";
+        }
+        if ("3单2双".equals(n)) {
+            return "odd_3_even_2";
+        }
+        if ("2单3双".equals(n)) {
+            return "odd_2_even_3";
+        }
+        if ("1单4双".equals(n)) {
+            return "odd_1_even_4";
+        }
+        if ("0单5双".equals(n)) {
+            return "odd_0_even_5";
+        }
+        return "";
+    }
+
     public String getBig(String n) {
         if ("大".equals(n)) {
             return "56789";
@@ -5132,6 +5173,19 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         }
         if ("双".equals(n)) {
             return "02468";
+        }
+        return "";
+    }
+
+    public String getDragon(String n) {
+        if ("龙".equals(n)) {
+            return "dragon";
+        }
+        if ("虎".equals(n)) {
+            return "tiger";
+        }
+        if ("和".equals(n)) {
+            return "equal";
         }
         return "";
     }
