@@ -78,7 +78,7 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
          else if("errorout".equals(logOut)) {
             Toasty.info(this,"登录异常,请重新登陆",2000).show();
         }else{
-            RetrofitService.getInstance().getTokenSignin(this);
+           RetrofitService.getInstance().getTokenSignin(this);
         }
         MyApp.getInstance().addActivitys(this);
 

@@ -441,12 +441,15 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(Call<UserInfo> call, retrofit2.Response<UserInfo> response) {
-                listener.onRequestStart(API_ID_USERINFO);
-                List<UserInfo> userInfos = new ArrayList<UserInfo>();
-                userInfos.add(0, response.body());
-                listener.onReceivedData(API_ID_USERINFO, userInfos, API_ID_ERROR);
-                System.out.println("用户的基本信息==" + response.body());
-                listener.onRequestEnd(API_ID_USERINFO);
+                if (response.code()==200) {
+                    listener.onRequestStart(API_ID_USERINFO);
+                    List<UserInfo> userInfos = new ArrayList<UserInfo>();
+                    userInfos.add(0, response.body());
+                    listener.onReceivedData(API_ID_USERINFO, userInfos, API_ID_ERROR);
+                    System.out.println("用户的基本信息==" + response.body());
+                    listener.onRequestEnd(API_ID_USERINFO);
+                }
+
             }
 
             @Override

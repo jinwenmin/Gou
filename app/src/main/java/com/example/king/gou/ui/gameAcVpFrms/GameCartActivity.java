@@ -75,15 +75,15 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
                     Map<String, Object> map = new HashMap();
                     map.put("pickedNumber", listids.get(i).getPickedNumber());
                     map.put("multiples", listids.get(i).getMultiple());
-                    map.put("locationText", "");
+                    map.put("locationText", listids.get(i).getLocationText());
                     map.put("priceUnit", listids.get(i).getPriceUnit());
                     map.put("amount", listids.get(i).getAmount());
                     map.put("priceType", listids.get(i).getPriceType());
                     map.put("amounts", listids.get(i).getAmount());
-                    map.put("pickedText", "");
+                    map.put("pickedText", listids.get(i).getPickedText());
                     map.put("multiple", listids.get(i).getMultiple());
                     map.put("classCode", listids.get(i).getClassCode());
-                    map.put("location", "");
+                    map.put("location", listids.get(i).getLocation());
                     map.put("num", listids.get(i).getNum());
                     map.put("vcode", "");
                     ids.add(map);
