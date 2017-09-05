@@ -5352,8 +5352,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 || "star_4_single".equals(code)
                                 || "2min_star_4_single".equals(code)
                                 || "star_3_next_single".equals(code)
-                                || "2min_star_3_next_single".equals(code) || "star_3_prev_duplex".equals(code)
-                                || "2min_star_3_prev_duplex".equals(code)
+                                || "2min_star_3_next_single".equals(code)
+
                                 || "star_3_next_group_single".equals(code)
                                 || "2min_star_3_next_group_single".equals(code)
                                 || "star_3_next_group_single_6".equals(code)
@@ -5361,8 +5361,14 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 || "star_3_next_group_diverse".equals(code)
                                 || "2min_star_3_next_group_diverse".equals(code)
                                 || "star_3_prev_group_single".equals(code)
-                                || "2min_star_3_prev_group_single".equals(code) || "star_3_prev_group_single_6".equals(code)
+                                || "2min_star_3_prev_group_single".equals(code)
+                                || "star_3_prev_group_single_6".equals(code)
                                 || "2min_star_3_prev_group_single_6".equals(code)
+                                || "star_3_prev_single".equals(code)
+                                || "2min_star_3_prev_single".equals(code)
+
+                                || "star_3_prev_group_diverse".equals(code)
+                                || "2min_star_3_prev_group_diverse".equals(code)
                         ) {
                     final EditText g2_editText = (EditText) inte.findViewById(R.id.g2_EditText);
                     String s = g2_editText.getText().toString();
@@ -5383,11 +5389,13 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             || "star_3_next_group_single_6".equals(code)
                             || "2min_star_3_next_group_single_6".equals(code)
                             || "star_3_prev_group_single_6".equals(code)
-                            || "2min_star_3_prev_group_single_6".equals(code)
+                            || "2min_star_3_prev_group_single_6".equals(code) || "star_3_prev_group_single".equals(code)
+                            || "2min_star_3_prev_group_single".equals(code)
 
                             || "star_3_next_group_diverse".equals(code)
                             || "2min_star_3_next_group_diverse".equals(code)
-
+                            || "star_3_prev_group_diverse".equals(code)
+                            || "2min_star_3_prev_group_diverse".equals(code)
 
                             || "star_3_prev_single".equals(code)
                             || "2min_star_3_prev_single".equals(code)
