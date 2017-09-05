@@ -22,7 +22,7 @@
             android:padding="5px"
             android:text="正码"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <LinearLayout
             android:layout_width="0px"
@@ -109,7 +109,7 @@
                     android:background="@drawable/item_gameselect_colorgreen"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="6"
+                    android:text="06"
                     android:textColor="@color/select_gamecolor_zheng"
                     android:textSize="30px" />
 
@@ -684,398 +684,473 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20px"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/gamecenter_btn1"
-            android:paddingLeft="15px"
-            android:paddingRight="15px"
-            android:text="0头"
-            android:textColor="@android:color/white"
-            android:textSize="30px" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
-            android:background="@drawable/gamecenter_btn1"
-            android:paddingLeft="15px"
-            android:paddingRight="15px"
-            android:text="1头"
-            android:textColor="@android:color/white"
-            android:textSize="30px" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
-            android:background="@drawable/gamecenter_btn1"
-            android:paddingLeft="15px"
-            android:paddingRight="15px"
-            android:text="2头"
-            android:textColor="@android:color/white"
-            android:textSize="30px" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
-            android:background="@drawable/gamecenter_btn1"
-            android:paddingLeft="15px"
-            android:paddingRight="15px"
-            android:text="3头"
-            android:textColor="@android:color/white"
-            android:textSize="30px" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
-            android:background="@drawable/gamecenter_btn1"
-            android:paddingLeft="15px"
-            android:paddingRight="15px"
-            android:text="4头"
-            android:textColor="@android:color/white"
-            android:textSize="30px" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
+        android:id="@+id/LinearOne"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10px"
         android:gravity="center">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0px"
+            android:layout_height="40px"
+            android:layout_weight="1"
+            android:background="@drawable/gamecenter_btn1"
+            android:gravity="center"
+            android:paddingLeft="15px"
+            android:paddingRight="15px"
+            android:text="0头"
+            android:textColor="@android:color/white"
+            android:textSize="25px" />
+
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
+            android:layout_marginLeft="20px"
+
+            android:background="@drawable/gamecenter_btn1"
+            android:paddingLeft="15px"
+            android:paddingRight="15px"
+            android:text="1头"
+            android:textColor="@android:color/white"
+            android:textSize="25px" />
+
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
+            android:layout_marginLeft="20px"
+
+            android:background="@drawable/gamecenter_btn1"
+            android:paddingLeft="15px"
+            android:paddingRight="15px"
+            android:text="2头"
+            android:textColor="@android:color/white"
+            android:textSize="25px" />
+
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
+            android:layout_marginLeft="20px"
+
+            android:background="@drawable/gamecenter_btn1"
+            android:paddingLeft="15px"
+            android:paddingRight="15px"
+            android:text="3头"
+            android:textColor="@android:color/white"
+            android:textSize="25px" />
+
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
+            android:layout_marginLeft="20px"
+
+            android:background="@drawable/gamecenter_btn1"
+            android:paddingLeft="15px"
+            android:paddingRight="15px"
+            android:text="4头"
+            android:textColor="@android:color/white"
+            android:textSize="25px" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearTwo"
+        android:layout_width="match_parent"
+        android:layout_height="40px"
+        android:layout_margin="10px"
+        android:gravity="center">
+
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="红波"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:layout_marginLeft="20px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="绿波"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:layout_marginLeft="20px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="蓝波"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:layout_marginLeft="20px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="机选五注"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="20px" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:layout_marginLeft="20px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="机选十注"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="20px" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/LinearThree"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40px"
         android:layout_margin="10px"
         android:gravity="center">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="0尾"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:layout_marginLeft="20px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="1尾"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:layout_marginLeft="20px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="2尾"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:layout_marginLeft="20px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="3尾"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:layout_marginLeft="20px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="4尾"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/LinearFour"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40px"
         android:layout_margin="10px"
         android:gravity="center">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="5尾"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:layout_marginLeft="20px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="6尾"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:layout_marginLeft="20px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="7尾"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:layout_marginLeft="20px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="8尾"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:layout_marginLeft="20px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="9尾"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/LinearFive"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40px"
         android:layout_margin="10px"
         android:gravity="center">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="鼠"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:layout_marginLeft="20px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="牛"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:layout_marginLeft="20px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="虎"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:layout_marginLeft="20px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="兔"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:layout_marginLeft="20px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="龙"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:layout_marginLeft="20px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="蛇"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/LinearSix"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40px"
         android:layout_margin="10px"
         android:gravity="center">
 
         <TextView
             android:id="@+id/textView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="马"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:layout_marginLeft="20px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="羊"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:layout_marginLeft="20px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="猴"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:layout_marginLeft="20px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="鸡"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:layout_marginLeft="20px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="狗"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="40px"
             android:layout_marginLeft="20px"
             android:background="@drawable/gamecenter_btn1"
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:text="猪"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
     </LinearLayout>
 

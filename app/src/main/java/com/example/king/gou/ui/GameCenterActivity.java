@@ -48,6 +48,8 @@ import com.example.king.gou.utils.RxUtils;
 import com.google.gson.Gson;
 import com.zhy.autolayout.AutoLayoutActivity;
 
+import org.w3c.dom.Text;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -1913,6 +1915,423 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         "lhc_special".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_xg_te, null, false);
+
+                    LinearLayout Linear1 = (LinearLayout) inte.findViewById(R.id.Linear1);
+                    LinearLayout Linear2 = (LinearLayout) inte.findViewById(R.id.Linear2);
+                    LinearLayout Linear3 = (LinearLayout) inte.findViewById(R.id.Linear3);
+                    LinearLayout Linear4 = (LinearLayout) inte.findViewById(R.id.Linear4);
+                    LinearLayout Linear5 = (LinearLayout) inte.findViewById(R.id.Linear5);
+                    LinearLayout Linear6 = (LinearLayout) inte.findViewById(R.id.Linear6);
+                    final List<View> vs = new ArrayList<View>();
+                    vs.add(Linear1);
+                    vs.add(Linear2);
+                    vs.add(Linear3);
+                    vs.add(Linear4);
+                    vs.add(Linear5);
+                    vs.add(Linear6);
+                    LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    LinearLayout lin3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
+                    LinearLayout lin4 = (LinearLayout) inte.findViewById(R.id.LinearFour);
+                    LinearLayout lin5 = (LinearLayout) inte.findViewById(R.id.LinearFive);
+                    LinearLayout lin6 = (LinearLayout) inte.findViewById(R.id.LinearSix);
+                    for (int i = 0; i < lin1.getChildCount(); i++) {
+                        lin1.getChildAt(i).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                List<String> str = new ArrayList<String>();
+                                if (((TextView) view).getText().equals("0头")) {
+
+                                    str.add("01");
+                                    str.add("02");
+                                    str.add("03");
+                                    str.add("04");
+                                    str.add("05");
+                                    str.add("06");
+                                    str.add("07");
+                                    str.add("08");
+                                    str.add("09");
+
+
+                                }
+                                if (((TextView) view).getText().equals("1头")) {
+
+                                    str.add("10");
+                                    str.add("11");
+                                    str.add("12");
+                                    str.add("13");
+                                    str.add("14");
+                                    str.add("15");
+                                    str.add("16");
+                                    str.add("17");
+                                    str.add("18");
+                                    str.add("19");
+
+                                }
+                                if (((TextView) view).getText().equals("2头")) {
+
+                                    str.add("20");
+                                    str.add("21");
+                                    str.add("22");
+                                    str.add("23");
+                                    str.add("24");
+                                    str.add("25");
+                                    str.add("26");
+                                    str.add("27");
+                                    str.add("28");
+                                    str.add("29");
+
+                                }
+                                if (((TextView) view).getText().equals("3头")) {
+
+                                    str.add("30");
+                                    str.add("31");
+                                    str.add("32");
+                                    str.add("33");
+                                    str.add("34");
+                                    str.add("35");
+                                    str.add("36");
+                                    str.add("37");
+                                    str.add("38");
+                                    str.add("39");
+
+                                }
+                                if (((TextView) view).getText().equals("4头")) {
+
+                                    str.add("40");
+                                    str.add("41");
+                                    str.add("42");
+                                    str.add("43");
+                                    str.add("44");
+                                    str.add("45");
+                                    str.add("46");
+                                    str.add("47");
+                                    str.add("48");
+                                    str.add("49");
+
+                                }
+
+
+                                setCheckLin(vs, str);
+                            }
+                        });
+
+
+                    }
+                    for (int i = 0; i < lin2.getChildCount(); i++) {
+                        ((TextView) lin2.getChildAt(i)).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                List<String> str = new ArrayList<String>();
+                                if (((TextView) view).getText().equals("红波")) {
+
+                                    str.add("01");
+                                    str.add("02");
+                                    str.add("07");
+                                    str.add("08");
+                                    str.add("12");
+                                    str.add("13");
+                                    str.add("18");
+                                    str.add("19");
+                                    str.add("23");
+                                    str.add("24");
+                                    str.add("29");
+                                    str.add("30");
+                                    str.add("34");
+                                    str.add("35");
+                                    str.add("40");
+                                    str.add("45");
+                                    str.add("46");
+
+                                }
+                                if (((TextView) view).getText().equals("绿波")) {
+
+                                    str.add("05");
+                                    str.add("06");
+                                    str.add("11");
+                                    str.add("16");
+                                    str.add("17");
+                                    str.add("21");
+                                    str.add("22");
+                                    str.add("27");
+                                    str.add("28");
+                                    str.add("32");
+                                    str.add("33");
+                                    str.add("38");
+                                    str.add("39");
+                                    str.add("43");
+                                    str.add("44");
+                                    str.add("49");
+                                }
+                                if (((TextView) view).getText().equals("蓝波")) {
+
+                                    str.add("03");
+                                    str.add("04");
+                                    str.add("09");
+                                    str.add("10");
+                                    str.add("14");
+                                    str.add("15");
+                                    str.add("20");
+                                    str.add("25");
+                                    str.add("26");
+                                    str.add("31");
+                                    str.add("36");
+                                    str.add("37");
+                                    str.add("41");
+                                    str.add("42");
+                                    str.add("47");
+                                    str.add("48");
+                                }
+                                if (((TextView) view).getText().equals("机选五注")) {
+                                    Random rand = new Random();
+                                    List<Integer> nums = new ArrayList<Integer>();
+                                    while (nums.size() < 5) {
+                                        String s = "";
+                                        int num = rand.nextInt(49) + 1;
+                                        if (!nums.contains(num)) {
+                                            nums.add(num);
+                                            if (num < 10) {
+                                                s = "0" + num;
+                                            } else {
+                                                s = num + "";
+                                            }
+                                            str.add(s + "");
+                                        }
+                                    }
+
+                                }
+                                if (((TextView) view).getText().equals("机选十注")) {
+
+                                    Random rand = new Random();
+                                    List<Integer> nums = new ArrayList<Integer>();
+                                    while (nums.size() < 10) {
+                                        String s = "";
+                                        int num = rand.nextInt(49) + 1;
+                                        Log.d("随机数1", num + "");
+                                        if (!nums.contains(num)) {
+                                            nums.add(num);
+                                            Log.d("随机数2", num + "");
+                                            if (num < 10) {
+                                                s = "0" + num;
+                                            } else {
+                                                s = num + "";
+                                            }
+                                            str.add(s + "");
+                                        }
+                                    }
+
+                                }
+                                setCheckLin(vs, str);
+                            }
+                        });
+                    }
+                    for (int i = 0; i < lin3.getChildCount(); i++) {
+                        lin3.getChildAt(i).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                List<String> str = new ArrayList<String>();
+                                if (((TextView) view).getText().equals("0尾")) {
+
+                                    str.add("10");
+                                    str.add("20");
+                                    str.add("30");
+                                    str.add("40");
+                                }
+                                if (((TextView) view).getText().equals("1尾")) {
+
+                                    str.add("01");
+                                    str.add("11");
+                                    str.add("21");
+                                    str.add("31");
+                                    str.add("41");
+                                }
+                                if (((TextView) view).getText().equals("2尾")) {
+
+                                    str.add("02");
+                                    str.add("12");
+                                    str.add("22");
+                                    str.add("32");
+                                    str.add("42");
+                                }
+                                if (((TextView) view).getText().equals("3尾")) {
+
+                                    str.add("03");
+                                    str.add("13");
+                                    str.add("23");
+                                    str.add("33");
+                                    str.add("43");
+                                }
+                                if (((TextView) view).getText().equals("4尾")) {
+
+                                    str.add("04");
+                                    str.add("14");
+                                    str.add("24");
+                                    str.add("34");
+                                    str.add("44");
+                                }
+                                setCheckLin(vs, str);
+                            }
+                        });
+                    }
+                    for (int i = 0; i < lin4.getChildCount(); i++) {
+                        lin4.getChildAt(i).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                List<String> str = new ArrayList<String>();
+                                if (((TextView) view).getText().equals("5尾")) {
+
+                                    str.add("05");
+                                    str.add("15");
+                                    str.add("25");
+                                    str.add("35");
+                                    str.add("45");
+                                }
+                                if (((TextView) view).getText().equals("6尾")) {
+
+                                    str.add("06");
+                                    str.add("16");
+                                    str.add("26");
+                                    str.add("36");
+                                    str.add("46");
+                                }
+                                if (((TextView) view).getText().equals("7尾")) {
+
+                                    str.add("07");
+                                    str.add("17");
+                                    str.add("27");
+                                    str.add("37");
+                                    str.add("47");
+                                }
+                                if (((TextView) view).getText().equals("8尾")) {
+
+                                    str.add("08");
+                                    str.add("18");
+                                    str.add("28");
+                                    str.add("38");
+                                    str.add("48");
+                                }
+                                if (((TextView) view).getText().equals("9尾")) {
+
+                                    str.add("09");
+                                    str.add("19");
+                                    str.add("29");
+                                    str.add("39");
+                                    str.add("49");
+                                }
+                                setCheckLin(vs, str);
+                            }
+                        });
+                    }
+                    for (int i = 0; i < lin5.getChildCount(); i++) {
+                        lin5.getChildAt(i).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                List<String> str = new ArrayList<String>();
+                                if (((TextView) view).getText().equals("鼠")) {
+
+                                    str.add("10");
+                                    str.add("22");
+                                    str.add("34");
+
+                                    str.add("46");
+                                }
+                                if (((TextView) view).getText().equals("牛")) {
+
+                                    str.add("09");
+                                    str.add("21");
+                                    str.add("33");
+                                    str.add("45");
+
+                                }
+                                if (((TextView) view).getText().equals("虎")) {
+
+                                    str.add("08");
+                                    str.add("20");
+                                    str.add("32");
+                                    str.add("44");
+
+                                }
+                                if (((TextView) view).getText().equals("兔")) {
+
+                                    str.add("07");
+                                    str.add("19");
+                                    str.add("31");
+                                    str.add("43");
+
+                                }
+                                if (((TextView) view).getText().equals("龙")) {
+
+                                    str.add("06");
+                                    str.add("18");
+                                    str.add("30");
+                                    str.add("42");
+                                }
+                                if (((TextView) view).getText().equals("蛇")) {
+
+                                    str.add("05");
+                                    str.add("17");
+                                    str.add("29");
+                                    str.add("41");
+                                }
+                                setCheckLin(vs, str);
+                            }
+                        });
+                    }
+                    for (int i = 0; i < lin6.getChildCount(); i++) {
+                        lin6.getChildAt(i).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                List<String> str = new ArrayList<String>();
+                                if (((TextView) view).getText().equals("马")) {
+
+                                    str.add("04");
+                                    str.add("16");
+                                    str.add("28");
+                                    str.add("40");
+                                }
+                                if (((TextView) view).getText().equals("羊")) {
+
+                                    str.add("03");
+                                    str.add("15");
+                                    str.add("27");
+                                    str.add("39");
+
+                                }
+                                if (((TextView) view).getText().equals("猴")) {
+
+                                    str.add("02");
+                                    str.add("14");
+                                    str.add("26");
+                                    str.add("38");
+
+                                }
+                                if (((TextView) view).getText().equals("鸡")) {
+
+                                    str.add("01");
+                                    str.add("13");
+                                    str.add("25");
+                                    str.add("37");
+                                    str.add("49");
+
+                                }
+                                if (((TextView) view).getText().equals("狗")) {
+
+                                    str.add("12");
+                                    str.add("24");
+                                    str.add("36");
+                                    str.add("48");
+                                }
+                                if (((TextView) view).getText().equals("猪")) {
+
+                                    str.add("11");
+                                    str.add("23");
+                                    str.add("35");
+                                    str.add("47");
+                                }
+                                setCheckLin(vs, str);
+                            }
+                        });
+                    }
                 }
                 if (
                         "lhc_special_max_min".equals(code)
@@ -3771,24 +4190,52 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 || "PK10_1st_odd_even".equals(code)
                                 || "PK10_2nd_odd_even".equals(code)
                                 || "PK10_3th_odd_even".equals(code)
-                                || "PK10_1st_2nd_special".equals(code)
+
                         ) {
                     LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     int count = 0;
                     String str = "";
+                    String strt1 = "";
                     for (int i = 0; i < linear1.getChildCount(); i++) {
                         CheckBox at = (CheckBox) linear1.getChildAt(i);
                         if (at.isChecked()) {
                             count++;
                             if (str == "") {
                                 str = at.getText().toString().trim();
+                                strt1 = getBigCamp(at.getText().toString().trim());
                             } else {
                                 str = str + "," + at.getText().toString().trim();
+                                strt1 = strt1 + "," + getBigCamp(at.getText().toString().trim());
                             }
                         }
                     }
                     pickedText = str;
-                    pickedNumber = str;
+                    pickedNumber = strt1;
+                    nums = count;
+                }
+                if (
+
+                        "PK10_1st_2nd_special".equals(code)
+                        ) {
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    int count = 0;
+                    String str = "";
+                    String strt1 = "";
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        if (at.isChecked()) {
+                            count++;
+                            if (str == "") {
+                                str = at.getText().toString().trim();
+                                strt1 = getBigCampHe(at.getText().toString().trim());
+                            } else {
+                                str = str + "," + at.getText().toString().trim();
+                                strt1 = strt1 + "," + getBigCampHe(at.getText().toString().trim());
+                            }
+                        }
+                    }
+                    pickedText = str;
+                    pickedNumber = strt1;
                     nums = count;
                 }
                 if (
@@ -3837,51 +4284,63 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     final String[] str3 = {""};
                     final String[] str4 = {""};
                     final String[] str5 = {""};
+                    String strt1 = "";
+                    String strt2 = "";
+                    String strt3 = "";
+                    String strt4 = "";
+                    String strt5 = "";
                     final int[] count = {0};
 
                     for (int i = 0; i < rg1.getChildCount(); i++) {
                         if (((RadioButton) rg1.getChildAt(i)).isChecked()) {
                             count[0]++;
                             str1[0] = ((RadioButton) rg1.getChildAt(i)).getText().toString();
+                            strt1 = getDragon(((RadioButton) rg1.getChildAt(i)).getText().toString())
+                            ;
                         }
                     }
                     for (int i = 0; i < rg2.getChildCount(); i++) {
                         if (((RadioButton) rg2.getChildAt(i)).isChecked()) {
                             count[0]++;
                             str2[0] = ((RadioButton) rg2.getChildAt(i)).getText().toString();
+                            strt2 = getDragon(((RadioButton) rg2.getChildAt(i)).getText().toString());
                         }
                     }
                     for (int i = 0; i < rg3.getChildCount(); i++) {
                         if (((RadioButton) rg3.getChildAt(i)).isChecked()) {
                             count[0]++;
                             str3[0] = ((RadioButton) rg3.getChildAt(i)).getText().toString();
+                            strt3 = getDragon(((RadioButton) rg3.getChildAt(i)).getText().toString());
                         }
                     }
                     for (int i = 0; i < rg4.getChildCount(); i++) {
                         if (((RadioButton) rg4.getChildAt(i)).isChecked()) {
                             count[0]++;
                             str4[0] = ((RadioButton) rg4.getChildAt(i)).getText().toString();
+                            strt4 = getDragon(((RadioButton) rg4.getChildAt(i)).getText().toString());
                         }
                     }
                     for (int i = 0; i < rg5.getChildCount(); i++) {
                         if (((RadioButton) rg5.getChildAt(i)).isChecked()) {
                             count[0]++;
                             str5[0] = ((RadioButton) rg5.getChildAt(i)).getText().toString();
+                            strt5 = getDragon(((RadioButton) rg5.getChildAt(i)).getText().toString());
                         }
                     }
                     nums = count[0];
-                    pickedNumber = str1[0] + "," + str2[0] + "," + str3[0] + "," + str4[0] + "," + str5[0];
+                    pickedText = str1[0] + "," + str2[0] + "," + str3[0] + "," + str4[0] + "," + str5[0];
+                    pickedNumber = strt1 + "," + strt2 + "," + strt3 + "," + strt4 + "," + strt5;
                 }
                 if (
                         "k3_triple_all".equals(code)
-                                || "k3_triple".equals(code)
-                                || "k3_double_simple".equals(code)
+
                                 || "k3_consecutives_3_all".equals(code)
 
                         ) {
                     LinearLayout linear = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     int count = 0;
                     String str = "";
+
                     for (int i = 0; i < linear.getChildCount(); i++) {
                         CheckBox at = (CheckBox) linear.getChildAt(i);
                         if (at.isChecked()) {
@@ -3894,6 +4353,31 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         }
                     }
                     pickedNumber = str;
+                    nums = count;
+                }
+                if (
+                        "k3_triple_all".equals(code)
+                                || "k3_consecutives_3_all".equals(code)
+
+                        ) {
+                    LinearLayout linear = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    int count = 0;
+                    String str = "";
+                    String strt1 = "";
+                    for (int i = 0; i < linear.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear.getChildAt(i);
+                        if (at.isChecked()) {
+                            count++;
+                            if (str == "") {
+                                str = at.getText().toString().trim();
+                                strt1 = getTongXuan(code);
+                            } else {
+                                str = str + "," + at.getText().toString().trim();
+                            }
+                        }
+                    }
+                    pickedNumber = strt1;
+                    pickedText = str;
                     nums = count;
                 }
                 if (
@@ -4016,6 +4500,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                                 || "kl8_up_down_2".equals(code)
                                         ) {
                                     str = String.valueOf(at.getText().toString().charAt(0));
+                                    strt1 = getBigCampHe(String.valueOf(at.getText().toString().charAt(0)));
                                 }
                                 if (
                                         "kl8_special".equals(code)
@@ -4042,7 +4527,12 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                                 || "2min_toradora_sg".equals(code)
                                         ) {
                                     str = at.getText().toString();
-                                    strt1 = getDragon(at.getText().toString());
+                                    if ("kl8_special".equals(code)
+                                            || "kl8_special_2".equals(code)) {
+                                        strt1 = getBigCampHe(at.getText().toString());
+                                    } else {
+                                        strt1 = getDragon(at.getText().toString());
+                                    }
                                 }
                             } else {
                                 if (
@@ -4056,6 +4546,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                                 || "kl8_up_down".equals(code)
                                         ) {
                                     str = str + "," + String.valueOf(at.getText().toString().charAt(0));
+                                    strt1 = strt1 + "," + getBigCampHe(String.valueOf(at.getText().toString().charAt(0)));
                                 }
                                 if (
                                         "kl8_special".equals(code)
@@ -4082,7 +4573,12 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                                 || "2min_toradora_sg".equals(code)
                                         ) {
                                     str = str + "," + at.getText().toString();
-                                    strt1 = strt1 + "," + getDragon(at.getText().toString());
+                                    if ("kl8_special".equals(code)
+                                            || "kl8_special_2".equals(code)) {
+                                        strt1 = strt1 + "," + getBigCampHe(at.getText().toString());
+                                    } else {
+                                        strt1 = strt1 + "," + getDragon(at.getText().toString());
+                                    }
                                 }
                             }
                         }
@@ -4290,6 +4786,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
                     String str = "";
+                    String strt1 = "";
                     int count = 0;
                     for (int i = 0; i < linear1.getChildCount(); i++) {
                         CheckBox at = (CheckBox) linear1.getChildAt(i);
@@ -4297,8 +4794,10 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             count++;
                             if (str == "") {
                                 str = String.valueOf(at.getText().toString().charAt(0));
+                                strt1 = get5_Elements(String.valueOf(at.getText().toString().charAt(0)));
                             } else {
                                 str = str + "," + String.valueOf(at.getText().toString().charAt(0));
+                                strt1 = strt1 + "," + get5_Elements(String.valueOf(at.getText().toString().charAt(0)));
                             }
                         }
                     }
@@ -4308,12 +4807,15 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             count++;
                             if (str == "") {
                                 str = String.valueOf(at.getText().toString().charAt(0));
+                                strt1 = get5_Elements(String.valueOf(at.getText().toString().charAt(0)));
                             } else {
                                 str = str + "," + String.valueOf(at.getText().toString().charAt(0));
+                                strt1 = strt1 + "," + get5_Elements(String.valueOf(at.getText().toString().charAt(0)));
                             }
                         }
                     }
-                    pickedNumber = str;
+                    pickedNumber = strt1;
+                    pickedText = str;
                     nums = count;
                 }
                 if (
@@ -4358,6 +4860,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
 
                     String str = "";
                     String str2 = "";
+                    String strt1 = "";
+                    String strt2 = "";
                     int n1 = 0;
                     int n2 = 0;
 
@@ -4367,8 +4871,10 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             n1++;
                             if (str == "") {
                                 str = at.getText().toString();
+                                strt1 = getBig(at.getText().toString());
                             } else {
                                 str = str + at.getText().toString();
+                                strt1 = strt1 + getBig(at.getText().toString());
                             }
                         }
                     }
@@ -4378,12 +4884,15 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             n2++;
                             if (str2 == "") {
                                 str2 = at.getText().toString();
+                                strt2 = getBig(at.getText().toString());
                             } else {
                                 str2 = str2 + at.getText().toString();
+                                strt2 = strt1 + getBig(at.getText().toString());
                             }
                         }
                     }
-                    pickedNumber = str + "," + str2;
+                    pickedText = str + "," + str2;
+                    pickedNumber = strt1 + "," + strt2;
                     nums = n1 * n2;
 
                 }
@@ -4478,6 +4987,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         ) {
                     LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     String str = "";
+                    String strt1 = "";
                     int count = 0;
                     for (int i = 0; i < linear1.getChildCount(); i++) {
                         CheckBox at = (CheckBox) linear1.getChildAt(i);
@@ -4485,12 +4995,15 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             count++;
                             if (str == "") {
                                 str = at.getText().toString();
+                                strt1 = getBigLHC(at.getText().toString());
                             } else {
                                 str = str + "," + at.getText().toString();
+                                strt1 = strt1 + "," + getBigLHC(at.getText().toString());
                             }
                         }
                     }
-                    pickedNumber = str;
+                    pickedNumber = strt1;
+                    pickedText = str;
                     nums = count;
                 }
                 if (
@@ -4501,6 +5014,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
                     String str = "";
+                    String strt1 = "";
                     int count = 0;
                     for (int i = 0; i < linear1.getChildCount(); i++) {
                         CheckBox at = (CheckBox) linear1.getChildAt(i);
@@ -4508,8 +5022,20 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             count++;
                             if (str == "") {
                                 str = at.getText().toString();
+                                if ("lhc_special_max_min_odd_even".equals(code)) {
+                                    strt1 = getTELHC(at.getText().toString());
+                                } else {
+                                    strt1 = getSXLHC(at.getText().toString());
+                                }
+
                             } else {
                                 str = str + "," + at.getText().toString();
+                                if ("lhc_special_max_min_odd_even".equals(code)) {
+                                    strt1 = strt1 + "," + getTELHC(at.getText().toString());
+                                } else {
+                                    strt1 = strt1 + "," + getSXLHC(at.getText().toString());
+                                }
+
                             }
                         }
                     }
@@ -4519,12 +5045,23 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             count++;
                             if (str == "") {
                                 str = at.getText().toString();
+                                if ("lhc_special_max_min_odd_even".equals(code)) {
+                                    strt1 = getTELHC(at.getText().toString());
+                                } else {
+                                    strt1 = getSXLHC(at.getText().toString());
+                                }
                             } else {
                                 str = str + "," + at.getText().toString();
+                                if ("lhc_special_max_min_odd_even".equals(code)) {
+                                    strt1 = strt1 + "," + getTELHC(at.getText().toString());
+                                } else {
+                                    strt1 = strt1 + "," + getSXLHC(at.getText().toString());
+                                }
                             }
                         }
                     }
-                    pickedNumber = str;
+                    pickedText = str;
+                    pickedNumber = strt1;
                     nums = count;
 
                 }
@@ -4537,6 +5074,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.Linear2);
                     LinearLayout linear3 = (LinearLayout) inte.findViewById(R.id.Linear3);
                     String str = "";
+                    String strt1 = "";
                     int count = 0;
                     for (int i = 0; i < linear1.getChildCount(); i++) {
                         CheckBox at = (CheckBox) linear1.getChildAt(i);
@@ -4544,8 +5082,10 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             count++;
                             if (str == "") {
                                 str = at.getText().toString();
+                                strt1 = getBigLHC(at.getText().toString());
                             } else {
                                 str = str + "," + at.getText().toString();
+                                strt1 = strt1 + "," + getBigLHC(at.getText().toString());
                             }
                         }
                     }
@@ -4555,8 +5095,10 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             count++;
                             if (str == "") {
                                 str = at.getText().toString();
+                                strt1 = getBigLHC(at.getText().toString());
                             } else {
                                 str = str + "," + at.getText().toString();
+                                strt1 = strt1 + "," + getBigLHC(at.getText().toString());
                             }
                         }
                     }
@@ -4566,12 +5108,15 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             count++;
                             if (str == "") {
                                 str = at.getText().toString();
+                                strt1 = getBigLHC(at.getText().toString());
                             } else {
                                 str = str + "," + at.getText().toString();
+                                strt1 = strt1 + "," + getBigLHC(at.getText().toString());
                             }
                         }
                     }
-                    pickedNumber = str;
+                    pickedNumber = strt1;
+                    pickedText = str;
                     nums = count;
                 }
                 if (
@@ -4801,6 +5346,73 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     pickedText = str;
                     nums = c1;
                 }
+                if (
+                        "star_5_single".equals(code)
+                                || "2min_star_5_single".equals(code)
+                                || "star_4_single".equals(code)
+                                || "2min_star_4_single".equals(code)
+                                || "star_3_next_single".equals(code)
+                                || "2min_star_3_next_single".equals(code) || "star_3_prev_duplex".equals(code)
+                                || "2min_star_3_prev_duplex".equals(code)
+                                || "star_3_next_group_single".equals(code)
+                                || "2min_star_3_next_group_single".equals(code)
+                                || "star_3_next_group_single_6".equals(code)
+                                || "2min_star_3_next_group_single_6".equals(code)
+                                || "star_3_next_group_diverse".equals(code)
+                                || "2min_star_3_next_group_diverse".equals(code)
+                                || "star_3_prev_group_single".equals(code)
+                                || "2min_star_3_prev_group_single".equals(code) || "star_3_prev_group_single_6".equals(code)
+                                || "2min_star_3_prev_group_single_6".equals(code)
+                        ) {
+                    final EditText g2_editText = (EditText) inte.findViewById(R.id.g2_EditText);
+                    String s = g2_editText.getText().toString();
+                    int seleNum = 0;
+                    if ("star_5_single".equals(code)
+                            || "2min_star_5_single".equals(code)) {
+                        seleNum = 5;
+                    }
+                    if ("star_4_single".equals(code)
+                            || "2min_star_4_single".equals(code)) {
+                        seleNum = 4;
+                    }
+                    if ("star_3_next_single".equals(code)
+                            || "2min_star_3_next_single".equals(code)
+                            || "star_3_next_group_single".equals(code)
+                            || "2min_star_3_next_group_single".equals(code)
+
+                            || "star_3_next_group_single_6".equals(code)
+                            || "2min_star_3_next_group_single_6".equals(code)
+                            || "star_3_prev_group_single_6".equals(code)
+                            || "2min_star_3_prev_group_single_6".equals(code)
+
+                            || "star_3_next_group_diverse".equals(code)
+                            || "2min_star_3_next_group_diverse".equals(code)
+
+
+                            || "star_3_prev_single".equals(code)
+                            || "2min_star_3_prev_single".equals(code)
+                            ) {
+                        seleNum = 3;
+                    }
+                    if (s.length() != seleNum) {
+                        Toasty.error(GameCenterActivity.this, "请至少输入一注进行投注", 2000).show();
+                        return;
+                    }
+                    if ("star_3_next_group_diverse".equals(code)
+                            || "2min_star_3_next_group_diverse".equals(code)
+                            || "star_3_prev_group_diverse".equals(code)
+                            || "2min_star_3_prev_group_diverse".equals(code)) {
+                        String s1 = s.substring(0, 1);
+                        String s2 = s.substring(1, 2);
+                        String s3 = s.substring(2, 3);
+                        if (s1.equals(s2) && s1.equals(s3) && s3.equals(s2)) {
+                            Toasty.error(GameCenterActivity.this, "三个号码不能完全相同", 2000).show();
+                            return;
+                        }
+                    }
+                    nums = 1;
+                    pickedNumber = s;
+                }
                 if (nums == 0) {
                     Toasty.error(GameCenterActivity.this, "投注注数为0,请重新投注", 2000).show();
                     return;
@@ -4832,6 +5444,69 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     alertView.show();
                 }
                 break;
+        }
+    }
+
+    public void setCheckLin(List<View> vs, List<String> str) {
+        LinearLayout lin0 = (LinearLayout) vs.get(0);
+        LinearLayout lin1 = (LinearLayout) vs.get(1);
+        LinearLayout lin2 = (LinearLayout) vs.get(2);
+        LinearLayout lin3 = (LinearLayout) vs.get(3);
+        LinearLayout lin4 = (LinearLayout) vs.get(4);
+        LinearLayout lin5 = (LinearLayout) vs.get(5);
+        for (int i = 0; i < lin0.getChildCount(); i++) {
+            CheckBox at = (CheckBox) lin0.getChildAt(i);
+            at.setChecked(false);
+            for (int i1 = 0; i1 < str.size(); i1++) {
+                if (at.getText().toString().trim().equals(str.get(i1))) {
+                    at.setChecked(true);
+                }
+            }
+        }
+        for (int i = 0; i < lin1.getChildCount(); i++) {
+            CheckBox at = (CheckBox) lin1.getChildAt(i);
+            at.setChecked(false);
+            for (int i1 = 0; i1 < str.size(); i1++) {
+                if (at.getText().toString().trim().equals(str.get(i1))) {
+                    at.setChecked(true);
+                }
+            }
+        }
+        for (int i = 0; i < lin2.getChildCount(); i++) {
+            CheckBox at = (CheckBox) lin2.getChildAt(i);
+            at.setChecked(false);
+            for (int i1 = 0; i1 < str.size(); i1++) {
+                if (at.getText().toString().trim().equals(str.get(i1))) {
+                    at.setChecked(true);
+                }
+            }
+        }
+        for (int i = 0; i < lin3.getChildCount(); i++) {
+            CheckBox at = (CheckBox) lin3.getChildAt(i);
+            at.setChecked(false);
+            for (int i1 = 0; i1 < str.size(); i1++) {
+                if (at.getText().toString().trim().equals(str.get(i1))) {
+                    at.setChecked(true);
+                }
+            }
+        }
+        for (int i = 0; i < lin4.getChildCount(); i++) {
+            CheckBox at = (CheckBox) lin4.getChildAt(i);
+            at.setChecked(false);
+            for (int i1 = 0; i1 < str.size(); i1++) {
+                if (at.getText().toString().trim().equals(str.get(i1))) {
+                    at.setChecked(true);
+                }
+            }
+        }
+        for (int i = 0; i < lin5.getChildCount(); i++) {
+            CheckBox at = (CheckBox) lin5.getChildAt(i);
+            at.setChecked(false);
+            for (int i1 = 0; i1 < str.size(); i1++) {
+                if (at.getText().toString().trim().equals(str.get(i1))) {
+                    at.setChecked(true);
+                }
+            }
         }
     }
 
@@ -5173,6 +5848,249 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         }
         if ("双".equals(n)) {
             return "02468";
+        }
+        return "";
+    }
+
+    public String getBigLHC(String n) {
+        if ("特大".equals(n) || "特和大".equals(n) || "特尾大".equals(n)) {
+            return "max";
+        }
+        if ("特小".equals(n) || "特和小".equals(n) || "特尾小".equals(n)) {
+            return "min";
+        }
+        if ("特单".equals(n) || "特和单".equals(n)) {
+            return "odd";
+        }
+        if ("特双".equals(n) || "特和双".equals(n)) {
+            return "even";
+        }
+        if ("红波".equals(n)) {
+            return "red";
+        }
+        if ("绿波".equals(n)) {
+            return "green";
+        }
+        if ("蓝波".equals(n)) {
+            return "blue";
+        }
+        if ("红大".equals(n)) {
+            return "redmax";
+        }
+        if ("红小".equals(n)) {
+            return "redmin";
+        }
+        if ("绿大".equals(n)) {
+            return "greenmax";
+        }
+        if ("绿小".equals(n)) {
+            return "greenmin";
+        }
+        if ("蓝大".equals(n)) {
+            return "bluemax";
+        }
+        if ("蓝小".equals(n)) {
+            return "bluemin";
+        }
+
+        if ("红单".equals(n)) {
+            return "redodd";
+        }
+        if ("红双".equals(n)) {
+            return "redeven";
+        }
+        if ("绿单".equals(n)) {
+            return "greenodd";
+        }
+        if ("绿双".equals(n)) {
+            return "greeneven";
+        }
+        if ("蓝单".equals(n)) {
+            return "blueodd";
+        }
+        if ("蓝双".equals(n)) {
+            return "blueeven";
+        }
+
+
+        if ("红大单".equals(n)) {
+            return "redmaxodd";
+        }
+        if ("红大双".equals(n)) {
+            return "redmaxeven";
+        }
+        if ("红小单".equals(n)) {
+            return "redminodd";
+        }
+        if ("红小双".equals(n)) {
+            return "redmineven";
+        }
+        if ("绿大单".equals(n)) {
+            return "greenmaxodd";
+        }
+        if ("绿大双".equals(n)) {
+            return "greenmaxeven";
+        }
+        if ("绿小单".equals(n)) {
+            return "greenminodd";
+        }
+        if ("绿小双".equals(n)) {
+            return "greenmineven";
+        }
+        if ("蓝大单".equals(n)) {
+            return "bluemaxodd";
+        }
+        if ("蓝大双".equals(n)) {
+            return "bluemaxeven";
+        }
+        if ("蓝小单".equals(n)) {
+            return "blueminodd";
+        }
+        if ("蓝小双".equals(n)) {
+            return "bluemineven";
+        }
+
+
+        return "";
+    }
+
+    public String getTELHC(String n) {
+        if ("特大单".equals(n)) {
+            return "maxodd";
+        }
+        if ("特小单".equals(n)) {
+            return "minodd";
+        }
+        if ("特大双".equals(n)) {
+            return "maxeven";
+        }
+        if ("特小双".equals(n)) {
+            return "mineven";
+        }
+        return "";
+    }
+
+    public String getSXLHC(String n) {
+        if ("鼠".equals(n)) {
+            return "rat";
+        }
+        if ("牛".equals(n)) {
+            return "cow";
+        }
+        if ("虎".equals(n)) {
+            return "tiger";
+        }
+        if ("兔".equals(n)) {
+            return "rabbit";
+        }
+        if ("龙".equals(n)) {
+            return "dragon";
+        }
+        if ("蛇".equals(n)) {
+            return "snake";
+        }
+        if ("马".equals(n)) {
+            return "horse";
+        }
+        if ("羊".equals(n)) {
+            return "sheep";
+        }
+        if ("猴".equals(n)) {
+            return "monkey";
+        }
+        if ("鸡".equals(n)) {
+            return "chicken";
+        }
+        if ("狗".equals(n)) {
+            return "dog";
+        }
+        if ("猪".equals(n)) {
+            return "pig";
+        }
+        return "";
+    }
+
+    public String get5_Elements(String n) {
+        if ("金".equals(n)) {
+            return "golden";
+        }
+        if ("木".equals(n)) {
+            return "wood";
+        }
+        if ("水".equals(n)) {
+            return "water";
+        }
+        if ("火".equals(n)) {
+            return "fire";
+        }
+        if ("土".equals(n)) {
+            return "soil";
+        }
+        return "";
+    }
+
+    public String getBigCamp(String n) {
+        if ("大".equals(n)) {
+            return "06,07,08,09,10";
+        }
+        if ("小".equals(n)) {
+            return "01,02,03,04,05";
+        }
+        if ("单".equals(n)) {
+            return "01,03,05,07,09";
+        }
+        if ("双".equals(n)) {
+            return "02,04,06,08,10";
+        }
+        return "";
+    }
+
+    public String getTongXuan(String n) {
+        if ("k3_triple_all".equals(n)) {
+            return "111,222,333,444,555,666";
+        }
+        if ("k3_consecutives_3_all".equals(n)) {
+            return "123,234,345,456";
+        }
+        return "";
+    }
+
+    public String getBigCampHe(String n) {
+        if ("大".equals(n)) {
+            return "max";
+        }
+        if ("小".equals(n)) {
+            return "min";
+        }
+        if ("单".equals(n) || "奇".equals(n)) {
+            return "odd";
+        }
+        if ("双".equals(n) || "偶".equals(n)) {
+            return "even";
+        }
+        if ("和".equals(n)) {
+            return "eq";
+        }
+        if ("大单".equals(n)) {
+            return "maxodd";
+        }
+        if ("大双".equals(n)) {
+            return "maxeven";
+        }
+        if ("小单".equals(n)) {
+            return "minodd";
+        }
+        if ("小双".equals(n)) {
+            return "mineven";
+        }
+        if ("上".equals(n)) {
+            return "up";
+        }
+        if ("中".equals(n)) {
+            return "middle";
+        }
+        if ("下".equals(n)) {
+            return "down";
         }
         return "";
     }

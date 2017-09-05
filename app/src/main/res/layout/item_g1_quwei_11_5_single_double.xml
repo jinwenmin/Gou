@@ -104,7 +104,7 @@
                     android:background="@drawable/item_gameselect1"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="1单5双"
+                    android:text="1单4双"
                     android:textColor="@color/select_gamecolor1"
                     android:textSize="30px" />
 
