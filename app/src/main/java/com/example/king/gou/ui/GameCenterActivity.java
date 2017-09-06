@@ -5754,6 +5754,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             || "2min_star_3_midd_group_single_6".equals(code)
                             || "star_3_midd_group_diverse".equals(code)
                             || "2min_star_3_midd_group_diverse".equals(code)
+
+
                             ) {
                         seleNum = 3;
                     }
@@ -6183,12 +6185,207 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             Toasty.error(GameCenterActivity.this, "选取号码在1-6之间", 2000).show();
                             return;
                         }
-                }
-
+                    }
                     pickedNumber = s;
-        }
+                }
+                if (
+                        "sequence_star_3_single".equals(code)
+                                || "sequence_star_3_group_3_single".equals(code)
+                                || "sequence_star_3_group_6_single".equals(code)
+                                || "sequence_star_3_group_diverse".equals(code)
+                                || "3D_star_3_single".equals(code)
+                                || "3D_star_3_group_3_single".equals(code)
+                                || "3D_star_3_group_6_single".equals(code)
+                                || "3D_star_3_group_diverse".equals(code)
+
+                        ) {
+                    final EditText g2_editText = (EditText) inte.findViewById(R.id.g2_EditText);
+                    String s = g2_editText.getText().toString().trim();
+                    if (",".equals(s.substring(s.length() - 1, s.length()))) {
+                        s = s.substring(0, s.length() - 1);
+                    }
+                    if (s.contains(",")) {
+
+                        String[] sp = s.split(",");
+                        nums = sp.length;
+                        for (int i = 0; i < sp.length; i++) {
+                            if (sp[i].length() != 3) {
+                                Toasty.error(GameCenterActivity.this, "投注内容位数不正确", 2000).show();
+                                return;
+                            } else {
+                                if (
+                                        "sequence_star_3_group_3_single".equals(code)
+                                        ||"3D_star_3_group_3_single".equals(code)
+                                        ) {
+                                    String s1 = sp[i].substring(0, 1);
+                                    String s2 = sp[i].substring(1, 2);
+                                    String s3 = sp[i].substring(2, 3);
+                                    if (s1.equals(s2) && s1.equals(s3)) {
+                                        Toasty.error(GameCenterActivity.this, "三个号码不能完全相同", 2000).show();
+                                        return;
+                                    }
+                                    if (!s1.equals(s2) && !s1.equals(s3) && !s2.equals(s3)) {
+                                        Toasty.error(GameCenterActivity.this, "需要两个相同的号码", 2000).show();
+                                        return;
+                                    }
+                                }
+                                if (
+                                        "sequence_star_3_group_6_single".equals(code)
+                                        ||"3D_star_3_group_6_single".equals(code)
+                                        ) {
+                                    String s1 = sp[i].substring(0, 1);
+                                    String s2 = sp[i].substring(1, 2);
+                                    String s3 = sp[i].substring(2, 3);
+                                    if (s1.equals(s2) && s1.equals(s3)) {
+                                        Toasty.error(GameCenterActivity.this, "不能存在相同的号码", 2000).show();
+                                        return;
+                                    }
+                                    if (s1.equals(s2) || s1.equals(s3) || s2.equals(s3)) {
+                                        Toasty.error(GameCenterActivity.this, "不能存在相同的号码", 2000).show();
+                                        return;
+                                    }
+                                }
+                                if (
+                                        "sequence_star_3_group_diverse".equals(code)
+                                        ||"3D_star_3_group_diverse".equals(code)
+                                        ) {
+                                    String s1 = sp[i].substring(0, 1);
+                                    String s2 = sp[i].substring(1, 2);
+                                    String s3 = sp[i].substring(2, 3);
+                                    if (s1.equals(s2) && s1.equals(s3)) {
+                                        Toasty.error(GameCenterActivity.this, "三个号码不能完全相同", 2000).show();
+                                        return;
+                                    }
+
+                                }
+
+                            }
+                        }
+                    } else {
+                        nums = 1;
+                        if (s.length() != 3) {
+                            Toasty.error(GameCenterActivity.this, "投注内容位数不正确", 2000).show();
+                            return;
+                        } else {
+                            if (
+                                    "sequence_star_3_group_3_single".equals(code)||
+                                    "3D_star_3_group_3_single".equals(code)){
+                                String s1 = s.substring(0, 1);
+                                String s2 = s.substring(1, 2);
+                                String s3 = s.substring(2, 3);
+                                if (s1.equals(s2) && s1.equals(s3)) {
+                                    Toasty.error(GameCenterActivity.this, "三个号码不能完全相同", 2000).show();
+                                    return;
+                                }
+                                if (!s1.equals(s2) && !s1.equals(s3) && !s2.equals(s3)) {
+                                    Toasty.error(GameCenterActivity.this, "需要两个相同的号码", 2000).show();
+                                    return;
+                                }
+                            }
+                            if (
+                                    "sequence_star_3_group_6_single".equals(code)
+                                    ||"3D_star_3_group_6_single".equals(code)
+                                    ) {
+                                String s1 = s.substring(0, 1);
+                                String s2 = s.substring(1, 2);
+                                String s3 = s.substring(2, 3);
+                                if (s1.equals(s2) && s1.equals(s3)) {
+                                    Toasty.error(GameCenterActivity.this, "不能存在相同的号码", 2000).show();
+                                    return;
+                                }
+                                if (s1.equals(s2) || s1.equals(s3) || s2.equals(s3)) {
+                                    Toasty.error(GameCenterActivity.this, "不能存在相同的号码", 2000).show();
+                                    return;
+                                }
+                            }
+                            if (
+                                    "sequence_star_3_group_diverse".equals(code)
+                                    ||"3D_star_3_group_diverse".equals(code)
+                                    ) {
+                                String s1 = s.substring(0, 1);
+                                String s2 = s.substring(1, 2);
+                                String s3 = s.substring(2, 3);
+                                if (s1.equals(s2) && s1.equals(s3)) {
+                                    Toasty.error(GameCenterActivity.this, "三个号码不能完全相同", 2000).show();
+                                    return;
+                                }
+
+                            }
+                        }
+                    }
+                    pickedNumber = s;
+                }
+                if (
+                        "sequence_star_2_prev_single".equals(code)
+                                || "sequence_star_2_next_single".equals(code)
+                                || "sequence_star_2_prev_group_single".equals(code)
+                                || "sequence_star_2_next_group_single".equals(code)
+
+                                || "3D_star_2_prev_single".equals(code)
+                                || "3D_star_2_next_single".equals(code)
+                                || "3D_star_2_prev_group_single".equals(code)
+                                || "3D_star_2_next_group_single".equals(code)
+
+                        ) {
+                    final EditText g2_editText = (EditText) inte.findViewById(R.id.g2_EditText);
+                    String s = g2_editText.getText().toString().trim();
+                    if (",".equals(s.substring(s.length() - 1, s.length()))) {
+                        s = s.substring(0, s.length() - 1);
+                    }
+                    if (s.contains(",")) {
+
+                        String[] sp = s.split(",");
+                        nums = sp.length;
+                        for (int i = 0; i < sp.length; i++) {
+                            if (sp[i].length() != 2) {
+                                Toasty.error(GameCenterActivity.this, "投注内容位数不正确", 2000).show();
+                                return;
+                            } else {
+                                if (
+                                        "sequence_star_2_prev_group_single".equals(code)
+                                       || "sequence_star_2_next_group_single".equals(code)
+                                       || "3D_star_2_prev_group_single".equals(code)
+                                       || "3D_star_2_next_group_single".equals(code)
+                                        ) {
+                                    String s1 = sp[i].substring(0, 1);
+                                    String s2 = sp[i].substring(1, 2);
+
+                                    if (s1.equals(s2)) {
+                                        Toasty.error(GameCenterActivity.this, "两个号码不能完全相同", 2000).show();
+                                        return;
+                                    }
+                                }
+
+                            }
+                        }
+                    } else {
+                        nums = 1;
+                        if (s.length() != 2) {
+                            Toasty.error(GameCenterActivity.this, "投注内容位数不正确", 2000).show();
+                            return;
+                        } else {
+                            if (
+                                    "sequence_star_2_prev_group_single".equals(code)
+                                            || "sequence_star_2_next_group_single".equals(code)
+                                            || "3D_star_2_prev_group_single".equals(code)
+                                            || "3D_star_2_next_group_single".equals(code)
+                                    ) {
+                                String s1 = s.substring(0, 1);
+                                String s2 = s.substring(1, 2);
+
+                                if (s1.equals(s2)) {
+                                    Toasty.error(GameCenterActivity.this, "两个号码不能完全相同", 2000).show();
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                    pickedNumber = s;
 
 
+
+
+                }
                 if (nums == 0)
 
                 {
@@ -6235,7 +6432,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     alertView.show();
                 }
                 break;
-    }
+        }
     }
 
     public List<List<String>> getCheck(List<String> ns) {
@@ -7055,7 +7252,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         @Override
         public CharSequence getPageTitle(int position) {
             return arg1.get(position);
-    }
+        }
 
     }
 
