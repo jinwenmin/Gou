@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10px"
         android:layout_marginTop="10px"
-        android:text="每一个号码之间请用一个 空格[ ]、逗号[,] 或者 分号[;] 隔开."
+        android:text="每注号码之间请使用逗号[,]、分号[;]或回车键隔开,每注内间隔使用空格即可."
         android:textSize="25px" />
 
     <LinearLayout
@@ -260,6 +260,44 @@
                 android:textColor="@color/btn_background"
                 android:textSize="50px" />
 
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70px">
+
+            <TextView
+                android:id="@+id/kong"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="空格"
+                android:textColor="@color/btn_background"
+                android:textSize="50px" />
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@color/gray" />
+
+            <TextView
+                android:id="@+id/fenhao"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text=";"
+                android:textColor="@color/btn_background"
+                android:textSize="50px" />
 
         </LinearLayout>
 
