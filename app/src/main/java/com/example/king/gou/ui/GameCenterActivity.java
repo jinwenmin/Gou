@@ -138,7 +138,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     private int gid;
     private int position;
     private int section;
-    private String name;
+    private String namess;
     List<RecordList> rcs = new ArrayList<RecordList>();
     BettingSync bs = new BettingSync();
     DrawHistoryAdapter drawHistoryAdapter;
@@ -178,6 +178,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     int multiples = 0;//投注总倍数，大都等于multiple
     String vcode = "";//每一单投注单加密秘钥
     int nums = 0;
+    List<String> name = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,10 +191,10 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         gid = intent.getIntExtra("gid", 0);
         position = intent.getIntExtra("position", 0);
         section = intent.getIntExtra("section", 0);
-        name = intent.getStringExtra("name");
-        GameCentertitle.setText(name);
+        namess = intent.getStringExtra("name");
+        GameCentertitle.setText(namess);
         Log.d("GameCenterGid==", gid + "");
-        Log.d("GameCenterName==", name + "");
+        Log.d("GameCenterName==", namess + "");
         Log.d("GameCenterPosition==", position + "");
         Log.d("GameCenterSection==", section + "");
         alertView = new AlertView(null, null, "取消", new String[]{"确认添加"}, null, this, AlertView.Style.Alert, this);
@@ -454,7 +455,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     }
 
     private void initSpinnerSelect() {
-        final List<String> name = new ArrayList<>();
+        name = new ArrayList<>();
         final List<String> class_code = new ArrayList<>();
         List<SwitchG.SwitchGa> switchGas = sg.get(SpinnerType1.getSelectedItemPosition()).getSwitchGas();
         for (int i1 = 0; i1 < switchGas.size(); i1++) {
@@ -1498,6 +1499,124 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
 
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_optional3_dan, null, false);
+                    final EditText g2_editText = (EditText) inte.findViewById(R.id.optional2_editText);
+                    final TextView num0 = (TextView) inte.findViewById(R.id.num0);
+                    TextView num1 = (TextView) inte.findViewById(R.id.num1);
+                    TextView num2 = (TextView) inte.findViewById(R.id.num2);
+                    TextView num3 = (TextView) inte.findViewById(R.id.num3);
+                    TextView num4 = (TextView) inte.findViewById(R.id.num4);
+                    TextView num5 = (TextView) inte.findViewById(R.id.num5);
+                    TextView num6 = (TextView) inte.findViewById(R.id.num6);
+                    TextView num7 = (TextView) inte.findViewById(R.id.num7);
+                    TextView num8 = (TextView) inte.findViewById(R.id.num8);
+                    TextView num9 = (TextView) inte.findViewById(R.id.num9);
+                    TextView numd = (TextView) inte.findViewById(R.id.numd);
+                    TextView kong = (TextView) inte.findViewById(R.id.kong);
+                    TextView fenhao = (TextView) inte.findViewById(R.id.fenhao);
+                    TextView numDelete = (TextView) inte.findViewById(R.id.numDelete);
+                    g2_editText.setInputType(InputType.TYPE_NULL);
+                    int c = 0;
+                    num0.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "0");
+
+                        }
+                    });
+                    num1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "1");
+                        }
+                    });
+                    num2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "2");
+                        }
+                    });
+                    num3.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "3");
+                        }
+                    });
+                    num4.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "4");
+                        }
+                    });
+                    num5.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "5");
+                        }
+                    });
+                    num6.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "6");
+                        }
+                    });
+                    num7.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "7");
+                        }
+                    });
+                    num8.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "8");
+                        }
+                    });
+                    num9.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "9");
+                        }
+                    });
+                    numd.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String text = g2_editText.getText().toString();
+
+                            if (!",".equals(text.substring(text.length() - 1))) {
+                                g2_editText.setText(g2_editText.getText().toString() + ",");
+                            }
+                        }
+                    });
+                    fenhao.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String text = g2_editText.getText().toString();
+
+                            if (!",".equals(text.substring(text.length() - 1))) {
+                                g2_editText.setText(g2_editText.getText().toString() + ";");
+                            }
+                        }
+                    });
+                    kong.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String text = g2_editText.getText().toString();
+
+                            if (!" ".equals(text.substring(text.length() - 1))) {
+                                g2_editText.setText(g2_editText.getText().toString().trim() + " ");
+                            }
+                        }
+                    });
+                    numDelete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String text = g2_editText.getText().toString();
+                            if (text.length() > 0) {
+                                text = text.substring(0, text.length() - 1);
+                                g2_editText.setText(text);
+                            }
+                        }
+                    });
                 }
                 if (
                         "star_3_any_group_sum".equals(code)
@@ -1510,6 +1629,124 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 || "2min_star_4_any_single".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_optional4_dan, null, false);
+                    final EditText g2_editText = (EditText) inte.findViewById(R.id.optional2_editText);
+                    final TextView num0 = (TextView) inte.findViewById(R.id.num0);
+                    TextView num1 = (TextView) inte.findViewById(R.id.num1);
+                    TextView num2 = (TextView) inte.findViewById(R.id.num2);
+                    TextView num3 = (TextView) inte.findViewById(R.id.num3);
+                    TextView num4 = (TextView) inte.findViewById(R.id.num4);
+                    TextView num5 = (TextView) inte.findViewById(R.id.num5);
+                    TextView num6 = (TextView) inte.findViewById(R.id.num6);
+                    TextView num7 = (TextView) inte.findViewById(R.id.num7);
+                    TextView num8 = (TextView) inte.findViewById(R.id.num8);
+                    TextView num9 = (TextView) inte.findViewById(R.id.num9);
+                    TextView numd = (TextView) inte.findViewById(R.id.numd);
+                    TextView kong = (TextView) inte.findViewById(R.id.kong);
+                    TextView fenhao = (TextView) inte.findViewById(R.id.fenhao);
+                    TextView numDelete = (TextView) inte.findViewById(R.id.numDelete);
+                    g2_editText.setInputType(InputType.TYPE_NULL);
+                    int c = 0;
+                    num0.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "0");
+
+                        }
+                    });
+                    num1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "1");
+                        }
+                    });
+                    num2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "2");
+                        }
+                    });
+                    num3.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "3");
+                        }
+                    });
+                    num4.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "4");
+                        }
+                    });
+                    num5.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "5");
+                        }
+                    });
+                    num6.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "6");
+                        }
+                    });
+                    num7.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "7");
+                        }
+                    });
+                    num8.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "8");
+                        }
+                    });
+                    num9.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "9");
+                        }
+                    });
+                    numd.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String text = g2_editText.getText().toString();
+
+                            if (!",".equals(text.substring(text.length() - 1))) {
+                                g2_editText.setText(g2_editText.getText().toString() + ",");
+                            }
+                        }
+                    });
+                    fenhao.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String text = g2_editText.getText().toString();
+
+                            if (!",".equals(text.substring(text.length() - 1))) {
+                                g2_editText.setText(g2_editText.getText().toString() + ";");
+                            }
+                        }
+                    });
+                    kong.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String text = g2_editText.getText().toString();
+
+                            if (!" ".equals(text.substring(text.length() - 1))) {
+                                g2_editText.setText(g2_editText.getText().toString().trim() + " ");
+                            }
+                        }
+                    });
+                    numDelete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String text = g2_editText.getText().toString();
+                            if (text.length() > 0) {
+                                text = text.substring(0, text.length() - 1);
+                                g2_editText.setText(text);
+                            }
+                        }
+                    });
                 }
                 if (
                         "star_4_any_group_24".equals(code)
@@ -1520,6 +1757,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_optional4_24_6, null, false);
                     TextView names = (TextView) inte.findViewById(R.id.name);
                     names.setText(name.get(position));
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
+                    Select9(select_1, linear1);
 
                 }
                 if (
@@ -5883,8 +6123,186 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         amount = amount * Nums;
                         classCode = code;
                         multiple = Nums;
+                        if (nums == 0) {
+                            return;
+                        }
                         AddLottery();
+                        GameTypeName = name.get(position);
+                    }
+                    return;
+                }
+                if (
+                        "star_3_any_single".equals(code)
+                                || "2min_star_3_any_single".equals(code)
+                                || "star_3_any_group_single".equals(code)
+                                || "2min_star_3_any_group_single".equals(code)
+                                || "star_3_any_group_single_6".equals(code)
+                                || "2min_star_3_any_group_single_6".equals(code)
+                                || "star_3_any_group_diverse".equals(code)
+                                || "2min_star_3_any_group_diverse".equals(code)
 
+                        ) {
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearCheck);
+                    EditText editT = (EditText) inte.findViewById(R.id.optional2_editText);
+                    String s = editT.getText().toString();
+                    String str = "";
+                    int n = 0;
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        if (at.isChecked()) {
+                            n++;
+                        }
+                    }
+                    if (n < 3) {
+                        Toasty.error(GameCenterActivity.this, "至少选择三个", 2000).show();
+                        return;
+
+                    }
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        if (at.isChecked()) {
+                            if (str == "") {
+                                str = at.getText().toString().substring(0, 1);
+                            } else {
+                                str = str + at.getText().toString().substring(0, 1);
+                            }
+                        }
+                    }
+                    List<List<String>> check3 = getCheck3(str);
+                    if ("".equals(s) || " ".equals(s)) {
+                        Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
+                        return;
+                    } else {
+                        if (s.substring(s.length() - 1, s.length()).equals(",")) {
+                            s = s.substring(0, s.length() - 1);
+                        }
+                    }
+
+                    if (s.contains(",")) {
+                        String[] sp = s.split(",");
+                        nums = sp.length;
+                        for (int i = 0; i < sp.length; i++) {
+                            if (sp[i].contains(" ")) {
+                                Toasty.error(GameCenterActivity.this, "不能存在空格", 2000).show();
+                                return;
+                            }
+                            if (sp[i].length() != 3) {
+                                Toasty.error(GameCenterActivity.this, "三个号码位一注", 2000).show();
+                                return;
+                            } else {
+                                if ("star_3_any_group_single".equals(code)
+                                        || "2min_star_3_any_group_single".equals(code)) {
+                                    String s1 = sp[i].substring(0, 1);
+                                    String s2 = sp[i].substring(1, 2);
+                                    String s3 = sp[i].substring(2, 3);
+                                    if (!s1.equals(s2) && !s1.equals(s3) && !s2.equals(s3)) {
+                                        Toasty.error(GameCenterActivity.this, "必须有两个号码相同", 2000).show();
+                                        return;
+                                    }
+                                    if (s1.equals(s2) && s1.equals(s3)) {
+                                        Toasty.error(GameCenterActivity.this, "三个号码不能同时相同", 2000).show();
+                                        return;
+                                    }
+                                }
+                                if ("star_3_any_group_single_6".equals(code)
+                                        || "2min_star_3_any_group_single_6".equals(code)) {
+                                    String s1 = sp[i].substring(0, 1);
+                                    String s2 = sp[i].substring(1, 2);
+                                    String s3 = sp[i].substring(2, 3);
+                                    if (s1.equals(s2) || s1.equals(s3) || s2.equals(s3)) {
+                                        Toasty.error(GameCenterActivity.this, "不能有相同的号码", 2000).show();
+                                        return;
+                                    }
+                                }
+                                if ("star_3_any_group_diverse".equals(code)
+                                        || "2min_star_3_any_group_diverse".equals(code)) {
+                                    String s1 = sp[i].substring(0, 1);
+                                    String s2 = sp[i].substring(1, 2);
+                                    String s3 = sp[i].substring(2, 3);
+                                    if (!s1.equals(s2) && !s1.equals(s3) && !s2.equals(s3)) {
+                                        Toasty.error(GameCenterActivity.this, "至少需要两个相同的号码", 2000).show();
+                                        return;
+                                    }
+                                }
+
+
+                            }
+                        }
+                    } else {
+                        if (s.contains(" ")) {
+                            Toasty.error(GameCenterActivity.this, "不能存在空格", 2000).show();
+                            return;
+                        }
+                        if (s.length() != 3) {
+                            Toasty.error(GameCenterActivity.this, "三个号码位一注", 2000).show();
+                            return;
+                        } else {
+                            if ("star_3_any_group_single".equals(code)
+                                    || "2min_star_3_any_group_single".equals(code)) {
+                                String s1 = s.substring(0, 1);
+                                String s2 = s.substring(1, 2);
+                                String s3 = s.substring(2, 3);
+                                if (!s1.equals(s2) && !s1.equals(s3) && !s2.equals(s3)) {
+                                    Toasty.error(GameCenterActivity.this, "必须有两个号码相同", 2000).show();
+                                    return;
+                                }
+                                if (s1.equals(s2) && s1.equals(s3)) {
+                                    Toasty.error(GameCenterActivity.this, "三个号码不能同时相同", 2000).show();
+                                    return;
+                                }
+                            }
+                            if ("star_3_any_group_single_6".equals(code)
+                                    || "2min_star_3_any_group_single_6".equals(code)) {
+                                String s1 = s.substring(0, 1);
+                                String s2 = s.substring(1, 2);
+                                String s3 = s.substring(2, 3);
+                                if (s1.equals(s2) || s1.equals(s3) || s2.equals(s3)) {
+                                    Toasty.error(GameCenterActivity.this, "不能有相同的号码", 2000).show();
+                                    return;
+                                }
+                            }
+                            if ("star_3_any_group_diverse".equals(code)
+                                    || "2min_star_3_any_group_diverse".equals(code)) {
+                                String s1 = s.substring(0, 1);
+                                String s2 = s.substring(1, 2);
+                                String s3 = s.substring(2, 3);
+                                if (!s1.equals(s2) && !s1.equals(s3) && !s2.equals(s3)) {
+                                    Toasty.error(GameCenterActivity.this, "至少需要两个相同的号码", 2000).show();
+                                    return;
+                                }
+                            }
+
+                        }
+                    }
+                    pickedNumber = s;
+                    for (int i = 0; i < check3.size(); i++) {
+                        List<String> list = check3.get(i);
+                        locationText = list.get(0);
+                        location = list.get(1);
+                        nums = 1;
+
+                        pickedNumber = s;
+                        Log.d("个十百千万选择", list.get(0));
+                        GameTypeName = GameTypeName + "-" + list.get(0);
+                        Nums = Integer.parseInt(edit1.getText().toString().trim());
+                        amount = nums * 2;
+                        if (PriceUnit == 2) {
+                            amount = amount / 10;
+                        }
+                        if (PriceUnit == 3) {
+                            amount = amount / 100;
+                        }
+                        if (PriceUnit == 4) {
+                            amount = amount / 1000;
+                        }
+                        amount = amount * Nums;
+                        classCode = code;
+                        multiple = Nums;
+                        if (nums == 0) {
+                            return;
+                        }
+                        AddLottery();
+                        GameTypeName = GameTypeName.substring(0, GameTypeName.length() - 6);
                     }
                     return;
                 }
@@ -6215,7 +6633,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             } else {
                                 if (
                                         "sequence_star_3_group_3_single".equals(code)
-                                        ||"3D_star_3_group_3_single".equals(code)
+                                                || "3D_star_3_group_3_single".equals(code)
                                         ) {
                                     String s1 = sp[i].substring(0, 1);
                                     String s2 = sp[i].substring(1, 2);
@@ -6231,7 +6649,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 }
                                 if (
                                         "sequence_star_3_group_6_single".equals(code)
-                                        ||"3D_star_3_group_6_single".equals(code)
+                                                || "3D_star_3_group_6_single".equals(code)
                                         ) {
                                     String s1 = sp[i].substring(0, 1);
                                     String s2 = sp[i].substring(1, 2);
@@ -6247,7 +6665,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 }
                                 if (
                                         "sequence_star_3_group_diverse".equals(code)
-                                        ||"3D_star_3_group_diverse".equals(code)
+                                                || "3D_star_3_group_diverse".equals(code)
                                         ) {
                                     String s1 = sp[i].substring(0, 1);
                                     String s2 = sp[i].substring(1, 2);
@@ -6268,8 +6686,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             return;
                         } else {
                             if (
-                                    "sequence_star_3_group_3_single".equals(code)||
-                                    "3D_star_3_group_3_single".equals(code)){
+                                    "sequence_star_3_group_3_single".equals(code) ||
+                                            "3D_star_3_group_3_single".equals(code)) {
                                 String s1 = s.substring(0, 1);
                                 String s2 = s.substring(1, 2);
                                 String s3 = s.substring(2, 3);
@@ -6284,7 +6702,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             }
                             if (
                                     "sequence_star_3_group_6_single".equals(code)
-                                    ||"3D_star_3_group_6_single".equals(code)
+                                            || "3D_star_3_group_6_single".equals(code)
                                     ) {
                                 String s1 = s.substring(0, 1);
                                 String s2 = s.substring(1, 2);
@@ -6300,7 +6718,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             }
                             if (
                                     "sequence_star_3_group_diverse".equals(code)
-                                    ||"3D_star_3_group_diverse".equals(code)
+                                            || "3D_star_3_group_diverse".equals(code)
                                     ) {
                                 String s1 = s.substring(0, 1);
                                 String s2 = s.substring(1, 2);
@@ -6343,9 +6761,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             } else {
                                 if (
                                         "sequence_star_2_prev_group_single".equals(code)
-                                       || "sequence_star_2_next_group_single".equals(code)
-                                       || "3D_star_2_prev_group_single".equals(code)
-                                       || "3D_star_2_next_group_single".equals(code)
+                                                || "sequence_star_2_next_group_single".equals(code)
+                                                || "3D_star_2_prev_group_single".equals(code)
+                                                || "3D_star_2_next_group_single".equals(code)
                                         ) {
                                     String s1 = sp[i].substring(0, 1);
                                     String s2 = sp[i].substring(1, 2);
@@ -6383,8 +6801,250 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     pickedNumber = s;
 
 
+                }
+                if (
+                        "star_3_any_sum".equals(code)
+                                || "2min_star_3_any_sum".equals(code)
+                                || "star_3_any_group_sum".equals(code)
+                                || "2min_star_3_any_group_sum".equals(code)
+                        ) {
+                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearCheck);
+                    LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    LinearLayout LinearThree = (LinearLayout) inte.findViewById(R.id.LinearThree);
+
+                    String str = "";
+                    String strc = "";
+                    int n = 0;
 
 
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        if (at.isChecked()) {
+                            n++;
+                            if (strc == "") {
+                                strc = at.getText().toString().substring(0, 1);
+                            } else {
+                                strc = strc + at.getText().toString().substring(0, 1);
+                            }
+                        }
+                    }
+                    if (n < 3) {
+                        Toasty.error(GameCenterActivity.this, "至少选择三个", 2000).show();
+                        return;
+
+                    }
+                    List<List<String>> check3 = getCheck3(strc);
+                    List<Integer> ns = new ArrayList<>();
+                    for (int i = 0; i < LinearOne.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        if (at.isChecked()) {
+                            ns.add(Integer.parseInt(at.getText().toString()));
+                            if (str == "") {
+                                str = at.getText().toString();
+                            } else {
+                                str = str + "," + at.getText().toString();
+                            }
+                        }
+                    }
+                    for (int i = 0; i < LinearTwo.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                        if (at.isChecked()) {
+                            ns.add(Integer.parseInt(at.getText().toString()));
+                            if (str == "") {
+                                str = at.getText().toString();
+                            } else {
+                                str = str + "," + at.getText().toString();
+                            }
+                        }
+                    }
+                    for (int i = 0; i < LinearThree.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearThree.getChildAt(i);
+                        if (at.isChecked()) {
+                            ns.add(Integer.parseInt(at.getText().toString()));
+                            if (str == "") {
+                                str = at.getText().toString();
+                            } else {
+                                str = str + "," + at.getText().toString();
+                            }
+                        }
+                    }
+
+                    for (int i = 0; i < check3.size(); i++) {
+                        List<String> list = check3.get(i);
+                        locationText = list.get(0);
+                        location = list.get(1);
+                        if ("star_3_any_sum".equals(code)
+                                || "2min_star_3_any_sum".equals(code)) {
+                            nums = getNum(ns) * check3.size();
+                        }
+                        if ("star_3_any_group_sum".equals(code)
+                                || "2min_star_3_any_group_sum".equals(code)) {
+                            nums = getNumZuHe(ns) * check3.size();
+                        }
+
+
+                        pickedNumber = str;
+                        Log.d("个十百千万选择", list.get(0));
+                        GameTypeName = GameTypeName + "-" + list.get(0);
+                        Nums = Integer.parseInt(edit1.getText().toString().trim());
+                        amount = nums * 2;
+                        if (PriceUnit == 2) {
+                            amount = amount / 10;
+                        }
+                        if (PriceUnit == 3) {
+                            amount = amount / 100;
+                        }
+                        if (PriceUnit == 4) {
+                            amount = amount / 1000;
+                        }
+                        amount = amount * Nums;
+                        classCode = code;
+                        multiple = Nums;
+                        if (nums == 0) {
+                            return;
+                        }
+                        AddLottery();
+                        GameTypeName = GameTypeName.substring(0, GameTypeName.length() - 6);
+                    }
+                    return;
+                }
+                if (
+                        "star_4_any_single".equals(code)
+                                || "2min_star_4_any_single".equals(code)
+                        ) {
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearCheck);
+                    EditText editT = (EditText) inte.findViewById(R.id.optional2_editText);
+                    String s = editT.getText().toString();
+                    String str = "";
+                    int n = 0;
+                    int ns = 0;
+
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        if (at.isChecked()) {
+                            n++;
+                            if (str == "") {
+                                str = at.getText().toString().substring(0, 1);
+                            } else {
+                                str = str + at.getText().toString().substring(0, 1);
+                            }
+                        }
+                    }
+                    if (n < 4) {
+                        Toasty.error(GameCenterActivity.this, "至少选择四个", 2000).show();
+                        return;
+
+                    }
+                    List<List<String>> check4 = getCheck4(str);
+                    if ("".equals(s) || " ".equals(s)) {
+                        Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
+                        return;
+                    } else {
+                        if (s.substring(s.length() - 1, s.length()).equals(",")) {
+                            s = s.substring(0, s.length() - 1);
+                        }
+                    }
+
+                    if (s.contains(",")) {
+                        String[] sp = s.split(",");
+                        ns = sp.length;
+                        for (int i = 0; i < sp.length; i++) {
+                            if (sp[i].contains(" ")) {
+                                Toasty.error(GameCenterActivity.this, "不能存在空格", 2000).show();
+                                return;
+                            }
+                            if (sp[i].length() != 4) {
+                                Toasty.error(GameCenterActivity.this, "四个号码位一注", 2000).show();
+                                return;
+                            } else {
+
+                            }
+                        }
+                    } else {
+                        ns = 1;
+                        if (s.contains(" ")) {
+                            Toasty.error(GameCenterActivity.this, "不能存在空格", 2000).show();
+                            return;
+                        }
+                        if (s.length() != 4) {
+                            Toasty.error(GameCenterActivity.this, "四个号码位一注", 2000).show();
+                            return;
+                        } else {
+
+                        }
+                    }
+                    pickedNumber = s;
+                    for (int i = 0; i < check4.size(); i++) {
+                        List<String> list = check4.get(i);
+                        locationText = list.get(0);
+                        location = list.get(1);
+                        nums = check4.size() * ns;
+
+                        pickedNumber = s;
+                        Log.d("个十百千万选择", list.get(0));
+                        GameTypeName = GameTypeName + "-" + list.get(0);
+                        Nums = Integer.parseInt(edit1.getText().toString().trim());
+                        amount = nums * 2;
+                        if (PriceUnit == 2) {
+                            amount = amount / 10;
+                        }
+                        if (PriceUnit == 3) {
+                            amount = amount / 100;
+                        }
+                        if (PriceUnit == 4) {
+                            amount = amount / 1000;
+                        }
+                        amount = amount * Nums / check4.size();
+                        classCode = code;
+                        multiple = Nums;
+                        if (nums == 0) {
+                            return;
+                        }
+                        AddLottery();
+                        GameTypeName = GameTypeName.substring(0, 4);
+                    }
+                    return;
+                }
+                if (
+                        "star_4_any_group_24".equals(code)
+                                || "2min_star_4_any_group_24".equals(code)
+                        ) {
+                    String str = "";
+                    String strNum = "";
+                    int n = 0;
+                    int ns = 0;
+                    int num_count = 0;
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearCheck);
+                    LinearLayout linearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        if (at.isChecked()) {
+                            n++;
+                            if (str == "") {
+                                str = at.getText().toString().substring(0, 1);
+                            } else {
+                                str = str + at.getText().toString().substring(0, 1);
+                            }
+                        }
+                    }
+                    if (n < 4) {
+                        Toasty.error(GameCenterActivity.this, "至少选择四个", 2000).show();
+                        return;
+
+                    }
+                    for (int i = 0; i < linearOne.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linearOne.getChildAt(i);
+                        if (at.isChecked()) {
+                            num_count++;
+                            if (strNum == "") {
+                                strNum = at.getText().toString();
+                            } else {
+                                strNum = strNum + "," + at.getText().toString();
+                            }
+                        }
+                    }
+                    List<List<String>> check4 = getCheck4(str);
                 }
                 if (nums == 0)
 
@@ -6433,6 +7093,118 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 }
                 break;
         }
+    }
+
+    public List<List<String>> getCheck3(String string) {
+
+        List<List<String>> check3 = new ArrayList<>();
+        int z, y;
+        int length = string.length();
+        for (int i = 0; i < length; i++) {
+            string.charAt(i);
+//            System.out.println(string.charAt(i));
+            String s = String.valueOf(string.charAt(i));
+            for (int j = i + 1; j < length; j++) {
+//                stringBuilder.append(string.charAt(j));
+                String s1 = String.valueOf(string.charAt(j));
+//                System.out.println(""+s+s1);
+                for (z = j + 1; z < length; z++) {
+                    List<String> ns = new ArrayList<>();
+                    String s2 = String.valueOf(string.charAt(z));
+                    String x = s + "," + s1 + "," + s2;
+                    System.out.println(x);
+                    ns.add(x);
+                    Log.d("万千百十个文字", x);
+                    String nns = "0,0,0,0,0";
+                    StringBuilder sb = new StringBuilder(nns);
+                    for (int i1 = 0; i1 < x.length(); i1 = i1 + 2) {
+                        String sx = x.substring(i1, i1 + 1);
+
+                        if (sx.equals("万")) {
+                            sb.replace(0, 1, "1");
+                        }
+                        if (sx.equals("千")) {
+                            sb.replace(2, 3, "1");
+                        }
+                        if (sx.equals("百")) {
+                            sb.replace(4, 5, "1");
+                        }
+                        if (sx.equals("十")) {
+                            sb.replace(6, 7, "1");
+                        }
+                        if (sx.equals("个")) {
+                            sb.replace(8, 9, "1");
+                        }
+                    }
+                    Log.d("万千百十个数字", sb.toString());
+                    ns.add(sb.toString());
+                  /*  for (y=z+1;y<length;y++){
+                        String s3 = String.valueOf(string.charAt(y));
+                        System.out.println(""+s+s1+s2+s3);
+                    }*/
+                    check3.add(ns);
+                }
+            }
+
+        }
+        return check3;
+    }
+
+    public List<List<String>> getCheck4(String string) {
+
+        List<List<String>> check4 = new ArrayList<>();
+        int z, y;
+        int length = string.length();
+        for (int i = 0; i < length; i++) {
+            string.charAt(i);
+//            System.out.println(string.charAt(i));
+            String s = String.valueOf(string.charAt(i));
+            for (int j = i + 1; j < length; j++) {
+//                stringBuilder.append(string.charAt(j));
+                String s1 = String.valueOf(string.charAt(j));
+//                System.out.println(""+s+s1);
+                for (z = j + 1; z < length; z++) {
+                    List<String> ns = new ArrayList<>();
+                    String s2 = String.valueOf(string.charAt(z));
+
+                    for (y = z + 1; y < length; y++) {
+                        String s3 = String.valueOf(string.charAt(y));
+                        System.out.println(s + "," + s1 + "," + s2 + "," + s3);
+                        String x = s + "," + s1 + "," + s2 + "," + s3;
+                        System.out.println(x);
+                        ns.add(x);
+                        Log.d("万千百十个文字", x);
+                        String nns = "0,0,0,0,0";
+                        StringBuilder sb = new StringBuilder(nns);
+                        for (int i1 = 0; i1 < x.length(); i1 = i1 + 2) {
+                            String sx = x.substring(i1, i1 + 1);
+
+                            if (sx.equals("万")) {
+                                sb.replace(0, 1, "1");
+                            }
+                            if (sx.equals("千")) {
+                                sb.replace(2, 3, "1");
+                            }
+                            if (sx.equals("百")) {
+                                sb.replace(4, 5, "1");
+                            }
+                            if (sx.equals("十")) {
+                                sb.replace(6, 7, "1");
+                            }
+                            if (sx.equals("个")) {
+                                sb.replace(8, 9, "1");
+                            }
+                        }
+                        Log.d("万千百十个数字", sb.toString());
+                        ns.add(sb.toString());
+                        check4.add(ns);
+                    }
+
+                }
+            }
+
+        }
+        return check4;
     }
 
     public List<List<String>> getCheck(List<String> ns) {
