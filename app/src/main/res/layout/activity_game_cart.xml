@@ -27,24 +27,59 @@
             android:text="购物车"
             android:textColor="@android:color/white"
             android:textSize="@dimen/top_textsize" />
+
+        <TextView
+            android:id="@+id/ZhuiHao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10px"
+            android:text="追号购物车"
+            android:textColor="@android:color/white"
+            android:textSize="30px" />
+
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/ToSendGame"
+    <LinearLayout
+        android:id="@+id/CertLin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@android:color/holo_blue_light"
-        android:gravity="center"
-        android:padding="5px"
-        android:text="一键投注"
-        android:textColor="@android:color/white"
-        android:textSize="45px" />
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/ToBettingAuto"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20px"
+            android:layout_weight="1"
+            android:background="@android:color/holo_blue_light"
+            android:gravity="center"
+            android:padding="5px"
+            android:text="追号"
+            android:textColor="@android:color/white"
+            android:textSize="45px" />
+
+        <TextView
+            android:id="@+id/ToSendGame"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
+            android:layout_weight="1"
+            android:background="@android:color/holo_blue_light"
+            android:gravity="center"
+            android:padding="5px"
+            android:text="一键投注"
+            android:textColor="@android:color/white"
+            android:textSize="45px" />
+    </LinearLayout>
+
 
     <ListView
         android:id="@+id/GameCartList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/ToSendGame"
+        android:layout_above="@id/CertLin"
         android:layout_below="@id/GameCertTop"></ListView>
 </RelativeLayout>

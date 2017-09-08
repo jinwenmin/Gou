@@ -3,15 +3,21 @@ package com.example.king.gou.ui.gameAcVpFrms;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bigkoo.alertview.AlertView;
+import com.bigkoo.alertview.OnItemClickListener;
+import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.GameCertAdapter;
 import com.example.king.gou.bean.Ids;
 import com.example.king.gou.service.RetrofitService;
+import com.example.king.gou.ui.CNumberActivity;
 import com.example.king.gou.utils.HttpEngine;
 import com.google.gson.Gson;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -25,7 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class GameCartActivity extends AutoLayoutActivity implements View.OnClickListener, HttpEngine.DataListener {
+public class GameCartActivity extends AutoLayoutActivity implements View.OnClickListener, HttpEngine.DataListener, OnItemClickListener {
 
     @BindView(R.id._back)
     ImageView Back;
@@ -37,12 +43,26 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
     GameCertAdapter adapter;
     @BindView(R.id.ToSendGame)
     TextView ToSendGame;
+    @BindView(R.id.ZhuiHao)
+    TextView ZhuiHao;
+    @BindView(R.id.GameCertTop)
+    RelativeLayout GameCertTop;
+    @BindView(R.id.ToBettingAuto)
+    TextView ToBettingAuto;
+    private AlertView alertView;
+    // 一个自定义的布局，作为显示的内容
+    View contentView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_cart);
         ButterKnife.bind(this);
+        alertView = new AlertView(null, null, "取消", new String[]{"确认追号"}, null, this, AlertView.Style.Alert, this);
+        contentView = LayoutInflater.from(this).inflate(
+                R.layout.item_zhuihao_check, null);
+        alertView.addExtView(contentView);
+        MyApp.getInstance().addActivitys(this);
         Intent intent = getIntent();
         listids = (ArrayList<Ids>) intent.getSerializableExtra("listids");
         gid = intent.getIntExtra("gid", 0);
@@ -59,6 +79,8 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
     private void initClick() {
         Back.setOnClickListener(this);
         ToSendGame.setOnClickListener(this);
+        ZhuiHao.setOnClickListener(this);
+        ToBettingAuto.setOnClickListener(this);
     }
 
     @Override
@@ -92,6 +114,15 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
                 String idsString = gson.toJson(ids);
                 RetrofitService.getInstance().getSendBetting(this, gid, "", idsString, period, "", Amounts, 1);
                 break;
+            case R.id.ZhuiHao:
+                Intent intent = new Intent(GameCartActivity.this, CNumberActivity.class);
+                intent.putExtra("period", period);
+                intent.putExtra("gid", gid);
+                startActivity(intent);
+                break;
+            case R.id.ToBettingAuto:
+                alertView.show();
+                break;
         }
     }
 
@@ -107,6 +138,11 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
 
     @Override
     public void onRequestEnd(int apiId) {
+
+    }
+
+    @Override
+    public void onItemClick(Object o, int position) {
 
     }
 }

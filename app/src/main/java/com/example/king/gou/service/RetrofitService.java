@@ -44,6 +44,7 @@ import com.example.king.gou.bean.UserTeamBetting;
 import com.example.king.gou.bean.VIPAccountChange;
 import com.example.king.gou.bean.WithDraw;
 import com.example.king.gou.bean.ZhuiHao;
+import com.example.king.gou.bean.ZhuiHaoCNum;
 import com.example.king.gou.bean.ZhuiHaoDetails;
 import com.example.king.gou.ui.MainActivity;
 import com.example.king.gou.utils.AddCookiesInterceptor;
@@ -179,6 +180,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_SENDMSG = 70;//获取聊天消息
     public static int API_ID_GETNEWMSG = 71;//轮询消息
     public static int API_ID_SWITCHGAME = 72;//获取游戏玩法详情
+    public static int API_ID_BEETING_AUTO = 73;//获取追号信息
 
 
     private Retrofit retrofit;
@@ -441,7 +443,7 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(Call<UserInfo> call, retrofit2.Response<UserInfo> response) {
-                if (response.code()==200) {
+                if (response.code() == 200) {
                     listener.onRequestStart(API_ID_USERINFO);
                     List<UserInfo> userInfos = new ArrayList<UserInfo>();
                     userInfos.add(0, response.body());
@@ -4893,27 +4895,46 @@ public class RetrofitService extends HttpEngine {
     }
 
     //获取追号信息
-    public void getBettingAutoPurchase(DataListener listener, int id, String period, int periods) {
+    public void getBettingAutoPurchase(final DataListener listener, int id, String period, int periods) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         map.put("id", id + "");
         map.put("period", period + "");
         map.put("periods", periods + "");
         final String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> bettingAutoPurchase = apiInterface.getBettingAutoPurchase(1, id, period, periods, reqkey, currentTimeMillis);
-        Call<Object> clone = bettingAutoPurchase.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<Map<String, Object>> bettingAutoPurchase = apiInterface.getBettingAutoPurchase(1, id, period, periods, reqkey, currentTimeMillis);
+        Call<Map<String, Object>> clone = bettingAutoPurchase.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
+                Log.d("获取追号信息Code", response.code() + "");
                 if (response.code() == 200) {
                     Log.d("获取追号信息", response.body().toString());
+                    Map<String, Object> map = response.body();
+                    List<ZhuiHaoCNum> zhCNum = new ArrayList<>();
+                    List<Object> content = new ArrayList<>();
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if (entry.getKey().equals("content")) {
+                                content = (List<Object>) entry.getValue();
+                            }
+                        }
+                    }
+                    for (int i = 0; i < content.size(); i++) {
+                        List<String> o = (List<String>) content.get(i);
+                        ZhuiHaoCNum zhuiHaoCNum = new ZhuiHaoCNum();
+                        zhuiHaoCNum.setPeriod(o.get(0));
+                        zhuiHaoCNum.setDate(o.get(1));
+                        zhCNum.add(zhuiHaoCNum);
+                    }
+                    listener.onReceivedData(API_ID_BEETING_AUTO, zhCNum, API_ID_ERROR);
                 }
 
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
-
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+                Log.d("获取追号信息Error", t.toString());
             }
         });
     }

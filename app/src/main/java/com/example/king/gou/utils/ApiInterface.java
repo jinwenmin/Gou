@@ -1310,7 +1310,7 @@ public interface ApiInterface {
     @Headers("X-Requested-With: XMLHttpRequest")
 
     @POST("/betting/auto-purchase")
-    Call<Object> getBettingAutoPurchase(
+    Call<Map<String, Object>> getBettingAutoPurchase(
             @Query("AppClient") int num,
             @Query("id") int id,//id 游戏gid
             @Query("period") String period,//开始追号的期号

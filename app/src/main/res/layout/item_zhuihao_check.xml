@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70px"
+        android:orientation="horizontal">
+
+        <LinearLayout
+
+            android:layout_width="0px"
+            android:layout_height="50px"
+            android:layout_marginLeft="10px"
+            android:layout_marginTop="10px"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="追号期数:"
+                android:textColor="@android:color/black"
+                android:textSize="30px" />
+
+            <EditText
+                android:id="@+id/EditNum"
+                android:layout_width="100px"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20px"
+                android:background="@drawable/linear_biankuang"
+                android:gravity="center"
+                android:hint="0"
+                android:inputType="number"
+                android:textSize="30px"></EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="50px"
+            android:layout_marginLeft="10px"
+            android:layout_marginTop="10px"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="起始倍数:"
+                android:textColor="@android:color/black"
+                android:textSize="30px" />
+
+            <EditText
+                android:id="@+id/BeiNum"
+                android:layout_width="100px"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20px"
+                android:background="@drawable/linear_biankuang"
+                android:gravity="center"
+                android:hint="0"
+                android:inputType="number"
+                android:textSize="30px"></EditText>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70px"
+        android:layout_marginLeft="10px"
+        android:layout_marginTop="10px">
+
+        <CheckBox
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:text="追中即停"
+            android:textSize="30px" />
+
+        <Button
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_margin="5px"
+            android:layout_weight="1"
+            android:background="@android:color/holo_blue_light"
+            android:text="生成"
+            android:textColor="@android:color/white"
+            android:textSize="40px" />
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="50px"
+        android:layout_marginLeft="10px"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="期号"
+            android:textColor="@android:color/black"
+            android:textSize="30px" />
+
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="倍率"
+            android:textColor="@android:color/black"
+            android:textSize="30px" />
+
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="金额"
+            android:textColor="@android:color/black"
+            android:textSize="30px" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/ZhuiHaoList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5px"></ListView>
+</LinearLayout>
