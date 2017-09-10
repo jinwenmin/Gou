@@ -7,13 +7,33 @@ package com.example.king.gou.bean;
 public class ZhuiHaoCNum {
     String period;
     String date;
+    int bei;
+    double amounts;
 
     @Override
     public String toString() {
         return "ZhuiHaoCNum{" +
                 "period='" + period + '\'' +
                 ", date='" + date + '\'' +
+                ", bei=" + bei +
+                ", amounts=" + amounts +
                 '}';
+    }
+
+    public int getBei() {
+        return bei;
+    }
+
+    public void setBei(int bei) {
+        this.bei = bei;
+    }
+
+    public double getAmounts() {
+        return amounts;
+    }
+
+    public void setAmounts(double amounts) {
+        this.amounts = amounts;
     }
 
     public String getPeriod() {

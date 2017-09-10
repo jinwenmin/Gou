@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -15,9 +17,12 @@ import com.bigkoo.alertview.OnItemClickListener;
 import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.GameCertAdapter;
+import com.example.king.gou.adapters.MakeZhuiHaoAdapter;
 import com.example.king.gou.bean.Ids;
+import com.example.king.gou.bean.ZhuiHaoCNum;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.ui.CNumberActivity;
+import com.example.king.gou.ui.GameCenterActivity;
 import com.example.king.gou.utils.HttpEngine;
 import com.google.gson.Gson;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -29,6 +34,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 
 
 public class GameCartActivity extends AutoLayoutActivity implements View.OnClickListener, HttpEngine.DataListener, OnItemClickListener {
@@ -52,17 +58,34 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
     private AlertView alertView;
     // 一个自定义的布局，作为显示的内容
     View contentView;
+    private Button ZhuiHaoMake;
+    private EditText editBeiNum;
+    private EditText editQiNum;
+    double Amounts = 0;
+    List<ZhuiHaoCNum> zhCNum;
+    List<ZhuiHaoCNum> adapterData;
+    String bei;
+    MakeZhuiHaoAdapter Zhadapter;
+    private ListView listZhuiH;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_cart);
+        Zhadapter = new MakeZhuiHaoAdapter(this);
         ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         alertView = new AlertView(null, null, "取消", new String[]{"确认追号"}, null, this, AlertView.Style.Alert, this);
         contentView = LayoutInflater.from(this).inflate(
                 R.layout.item_zhuihao_check, null);
+        ZhuiHaoMake = ((Button) contentView.findViewById(R.id.ZhuiHaoMake));
+        editBeiNum = ((EditText) contentView.findViewById(R.id.EditBeiNum));
+        editQiNum = ((EditText) contentView.findViewById(R.id.EditQiNum));
+        listZhuiH = ((ListView) contentView.findViewById(R.id.ZhuiHaoList));
+        listZhuiH.setAdapter(Zhadapter);
+        ZhuiHaoMake.setOnClickListener(this);
         alertView.addExtView(contentView);
-        MyApp.getInstance().addActivitys(this);
+
         Intent intent = getIntent();
         listids = (ArrayList<Ids>) intent.getSerializableExtra("listids");
         gid = intent.getIntExtra("gid", 0);
@@ -70,6 +93,7 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
         period = intent.getStringExtra("period");
         for (int i = 0; i < listids.size(); i++) {
             Log.d("购彩单的数据=", listids.get(i).toString());
+            Amounts = Amounts + listids.get(i).getAmounts();
         }
         adapter = new GameCertAdapter(this, listids);
         GameCartList.setAdapter(adapter);
@@ -123,12 +147,39 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
             case R.id.ToBettingAuto:
                 alertView.show();
                 break;
+            case R.id.ZhuiHaoMake:
+                String qi = editQiNum.getText().toString().trim();
+                if (qi == "" || "".equals(qi)) {
+                    Toasty.error(GameCartActivity.this, "期数不可为空", 2000).show();
+                    return;
+                }
+                bei = editBeiNum.getText().toString().trim();
+                if (bei == "") {
+                    Toasty.error(GameCartActivity.this, "倍数不可为空", 2000).show();
+                    return;
+                }
+                RetrofitService.getInstance().getBettingAutoPurchase(GameCartActivity.this, gid, period, Integer.parseInt(qi));
+                break;
         }
     }
 
     @Override
     public void onReceivedData(int apiId, Object object, int errorId) {
-
+        if (apiId == RetrofitService.API_ID_BEETING_AUTO) {
+            if (object != null) {
+                zhCNum = (List<ZhuiHaoCNum>) object;
+                adapterData = new ArrayList<>();
+                for (int i = 0; i < zhCNum.size(); i++) {
+                    Log.d("追号详情", zhCNum.get(i).toString());
+                    ZhuiHaoCNum zh = new ZhuiHaoCNum();
+                    zh.setPeriod(zhCNum.get(i).getPeriod());
+                    zh.setBei(Integer.parseInt(bei));
+                    zh.setAmounts(Amounts);
+                    adapterData.add(zh);
+                }
+                Zhadapter.addList(adapterData);
+            }
+        }
     }
 
     @Override

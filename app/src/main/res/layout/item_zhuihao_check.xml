@@ -27,7 +27,7 @@
                 android:textSize="30px" />
 
             <EditText
-                android:id="@+id/EditNum"
+                android:id="@+id/EditQiNum"
                 android:layout_width="100px"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="20px"
@@ -55,7 +55,7 @@
                 android:textSize="30px" />
 
             <EditText
-                android:id="@+id/BeiNum"
+                android:id="@+id/EditBeiNum"
                 android:layout_width="100px"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="20px"
@@ -74,6 +74,7 @@
         android:layout_marginTop="10px">
 
         <CheckBox
+            android:id="@+id/ZhuiHaoStop"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="2"
@@ -81,6 +82,7 @@
             android:textSize="30px" />
 
         <Button
+            android:id="@+id/ZhuiHaoMake"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_margin="5px"
@@ -99,6 +101,7 @@
         android:orientation="horizontal">
 
         <CheckBox
+            android:id="@+id/ZhuiHaoListCheck"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1" />
@@ -134,6 +137,6 @@
     <ListView
         android:id="@+id/ZhuiHaoList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="300px"
         android:layout_margin="5px"></ListView>
 </LinearLayout>

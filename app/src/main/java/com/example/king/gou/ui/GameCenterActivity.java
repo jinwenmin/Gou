@@ -1751,8 +1751,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 if (
                         "star_4_any_group_24".equals(code)
                                 || "star_4_any_group_6".equals(code)
-                                || "2min_star_4_any_group_24".equals(code)
                                 || "2min_star_4_any_group_6".equals(code)
+                                || "2min_star_4_any_group_24".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_optional4_24_6, null, false);
                     TextView names = (TextView) inte.findViewById(R.id.name);
@@ -5957,7 +5957,15 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
 
                         ) {
                     final EditText g2_editText = (EditText) inte.findViewById(R.id.g2_EditText);
-                    String s = g2_editText.getText().toString();
+                    String s = g2_editText.getText().toString().trim();
+                    if (s.equals("")) {
+                        Toasty.error(GameCenterActivity.this, "请输入内容", 2000).show();
+                        return;
+                    }
+                    if (s.substring(s.length() - 1, s.length()).equals(",")) {
+                        s = s.substring(s.length() - 1, s.length());
+                    }
+
                     int seleNum = 0;
                     if ("star_5_single".equals(code)
                             || "2min_star_5_single".equals(code)) {
@@ -6011,37 +6019,176 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             ) {
                         seleNum = 2;
                     }
-                    if (s.length() != seleNum) {
-                        Toasty.error(GameCenterActivity.this, "请至少输入一注进行投注", 2000).show();
+                    if (s.contains(",")) {
+                        String[] sp = s.split(",");
+                        nums = sp.length;
+                        for (int i = 0; i < sp.length; i++) {
+                            if (sp[i].length() != seleNum) {
+                                Toasty.error(GameCenterActivity.this, "请至少输入一注进行投注", 2000).show();
+                                return;
+                            }
+                            if ("star_3_next_group_diverse".equals(code)
+                                    || "2min_star_3_next_group_diverse".equals(code)
+                                    || "star_3_prev_group_diverse".equals(code)
+                                    || "2min_star_3_prev_group_diverse".equals(code)
+                                    || "star_3_midd_group_diverse".equals(code)
+                                    || "2min_star_3_midd_group_diverse".equals(code)) {
+                                String s1 = sp[i].substring(0, 1);
+                                String s2 = sp[i].substring(1, 2);
+                                String s3 = sp[i].substring(2, 3);
+                                if (s1.equals(s2) && s1.equals(s3) && s3.equals(s2)) {
+                                    Toasty.error(GameCenterActivity.this, "三个号码不能完全相同", 2000).show();
+                                    return;
+                                }
+                            }
+                            if ("star_2_next_group_single".equals(code)
+                                    || "2min_star_2_next_group_single".equals(code)
+                                    || "star_2_prev_group_single".equals(code)
+                                    || "2min_star_2_prev_group_single".equals(code)) {
+                                String s1 = sp[i].substring(0, 1);
+                                String s2 = sp[i].substring(1, 2);
+                                if (s1.equals(s2)) {
+                                    Toasty.error(GameCenterActivity.this, "两个号码不能完全相同", 2000).show();
+                                    return;
+                                }
+                            }
+
+                        }
+                    } else {
+                        nums = 1;
+                        if (s.length() != seleNum) {
+                            Toasty.error(GameCenterActivity.this, "请至少输入一注进行投注", 2000).show();
+                            return;
+
+                        }
+                       /* pickedNumber = s;
+                        Nums = Integer.parseInt(edit1.getText().toString().trim());
+                        nums = 1;
+                        amount = nums * 2;
+                        if (PriceUnit == 2) {
+                            amount = amount / 10;
+                        }
+                        if (PriceUnit == 3) {
+                            amount = amount / 100;
+                        }
+                        if (PriceUnit == 4) {
+                            amount = amount / 1000;
+                        }
+                        amount = amount * Nums;
+                        classCode = code;
+                        multiple = Nums;
+                        if (nums == 0) {
+                            return;
+                        }
+                        AddLottery();*/
+                    }
+                    locationText = "";
+                    location = "";
+
+
+                    pickedNumber = s;
+
+                    Nums = Integer.parseInt(edit1.getText().toString().trim());
+
+                    amount = nums * 2;
+                    if (PriceUnit == 2) {
+                        amount = amount / 10;
+                    }
+                    if (PriceUnit == 3) {
+                        amount = amount / 100;
+                    }
+                    if (PriceUnit == 4) {
+                        amount = amount / 1000;
+                    }
+                    amount = amount * Nums;
+                    classCode = code;
+                    multiple = Nums;
+                    if (nums == 0) {
                         return;
                     }
-                    if ("star_3_next_group_diverse".equals(code)
-                            || "2min_star_3_next_group_diverse".equals(code)
-                            || "star_3_prev_group_diverse".equals(code)
-                            || "2min_star_3_prev_group_diverse".equals(code)
-                            || "star_3_midd_group_diverse".equals(code)
-                            || "2min_star_3_midd_group_diverse".equals(code)) {
-                        String s1 = s.substring(0, 1);
-                        String s2 = s.substring(1, 2);
-                        String s3 = s.substring(2, 3);
-                        if (s1.equals(s2) && s1.equals(s3) && s3.equals(s2)) {
-                            Toasty.error(GameCenterActivity.this, "三个号码不能完全相同", 2000).show();
+                    AddLottery();
+                   /* if (s.contains(",")) {
+                        String[] sp = s.split(",");
+                        for (int i = 0; i < sp.length; i++) {
+                            if ("star_3_next_group_diverse".equals(code)
+                                    || "2min_star_3_next_group_diverse".equals(code)
+                                    || "star_3_prev_group_diverse".equals(code)
+                                    || "2min_star_3_prev_group_diverse".equals(code)
+                                    || "star_3_midd_group_diverse".equals(code)
+                                    || "2min_star_3_midd_group_diverse".equals(code)) {
+                                String s1 = sp[i].substring(0, 1);
+                                String s2 = sp[i].substring(1, 2);
+                                String s3 = sp[i].substring(2, 3);
+                                if (s1.equals(s2) && s1.equals(s3) && s3.equals(s2)) {
+                                    Toasty.error(GameCenterActivity.this, "三个号码不能完全相同", 2000).show();
+                                    return;
+                                }
+                            }
+                            if ("star_2_next_group_single".equals(code)
+                                    || "2min_star_2_next_group_single".equals(code)
+                                    || "star_2_prev_group_single".equals(code)
+                                    || "2min_star_2_prev_group_single".equals(code)) {
+                                String s1 = sp[i].substring(0, 1);
+                                String s2 = sp[i].substring(1, 2);
+                                if (s1.equals(s2)) {
+                                    Toasty.error(GameCenterActivity.this, "两个号码不能完全相同", 2000).show();
+                                    return;
+                                }
+                            }
+                            locationText = "";
+                            location = "";
+
+
+                            pickedNumber = sp[i];
+
+                            Nums = Integer.parseInt(edit1.getText().toString().trim());
+                            nums = 1;
+                            amount = nums * 2;
+                            if (PriceUnit == 2) {
+                                amount = amount / 10;
+                            }
+                            if (PriceUnit == 3) {
+                                amount = amount / 100;
+                            }
+                            if (PriceUnit == 4) {
+                                amount = amount / 1000;
+                            }
+                            amount = amount * Nums;
+                            classCode = code;
+                            multiple = Nums;
+                            if (nums == 0) {
+                                return;
+                            }
+                            AddLottery();
+                        }
+                    } else {
+                        locationText = "";
+                        location = "";
+
+
+                        pickedNumber = s;
+
+                        Nums = Integer.parseInt(edit1.getText().toString().trim());
+                        nums = 1;
+                        amount = nums * 2;
+                        if (PriceUnit == 2) {
+                            amount = amount / 10;
+                        }
+                        if (PriceUnit == 3) {
+                            amount = amount / 100;
+                        }
+                        if (PriceUnit == 4) {
+                            amount = amount / 1000;
+                        }
+                        amount = amount * Nums;
+                        classCode = code;
+                        multiple = Nums;
+                        if (nums == 0) {
                             return;
                         }
-                    }
-                    if ("star_2_next_group_single".equals(code)
-                            || "2min_star_2_next_group_single".equals(code)
-                            || "star_2_prev_group_single".equals(code)
-                            || "2min_star_2_prev_group_single".equals(code)) {
-                        String s1 = s.substring(0, 1);
-                        String s2 = s.substring(1, 2);
-                        if (s1.equals(s2)) {
-                            Toasty.error(GameCenterActivity.this, "两个号码不能完全相同", 2000).show();
-                            return;
-                        }
-                    }
-                    nums = 1;
-                    pickedNumber = s;
+                        AddLottery();
+                    }*/
+                    return;
                 }
                 if (
                         "star_2_any_single".equals(code)
@@ -6053,52 +6200,92 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 {
                     LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearCheck);
                     EditText editT = (EditText) inte.findViewById(R.id.optional2_editText);
-                    String s = editT.getText().toString();
-                    if ("star_2_any_group_single".equals(code)
-                            || "2min_star_2_any_group_single".equals(code)) {
-                        String s1 = s.substring(0, 1);
-                        String s2 = s.substring(1, 2);
-                        if (s1.equals(s2)) {
-                            Toasty.error(GameCenterActivity.this, "两个号码不能完全相同", 2000).show();
-                            return;
-                        }
-                    }
+                    String s = editT.getText().toString().trim();
                     int n = 0;
-                    String l = "";
-                    String ltext = "";
                     List<String> ns = new ArrayList<>();
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-
-                        if (at.isChecked()) {
-                            ns.add(at.getText().toString().substring(0, 1));
-                            n++;
-                            if (ltext == "") {
-
-                                ltext = at.getText().toString().substring(0, 1);
-                            } else {
-                                ltext = ltext + "," + at.getText().toString().substring(0, 1);
-                            }
-                            if (l == "") {
-                                l = "1";
-                            } else {
-                                l = l + "," + "1";
-                            }
-                        } else {
-                            if (l == "") {
-                                l = "0";
-                            } else {
-                                l = l + "," + "0";
-                            }
-                        }
-                    }
-                    if (s.length() != 2) {
-                        Toasty.error(GameCenterActivity.this, "投注个数不正确,请重新投注.", 2000).show();
+                    if (s.equals("")) {
+                        Toasty.error(GameCenterActivity.this, "请输入内容", 2000).show();
                         return;
                     }
+                    if (s.substring(s.length() - 1, s.length()).equals(",")) {
+                        s = s.substring(s.length() - 1, s.length());
+                    }
+
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        if (at.isChecked()) {
+                            n++;
+                            ns.add(at.getText().toString().substring(0, 1));
+                        }
+                    }
+                    /*for (int j = 0; j < sp.length; j++) {
+                        int n = 0;
+                        String l = "";
+                        String ltext = "";
+                        List<String> ns = new ArrayList<>();
+                        for (int i = 0; i < linear1.getChildCount(); i++) {
+                            CheckBox at = (CheckBox) linear1.getChildAt(i);
+
+                            if (at.isChecked()) {
+                                ns.add(at.getText().toString().substring(0, 1));
+                                n++;
+                                if (ltext == "") {
+
+                                    ltext = at.getText().toString().substring(0, 1);
+                                } else {
+                                    ltext = ltext + "," + at.getText().toString().substring(0, 1);
+                                }
+                                if (l == "") {
+                                    l = "1";
+                                } else {
+                                    l = l + "," + "1";
+                                }
+                            } else {
+                                if (l == "") {
+                                    l = "0";
+                                } else {
+                                    l = l + "," + "0";
+                                }
+                            }
+                        }*/
+
                     if (n < 2) {
                         Toasty.error(GameCenterActivity.this, "请至少选择一注,请重新投注.", 2000).show();
                         return;
+                    }
+                    if (s.contains(",")) {
+                        String[] sp = s.split(",");
+                        for (int j = 0; j < sp.length; j++) {
+                            if (sp[j].length() != 2) {
+                                Toasty.error(GameCenterActivity.this, "投注个数不正确,请重新投注.", 2000).show();
+                                return;
+                            }
+                            if ("star_2_any_group_single".equals(code)
+                                    || "2min_star_2_any_group_single".equals(code)) {
+                                String s1 = sp[j].substring(0, 1);
+                                String s2 = sp[j].substring(1, 2);
+                                if (s1.equals(s2)) {
+                                    Toasty.error(GameCenterActivity.this, "两个号码不能完全相同", 2000).show();
+                                    return;
+                                }
+                            }
+                        }
+                    } else {
+                        if (s.length() != 2) {
+                            Toasty.error(GameCenterActivity.this, "投注个数不正确,请重新投注.", 2000).show();
+                            return;
+                        }
+                        if ("star_2_any_group_single".equals(code)
+                                || "2min_star_2_any_group_single".equals(code)) {
+                            String s1 = s.substring(0, 1);
+                            String s2 = s.substring(1, 2);
+                            if (s1.equals(s2)) {
+                                Toasty.error(GameCenterActivity.this, "两个号码不能完全相同", 2000).show();
+                                return;
+                            }
+                        }
+
+
                     }
                     List<List<String>> check = getCheck(ns);
                     for (int i = 0; i < check.size(); i++) {
@@ -6129,6 +6316,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         AddLottery();
                         GameTypeName = name.get(position);
                     }
+
+
                     return;
                 }
                 if (
@@ -7009,6 +7198,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 if (
                         "star_4_any_group_24".equals(code)
                                 || "2min_star_4_any_group_24".equals(code)
+                                || "star_4_any_group_6".equals(code)
+                                || "2min_star_4_any_group_6".equals(code)
                         ) {
                     String str = "";
                     String strNum = "";
@@ -7033,7 +7224,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         return;
 
                     }
-                    for (int i = 0; i < linearOne.getChildCount(); i++) {
+                    for (int i = 1; i < linearOne.getChildCount(); i++) {
                         CheckBox at = (CheckBox) linearOne.getChildAt(i);
                         if (at.isChecked()) {
                             num_count++;
@@ -7044,7 +7235,172 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             }
                         }
                     }
+                    if (num_count < 4) {
+                        Toasty.error(GameCenterActivity.this, "至少选择四个号码", 2000).show();
+                        return;
+                    }
                     List<List<String>> check4 = getCheck4(str);
+                    for (int i = 0; i < check4.size(); i++) {
+                        List<String> list = check4.get(i);
+                        locationText = list.get(0);
+                        location = list.get(1);
+                        if ("star_4_any_group_24".equals(code)
+                                || "2min_star_4_any_group_24".equals(code)) {
+                            int jn = RxUtils.getInstance().JieCheng(num_count);
+                            int j4 = RxUtils.getInstance().JieCheng(4);
+                            int jn4 = RxUtils.getInstance().JieCheng(num_count - 4);
+                            nums = jn / (j4 * jn4);
+                        } else if ("star_4_any_group_6".equals(code)
+                                || "2min_star_4_any_group_6".equals(code)) {
+                            nums = num_count * (num_count - 1) / 2;
+                        }
+
+                        Log.d("个十百千万Nums", nums + "");
+                        pickedNumber = strNum;
+                        Log.d("个十百千万选择", list.get(0));
+                        GameTypeName = GameTypeName + "-" + list.get(0);
+                        Nums = Integer.parseInt(edit1.getText().toString().trim());
+                        amount = nums * 2;
+                        if (PriceUnit == 2) {
+                            amount = amount / 10;
+                        }
+                        if (PriceUnit == 3) {
+                            amount = amount / 100;
+                        }
+                        if (PriceUnit == 4) {
+                            amount = amount / 1000;
+                        }
+                        amount = amount * Nums;
+                        classCode = code;
+                        multiple = Nums;
+                        if (nums == 0) {
+                            return;
+                        }
+                        AddLottery();
+                        GameTypeName = GameTypeName.substring(0, 4);
+                    }
+                    return;
+                }
+                if (
+                        "star_4_any_group_12".equals(code)
+                                || "2min_star_4_any_group_12".equals(code)
+                                || "star_4_any_group_4".equals(code)
+                                || "2min_star_4_any_group_4".equals(code)
+                        ) {
+                    String str = "";
+                    String strNum1 = "";
+                    String strNum2 = "";
+                    int n = 0;
+                    int ns = 0;
+                    int c1 = 0;
+                    int c2 = 0;
+                    List<String> nns = new ArrayList<>();
+                    List<String> mms = new ArrayList<>();
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearCheck);
+                    LinearLayout linearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout linearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        if (at.isChecked()) {
+                            n++;
+
+                            if (str == "") {
+                                str = at.getText().toString().substring(0, 1);
+                            } else {
+                                str = str + at.getText().toString().substring(0, 1);
+                            }
+                        }
+                    }
+                    if (n < 4) {
+                        Toasty.error(GameCenterActivity.this, "至少选择四个", 2000).show();
+                        return;
+
+                    }
+                    for (int i = 1; i < linearOne.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linearOne.getChildAt(i);
+                        if (at.isChecked()) {
+                            c1++;
+                            nns.add(at.getText().toString());
+                            strNum1 = strNum1 + at.getText().toString();
+
+                        }
+                    }
+                    for (int i = 1; i < linearTwo.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linearTwo.getChildAt(i);
+                        if (at.isChecked()) {
+                            c2++;
+                            strNum2 = strNum2 + at.getText().toString();
+                            mms.add(at.getText().toString());
+                        }
+                    }
+                    if (c1 > 0 && c2 > 2) {
+                        int d = 0;
+                        for (int i = 0; i < nns.size(); i++) {
+                            Log.d("重号", nns.get(i) + "");
+                            for (int i1 = 0; i1 < mms.size(); i1++) {
+                                Log.d("单号", mms.get(i) + "");
+                                if (nns.get(i) == mms.get(i1)) {
+                                    d++;
+                                }
+                            }
+                        }
+                        if ("star_4_any_group_12".equals(code)
+                                || "2min_star_4_any_group_12".equals(code)) {
+                            nums = c1 * c2 * (c2 - 1) / 2 - d * (c2 - 1);
+                            Log.d("组选注数", nums + "");
+                        }
+                        if ("star_4_any_group_4".equals(code)
+                                || "2min_star_4_any_group_4".equals(code)) {
+                            nums = c1 * c2 - d;
+                            Log.d("组选注数", nums + "");
+                        }
+
+                    } else {
+                        if ("star_4_any_group_12".equals(code)
+                                || "2min_star_4_any_group_12".equals(code)) {
+                            if (c1 < 0 || c1 == 0) {
+                                Toasty.error(GameCenterActivity.this, "重号个数不够", 2000).show();
+                                return;
+                            }
+                            if (c2 < 2 || c2 == 2) {
+                                Toasty.error(GameCenterActivity.this, "单号个数不够", 2000).show();
+                                return;
+                            }
+                        }
+
+                    }
+                    List<List<String>> check4 = getCheck4(str);
+                    for (int i = 0; i < check4.size(); i++) {
+                        List<String> list = check4.get(i);
+                        locationText = list.get(0);
+                        location = list.get(1);
+
+
+                        Log.d("个十百千万Nums", nums + "");
+                        pickedNumber = strNum1 + "," + strNum2;
+                        Log.d("个十百千万选择", list.get(0));
+                        GameTypeName = GameTypeName + "-" + list.get(0);
+                        Nums = Integer.parseInt(edit1.getText().toString().trim());
+                        amount = nums * 2;
+                        if (PriceUnit == 2) {
+                            amount = amount / 10;
+                        }
+                        if (PriceUnit == 3) {
+                            amount = amount / 100;
+                        }
+                        if (PriceUnit == 4) {
+                            amount = amount / 1000;
+                        }
+                        amount = amount * Nums;
+                        classCode = code;
+                        multiple = Nums;
+                        if (nums == 0) {
+                            return;
+                        }
+                        AddLottery();
+                        GameTypeName = GameTypeName.substring(0, 4);
+                    }
+                    return;
                 }
                 if (nums == 0)
 
