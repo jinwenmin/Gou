@@ -34,6 +34,7 @@ import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.bean.UserInfo;
 import com.example.king.gou.service.RetrofitService;
 
+import com.example.king.gou.ui.settingfragment.AboutUsActivity;
 import com.example.king.gou.ui.settingfragment.BankCardManActivity;
 import com.example.king.gou.ui.settingfragment.MoneyProtectActivity;
 import com.example.king.gou.ui.settingfragment.ResetPwdActivity;
@@ -251,7 +252,7 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
                 RetrofitService.getInstance().GetUserInfo(this);
                 break;
             case R.id.Aboutus:
-                //   StartA(AboutUsActivity.class);
+                StartA(AboutUsActivity.class);
                 break;
             case R.id.LogOut:
                 Log.d("退出Sett=", "退出Sett");

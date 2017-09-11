@@ -282,8 +282,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                android:background="@android:color/white">
+                android:background="@android:color/white"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/Setting_img5"
@@ -396,8 +396,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                android:background="@android:color/white">
+                android:background="@android:color/white"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/Setting_img8"
@@ -436,8 +436,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                android:background="@android:color/white">
+                android:background="@android:color/white"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/Setting_img9"
@@ -476,8 +476,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                android:background="@android:color/white">
+                android:background="@android:color/white"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/Setting_img10"
@@ -516,8 +516,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                android:background="@android:color/white">
+                android:background="@android:color/white"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/Setting_img11"
@@ -639,9 +639,9 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/Aboutus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-android:id="@+id/Aboutus"
                 android:background="@android:color/white">
 
                 <ImageView
