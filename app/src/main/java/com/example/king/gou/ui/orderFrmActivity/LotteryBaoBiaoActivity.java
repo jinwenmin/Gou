@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -15,7 +16,9 @@ import com.codbking.widget.OnSureLisener;
 import com.codbking.widget.bean.DateType;
 import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
+import com.example.king.gou.adapters.TeamBettingAdapter;
 import com.example.king.gou.bean.GameType;
+import com.example.king.gou.bean.UserTeamBetting;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
@@ -56,12 +59,15 @@ public class LotteryBaoBiaoActivity extends AutoLayoutActivity implements View.O
     String date2;
     List<GameType> gameTypes1 = new ArrayList<>();
     List<GameType> gameTypes2 = new ArrayList<>();
+    @BindView(R.id.UserBettingList)
+    ListView UserBettingList;
     private ArrayAdapter<String> adapter;
     private ArrayAdapter<String> adapter1;
     private ArrayAdapter<String> adapter2;
     List<Integer> ints;
     List<String> status;
-
+    TeamBettingAdapter teamBettingAdapter;
+    List<UserTeamBetting> userTeamBettingLis = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,34 +75,15 @@ public class LotteryBaoBiaoActivity extends AutoLayoutActivity implements View.O
         ButterKnife.bind(this);
         MyApp.getInstance().addActivitys(this);
         RetrofitService.getInstance().getGame(this, 4, 0, 0, 0);
-        initSpinner();
+        teamBettingAdapter = new TeamBettingAdapter(this);
+        UserBettingList.setAdapter(teamBettingAdapter);
+        initS();
         initClick();
         initDateDialog();
+
     }
 
-    private void initSpinner() {
-        SpinnerGameid.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                RetrofitService.getInstance().getGame(LotteryBaoBiaoActivity.this, 7, gameTypes1.get(position).getGid(), 0, 0);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        SpinnerGameRid.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+    private void initS() {
         ints = new ArrayList<>();
         ints.add(-2);
         ints.add(-1);
@@ -121,10 +108,40 @@ public class LotteryBaoBiaoActivity extends AutoLayoutActivity implements View.O
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //第四步：将适配器添加到下拉列表上
         SpinnerStatus.setAdapter(adapter2);
+
+    }
+
+    private void initSpinnerSelect() {
+        RetrofitService.getInstance().getBettingList(LotteryBaoBiaoActivity.this, 1, 100, "bid", "desc", LotteryBBtimetext.getText().toString().trim(), LotteryBBtimetext2.getText().toString().trim(), gameTypes1.get(SpinnerGameid.getSelectedItemPosition()).getGid(), gameTypes2.get(SpinnerGameRid.getSelectedItemPosition()).getTid(), ints.get(SpinnerStatus.getSelectedItemPosition()));
+    }
+
+    private void initSpinner() {
+        SpinnerGameid.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                RetrofitService.getInstance().getGame(LotteryBaoBiaoActivity.this, 7, gameTypes1.get(position).getGid(), 0, 0);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        SpinnerGameRid.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                initSpinnerSelect();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         SpinnerStatus.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                initSpinnerSelect();
             }
 
             @Override
@@ -188,8 +205,10 @@ public class LotteryBaoBiaoActivity extends AutoLayoutActivity implements View.O
                         String substring = formatDate.substring(0, 10);
                         Log.d("Date===", substring);
                         LotteryBBtimetext.setText(substring);
+                        initSpinnerSelect();
                     }
                 });
+
                 dialog.show();
                 break;
             case R.id.LotteryBBrelateTime2:
@@ -213,6 +232,7 @@ public class LotteryBaoBiaoActivity extends AutoLayoutActivity implements View.O
                         String substring = formatDate.substring(0, 10);
                         Log.d("Date===", substring);
                         LotteryBBtimetext2.setText(substring);
+                        initSpinnerSelect();
                     }
                 });
                 dialog2.show();
@@ -255,8 +275,16 @@ public class LotteryBaoBiaoActivity extends AutoLayoutActivity implements View.O
                 adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 //第四步：将适配器添加到下拉列表上
                 SpinnerGameRid.setAdapter(adapter1);
-                RetrofitService.getInstance().getBettingList(LotteryBaoBiaoActivity.this, 1, 100, "bid", "desc", LotteryBBtimetext.getText().toString().trim(), LotteryBBtimetext2.getText().toString().trim(), gameTypes1.get(SpinnerGameid.getSelectedItemPosition()).getGid(), gameTypes2.get(SpinnerGameRid.getSelectedItemPosition()).getTid(), ints.get(SpinnerStatus.getSelectedItemPosition()));
+                initSpinner();
+
             }
+        }
+        if (apiId == RetrofitService.API_ID_USERBETTING) {
+            if (object != null) {
+                userTeamBettingLis = (List<UserTeamBetting>) object;
+                teamBettingAdapter.addList(userTeamBettingLis);
+            }
+
         }
     }
 

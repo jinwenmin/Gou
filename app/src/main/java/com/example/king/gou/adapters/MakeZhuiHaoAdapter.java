@@ -69,7 +69,7 @@ public class MakeZhuiHaoAdapter extends BaseAdapter {
             viewHolder.ZhuiHaoPeriod.setText(z.getPeriod());
         }
         if (!"".equals(z.getBei())) {
-            viewHolder.ZhuiHaoBei.setText(z.getBei());
+            viewHolder.ZhuiHaoBei.setText(z.getBei() + "");
         }
         if (!"".equals(z.getAmounts())) {
             viewHolder.ZhuiHaoAmount.setText(z.getAmounts() + "");

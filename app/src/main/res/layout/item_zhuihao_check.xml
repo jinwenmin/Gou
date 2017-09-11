@@ -101,6 +101,7 @@
         android:orientation="horizontal">
 
         <CheckBox
+            android:visibility="invisible"
             android:id="@+id/ZhuiHaoListCheck"
             android:layout_width="0px"
             android:layout_height="match_parent"

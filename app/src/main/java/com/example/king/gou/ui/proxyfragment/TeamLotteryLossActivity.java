@@ -36,10 +36,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.example.king.gou.R.id.LotteryLoss_back;
+
 
 public class TeamLotteryLossActivity extends AutoLayoutActivity implements View.OnClickListener, HttpEngine.DataListener {
 
-    @BindView(R.id.LotteryLoss_back)
+    @BindView(LotteryLoss_back)
     ImageView LotteryLossBack;
     @BindView(R.id.LotteryLossTop)
     RelativeLayout LotteryLossTop;
@@ -163,6 +165,7 @@ public class TeamLotteryLossActivity extends AutoLayoutActivity implements View.
         relateTime1.setOnClickListener(this);
         relateTime2.setOnClickListener(this);
         SearchUserName.setOnClickListener(this);
+        LotteryLossBack.setOnClickListener(this);
     }
 
     private void initSpinner() {
@@ -285,6 +288,9 @@ public class TeamLotteryLossActivity extends AutoLayoutActivity implements View.
                 break;
             case R.id.SearchUserName:
                 initRetrofit();
+                break;
+            case R.id.LotteryLoss_back:
+                finish();
                 break;
         }
     }

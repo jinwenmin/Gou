@@ -152,4 +152,9 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/gray" />
+
+    <ListView
+        android:id="@+id/UserBettingList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
 </LinearLayout>

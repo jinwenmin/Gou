@@ -111,6 +111,7 @@
         android:layout_height="wrap_content">
 
         <EditText
+            android:singleLine="true"
             android:id="@+id/UserName"
             android:layout_width="0px"
             android:layout_height="wrap_content"

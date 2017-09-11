@@ -29,6 +29,7 @@
             android:textSize="@dimen/top_textsize" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/ZhuiHao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,6 +43,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:layout_marginBottom="10px"
         android:id="@+id/CertLin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

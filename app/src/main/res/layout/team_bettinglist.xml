@@ -106,6 +106,7 @@
         android:layout_height="80px">
 
         <EditText
+            android:singleLine="true"
             android:id="@+id/SearchName"
             android:layout_width="0px"
             android:layout_height="match_parent"

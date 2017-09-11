@@ -3040,6 +3040,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             Log.i("GameCentprint", anInt[0] + "");
                             Log.i("GameCentTime", secToTime + "");
                             if (anInt[0] < 0) {
+                                listIds = new ArrayList<>();
+                                SendGameNum.setText("0");
                                 handler.removeCallbacks(runnable);
                                 Toast toast = Toasty.warning(GameCenterActivity.this, "第" + bs.getPeriod() + "期开奖中", Toast.LENGTH_SHORT);
                                 toast.setGravity(Gravity.CENTER, 0, 0);
@@ -6203,8 +6205,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     String s = editT.getText().toString().trim();
                     int n = 0;
                     List<String> ns = new ArrayList<>();
-                    if (s.equals("")) {
-                        Toasty.error(GameCenterActivity.this, "请输入内容", 2000).show();
+                    if ("".equals(s) || " ".equals(s)) {
+                        Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
                         return;
                     }
                     if (s.substring(s.length() - 1, s.length()).equals(",")) {
@@ -6333,7 +6335,11 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         ) {
                     LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearCheck);
                     EditText editT = (EditText) inte.findViewById(R.id.optional2_editText);
-                    String s = editT.getText().toString();
+                    String s = editT.getText().toString().trim();
+                    if ("".equals(s) || " ".equals(s)) {
+                        Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
+                        return;
+                    }
                     String str = "";
                     int n = 0;
                     for (int i = 0; i < linear1.getChildCount(); i++) {
@@ -6516,7 +6522,11 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
 
                         ) {
                     final EditText g2_editText = (EditText) inte.findViewById(R.id.g2_EditText);
-                    String s = g2_editText.getText().toString();
+                    String s = g2_editText.getText().toString().trim();
+                    if ("".equals(s) || " ".equals(s)) {
+                        Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
+                        return;
+                    }
                     int co = 0;
                     int ns = 11;
 
@@ -6808,6 +6818,10 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         ) {
                     final EditText g2_editText = (EditText) inte.findViewById(R.id.g2_EditText);
                     String s = g2_editText.getText().toString().trim();
+                    if ("".equals(s) || " ".equals(s)) {
+                        Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
+                        return;
+                    }
                     if (",".equals(s.substring(s.length() - 1, s.length()))) {
                         s = s.substring(0, s.length() - 1);
                     }
@@ -6936,6 +6950,10 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         ) {
                     final EditText g2_editText = (EditText) inte.findViewById(R.id.g2_EditText);
                     String s = g2_editText.getText().toString().trim();
+                    if ("".equals(s) || " ".equals(s)) {
+                        Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
+                        return;
+                    }
                     if (",".equals(s.substring(s.length() - 1, s.length()))) {
                         s = s.substring(0, s.length() - 1);
                     }
@@ -7104,7 +7122,11 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         ) {
                     LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearCheck);
                     EditText editT = (EditText) inte.findViewById(R.id.optional2_editText);
-                    String s = editT.getText().toString();
+                    String s = editT.getText().toString().trim();
+                    if ("".equals(s) || " ".equals(s)) {
+                        Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
+                        return;
+                    }
                     String str = "";
                     int n = 0;
                     int ns = 0;

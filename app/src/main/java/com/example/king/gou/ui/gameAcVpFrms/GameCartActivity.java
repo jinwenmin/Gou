@@ -6,8 +6,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -67,6 +69,7 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
     String bei;
     MakeZhuiHaoAdapter Zhadapter;
     private ListView listZhuiH;
+    private CheckBox ZhuiHaoCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +85,7 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
         editBeiNum = ((EditText) contentView.findViewById(R.id.EditBeiNum));
         editQiNum = ((EditText) contentView.findViewById(R.id.EditQiNum));
         listZhuiH = ((ListView) contentView.findViewById(R.id.ZhuiHaoList));
+        ZhuiHaoCheck = ((CheckBox) contentView.findViewById(R.id.ZhuiHaoCheck));
         listZhuiH.setAdapter(Zhadapter);
         ZhuiHaoMake.setOnClickListener(this);
         alertView.addExtView(contentView);
@@ -154,7 +158,7 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
                     return;
                 }
                 bei = editBeiNum.getText().toString().trim();
-                if (bei == "") {
+                if (bei == "" || "".equals(bei)) {
                     Toasty.error(GameCartActivity.this, "倍数不可为空", 2000).show();
                     return;
                 }
@@ -194,6 +198,52 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
 
     @Override
     public void onItemClick(Object o, int position) {
+        if (position != AlertView.CANCELPOSITION) {
+            List<Map<String, Object>> ids = new ArrayList<>();
+            double Amounts = 0;
+            for (int i = 0; i < listids.size(); i++) {
+                Amounts = Amounts + listids.get(i).getAmount();
+                Map<String, Object> map = new HashMap();
+                map.put("pickedNumber", listids.get(i).getPickedNumber());
+                map.put("multiples", listids.get(i).getMultiple());
+                map.put("locationText", listids.get(i).getLocationText());
+                map.put("priceUnit", listids.get(i).getPriceUnit());
+                map.put("amount", listids.get(i).getAmount());
+                map.put("priceType", listids.get(i).getPriceType());
+                map.put("amounts", listids.get(i).getAmount());
+                map.put("pickedText", listids.get(i).getPickedText());
+                map.put("multiple", listids.get(i).getMultiple());
+                map.put("classCode", listids.get(i).getClassCode());
+                map.put("location", listids.get(i).getLocation());
+                map.put("num", listids.get(i).getNum());
+                map.put("vcode", "");
+                ids.add(map);
+            }
+            List<Map<String, Object>> ars = new ArrayList<>();
+            for (int i = 0; i < zhCNum.size(); i++) {
+                Map<String, Object> map = new HashMap();
+                LinearLayout v = (LinearLayout) listZhuiH.getChildAt(i);
+                if (((CheckBox) v.getChildAt(0)).isChecked()) {
 
+                    map.put("period", ((TextView) v.getChildAt(1)).getText().toString());
+                    map.put("multiple", Integer.parseInt(((EditText) v.getChildAt(2)).getText().toString()));
+                    ars.add(map);
+                }
+
+
+            }
+            if (ars.size() == 0) {
+                Toasty.error(GameCartActivity.this, "没有选择任何期数", 2000).show();
+                return;
+            }
+            Gson gson = new Gson();
+            String idsString = gson.toJson(ids);
+            String arstring = gson.toJson(ars);
+            int stop = 0;
+            if (ZhuiHaoCheck.isChecked()) {
+                stop = 1;
+            }
+            RetrofitService.getInstance().getSendBetting(this, gid, "", idsString, period, arstring, Amounts, stop);
+        }
     }
 }

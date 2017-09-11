@@ -131,6 +131,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="invisible"
             android:id="@+id/FanDianjl"
             android:layout_width="0px"
             android:layout_height="wrap_content"
@@ -185,6 +186,30 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/CaiPiaoyk"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="150px"
+                android:layout_height="150px"
+                android:src="@mipmap/ic_caipiaobaobiao" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                android:gravity="center_horizontal"
+                android:text="彩票盈亏" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="invisible"
             android:id="@+id/ZhuanZhangjl"
             android:layout_width="0px"
             android:layout_height="wrap_content"
@@ -207,28 +232,6 @@
                 android:text="转账记录" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/CaiPiaoyk"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="150px"
-                android:layout_height="150px"
-                android:src="@mipmap/ic_caipiaobaobiao" />
-
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-
-                android:gravity="center_horizontal"
-                android:text="彩票盈亏" />
-        </LinearLayout>
 
 
     </LinearLayout>

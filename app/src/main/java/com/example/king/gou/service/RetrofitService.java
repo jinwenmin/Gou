@@ -181,7 +181,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_GETNEWMSG = 71;//轮询消息
     public static int API_ID_SWITCHGAME = 72;//获取游戏玩法详情
     public static int API_ID_BEETING_AUTO = 73;//获取追号信息
-
+    public static int API_ID_USERBETTING = 74;//个人报表彩票投注
 
     private Retrofit retrofit;
     private ApiInterface apiInterface;
@@ -1183,7 +1183,7 @@ public class RetrofitService extends HttpEngine {
         Log.d("用户名加密的东西", reqkey);
         Call<RestultInfo> nickNameChange = apiInterface.getNickNameChange(1, nickName, reqkey, currentTimeMillis);
         String s = nickNameChange.request().toString();
-        Log.d("查询投注记录请求完全体====", s);
+        Log.d("修改用户昵称请求完全体====", s);
         Call<RestultInfo> clone = nickNameChange.clone();
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
@@ -2115,21 +2115,61 @@ public class RetrofitService extends HttpEngine {
         map.put("id", id + "");
         map.put("rid", rid + "");
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> keepNum = apiInterface.getKeepNum(1, page, rows, sidx, sord, from, to, id, rid, reqkey, currentTimeMillis);
-        Call<Object> clone = keepNum.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<Map<String, Object>> keepNum = apiInterface.getKeepNum(1, page, rows, sidx, sord, from, to, id, rid, reqkey, currentTimeMillis);
+        Call<Map<String, Object>> clone = keepNum.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 if (response.code() == 200) {
                     String toString = response.body().toString();
-                    String substring = toString.substring(toString.indexOf("content=[") + 9, toString.indexOf("], number"));
-                    Log.d("追号记录SubString=", substring);
+                    Log.d("追号记录完全体=", toString);
+                    Map<String, Object> map = response.body();
+                    List<Object> content = new ArrayList<>();
+                    double totalElements = 0;
                     List<ZhuiHao> zhuiHaos = new ArrayList<ZhuiHao>();
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if ("totalElements".equals(entry.getKey())) {
+                                totalElements = (double) entry.getValue();
+                            }
+                            if ("content".equals(entry.getKey())) {
+                                content = (List<Object>) entry.getValue();
+                            }
+                        }
+                    }
+                    if (totalElements > 0) {
+                        for (int i = 0; i < content.size(); i++) {
+                            List<Object> cn = (List<Object>) content.get(i);
+                            ZhuiHao z = new ZhuiHao();
+                            z.setId(RxUtils.getInstance().getInt(cn.get(0)));
+                            z.setNumber((String) cn.get(1));
+                            z.setPurchase_date((String) cn.get(2));
+                            z.setGname((String) cn.get(3));
+                            z.setRname((String) cn.get(4));
+                            z.setStart_period((String) cn.get(5));
+                            z.setPeriods(RxUtils.getInstance().getInt(cn.get(6)));
+                            z.setPurchase_periods(RxUtils.getInstance().getInt(cn.get(7)));
+                            z.setPicked_numbers((String) cn.get(8));
+                            z.setMode(RxUtils.getInstance().getInt(cn.get(9)));
+                            z.setAmount((Double) cn.get(10));
+                            z.setPurchase_amount((Double) cn.get(11));
+                            z.setCancel_amount((Double) cn.get(12));
+                            z.setPrize_num(RxUtils.getInstance().getInt(cn.get(13)));
+                            z.setPrize_amount((Double) cn.get(14));
+                            z.setStatus(RxUtils.getInstance().getInt(15));
+                            Log.d("查询追号的Bean", z.toString());
+                            zhuiHaos.add(z);
+
+                        }
+                    }
+                   /* String substring = toString.substring(toString.indexOf("content=[") + 9, toString.indexOf("], number"));
+                    Log.d("追号记录SubString=", substring);
+
                     if (substring.length() > 10) {
                         String[] sp = substring.split(", ");
 
                         for (int i = 0; i < sp.length; i = i + 17) {
-                            Log.d("追号记录截取1", sp[i]);
+                            //  Log.d("追号记录截取1", sp[i]);
                             ZhuiHao z = new ZhuiHao();
                             String id = sp[i].substring(1, sp[i].length() - 2);
                             String number = sp[i + 1];
@@ -2169,14 +2209,14 @@ public class RetrofitService extends HttpEngine {
                         }
 
                         Log.d("查询追号返回数据", toString);
-                    }
+                    }*/
                     listener.onReceivedData(API_ID_ZHUIHAO, zhuiHaos, API_ID_ERROR);
                 }
 
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
                 Log.d("查询追号返回数据异常", t.toString());
             }
         });
@@ -2573,7 +2613,7 @@ public class RetrofitService extends HttpEngine {
 
     //个人报表彩票投注
 
-    public void getBettingList(DataListener listener, int page, int rows, String sidx, String sord, String from, final String to, int id, int rid, int status) {
+    public void getBettingList(final DataListener listener, int page, int rows, String sidx, String sord, String from, final String to, int id, int rid, int status) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> maps = new HashMap<>();
         maps.put("page", page + "");
@@ -2586,19 +2626,90 @@ public class RetrofitService extends HttpEngine {
         maps.put("rid", rid + "");
         maps.put("status", status + "");
         String reqkey = RxUtils.getInstance().getReqkey(maps, currentTimeMillis);
-        Call<Object> bettingList = apiInterface.getBettingList(1, page, rows, sidx, sord, from, to, id, rid, status, reqkey, currentTimeMillis);
-        Call<Object> clone = bettingList.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<Map<String, Object>> bettingList = apiInterface.getBettingList(1, page, rows, sidx, sord, from, to, id, rid, status, reqkey, currentTimeMillis);
+        Call<Map<String, Object>> clone = bettingList.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 if (response.code() == 200) {
-                    Log.d("个人报表彩票投注", response.body().toString());
+                    String s = response.body().toString();
+                    Log.d("个人报表彩票投注Content", s);
+                    double totalElements = 0;
+                    List<Object> content = new ArrayList<>();
+                    for (Map.Entry<String, Object> entry : response.body().entrySet()) {
+                        if ("totalElements".equals(entry.getKey())) {
+                            totalElements = (double) entry.getValue();
+                        }
+                        if ("content".equals(entry.getKey())) {
+                            content = (List<Object>) entry.getValue();
+                        }
+                    }
+                    List<UserTeamBetting> userBetting = new ArrayList<UserTeamBetting>();
+                    if (totalElements > 0) {
+                        for (int i = 0; i < content.size(); i++) {
+                            List<Object> cn = (List<Object>) content.get(i);
+                            UserTeamBetting us = new UserTeamBetting();
+                            us.setBid(RxUtils.getInstance().getInt(cn.get(0)));
+                            us.setUid(RxUtils.getInstance().getInt(cn.get(1)));
+                            us.setUname((String) cn.get(2));
+                            us.setDate((String) cn.get(3));
+                            us.setGname((String) cn.get(4));
+                            us.setPeriod((String) cn.get(5));
+                            us.setRname((String) cn.get(6));
+                            us.setPicked_text((String) cn.get(7));
+                            us.setAmount((Double) cn.get(8));
+
+                            if (cn.get(9) == null) {
+                                us.setPrize(0.0);
+                            } else {
+                                us.setPrize((Double) cn.get(9));
+                            }
+
+                            us.setWinning_number((String) cn.get(10));
+                            Log.d("个人报表彩票投注Status", RxUtils.getInstance().getInt(cn.get(11)) + "");
+                            us.setStatus(RxUtils.getInstance().getInt(cn.get(11)));
+                            userBetting.add(us);
+                        }
+                       /* String con = s.substring(s.indexOf("content=[") + 9, s.indexOf("], number="));
+                        String[] cs = con.split(", ");
+
+                        for (int i = 0; i < cs.length; i = i + 12) {
+                            UserTeamBetting us = new UserTeamBetting();
+                            String bid = cs[i].substring(1, cs[i].length() - 2);
+                            String uid = cs[i + 1].substring(0, cs[i + 1].length() - 2);
+                            String uname = cs[i + 2];
+                            String date = cs[i + 3];
+                            String gname = cs[i + 4];
+                            String period = cs[i + 5];
+                            String rname = cs[i + 6];
+                            String picked_text = cs[i + 7];
+                            String amount = cs[i + 8];
+                            String prize = cs[i + 9];
+                            String winning_numbers = cs[i + 10];
+                            String status = cs[i + 11].substring(0, cs[i + 11].length() - 3);
+                            Log.d("彩票报表Split", cs[i]);
+                            us.setBid(Integer.parseInt(bid));
+                            us.setUid(Integer.parseInt(uid));
+                            us.setUname(uname);
+                            us.setDate(date);
+                            us.setGname(gname);
+                            us.setPeriod(period);
+                            us.setRname(rname);
+                            us.setPicked_text(picked_text);
+                            us.setAmount(Double.parseDouble(amount));
+                            us.setPrize(Double.parseDouble(prize));
+                            us.setWinning_number(winning_numbers);
+                            us.setStatus(Integer.parseInt(status));
+                            userBetting.add(us);
+                        }*/
+                    }
+                    listener.onReceivedData(API_ID_USERBETTING, userBetting, API_ID_ERROR);
                 }
 
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
 
             }
         });
@@ -2685,6 +2796,7 @@ public class RetrofitService extends HttpEngine {
                             type = (String) cell.get(9);
                             counts = (String) cell.get(10);
                         }
+                        ls.setUname(uname);
                         ls.setBetting_amount(Double.parseDouble(betting_amount));
                         ls.setRebate_amount(Double.parseDouble(rebate_amount));
                         ls.setWinning_amount(Double.parseDouble(winning_amount));
@@ -2847,28 +2959,102 @@ public class RetrofitService extends HttpEngine {
         map.put("type", type + "");
         map.put("team", team + "");
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> reChargeWithDrawList = apiInterface.getTeamReChargeWithDrawList(1, page, rows, sidx, sord, from, to, name, type, team, reqkey, currentTimeMillis);
-        Call<Object> clone = reChargeWithDrawList.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<Map<String, Object>> reChargeWithDrawList = apiInterface.getTeamReChargeWithDrawList(1, page, rows, sidx, sord, from, to, name, type, team, reqkey, currentTimeMillis);
+        Call<Map<String, Object>> clone = reChargeWithDrawList.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 if (response.code() == 200) {
                     String s = response.body().toString();
                     Log.d("团队报表充提记录", s);
                     List<List<CunQu>> cqs = new ArrayList<List<CunQu>>();
                     List<CunQu> ccs = new ArrayList<CunQu>();
-                    String incomes = s.substring(s.indexOf("userdata={income=") + 17, s.indexOf(", expend"));
-                    String expends = s.substring(s.indexOf("expend=") + 7, s.indexOf(", serial_number="));
+                    Map<String, Object> map = response.body();
+                    Map<String, Object> userdata = new HashMap<>();
+                    double records = 0;
+                    List<Object> rows = new ArrayList<>();
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if ("userdata".equals(entry.getKey())) {
+                                userdata = (Map<String, Object>) entry.getValue();
+                            }
+                            if ("records".equals(entry.getKey())) {
+                                records = (double) entry.getValue();
+                            }
+                            if ("rows".equals(entry.getKey())) {
+                                rows = (List<Object>) entry.getValue();
+                            }
+                        }
+                    }
+                    double income = 0;
+                    double expend = 0;
+                    if (userdata.size() > 0) {
+                        for (Map.Entry<String, Object> entry : userdata.entrySet()) {
+                            if ("income".equals(entry.getKey())) {
+                                income = (double) entry.getValue();
+                            }
+                            if ("expend".equals(entry.getKey())) {
+                                expend = (double) entry.getValue();
+                            }
+                        }
+                    }
+                  /*  String incomes = s.substring(s.indexOf("userdata={income=") + 17, s.indexOf(", expend"));
+                    String expends = s.substring(s.indexOf("expend=") + 7, s.indexOf(", serial_number="));*/
                     CunQu c = new CunQu();
-                    c.setIncomes(Double.parseDouble(incomes));
-                    c.setExpengs(Double.parseDouble(expends));
+                    c.setIncomes(income);
+                    c.setExpengs(expend);
                     ccs.add(c);
                     cqs.add(ccs);
-                    String Records = s.substring(s.indexOf("records=") + 8, s.indexOf(".0, rows="));
+                /*    String Records = s.substring(s.indexOf("records=") + 8, s.indexOf(".0, rows="));
                     int i1 = Integer.parseInt(Records);
-                    String substring = s.substring(s.indexOf("rows=[") + 6, s.indexOf("], userdata="));
+                    String substring = s.substring(s.indexOf("rows=[") + 6, s.indexOf("], userdata="));*/
                     List<CunQu> cs = new ArrayList<CunQu>();
-                    if (i1 > 0) {
+                    if (records > 0) {
+                        for (int i = 0; i < rows.size(); i++) {
+                            Map<String, Object> o = (Map<String, Object>) rows.get(i);
+                            Object id = 0;
+                            List<Object> cell = new ArrayList<>();
+                            if (o.size() > 0) {
+                                for (Map.Entry<String, Object> entry : o.entrySet()) {
+                                    if ("id".equals(entry.getKey())) {
+                                        id = (Object) entry.getValue();
+                                    }
+                                    if ("cell".equals(entry.getKey())) {
+                                        cell = (List<Object>) entry.getValue();
+                                    }
+                                }
+                            }
+                            CunQu cunQu = new CunQu();
+                            if (id instanceof String) {
+                                cunQu.setId(Integer.parseInt(String.valueOf(id)));
+                            } else {
+                                cunQu.setId(RxUtils.getInstance().getInt(id));
+                            }
+
+                            cunQu.setSerial_number((String) cell.get(0));
+                            cunQu.setUname((String) cell.get(1));
+                            cunQu.setDate((String) cell.get(2));
+                            if (cell.get(3) instanceof String) {
+                                cunQu.setStype(Integer.parseInt(String.valueOf(cell.get(3))));
+                            } else {
+                                cunQu.setStype(RxUtils.getInstance().getInt(cell.get(3)));
+                            }
+
+                            cunQu.setIncome(Double.parseDouble((String) cell.get(4)));
+                            cunQu.setExpend(Double.parseDouble((String) cell.get(5)));
+                            cunQu.setAmount(Double.parseDouble((String) cell.get(6)));
+                            if (cell.get(7) instanceof String) {
+                                cunQu.setStatus(Integer.parseInt(String.valueOf(cell.get(7))));
+                            } else {
+                                cunQu.setStatus(RxUtils.getInstance().getInt(cell.get(7)));
+                            }
+
+                            cunQu.setDetial((String) cell.get(8));
+                            cs.add(cunQu);
+                        }
+                        cqs.add(cs);
+                    }
+                   /* if (i1 > 0) {
                         //String substring1 = substring.substring(substring.indexOf("id=") + 3, substring.indexOf(", cell="));
                         String[] ss = substring.split(", ");
                         for (int i = 0; i < ss.length; i = i + 10) {
@@ -2897,7 +3083,7 @@ public class RetrofitService extends HttpEngine {
                             cs.add(cunQu);
                         }
                         cqs.add(cs);
-                    }
+                    }*/
                     listener.onReceivedData(API_ID_TEAMCQ, cqs, API_ID_ERROR);
                 }
 
@@ -2905,7 +3091,7 @@ public class RetrofitService extends HttpEngine {
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
 
             }
         });
@@ -3917,21 +4103,44 @@ public class RetrofitService extends HttpEngine {
             public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 if (response.code() == 200) {
                     String s = response.body().toString();
-                    Log.d("团队报表彩票投注", s);
-                    String str = null;
+                    Log.d("团队报表彩票投注Content", s);
                     double totalElements = 0;
-
+                    List<Object> content = new ArrayList<>();
                     for (Map.Entry<String, Object> entry : response.body().entrySet()) {
-                        System.out.println("key==" + entry.getKey() + " " + entry.getValue());
-                        str = str + "&" + entry.getKey() + "=" + entry.getValue();
                         if ("totalElements".equals(entry.getKey())) {
                             totalElements = (double) entry.getValue();
                         }
-                        Log.d("团队报表彩票投注", str);
+                        if ("content".equals(entry.getKey())) {
+                            content = (List<Object>) entry.getValue();
+                        }
                     }
                     List<UserTeamBetting> userBetting = new ArrayList<UserTeamBetting>();
                     if (totalElements > 0) {
-                        String con = s.substring(s.indexOf("content=[") + 9, s.indexOf("], number="));
+                        for (int i = 0; i < content.size(); i++) {
+                            List<Object> cn = (List<Object>) content.get(i);
+                            UserTeamBetting us = new UserTeamBetting();
+                            us.setBid(RxUtils.getInstance().getInt(cn.get(0)));
+                            us.setUid(RxUtils.getInstance().getInt(cn.get(1)));
+                            us.setUname((String) cn.get(2));
+                            us.setDate((String) cn.get(3));
+                            us.setGname((String) cn.get(4));
+                            us.setPeriod((String) cn.get(5));
+                            us.setRname((String) cn.get(6));
+                            us.setPicked_text((String) cn.get(7));
+                            us.setAmount((Double) cn.get(8));
+
+                            if (cn.get(9) == null) {
+                                us.setPrize(0.0);
+                            } else {
+                                us.setPrize((Double) cn.get(9));
+                            }
+
+                            us.setWinning_number((String) cn.get(10));
+                            Log.d("团队报表彩票投注Status", RxUtils.getInstance().getInt(cn.get(11)) + "");
+                            us.setStatus(RxUtils.getInstance().getInt(cn.get(11)));
+                            userBetting.add(us);
+                        }
+                       /* String con = s.substring(s.indexOf("content=[") + 9, s.indexOf("], number="));
                         String[] cs = con.split(", ");
 
                         for (int i = 0; i < cs.length; i = i + 12) {
@@ -3962,7 +4171,7 @@ public class RetrofitService extends HttpEngine {
                             us.setWinning_number(winning_numbers);
                             us.setStatus(Integer.parseInt(status));
                             userBetting.add(us);
-                        }
+                        }*/
                     }
                     listener.onReceivedData(API_ID_TEAMBETTING, userBetting, API_ID_ERROR);
                 }
@@ -4140,32 +4349,60 @@ public class RetrofitService extends HttpEngine {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         final String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> userStatistics = apiInterface.getUserStatistics(1, reqkey, currentTimeMillis);
-        Call<Object> clone = userStatistics.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<Map<String, Object>> userStatistics = apiInterface.getUserStatistics(1, reqkey, currentTimeMillis);
+        Call<Map<String, Object>> clone = userStatistics.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 if (response.code() == 200) {
                     String s = response.body().toString();
                     Log.d("会员统计", s);
-                    String headCount = s.substring(s.indexOf("headcount=") + 10, s.indexOf(".0, onlinecount="));
-                    String onlineCount = s.substring(s.indexOf("onlinecount=") + 12, s.indexOf(".0, amounts="));
-                    String amount = s.substring(s.indexOf("amounts=") + 8, s.indexOf(", months="));
-                    String month = s.substring(s.indexOf("months=") + 7, s.indexOf(".0, todays="));
-                    String todays = s.substring(s.indexOf("todays=") + 7, s.length() - 4);
+                    Map<String, Object> map = response.body();
+                    Map<String, Object> others = new HashMap<>();
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if ("others".equals(entry.getKey())) {
+                                others = (Map<String, Object>) entry.getValue();
+                            }
+                        }
+                    }
+                    double headcount = 0;
+                    double onlinecount = 0;
+                    double amounts = 0;
+                    double months = 0;
+                    double todays = 0;
+                    if (others.size() > 0) {
+                        for (Map.Entry<String, Object> entry : others.entrySet()) {
+                            if ("headcount".equals(entry.getKey())) {
+                                headcount = (double) entry.getValue();
+                            }
+                            if ("onlinecount".equals(entry.getKey())) {
+                                onlinecount = (double) entry.getValue();
+                            }
+                            if ("amounts".equals(entry.getKey())) {
+                                amounts = (double) entry.getValue();
+                            }
+                            if ("months".equals(entry.getKey())) {
+                                months = (double) entry.getValue();
+                            }
+                            if ("todays".equals(entry.getKey())) {
+                                todays = (double) entry.getValue();
+                            }
+                        }
+                    }
                     List<String> UserSta = new ArrayList<String>();
-                    UserSta.add(headCount);
-                    UserSta.add(onlineCount);
-                    UserSta.add(amount);
-                    UserSta.add(month);
-                    UserSta.add(todays);
+                    UserSta.add(headcount + "");
+                    UserSta.add(onlinecount + "");
+                    UserSta.add(amounts + "");
+                    UserSta.add(months + "");
+                    UserSta.add(todays + "");
                     listener.onReceivedData(API_ID_USERSTA, UserSta, API_ID_ERROR);
                 }
 
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
 
             }
         });
@@ -4194,10 +4431,14 @@ public class RetrofitService extends HttpEngine {
                     double totalElements = 0;
                     Log.d("查询统计的用户信息", s);
                     Map<String, Object> map = response.body();
+                    List<Object> content = new ArrayList<>();
                     if (map.size() > 0) {
                         for (Map.Entry<String, Object> entry : map.entrySet()) {
                             if ("totalElements".equals(entry.getKey())) {
                                 totalElements = (double) entry.getValue();
+                            }
+                            if ("content".equals(entry.getKey())) {
+                                content = (List<Object>) entry.getValue();
                             }
                         }
                     }
@@ -4211,7 +4452,24 @@ public class RetrofitService extends HttpEngine {
                     ts.add(t);
                     if (totalElements > 0) {
                         List<TeamUserInfo> t1 = new ArrayList<TeamUserInfo>();
-                        String Content = s.substring(s.indexOf("content=[") + 9, s.indexOf("], number="));
+                        for (int i = 0; i < content.size(); i++) {
+                            List<Object> li = (List<Object>) content.get(i);
+                            TeamUserInfo team = new TeamUserInfo();
+                            team.setUid(RxUtils.getInstance().getInt(li.get(0)));
+                            team.setMine(RxUtils.getInstance().getInt(li.get(1)));
+                            team.setUtype(RxUtils.getInstance().getInt(li.get(2)));
+                            team.setName((String) li.get(3));
+                            team.setAmount((Double) li.get(4));
+                            team.setRebate_id(RxUtils.getInstance().getInt(li.get(5)));
+                            team.setRate((Double) li.get(6));
+                            team.setCreated((String) li.get(7));
+                            team.setLogin((String) li.get(8));
+                            team.setRtype(RxUtils.getInstance().getInt(li.get(9)));
+                            team.setStatus(RxUtils.getInstance().getInt(li.get(10)));
+                            team.setZu(RxUtils.getInstance().getInt(li.get(11)));
+                            t1.add(team);
+                        }
+                       /* String Content = s.substring(s.indexOf("content=[") + 9, s.indexOf("], number="));
                         String[] cs = Content.split(", ");
                         for (int i = 0; i < cs.length; i = i + 12) {
                             Log.d("会员管理Split", cs[i]);
@@ -4241,7 +4499,7 @@ public class RetrofitService extends HttpEngine {
                             team.setStatus(Integer.parseInt(status));
                             team.setZu(Integer.parseInt(zu));
                             t1.add(team);
-                        }
+                        }*/
                         ts.add(t1);
                     }
                     listener.onReceivedData(API_ID_TEAMUSERLIST, ts, API_ID_ERROR);

@@ -605,7 +605,7 @@ public interface ApiInterface {
     //查询追号记录
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/keep-number-list")
-    Call<Object> getKeepNum(
+    Call<Map<String, Object>> getKeepNum(
             @Query("AppClient") int num,
             @Query("page") int page,
             @Query("rows") int rows,
@@ -739,7 +739,7 @@ public interface ApiInterface {
     //53 个人报表彩票投注
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/betting-list")
-    Call<Object> getBettingList(
+    Call<Map<String, Object>> getBettingList(
             @Query("AppClient") int num,
             @Query("page") int page,
             @Query("rows") int rows,
@@ -818,7 +818,7 @@ public interface ApiInterface {
     //51 个人报表充提记录
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/recharge-withdraw-list")
-    Call<Object> getTeamReChargeWithDrawList(
+    Call<Map<String, Object>> getTeamReChargeWithDrawList(
             @Query("AppClient") int num,
             @Query("page") int page,
             @Query("rows") int rows,
@@ -975,7 +975,7 @@ public interface ApiInterface {
     //65 会员统计
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/users-statistics")
-    Call<Object> getUserStatistics(
+    Call<Map<String, Object>> getUserStatistics(
             @Query("AppClient") int num,
             @Query("reqkey") String reqkey,
             @Query("t") long t
