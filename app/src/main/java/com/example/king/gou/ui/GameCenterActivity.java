@@ -56,6 +56,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -149,6 +150,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
 
     private ArrayAdapter<String> adapterType1;
     private ArrayAdapter<String> adapterType2;
+    private ArrayAdapter<String> adapterTypeMoney;
     private AlertView alertView;
     // 一个自定义的布局，作为显示的内容
     View contentView;
@@ -484,7 +486,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 ms.add(switchGas.get(i1).getMinimum2());
                 ms.add(switchGas.get(i1).getCoefficient2());
                 ms.add(switchGas.get(i1).getRate2());
-            }
+            }MinAndMaxs.add(ms);
         }
 
         adapterType2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, name);
@@ -495,6 +497,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         SpinnerType2.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                AddMoneySpinner(position);
                 code = class_code.get(position);
                 GameTypeName = name.get(position);
                 nums = 0;
@@ -2976,6 +2979,21 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
 
             }
         });
+    }
+
+    private void AddMoneySpinner(int position) {
+        List<Double> lis = MinAndMaxs.get(position);
+        Double min = lis.get(0);
+        Double coe = lis.get(1);
+        Double rate = lis.get(2);
+        List<String> list = new ArrayList<>();
+        list.add(min + "");
+        list.add(min + coe * rate + "");
+        adapterTypeMoney = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        //第三步：为适配器设置下拉列表下拉时的菜单样式。
+        adapterTypeMoney.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //第四步：将适配器添加到下拉列表上
+        SpinnerMoney.setAdapter(adapterTypeMoney);
     }
 
     private void initClick() {
