@@ -3702,7 +3702,7 @@ public class RetrofitService extends HttpEngine {
                         SwitchG s = new SwitchG();
                         s.setId1(id);
                         s.setName1(nameOne);
-
+                        s.setRate(rate);
                         if (!"null".equals(o.get(2))) {
                             List<Object> o1 = new ArrayList<>();
                             if (o.get(2) == null) {
@@ -3711,19 +3711,29 @@ public class RetrofitService extends HttpEngine {
                                 o1 = (List<Object>) o.get(2);
                             }
                             List<SwitchG.SwitchGa> ssg = new ArrayList<SwitchG.SwitchGa>();
-                            Log.d("RES第二层List", o1.toString() + "  XXX");
+
                             for (int k = 0; k < o1.size(); k++) {
                                 List<Object> list2 = (List) o1.get(k);
+                                Log.d("RES第二层List", list2.toString() + "  XXX");
                                 Object id2 = (Object) list2.get(0);
                                 Object name2 = (Object) list2.get(1);
-                                Log.d("RES第二层", id2 + "   " + name2);
                                 SwitchG.SwitchGa ssa = new SwitchG.SwitchGa();
                                 ssa.setId2(id2);
                                 ssa.setName2(name2);
+                                String clacode = "";
                                 if (list2.get(2) instanceof String) {
-                                    String clacode = (String) list2.get(2);
+                                    clacode = (String) list2.get(2);
                                     ssa.setClass_code2(clacode);
                                 }
+                                if (list2.size() > 3) {
+                                    double coefficient22 = (double) list2.get(3);
+                                    double min22 = (double) list2.get(4);
+                                    Log.d("RES第二层11", id2 + "   " + name2 + "   " + coefficient22 + "   " + min22);
+                                    ssa.setMinimum2(min22);
+                                    ssa.setCoefficient2(coefficient22);
+                                    ssa.setRate2(rate);
+                                }
+
                                 ssg.add(ssa);
 
                                 List<Object> list3 = new ArrayList<>();
@@ -3736,13 +3746,19 @@ public class RetrofitService extends HttpEngine {
                                     Object id3 = (Object) ll.get(0);
                                     Object name3 = (Object) ll.get(1);
                                     String class_code3 = (String) ll.get(2);
-                                    Log.d("RES第三层", id3 + "   " + name3);
+                                    double coefficient = (double) ll.get(3);
+                                    double min = (double) ll.get(4);
+                                    Log.d("RES第三层", id3 + "   " + name3 + "   " + coefficient + "   " + min);
 
                                     SwitchG.SwitchGa.SwitchGam sssg = new SwitchG.SwitchGa.SwitchGam();
                                     sssg.setId3(id3);
                                     sssg.setName3(name3);
                                     sssg.setClass_code3(class_code3);
+                                    sssg.setMinimum3(min);
+                                    sssg.setCoefficient3(coefficient);
+                                    sssg.setRate3(rate);
                                     sga.add(sssg);
+
 
                                 }
                                 ssa.setSwitchGams(sga);
@@ -3755,12 +3771,17 @@ public class RetrofitService extends HttpEngine {
                                 Object id2 = (Object) list2.get(0);
                                 Object name2 = (Object) list2.get(1);
                                 String class_code2 = (String) list2.get(2);
-                                Log.d("RE第二层", id2 + "   " + name2);
+                                double coefficient = (double) list.get(3);
+                                double min = (double) list.get(4);
+                                Log.d("RE第二层22", id2 + "   " + name2 + "   " + coefficient + "   " + min);
                                 List<SwitchG.SwitchGa> ssg = new ArrayList<SwitchG.SwitchGa>();
                                 SwitchG.SwitchGa ssa = new SwitchG.SwitchGa();
                                 ssa.setId2(id2);
                                 ssa.setName2(name2);
                                 ssa.setClass_code2(class_code2);
+                                ssa.setMinimum2(min);
+                                ssa.setCoefficient2(coefficient);
+                                ssa.setRate2(rate);
                                 ssg.add(ssa);
                             }
                         }

@@ -407,7 +407,7 @@ public class LotteryFragment extends BaseFragment implements HttpEngine.DataList
                     Log.d("游戏中心Gid", gid + "");
                     String name = gids.get(section).get(position).getName();
                     Intent intent = new Intent(getActivity(), GameCenterActivity.class);
-                   /* Cursor cursor1 = db.rawQuery("select * from games where name=?", new String[]{name});
+                    Cursor cursor1 = db.rawQuery("select * from games where name=?", new String[]{name});
 
                     while (cursor1.moveToNext()) {
                        count1 = cursor1.getInt(4);
@@ -425,7 +425,7 @@ public class LotteryFragment extends BaseFragment implements HttpEngine.DataList
                         int Img = cursor.getInt(3);
                         int Count = cursor.getInt(4);
                         Log.d("游戏的数据库", Name + "  " + Gid + "  " + Img + "   " + Count);
-                    }*/
+                    }
                     intent.putExtra("gid", gid);
                     intent.putExtra("name", name);
                     intent.putExtra("position", position);

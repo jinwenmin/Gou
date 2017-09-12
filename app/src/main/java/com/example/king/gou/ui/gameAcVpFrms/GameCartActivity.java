@@ -149,6 +149,10 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
                 startActivity(intent);
                 break;
             case R.id.ToBettingAuto:
+                if (gid == 9 || gid == 10 || gid == 28) {
+                    Toasty.info(GameCartActivity.this, "该游戏没有追号功能", 2000).show();
+                    return;
+                }
                 alertView.show();
                 break;
             case R.id.ZhuiHaoMake:

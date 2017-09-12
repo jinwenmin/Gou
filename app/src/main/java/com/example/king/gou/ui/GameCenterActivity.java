@@ -179,6 +179,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     String vcode = "";//每一单投注单加密秘钥
     int nums = 0;
     List<String> name = null;
+    List<List<Double>> MinAndMaxs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -456,10 +457,11 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
 
     private void initSpinnerSelect() {
         name = new ArrayList<>();
+        MinAndMaxs = new ArrayList<>();
         final List<String> class_code = new ArrayList<>();
         List<SwitchG.SwitchGa> switchGas = sg.get(SpinnerType1.getSelectedItemPosition()).getSwitchGas();
         for (int i1 = 0; i1 < switchGas.size(); i1++) {
-
+            List<Double> ms = new ArrayList<>();
             List<SwitchG.SwitchGa.SwitchGam> switchGams1 = switchGas.get(i1).getSwitchGams();
             Log.d("GameCenterSwSize", switchGams1.size() + "");
             if (switchGams1.size() == 0) {
@@ -470,10 +472,18 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 for (int i2 = 0; i2 < switchGams.size(); i2++) {
                     name.add((String) switchGams.get(i2).getName3());
                     class_code.add(switchGams.get(i2).getClass_code3());
+                    Log.d("Min==", switchGams.get(i2).getMinimum3() + "  Coe==" + switchGams.get(i2).getCoefficient3() + "  Rate==" + switchGams.get(i2).getRate3());
+                    ms.add(switchGams.get(i2).getMinimum3());
+                    ms.add(switchGams.get(i2).getCoefficient3());
+                    ms.add(switchGams.get(i2).getRate3());
                 }
             } else if (switchGams1.size() == 0) {
                 name.add((String) switchGas.get(i1).getName2());
                 class_code.add(switchGas.get(i1).getClass_code2());
+                Log.d("Min==", switchGas.get(i1).getMinimum2() + "Coe" + switchGas.get(i1).getCoefficient2() + "  Rate==" + switchGas.get(i1).getRate2());
+                ms.add(switchGas.get(i1).getMinimum2());
+                ms.add(switchGas.get(i1).getCoefficient2());
+                ms.add(switchGas.get(i1).getRate2());
             }
         }
 
@@ -6109,87 +6119,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         return;
                     }
                     AddLottery();
-                   /* if (s.contains(",")) {
-                        String[] sp = s.split(",");
-                        for (int i = 0; i < sp.length; i++) {
-                            if ("star_3_next_group_diverse".equals(code)
-                                    || "2min_star_3_next_group_diverse".equals(code)
-                                    || "star_3_prev_group_diverse".equals(code)
-                                    || "2min_star_3_prev_group_diverse".equals(code)
-                                    || "star_3_midd_group_diverse".equals(code)
-                                    || "2min_star_3_midd_group_diverse".equals(code)) {
-                                String s1 = sp[i].substring(0, 1);
-                                String s2 = sp[i].substring(1, 2);
-                                String s3 = sp[i].substring(2, 3);
-                                if (s1.equals(s2) && s1.equals(s3) && s3.equals(s2)) {
-                                    Toasty.error(GameCenterActivity.this, "三个号码不能完全相同", 2000).show();
-                                    return;
-                                }
-                            }
-                            if ("star_2_next_group_single".equals(code)
-                                    || "2min_star_2_next_group_single".equals(code)
-                                    || "star_2_prev_group_single".equals(code)
-                                    || "2min_star_2_prev_group_single".equals(code)) {
-                                String s1 = sp[i].substring(0, 1);
-                                String s2 = sp[i].substring(1, 2);
-                                if (s1.equals(s2)) {
-                                    Toasty.error(GameCenterActivity.this, "两个号码不能完全相同", 2000).show();
-                                    return;
-                                }
-                            }
-                            locationText = "";
-                            location = "";
 
-
-                            pickedNumber = sp[i];
-
-                            Nums = Integer.parseInt(edit1.getText().toString().trim());
-                            nums = 1;
-                            amount = nums * 2;
-                            if (PriceUnit == 2) {
-                                amount = amount / 10;
-                            }
-                            if (PriceUnit == 3) {
-                                amount = amount / 100;
-                            }
-                            if (PriceUnit == 4) {
-                                amount = amount / 1000;
-                            }
-                            amount = amount * Nums;
-                            classCode = code;
-                            multiple = Nums;
-                            if (nums == 0) {
-                                return;
-                            }
-                            AddLottery();
-                        }
-                    } else {
-                        locationText = "";
-                        location = "";
-
-
-                        pickedNumber = s;
-
-                        Nums = Integer.parseInt(edit1.getText().toString().trim());
-                        nums = 1;
-                        amount = nums * 2;
-                        if (PriceUnit == 2) {
-                            amount = amount / 10;
-                        }
-                        if (PriceUnit == 3) {
-                            amount = amount / 100;
-                        }
-                        if (PriceUnit == 4) {
-                            amount = amount / 1000;
-                        }
-                        amount = amount * Nums;
-                        classCode = code;
-                        multiple = Nums;
-                        if (nums == 0) {
-                            return;
-                        }
-                        AddLottery();
-                    }*/
                     return;
                 }
                 if (
@@ -6624,10 +6554,10 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                         }
                                     }
                                 }
-                            } else {
+                            }/* else {
                                 Toasty.error(GameCenterActivity.this, "投注内容不足", 2000).show();
                                 return;
-                            }
+                            }*/
                         }
 
                     }
@@ -8072,6 +8002,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         String s = SendGameNum.getText().toString();
         int num = Integer.parseInt(s);
         SendGameNum.setText(num + 1 + "");
+
 
     }
 

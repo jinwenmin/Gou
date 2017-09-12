@@ -340,7 +340,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         Log.d("重新显示", hidden + "");
-       /* if (!hidden) {
+        if (!hidden) {
             Cursor cursor = db.rawQuery("select * from games order by count desc", null);
             List<HistoryGames> hs = new ArrayList<>();
             while (cursor.moveToNext()) {
@@ -356,7 +356,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 hs.add(h);
             }
             adapters.addList(hs);
-        }*/
+        }
     }
 
     @Override
