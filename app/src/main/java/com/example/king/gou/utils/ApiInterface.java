@@ -1262,7 +1262,7 @@ public interface ApiInterface {
 
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/betting/submit/{gid}")
-    Call<Map<String, Object>> getSendBetting(
+    Call<RestultInfo> getSendBetting(
             @Path("gid") int gid,
             @Query("AppClient") int num,
             @Query("amount") double amount,

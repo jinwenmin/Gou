@@ -3,7 +3,6 @@ package com.example.king.gou.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.IdRes;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -35,7 +34,6 @@ import com.bigkoo.alertview.OnItemClickListener;
 import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.DrawHistoryAdapter;
-import com.example.king.gou.bean.Arrays;
 import com.example.king.gou.bean.BettingSync;
 import com.example.king.gou.bean.Ids;
 import com.example.king.gou.bean.RecordList;
@@ -45,29 +43,18 @@ import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.ui.gameAcVpFrms.GameCartActivity;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
-import com.google.gson.Gson;
 import com.zhy.autolayout.AutoLayoutActivity;
-
-import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
-import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
-
-import static com.example.king.gou.R.id.linear1;
-import static com.example.king.gou.R.id.radion1;
-import static com.example.king.gou.R.id.text;
-import static com.example.king.gou.R.id.wan;
 
 
 public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine.DataListener, View.OnClickListener, OnItemClickListener {
@@ -111,14 +98,14 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     TextView edit1;
     @BindView(R.id.add)
     TextView add;
-    @BindView(R.id.radion1)
-    RadioButton radion1;
-    @BindView(R.id.radion2)
-    RadioButton radion2;
-    @BindView(R.id.radion3)
-    RadioButton radion3;
-    @BindView(R.id.radion4)
-    RadioButton radion4;
+    /* @BindView(R.id.radion1)
+     RadioButton radion1;
+     @BindView(R.id.radion2)
+     RadioButton radion2;
+     @BindView(R.id.radion3)
+     RadioButton radion3;
+     @BindView(R.id.radion4)
+     RadioButton radion4;*/
     @BindView(R.id.SpinnerMoney)
     Spinner SpinnerMoney;
     @BindView(R.id.GameCentertitle)
@@ -127,10 +114,12 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     RelativeLayout AddGameNumBtn;
     @BindView(R.id.SendGameNum)
     TextView SendGameNum;
-    @BindView(R.id.RadioGroupGameCenter)
-    RadioGroup RadioGroupGameCenter;
+    /*@BindView(R.id.RadioGroupGameCenter)
+    RadioGroup RadioGroupGameCenter;*/
     @BindView(R.id.ToGameCert)
     RelativeLayout ToGameCert;
+    @BindView(R.id.LinearMoneyGetCheck)
+    LinearLayout LinearMoneyGetCheck;
 
     private int TIME = 1000;  //每隔1s执行一次.
 
@@ -486,7 +475,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 ms.add(switchGas.get(i1).getMinimum2());
                 ms.add(switchGas.get(i1).getCoefficient2());
                 ms.add(switchGas.get(i1).getRate2());
-            }MinAndMaxs.add(ms);
+            }
+            MinAndMaxs.add(ms);
         }
 
         adapterType2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, name);
@@ -3001,7 +2991,35 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         cut.setOnClickListener(this);
         add.setOnClickListener(this);
         AddGameNumBtn.setOnClickListener(this);
-        RadioGroupGameCenter.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        for (int i = 0; i < LinearMoneyGetCheck.getChildCount(); i++) {
+            CheckBox at = (CheckBox) LinearMoneyGetCheck.getChildAt(i);
+            final int finalI = i;
+            at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        if (finalI == 0) {
+                            PriceUnit = 1;
+                        }
+                        if (finalI == 1) {
+                            PriceUnit = 2;
+                        }
+                        if (finalI == 2) {
+                            PriceUnit = 3;
+                        }
+                        if (finalI == 3) {
+                            PriceUnit = 4;
+                        }
+                        for (int i1 = 0; i1 < LinearMoneyGetCheck.getChildCount(); i1++) {
+                            if (i1 != finalI) {
+                                ((CheckBox) LinearMoneyGetCheck.getChildAt(i1)).setChecked(false);
+                            }
+                        }
+                    }
+                }
+            });
+        }
+     /*   RadioGroupGameCenter.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
                 if (i == R.id.radion1) {
@@ -3018,7 +3036,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 }
                 Log.d("PriceUnit", PriceUnit + "");
             }
-        });
+        });*/
         ToGameCert.setOnClickListener(this);
     }
 
@@ -4107,21 +4125,22 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     int c1 = 0;
                     int c2 = 0;
                     int c3 = 0;
+
                     for (int i = 0; i < gn1.length; i++) {
-                        if (gn1[i] != "") {
-                            Log.d("11选五三码直选1", gn1[i]);
+                        if (gn1[i] != null) {
+                            Log.d("11选五三码直选1", gn1[i] + "");
                             c1++;
                         }
                     }
                     for (int i = 0; i < gn2.length; i++) {
-                        if (gn2[i] != "") {
-                            Log.d("11选五三码直选2", gn2[i]);
+                        if (gn2[i] != null) {
+                            Log.d("11选五三码直选2", gn2[i] + "");
                             c2++;
                         }
                     }
                     for (int i = 0; i < gn3.length; i++) {
-                        if (gn3[i] != "") {
-                            Log.d("11选五三码直选3", gn3[i]);
+                        if (gn3[i] != null) {
+                            Log.d("11选五三码直选3", gn3[i] + "");
                             c3++;
                         }
                     }
@@ -7404,6 +7423,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 amount = amount * Nums;
                 classCode = code;
                 multiple = Nums;
+                priceType = SpinnerMoney.getSelectedItemPosition();
                 TextView Zhu = (TextView) contentView.findViewById(R.id.Zhu);
                 TextView Amounts = (TextView) contentView.findViewById(R.id.GameAmounts);
                 TextView TouZhuContent = (TextView) contentView.findViewById(R.id.TouZhuContent);
@@ -8006,7 +8026,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         ids.setNum(nums);
         ids.setClassCode(classCode);
         ids.setPriceUnit(PriceUnit);
-        ids.setPriceType(1);
+        ids.setPriceType(priceType);
         ids.setAmount(amount);
         ids.setMultiple(multiple);
         ids.setAmounts(amount);

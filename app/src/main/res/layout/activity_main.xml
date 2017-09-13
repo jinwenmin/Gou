@@ -52,7 +52,7 @@
             android:button="@null"
             android:drawableTop="@drawable/select_find"
             android:gravity="center_horizontal"
-            android:text="发现"
+            android:text="活动"
             android:textColor="@color/select_radiobtn_color" />
 
 

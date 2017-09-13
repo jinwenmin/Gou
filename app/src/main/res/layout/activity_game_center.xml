@@ -38,9 +38,9 @@
         android:orientation="vertical">
 
         <RelativeLayout
-            android:layout_marginBottom="10px"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10px">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -81,11 +81,63 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/LinearMoneyGetCheck"
                 android:layout_width="wrap_content"
                 android:layout_height="50px"
-                android:layout_centerInParent="true">
+                android:layout_centerInParent="true"
+                android:orientation="horizontal">
 
-                <RadioGroup
+                <CheckBox
+                    android:checked="true"
+                    android:layout_width="50px"
+                    android:layout_height="50px"
+                    android:layout_marginLeft="5px"
+                    android:layout_marginRight="5px"
+                    android:gravity="center"
+                    android:text="元"
+                    android:textColor="@color/select_gamecolor1"
+                    android:textSize="30px"
+                    android:button="@null"
+                    android:background="@drawable/item_gamemoney_type_select" />
+
+                <CheckBox
+                    android:id="@+id/checkBox"
+                    android:layout_width="50px"
+                    android:layout_height="50px"
+                    android:layout_marginLeft="5px"
+                    android:layout_marginRight="5px"
+                    android:gravity="center"
+                    android:text="角"
+                    android:button="@null"
+                    android:textColor="@color/select_gamecolor1"
+                    android:textSize="30px"
+                    android:background="@drawable/item_gamemoney_type_select" />
+
+                <CheckBox
+                    android:layout_width="50px"
+                    android:layout_height="50px"
+                    android:layout_marginLeft="5px"
+                    android:layout_marginRight="5px"
+                    android:gravity="center"
+                    android:text="分"
+                    android:button="@null"
+                    android:textColor="@color/select_gamecolor1"
+                    android:textSize="30px"
+                    android:background="@drawable/item_gamemoney_type_select" />
+
+                <CheckBox
+                    android:layout_width="50px"
+                    android:layout_height="50px"
+                    android:layout_marginLeft="5px"
+                    android:layout_marginRight="5px"
+                    android:gravity="center"
+                    android:text="厘"
+                    android:button="@null"
+                    android:textColor="@color/select_gamecolor1"
+                    android:textSize="30px"
+                    android:background="@drawable/item_gamemoney_type_select" />
+                <!--<RadioGroup
+
                     android:id="@+id/RadioGroupGameCenter"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -136,7 +188,7 @@
                         android:text="厘"
                         android:textColor="@color/select_gamecolor1"
                         android:textSize="40px" />
-                </RadioGroup>
+                </RadioGroup>-->
 
             </LinearLayout>
 

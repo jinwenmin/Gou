@@ -21,6 +21,7 @@ import com.example.king.gou.R;
 import com.example.king.gou.adapters.GameCertAdapter;
 import com.example.king.gou.adapters.MakeZhuiHaoAdapter;
 import com.example.king.gou.bean.Ids;
+import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.bean.ZhuiHaoCNum;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.ui.CNumberActivity;
@@ -85,7 +86,7 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
         editBeiNum = ((EditText) contentView.findViewById(R.id.EditBeiNum));
         editQiNum = ((EditText) contentView.findViewById(R.id.EditQiNum));
         listZhuiH = ((ListView) contentView.findViewById(R.id.ZhuiHaoList));
-        ZhuiHaoCheck = ((CheckBox) contentView.findViewById(R.id.ZhuiHaoCheck));
+        ZhuiHaoCheck = ((CheckBox) contentView.findViewById(R.id.ZhuiHaoStop));
         listZhuiH.setAdapter(Zhadapter);
         ZhuiHaoMake.setOnClickListener(this);
         alertView.addExtView(contentView);
@@ -188,6 +189,16 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
                 Zhadapter.addList(adapterData);
             }
         }
+        if (apiId== RetrofitService.API_ID_SENDBETTING) {
+            if (object!=null) {
+                RestultInfo restultInfo= (RestultInfo) object;
+                if (restultInfo.isRc()) {
+                    Toasty.success(GameCartActivity.this,restultInfo.getMsg(),2000).show();
+                }else{
+                    Toasty.error(GameCartActivity.this,restultInfo.getMsg(),2000).show();
+                }
+            }
+        }
     }
 
     @Override
@@ -224,6 +235,10 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
                 ids.add(map);
             }
             List<Map<String, Object>> ars = new ArrayList<>();
+            if (zhCNum==null) {
+                Toasty.info(GameCartActivity.this,"没有追号列表",2000).show();
+                return;
+            }
             for (int i = 0; i < zhCNum.size(); i++) {
                 Map<String, Object> map = new HashMap();
                 LinearLayout v = (LinearLayout) listZhuiH.getChildAt(i);

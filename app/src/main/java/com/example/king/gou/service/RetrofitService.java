@@ -182,6 +182,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_SWITCHGAME = 72;//获取游戏玩法详情
     public static int API_ID_BEETING_AUTO = 73;//获取追号信息
     public static int API_ID_USERBETTING = 74;//个人报表彩票投注
+    public static int API_ID_SENDBETTING = 75;//提交购彩单
 
     private Retrofit retrofit;
     private ApiInterface apiInterface;
@@ -3519,7 +3520,7 @@ public class RetrofitService extends HttpEngine {
                 @Query("reqkey") String reqkey,
                 @Query("t") long t*/
     //提交购彩单
-    public void getSendBetting(DataListener listener, int gid, String vcode1, String ids, String period, String array, double amount, int stopByWin) {
+    public void getSendBetting(final DataListener listener, int gid, String vcode1, String ids, String period, String array, double amount, int stopByWin) {
         long currentThreadTimeMillis = System.currentTimeMillis();
         Map map = new HashMap();
         map.put("vcode1", vcode1 + "");
@@ -3529,25 +3530,26 @@ public class RetrofitService extends HttpEngine {
         map.put("amount", amount + "");
         map.put("stopByWin", stopByWin + "");
         String reqkey = RxUtils.getInstance().getReqkey(map, currentThreadTimeMillis);
-        Call<Map<String, Object>> sendBetting = apiInterface.getSendBetting(gid, 1, amount, array, ids, period, reqkey, stopByWin, currentThreadTimeMillis, vcode1);
+        Call<RestultInfo> sendBetting = apiInterface.getSendBetting(gid, 1, amount, array, ids, period, reqkey, stopByWin, currentThreadTimeMillis, vcode1);
         String s = sendBetting.request().toString();
         Request request = sendBetting.request();
-        List<String> list = request.url().encodedPathSegments();
+        final List<String> list = request.url().encodedPathSegments();
 
         Log.d("提交购彩单的请求整体", s);
-        Call<Map<String, Object>> clone = sendBetting.clone();
-        clone.enqueue(new Callback<Map<String, Object>>() {
+        Call<RestultInfo> clone = sendBetting.clone();
+        clone.enqueue(new Callback<RestultInfo>() {
             @Override
-            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
                 int code = response.code();
                 Log.d("提交购彩单Code==", code + "");
                 if (code == 200) {
                     Log.d("提交购彩单", response.body().toString());
+                    listener.onReceivedData(API_ID_SENDBETTING,response.body(),API_ID_ERROR);
                 }
             }
 
             @Override
-            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
                 Log.d("提交购彩单Error", t.toString());
             }
         });
