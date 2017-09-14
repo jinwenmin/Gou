@@ -38,7 +38,8 @@ import retrofit2.http.Url;
 
 public interface ApiInterface {
     //默认的服务器地址
-    public final static String HOST = "http://vipfacaiflvbceshi.com";
+    // public final static String HOST = "http://vipfacaiflvbceshi.com";
+    public final static String HOST = "http://23.88.226.5";
 
     //登陆
     @Headers("X-Requested-With: XMLHttpRequest")

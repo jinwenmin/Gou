@@ -223,7 +223,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
                 startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;
             case R.id.frmMyMsg:
-                startActivity(new Intent(getActivity(), MessageActivity.class));
+                //startActivity(new Intent(getActivity(), MessageActivity.class));
                 break;
             case R.id.frmMyNotice:
                 startActivity(new Intent(getActivity(), NoticeActivity.class));

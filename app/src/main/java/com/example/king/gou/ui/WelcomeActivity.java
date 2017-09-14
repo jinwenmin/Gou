@@ -23,7 +23,7 @@ import it.sephiroth.android.library.picasso.Picasso;
 
 public class WelcomeActivity extends AutoLayoutActivity {
     String[] path = new String[]{
-            "file:///android_asset/bg_loading_page2.webp", "file:///android_asset/bg_loading_page.webp"
+            "file:///android_asset/welcome1.jpg", "file:///android_asset/welcome2.jpg"
     };
 
     @BindView(R.id.welcome_bg)

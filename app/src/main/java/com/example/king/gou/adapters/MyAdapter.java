@@ -72,7 +72,7 @@ public class MyAdapter extends SectionedBaseAdapter {
 
         int gameimg = gameIms.get(section).getGameIms().get(position).getGameimg();
         viewHolder.img.setBackgroundResource(gameimg);
-        // Picasso.with(context).load(gameimg).into(viewHolder.img);
+//         Picasso.with(context).load(gameimg).into(viewHolder.img);
         String imgText = gameIms.get(section).getGameIms().get(position).getImgText();
         viewHolder.name.setText(imgText);
         return convertView;

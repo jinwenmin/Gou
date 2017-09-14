@@ -21,6 +21,7 @@ import com.example.king.gou.bean.Login;
 import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.ui.settingfragment.UpDateFirstPwdActivity;
+import com.example.king.gou.utils.ApiInterface;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
 import com.google.gson.Gson;
@@ -116,7 +117,7 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
         return "";
     }
 
-    private void Login2() {
+    /*private void Login2() {
         OkHttpClient okHttpClient = new OkHttpClient();
         Request.Builder requestBuilder = new Request.Builder().url("http://vipfacaiflvbceshi.com/chat-message?luid=2047&uonline=1&type=1");
         //可以省略，默认是GET请求
@@ -135,7 +136,7 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
                 System.out.println("SessionCook==" + sessionCookie);
             }
         });
-    }
+    }*/
 
 
     private void initNameAndPwd() {
@@ -194,7 +195,7 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
         Log.i("时间戳SHA256消息", s1);
 
         OkHttpClient okHttpClient = new OkHttpClient();
-        Request.Builder requestBuilder = new Request.Builder().url("http://vipfacaiflvbceshi.com/signin?AppClient=1&u=" + Login_UserName + "&p=" + password + "&ipwd=" + false + "&reqkey=" + rekey + "&t=" + timeMillis);
+        Request.Builder requestBuilder = new Request.Builder().url(ApiInterface.HOST + "/signin?AppClient=1&u=" + Login_UserName + "&p=" + password + "&ipwd=" + false + "&reqkey=" + rekey + "&t=" + timeMillis);
         // Request.Builder requestBuilder = new Request.Builder().url("http://vipfacaiflvbceshi.com/logout");
         // requestBuilder.addHeader( "XMLHttpRequest","X-Requested-With");
         //可以省略，默认是GET请求

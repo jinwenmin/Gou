@@ -166,14 +166,14 @@ public class RxUtils {
         return hs.toString().toUpperCase();
     }
 
-    public OkHttpClient Http() {
+    /*public OkHttpClient Http() {
         OkHttpClient okHttpClient = new OkHttpClient();
         Request.Builder requestBuilder = new Request.Builder().url("http://vipfacaiflvbceshi.com/logout");
 //可以省略，默认是GET请求
         requestBuilder.method("GET", null);
 
         return okHttpClient;
-    }
+    }*/
 
     public String Dates(long time) {
 

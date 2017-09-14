@@ -96,16 +96,19 @@ public class RegisterActivity extends AutoLayoutActivity implements HttpEngine.D
     @Override
     public void onReceivedData(int apiId, Object object, int errorId) {
         if (apiId == RetrofitService.API_ID_IMAGECHECK) {
-            final Bitmap imgs = (Bitmap) object;
-            Log.d("imgs==", imgs.toString());
-            //ImageYZM.addView(imgs);
-            // Picasso.with(this).load(imgs).into(ImageYZM);
-            new Runnable() {
-                @Override
-                public void run() {
-                    ImageYZM.setImageBitmap(imgs);
-                }
-            }.run();
+            if (object != null) {
+                final Bitmap imgs = (Bitmap) object;
+                Log.d("imgs==", imgs.toString());
+                //ImageYZM.addView(imgs);
+                // Picasso.with(this).load(imgs).into(ImageYZM);
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        ImageYZM.setImageBitmap(imgs);
+                    }
+                }.run();
+            }
+
 
 
         }
