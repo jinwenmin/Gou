@@ -7429,7 +7429,12 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 TextView TouZhuContent = (TextView) contentView.findViewById(R.id.TouZhuContent);
                 TextView GameType = (TextView) contentView.findViewById(R.id.GameType);
                 GameType.setText(GameTypeName);
-                TouZhuContent.setText(pickedNumber);
+                if (pickedText != "") {
+                    TouZhuContent.setText(pickedText);
+                } else {
+
+                    TouZhuContent.setText(pickedNumber);
+                }
                 Zhu.setText(nums + "");
                 Amounts.setText(amount + "");
                 if (nums > 0)
