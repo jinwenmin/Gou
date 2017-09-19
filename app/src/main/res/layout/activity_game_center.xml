@@ -194,7 +194,7 @@
 
             <Spinner
                 android:id="@+id/SpinnerMoney"
-                android:layout_width="200px"
+                android:layout_width="250px"
                 android:layout_height="50px"
                 android:layout_alignParentRight="true"></Spinner>
         </RelativeLayout>
@@ -388,6 +388,7 @@
                     android:src="@drawable/shake_on_green" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/MoneyCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -397,6 +398,7 @@
                     android:textSize="20px" />
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"

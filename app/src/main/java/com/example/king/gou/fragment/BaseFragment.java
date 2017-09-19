@@ -32,7 +32,7 @@ public class BaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        RefWatcher refWatcher = MyApp.getRefWatcher(getActivity());
-        refWatcher.watch(this);
+        //RefWatcher refWatcher = MyApp.getRefWatcher(getActivity());
+        // refWatcher.watch(this);
     }
 }

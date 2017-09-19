@@ -36,6 +36,7 @@ import com.example.king.gou.R;
 import com.example.king.gou.adapters.DrawHistoryAdapter;
 import com.example.king.gou.bean.BettingSync;
 import com.example.king.gou.bean.Ids;
+import com.example.king.gou.bean.Rates;
 import com.example.king.gou.bean.RecordList;
 import com.example.king.gou.bean.SwitchG;
 import com.example.king.gou.fragment.FindFragment;
@@ -170,7 +171,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     String vcode = "";//每一单投注单加密秘钥
     int nums = 0;
     List<String> name = null;
-    List<List<Double>> MinAndMaxs;
+    List<Rates> MinAndMaxs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -463,20 +464,33 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 for (int i2 = 0; i2 < switchGams.size(); i2++) {
                     name.add((String) switchGams.get(i2).getName3());
                     class_code.add(switchGams.get(i2).getClass_code3());
+                    Log.d("ClassCode", switchGams.get(i2).getClass_code3());
                     Log.d("Min==", switchGams.get(i2).getMinimum3() + "  Coe==" + switchGams.get(i2).getCoefficient3() + "  Rate==" + switchGams.get(i2).getRate3());
-                    ms.add(switchGams.get(i2).getMinimum3());
+                    Rates rates = new Rates();
+                    rates.setRate(switchGams.get(i2).getRate3());
+                    rates.setCoefficient(switchGams.get(i2).getCoefficient3());
+                    rates.setMinimum(switchGams.get(i2).getMinimum3());
+                   /* ms.add(switchGams.get(i2).getMinimum3());
                     ms.add(switchGams.get(i2).getCoefficient3());
-                    ms.add(switchGams.get(i2).getRate3());
+                    ms.add();*/
+                    MinAndMaxs.add(rates);
                 }
             } else if (switchGams1.size() == 0) {
                 name.add((String) switchGas.get(i1).getName2());
                 class_code.add(switchGas.get(i1).getClass_code2());
+                Log.d("ClassCode", switchGas.get(i1).getClass_code2());
                 Log.d("Min==", switchGas.get(i1).getMinimum2() + "Coe" + switchGas.get(i1).getCoefficient2() + "  Rate==" + switchGas.get(i1).getRate2());
-                ms.add(switchGas.get(i1).getMinimum2());
+             /*   ms.add(switchGas.get(i1).getMinimum2());
                 ms.add(switchGas.get(i1).getCoefficient2());
-                ms.add(switchGas.get(i1).getRate2());
+                ms.add(switchGas.get(i1).getRate2());*/
+                Rates rates = new Rates();
+                rates.setRate(switchGas.get(i1).getRate2());
+                rates.setCoefficient(switchGas.get(i1).getCoefficient2());
+                rates.setMinimum(switchGas.get(i1).getMinimum2());
+                MinAndMaxs.add(rates);
             }
-            MinAndMaxs.add(ms);
+            // MinAndMaxs.add(ms);
+            Log.d("MinAndMaxsSize", MinAndMaxs.size() + "");
         }
 
         adapterType2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, name);
@@ -2972,10 +2986,11 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     }
 
     private void AddMoneySpinner(int position) {
-        List<Double> lis = MinAndMaxs.get(position);
-        Double min = lis.get(0);
-        Double coe = lis.get(1);
-        Double rate = lis.get(2);
+        Rates rates = MinAndMaxs.get(position);
+
+        Double min = rates.getMinimum();
+        Double coe = rates.getCoefficient();
+        Double rate = rates.getRate();
         List<String> list = new ArrayList<>();
         list.add(min + "");
         list.add(min + coe * rate + "");
