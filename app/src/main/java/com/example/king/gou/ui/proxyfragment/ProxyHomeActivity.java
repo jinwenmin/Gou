@@ -87,6 +87,7 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
     private TextView proxyName;
     private EditText setTrans;
     SreCharge sreCharge;
+    private TextView username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,7 +187,7 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
             case 3:
                 //  RetrofitService.getInstance().getTquotaData(this, uid);
                 RetrofitService.getInstance().getTeamUsersParent(this, uid);
-                RetrofitService.getInstance().getSreChargeData(this, uid);
+                RetrofitService.getInstance().getSreChargeData2(this, uid);
                 /*proxyName = ((TextView) contentView2.findViewById(R.id.proxy_name));
                 proxyName.setText(name);
                 setTrans = ((EditText) contentView2.findViewById(R.id.Proxy_setTrans));
@@ -294,6 +295,8 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
             }
 
             proxyName = ((TextView) contentView2.findViewById(R.id.proxy_name));
+            username = ((TextView) contentView2.findViewById(R.id.UserTitle));
+            username.setText("保存上级充值");
             proxyName.setText(sreCharge.getRuser());
             setTrans = ((EditText) contentView2.findViewById(R.id.Proxy_setTrans));
             SreChargeMin = sreCharge.getMin1();
@@ -308,18 +311,16 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
         }
         if (apiId == RetrofitService.API_ID_SRECHARGE2) {
             sreCharge = (SreCharge) object;
-            if (sreCharge.getStype() == 0) {
-                Toasty.error(this, "没有充值权限", 2000).show();
+            if (sreCharge.isDtype()==false) {
+                Toasty.error(this, "没有权限日工资充值", 2000).show();
                 return;
             }
-            if (sreCharge.getStype() == 1) {
-                Toasty.success(this, "直属下级可充值", 2000).show();
+            if (sreCharge.isDtype() ==true) {
+                Toasty.success(this, "有权限日工资充值", 2000).show();
             }
-            if (sreCharge.getStype() == 2) {
-                Toasty.success(this, "所有下级可充值", 2000).show();
-            }
-
             proxyName = ((TextView) contentView2.findViewById(R.id.proxy_name));
+            username = ((TextView) contentView2.findViewById(R.id.UserTitle));
+            username.setText("保存日工资充值");
             proxyName.setText(sreCharge.getRuser());
             setTrans = ((EditText) contentView2.findViewById(R.id.Proxy_setTrans));
             SreChargeMin = sreCharge.getMin1();

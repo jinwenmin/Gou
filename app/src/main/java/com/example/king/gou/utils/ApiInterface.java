@@ -1070,7 +1070,7 @@ public interface ApiInterface {
     //72 获取上级充值数据
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/srecharge-data")
-    Call<Object> getSreChargeData(
+    Call<Map<String,Object>> getSreChargeData(
             @Query("AppClient") int num,
             @Query("uid") int uid,//需要设置返点的用户id
             @Query("reqkey") String reqkey,

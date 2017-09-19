@@ -155,7 +155,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_UREBATEDATA = 44;//查询会员返点
     public static int API_ID_SETRATESAVE = 45;//查询会员返点
     public static int API_ID_SRECHARGE = 46;//获取上级充值数据
-    public static int API_ID_SRECHARGE2 = 47;//获取上级充值数据
+    public static int API_ID_SRECHARGE2 = 47;//获取上级充值数据2
     public static int API_ID_OWNTRANSFER = 48;//给下级充值
     public static int API_ID_ACTIVITYLIST = 49;//获取活动列表
     public static int API_ID_ACTIVITYDETAIL = 50;//获取活动详情
@@ -3544,7 +3544,7 @@ public class RetrofitService extends HttpEngine {
                 Log.d("提交购彩单Code==", code + "");
                 if (code == 200) {
                     Log.d("提交购彩单", response.body().toString());
-                    listener.onReceivedData(API_ID_SENDBETTING,response.body(),API_ID_ERROR);
+                    listener.onReceivedData(API_ID_SENDBETTING, response.body(), API_ID_ERROR);
                 }
             }
 
@@ -4863,55 +4863,221 @@ public class RetrofitService extends HttpEngine {
         Map<String, String> map = new HashMap<>();
         map.put("uid", uid + "");
         final String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> SreChargeData = apiInterface.getSreChargeData(1, uid, reqkey, currentTimeMillis);
-        Call<Object> clone = SreChargeData.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<Map<String, Object>> SreChargeData = apiInterface.getSreChargeData(1, uid, reqkey, currentTimeMillis);
+        Call<Map<String, Object>> clone = SreChargeData.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 if (response.code() == 200) {
                     String s = response.body().toString();
                     Log.d("获取上级充值数据", s);
-                    String others = s.substring(s.indexOf("others={") + 8, s.length() - 2);
+                    Map<String, Object> map = response.body();
+                    Map<String, Object> others = new HashMap<>();
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if (entry.getKey().equals("others")) {
+                                others = (Map<String, Object>) entry.getValue();
+                            }
+                        }
+                    }
+                /*    String others1 = s.substring(s.indexOf("others={") + 8, s.length() - 2);
                     String[] so = others.split(", ");
                     for (int i = 0; i < so.length; i++) {
                         Log.d("获取上级充值数据Split", so[i]);
                     }
-                    int i = 0;
-                    String ruser = so[i].substring(so[i].indexOf("ruser=") + 6, so[i].length());
-                    String username = so[i + 1].substring(so[i + 1].indexOf("username=") + 9, so[i + 1].length());
-                    String haspass = so[i + 2].substring(so[i + 2].indexOf("haspass=") + 8, so[i + 2].length());
-                    String hassqas = so[i + 3].substring(so[i + 3].indexOf("hassqas=") + 8, so[i + 3].length());
-                    String q = so[i + 4].substring(so[i + 4].indexOf("q=") + 2, so[i + 4].length());
-                    String amounts1 = so[i + 5].substring(so[i + 5].indexOf("amounts1=") + 9, so[i + 5].length());
-                    String min1 = so[i + 6].substring(so[i + 6].indexOf("min1=") + 5, so[i + 6].length());
-                    String max1 = so[i + 7].substring(so[i + 7].indexOf("max1=") + 5, so[i + 7].length());
-                    String amounts2 = so[i + 8].substring(so[i + 8].indexOf("amounts2=") + 9, so[i + 8].length());
-                    String min2 = so[i + 9].substring(so[i + 9].indexOf("min2=") + 5, so[i + 9].length());
-                    String max2 = so[i + 10].substring(so[i + 10].indexOf("max2=") + 5, so[i + 10].length());
-                    String stype = so[i + 11].substring(so[i + 11].indexOf("stype=") + 6, so[i + 11].length() - 2);
-                    String dtype = so[i + 12].substring(so[i + 12].indexOf("dtype=") + 6, so[i + 12].length());
+                    int i = 0;*/
+                    String ruser = null;
+                    String username = null;
+                    Boolean haspass = false;
+                    Boolean hassqas = false;
+                    String q = null;
+                    Double amounts1 = null;
+                    Double min1= null;
+                    Double max1= null;
+                    Double amounts2= null;
+                    Double min2= null;
+                    Double max2= null;
+                    int stype= 0;
+                    Boolean dtype= null;
+                    if (others.size() > 0) {
+                        for (Map.Entry<String, Object> entry : others.entrySet()) {
+                            if (entry.getKey().equals("ruser")) {
+                                ruser = (String) entry.getValue();
+                            }
+                            if (entry.getKey().equals("username")) {
+                                username = (String) entry.getValue();
+                            }
+                            if (entry.getKey().equals("haspass")) {
+                                haspass = (Boolean) entry.getValue();
+                            }
+                            if (entry.getKey().equals("hassqas")) {
+                                hassqas = (Boolean) entry.getValue();
+                            }
+                            if (entry.getKey().equals("q")) {
+                                q = (String) entry.getValue();
+                            }
+                            if (entry.getKey().equals("amounts1")) {
+                                amounts1 = (Double) entry.getValue();
+                            }
+                            if (entry.getKey().equals("min1")) {
+                                min1 = (Double) entry.getValue();
+                            }
+                            if (entry.getKey().equals("max1")) {
+                                max1 = (Double) entry.getValue();
+                            }
+                            if (entry.getKey().equals("amounts2")) {
+                                amounts2 = (Double) entry.getValue();
+                            }
+                            if (entry.getKey().equals("min2")) {
+                                min2 = (Double) entry.getValue();
+                            }
+                            if (entry.getKey().equals("max2")) {
+                                max2 = (Double) entry.getValue();
+                            }
+                            if (entry.getKey().equals("stype")) {
+                                double styped = (Double) entry.getValue();
+                                stype = RxUtils.getInstance().getInt(styped);
+                            }if (entry.getKey().equals("dtype")) {
+
+                                dtype = (Boolean) entry.getValue();
+                            }
+                        }
+                    }
+
+
                     SreCharge sreCharge = new SreCharge();
                     sreCharge.setRuser(ruser);
                     sreCharge.setUsername(username);
-                    sreCharge.setHaspass(Boolean.parseBoolean(haspass));
-                    sreCharge.setHassqas(Boolean.parseBoolean(hassqas));
+                    sreCharge.setHaspass(haspass);
+                    sreCharge.setHassqas(hassqas);
                     sreCharge.setQ(q);
-                    sreCharge.setAmounts1(Double.parseDouble(amounts1));
-                    sreCharge.setAmounts2(Double.parseDouble(amounts2));
-                    sreCharge.setMin1(Double.parseDouble(min1));
-                    sreCharge.setMin2(Double.parseDouble(min2));
-                    sreCharge.setMax1(Double.parseDouble(max1));
-                    sreCharge.setMax2(Double.parseDouble(max2));
-                    sreCharge.setStype(Integer.parseInt(stype));
-                    sreCharge.setDtype(Boolean.parseBoolean(dtype));
+                    sreCharge.setAmounts1(amounts1);
+                    sreCharge.setAmounts2(amounts2);
+                    sreCharge.setMin1(min1);
+                    sreCharge.setMin2(min2);
+                    sreCharge.setMax1(max1);
+                    sreCharge.setMax2(max2);
+                    sreCharge.setStype(stype);
+                    sreCharge.setDtype(dtype);
                     listener.onReceivedData(API_ID_SRECHARGE, sreCharge, API_ID_ERROR);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+
+            }
+        });
+    } //获取上级充值数据
+    public void getSreChargeData2(final DataListener listener, int uid) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", uid + "");
+        final String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Map<String, Object>> SreChargeData = apiInterface.getSreChargeData(1, uid, reqkey, currentTimeMillis);
+        Call<Map<String, Object>> clone = SreChargeData.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
+            @Override
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
+                if (response.code() == 200) {
+                    String s = response.body().toString();
+                    Log.d("获取上级充值数据", s);
+                    Map<String, Object> map = response.body();
+                    Map<String, Object> others = new HashMap<>();
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if (entry.getKey().equals("others")) {
+                                others = (Map<String, Object>) entry.getValue();
+                            }
+                        }
+                    }
+                /*    String others1 = s.substring(s.indexOf("others={") + 8, s.length() - 2);
+                    String[] so = others.split(", ");
+                    for (int i = 0; i < so.length; i++) {
+                        Log.d("获取上级充值数据Split", so[i]);
+                    }
+                    int i = 0;*/
+                    String ruser = null;
+                    String username = null;
+                    Boolean haspass = false;
+                    Boolean hassqas = false;
+                    String q = null;
+                    Double amounts1 = null;
+                    Double min1= null;
+                    Double max1= null;
+                    Double amounts2= null;
+                    Double min2= null;
+                    Double max2= null;
+                    int stype= 0;
+                    Boolean dtype= null;
+                    if (others.size() > 0) {
+                        for (Map.Entry<String, Object> entry : others.entrySet()) {
+                            if (entry.getKey().equals("others")) {
+                                ruser = (String) entry.getValue();
+                            }
+                            if (entry.getKey().equals("username")) {
+                                username = (String) entry.getValue();
+                            }
+                            if (entry.getKey().equals("haspass")) {
+                                haspass = (Boolean) entry.getValue();
+                            }
+                            if (entry.getKey().equals("hassqas")) {
+                                hassqas = (Boolean) entry.getValue();
+                            }
+                            if (entry.getKey().equals("q")) {
+                                q = (String) entry.getValue();
+                            }
+                            if (entry.getKey().equals("amounts1")) {
+                                amounts1 = (Double) entry.getValue();
+                            }
+                            if (entry.getKey().equals("min1")) {
+                                min1 = (Double) entry.getValue();
+                            }
+                            if (entry.getKey().equals("max1")) {
+                                max1 = (Double) entry.getValue();
+                            }
+                            if (entry.getKey().equals("amounts2")) {
+                                amounts2 = (Double) entry.getValue();
+                            }
+                            if (entry.getKey().equals("min2")) {
+                                min2 = (Double) entry.getValue();
+                            }
+                            if (entry.getKey().equals("max2")) {
+                                max2 = (Double) entry.getValue();
+                            }
+                            if (entry.getKey().equals("stype")) {
+                                double styped = (Double) entry.getValue();
+                                stype = RxUtils.getInstance().getInt(styped);
+                            }if (entry.getKey().equals("dtype")) {
+
+                                dtype = (Boolean) entry.getValue();
+                            }
+                        }
+                    }
+
+
+                    SreCharge sreCharge = new SreCharge();
+                    sreCharge.setRuser(ruser);
+                    sreCharge.setUsername(username);
+                    sreCharge.setHaspass(haspass);
+                    sreCharge.setHassqas(hassqas);
+                    sreCharge.setQ(q);
+                    sreCharge.setAmounts1(amounts1);
+                    sreCharge.setAmounts2(amounts2);
+                    sreCharge.setMin1(min1);
+                    sreCharge.setMin2(min2);
+                    sreCharge.setMax1(max1);
+                    sreCharge.setMax2(max2);
+                    sreCharge.setStype(stype);
+                    sreCharge.setDtype(dtype);
                     listener.onReceivedData(API_ID_SRECHARGE2, sreCharge, API_ID_ERROR);
                 }
 
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
 
             }
         });
@@ -4975,6 +5141,7 @@ public class RetrofitService extends HttpEngine {
         map.put("name", name + "");
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
         Call<RestultInfo> dailyRechargeTrans = apiInterface.getDailyRechargeTrans(1, amount, name, reqkey, currentTimeMillis);
+        Log.d("保存日工资充值请求", dailyRechargeTrans.request().toString());
         Call<RestultInfo> clone = dailyRechargeTrans.clone();
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
