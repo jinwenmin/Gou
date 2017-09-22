@@ -1,6 +1,7 @@
 package com.example.king.gou.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.Ids;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -24,12 +26,16 @@ public class GameCertAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater;
 
-    public GameCertAdapter(Context context, List<Ids> idses) {
-        this.idses = idses;
+    public GameCertAdapter(Context context) {
+        this.idses = new ArrayList<>();
         this.context = context;
         inflater = LayoutInflater.from(context);
     }
 
+    public void addList(List<Ids> idses) {
+        this.idses = idses;
+        notifyDataSetChanged();
+    }
     @Override
     public int getCount() {
         return idses.size();
@@ -46,7 +52,7 @@ public class GameCertAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, final ViewGroup viewGroup) {
         ViewHolder viewHolder;
         if (view == null) {
             view = inflater.inflate(R.layout.item_gamecert, viewGroup, false);
@@ -70,6 +76,17 @@ public class GameCertAdapter extends BaseAdapter {
         if (!"".equals(idses.get(i).getGamename())) {
             viewHolder.GameTypeName.setText(idses.get(i).getGamename());
         }
+        viewHolder.GameDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent();
+                intent1.putExtra("amounts", idses.get(i).getAmount());
+                intent1.putExtra("position", i);
+                intent1.setAction("DeleteAmounts");
+                context.sendBroadcast(intent1);
+
+            }
+        });
 
         return view;
     }
@@ -85,6 +102,8 @@ public class GameCertAdapter extends BaseAdapter {
         TextView GameTypeBei;
         @BindView(R.id.GameTypeAmount)
         TextView GameTypeAmount;
+        @BindView(R.id.GameDelete)
+        TextView GameDelete;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

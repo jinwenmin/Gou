@@ -29,7 +29,6 @@
             android:textSize="@dimen/top_textsize" />
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/ZhuiHao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,16 +37,17 @@
             android:layout_marginRight="10px"
             android:text="追号购物车"
             android:textColor="@android:color/white"
-            android:textSize="30px" />
+            android:textSize="30px"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_marginBottom="10px"
         android:id="@+id/CertLin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10px">
 
         <TextView
             android:id="@+id/ToBettingAuto"
@@ -77,11 +77,30 @@
             android:textSize="45px" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/LinAmountSum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/CertLin"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="投注总金额:" />
+
+        <TextView
+            android:id="@+id/AmountSum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.00" />
+    </LinearLayout>
 
     <ListView
         android:id="@+id/GameCartList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/CertLin"
+        android:layout_above="@id/LinAmountSum"
         android:layout_below="@id/GameCertTop"></ListView>
 </RelativeLayout>

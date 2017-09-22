@@ -1,6 +1,9 @@
 package com.example.king.gou.ui.gameAcVpFrms;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,7 +28,6 @@ import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.bean.ZhuiHaoCNum;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.ui.CNumberActivity;
-import com.example.king.gou.ui.GameCenterActivity;
 import com.example.king.gou.utils.HttpEngine;
 import com.google.gson.Gson;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -58,6 +60,8 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
     RelativeLayout GameCertTop;
     @BindView(R.id.ToBettingAuto)
     TextView ToBettingAuto;
+    @BindView(R.id.AmountSum)
+    TextView AmountSum;
     private AlertView alertView;
     // 一个自定义的布局，作为显示的内容
     View contentView;
@@ -71,6 +75,7 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
     MakeZhuiHaoAdapter Zhadapter;
     private ListView listZhuiH;
     private CheckBox ZhuiHaoCheck;
+    private Broadcast broad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +95,9 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
         listZhuiH.setAdapter(Zhadapter);
         ZhuiHaoMake.setOnClickListener(this);
         alertView.addExtView(contentView);
+        for (int i = 0; i < GameCartList.getChildCount(); i++) {
 
+        }
         Intent intent = getIntent();
         listids = (ArrayList<Ids>) intent.getSerializableExtra("listids");
         gid = intent.getIntExtra("gid", 0);
@@ -100,9 +107,15 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
             Log.d("购彩单的数据=", listids.get(i).toString());
             Amounts = Amounts + listids.get(i).getAmounts();
         }
-        adapter = new GameCertAdapter(this, listids);
+        AmountSum.setText(Amounts + "");
+        adapter = new GameCertAdapter(this);
         GameCartList.setAdapter(adapter);
+        adapter.addList(listids);
+        broad = new Broadcast();
 
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("DeleteAmounts");
+        this.registerReceiver(broad, intentFilter);
     }
 
     private void initClick() {
@@ -110,6 +123,24 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
         ToSendGame.setOnClickListener(this);
         ZhuiHao.setOnClickListener(this);
         ToBettingAuto.setOnClickListener(this);
+    }
+
+    private class Broadcast extends BroadcastReceiver {
+
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("DeleteAmounts")) {
+                double amounts = intent.getDoubleExtra("amounts", 0);
+                int position = intent.getIntExtra("position", 0);
+                String trim = AmountSum.getText().toString().trim();
+                double as = Double.parseDouble(trim);
+                AmountSum.setText(as - amounts + "");
+                listids.remove(position);
+                adapter.addList(listids);
+            }
+        }
     }
 
     @Override
@@ -189,13 +220,13 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
                 Zhadapter.addList(adapterData);
             }
         }
-        if (apiId== RetrofitService.API_ID_SENDBETTING) {
-            if (object!=null) {
-                RestultInfo restultInfo= (RestultInfo) object;
+        if (apiId == RetrofitService.API_ID_SENDBETTING) {
+            if (object != null) {
+                RestultInfo restultInfo = (RestultInfo) object;
                 if (restultInfo.isRc()) {
-                    Toasty.success(GameCartActivity.this,restultInfo.getMsg(),2000).show();
-                }else{
-                    Toasty.error(GameCartActivity.this,restultInfo.getMsg(),2000).show();
+                    Toasty.success(GameCartActivity.this, restultInfo.getMsg(), 2000).show();
+                } else {
+                    Toasty.error(GameCartActivity.this, restultInfo.getMsg(), 2000).show();
                 }
             }
         }
@@ -235,8 +266,8 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
                 ids.add(map);
             }
             List<Map<String, Object>> ars = new ArrayList<>();
-            if (zhCNum==null) {
-                Toasty.info(GameCartActivity.this,"没有追号列表",2000).show();
+            if (zhCNum == null) {
+                Toasty.info(GameCartActivity.this, "没有追号列表", 2000).show();
                 return;
             }
             for (int i = 0; i < zhCNum.size(); i++) {

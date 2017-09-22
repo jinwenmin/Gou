@@ -346,6 +346,16 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            RetrofitService.getInstance().LoginUserAmount(this);
+            RetrofitService.getInstance().GetUserInfo(this);
+            RetrofitService.getInstance().getSafeQues(this);
+        }
+    }
+
+    @Override
     public void onItemClick(Object o, int position) {
         if ("1".equals(show)) {
             if (position != AlertView.CANCELPOSITION) {

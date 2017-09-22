@@ -96,7 +96,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     @BindView(R.id.cut)
     TextView cut;
     @BindView(R.id.edit1)
-    TextView edit1;
+    EditText edit1;
     @BindView(R.id.add)
     TextView add;
     /* @BindView(R.id.radion1)
@@ -172,6 +172,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     int nums = 0;
     List<String> name = null;
     List<Rates> MinAndMaxs;
+    int requestCode = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,6 +201,18 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         RetrofitService.getInstance().getBettingDrawHistory(this, gid);
         initClick();
         initSpinner1();
+        SpinnerMoney.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                MyApp.getInstance().setMoneySpinnerPosition(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        SpinnerMoney.setSelection(MyApp.getInstance().getMoneySpinnerPosition());
         drawHistoryAdapter = new DrawHistoryAdapter(this);
         GameCenterListView.setAdapter(drawHistoryAdapter);
 
@@ -676,9 +689,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     TextView num9 = (TextView) inte.findViewById(R.id.num9);
                     TextView numd = (TextView) inte.findViewById(R.id.numd);
                     TextView kong = (TextView) inte.findViewById(R.id.kong);
-                    TextView fenhao = (TextView) inte.findViewById(R.id.fenhao);
+
                     TextView numDelete = (TextView) inte.findViewById(R.id.numDelete);
-                    g2_editText.setInputType(InputType.TYPE_NULL);
+                    // g2_editText.setInputType(InputType.TYPE_NULL);
 
                     num0.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -744,7 +757,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         @Override
                         public void onClick(View view) {
                             String text = g2_editText.getText().toString();
-
+                            if (text.length() == 0) {
+                                return;
+                            }
                             if (!",".equals(text.substring(text.length() - 1))) {
                                 g2_editText.setText(g2_editText.getText().toString() + ",");
                             }
@@ -754,27 +769,23 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         @Override
                         public void onClick(View view) {
                             String text = g2_editText.getText().toString();
+                            if (text.length() == 0) {
+                                return;
+                            }
                             if (text.length() > 0) {
                                 text = text.substring(0, text.length() - 1);
                                 g2_editText.setText(text);
                             }
                         }
                     });
-                    fenhao.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            String text = g2_editText.getText().toString();
 
-                            if (!",".equals(text.substring(text.length() - 1))) {
-                                g2_editText.setText(g2_editText.getText().toString() + ";");
-                            }
-                        }
-                    });
                     kong.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             String text = g2_editText.getText().toString();
-
+                            if (text.length() == 0) {
+                                return;
+                            }
                             if (!" ".equals(text.substring(text.length() - 1))) {
                                 g2_editText.setText(g2_editText.getText().toString().trim() + " ");
                             }
@@ -1227,7 +1238,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         @Override
                         public void onClick(View view) {
                             String text = g2_editText.getText().toString().trim();
-
+                            if (text.length() == 0) {
+                                return;
+                            }
                             if (!",".equals(text.substring(text.length() - 1))) {
                                 g2_editText.setText(g2_editText.getText().toString().trim() + ",");
                             }
@@ -1237,6 +1250,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         @Override
                         public void onClick(View view) {
                             String text = g2_editText.getText().toString().trim();
+                            if (text.length() == 0) {
+                                return;
+                            }
                             if (text.length() > 0) {
                                 text = text.substring(0, text.length() - 1);
                                 g2_editText.setText(text);
@@ -1343,7 +1359,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         @Override
                         public void onClick(View view) {
                             String text = g2_editText.getText().toString().trim();
-
+                            if (text.length() == 0) {
+                                return;
+                            }
                             if (!",".equals(text.substring(text.length() - 1))) {
                                 g2_editText.setText(g2_editText.getText().toString().trim() + ",");
                             }
@@ -1353,6 +1371,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         @Override
                         public void onClick(View view) {
                             String text = g2_editText.getText().toString().trim();
+                            if (text.length() == 0) {
+                                return;
+                            }
                             if (text.length() > 0) {
                                 text = text.substring(0, text.length() - 1);
                                 g2_editText.setText(text);
@@ -1384,7 +1405,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     TextView num9 = (TextView) inte.findViewById(R.id.num9);
                     TextView numd = (TextView) inte.findViewById(R.id.numd);
                     TextView kong = (TextView) inte.findViewById(R.id.kong);
-                    TextView fenhao = (TextView) inte.findViewById(R.id.fenhao);
+
                     TextView numDelete = (TextView) inte.findViewById(R.id.numDelete);
                     g2_editText.setInputType(InputType.TYPE_NULL);
                     int c = 0;
@@ -1453,27 +1474,22 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         @Override
                         public void onClick(View view) {
                             String text = g2_editText.getText().toString();
-
+                            if (text.length() == 0) {
+                                return;
+                            }
                             if (!",".equals(text.substring(text.length() - 1))) {
                                 g2_editText.setText(g2_editText.getText().toString() + ",");
                             }
                         }
                     });
-                    fenhao.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            String text = g2_editText.getText().toString();
 
-                            if (!",".equals(text.substring(text.length() - 1))) {
-                                g2_editText.setText(g2_editText.getText().toString() + ";");
-                            }
-                        }
-                    });
                     kong.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             String text = g2_editText.getText().toString();
-
+                            if (text.length() == 0) {
+                                return;
+                            }
                             if (!" ".equals(text.substring(text.length() - 1))) {
                                 g2_editText.setText(g2_editText.getText().toString().trim() + " ");
                             }
@@ -1483,6 +1499,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         @Override
                         public void onClick(View view) {
                             String text = g2_editText.getText().toString();
+                            if (text.length() == 0) {
+                                return;
+                            }
                             if (text.length() > 0) {
                                 text = text.substring(0, text.length() - 1);
                                 g2_editText.setText(text);
@@ -1529,7 +1548,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     TextView num9 = (TextView) inte.findViewById(R.id.num9);
                     TextView numd = (TextView) inte.findViewById(R.id.numd);
                     TextView kong = (TextView) inte.findViewById(R.id.kong);
-                    TextView fenhao = (TextView) inte.findViewById(R.id.fenhao);
+
                     TextView numDelete = (TextView) inte.findViewById(R.id.numDelete);
                     g2_editText.setInputType(InputType.TYPE_NULL);
                     int c = 0;
@@ -1598,27 +1617,22 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         @Override
                         public void onClick(View view) {
                             String text = g2_editText.getText().toString();
-
+                            if (text.length() == 0) {
+                                return;
+                            }
                             if (!",".equals(text.substring(text.length() - 1))) {
                                 g2_editText.setText(g2_editText.getText().toString() + ",");
                             }
                         }
                     });
-                    fenhao.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            String text = g2_editText.getText().toString();
 
-                            if (!",".equals(text.substring(text.length() - 1))) {
-                                g2_editText.setText(g2_editText.getText().toString() + ";");
-                            }
-                        }
-                    });
                     kong.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             String text = g2_editText.getText().toString();
-
+                            if (text.length() == 0) {
+                                return;
+                            }
                             if (!" ".equals(text.substring(text.length() - 1))) {
                                 g2_editText.setText(g2_editText.getText().toString().trim() + " ");
                             }
@@ -1628,6 +1642,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         @Override
                         public void onClick(View view) {
                             String text = g2_editText.getText().toString();
+                            if (text.length() == 0) {
+                                return;
+                            }
                             if (text.length() > 0) {
                                 text = text.substring(0, text.length() - 1);
                                 g2_editText.setText(text);
@@ -1659,7 +1676,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     TextView num9 = (TextView) inte.findViewById(R.id.num9);
                     TextView numd = (TextView) inte.findViewById(R.id.numd);
                     TextView kong = (TextView) inte.findViewById(R.id.kong);
-                    TextView fenhao = (TextView) inte.findViewById(R.id.fenhao);
+
                     TextView numDelete = (TextView) inte.findViewById(R.id.numDelete);
                     g2_editText.setInputType(InputType.TYPE_NULL);
                     int c = 0;
@@ -1728,27 +1745,22 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         @Override
                         public void onClick(View view) {
                             String text = g2_editText.getText().toString();
-
+                            if (text.length() == 0) {
+                                return;
+                            }
                             if (!",".equals(text.substring(text.length() - 1))) {
                                 g2_editText.setText(g2_editText.getText().toString() + ",");
                             }
                         }
                     });
-                    fenhao.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            String text = g2_editText.getText().toString();
 
-                            if (!",".equals(text.substring(text.length() - 1))) {
-                                g2_editText.setText(g2_editText.getText().toString() + ";");
-                            }
-                        }
-                    });
                     kong.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             String text = g2_editText.getText().toString();
-
+                            if (text.length() == 0) {
+                                return;
+                            }
                             if (!" ".equals(text.substring(text.length() - 1))) {
                                 g2_editText.setText(g2_editText.getText().toString().trim() + " ");
                             }
@@ -1758,6 +1770,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         @Override
                         public void onClick(View view) {
                             String text = g2_editText.getText().toString();
+                            if (text.length() == 0) {
+                                return;
+                            }
                             if (text.length() > 0) {
                                 text = text.substring(0, text.length() - 1);
                                 g2_editText.setText(text);
@@ -2992,13 +3007,22 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         Double coe = rates.getCoefficient();
         Double rate = rates.getRate();
         List<String> list = new ArrayList<>();
-        list.add(min + "");
-        list.add(min + coe * rate + "");
+        String mins = min + "";
+        String maxs = min + coe * rate + "";
+        if (min == 0) {
+            mins = "最低奖";
+        }
+        if (min + coe * rate == 0) {
+            maxs = "最高奖";
+        }
+        list.add(mins);
+        list.add(maxs);
         adapterTypeMoney = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
         //第三步：为适配器设置下拉列表下拉时的菜单样式。
         adapterTypeMoney.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //第四步：将适配器添加到下拉列表上
         SpinnerMoney.setAdapter(adapterTypeMoney);
+        SpinnerMoney.setSelection(MyApp.getInstance().getMoneySpinnerPosition());
     }
 
     private void initClick() {
@@ -3159,6 +3183,11 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id._back:
@@ -3183,7 +3212,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 intent.putExtra("listids", (Serializable) listIds);
                 intent.putExtra("gid", gid);
                 intent.putExtra("period", bs.getPeriod());
-                startActivity(intent);
+                startActivityForResult(intent, requestCode);
                 break;
             case R.id.AddGameNumBtn:
                 if (

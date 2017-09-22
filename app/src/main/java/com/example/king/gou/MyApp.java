@@ -31,6 +31,15 @@ public class MyApp extends Application {
     private List<TeamUserInfo> Uids;
     List<AutoLayoutActivity> activities;
     //private RefWatcher refWatcher;
+    int MoneySpinnerPosition;
+
+    public int getMoneySpinnerPosition() {
+        return MoneySpinnerPosition;
+    }
+
+    public void setMoneySpinnerPosition(int moneySpinnerPosition) {
+        MoneySpinnerPosition = moneySpinnerPosition;
+    }
 
     public void addActivitys(AutoLayoutActivity a) {
         if (activities == null) {

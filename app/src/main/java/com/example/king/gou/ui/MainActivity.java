@@ -84,7 +84,7 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
     private Timer timer;
     private String login_sessionid;
     private AlertView alertView;
-     // 一个自定义的布局，作为显示的内容
+    // 一个自定义的布局，作为显示的内容
     View contentView;
     private ImageView fingerImg;
     private TextView fingerText;
@@ -106,6 +106,7 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         ButterKnife.bind(this);
         MyApp.getInstance().addActivitys(this);
         RetrofitService.getInstance().getTeamUserInfo(this, 1, 100, "uid", "desc", MyApp.getInstance().getUserUid(), "", 0);
@@ -192,8 +193,8 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
             String uname = (String) object;
 
             if (uname == null) {
-                Intent intent=new Intent(MainActivity.this,LoginActivity.class);
-                intent.putExtra("LogOut","errorout");
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                intent.putExtra("LogOut", "errorout");
                 startActivity(intent);
                 MyApp.getInstance().finishActivity();
                /* Intent intent=new Intent(MainActivity.this,LoginActivity.class);

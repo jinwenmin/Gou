@@ -71,6 +71,7 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        MyApp.getInstance().setMoneySpinnerPosition(0);
         Intent intent = getIntent();
         String logOut = intent.getStringExtra("LogOut");
         if ("logout".equals(logOut)) {

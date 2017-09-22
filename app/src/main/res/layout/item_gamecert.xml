@@ -1,58 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/Linear1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10px"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="0px"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+
             android:gravity="center"
             android:text="玩法名称："
             android:textSize="30px" />
 
         <TextView
             android:id="@+id/GameTypeName"
-            android:layout_width="0px"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="7"
+
             android:text=""
             android:textSize="30px" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+
+        android:id="@+id/Linear2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/Linear1"
         android:layout_margin="10px"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="0px"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+
             android:gravity="center"
             android:text="玩法内容："
             android:textSize="30px" />
 
         <TextView
             android:id="@+id/GameTypeContent"
-            android:layout_width="0px"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="7"
+
             android:text=""
             android:textSize="30px" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/Linear3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/Linear2"
         android:layout_margin="10px"
         android:orientation="horizontal">
 
@@ -83,4 +89,15 @@
             android:text="共*元"
             android:textSize="30px" />
     </LinearLayout>
-</LinearLayout>
+
+    <TextView
+        android:id="@+id/GameDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/Linear1"
+        android:layout_margin="10px"
+        android:text="×"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="50px" />
+</RelativeLayout>

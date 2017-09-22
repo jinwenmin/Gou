@@ -121,7 +121,7 @@
         android:layout_marginTop="10px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="每一个号码之间请用一个 空格[ ]、逗号[,] 或者 分号[;] 隔开."
+        android:text="每一个号码之间请用一个 空格[ ]、逗号[,]隔开."
         android:textSize="25px" />
 
     <LinearLayout

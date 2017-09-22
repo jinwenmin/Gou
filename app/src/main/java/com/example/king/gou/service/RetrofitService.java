@@ -925,8 +925,8 @@ public class RetrofitService extends HttpEngine {
     //获取用户的余额
     public void LoginUserAmount(final DataListener listener) {
         long currentTimeMillis = System.currentTimeMillis();
-        reqkey = "AppClient=1&t=" + currentTimeMillis;
-        reqkey = RxUtils.getInstance().md5(reqkey);
+        Map<String, String> map = new HashMap<>();
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
         final Call<UserAmount> userAmount = apiInterface.getUserAmount(1, reqkey, currentTimeMillis);
         Call<UserAmount> clone = userAmount.clone();
         listener.onRequestStart(API_ID_USERAMOUNT);
