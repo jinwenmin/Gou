@@ -32,6 +32,7 @@ import com.example.king.gou.utils.HttpEngine;
 import com.google.gson.Gson;
 import com.zhy.autolayout.AutoLayoutActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,8 +55,7 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
     GameCertAdapter adapter;
     @BindView(R.id.ToSendGame)
     TextView ToSendGame;
-    @BindView(R.id.ZhuiHao)
-    TextView ZhuiHao;
+
     @BindView(R.id.GameCertTop)
     RelativeLayout GameCertTop;
     @BindView(R.id.ToBettingAuto)
@@ -95,9 +95,6 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
         listZhuiH.setAdapter(Zhadapter);
         ZhuiHaoMake.setOnClickListener(this);
         alertView.addExtView(contentView);
-        for (int i = 0; i < GameCartList.getChildCount(); i++) {
-
-        }
         Intent intent = getIntent();
         listids = (ArrayList<Ids>) intent.getSerializableExtra("listids");
         gid = intent.getIntExtra("gid", 0);
@@ -121,7 +118,6 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
     private void initClick() {
         Back.setOnClickListener(this);
         ToSendGame.setOnClickListener(this);
-        ZhuiHao.setOnClickListener(this);
         ToBettingAuto.setOnClickListener(this);
     }
 
@@ -147,6 +143,9 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id._back:
+                Intent intent1 = new Intent();
+                intent1.putExtra("ids", (Serializable) listids);
+                setResult(1, intent1);
                 finish();
                 break;
             case R.id.ToSendGame:
@@ -174,12 +173,12 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
                 String idsString = gson.toJson(ids);
                 RetrofitService.getInstance().getSendBetting(this, gid, "", idsString, period, "", Amounts, 1);
                 break;
-            case R.id.ZhuiHao:
+          /*  case R.id.ZhuiHao:
                 Intent intent = new Intent(GameCartActivity.this, CNumberActivity.class);
                 intent.putExtra("period", period);
                 intent.putExtra("gid", gid);
                 startActivity(intent);
-                break;
+                break;*/
             case R.id.ToBettingAuto:
                 if (gid == 9 || gid == 10 || gid == 28) {
                     Toasty.info(GameCartActivity.this, "该游戏没有追号功能", 2000).show();
@@ -224,6 +223,8 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
             if (object != null) {
                 RestultInfo restultInfo = (RestultInfo) object;
                 if (restultInfo.isRc()) {
+                    listids = new ArrayList<>();
+                    AmountSum.setText("0.0");
                     Toasty.success(GameCartActivity.this, restultInfo.getMsg(), 2000).show();
                 } else {
                     Toasty.error(GameCartActivity.this, restultInfo.getMsg(), 2000).show();
@@ -240,6 +241,14 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
     @Override
     public void onRequestEnd(int apiId) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent1 = new Intent();
+        intent1.putExtra("ids", (Serializable) listids);
+        setResult(1, intent1);
+        super.onBackPressed();
     }
 
     @Override

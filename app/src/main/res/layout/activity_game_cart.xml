@@ -29,16 +29,15 @@
             android:textSize="@dimen/top_textsize" />
 
         <TextView
-            android:id="@+id/ZhuiHao"
+            android:id="@+id/ClearGameCart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10px"
-            android:text="追号购物车"
+            android:text="清空购物车"
             android:textColor="@android:color/white"
-            android:textSize="30px"
-            android:visibility="gone" />
+            android:textSize="30px" />
 
     </RelativeLayout>
 

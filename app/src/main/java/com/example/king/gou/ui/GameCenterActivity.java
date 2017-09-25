@@ -121,10 +121,15 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     RelativeLayout ToGameCert;
     @BindView(R.id.LinearMoneyGetCheck)
     LinearLayout LinearMoneyGetCheck;
+    @BindView(R.id.GameZhu)
+    TextView GameZhu;
+    @BindView(R.id.GameYuan)
+    TextView GameYuan;
 
     private int TIME = 1000;  //每隔1s执行一次.
 
     Handler handler = new Handler();
+    Handler handler1 = new Handler();
 
     private int gid;
     private int position;
@@ -136,6 +141,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     Runnable runnable;
 
     private Timer timer;
+    private Timer timerSelect;
     List<SwitchG> sg = new ArrayList<>();
 
     private ArrayAdapter<String> adapterType1;
@@ -172,7 +178,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     int nums = 0;
     List<String> name = null;
     List<Rates> MinAndMaxs;
-    int requestCode = 1;
+    int REQUESTCODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -518,6 +524,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 code = class_code.get(position);
                 GameTypeName = name.get(position);
                 nums = 0;
+
+
               /*  Map<String, Object> map = new HashMap();
                 map.put("pickedNumber", "125,268,1,3,4");
                 map.put("multiples", 1);
@@ -2991,6 +2999,17 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_xg_tb_big_small_dan_shuang, null, false);
                 }
                 GameCenterLinear.addView(inte);
+                timerSelect = new Timer();
+                final TimerTask timerTasks = new TimerTask() {
+                    @Override
+                    public void run() {
+                        //  Looper.prepare();
+                        SelectNums();
+                        //Looper.loop();
+                    }
+                };
+
+                timerSelect.schedule(timerTasks, 0, 100);
             }
 
             @Override
@@ -3184,8 +3203,16 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case 1:
+                listIds = (List<Ids>) data.getSerializableExtra("ids");
+
+                SendGameNum.setText(listIds.size() + "");
+                break;
+        }
     }
+
 
     @Override
     public void onClick(View view) {
@@ -3212,2948 +3239,2954 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 intent.putExtra("listids", (Serializable) listIds);
                 intent.putExtra("gid", gid);
                 intent.putExtra("period", bs.getPeriod());
-                startActivityForResult(intent, requestCode);
+                startActivityForResult(intent, REQUESTCODE);
                 break;
             case R.id.AddGameNumBtn:
-                if (
-                        code.equals("star_5_duplex")
-                                || code.equals("2min_star_5_duplex")
-                        ) {
-                    final int[] count1 = {0};
-                    final int[] count2 = {0};
-                    final int[] count3 = {0};
-                    final int[] count4 = {0};
-                    final int[] count5 = {0};
-                    String wan = "";
-                    String qian = "";
-                    String bai = "";
-                    String shi = "";
-                    String ge = "";
+                SelectNums();
+                break;
+        }
+    }
 
-                    LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearWan);
-                    LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearQian);
-                    LinearLayout lin3 = (LinearLayout) inte.findViewById(R.id.LinearBai);
-                    LinearLayout lin4 = (LinearLayout) inte.findViewById(R.id.LinearShi);
-                    LinearLayout lin5 = (LinearLayout) inte.findViewById(R.id.LinearGe);
-                    for (int i = 1; i < lin1.getChildCount(); i++) {
-                        if (((CheckBox) lin1.getChildAt(i)).isChecked()) {
-                            count1[0]++;
-                            if (wan == "") {
-                                wan = ((CheckBox) lin1.getChildAt(i)).getText().toString();
-                            } else {
-                                wan = wan + ((CheckBox) lin1.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < lin2.getChildCount(); i++) {
-                        if (((CheckBox) lin2.getChildAt(i)).isChecked()) {
-                            count2[0]++;
-                            if (qian == "") {
-                                qian = ((CheckBox) lin2.getChildAt(i)).getText().toString();
-                            } else {
-                                qian = qian + ((CheckBox) lin2.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < lin3.getChildCount(); i++) {
-                        if (((CheckBox) lin3.getChildAt(i)).isChecked()) {
-                            count3[0]++;
-                            if (bai == "") {
-                                bai = ((CheckBox) lin3.getChildAt(i)).getText().toString();
-                            } else {
-                                bai = bai + ((CheckBox) lin3.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < lin4.getChildCount(); i++) {
-                        if (((CheckBox) lin4.getChildAt(i)).isChecked()) {
-                            count4[0]++;
-                            if (shi == "") {
-                                shi = ((CheckBox) lin4.getChildAt(i)).getText().toString();
-                            } else {
-                                shi = shi + ((CheckBox) lin4.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < lin5.getChildCount(); i++) {
-                        if (((CheckBox) lin5.getChildAt(i)).isChecked()) {
-                            count5[0]++;
-                            if (ge == "") {
-                                ge = ((CheckBox) lin5.getChildAt(i)).getText().toString();
-                            } else {
-                                ge = ge + ((CheckBox) lin5.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-                    Log.d("GameCenterrCount==", count1[0] + "   " + count2[0] + "   " + count3[0] + "   " + count4[0] + "   " + count5[0]);
-                    pickedNumber = wan + "," + qian + "," + bai + "," + shi + "," + ge;
-                    Log.d("GameCenterrText==", pickedNumber);
-                    nums = count1[0] * count2[0] * count3[0] * count4[0] * count5[0];
+    public void SelectNums() {
+        if (
+                code.equals("star_5_duplex")
+                        || code.equals("2min_star_5_duplex")
+                ) {
+            final int[] count1 = {0};
+            final int[] count2 = {0};
+            final int[] count3 = {0};
+            final int[] count4 = {0};
+            final int[] count5 = {0};
+            String wan = "";
+            String qian = "";
+            String bai = "";
+            String shi = "";
+            String ge = "";
 
-
-                }
-                if (
-                        code.equals("star_5_group_120")
-                                || code.equals("2min_star_5_group_120")
-                                || code.equals("star_4_group_24")
-                                || code.equals("2min_star_4_group_24")
-                                || code.equals("star_4_group_6")
-                                || code.equals("2min_star_4_group_6")
-
-                        ) {
-                    int[] count120 = {0};
-                    String text120 = "";
-                    LinearLayout linear120 = null;
-                    if (
-                            code.equals("star_5_group_120")
-                                    || code.equals("2min_star_5_group_120")
-                            ) {
-                        linear120 = (LinearLayout) inte.findViewById(R.id.Linear120);
-                    }
-                    if (
-                            code.equals("star_4_group_24")
-                                    || code.equals("2min_star_4_group_24")
-                                    || code.equals("star_4_group_6")
-                                    || code.equals("2min_star_4_group_6")
-                            ) {
-                        linear120 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    }
-                    for (int i = 1; i < linear120.getChildCount(); i++) {
-                        if (((CheckBox) linear120.getChildAt(i)).isChecked()) {
-                            count120[0]++;
-                            if (text120 == "") {
-                                text120 = ((CheckBox) linear120.getChildAt(i)).getText().toString();
-                            } else {
-                                text120 = text120 + "," + ((CheckBox) linear120.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-                    Log.d("GameCenter120", text120);
-                    pickedNumber = text120;
-                    if (
-                            code.equals("star_5_group_120")
-                                    || code.equals("2min_star_5_group_120")
-                            ) {
-                        if (count120[0] > 4) {
-                            int nns = RxUtils.getInstance().JieCheng(count120[0]) / (RxUtils.getInstance().JieCheng(5) * RxUtils.getInstance().JieCheng(count120[0] - 5));
-                            Log.d("GameCenter120注", nns + "");
-                            nums = nns;
-                        }
-                    } else if (
-                            code.equals("star_4_group_24")
-                                    || code.equals("2min_star_4_group_24")
-                            ) {
-                        if (count120[0] > 3) {
-                            int nns = RxUtils.getInstance().JieCheng(count120[0]) / (RxUtils.getInstance().JieCheng(4) * RxUtils.getInstance().JieCheng(count120[0] - 4));
-                            Log.d("GameCenter24注", nns + "");
-                            nums = nns;
-                        }
-                    } else if (
-                            code.equals("star_4_group_6")
-                                    || code.equals("2min_star_4_group_6")
-                            ) {
-                        if (count120[0] > 1) {
-                            int nns = count120[0] * (count120[0] - 1) / 2;
-                            Log.d("GameCenter6注", nns + "");
-                            nums = nns;
-                        }
-                    }
-
-
-                }
-                if (
-                        code.equals("star_5_group_30")
-                                || code.equals("2min_star_5_group_30")
-                                || code.equals("star_5_group_20")
-                                || code.equals("2min_star_5_group_20")
-                                || code.equals("star_4_group_12")
-                                || code.equals("2min_star_4_group_12")
-                        ) {
-                    int[] count30_1 = {0};
-                    int[] count30_2 = {0};
-                    String text30_1 = "";
-                    String text30_2 = "";
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    for (int i = 1; i < linear1.getChildCount(); i++) {
-                        if (((CheckBox) linear1.getChildAt(i)).isChecked()) {
-                            count30_1[0]++;
-                            if (text30_1 == "") {
-                                text30_1 = ((CheckBox) linear1.getChildAt(i)).getText().toString();
-                            } else {
-                                text30_1 = text30_1 + ((CheckBox) linear1.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < linear2.getChildCount(); i++) {
-                        if (((CheckBox) linear2.getChildAt(i)).isChecked()) {
-                            count30_2[0]++;
-                            if (text30_2 == "") {
-                                text30_2 = ((CheckBox) linear2.getChildAt(i)).getText().toString();
-                            } else {
-                                text30_2 = text30_2 + ((CheckBox) linear2.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-                    int k = 0;
-                    for (int i = 0; i < text30_1.length(); i++) {
-                        Log.d("Char30_1", text30_1.charAt(i) + "");
-                        for (int i1 = 0; i1 < text30_2.length(); i1++) {
-                            Log.d("Char30_2", text30_2.charAt(i1) + "");
-                            if (text30_1.charAt(i) == text30_2.charAt(i1)) {
-                                k++;
-                            }
-                        }
-                    }
-                    Log.d("相同的个数", k + "");
-                    pickedNumber = text30_1 + "," + text30_2;
-                    if (
-                            code.equals("star_5_group_30")
-                                    || code.equals("2min_star_5_group_30")
-                            ) {
-                        nums = count30_1[0] * (count30_1[0] - 1) * count30_2[0] / 2 - (count30_1[0] - 1) * k;
-                    } else if (
-                            code.equals("star_5_group_20")
-                                    || code.equals("2min_star_5_group_20")
-                            ) {
-                        nums = count30_2[0] * (count30_2[0] - 1) * count30_1[0] / 2 - (count30_2[0] - 1) * k;
-                    }
-                }
-                if (
-                        code.equals("star_5_one") ||
-                                code.equals("2min_star_5_one") ||
-                                code.equals("star_5_two") ||
-                                code.equals("2min_star_5_two") ||
-                                code.equals("star_5_three") ||
-                                code.equals("2min_star_5_three") ||
-                                code.equals("star_5_four") ||
-                                code.equals("2min_star_5_four")
-                        ) {
-                    int[] count5 = {0};
-                    String text5 = "";
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    for (int i = 1; i < linear1.getChildCount(); i++) {
-                        if (((CheckBox) linear1.getChildAt(i)).isChecked()) {
-                            count5[0]++;
-                            if (text5 == "") {
-                                text5 = ((CheckBox) linear1.getChildAt(i)).getText().toString();
-                            } else {
-                                text5 = text5 + "," + ((CheckBox) linear1.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-                    pickedNumber = text5;
-                    nums = count5[0];
-                }
-                if (
-                        code.equals("star_4_duplex")
-                                || code.equals("2min_star_4_duplex")
-                        ) {
-
-                    final int[] count1 = {0};
-                    final int[] count2 = {0};
-                    final int[] count3 = {0};
-                    final int[] count4 = {0};
-
-                    String wan = "";
-                    String qian = "";
-                    String bai = "";
-                    String shi = "";
-
-
-                    LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    LinearLayout lin3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
-                    LinearLayout lin4 = (LinearLayout) inte.findViewById(R.id.LinearFour);
-
-                    for (int i = 1; i < lin1.getChildCount(); i++) {
-                        if (((CheckBox) lin1.getChildAt(i)).isChecked()) {
-                            count1[0]++;
-                            if (wan == "") {
-                                wan = ((CheckBox) lin1.getChildAt(i)).getText().toString();
-                            } else {
-                                wan = wan + ((CheckBox) lin1.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < lin2.getChildCount(); i++) {
-                        if (((CheckBox) lin2.getChildAt(i)).isChecked()) {
-                            count2[0]++;
-                            if (qian == "") {
-                                qian = ((CheckBox) lin2.getChildAt(i)).getText().toString();
-                            } else {
-                                qian = qian + ((CheckBox) lin2.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < lin3.getChildCount(); i++) {
-                        if (((CheckBox) lin3.getChildAt(i)).isChecked()) {
-                            count3[0]++;
-                            if (bai == "") {
-                                bai = ((CheckBox) lin3.getChildAt(i)).getText().toString();
-                            } else {
-                                bai = bai + ((CheckBox) lin3.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < lin4.getChildCount(); i++) {
-                        if (((CheckBox) lin4.getChildAt(i)).isChecked()) {
-                            count4[0]++;
-                            if (shi == "") {
-                                shi = ((CheckBox) lin4.getChildAt(i)).getText().toString();
-                            } else {
-                                shi = shi + ((CheckBox) lin4.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-
-                    Log.d("GameCenterrCount==", count1[0] + "   " + count2[0] + "   " + count3[0] + "   " + count4[0] + "   ");
-                    pickedNumber = wan + "," + qian + "," + bai + "," + shi;
-                    Log.d("GameCenterrText==", pickedNumber);
-                    nums = count1[0] * count2[0] * count3[0] * count4[0];
-                }
-                //三星直选复式
-                if (
-                        code.equals("star_3_next_duplex")
-                                || code.equals("2min_star_3_next_duplex")
-                                || code.equals("star_3_prev_duplex")
-                                || code.equals("2min_star_3_prev_duplex")
-                                || code.equals("star_3_midd_duplex")
-                                || code.equals("2min_star_3_midd_duplex")
-                                || code.equals("sequence_star_3_duplex")
-                                || code.equals("3D_star_3_duplex")
-                                || code.equals("3D_fix")
-
-                        ) {
-                    final int[] count1 = {0};
-                    final int[] count2 = {0};
-                    final int[] count3 = {0};
-
-
-                    String wan = "";
-                    String qian = "";
-                    String bai = "";
-
-
-                    LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    LinearLayout lin3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
-
-
-                    for (int i = 1; i < lin1.getChildCount(); i++) {
-                        if (((CheckBox) lin1.getChildAt(i)).isChecked()) {
-                            count1[0]++;
-                            if (wan == "") {
-                                wan = ((CheckBox) lin1.getChildAt(i)).getText().toString();
-                            } else {
-                                wan = wan + ((CheckBox) lin1.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < lin2.getChildCount(); i++) {
-                        if (((CheckBox) lin2.getChildAt(i)).isChecked()) {
-                            count2[0]++;
-                            if (qian == "") {
-                                qian = ((CheckBox) lin2.getChildAt(i)).getText().toString();
-                            } else {
-                                qian = qian + ((CheckBox) lin2.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < lin3.getChildCount(); i++) {
-                        if (((CheckBox) lin3.getChildAt(i)).isChecked()) {
-                            count3[0]++;
-                            if (bai == "") {
-                                bai = ((CheckBox) lin3.getChildAt(i)).getText().toString();
-                            } else {
-                                bai = bai + ((CheckBox) lin3.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-
-
-                    Log.d("GameCenterrCount==", count1[0] + "   " + count2[0] + "   " + count3[0] + "   ");
-                    pickedNumber = wan + "," + qian + "," + bai;
-                    Log.d("GameCenterrText==", pickedNumber);
-                    if ("3D_fix".equals(code)) {
-                        nums = count1[0] + count2[0] + count3[0];
+            LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearWan);
+            LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearQian);
+            LinearLayout lin3 = (LinearLayout) inte.findViewById(R.id.LinearBai);
+            LinearLayout lin4 = (LinearLayout) inte.findViewById(R.id.LinearShi);
+            LinearLayout lin5 = (LinearLayout) inte.findViewById(R.id.LinearGe);
+            for (int i = 1; i < lin1.getChildCount(); i++) {
+                if (((CheckBox) lin1.getChildAt(i)).isChecked()) {
+                    count1[0]++;
+                    if (wan == "") {
+                        wan = ((CheckBox) lin1.getChildAt(i)).getText().toString();
                     } else {
-                        nums = count1[0] * count2[0] * count3[0];
+                        wan = wan + ((CheckBox) lin1.getChildAt(i)).getText().toString();
                     }
                 }
-                //三星直选和值
-                if (
-                        code.equals("star_3_next_sum")
-                                || code.equals("2min_star_3_next_sum")
-                                || code.equals("star_3_prev_sum")
-                                || code.equals("2min_star_3_prev_sum")
-                                || code.equals("star_3_midd_sum")
-                                || code.equals("2min_star_3_midd_sum")
-                                || code.equals("sequence_star_3_sum")
-                                || code.equals("3D_star_3_sum")
-                        ) {
-                    LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    LinearLayout lin3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
-                    List<Integer> ns = new ArrayList<>();
-                    List<String> str = new ArrayList<>();
-                    for (int i = 0; i < lin1.getChildCount(); i++) {
-                        if (((CheckBox) lin1.getChildAt(i)).isChecked()) {
-                            int i1 = Integer.parseInt(((CheckBox) lin1.getChildAt(i)).getText().toString());
-                            ns.add(i1);
-                            str.add(((CheckBox) lin1.getChildAt(i)).getText().toString());
-                        }
+            }
+            for (int i = 1; i < lin2.getChildCount(); i++) {
+                if (((CheckBox) lin2.getChildAt(i)).isChecked()) {
+                    count2[0]++;
+                    if (qian == "") {
+                        qian = ((CheckBox) lin2.getChildAt(i)).getText().toString();
+                    } else {
+                        qian = qian + ((CheckBox) lin2.getChildAt(i)).getText().toString();
                     }
-
-                    for (int i = 0; i < lin2.getChildCount(); i++) {
-                        if (((CheckBox) lin2.getChildAt(i)).isChecked()) {
-                            int i1 = Integer.parseInt(((CheckBox) lin2.getChildAt(i)).getText().toString());
-                            ns.add(i1);
-                            str.add(((CheckBox) lin2.getChildAt(i)).getText().toString());
-
-                        }
-
-                    }
-                    for (int i = 0; i < lin3.getChildCount(); i++) {
-                        if (((CheckBox) lin3.getChildAt(i)).isChecked()) {
-                            int i1 = Integer.parseInt(((CheckBox) lin3.getChildAt(i)).getText().toString());
-                            ns.add(i1);
-                            str.add(((CheckBox) lin3.getChildAt(i)).getText().toString());
-                        }
-                    }
-                    nums = getNum(ns);
-                    pickedNumber = getheNums(str);
-                    Log.d("3星和值和注", getheNums(str) + "            " + nums);
                 }
-                //三星直选跨度
-                if (
-                        code.equals("star_3_next_sub")
-                                || code.equals("2min_star_3_next_sub")
-                                || code.equals("star_3_prev_sub")
-                                || code.equals("2min_star_3_prev_sub")
-                                || code.equals("star_3_midd_sub")
-                                || code.equals("2min_star_3_midd_sub")
-                        ) {
-                    LinearLayout linear = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    final int[] count1 = {0};
-                    List<String> kua = new ArrayList<>();
-                    List<Integer> ns = new ArrayList<>();
-                    for (int i = 1; i < linear.getChildCount(); i++) {
-                        if (((CheckBox) linear.getChildAt(i)).isChecked()) {
-                            count1[0]++;
-                            ns.add(Integer.parseInt(((CheckBox) linear.getChildAt(i)).getText().toString()));
-                            kua.add(((CheckBox) linear.getChildAt(i)).getText().toString());
+            }
+            for (int i = 1; i < lin3.getChildCount(); i++) {
+                if (((CheckBox) lin3.getChildAt(i)).isChecked()) {
+                    count3[0]++;
+                    if (bai == "") {
+                        bai = ((CheckBox) lin3.getChildAt(i)).getText().toString();
+                    } else {
+                        bai = bai + ((CheckBox) lin3.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+            for (int i = 1; i < lin4.getChildCount(); i++) {
+                if (((CheckBox) lin4.getChildAt(i)).isChecked()) {
+                    count4[0]++;
+                    if (shi == "") {
+                        shi = ((CheckBox) lin4.getChildAt(i)).getText().toString();
+                    } else {
+                        shi = shi + ((CheckBox) lin4.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+            for (int i = 1; i < lin5.getChildCount(); i++) {
+                if (((CheckBox) lin5.getChildAt(i)).isChecked()) {
+                    count5[0]++;
+                    if (ge == "") {
+                        ge = ((CheckBox) lin5.getChildAt(i)).getText().toString();
+                    } else {
+                        ge = ge + ((CheckBox) lin5.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+            Log.d("GameCenterrCount==", count1[0] + "   " + count2[0] + "   " + count3[0] + "   " + count4[0] + "   " + count5[0]);
+            pickedNumber = wan + "," + qian + "," + bai + "," + shi + "," + ge;
+            Log.d("GameCenterrText==", pickedNumber);
+            nums = count1[0] * count2[0] * count3[0] * count4[0] * count5[0];
+
+
+        }
+        if (
+                code.equals("star_5_group_120")
+                        || code.equals("2min_star_5_group_120")
+                        || code.equals("star_4_group_24")
+                        || code.equals("2min_star_4_group_24")
+                        || code.equals("star_4_group_6")
+                        || code.equals("2min_star_4_group_6")
+
+                ) {
+            int[] count120 = {0};
+            String text120 = "";
+            LinearLayout linear120 = null;
+            if (
+                    code.equals("star_5_group_120")
+                            || code.equals("2min_star_5_group_120")
+                    ) {
+                linear120 = (LinearLayout) inte.findViewById(R.id.Linear120);
+            }
+            if (
+                    code.equals("star_4_group_24")
+                            || code.equals("2min_star_4_group_24")
+                            || code.equals("star_4_group_6")
+                            || code.equals("2min_star_4_group_6")
+                    ) {
+                linear120 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            }
+            for (int i = 1; i < linear120.getChildCount(); i++) {
+                if (((CheckBox) linear120.getChildAt(i)).isChecked()) {
+                    count120[0]++;
+                    if (text120 == "") {
+                        text120 = ((CheckBox) linear120.getChildAt(i)).getText().toString();
+                    } else {
+                        text120 = text120 + "," + ((CheckBox) linear120.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+            Log.d("GameCenter120", text120);
+            pickedNumber = text120;
+            if (
+                    code.equals("star_5_group_120")
+                            || code.equals("2min_star_5_group_120")
+                    ) {
+                if (count120[0] > 4) {
+                    int nns = RxUtils.getInstance().JieCheng(count120[0]) / (RxUtils.getInstance().JieCheng(5) * RxUtils.getInstance().JieCheng(count120[0] - 5));
+                    Log.d("GameCenter120注", nns + "");
+                    nums = nns;
+                }
+            } else if (
+                    code.equals("star_4_group_24")
+                            || code.equals("2min_star_4_group_24")
+                    ) {
+                if (count120[0] > 3) {
+                    int nns = RxUtils.getInstance().JieCheng(count120[0]) / (RxUtils.getInstance().JieCheng(4) * RxUtils.getInstance().JieCheng(count120[0] - 4));
+                    Log.d("GameCenter24注", nns + "");
+                    nums = nns;
+                }
+            } else if (
+                    code.equals("star_4_group_6")
+                            || code.equals("2min_star_4_group_6")
+                    ) {
+                if (count120[0] > 1) {
+                    int nns = count120[0] * (count120[0] - 1) / 2;
+                    Log.d("GameCenter6注", nns + "");
+                    nums = nns;
+                }
+            }
+
+
+        }
+        if (
+                code.equals("star_5_group_30")
+                        || code.equals("2min_star_5_group_30")
+                        || code.equals("star_5_group_20")
+                        || code.equals("2min_star_5_group_20")
+                        || code.equals("star_4_group_12")
+                        || code.equals("2min_star_4_group_12")
+                ) {
+            int[] count30_1 = {0};
+            int[] count30_2 = {0};
+            String text30_1 = "";
+            String text30_2 = "";
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            for (int i = 1; i < linear1.getChildCount(); i++) {
+                if (((CheckBox) linear1.getChildAt(i)).isChecked()) {
+                    count30_1[0]++;
+                    if (text30_1 == "") {
+                        text30_1 = ((CheckBox) linear1.getChildAt(i)).getText().toString();
+                    } else {
+                        text30_1 = text30_1 + ((CheckBox) linear1.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+            for (int i = 1; i < linear2.getChildCount(); i++) {
+                if (((CheckBox) linear2.getChildAt(i)).isChecked()) {
+                    count30_2[0]++;
+                    if (text30_2 == "") {
+                        text30_2 = ((CheckBox) linear2.getChildAt(i)).getText().toString();
+                    } else {
+                        text30_2 = text30_2 + ((CheckBox) linear2.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+            int k = 0;
+            for (int i = 0; i < text30_1.length(); i++) {
+                Log.d("Char30_1", text30_1.charAt(i) + "");
+                for (int i1 = 0; i1 < text30_2.length(); i1++) {
+                    Log.d("Char30_2", text30_2.charAt(i1) + "");
+                    if (text30_1.charAt(i) == text30_2.charAt(i1)) {
+                        k++;
+                    }
+                }
+            }
+            Log.d("相同的个数", k + "");
+            pickedNumber = text30_1 + "," + text30_2;
+            if (
+                    code.equals("star_5_group_30")
+                            || code.equals("2min_star_5_group_30")
+                    ) {
+                nums = count30_1[0] * (count30_1[0] - 1) * count30_2[0] / 2 - (count30_1[0] - 1) * k;
+            } else if (
+                    code.equals("star_5_group_20")
+                            || code.equals("2min_star_5_group_20")
+                    ) {
+                nums = count30_2[0] * (count30_2[0] - 1) * count30_1[0] / 2 - (count30_2[0] - 1) * k;
+            }
+        }
+        if (
+                code.equals("star_5_one") ||
+                        code.equals("2min_star_5_one") ||
+                        code.equals("star_5_two") ||
+                        code.equals("2min_star_5_two") ||
+                        code.equals("star_5_three") ||
+                        code.equals("2min_star_5_three") ||
+                        code.equals("star_5_four") ||
+                        code.equals("2min_star_5_four")
+                ) {
+            int[] count5 = {0};
+            String text5 = "";
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            for (int i = 1; i < linear1.getChildCount(); i++) {
+                if (((CheckBox) linear1.getChildAt(i)).isChecked()) {
+                    count5[0]++;
+                    if (text5 == "") {
+                        text5 = ((CheckBox) linear1.getChildAt(i)).getText().toString();
+                    } else {
+                        text5 = text5 + "," + ((CheckBox) linear1.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+            pickedNumber = text5;
+            nums = count5[0];
+        }
+        if (
+                code.equals("star_4_duplex")
+                        || code.equals("2min_star_4_duplex")
+                ) {
+
+            final int[] count1 = {0};
+            final int[] count2 = {0};
+            final int[] count3 = {0};
+            final int[] count4 = {0};
+
+            String wan = "";
+            String qian = "";
+            String bai = "";
+            String shi = "";
+
+
+            LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            LinearLayout lin3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
+            LinearLayout lin4 = (LinearLayout) inte.findViewById(R.id.LinearFour);
+
+            for (int i = 1; i < lin1.getChildCount(); i++) {
+                if (((CheckBox) lin1.getChildAt(i)).isChecked()) {
+                    count1[0]++;
+                    if (wan == "") {
+                        wan = ((CheckBox) lin1.getChildAt(i)).getText().toString();
+                    } else {
+                        wan = wan + ((CheckBox) lin1.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+            for (int i = 1; i < lin2.getChildCount(); i++) {
+                if (((CheckBox) lin2.getChildAt(i)).isChecked()) {
+                    count2[0]++;
+                    if (qian == "") {
+                        qian = ((CheckBox) lin2.getChildAt(i)).getText().toString();
+                    } else {
+                        qian = qian + ((CheckBox) lin2.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+            for (int i = 1; i < lin3.getChildCount(); i++) {
+                if (((CheckBox) lin3.getChildAt(i)).isChecked()) {
+                    count3[0]++;
+                    if (bai == "") {
+                        bai = ((CheckBox) lin3.getChildAt(i)).getText().toString();
+                    } else {
+                        bai = bai + ((CheckBox) lin3.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+            for (int i = 1; i < lin4.getChildCount(); i++) {
+                if (((CheckBox) lin4.getChildAt(i)).isChecked()) {
+                    count4[0]++;
+                    if (shi == "") {
+                        shi = ((CheckBox) lin4.getChildAt(i)).getText().toString();
+                    } else {
+                        shi = shi + ((CheckBox) lin4.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+
+            Log.d("GameCenterrCount==", count1[0] + "   " + count2[0] + "   " + count3[0] + "   " + count4[0] + "   ");
+            pickedNumber = wan + "," + qian + "," + bai + "," + shi;
+            Log.d("GameCenterrText==", pickedNumber);
+            nums = count1[0] * count2[0] * count3[0] * count4[0];
+        }
+        //三星直选复式
+        if (
+                code.equals("star_3_next_duplex")
+                        || code.equals("2min_star_3_next_duplex")
+                        || code.equals("star_3_prev_duplex")
+                        || code.equals("2min_star_3_prev_duplex")
+                        || code.equals("star_3_midd_duplex")
+                        || code.equals("2min_star_3_midd_duplex")
+                        || code.equals("sequence_star_3_duplex")
+                        || code.equals("3D_star_3_duplex")
+                        || code.equals("3D_fix")
+
+                ) {
+            final int[] count1 = {0};
+            final int[] count2 = {0};
+            final int[] count3 = {0};
+
+
+            String wan = "";
+            String qian = "";
+            String bai = "";
+
+
+            LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            LinearLayout lin3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
+
+
+            for (int i = 1; i < lin1.getChildCount(); i++) {
+                if (((CheckBox) lin1.getChildAt(i)).isChecked()) {
+                    count1[0]++;
+                    if (wan == "") {
+                        wan = ((CheckBox) lin1.getChildAt(i)).getText().toString();
+                    } else {
+                        wan = wan + ((CheckBox) lin1.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+            for (int i = 1; i < lin2.getChildCount(); i++) {
+                if (((CheckBox) lin2.getChildAt(i)).isChecked()) {
+                    count2[0]++;
+                    if (qian == "") {
+                        qian = ((CheckBox) lin2.getChildAt(i)).getText().toString();
+                    } else {
+                        qian = qian + ((CheckBox) lin2.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+            for (int i = 1; i < lin3.getChildCount(); i++) {
+                if (((CheckBox) lin3.getChildAt(i)).isChecked()) {
+                    count3[0]++;
+                    if (bai == "") {
+                        bai = ((CheckBox) lin3.getChildAt(i)).getText().toString();
+                    } else {
+                        bai = bai + ((CheckBox) lin3.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+
+
+            Log.d("GameCenterrCount==", count1[0] + "   " + count2[0] + "   " + count3[0] + "   ");
+            pickedNumber = wan + "," + qian + "," + bai;
+            Log.d("GameCenterrText==", pickedNumber);
+            if ("3D_fix".equals(code)) {
+                nums = count1[0] + count2[0] + count3[0];
+            } else {
+                nums = count1[0] * count2[0] * count3[0];
+            }
+        }
+        //三星直选和值
+        if (
+                code.equals("star_3_next_sum")
+                        || code.equals("2min_star_3_next_sum")
+                        || code.equals("star_3_prev_sum")
+                        || code.equals("2min_star_3_prev_sum")
+                        || code.equals("star_3_midd_sum")
+                        || code.equals("2min_star_3_midd_sum")
+                        || code.equals("sequence_star_3_sum")
+                        || code.equals("3D_star_3_sum")
+                ) {
+            LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            LinearLayout lin3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
+            List<Integer> ns = new ArrayList<>();
+            List<String> str = new ArrayList<>();
+            for (int i = 0; i < lin1.getChildCount(); i++) {
+                if (((CheckBox) lin1.getChildAt(i)).isChecked()) {
+                    int i1 = Integer.parseInt(((CheckBox) lin1.getChildAt(i)).getText().toString());
+                    ns.add(i1);
+                    str.add(((CheckBox) lin1.getChildAt(i)).getText().toString());
+                }
+            }
+
+            for (int i = 0; i < lin2.getChildCount(); i++) {
+                if (((CheckBox) lin2.getChildAt(i)).isChecked()) {
+                    int i1 = Integer.parseInt(((CheckBox) lin2.getChildAt(i)).getText().toString());
+                    ns.add(i1);
+                    str.add(((CheckBox) lin2.getChildAt(i)).getText().toString());
+
+                }
+
+            }
+            for (int i = 0; i < lin3.getChildCount(); i++) {
+                if (((CheckBox) lin3.getChildAt(i)).isChecked()) {
+                    int i1 = Integer.parseInt(((CheckBox) lin3.getChildAt(i)).getText().toString());
+                    ns.add(i1);
+                    str.add(((CheckBox) lin3.getChildAt(i)).getText().toString());
+                }
+            }
+            nums = getNum(ns);
+            pickedNumber = getheNums(str);
+            Log.d("3星和值和注", getheNums(str) + "            " + nums);
+        }
+        //三星直选跨度
+        if (
+                code.equals("star_3_next_sub")
+                        || code.equals("2min_star_3_next_sub")
+                        || code.equals("star_3_prev_sub")
+                        || code.equals("2min_star_3_prev_sub")
+                        || code.equals("star_3_midd_sub")
+                        || code.equals("2min_star_3_midd_sub")
+                ) {
+            LinearLayout linear = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            final int[] count1 = {0};
+            List<String> kua = new ArrayList<>();
+            List<Integer> ns = new ArrayList<>();
+            for (int i = 1; i < linear.getChildCount(); i++) {
+                if (((CheckBox) linear.getChildAt(i)).isChecked()) {
+                    count1[0]++;
+                    ns.add(Integer.parseInt(((CheckBox) linear.getChildAt(i)).getText().toString()));
+                    kua.add(((CheckBox) linear.getChildAt(i)).getText().toString());
+                }
+            }
+            nums = getNumKua(ns);
+            pickedNumber = getheNums(kua);
+            Log.d("3星和值跨", getheNums(kua) + "            " + nums);
+        }
+        //三星复式 3 6
+        if (
+                code.equals("star_3_next_group_duplex")
+                        || code.equals("2min_star_3_next_group_duplex")
+                        || code.equals("star_3_next_group_duplex_6")
+                        || code.equals("2min_star_3_next_group_duplex_6")
+                        || code.equals("star_3_midd_group_duplex")
+                        || code.equals("2min_star_3_midd_group_duplex")
+                        || code.equals("star_3_prev_group_duplex")
+                        || code.equals("2min_star_3_prev_group_duplex")
+                        || code.equals("star_3_prev_group_duplex_6")
+                        || code.equals("2min_star_3_prev_group_duplex_6")
+                        || code.equals("star_3_midd_group_duplex_6")
+                        || code.equals("2min_star_3_midd_group_duplex_6")
+
+
+                ) {
+            final int[] count1 = {0};
+            String str = "";
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            for (int i = 1; i < linear1.getChildCount(); i++) {
+                if (((CheckBox) linear1.getChildAt(i)).isChecked()) {
+                    count1[0]++;
+                    if (str == "") {
+                        str = ((CheckBox) linear1.getChildAt(i)).getText().toString();
+                    } else {
+                        str = str + "," + ((CheckBox) linear1.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+            pickedNumber = str;
+            if (
+                    code.equals("star_3_next_group_duplex")
+                            || code.equals("2min_star_3_next_group_duplex")
+                            || code.equals("star_3_prev_group_duplex")
+                            || code.equals("2min_star_3_prev_group_duplex")
+                            || code.equals("star_3_midd_group_duplex")
+                            || code.equals("2min_star_3_midd_group_duplex") || "star_5_three_no_fix".equals(code)
+                            || "2min_star_5_three_no_fix".equals(code)
+                    ) {
+                if (count1[0] < 2) {
+                    nums = 0;
+                } else {
+                    nums = count1[0] * (count1[0] - 1);
+                }
+            } else if (
+                    code.equals("star_3_next_group_duplex_6")
+                            || code.equals("2min_star_3_next_group_duplex_6")
+                            || code.equals("star_3_prev_group_duplex_6")
+                            || code.equals("2min_star_3_prev_group_duplex_6")
+                            || code.equals("star_3_midd_group_duplex_6")
+                            || code.equals("2min_star_3_midd_group_duplex_6")
+                            || "star_5_three_no_fix".equals(code)
+                            || "2min_star_5_three_no_fix".equals(code)
+                    ) {
+                if (count1[0] < 3) {
+                    nums = 0;
+                } else {
+                    int n1 = RxUtils.getInstance().JieCheng(count1[0]);
+                    int n2 = RxUtils.getInstance().JieCheng(3);
+                    int n3 = RxUtils.getInstance().JieCheng(count1[0] - 3);
+                    nums = (n2 * n3 <= 0 ? 0 : n1 / (n2 * n3));
+                }
+            }
+
+        }
+        //三星组选包胆
+        if (
+                code.equals("star_3_next_group_any")
+                        || code.equals("2min_star_3_next_group_any")
+                        || code.equals("star_3_prev_group_any")
+                        || code.equals("2min_star_3_prev_group_any")
+                        || code.equals("star_3_midd_group_any")
+                        || code.equals("2min_star_3_midd_group_any")
+                ) {
+            RadioGroup radiog1 = (RadioGroup) inte.findViewById(R.id.RadioG1);
+            for (int i = 0; i < radiog1.getChildCount(); i++) {
+                if (((RadioButton) radiog1.getChildAt(i)).isChecked()) {
+                    pickedNumber = ((RadioButton) radiog1.getChildAt(i)).getText().toString();
+                }
+            }
+            nums = 54;
+        }
+        //三星组选和值
+        if (
+                code.equals("star_3_next_group_sum")
+                        || code.equals("2min_star_3_next_group_sum")
+                        || code.equals("star_3_prev_group_sum")
+                        || code.equals("2min_star_3_prev_group_sum")
+                        || code.equals("star_3_midd_group_sum")
+                        || code.equals("2min_star_3_midd_group_sum")
+                        || code.equals("sequence_star_3_group_sum")
+                        || code.equals("3D_star_3_group_sum")
+                ) {
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.Linear1);
+            LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.Linear2);
+            LinearLayout linear3 = (LinearLayout) inte.findViewById(R.id.Linear3);
+            final int[] count1 = {0};
+            List<Integer> ns = new ArrayList<>();
+            List<String> str = new ArrayList<>();
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                if (((CheckBox) linear1.getChildAt(i)).isChecked()) {
+                    String s = ((CheckBox) linear1.getChildAt(i)).getText().toString();
+                    ns.add(Integer.parseInt(s));
+                    str.add(s);
+                }
+            }
+            for (int i = 0; i < linear2.getChildCount(); i++) {
+                if (((CheckBox) linear2.getChildAt(i)).isChecked()) {
+                    String s = ((CheckBox) linear2.getChildAt(i)).getText().toString();
+                    ns.add(Integer.parseInt(s));
+                    str.add(s);
+                }
+            }
+            for (int i = 0; i < linear3.getChildCount(); i++) {
+                if (((CheckBox) linear3.getChildAt(i)).isChecked()) {
+                    String s = ((CheckBox) linear3.getChildAt(i)).getText().toString();
+                    ns.add(Integer.parseInt(s));
+                    str.add(s);
+                }
+            }
+            nums = getNumZuHe(ns);
+            pickedNumber = getheNums(str);
+        }
+        //二星直选复式
+        if (
+                "star_2_next_duplex".equals(code)
+                        || "2min_star_2_next_duplex".equals(code)
+                        || "star_2_prev_duplex".equals(code)
+                        || "2min_star_2_prev_duplex".equals(code)
+                        || "sequence_star_2_prev_duplex".equals(code)
+                        || "sequence_star_2_next_duplex".equals(code)
+                        || "3D_star_2_prev_duplex".equals(code)
+                        || "3D_star_2_next_duplex".equals(code)
+                ) {
+            int count1 = 0;
+            int count2 = 0;
+            String str1 = "";
+            String str2 = "";
+            LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                if (at.isChecked()) {
+                    count1++;
+                    if (str1 == "") {
+                        str1 = at.getText().toString();
+                    } else {
+                        str1 = str1 + at.getText().toString();
+                    }
+                }
+            }
+            for (int i = 1; i < LinearTwo.getChildCount(); i++) {
+                CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                if (at.isChecked()) {
+                    count2++;
+                    if (str2 == "") {
+                        str2 = at.getText().toString();
+                    } else {
+                        str2 = str2 + at.getText().toString();
+                    }
+                }
+            }
+            nums = count1 * count2;
+            pickedNumber = str1 + "," + str2;
+        }
+        //二星直选和值
+        if (
+                code.equals("star_2_next_sum")
+                        || code.equals("2min_star_2_next_sum")
+                        || code.equals("star_2_prev_sum")
+                        || code.equals("2min_star_2_prev_sum")
+                ) {
+            List<Integer> ns = new ArrayList<>();
+            List<String> nss = new ArrayList<>();
+            LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                if (at.isChecked()) {
+                    int i1 = Integer.parseInt(at.getText().toString().trim());
+                    ns.add(i1);
+                    nss.add(at.getText().toString().trim());
+                }
+            }
+            for (int i = 1; i < LinearTwo.getChildCount(); i++) {
+                CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                if (at.isChecked()) {
+                    int i1 = Integer.parseInt(at.getText().toString().trim());
+                    ns.add(i1);
+                    nss.add(at.getText().toString().trim());
+                }
+            }
+            nums = getNumHe2(ns);
+            pickedNumber = getheNums(nss);
+
+        }
+        //二星直选跨度
+        if (
+                "star_2_next_sub".equals(code)
+                        || "2min_star_2_next_sub".equals(code)
+                        || "star_2_prev_sub".equals(code)
+                        || "2min_star_2_prev_sub".equals(code)
+                ) {
+            List<Integer> ns = new ArrayList<>();
+            List<String> nss = new ArrayList<>();
+            LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                if (at.isChecked()) {
+                    ns.add(Integer.parseInt(at.getText().toString()));
+                    nss.add(at.getText().toString());
+                }
+            }
+            nums = getNumKua2(ns);
+            pickedNumber = getheNums(nss);
+        }
+        //二星组选复式
+        if (
+                "star_2_next_group_duplex".equals(code)
+                        || "2min_star_2_next_group_duplex".equals(code)
+                        || "star_2_prev_group_duplex".equals(code)
+                        || "2min_star_2_prev_group_duplex".equals(code)
+                        || "eleven_star_2_prev_group_duplex".equals(code)
+                        || "sequence_star_3_group_3_duplex".equals(code)
+                        || "3D_star_3_group_3_duplex".equals(code)
+                        || "sequence_star_2_prev_group_duplex".equals(code)
+                        || "3D_star_2_next_group_duplex".equals(code)
+                        || "3D_star_2_prev_group_duplex".equals(code)
+                        || "sequence_star_2_next_group_duplex".equals(code)
+                ) {
+            int count1 = 0;
+            String str = "";
+            LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                if (at.isChecked()) {
+                    count1++;
+                    if (str == "") {
+                        str = at.getText().toString().trim();
+                    } else {
+                        str = str + "," + at.getText().toString().trim();
+                    }
+                }
+
+            }
+            if (
+                    "sequence_star_3_group_3_duplex".equals(code)
+                            || "3D_star_3_group_3_duplex".equals(code)
+                    ) {
+                nums = count1 * (count1 - 1);
+            } else {
+
+                nums = count1 * (count1 - 1) / 2;
+            }
+            pickedNumber = str;
+        }
+        //二星组选和值
+        if (
+                "star_2_next_group_sum".equals(code)
+                        || "2min_star_2_next_group_sum".equals(code)
+                        || "star_2_prev_group_sum".equals(code)
+                        || "2min_star_2_prev_group_sum".equals(code)
+                ) {
+            List<Integer> ns = new ArrayList<>();
+            List<String> nns = new ArrayList<>();
+            LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                if (at.isChecked()) {
+                    ns.add(Integer.parseInt(at.getText().toString().trim()));
+                    nns.add(at.getText().toString().trim());
+                }
+            }
+            for (int i = 1; i < LinearTwo.getChildCount(); i++) {
+                CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                if (at.isChecked()) {
+                    ns.add(Integer.parseInt(at.getText().toString().trim()));
+                    nns.add(at.getText().toString().trim());
+                }
+            }
+            pickedNumber = getheNums(nns);
+            nums = getNumHe22(ns);
+        }
+        //二星组选包胆
+        if (
+                "star_2_next_group_any".equals(code)
+                        || "2min_star_2_next_group_any".equals(code)
+                        || "star_2_prev_group_any".equals(code)
+                        || "2min_star_2_prev_group_any".equals(code)
+                ) {
+            RadioGroup radiog1 = (RadioGroup) inte.findViewById(R.id.RadioG1);
+            for (int i = 0; i < radiog1.getChildCount(); i++) {
+                if (((RadioButton) radiog1.getChildAt(i)).isChecked()) {
+                    pickedNumber = ((RadioButton) radiog1.getChildAt(i)).getText().toString();
+                }
+            }
+            nums = 9;
+        }
+        if (
+                "fix".equals(code)
+                        || "2min_fix".equals(code)
+                        || "star_2_any_duplex".equals(code)
+                        || "2min_star_2_any_duplex".equals(code)
+                        || "star_3_any_duplex".equals(code)
+                        || "2min_star_3_any_duplex".equals(code)
+                        || "star_4_any_duplex".equals(code)
+                        || "2min_star_4_any_duplex".equals(code)
+                        || "sequence_fix".equals(code)
+
+                ) {
+            final int[] m1 = {0};
+            final int[] m2 = {0};
+            final int[] m3 = {0};
+            final int[] m4 = {0};
+            final int[] m5 = {0};
+            String wan = "";
+            String qian = "";
+            String bai = "";
+            String shi = "";
+            String ge = "";
+
+            LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            LinearLayout lin3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
+            LinearLayout lin4 = (LinearLayout) inte.findViewById(R.id.LinearFour);
+            LinearLayout lin5 = (LinearLayout) inte.findViewById(R.id.LinearFive);
+            for (int i = 1; i < lin1.getChildCount(); i++) {
+                if (((CheckBox) lin1.getChildAt(i)).isChecked()) {
+                    m1[0]++;
+                    if (wan == "") {
+                        wan = ((CheckBox) lin1.getChildAt(i)).getText().toString();
+                    } else {
+                        wan = wan + ((CheckBox) lin1.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+            for (int i = 1; i < lin2.getChildCount(); i++) {
+                if (((CheckBox) lin2.getChildAt(i)).isChecked()) {
+                    m2[0]++;
+                    if (qian == "") {
+                        qian = ((CheckBox) lin2.getChildAt(i)).getText().toString();
+                    } else {
+                        qian = qian + ((CheckBox) lin2.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+            for (int i = 1; i < lin3.getChildCount(); i++) {
+                if (((CheckBox) lin3.getChildAt(i)).isChecked()) {
+                    m3[0]++;
+                    if (bai == "") {
+                        bai = ((CheckBox) lin3.getChildAt(i)).getText().toString();
+                    } else {
+                        bai = bai + ((CheckBox) lin3.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+            for (int i = 1; i < lin4.getChildCount(); i++) {
+                if (((CheckBox) lin4.getChildAt(i)).isChecked()) {
+                    m4[0]++;
+                    if (shi == "") {
+                        shi = ((CheckBox) lin4.getChildAt(i)).getText().toString();
+                    } else {
+                        shi = shi + ((CheckBox) lin4.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+            for (int i = 1; i < lin5.getChildCount(); i++) {
+                if (((CheckBox) lin5.getChildAt(i)).isChecked()) {
+                    m5[0]++;
+                    if (ge == "") {
+                        ge = ((CheckBox) lin5.getChildAt(i)).getText().toString();
+                    } else {
+                        ge = ge + ((CheckBox) lin5.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+
+            pickedNumber = wan + "," + qian + "," + bai + "," + shi + "," + ge;
+            Log.d("GameCenterrText==", pickedNumber);
+            if (
+                    "fix".equals(code)
+                            || "2min_fix".equals(code)
+                            || "sequence_fix".equals(code)
+                    ) {
+                nums = m1[0] + m2[0] + m3[0] + m4[0] + m5[0];
+            }
+            if (
+                    "star_2_any_duplex".equals(code)
+                            || "2min_star_2_any_duplex".equals(code)
+                    ) {
+                nums = m1[0] * (m2[0] + m3[0] + m4[0] + m5[0]) + m2[0] * (m3[0] + m4[0] + m5[0]) + m3[0] * (m4[0] + m5[0]) + m4[0] * m5[0];
+            }
+            if (
+                    "star_3_any_duplex".equals(code)
+                            || "2min_star_3_any_duplex".equals(code)
+                    ) {
+                nums = m1[0] * m2[0] * m3[0] + m1[0] * m2[0] * m4[0] + m1[0] * m2[0] * m5[0] + m1[0] * m3[0] * m4[0] + m1[0] * m3[0] * m5[0] + m1[0] * m4[0] * m5[0] + m2[0] * m3[0] * m4[0] + m2[0] * m3[0] * m5[0] + m2[0] * m4[0] * m5[0] + m3[0] * m4[0] * m5[0];
+            }
+            if (
+                    "star_4_any_duplex".equals(code)
+                            || "2min_star_4_any_duplex".equals(code)
+                    ) {
+                nums = m1[0] * m2[0] * m3[0] * m4[0] + m1[0] * m2[0] * m3[0] * m5[0] + m1[0] * m2[0] * m4[0] * m5[0] + m1[0] * m3[0] * m4[0] * m5[0] + m2[0] * m3[0] * m4[0] * m5[0];
+            }
+        }
+        if (
+                "star_3_next_one_no_fix".equals(code)
+                        || "2min_star_3_next_one_no_fix".equals(code)
+                        || "star_3_prev_one_no_fix".equals(code)
+                        || "2min_star_3_prev_one_no_fix".equals(code)
+                        || "star_4_one_no_fix".equals(code)
+                        || "2min_star_4_one_no_fix".equals(code)
+                        || "eleven_star_3_prev_no_fix".equals(code)
+                        || "sequence_choose_1_no_fix".equals(code)
+                        || "3D_choose_1_no_fix".equals(code)
+                        || "3D_choose_2_no_fix".equals(code)
+
+                        || "star_3_next_two_no_fix".equals(code)
+                        || "2min_star_3_next_two_no_fix".equals(code)
+                        || "star_3_prev_two_no_fix".equals(code)
+                        || "2min_star_3_prev_two_no_fix".equals(code)
+                        || "star_4_two_no_fix".equals(code)
+                        || "2min_star_4_two_no_fix".equals(code)
+                        || "star_5_two_no_fix".equals(code)
+                        || "2min_star_5_two_no_fix".equals(code)
+                        || "star_5_three_no_fix".equals(code)
+                        || "2min_star_5_three_no_fix".equals(code)
+
+                ) {
+            String str = "";
+            int count = 0;
+            LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString().trim();
+                    } else {
+                        str = str + "," + at.getText().toString().toString();
+                    }
+                }
+            }
+            pickedNumber = str;
+            if (
+                    "3D_choose_2_no_fix".equals(code)
+                            || "star_3_next_two_no_fix".equals(code)
+                            || "2min_star_3_next_two_no_fix".equals(code)
+                            || "star_3_prev_two_no_fix".equals(code)
+                            || "2min_star_3_prev_two_no_fix".equals(code)
+                            || "star_4_two_no_fix".equals(code)
+                            || "2min_star_4_two_no_fix".equals(code)
+                            || "star_5_two_no_fix".equals(code)
+                            || "2min_star_5_two_no_fix".equals(code)
+
+                    ) {
+                nums = count * (count - 1) / 2;
+            } else {
+                nums = count;
+            }
+        }
+        //11 选五三码直选
+        if (
+                "eleven_star_3_prev_duplex".equals(code)
+
+                ) {
+            String gn1[] = new String[11];
+            int i1 = 0;
+            String gn2[] = new String[11];
+            int i2 = 0;
+            String gn3[] = new String[11];
+            int i3 = 0;
+            int coun = 0;
+            String str1 = "";
+            String str2 = "";
+            String str3 = "";
+            LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            LinearLayout lin3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
+            for (int i = 1; i < lin1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) lin1.getChildAt(i);
+                if (at.isChecked()) {
+                    gn1[i1] = at.getText().toString().trim();
+                    if (str1 == "") {
+                        str1 = at.getText().toString().trim();
+                    } else {
+                        str1 = str1 + " " + at.getText().toString().trim();
+                    }
+                    i1++;
+                }
+            }
+            for (int i = 1; i < lin2.getChildCount(); i++) {
+                CheckBox at = (CheckBox) lin2.getChildAt(i);
+                if (at.isChecked()) {
+                    gn2[i2] = at.getText().toString().trim();
+                    if (str2 == "") {
+                        str2 = at.getText().toString().trim();
+                    } else {
+                        str2 = str2 + " " + at.getText().toString().trim();
+                    }
+                    i2++;
+                }
+            }
+            for (int i = 1; i < lin3.getChildCount(); i++) {
+                CheckBox at = (CheckBox) lin3.getChildAt(i);
+                if (at.isChecked()) {
+                    gn3[i3] = at.getText().toString().trim();
+                    if (str3 == "") {
+                        str3 = at.getText().toString().trim();
+                    } else {
+                        str3 = str3 + " " + at.getText().toString().trim();
+                    }
+                    i3++;
+                }
+            }
+            int c1 = 0;
+            int c2 = 0;
+            int c3 = 0;
+
+            for (int i = 0; i < gn1.length; i++) {
+                if (gn1[i] != null) {
+                    Log.d("11选五三码直选1", gn1[i] + "");
+                    c1++;
+                }
+            }
+            for (int i = 0; i < gn2.length; i++) {
+                if (gn2[i] != null) {
+                    Log.d("11选五三码直选2", gn2[i] + "");
+                    c2++;
+                }
+            }
+            for (int i = 0; i < gn3.length; i++) {
+                if (gn3[i] != null) {
+                    Log.d("11选五三码直选3", gn3[i] + "");
+                    c3++;
+                }
+            }
+
+            for (int i = 0; i < c1; i++) {
+                for (int j = 0; j < c2; j++) {
+                    if (gn1[i] == gn2[j]) continue;
+                    else {
+                        for (int k = 0; k < c3; k++) {
+                            if (gn1[i] == gn3[k] || gn2[j] == gn3[k]) continue;
+                            else coun++;
                         }
                     }
-                    nums = getNumKua(ns);
-                    pickedNumber = getheNums(kua);
-                    Log.d("3星和值跨", getheNums(kua) + "            " + nums);
                 }
-                //三星复式 3 6
-                if (
-                        code.equals("star_3_next_group_duplex")
-                                || code.equals("2min_star_3_next_group_duplex")
-                                || code.equals("star_3_next_group_duplex_6")
-                                || code.equals("2min_star_3_next_group_duplex_6")
-                                || code.equals("star_3_midd_group_duplex")
-                                || code.equals("2min_star_3_midd_group_duplex")
-                                || code.equals("star_3_prev_group_duplex")
-                                || code.equals("2min_star_3_prev_group_duplex")
-                                || code.equals("star_3_prev_group_duplex_6")
-                                || code.equals("2min_star_3_prev_group_duplex_6")
-                                || code.equals("star_3_midd_group_duplex_6")
-                                || code.equals("2min_star_3_midd_group_duplex_6")
+            }
+            nums = coun;
+            pickedNumber = str1 + "," + str2 + "," + str3;
+        }
+        if ("eleven_star_3_prev_group_duplex".equals(code)) {
+            String str = "";
+            int n = 0;
+            LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                if (at.isChecked()) {
+                    n++;
+                    if (str == "") {
+                        str = at.getText().toString().trim();
+                    } else {
+                        str = str + "," + at.getText().toString().trim();
+                    }
+                }
+            }
+            nums = n * (n - 1) * (n - 2) / 6;
+            pickedNumber = str;
+        }
+        if ("eleven_star_2_prev_duplex".equals(code)) {
+            String gn1[] = new String[11];
+            int i1 = 0;
+            String gn2[] = new String[11];
+            int i2 = 0;
 
+            int coun = 0;
+            String str1 = "";
+            String str2 = "";
 
-                        ) {
-                    final int[] count1 = {0};
-                    String str = "";
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    for (int i = 1; i < linear1.getChildCount(); i++) {
-                        if (((CheckBox) linear1.getChildAt(i)).isChecked()) {
-                            count1[0]++;
-                            if (str == "") {
-                                str = ((CheckBox) linear1.getChildAt(i)).getText().toString();
-                            } else {
-                                str = str + "," + ((CheckBox) linear1.getChildAt(i)).getText().toString();
+            LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            LinearLayout lin3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
+            for (int i = 1; i < lin1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) lin1.getChildAt(i);
+                if (at.isChecked()) {
+                    gn1[i1] = at.getText().toString().trim();
+                    if (str1 == "") {
+                        str1 = at.getText().toString().trim();
+                    } else {
+                        str1 = str1 + " " + at.getText().toString().trim();
+                    }
+                    i1++;
+                }
+            }
+            for (int i = 1; i < lin2.getChildCount(); i++) {
+                CheckBox at = (CheckBox) lin2.getChildAt(i);
+                if (at.isChecked()) {
+                    gn2[i2] = at.getText().toString().trim();
+                    if (str2 == "") {
+                        str2 = at.getText().toString().trim();
+                    } else {
+                        str2 = str2 + " " + at.getText().toString().trim();
+                    }
+                    i2++;
+                }
+            }
+            int c1 = 0;
+            int c2 = 0;
+
+            for (int i = 0; i < gn1.length; i++) {
+                if (gn1[i] != "") {
+                    Log.d("11选五三码直选1", gn1[i]);
+                    c1++;
+                }
+            }
+            for (int i = 0; i < gn2.length; i++) {
+                if (gn2[i] != "") {
+                    Log.d("11选五三码直选2", gn2[i]);
+                    c2++;
+                }
+            }
+            for (int i = 0; i < c1; i++) {
+                for (int j = 0; j < c2; j++) {
+                    if (gn1[i] == gn2[j]) continue;
+                    coun += 1;
+                }
+            }
+            nums = coun;
+            pickedNumber = str1 + "," + str2;
+        }
+        if ("eleven_fix".equals(code)) {
+            LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            LinearLayout lin3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
+            int count = 0;
+            String str1 = "";
+            String str2 = "";
+            String str3 = "";
+            for (int i = 1; i < lin1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) lin1.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str1 == "") {
+                        str1 = at.getText().toString().trim();
+                    } else {
+                        str1 = str1 + " " + at.getText().toString().trim();
+                    }
+
+                }
+            }
+            for (int i = 1; i < lin2.getChildCount(); i++) {
+                CheckBox at = (CheckBox) lin2.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str2 == "") {
+                        str2 = at.getText().toString().trim();
+                    } else {
+                        str2 = str2 + " " + at.getText().toString().trim();
+                    }
+
+                }
+            }
+            for (int i = 1; i < lin3.getChildCount(); i++) {
+                CheckBox at = (CheckBox) lin3.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str3 == "") {
+                        str3 = at.getText().toString().trim();
+                    } else {
+                        str3 = str3 + " " + at.getText().toString().trim();
+                    }
+                }
+            }
+            nums = count;
+            pickedNumber = str1 + "," + str2 + "," + str3;
+        }
+        if ("eleven_even_or_odd".equals(code)) {
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            String str = "";
+            String strt1 = "";
+            int count = 0;
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString().trim();
+                        strt1 = get11_5(at.getText().toString().trim());
+                    } else {
+                        str = str + "," + at.getText().toString().trim();
+                        strt1 = strt1 + "," + get11_5(at.getText().toString().trim());
+                    }
+                }
+            }
+            for (int i = 0; i < linear2.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear2.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString().trim();
+                        strt1 = get11_5(at.getText().toString().trim());
+                    } else {
+                        str = str + "," + at.getText().toString().trim();
+                        strt1 = strt1 + "," + get11_5(at.getText().toString().trim());
+                    }
+                }
+            }
+            pickedNumber = strt1;
+            pickedText = str;
+            nums = count;
+        }
+        if ("eleven_middle".equals(code)) {
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            String str = "";
+            int count = 0;
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString().trim();
+                    } else {
+                        str = str + "," + at.getText().toString().trim();
+                    }
+                }
+            }
+            pickedNumber = str;
+            nums = count;
+        }
+        if (
+                "eleven_any_one_duplex".equals(code)
+                        || "eleven_any_two_duplex".equals(code)
+                        || "eleven_any_three_duplex".equals(code)
+                        || "eleven_any_four_duplex".equals(code)
+                        || "eleven_any_five_duplex".equals(code)
+                        || "eleven_any_six_duplex".equals(code)
+                        || "eleven_any_seven_duplex".equals(code)
+                        || "eleven_any_eight_duplex".equals(code)
+                ) {
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            String str = "";
+            int count = 0;
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString().trim();
+                    } else {
+                        str = str + "," + at.getText().toString().trim();
+                    }
+                }
+            }
+            for (int i = 0; i < linear2.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear2.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString().trim();
+                    } else {
+                        str = str + "," + at.getText().toString().trim();
+                    }
+                }
+            }
+            if ("eleven_any_one_duplex".equals(code)) {
+                if (count != 1) {
+                    //Toasty.error(GameCenterActivity.this, "投注个数不正确,请重新投注.", 2000).show();
+                    return;
+                }
+            }
+            if ("eleven_any_two_duplex".equals(code)) {
+                if (count != 2) {
+                    //Toasty.error(GameCenterActivity.this, "投注个数不正确,请重新投注.", 2000).show();
+                    return;
+                }
+            }
+            if ("eleven_any_three_duplex".equals(code)) {
+                if (count != 3) {
+                    //Toasty.error(GameCenterActivity.this, "投注个数不正确,请重新投注.", 2000).show();
+                    return;
+                }
+            }
+            if ("eleven_any_four_duplex".equals(code)) {
+                if (count != 4) {
+                    //Toasty.error(GameCenterActivity.this, "投注个数不正确,请重新投注.", 2000).show();
+                    return;
+                }
+            }
+            if ("eleven_any_five_duplex".equals(code)) {
+                if (count != 5) {
+                    //Toasty.error(GameCenterActivity.this, "投注个数不正确,请重新投注.", 2000).show();
+                    return;
+                }
+            }
+            if ("eleven_any_six_duplex".equals(code)) {
+                if (count != 6) {
+                    //Toasty.error(GameCenterActivity.this, "投注个数不正确,请重新投注.", 2000).show();
+                    return;
+                }
+            }
+            if ("eleven_any_seven_duplex".equals(code)) {
+                if (count != 7) {
+                    //Toasty.error(GameCenterActivity.this, "投注个数不正确,请重新投注.", 2000).show();
+                    return;
+                }
+            }
+            if ("eleven_any_eight_duplex".equals(code)) {
+                if (count != 8) {
+                    //Toasty.error(GameCenterActivity.this, "投注个数不正确,请重新投注.", 2000).show();
+                    return;
+                }
+            }
+            pickedNumber = str;
+            nums = 1;
+        }
+        if ("PK10_1st_duplex".equals(code)) {
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            String str = "";
+            int count = 0;
+            for (int i = 1; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString().trim();
+                    } else {
+                        str = str + "," + at.getText().toString().trim();
+                    }
+                }
+            }
+            pickedNumber = str;
+            nums = count;
+        }
+        if ("PK10_1st_2nd_duplex".equals(code)) {
+            LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            int n = 0;//冠军选号数;
+            int m = 0;//亚军选号数;
+            String str1 = "";
+            String str2 = "";
+            List<String> n1 = new ArrayList<>();
+            List<String> n2 = new ArrayList<>();
+            int k = 0;//冠亚军重复选号数;
+            for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                if (at.isChecked()) {
+                    n++;
+                    if (str1 == "") {
+                        str1 = at.getText().toString().trim();
+                    } else {
+                        str1 = str1 + " " + at.getText().toString().trim();
+                    }
+                    n1.add(at.getText().toString().trim());
+                }
+            }
+            for (int i = 1; i < LinearTwo.getChildCount(); i++) {
+                CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                if (at.isChecked()) {
+                    m++;
+                    if (str2 == "") {
+                        str2 = at.getText().toString().trim();
+                    } else {
+                        str2 = str2 + " " + at.getText().toString().trim();
+                    }
+                    n2.add(at.getText().toString().trim());
+                }
+            }
+
+            for (int i = 0; i < n1.size(); i++) {
+                Log.d("冠军_1", n1.get(i) + "");
+                for (int i1 = 0; i1 < n2.size(); i1++) {
+                    Log.d("冠军_2", n2.get(i) + "");
+                    if (n1.get(i) == n2.get(i1)) {
+                        k++;
+                    }
+                }
+            }
+            nums = n * m - k;
+            pickedNumber = str1 + "," + str2;
+            Log.d("相同的个数", k + "");
+        }
+        if ("PK10_1st_2nd_3th_duplex".equals(code)) {
+            LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            LinearLayout LinearThree = (LinearLayout) inte.findViewById(R.id.LinearThree);
+            int n = 0;//冠军选号个数
+            int m = 0;//亚军选号个数
+            int k = 0;//第三名选号个数
+
+            int a = 0;//冠军亚军重复个数
+            int b = 0;//亚军季军重复个数
+            int c = 0;//冠军季军重复个数
+            int d = 0;//冠亚季军重复个数
+
+            List<String> ns = new ArrayList<>();
+            List<String> ms = new ArrayList<>();
+            List<String> ks = new ArrayList<>();
+            String str1 = "";
+            String str2 = "";
+            String str3 = "";
+            for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                if (at.isChecked()) {
+                    n++;
+                    ns.add(at.getText().toString().trim());
+                    if (str1 == "") {
+                        str1 = at.getText().toString().trim();
+                    } else {
+                        str1 = str1 + " " + at.getText().toString().trim();
+                    }
+                }
+            }
+            for (int i = 1; i < LinearTwo.getChildCount(); i++) {
+                CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                if (at.isChecked()) {
+                    m++;
+                    ms.add(at.getText().toString().trim());
+                    if (str2 == "") {
+                        str2 = at.getText().toString().trim();
+                    } else {
+                        str2 = str2 + " " + at.getText().toString().trim();
+                    }
+                }
+            }
+            for (int i = 1; i < LinearThree.getChildCount(); i++) {
+                CheckBox at = (CheckBox) LinearThree.getChildAt(i);
+                if (at.isChecked()) {
+                    k++;
+                    ks.add(at.getText().toString().trim());
+                    if (str3 == "") {
+                        str3 = at.getText().toString().trim();
+                    } else {
+                        str3 = str3 + " " + at.getText().toString().trim();
+                    }
+                }
+            }
+            //冠军亚军重复个数
+            for (int i = 0; i < ns.size(); i++) {
+                Log.d("冠军_1", ns.get(i) + "");
+                for (int i1 = 0; i1 < ms.size(); i1++) {
+                    Log.d("冠军_2", ms.get(i) + "");
+                    if (ns.get(i) == ms.get(i1)) {
+                        a++;
+                    }
+                }
+            }
+            //冠军季军重复个数
+            for (int i = 0; i < ns.size(); i++) {
+                Log.d("冠军_1", ns.get(i) + "");
+                for (int i1 = 0; i1 < ks.size(); i1++) {
+                    Log.d("冠军_3", ks.get(i1) + "");
+                    if (ns.get(i) == ks.get(i1)) {
+                        b++;
+                    }
+                }
+            }
+
+            //亚军季军重复个数
+            for (int i = 0; i < ms.size(); i++) {
+                Log.d("冠军_2", ms.get(i) + "");
+                for (int i1 = 0; i1 < ks.size(); i1++) {
+                    Log.d("冠军_3", ks.get(i1) + "");
+                    if (ms.get(i) == ks.get(i1)) {
+                        c++;
+                    }
+                }
+            }
+            //冠军亚军季军重复个数
+            for (int i = 0; i < ns.size(); i++) {
+                Log.d("冠军_1", ns.get(i) + "");
+                for (int i1 = 0; i1 < ms.size(); i1++) {
+                    Log.d("冠军_2", ms.get(i1) + "");
+                    if (ns.get(i) == ms.get(i1)) {
+                        for (int i2 = 0; i2 < ks.size(); i2++) {
+                            Log.d("冠军_3", ks.get(i2) + "");
+                            if (ns.get(i) == ks.get(i2)) {
+                                d++;
                             }
                         }
                     }
-                    pickedNumber = str;
-                    if (
-                            code.equals("star_3_next_group_duplex")
-                                    || code.equals("2min_star_3_next_group_duplex")
-                                    || code.equals("star_3_prev_group_duplex")
-                                    || code.equals("2min_star_3_prev_group_duplex")
-                                    || code.equals("star_3_midd_group_duplex")
-                                    || code.equals("2min_star_3_midd_group_duplex") || "star_5_three_no_fix".equals(code)
-                                    || "2min_star_5_three_no_fix".equals(code)
-                            ) {
-                        if (count1[0] < 2) {
-                            nums = 0;
+                }
+            }
+            nums = n * m * k - a * k - b * n - c * m + d * 2;
+            pickedNumber = str1 + "," + str2 + "," + str3;
+
+        }
+        if (
+                "PK10_1to5_duplex".equals(code)
+                        || "PK10_6to10_duplex".equals(code)
+                ) {
+            LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            LinearLayout lin3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
+            LinearLayout lin4 = (LinearLayout) inte.findViewById(R.id.LinearFour);
+            LinearLayout lin5 = (LinearLayout) inte.findViewById(R.id.LinearFive);
+            int count = 0;
+            String wan = "";
+            String qian = "";
+            String bai = "";
+            String shi = "";
+            String ge = "";
+
+
+            for (int i = 1; i < lin1.getChildCount(); i++) {
+                if (((CheckBox) lin1.getChildAt(i)).isChecked()) {
+                    count++;
+                    if (wan == "") {
+                        wan = ((CheckBox) lin1.getChildAt(i)).getText().toString();
+                    } else {
+                        wan = wan + " " + ((CheckBox) lin1.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+            for (int i = 1; i < lin2.getChildCount(); i++) {
+                if (((CheckBox) lin2.getChildAt(i)).isChecked()) {
+                    count++;
+                    if (qian == "") {
+                        qian = ((CheckBox) lin2.getChildAt(i)).getText().toString();
+                    } else {
+                        qian = qian + " " + ((CheckBox) lin2.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+            for (int i = 1; i < lin3.getChildCount(); i++) {
+                if (((CheckBox) lin3.getChildAt(i)).isChecked()) {
+                    count++;
+                    if (bai == "") {
+                        bai = ((CheckBox) lin3.getChildAt(i)).getText().toString();
+                    } else {
+                        bai = bai + " " + ((CheckBox) lin3.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+            for (int i = 1; i < lin4.getChildCount(); i++) {
+                if (((CheckBox) lin4.getChildAt(i)).isChecked()) {
+                    count++;
+                    if (shi == "") {
+                        shi = ((CheckBox) lin4.getChildAt(i)).getText().toString();
+                    } else {
+                        shi = shi + " " + ((CheckBox) lin4.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+            for (int i = 1; i < lin5.getChildCount(); i++) {
+                if (((CheckBox) lin5.getChildAt(i)).isChecked()) {
+                    count++;
+                    if (ge == "") {
+                        ge = ((CheckBox) lin5.getChildAt(i)).getText().toString();
+                    } else {
+                        ge = ge + " " + ((CheckBox) lin5.getChildAt(i)).getText().toString();
+                    }
+                }
+            }
+            nums = count;
+            pickedNumber = wan + "," + qian + "," + bai + "," + shi + "," + ge;
+        }
+        if ("PK10_1to10_duplex".equals(code)) {
+            LinearLayout Linear1 = (LinearLayout) inte.findViewById(R.id.Linear1);
+            LinearLayout Linear2 = (LinearLayout) inte.findViewById(R.id.Linear2);
+            LinearLayout Linear3 = (LinearLayout) inte.findViewById(R.id.Linear3);
+            LinearLayout Linear4 = (LinearLayout) inte.findViewById(R.id.Linear4);
+            LinearLayout Linear5 = (LinearLayout) inte.findViewById(R.id.Linear5);
+            LinearLayout Linear6 = (LinearLayout) inte.findViewById(R.id.Linear6);
+            LinearLayout Linear7 = (LinearLayout) inte.findViewById(R.id.Linear7);
+            LinearLayout Linear8 = (LinearLayout) inte.findViewById(R.id.Linear8);
+            LinearLayout Linear9 = (LinearLayout) inte.findViewById(R.id.Linear9);
+            LinearLayout Linear10 = (LinearLayout) inte.findViewById(R.id.Linear10);
+            String str1 = "";
+            String str2 = "";
+            String str3 = "";
+            String str4 = "";
+            String str5 = "";
+            String str6 = "";
+            String str7 = "";
+            String str8 = "";
+            String str9 = "";
+            String str10 = "";
+            int count = 0;
+            for (int i = 1; i < Linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str1 == "") {
+                        str1 = at.getText().toString().trim();
+                    } else {
+                        str1 = str1 + " " + at.getText().toString().trim();
+                    }
+                }
+            }
+            for (int i = 1; i < Linear2.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear2.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str2 == "") {
+                        str2 = at.getText().toString().trim();
+                    } else {
+                        str2 = str2 + " " + at.getText().toString().trim();
+                    }
+                }
+            }
+            for (int i = 1; i < Linear3.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear3.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str3 == "") {
+                        str3 = at.getText().toString().trim();
+                    } else {
+                        str3 = str3 + " " + at.getText().toString().trim();
+                    }
+                }
+            }
+            for (int i = 1; i < Linear4.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear4.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str4 == "") {
+                        str4 = at.getText().toString().trim();
+                    } else {
+                        str4 = str4 + " " + at.getText().toString().trim();
+                    }
+                }
+            }
+            for (int i = 1; i < Linear5.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear5.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str5 == "") {
+                        str5 = at.getText().toString().trim();
+                    } else {
+                        str5 = str5 + " " + at.getText().toString().trim();
+                    }
+                }
+            }
+            for (int i = 1; i < Linear6.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear6.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str6 == "") {
+                        str6 = at.getText().toString().trim();
+                    } else {
+                        str6 = str6 + " " + at.getText().toString().trim();
+                    }
+                }
+            }
+            for (int i = 1; i < Linear7.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear7.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str7 == "") {
+                        str7 = at.getText().toString().trim();
+                    } else {
+                        str7 = str7 + " " + at.getText().toString().trim();
+                    }
+                }
+            }
+            for (int i = 1; i < Linear8.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear8.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str8 == "") {
+                        str8 = at.getText().toString().trim();
+                    } else {
+                        str8 = str8 + " " + at.getText().toString().trim();
+                    }
+                }
+            }
+            for (int i = 1; i < Linear9.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear9.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str9 == "") {
+                        str9 = at.getText().toString().trim();
+                    } else {
+                        str9 = str9 + " " + at.getText().toString().trim();
+                    }
+                }
+            }
+            for (int i = 1; i < Linear10.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear10.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str10 == "") {
+                        str10 = at.getText().toString().trim();
+                    } else {
+                        str10 = str1 + " " + at.getText().toString().trim();
+                    }
+                }
+            }
+            nums = count;
+            pickedNumber = str1 + "," + str2 + "," + str3 + "," + str4 + "," + str5 + "," + str6 + "," + str7 + "," + str8 + "," + str9 + "," + str10;
+
+        }
+        if (
+                "PK10_1st_special".equals(code)
+                        || "PK10_2nd_special".equals(code)
+                        || "PK10_3th_special".equals(code)
+                        || "PK10_1st_odd_even".equals(code)
+                        || "PK10_2nd_odd_even".equals(code)
+                        || "PK10_3th_odd_even".equals(code)
+
+                ) {
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            int count = 0;
+            String str = "";
+            String strt1 = "";
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString().trim();
+                        strt1 = getBigCamp(at.getText().toString().trim());
+                    } else {
+                        str = str + "," + at.getText().toString().trim();
+                        strt1 = strt1 + "," + getBigCamp(at.getText().toString().trim());
+                    }
+                }
+            }
+            pickedText = str;
+            pickedNumber = strt1;
+            nums = count;
+        }
+        if (
+
+                "PK10_1st_2nd_special".equals(code)
+                ) {
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            int count = 0;
+            String str = "";
+            String strt1 = "";
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString().trim();
+                        strt1 = getBigCampHe(at.getText().toString().trim());
+                    } else {
+                        str = str + "," + at.getText().toString().trim();
+                        strt1 = strt1 + "," + getBigCampHe(at.getText().toString().trim());
+                    }
+                }
+            }
+            pickedText = str;
+            pickedNumber = strt1;
+            nums = count;
+        }
+        if (
+                "PK10_1st_2nd_sum".equals(code)
+                        || "k3_sum".equals(code)
+                ) {
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            String str = "";
+            int count = 0;
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString().trim();
+                    } else {
+                        str = str + "," + at.getText().toString().trim();
+                    }
+                }
+
+            }
+            for (int i = 0; i < linear2.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear2.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString().trim();
+                    } else {
+                        str = str + "," + at.getText().toString().trim();
+                    }
+                }
+
+            }
+            pickedNumber = str;
+            nums = count;
+        }
+        if ("PK10_toradora".equals(code)) {
+            final RadioGroup rg1 = (RadioGroup) inte.findViewById(R.id.Rg1);
+            final RadioGroup rg2 = (RadioGroup) inte.findViewById(R.id.Rg2);
+            final RadioGroup rg3 = (RadioGroup) inte.findViewById(R.id.Rg3);
+            final RadioGroup rg4 = (RadioGroup) inte.findViewById(R.id.Rg4);
+            final RadioGroup rg5 = (RadioGroup) inte.findViewById(R.id.Rg5);
+            final String[] str1 = {""};
+            final String[] str2 = {""};
+            final String[] str3 = {""};
+            final String[] str4 = {""};
+            final String[] str5 = {""};
+            String strt1 = "";
+            String strt2 = "";
+            String strt3 = "";
+            String strt4 = "";
+            String strt5 = "";
+            final int[] count = {0};
+
+            for (int i = 0; i < rg1.getChildCount(); i++) {
+                if (((RadioButton) rg1.getChildAt(i)).isChecked()) {
+                    count[0]++;
+                    str1[0] = ((RadioButton) rg1.getChildAt(i)).getText().toString();
+                    strt1 = getDragon(((RadioButton) rg1.getChildAt(i)).getText().toString())
+                    ;
+                }
+            }
+            for (int i = 0; i < rg2.getChildCount(); i++) {
+                if (((RadioButton) rg2.getChildAt(i)).isChecked()) {
+                    count[0]++;
+                    str2[0] = ((RadioButton) rg2.getChildAt(i)).getText().toString();
+                    strt2 = getDragon(((RadioButton) rg2.getChildAt(i)).getText().toString());
+                }
+            }
+            for (int i = 0; i < rg3.getChildCount(); i++) {
+                if (((RadioButton) rg3.getChildAt(i)).isChecked()) {
+                    count[0]++;
+                    str3[0] = ((RadioButton) rg3.getChildAt(i)).getText().toString();
+                    strt3 = getDragon(((RadioButton) rg3.getChildAt(i)).getText().toString());
+                }
+            }
+            for (int i = 0; i < rg4.getChildCount(); i++) {
+                if (((RadioButton) rg4.getChildAt(i)).isChecked()) {
+                    count[0]++;
+                    str4[0] = ((RadioButton) rg4.getChildAt(i)).getText().toString();
+                    strt4 = getDragon(((RadioButton) rg4.getChildAt(i)).getText().toString());
+                }
+            }
+            for (int i = 0; i < rg5.getChildCount(); i++) {
+                if (((RadioButton) rg5.getChildAt(i)).isChecked()) {
+                    count[0]++;
+                    str5[0] = ((RadioButton) rg5.getChildAt(i)).getText().toString();
+                    strt5 = getDragon(((RadioButton) rg5.getChildAt(i)).getText().toString());
+                }
+            }
+            nums = count[0];
+            pickedText = str1[0] + "," + str2[0] + "," + str3[0] + "," + str4[0] + "," + str5[0];
+            pickedNumber = strt1 + "," + strt2 + "," + strt3 + "," + strt4 + "," + strt5;
+        }
+        if (
+                "k3_triple_all".equals(code)
+
+                        || "k3_consecutives_3_all".equals(code)
+
+                ) {
+            LinearLayout linear = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            int count = 0;
+            String str = "";
+
+            for (int i = 0; i < linear.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString().trim();
+                    } else {
+                        str = str + "," + at.getText().toString().trim();
+                    }
+                }
+            }
+            pickedNumber = str;
+            nums = count;
+        }
+        if (
+                "k3_triple_all".equals(code)
+                        || "k3_consecutives_3_all".equals(code)
+
+                ) {
+            LinearLayout linear = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            int count = 0;
+            String str = "";
+            String strt1 = "";
+            for (int i = 0; i < linear.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString().trim();
+                        strt1 = getTongXuan(code);
+                    } else {
+                        str = str + "," + at.getText().toString().trim();
+                    }
+                }
+            }
+            pickedNumber = strt1;
+            pickedText = str;
+            nums = count;
+        }
+        if (
+                "k3_double_standard".equals(code)
+
+
+                ) {
+            final LinearLayout linear = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            final LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            int count = 0;
+            String str = "";
+            String str2 = "";
+            for (int i = 0; i < linear.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString().trim();
+                    } else {
+                        str = str + " " + at.getText().toString().trim();
+                    }
+                }
+            }
+            for (int i = 0; i < linear2.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear2.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str2 == "") {
+                        str2 = at.getText().toString().trim();
+                    } else {
+                        str2 = str2 + at.getText().toString().trim();
+                    }
+                }
+            }
+            pickedNumber = str + "," + str2;
+            nums = count;
+        }
+        if (
+                "k3_different_3_standard".equals(code)
+                        || "k3_different_3_sum".equals(code)
+                        || "k3_different_2_standard".equals(code)
+                ) {
+            LinearLayout linear = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            int count = 0;
+            String str = "";
+
+            for (int i = 0; i < linear.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString().trim();
+                    } else {
+                        str = str + "," + at.getText().toString().trim();
+                    }
+                }
+            }
+            pickedNumber = str;
+            if ("k3_different_3_standard".equals(code)) {
+                nums = count * (count - 1) * (count - 2) / 6;
+            }
+            if ("k3_different_3_sum".equals(code)) {
+                nums = count;
+            }
+            if ("k3_different_2_standard".equals(code)) {
+                nums = count * (count - 1) / 2;
+            }
+        }
+        if (
+                "kl8_sum_even_odd".equals(code)
+                        || "kl8_sum_even_odd_2".equals(code)
+                        || "kl8_sum_max_min".equals(code)
+                        || "kl8_sum_max_min_2".equals(code)
+                        || "kl8_parity_disk".equals(code)
+                        || "kl8_parity_disk_2".equals(code)
+                        || "kl8_up_down".equals(code)
+                        || "kl8_up_down_2".equals(code)
+                        || "kl8_special".equals(code)
+                        || "kl8_special_2".equals(code)
+                        || "toradora_wq".equals(code)
+                        || "toradora_wb".equals(code)
+                        || "toradora_ws".equals(code)
+                        || "toradora_wg".equals(code)
+                        || "toradora_qb".equals(code)
+                        || "toradora_qs".equals(code)
+                        || "toradora_qg".equals(code)
+                        || "toradora_bs".equals(code)
+                        || "toradora_bg".equals(code)
+                        || "toradora_sg".equals(code)
+                        || "2min_toradora_wq".equals(code)
+                        || "2min_toradora_wb".equals(code)
+                        || "2min_toradora_ws".equals(code)
+                        || "2min_toradora_wg".equals(code)
+                        || "2min_toradora_qb".equals(code)
+                        || "2min_toradora_qs".equals(code)
+                        || "2min_toradora_qg".equals(code)
+                        || "2min_toradora_bs".equals(code)
+                        || "2min_toradora_bg".equals(code)
+                        || "2min_toradora_sg".equals(code)
+
+
+                ) {
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            String str = "";
+            String strt1 = "";
+            int count = 0;
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        if (
+                                "kl8_sum_even_odd".equals(code)
+                                        || "kl8_sum_even_odd_2".equals(code)
+                                        || "kl8_sum_max_min".equals(code)
+                                        || "kl8_sum_max_min_2".equals(code)
+                                        || "kl8_parity_disk".equals(code)
+                                        || "kl8_parity_disk_2".equals(code)
+                                        || "kl8_up_down".equals(code)
+                                        || "kl8_up_down_2".equals(code)
+                                ) {
+                            str = String.valueOf(at.getText().toString().charAt(0));
+                            strt1 = getBigCampHe(String.valueOf(at.getText().toString().charAt(0)));
+                        }
+                        if (
+                                "kl8_special".equals(code)
+                                        || "kl8_special_2".equals(code)
+                                        || "toradora_wq".equals(code)
+                                        || "toradora_wb".equals(code)
+                                        || "toradora_ws".equals(code)
+                                        || "toradora_wg".equals(code)
+                                        || "toradora_qb".equals(code)
+                                        || "toradora_qs".equals(code)
+                                        || "toradora_qg".equals(code)
+                                        || "toradora_bs".equals(code)
+                                        || "toradora_bg".equals(code)
+                                        || "toradora_sg".equals(code)
+                                        || "2min_toradora_wq".equals(code)
+                                        || "2min_toradora_wb".equals(code)
+                                        || "2min_toradora_ws".equals(code)
+                                        || "2min_toradora_wg".equals(code)
+                                        || "2min_toradora_qb".equals(code)
+                                        || "2min_toradora_qs".equals(code)
+                                        || "2min_toradora_qg".equals(code)
+                                        || "2min_toradora_bs".equals(code)
+                                        || "2min_toradora_bg".equals(code)
+                                        || "2min_toradora_sg".equals(code)
+                                ) {
+                            str = at.getText().toString();
+                            if ("kl8_special".equals(code)
+                                    || "kl8_special_2".equals(code)) {
+                                strt1 = getBigCampHe(at.getText().toString());
+                            } else {
+                                strt1 = getDragon(at.getText().toString());
+                            }
+                        }
+                    } else {
+                        if (
+                                "kl8_sum_even_odd".equals(code)
+                                        || "kl8_sum_even_odd_2".equals(code)
+                                        || "kl8_sum_max_min".equals(code)
+                                        || "kl8_sum_max_min_2".equals(code)
+                                        || "kl8_parity_disk".equals(code)
+                                        || "kl8_parity_disk_2".equals(code)
+                                        || "kl8_up_down_2".equals(code)
+                                        || "kl8_up_down".equals(code)
+                                ) {
+                            str = str + "," + String.valueOf(at.getText().toString().charAt(0));
+                            strt1 = strt1 + "," + getBigCampHe(String.valueOf(at.getText().toString().charAt(0)));
+                        }
+                        if (
+                                "kl8_special".equals(code)
+                                        || "kl8_special_2".equals(code)
+                                        || "toradora_wq".equals(code)
+                                        || "toradora_wb".equals(code)
+                                        || "toradora_ws".equals(code)
+                                        || "toradora_wg".equals(code)
+                                        || "toradora_qb".equals(code)
+                                        || "toradora_qs".equals(code)
+                                        || "toradora_qg".equals(code)
+                                        || "toradora_bs".equals(code)
+                                        || "toradora_bg".equals(code)
+                                        || "toradora_sg".equals(code)
+                                        || "2min_toradora_wq".equals(code)
+                                        || "2min_toradora_wb".equals(code)
+                                        || "2min_toradora_ws".equals(code)
+                                        || "2min_toradora_wg".equals(code)
+                                        || "2min_toradora_qb".equals(code)
+                                        || "2min_toradora_qs".equals(code)
+                                        || "2min_toradora_qg".equals(code)
+                                        || "2min_toradora_bs".equals(code)
+                                        || "2min_toradora_bg".equals(code)
+                                        || "2min_toradora_sg".equals(code)
+                                ) {
+                            str = str + "," + at.getText().toString();
+                            if ("kl8_special".equals(code)
+                                    || "kl8_special_2".equals(code)) {
+                                strt1 = strt1 + "," + getBigCampHe(at.getText().toString());
+                            } else {
+                                strt1 = strt1 + "," + getDragon(at.getText().toString());
+                            }
+                        }
+                    }
+                }
+            }
+            nums = count;
+            pickedNumber = strt1;
+            pickedText = str;
+        }
+        if (
+                "kl8_any_one".equals(code)
+                        || "kl8_any_two".equals(code)
+                        || "kl8_any_three".equals(code)
+                        || "kl8_any_four".equals(code)
+                        || "kl8_any_five".equals(code)
+                        || "kl8_any_six".equals(code)
+                        || "kl8_any_seven".equals(code)
+                ) {
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.Linear1);
+            LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.Linear2);
+            LinearLayout linear3 = (LinearLayout) inte.findViewById(R.id.Linear3);
+            LinearLayout linear4 = (LinearLayout) inte.findViewById(R.id.Linear4);
+            LinearLayout linear5 = (LinearLayout) inte.findViewById(R.id.Linear5);
+            LinearLayout linear6 = (LinearLayout) inte.findViewById(R.id.Linear6);
+            LinearLayout linear7 = (LinearLayout) inte.findViewById(R.id.Linear7);
+            LinearLayout linear8 = (LinearLayout) inte.findViewById(R.id.Linear8);
+            LinearLayout linear9 = (LinearLayout) inte.findViewById(R.id.Linear9);
+            LinearLayout linear10 = (LinearLayout) inte.findViewById(R.id.Linear10);
+
+            String str = "";
+            int count = 0;
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            for (int i = 0; i < linear2.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear2.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            for (int i = 0; i < linear3.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear3.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            for (int i = 0; i < linear4.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear4.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            for (int i = 0; i < linear5.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear5.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            for (int i = 0; i < linear6.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear6.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            for (int i = 0; i < linear7.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear7.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            for (int i = 0; i < linear8.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear8.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            for (int i = 0; i < linear9.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear9.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            for (int i = 0; i < linear10.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear10.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            if ("kl8_any_two".equals(code)
+                    || "kl8_any_three".equals(code)
+                    || "kl8_any_four".equals(code)
+                    || "kl8_any_five".equals(code)
+                    || "kl8_any_six".equals(code)
+                    || "kl8_any_seven".equals(code)) {
+                if (count > 8) {
+                    //Toasty.info(GameCenterActivity.this, "最多只能选择8个号码位", 2000).show();
+                    return;
+                }
+            }
+            if ("kl8_any_one".equals(code)) {
+                if (count < 1) {
+                    //Toasty.info(GameCenterActivity.this, "投注个数不够，请重新投注", 2000).show();
+                    return;
+                }
+                nums = count;
+            }
+            if ("kl8_any_two".equals(code)) {
+                if (count < 2) {
+                    //Toasty.info(GameCenterActivity.this, "投注个数不够，请重新投注", 2000).show();
+                    return;
+                }
+                nums = count * (count - 1) / 2;
+            }
+            if ("kl8_any_three".equals(code)) {
+                if (count < 3) {
+                    //Toasty.info(GameCenterActivity.this, "投注个数不够，请重新投注", 2000).show();
+                    return;
+                }
+                nums = count * (count - 1) * (count - 2) / 6;
+            }
+            if ("kl8_any_four".equals(code)) {
+                if (count < 4) {
+                    //Toasty.info(GameCenterActivity.this, "投注个数不够，请重新投注", 2000).show();
+                    return;
+                }
+                nums = count * (count - 1) * (count - 2) * (count - 3) / 24;
+            }
+            if ("kl8_any_five".equals(code)) {
+                if (count < 5) {
+                    //Toasty.info(GameCenterActivity.this, "投注个数不够，请重新投注", 2000).show();
+                    return;
+                }
+                nums = count * (count - 1) * (count - 2) * (count - 3) * (count - 4) / 120;
+            }
+            if ("kl8_any_six".equals(code)) {
+                if (count < 6) {
+                    //Toasty.info(GameCenterActivity.this, "投注个数不够，请重新投注", 2000).show();
+                    return;
+                }
+                nums = count * (count - 1) * (count - 2) * (count - 3) * (count - 4) * (count - 5) / 720;
+            }
+            if ("kl8_any_seven".equals(code)) {
+                if (count < 7) {
+                    //Toasty.info(GameCenterActivity.this, "投注个数不够，请重新投注", 2000).show();
+                    return;
+                }
+                nums = RxUtils.getInstance().JieCheng(count) / RxUtils.getInstance().JieCheng(7);
+            }
+            pickedNumber = str;
+
+        }
+        if ("kl8_five_elements".equals(code)) {
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            String str = "";
+            String strt1 = "";
+            int count = 0;
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = String.valueOf(at.getText().toString().charAt(0));
+                        strt1 = get5_Elements(String.valueOf(at.getText().toString().charAt(0)));
+                    } else {
+                        str = str + "," + String.valueOf(at.getText().toString().charAt(0));
+                        strt1 = strt1 + "," + get5_Elements(String.valueOf(at.getText().toString().charAt(0)));
+                    }
+                }
+            }
+            for (int i = 0; i < linear2.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear2.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = String.valueOf(at.getText().toString().charAt(0));
+                        strt1 = get5_Elements(String.valueOf(at.getText().toString().charAt(0)));
+                    } else {
+                        str = str + "," + String.valueOf(at.getText().toString().charAt(0));
+                        strt1 = strt1 + "," + get5_Elements(String.valueOf(at.getText().toString().charAt(0)));
+                    }
+                }
+            }
+            pickedNumber = strt1;
+            pickedText = str;
+            nums = count;
+        }
+        if (
+                "sequence_star_3_group_6_duplex".equals(code)
+                        || "sequence_choose_2_no_fix".equals(code)
+                        || "3D_star_3_group_6_duplex".equals(code)
+                ) {
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            String str = "";
+            int n = 0;
+            for (int i = 1; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    n++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            pickedNumber = str;
+            if ("sequence_choose_2_no_fix".equals(code)) {
+                nums = n * (n - 1) / 2;
+            }
+            if (
+                    "sequence_star_3_group_6_duplex".equals(code)
+                            || "3D_star_3_group_6_duplex".equals(code)
+                    ) {
+                nums = n * (n - 1) * (n - 2) / 6;
+            }
+
+        }
+        if (
+                "sequence_next_special".equals(code)
+                        || "sequence_prev_special".equals(code)
+                        || "3D_prev_special".equals(code)
+                        || "3D_next_special".equals(code)
+                ) {
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+
+            String str = "";
+            String str2 = "";
+            String strt1 = "";
+            String strt2 = "";
+            int n1 = 0;
+            int n2 = 0;
+
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    n1++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                        strt1 = getBig(at.getText().toString());
+                    } else {
+                        str = str + at.getText().toString();
+                        strt1 = strt1 + getBig(at.getText().toString());
+                    }
+                }
+            }
+            for (int i = 0; i < linear2.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear2.getChildAt(i);
+                if (at.isChecked()) {
+                    n2++;
+                    if (str2 == "") {
+                        str2 = at.getText().toString();
+                        strt2 = getBig(at.getText().toString());
+                    } else {
+                        str2 = str2 + at.getText().toString();
+                        strt2 = strt1 + getBig(at.getText().toString());
+                    }
+                }
+            }
+            pickedText = str + "," + str2;
+            pickedNumber = strt1 + "," + strt2;
+            nums = n1 * n2;
+
+        }
+        if (
+                "lhc_orthocode".equals(code)
+                        || "lhc_special".equals(code)
+                ) {
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.Linear1);
+            LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.Linear2);
+            LinearLayout linear3 = (LinearLayout) inte.findViewById(R.id.Linear3);
+            LinearLayout linear4 = (LinearLayout) inte.findViewById(R.id.Linear4);
+            LinearLayout linear5 = (LinearLayout) inte.findViewById(R.id.Linear5);
+            LinearLayout linear6 = (LinearLayout) inte.findViewById(R.id.Linear6);
+            String str = "";
+            int count = 0;
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            for (int i = 0; i < linear2.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear2.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            for (int i = 0; i < linear3.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear3.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            for (int i = 0; i < linear4.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear4.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            for (int i = 0; i < linear5.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear5.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            for (int i = 0; i < linear6.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear6.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            pickedNumber = str;
+            nums = count;
+        }
+        if (
+                "lhc_special_max_min".equals(code)
+                        || "lhc_special_odd_even".equals(code)
+                        || "lhc_special_sum_max_min".equals(code)
+                        || "lhc_special_sum_odd_even".equals(code)
+                        || "lhc_special_last_max_min".equals(code)
+                        || "lhc_special_color".equals(code)
+                ) {
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            String str = "";
+            String strt1 = "";
+            int count = 0;
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                        strt1 = getBigLHC(at.getText().toString());
+                    } else {
+                        str = str + "," + at.getText().toString();
+                        strt1 = strt1 + "," + getBigLHC(at.getText().toString());
+                    }
+                }
+            }
+            pickedNumber = strt1;
+            pickedText = str;
+            nums = count;
+        }
+        if (
+                "lhc_special_max_min_odd_even".equals(code)
+                        || "lhc_special_zodiacs".equals(code)
+
+                ) {
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            String str = "";
+            String strt1 = "";
+            int count = 0;
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                        if ("lhc_special_max_min_odd_even".equals(code)) {
+                            strt1 = getTELHC(at.getText().toString());
                         } else {
-                            nums = count1[0] * (count1[0] - 1);
+                            strt1 = getSXLHC(at.getText().toString());
                         }
-                    } else if (
-                            code.equals("star_3_next_group_duplex_6")
-                                    || code.equals("2min_star_3_next_group_duplex_6")
-                                    || code.equals("star_3_prev_group_duplex_6")
-                                    || code.equals("2min_star_3_prev_group_duplex_6")
-                                    || code.equals("star_3_midd_group_duplex_6")
-                                    || code.equals("2min_star_3_midd_group_duplex_6")
-                                    || "star_5_three_no_fix".equals(code)
-                                    || "2min_star_5_three_no_fix".equals(code)
-                            ) {
-                        if (count1[0] < 3) {
-                            nums = 0;
+
+                    } else {
+                        str = str + "," + at.getText().toString();
+                        if ("lhc_special_max_min_odd_even".equals(code)) {
+                            strt1 = strt1 + "," + getTELHC(at.getText().toString());
                         } else {
-                            int n1 = RxUtils.getInstance().JieCheng(count1[0]);
-                            int n2 = RxUtils.getInstance().JieCheng(3);
-                            int n3 = RxUtils.getInstance().JieCheng(count1[0] - 3);
-                            nums = (n2 * n3 <= 0 ? 0 : n1 / (n2 * n3));
-                        }
-                    }
-
-                }
-                //三星组选包胆
-                if (
-                        code.equals("star_3_next_group_any")
-                                || code.equals("2min_star_3_next_group_any")
-                                || code.equals("star_3_prev_group_any")
-                                || code.equals("2min_star_3_prev_group_any")
-                                || code.equals("star_3_midd_group_any")
-                                || code.equals("2min_star_3_midd_group_any")
-                        ) {
-                    RadioGroup radiog1 = (RadioGroup) inte.findViewById(R.id.RadioG1);
-                    for (int i = 0; i < radiog1.getChildCount(); i++) {
-                        if (((RadioButton) radiog1.getChildAt(i)).isChecked()) {
-                            pickedNumber = ((RadioButton) radiog1.getChildAt(i)).getText().toString();
-                        }
-                    }
-                    nums = 54;
-                }
-                //三星组选和值
-                if (
-                        code.equals("star_3_next_group_sum")
-                                || code.equals("2min_star_3_next_group_sum")
-                                || code.equals("star_3_prev_group_sum")
-                                || code.equals("2min_star_3_prev_group_sum")
-                                || code.equals("star_3_midd_group_sum")
-                                || code.equals("2min_star_3_midd_group_sum")
-                                || code.equals("sequence_star_3_group_sum")
-                                || code.equals("3D_star_3_group_sum")
-                        ) {
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.Linear1);
-                    LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.Linear2);
-                    LinearLayout linear3 = (LinearLayout) inte.findViewById(R.id.Linear3);
-                    final int[] count1 = {0};
-                    List<Integer> ns = new ArrayList<>();
-                    List<String> str = new ArrayList<>();
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        if (((CheckBox) linear1.getChildAt(i)).isChecked()) {
-                            String s = ((CheckBox) linear1.getChildAt(i)).getText().toString();
-                            ns.add(Integer.parseInt(s));
-                            str.add(s);
-                        }
-                    }
-                    for (int i = 0; i < linear2.getChildCount(); i++) {
-                        if (((CheckBox) linear2.getChildAt(i)).isChecked()) {
-                            String s = ((CheckBox) linear2.getChildAt(i)).getText().toString();
-                            ns.add(Integer.parseInt(s));
-                            str.add(s);
-                        }
-                    }
-                    for (int i = 0; i < linear3.getChildCount(); i++) {
-                        if (((CheckBox) linear3.getChildAt(i)).isChecked()) {
-                            String s = ((CheckBox) linear3.getChildAt(i)).getText().toString();
-                            ns.add(Integer.parseInt(s));
-                            str.add(s);
-                        }
-                    }
-                    nums = getNumZuHe(ns);
-                    pickedNumber = getheNums(str);
-                }
-                //二星直选复式
-                if (
-                        "star_2_next_duplex".equals(code)
-                                || "2min_star_2_next_duplex".equals(code)
-                                || "star_2_prev_duplex".equals(code)
-                                || "2min_star_2_prev_duplex".equals(code)
-                                || "sequence_star_2_prev_duplex".equals(code)
-                                || "sequence_star_2_next_duplex".equals(code)
-                                || "3D_star_2_prev_duplex".equals(code)
-                                || "3D_star_2_next_duplex".equals(code)
-                        ) {
-                    int count1 = 0;
-                    int count2 = 0;
-                    String str1 = "";
-                    String str2 = "";
-                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
-                        if (at.isChecked()) {
-                            count1++;
-                            if (str1 == "") {
-                                str1 = at.getText().toString();
-                            } else {
-                                str1 = str1 + at.getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < LinearTwo.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
-                        if (at.isChecked()) {
-                            count2++;
-                            if (str2 == "") {
-                                str2 = at.getText().toString();
-                            } else {
-                                str2 = str2 + at.getText().toString();
-                            }
-                        }
-                    }
-                    nums = count1 * count2;
-                    pickedNumber = str1 + "," + str2;
-                }
-                //二星直选和值
-                if (
-                        code.equals("star_2_next_sum")
-                                || code.equals("2min_star_2_next_sum")
-                                || code.equals("star_2_prev_sum")
-                                || code.equals("2min_star_2_prev_sum")
-                        ) {
-                    List<Integer> ns = new ArrayList<>();
-                    List<String> nss = new ArrayList<>();
-                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
-                        if (at.isChecked()) {
-                            int i1 = Integer.parseInt(at.getText().toString().trim());
-                            ns.add(i1);
-                            nss.add(at.getText().toString().trim());
-                        }
-                    }
-                    for (int i = 1; i < LinearTwo.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
-                        if (at.isChecked()) {
-                            int i1 = Integer.parseInt(at.getText().toString().trim());
-                            ns.add(i1);
-                            nss.add(at.getText().toString().trim());
-                        }
-                    }
-                    nums = getNumHe2(ns);
-                    pickedNumber = getheNums(nss);
-
-                }
-                //二星直选跨度
-                if (
-                        "star_2_next_sub".equals(code)
-                                || "2min_star_2_next_sub".equals(code)
-                                || "star_2_prev_sub".equals(code)
-                                || "2min_star_2_prev_sub".equals(code)
-                        ) {
-                    List<Integer> ns = new ArrayList<>();
-                    List<String> nss = new ArrayList<>();
-                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
-                        if (at.isChecked()) {
-                            ns.add(Integer.parseInt(at.getText().toString()));
-                            nss.add(at.getText().toString());
-                        }
-                    }
-                    nums = getNumKua2(ns);
-                    pickedNumber = getheNums(nss);
-                }
-                //二星组选复式
-                if (
-                        "star_2_next_group_duplex".equals(code)
-                                || "2min_star_2_next_group_duplex".equals(code)
-                                || "star_2_prev_group_duplex".equals(code)
-                                || "2min_star_2_prev_group_duplex".equals(code)
-                                || "eleven_star_2_prev_group_duplex".equals(code)
-                                || "sequence_star_3_group_3_duplex".equals(code)
-                                || "3D_star_3_group_3_duplex".equals(code)
-                                || "sequence_star_2_prev_group_duplex".equals(code)
-                                || "3D_star_2_next_group_duplex".equals(code)
-                                || "3D_star_2_prev_group_duplex".equals(code)
-                                || "sequence_star_2_next_group_duplex".equals(code)
-                        ) {
-                    int count1 = 0;
-                    String str = "";
-                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
-                        if (at.isChecked()) {
-                            count1++;
-                            if (str == "") {
-                                str = at.getText().toString().trim();
-                            } else {
-                                str = str + "," + at.getText().toString().trim();
-                            }
+                            strt1 = strt1 + "," + getSXLHC(at.getText().toString());
                         }
 
                     }
-                    if (
-                            "sequence_star_3_group_3_duplex".equals(code)
-                                    || "3D_star_3_group_3_duplex".equals(code)
-                            ) {
-                        nums = count1 * (count1 - 1);
+                }
+            }
+            for (int i = 0; i < linear2.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear2.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                        if ("lhc_special_max_min_odd_even".equals(code)) {
+                            strt1 = getTELHC(at.getText().toString());
+                        } else {
+                            strt1 = getSXLHC(at.getText().toString());
+                        }
                     } else {
-
-                        nums = count1 * (count1 - 1) / 2;
-                    }
-                    pickedNumber = str;
-                }
-                //二星组选和值
-                if (
-                        "star_2_next_group_sum".equals(code)
-                                || "2min_star_2_next_group_sum".equals(code)
-                                || "star_2_prev_group_sum".equals(code)
-                                || "2min_star_2_prev_group_sum".equals(code)
-                        ) {
-                    List<Integer> ns = new ArrayList<>();
-                    List<String> nns = new ArrayList<>();
-                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
-                        if (at.isChecked()) {
-                            ns.add(Integer.parseInt(at.getText().toString().trim()));
-                            nns.add(at.getText().toString().trim());
+                        str = str + "," + at.getText().toString();
+                        if ("lhc_special_max_min_odd_even".equals(code)) {
+                            strt1 = strt1 + "," + getTELHC(at.getText().toString());
+                        } else {
+                            strt1 = strt1 + "," + getSXLHC(at.getText().toString());
                         }
-                    }
-                    for (int i = 1; i < LinearTwo.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
-                        if (at.isChecked()) {
-                            ns.add(Integer.parseInt(at.getText().toString().trim()));
-                            nns.add(at.getText().toString().trim());
-                        }
-                    }
-                    pickedNumber = getheNums(nns);
-                    nums = getNumHe22(ns);
-                }
-                //二星组选包胆
-                if (
-                        "star_2_next_group_any".equals(code)
-                                || "2min_star_2_next_group_any".equals(code)
-                                || "star_2_prev_group_any".equals(code)
-                                || "2min_star_2_prev_group_any".equals(code)
-                        ) {
-                    RadioGroup radiog1 = (RadioGroup) inte.findViewById(R.id.RadioG1);
-                    for (int i = 0; i < radiog1.getChildCount(); i++) {
-                        if (((RadioButton) radiog1.getChildAt(i)).isChecked()) {
-                            pickedNumber = ((RadioButton) radiog1.getChildAt(i)).getText().toString();
-                        }
-                    }
-                    nums = 9;
-                }
-                if (
-                        "fix".equals(code)
-                                || "2min_fix".equals(code)
-                                || "star_2_any_duplex".equals(code)
-                                || "2min_star_2_any_duplex".equals(code)
-                                || "star_3_any_duplex".equals(code)
-                                || "2min_star_3_any_duplex".equals(code)
-                                || "star_4_any_duplex".equals(code)
-                                || "2min_star_4_any_duplex".equals(code)
-                                || "sequence_fix".equals(code)
-
-                        ) {
-                    final int[] m1 = {0};
-                    final int[] m2 = {0};
-                    final int[] m3 = {0};
-                    final int[] m4 = {0};
-                    final int[] m5 = {0};
-                    String wan = "";
-                    String qian = "";
-                    String bai = "";
-                    String shi = "";
-                    String ge = "";
-
-                    LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    LinearLayout lin3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
-                    LinearLayout lin4 = (LinearLayout) inte.findViewById(R.id.LinearFour);
-                    LinearLayout lin5 = (LinearLayout) inte.findViewById(R.id.LinearFive);
-                    for (int i = 1; i < lin1.getChildCount(); i++) {
-                        if (((CheckBox) lin1.getChildAt(i)).isChecked()) {
-                            m1[0]++;
-                            if (wan == "") {
-                                wan = ((CheckBox) lin1.getChildAt(i)).getText().toString();
-                            } else {
-                                wan = wan + ((CheckBox) lin1.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < lin2.getChildCount(); i++) {
-                        if (((CheckBox) lin2.getChildAt(i)).isChecked()) {
-                            m2[0]++;
-                            if (qian == "") {
-                                qian = ((CheckBox) lin2.getChildAt(i)).getText().toString();
-                            } else {
-                                qian = qian + ((CheckBox) lin2.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < lin3.getChildCount(); i++) {
-                        if (((CheckBox) lin3.getChildAt(i)).isChecked()) {
-                            m3[0]++;
-                            if (bai == "") {
-                                bai = ((CheckBox) lin3.getChildAt(i)).getText().toString();
-                            } else {
-                                bai = bai + ((CheckBox) lin3.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < lin4.getChildCount(); i++) {
-                        if (((CheckBox) lin4.getChildAt(i)).isChecked()) {
-                            m4[0]++;
-                            if (shi == "") {
-                                shi = ((CheckBox) lin4.getChildAt(i)).getText().toString();
-                            } else {
-                                shi = shi + ((CheckBox) lin4.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < lin5.getChildCount(); i++) {
-                        if (((CheckBox) lin5.getChildAt(i)).isChecked()) {
-                            m5[0]++;
-                            if (ge == "") {
-                                ge = ((CheckBox) lin5.getChildAt(i)).getText().toString();
-                            } else {
-                                ge = ge + ((CheckBox) lin5.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-
-                    pickedNumber = wan + "," + qian + "," + bai + "," + shi + "," + ge;
-                    Log.d("GameCenterrText==", pickedNumber);
-                    if (
-                            "fix".equals(code)
-                                    || "2min_fix".equals(code)
-                                    || "sequence_fix".equals(code)
-                            ) {
-                        nums = m1[0] + m2[0] + m3[0] + m4[0] + m5[0];
-                    }
-                    if (
-                            "star_2_any_duplex".equals(code)
-                                    || "2min_star_2_any_duplex".equals(code)
-                            ) {
-                        nums = m1[0] * (m2[0] + m3[0] + m4[0] + m5[0]) + m2[0] * (m3[0] + m4[0] + m5[0]) + m3[0] * (m4[0] + m5[0]) + m4[0] * m5[0];
-                    }
-                    if (
-                            "star_3_any_duplex".equals(code)
-                                    || "2min_star_3_any_duplex".equals(code)
-                            ) {
-                        nums = m1[0] * m2[0] * m3[0] + m1[0] * m2[0] * m4[0] + m1[0] * m2[0] * m5[0] + m1[0] * m3[0] * m4[0] + m1[0] * m3[0] * m5[0] + m1[0] * m4[0] * m5[0] + m2[0] * m3[0] * m4[0] + m2[0] * m3[0] * m5[0] + m2[0] * m4[0] * m5[0] + m3[0] * m4[0] * m5[0];
-                    }
-                    if (
-                            "star_4_any_duplex".equals(code)
-                                    || "2min_star_4_any_duplex".equals(code)
-                            ) {
-                        nums = m1[0] * m2[0] * m3[0] * m4[0] + m1[0] * m2[0] * m3[0] * m5[0] + m1[0] * m2[0] * m4[0] * m5[0] + m1[0] * m3[0] * m4[0] * m5[0] + m2[0] * m3[0] * m4[0] * m5[0];
                     }
                 }
-                if (
-                        "star_3_next_one_no_fix".equals(code)
-                                || "2min_star_3_next_one_no_fix".equals(code)
-                                || "star_3_prev_one_no_fix".equals(code)
-                                || "2min_star_3_prev_one_no_fix".equals(code)
-                                || "star_4_one_no_fix".equals(code)
-                                || "2min_star_4_one_no_fix".equals(code)
-                                || "eleven_star_3_prev_no_fix".equals(code)
-                                || "sequence_choose_1_no_fix".equals(code)
-                                || "3D_choose_1_no_fix".equals(code)
-                                || "3D_choose_2_no_fix".equals(code)
+            }
+            pickedText = str;
+            pickedNumber = strt1;
+            nums = count;
 
-                                || "star_3_next_two_no_fix".equals(code)
-                                || "2min_star_3_next_two_no_fix".equals(code)
-                                || "star_3_prev_two_no_fix".equals(code)
-                                || "2min_star_3_prev_two_no_fix".equals(code)
-                                || "star_4_two_no_fix".equals(code)
-                                || "2min_star_4_two_no_fix".equals(code)
-                                || "star_5_two_no_fix".equals(code)
-                                || "2min_star_5_two_no_fix".equals(code)
-                                || "star_5_three_no_fix".equals(code)
-                                || "2min_star_5_three_no_fix".equals(code)
-
-                        ) {
-                    String str = "";
-                    int count = 0;
-                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString().trim();
-                            } else {
-                                str = str + "," + at.getText().toString().toString();
-                            }
-                        }
-                    }
-                    pickedNumber = str;
-                    if (
-                            "3D_choose_2_no_fix".equals(code)
-                                    || "star_3_next_two_no_fix".equals(code)
-                                    || "2min_star_3_next_two_no_fix".equals(code)
-                                    || "star_3_prev_two_no_fix".equals(code)
-                                    || "2min_star_3_prev_two_no_fix".equals(code)
-                                    || "star_4_two_no_fix".equals(code)
-                                    || "2min_star_4_two_no_fix".equals(code)
-                                    || "star_5_two_no_fix".equals(code)
-                                    || "2min_star_5_two_no_fix".equals(code)
-
-                            ) {
-                        nums = count * (count - 1) / 2;
+        }
+        if (
+                "lhc_special_color_max_min".equals(code)
+                        || "lhc_special_color_odd_even".equals(code)
+                        || "lhc_special_color_max_min_odd_even".equals(code)
+                ) {
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.Linear1);
+            LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.Linear2);
+            LinearLayout linear3 = (LinearLayout) inte.findViewById(R.id.Linear3);
+            String str = "";
+            String strt1 = "";
+            int count = 0;
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                        strt1 = getBigLHC(at.getText().toString());
                     } else {
-                        nums = count;
+                        str = str + "," + at.getText().toString();
+                        strt1 = strt1 + "," + getBigLHC(at.getText().toString());
                     }
                 }
-                //11 选五三码直选
-                if (
-                        "eleven_star_3_prev_duplex".equals(code)
-
-                        ) {
-                    String gn1[] = new String[11];
-                    int i1 = 0;
-                    String gn2[] = new String[11];
-                    int i2 = 0;
-                    String gn3[] = new String[11];
-                    int i3 = 0;
-                    int coun = 0;
-                    String str1 = "";
-                    String str2 = "";
-                    String str3 = "";
-                    LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    LinearLayout lin3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
-                    for (int i = 1; i < lin1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) lin1.getChildAt(i);
-                        if (at.isChecked()) {
-                            gn1[i1] = at.getText().toString().trim();
-                            if (str1 == "") {
-                                str1 = at.getText().toString().trim();
-                            } else {
-                                str1 = str1 + " " + at.getText().toString().trim();
-                            }
-                            i1++;
-                        }
-                    }
-                    for (int i = 1; i < lin2.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) lin2.getChildAt(i);
-                        if (at.isChecked()) {
-                            gn2[i2] = at.getText().toString().trim();
-                            if (str2 == "") {
-                                str2 = at.getText().toString().trim();
-                            } else {
-                                str2 = str2 + " " + at.getText().toString().trim();
-                            }
-                            i2++;
-                        }
-                    }
-                    for (int i = 1; i < lin3.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) lin3.getChildAt(i);
-                        if (at.isChecked()) {
-                            gn3[i3] = at.getText().toString().trim();
-                            if (str3 == "") {
-                                str3 = at.getText().toString().trim();
-                            } else {
-                                str3 = str3 + " " + at.getText().toString().trim();
-                            }
-                            i3++;
-                        }
-                    }
-                    int c1 = 0;
-                    int c2 = 0;
-                    int c3 = 0;
-
-                    for (int i = 0; i < gn1.length; i++) {
-                        if (gn1[i] != null) {
-                            Log.d("11选五三码直选1", gn1[i] + "");
-                            c1++;
-                        }
-                    }
-                    for (int i = 0; i < gn2.length; i++) {
-                        if (gn2[i] != null) {
-                            Log.d("11选五三码直选2", gn2[i] + "");
-                            c2++;
-                        }
-                    }
-                    for (int i = 0; i < gn3.length; i++) {
-                        if (gn3[i] != null) {
-                            Log.d("11选五三码直选3", gn3[i] + "");
-                            c3++;
-                        }
-                    }
-
-                    for (int i = 0; i < c1; i++) {
-                        for (int j = 0; j < c2; j++) {
-                            if (gn1[i] == gn2[j]) continue;
-                            else {
-                                for (int k = 0; k < c3; k++) {
-                                    if (gn1[i] == gn3[k] || gn2[j] == gn3[k]) continue;
-                                    else coun++;
-                                }
-                            }
-                        }
-                    }
-                    nums = coun;
-                    pickedNumber = str1 + "," + str2 + "," + str3;
-                }
-                if ("eleven_star_3_prev_group_duplex".equals(code)) {
-                    String str = "";
-                    int n = 0;
-                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
-                        if (at.isChecked()) {
-                            n++;
-                            if (str == "") {
-                                str = at.getText().toString().trim();
-                            } else {
-                                str = str + "," + at.getText().toString().trim();
-                            }
-                        }
-                    }
-                    nums = n * (n - 1) * (n - 2) / 6;
-                    pickedNumber = str;
-                }
-                if ("eleven_star_2_prev_duplex".equals(code)) {
-                    String gn1[] = new String[11];
-                    int i1 = 0;
-                    String gn2[] = new String[11];
-                    int i2 = 0;
-
-                    int coun = 0;
-                    String str1 = "";
-                    String str2 = "";
-
-                    LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    LinearLayout lin3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
-                    for (int i = 1; i < lin1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) lin1.getChildAt(i);
-                        if (at.isChecked()) {
-                            gn1[i1] = at.getText().toString().trim();
-                            if (str1 == "") {
-                                str1 = at.getText().toString().trim();
-                            } else {
-                                str1 = str1 + " " + at.getText().toString().trim();
-                            }
-                            i1++;
-                        }
-                    }
-                    for (int i = 1; i < lin2.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) lin2.getChildAt(i);
-                        if (at.isChecked()) {
-                            gn2[i2] = at.getText().toString().trim();
-                            if (str2 == "") {
-                                str2 = at.getText().toString().trim();
-                            } else {
-                                str2 = str2 + " " + at.getText().toString().trim();
-                            }
-                            i2++;
-                        }
-                    }
-                    int c1 = 0;
-                    int c2 = 0;
-
-                    for (int i = 0; i < gn1.length; i++) {
-                        if (gn1[i] != "") {
-                            Log.d("11选五三码直选1", gn1[i]);
-                            c1++;
-                        }
-                    }
-                    for (int i = 0; i < gn2.length; i++) {
-                        if (gn2[i] != "") {
-                            Log.d("11选五三码直选2", gn2[i]);
-                            c2++;
-                        }
-                    }
-                    for (int i = 0; i < c1; i++) {
-                        for (int j = 0; j < c2; j++) {
-                            if (gn1[i] == gn2[j]) continue;
-                            coun += 1;
-                        }
-                    }
-                    nums = coun;
-                    pickedNumber = str1 + "," + str2;
-                }
-                if ("eleven_fix".equals(code)) {
-                    LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    LinearLayout lin3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
-                    int count = 0;
-                    String str1 = "";
-                    String str2 = "";
-                    String str3 = "";
-                    for (int i = 1; i < lin1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) lin1.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str1 == "") {
-                                str1 = at.getText().toString().trim();
-                            } else {
-                                str1 = str1 + " " + at.getText().toString().trim();
-                            }
-
-                        }
-                    }
-                    for (int i = 1; i < lin2.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) lin2.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str2 == "") {
-                                str2 = at.getText().toString().trim();
-                            } else {
-                                str2 = str2 + " " + at.getText().toString().trim();
-                            }
-
-                        }
-                    }
-                    for (int i = 1; i < lin3.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) lin3.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str3 == "") {
-                                str3 = at.getText().toString().trim();
-                            } else {
-                                str3 = str3 + " " + at.getText().toString().trim();
-                            }
-                        }
-                    }
-                    nums = count;
-                    pickedNumber = str1 + "," + str2 + "," + str3;
-                }
-                if ("eleven_even_or_odd".equals(code)) {
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    String str = "";
-                    String strt1 = "";
-                    int count = 0;
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString().trim();
-                                strt1 = get11_5(at.getText().toString().trim());
-                            } else {
-                                str = str + "," + at.getText().toString().trim();
-                                strt1 = strt1 + "," + get11_5(at.getText().toString().trim());
-                            }
-                        }
-                    }
-                    for (int i = 0; i < linear2.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear2.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString().trim();
-                                strt1 = get11_5(at.getText().toString().trim());
-                            } else {
-                                str = str + "," + at.getText().toString().trim();
-                                strt1 = strt1 + "," + get11_5(at.getText().toString().trim());
-                            }
-                        }
-                    }
-                    pickedNumber = strt1;
-                    pickedText = str;
-                    nums = count;
-                }
-                if ("eleven_middle".equals(code)) {
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    String str = "";
-                    int count = 0;
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString().trim();
-                            } else {
-                                str = str + "," + at.getText().toString().trim();
-                            }
-                        }
-                    }
-                    pickedNumber = str;
-                    nums = count;
-                }
-                if (
-                        "eleven_any_one_duplex".equals(code)
-                                || "eleven_any_two_duplex".equals(code)
-                                || "eleven_any_three_duplex".equals(code)
-                                || "eleven_any_four_duplex".equals(code)
-                                || "eleven_any_five_duplex".equals(code)
-                                || "eleven_any_six_duplex".equals(code)
-                                || "eleven_any_seven_duplex".equals(code)
-                                || "eleven_any_eight_duplex".equals(code)
-                        ) {
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    String str = "";
-                    int count = 0;
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString().trim();
-                            } else {
-                                str = str + "," + at.getText().toString().trim();
-                            }
-                        }
-                    }
-                    for (int i = 0; i < linear2.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear2.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString().trim();
-                            } else {
-                                str = str + "," + at.getText().toString().trim();
-                            }
-                        }
-                    }
-                    if ("eleven_any_one_duplex".equals(code)) {
-                        if (count != 1) {
-                            Toasty.error(GameCenterActivity.this, "投注个数不正确,请重新投注.", 2000).show();
-                            return;
-                        }
-                    }
-                    if ("eleven_any_two_duplex".equals(code)) {
-                        if (count != 2) {
-                            Toasty.error(GameCenterActivity.this, "投注个数不正确,请重新投注.", 2000).show();
-                            return;
-                        }
-                    }
-                    if ("eleven_any_three_duplex".equals(code)) {
-                        if (count != 3) {
-                            Toasty.error(GameCenterActivity.this, "投注个数不正确,请重新投注.", 2000).show();
-                            return;
-                        }
-                    }
-                    if ("eleven_any_four_duplex".equals(code)) {
-                        if (count != 4) {
-                            Toasty.error(GameCenterActivity.this, "投注个数不正确,请重新投注.", 2000).show();
-                            return;
-                        }
-                    }
-                    if ("eleven_any_five_duplex".equals(code)) {
-                        if (count != 5) {
-                            Toasty.error(GameCenterActivity.this, "投注个数不正确,请重新投注.", 2000).show();
-                            return;
-                        }
-                    }
-                    if ("eleven_any_six_duplex".equals(code)) {
-                        if (count != 6) {
-                            Toasty.error(GameCenterActivity.this, "投注个数不正确,请重新投注.", 2000).show();
-                            return;
-                        }
-                    }
-                    if ("eleven_any_seven_duplex".equals(code)) {
-                        if (count != 7) {
-                            Toasty.error(GameCenterActivity.this, "投注个数不正确,请重新投注.", 2000).show();
-                            return;
-                        }
-                    }
-                    if ("eleven_any_eight_duplex".equals(code)) {
-                        if (count != 8) {
-                            Toasty.error(GameCenterActivity.this, "投注个数不正确,请重新投注.", 2000).show();
-                            return;
-                        }
-                    }
-                    pickedNumber = str;
-                    nums = 1;
-                }
-                if ("PK10_1st_duplex".equals(code)) {
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    String str = "";
-                    int count = 0;
-                    for (int i = 1; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString().trim();
-                            } else {
-                                str = str + "," + at.getText().toString().trim();
-                            }
-                        }
-                    }
-                    pickedNumber = str;
-                    nums = count;
-                }
-                if ("PK10_1st_2nd_duplex".equals(code)) {
-                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    int n = 0;//冠军选号数;
-                    int m = 0;//亚军选号数;
-                    String str1 = "";
-                    String str2 = "";
-                    List<String> n1 = new ArrayList<>();
-                    List<String> n2 = new ArrayList<>();
-                    int k = 0;//冠亚军重复选号数;
-                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
-                        if (at.isChecked()) {
-                            n++;
-                            if (str1 == "") {
-                                str1 = at.getText().toString().trim();
-                            } else {
-                                str1 = str1 + " " + at.getText().toString().trim();
-                            }
-                            n1.add(at.getText().toString().trim());
-                        }
-                    }
-                    for (int i = 1; i < LinearTwo.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
-                        if (at.isChecked()) {
-                            m++;
-                            if (str2 == "") {
-                                str2 = at.getText().toString().trim();
-                            } else {
-                                str2 = str2 + " " + at.getText().toString().trim();
-                            }
-                            n2.add(at.getText().toString().trim());
-                        }
-                    }
-
-                    for (int i = 0; i < n1.size(); i++) {
-                        Log.d("冠军_1", n1.get(i) + "");
-                        for (int i1 = 0; i1 < n2.size(); i1++) {
-                            Log.d("冠军_2", n2.get(i) + "");
-                            if (n1.get(i) == n2.get(i1)) {
-                                k++;
-                            }
-                        }
-                    }
-                    nums = n * m - k;
-                    pickedNumber = str1 + "," + str2;
-                    Log.d("相同的个数", k + "");
-                }
-                if ("PK10_1st_2nd_3th_duplex".equals(code)) {
-                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    LinearLayout LinearThree = (LinearLayout) inte.findViewById(R.id.LinearThree);
-                    int n = 0;//冠军选号个数
-                    int m = 0;//亚军选号个数
-                    int k = 0;//第三名选号个数
-
-                    int a = 0;//冠军亚军重复个数
-                    int b = 0;//亚军季军重复个数
-                    int c = 0;//冠军季军重复个数
-                    int d = 0;//冠亚季军重复个数
-
-                    List<String> ns = new ArrayList<>();
-                    List<String> ms = new ArrayList<>();
-                    List<String> ks = new ArrayList<>();
-                    String str1 = "";
-                    String str2 = "";
-                    String str3 = "";
-                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
-                        if (at.isChecked()) {
-                            n++;
-                            ns.add(at.getText().toString().trim());
-                            if (str1 == "") {
-                                str1 = at.getText().toString().trim();
-                            } else {
-                                str1 = str1 + " " + at.getText().toString().trim();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < LinearTwo.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
-                        if (at.isChecked()) {
-                            m++;
-                            ms.add(at.getText().toString().trim());
-                            if (str2 == "") {
-                                str2 = at.getText().toString().trim();
-                            } else {
-                                str2 = str2 + " " + at.getText().toString().trim();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < LinearThree.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) LinearThree.getChildAt(i);
-                        if (at.isChecked()) {
-                            k++;
-                            ks.add(at.getText().toString().trim());
-                            if (str3 == "") {
-                                str3 = at.getText().toString().trim();
-                            } else {
-                                str3 = str3 + " " + at.getText().toString().trim();
-                            }
-                        }
-                    }
-                    //冠军亚军重复个数
-                    for (int i = 0; i < ns.size(); i++) {
-                        Log.d("冠军_1", ns.get(i) + "");
-                        for (int i1 = 0; i1 < ms.size(); i1++) {
-                            Log.d("冠军_2", ms.get(i) + "");
-                            if (ns.get(i) == ms.get(i1)) {
-                                a++;
-                            }
-                        }
-                    }
-                    //冠军季军重复个数
-                    for (int i = 0; i < ns.size(); i++) {
-                        Log.d("冠军_1", ns.get(i) + "");
-                        for (int i1 = 0; i1 < ks.size(); i1++) {
-                            Log.d("冠军_3", ks.get(i1) + "");
-                            if (ns.get(i) == ks.get(i1)) {
-                                b++;
-                            }
-                        }
-                    }
-
-                    //亚军季军重复个数
-                    for (int i = 0; i < ms.size(); i++) {
-                        Log.d("冠军_2", ms.get(i) + "");
-                        for (int i1 = 0; i1 < ks.size(); i1++) {
-                            Log.d("冠军_3", ks.get(i1) + "");
-                            if (ms.get(i) == ks.get(i1)) {
-                                c++;
-                            }
-                        }
-                    }
-                    //冠军亚军季军重复个数
-                    for (int i = 0; i < ns.size(); i++) {
-                        Log.d("冠军_1", ns.get(i) + "");
-                        for (int i1 = 0; i1 < ms.size(); i1++) {
-                            Log.d("冠军_2", ms.get(i1) + "");
-                            if (ns.get(i) == ms.get(i1)) {
-                                for (int i2 = 0; i2 < ks.size(); i2++) {
-                                    Log.d("冠军_3", ks.get(i2) + "");
-                                    if (ns.get(i) == ks.get(i2)) {
-                                        d++;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    nums = n * m * k - a * k - b * n - c * m + d * 2;
-                    pickedNumber = str1 + "," + str2 + "," + str3;
-
-                }
-                if (
-                        "PK10_1to5_duplex".equals(code)
-                                || "PK10_6to10_duplex".equals(code)
-                        ) {
-                    LinearLayout lin1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout lin2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    LinearLayout lin3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
-                    LinearLayout lin4 = (LinearLayout) inte.findViewById(R.id.LinearFour);
-                    LinearLayout lin5 = (LinearLayout) inte.findViewById(R.id.LinearFive);
-                    int count = 0;
-                    String wan = "";
-                    String qian = "";
-                    String bai = "";
-                    String shi = "";
-                    String ge = "";
-
-
-                    for (int i = 1; i < lin1.getChildCount(); i++) {
-                        if (((CheckBox) lin1.getChildAt(i)).isChecked()) {
-                            count++;
-                            if (wan == "") {
-                                wan = ((CheckBox) lin1.getChildAt(i)).getText().toString();
-                            } else {
-                                wan = wan + " " + ((CheckBox) lin1.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < lin2.getChildCount(); i++) {
-                        if (((CheckBox) lin2.getChildAt(i)).isChecked()) {
-                            count++;
-                            if (qian == "") {
-                                qian = ((CheckBox) lin2.getChildAt(i)).getText().toString();
-                            } else {
-                                qian = qian + " " + ((CheckBox) lin2.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < lin3.getChildCount(); i++) {
-                        if (((CheckBox) lin3.getChildAt(i)).isChecked()) {
-                            count++;
-                            if (bai == "") {
-                                bai = ((CheckBox) lin3.getChildAt(i)).getText().toString();
-                            } else {
-                                bai = bai + " " + ((CheckBox) lin3.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < lin4.getChildCount(); i++) {
-                        if (((CheckBox) lin4.getChildAt(i)).isChecked()) {
-                            count++;
-                            if (shi == "") {
-                                shi = ((CheckBox) lin4.getChildAt(i)).getText().toString();
-                            } else {
-                                shi = shi + " " + ((CheckBox) lin4.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < lin5.getChildCount(); i++) {
-                        if (((CheckBox) lin5.getChildAt(i)).isChecked()) {
-                            count++;
-                            if (ge == "") {
-                                ge = ((CheckBox) lin5.getChildAt(i)).getText().toString();
-                            } else {
-                                ge = ge + " " + ((CheckBox) lin5.getChildAt(i)).getText().toString();
-                            }
-                        }
-                    }
-                    nums = count;
-                    pickedNumber = wan + "," + qian + "," + bai + "," + shi + "," + ge;
-                }
-                if ("PK10_1to10_duplex".equals(code)) {
-                    LinearLayout Linear1 = (LinearLayout) inte.findViewById(R.id.Linear1);
-                    LinearLayout Linear2 = (LinearLayout) inte.findViewById(R.id.Linear2);
-                    LinearLayout Linear3 = (LinearLayout) inte.findViewById(R.id.Linear3);
-                    LinearLayout Linear4 = (LinearLayout) inte.findViewById(R.id.Linear4);
-                    LinearLayout Linear5 = (LinearLayout) inte.findViewById(R.id.Linear5);
-                    LinearLayout Linear6 = (LinearLayout) inte.findViewById(R.id.Linear6);
-                    LinearLayout Linear7 = (LinearLayout) inte.findViewById(R.id.Linear7);
-                    LinearLayout Linear8 = (LinearLayout) inte.findViewById(R.id.Linear8);
-                    LinearLayout Linear9 = (LinearLayout) inte.findViewById(R.id.Linear9);
-                    LinearLayout Linear10 = (LinearLayout) inte.findViewById(R.id.Linear10);
-                    String str1 = "";
-                    String str2 = "";
-                    String str3 = "";
-                    String str4 = "";
-                    String str5 = "";
-                    String str6 = "";
-                    String str7 = "";
-                    String str8 = "";
-                    String str9 = "";
-                    String str10 = "";
-                    int count = 0;
-                    for (int i = 1; i < Linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) Linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str1 == "") {
-                                str1 = at.getText().toString().trim();
-                            } else {
-                                str1 = str1 + " " + at.getText().toString().trim();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < Linear2.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) Linear2.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str2 == "") {
-                                str2 = at.getText().toString().trim();
-                            } else {
-                                str2 = str2 + " " + at.getText().toString().trim();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < Linear3.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) Linear3.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str3 == "") {
-                                str3 = at.getText().toString().trim();
-                            } else {
-                                str3 = str3 + " " + at.getText().toString().trim();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < Linear4.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) Linear4.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str4 == "") {
-                                str4 = at.getText().toString().trim();
-                            } else {
-                                str4 = str4 + " " + at.getText().toString().trim();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < Linear5.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) Linear5.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str5 == "") {
-                                str5 = at.getText().toString().trim();
-                            } else {
-                                str5 = str5 + " " + at.getText().toString().trim();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < Linear6.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) Linear6.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str6 == "") {
-                                str6 = at.getText().toString().trim();
-                            } else {
-                                str6 = str6 + " " + at.getText().toString().trim();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < Linear7.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) Linear7.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str7 == "") {
-                                str7 = at.getText().toString().trim();
-                            } else {
-                                str7 = str7 + " " + at.getText().toString().trim();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < Linear8.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) Linear8.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str8 == "") {
-                                str8 = at.getText().toString().trim();
-                            } else {
-                                str8 = str8 + " " + at.getText().toString().trim();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < Linear9.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) Linear9.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str9 == "") {
-                                str9 = at.getText().toString().trim();
-                            } else {
-                                str9 = str9 + " " + at.getText().toString().trim();
-                            }
-                        }
-                    }
-                    for (int i = 1; i < Linear10.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) Linear10.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str10 == "") {
-                                str10 = at.getText().toString().trim();
-                            } else {
-                                str10 = str1 + " " + at.getText().toString().trim();
-                            }
-                        }
-                    }
-                    nums = count;
-                    pickedNumber = str1 + "," + str2 + "," + str3 + "," + str4 + "," + str5 + "," + str6 + "," + str7 + "," + str8 + "," + str9 + "," + str10;
-
-                }
-                if (
-                        "PK10_1st_special".equals(code)
-                                || "PK10_2nd_special".equals(code)
-                                || "PK10_3th_special".equals(code)
-                                || "PK10_1st_odd_even".equals(code)
-                                || "PK10_2nd_odd_even".equals(code)
-                                || "PK10_3th_odd_even".equals(code)
-
-                        ) {
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    int count = 0;
-                    String str = "";
-                    String strt1 = "";
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString().trim();
-                                strt1 = getBigCamp(at.getText().toString().trim());
-                            } else {
-                                str = str + "," + at.getText().toString().trim();
-                                strt1 = strt1 + "," + getBigCamp(at.getText().toString().trim());
-                            }
-                        }
-                    }
-                    pickedText = str;
-                    pickedNumber = strt1;
-                    nums = count;
-                }
-                if (
-
-                        "PK10_1st_2nd_special".equals(code)
-                        ) {
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    int count = 0;
-                    String str = "";
-                    String strt1 = "";
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString().trim();
-                                strt1 = getBigCampHe(at.getText().toString().trim());
-                            } else {
-                                str = str + "," + at.getText().toString().trim();
-                                strt1 = strt1 + "," + getBigCampHe(at.getText().toString().trim());
-                            }
-                        }
-                    }
-                    pickedText = str;
-                    pickedNumber = strt1;
-                    nums = count;
-                }
-                if (
-                        "PK10_1st_2nd_sum".equals(code)
-                                || "k3_sum".equals(code)
-                        ) {
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    String str = "";
-                    int count = 0;
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString().trim();
-                            } else {
-                                str = str + "," + at.getText().toString().trim();
-                            }
-                        }
-
-                    }
-                    for (int i = 0; i < linear2.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear2.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString().trim();
-                            } else {
-                                str = str + "," + at.getText().toString().trim();
-                            }
-                        }
-
-                    }
-                    pickedNumber = str;
-                    nums = count;
-                }
-                if ("PK10_toradora".equals(code)) {
-                    final RadioGroup rg1 = (RadioGroup) inte.findViewById(R.id.Rg1);
-                    final RadioGroup rg2 = (RadioGroup) inte.findViewById(R.id.Rg2);
-                    final RadioGroup rg3 = (RadioGroup) inte.findViewById(R.id.Rg3);
-                    final RadioGroup rg4 = (RadioGroup) inte.findViewById(R.id.Rg4);
-                    final RadioGroup rg5 = (RadioGroup) inte.findViewById(R.id.Rg5);
-                    final String[] str1 = {""};
-                    final String[] str2 = {""};
-                    final String[] str3 = {""};
-                    final String[] str4 = {""};
-                    final String[] str5 = {""};
-                    String strt1 = "";
-                    String strt2 = "";
-                    String strt3 = "";
-                    String strt4 = "";
-                    String strt5 = "";
-                    final int[] count = {0};
-
-                    for (int i = 0; i < rg1.getChildCount(); i++) {
-                        if (((RadioButton) rg1.getChildAt(i)).isChecked()) {
-                            count[0]++;
-                            str1[0] = ((RadioButton) rg1.getChildAt(i)).getText().toString();
-                            strt1 = getDragon(((RadioButton) rg1.getChildAt(i)).getText().toString())
-                            ;
-                        }
-                    }
-                    for (int i = 0; i < rg2.getChildCount(); i++) {
-                        if (((RadioButton) rg2.getChildAt(i)).isChecked()) {
-                            count[0]++;
-                            str2[0] = ((RadioButton) rg2.getChildAt(i)).getText().toString();
-                            strt2 = getDragon(((RadioButton) rg2.getChildAt(i)).getText().toString());
-                        }
-                    }
-                    for (int i = 0; i < rg3.getChildCount(); i++) {
-                        if (((RadioButton) rg3.getChildAt(i)).isChecked()) {
-                            count[0]++;
-                            str3[0] = ((RadioButton) rg3.getChildAt(i)).getText().toString();
-                            strt3 = getDragon(((RadioButton) rg3.getChildAt(i)).getText().toString());
-                        }
-                    }
-                    for (int i = 0; i < rg4.getChildCount(); i++) {
-                        if (((RadioButton) rg4.getChildAt(i)).isChecked()) {
-                            count[0]++;
-                            str4[0] = ((RadioButton) rg4.getChildAt(i)).getText().toString();
-                            strt4 = getDragon(((RadioButton) rg4.getChildAt(i)).getText().toString());
-                        }
-                    }
-                    for (int i = 0; i < rg5.getChildCount(); i++) {
-                        if (((RadioButton) rg5.getChildAt(i)).isChecked()) {
-                            count[0]++;
-                            str5[0] = ((RadioButton) rg5.getChildAt(i)).getText().toString();
-                            strt5 = getDragon(((RadioButton) rg5.getChildAt(i)).getText().toString());
-                        }
-                    }
-                    nums = count[0];
-                    pickedText = str1[0] + "," + str2[0] + "," + str3[0] + "," + str4[0] + "," + str5[0];
-                    pickedNumber = strt1 + "," + strt2 + "," + strt3 + "," + strt4 + "," + strt5;
-                }
-                if (
-                        "k3_triple_all".equals(code)
-
-                                || "k3_consecutives_3_all".equals(code)
-
-                        ) {
-                    LinearLayout linear = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    int count = 0;
-                    String str = "";
-
-                    for (int i = 0; i < linear.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString().trim();
-                            } else {
-                                str = str + "," + at.getText().toString().trim();
-                            }
-                        }
-                    }
-                    pickedNumber = str;
-                    nums = count;
-                }
-                if (
-                        "k3_triple_all".equals(code)
-                                || "k3_consecutives_3_all".equals(code)
-
-                        ) {
-                    LinearLayout linear = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    int count = 0;
-                    String str = "";
-                    String strt1 = "";
-                    for (int i = 0; i < linear.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString().trim();
-                                strt1 = getTongXuan(code);
-                            } else {
-                                str = str + "," + at.getText().toString().trim();
-                            }
-                        }
-                    }
-                    pickedNumber = strt1;
-                    pickedText = str;
-                    nums = count;
-                }
-                if (
-                        "k3_double_standard".equals(code)
-
-
-                        ) {
-                    final LinearLayout linear = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    final LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    int count = 0;
-                    String str = "";
-                    String str2 = "";
-                    for (int i = 0; i < linear.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString().trim();
-                            } else {
-                                str = str + " " + at.getText().toString().trim();
-                            }
-                        }
-                    }
-                    for (int i = 0; i < linear2.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear2.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str2 == "") {
-                                str2 = at.getText().toString().trim();
-                            } else {
-                                str2 = str2 + at.getText().toString().trim();
-                            }
-                        }
-                    }
-                    pickedNumber = str + "," + str2;
-                    nums = count;
-                }
-                if (
-                        "k3_different_3_standard".equals(code)
-                                || "k3_different_3_sum".equals(code)
-                                || "k3_different_2_standard".equals(code)
-                        ) {
-                    LinearLayout linear = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    int count = 0;
-                    String str = "";
-
-                    for (int i = 0; i < linear.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString().trim();
-                            } else {
-                                str = str + "," + at.getText().toString().trim();
-                            }
-                        }
-                    }
-                    pickedNumber = str;
-                    if ("k3_different_3_standard".equals(code)) {
-                        nums = count * (count - 1) * (count - 2) / 6;
-                    }
-                    if ("k3_different_3_sum".equals(code)) {
-                        nums = count;
-                    }
-                    if ("k3_different_2_standard".equals(code)) {
-                        nums = count * (count - 1) / 2;
-                    }
-                }
-                if (
-                        "kl8_sum_even_odd".equals(code)
-                                || "kl8_sum_even_odd_2".equals(code)
-                                || "kl8_sum_max_min".equals(code)
-                                || "kl8_sum_max_min_2".equals(code)
-                                || "kl8_parity_disk".equals(code)
-                                || "kl8_parity_disk_2".equals(code)
-                                || "kl8_up_down".equals(code)
-                                || "kl8_up_down_2".equals(code)
-                                || "kl8_special".equals(code)
-                                || "kl8_special_2".equals(code)
-                                || "toradora_wq".equals(code)
-                                || "toradora_wb".equals(code)
-                                || "toradora_ws".equals(code)
-                                || "toradora_wg".equals(code)
-                                || "toradora_qb".equals(code)
-                                || "toradora_qs".equals(code)
-                                || "toradora_qg".equals(code)
-                                || "toradora_bs".equals(code)
-                                || "toradora_bg".equals(code)
-                                || "toradora_sg".equals(code)
-                                || "2min_toradora_wq".equals(code)
-                                || "2min_toradora_wb".equals(code)
-                                || "2min_toradora_ws".equals(code)
-                                || "2min_toradora_wg".equals(code)
-                                || "2min_toradora_qb".equals(code)
-                                || "2min_toradora_qs".equals(code)
-                                || "2min_toradora_qg".equals(code)
-                                || "2min_toradora_bs".equals(code)
-                                || "2min_toradora_bg".equals(code)
-                                || "2min_toradora_sg".equals(code)
-
-
-                        ) {
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    String str = "";
-                    String strt1 = "";
-                    int count = 0;
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                if (
-                                        "kl8_sum_even_odd".equals(code)
-                                                || "kl8_sum_even_odd_2".equals(code)
-                                                || "kl8_sum_max_min".equals(code)
-                                                || "kl8_sum_max_min_2".equals(code)
-                                                || "kl8_parity_disk".equals(code)
-                                                || "kl8_parity_disk_2".equals(code)
-                                                || "kl8_up_down".equals(code)
-                                                || "kl8_up_down_2".equals(code)
-                                        ) {
-                                    str = String.valueOf(at.getText().toString().charAt(0));
-                                    strt1 = getBigCampHe(String.valueOf(at.getText().toString().charAt(0)));
-                                }
-                                if (
-                                        "kl8_special".equals(code)
-                                                || "kl8_special_2".equals(code)
-                                                || "toradora_wq".equals(code)
-                                                || "toradora_wb".equals(code)
-                                                || "toradora_ws".equals(code)
-                                                || "toradora_wg".equals(code)
-                                                || "toradora_qb".equals(code)
-                                                || "toradora_qs".equals(code)
-                                                || "toradora_qg".equals(code)
-                                                || "toradora_bs".equals(code)
-                                                || "toradora_bg".equals(code)
-                                                || "toradora_sg".equals(code)
-                                                || "2min_toradora_wq".equals(code)
-                                                || "2min_toradora_wb".equals(code)
-                                                || "2min_toradora_ws".equals(code)
-                                                || "2min_toradora_wg".equals(code)
-                                                || "2min_toradora_qb".equals(code)
-                                                || "2min_toradora_qs".equals(code)
-                                                || "2min_toradora_qg".equals(code)
-                                                || "2min_toradora_bs".equals(code)
-                                                || "2min_toradora_bg".equals(code)
-                                                || "2min_toradora_sg".equals(code)
-                                        ) {
-                                    str = at.getText().toString();
-                                    if ("kl8_special".equals(code)
-                                            || "kl8_special_2".equals(code)) {
-                                        strt1 = getBigCampHe(at.getText().toString());
-                                    } else {
-                                        strt1 = getDragon(at.getText().toString());
-                                    }
-                                }
-                            } else {
-                                if (
-                                        "kl8_sum_even_odd".equals(code)
-                                                || "kl8_sum_even_odd_2".equals(code)
-                                                || "kl8_sum_max_min".equals(code)
-                                                || "kl8_sum_max_min_2".equals(code)
-                                                || "kl8_parity_disk".equals(code)
-                                                || "kl8_parity_disk_2".equals(code)
-                                                || "kl8_up_down_2".equals(code)
-                                                || "kl8_up_down".equals(code)
-                                        ) {
-                                    str = str + "," + String.valueOf(at.getText().toString().charAt(0));
-                                    strt1 = strt1 + "," + getBigCampHe(String.valueOf(at.getText().toString().charAt(0)));
-                                }
-                                if (
-                                        "kl8_special".equals(code)
-                                                || "kl8_special_2".equals(code)
-                                                || "toradora_wq".equals(code)
-                                                || "toradora_wb".equals(code)
-                                                || "toradora_ws".equals(code)
-                                                || "toradora_wg".equals(code)
-                                                || "toradora_qb".equals(code)
-                                                || "toradora_qs".equals(code)
-                                                || "toradora_qg".equals(code)
-                                                || "toradora_bs".equals(code)
-                                                || "toradora_bg".equals(code)
-                                                || "toradora_sg".equals(code)
-                                                || "2min_toradora_wq".equals(code)
-                                                || "2min_toradora_wb".equals(code)
-                                                || "2min_toradora_ws".equals(code)
-                                                || "2min_toradora_wg".equals(code)
-                                                || "2min_toradora_qb".equals(code)
-                                                || "2min_toradora_qs".equals(code)
-                                                || "2min_toradora_qg".equals(code)
-                                                || "2min_toradora_bs".equals(code)
-                                                || "2min_toradora_bg".equals(code)
-                                                || "2min_toradora_sg".equals(code)
-                                        ) {
-                                    str = str + "," + at.getText().toString();
-                                    if ("kl8_special".equals(code)
-                                            || "kl8_special_2".equals(code)) {
-                                        strt1 = strt1 + "," + getBigCampHe(at.getText().toString());
-                                    } else {
-                                        strt1 = strt1 + "," + getDragon(at.getText().toString());
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    nums = count;
-                    pickedNumber = strt1;
-                    pickedText = str;
-                }
-                if (
-                        "kl8_any_one".equals(code)
-                                || "kl8_any_two".equals(code)
-                                || "kl8_any_three".equals(code)
-                                || "kl8_any_four".equals(code)
-                                || "kl8_any_five".equals(code)
-                                || "kl8_any_six".equals(code)
-                                || "kl8_any_seven".equals(code)
-                        ) {
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.Linear1);
-                    LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.Linear2);
-                    LinearLayout linear3 = (LinearLayout) inte.findViewById(R.id.Linear3);
-                    LinearLayout linear4 = (LinearLayout) inte.findViewById(R.id.Linear4);
-                    LinearLayout linear5 = (LinearLayout) inte.findViewById(R.id.Linear5);
-                    LinearLayout linear6 = (LinearLayout) inte.findViewById(R.id.Linear6);
-                    LinearLayout linear7 = (LinearLayout) inte.findViewById(R.id.Linear7);
-                    LinearLayout linear8 = (LinearLayout) inte.findViewById(R.id.Linear8);
-                    LinearLayout linear9 = (LinearLayout) inte.findViewById(R.id.Linear9);
-                    LinearLayout linear10 = (LinearLayout) inte.findViewById(R.id.Linear10);
-
-                    String str = "";
-                    int count = 0;
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                            } else {
-                                str = str + "," + at.getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 0; i < linear2.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear2.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                            } else {
-                                str = str + "," + at.getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 0; i < linear3.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear3.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                            } else {
-                                str = str + "," + at.getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 0; i < linear4.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear4.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                            } else {
-                                str = str + "," + at.getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 0; i < linear5.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear5.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                            } else {
-                                str = str + "," + at.getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 0; i < linear6.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear6.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                            } else {
-                                str = str + "," + at.getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 0; i < linear7.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear7.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                            } else {
-                                str = str + "," + at.getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 0; i < linear8.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear8.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                            } else {
-                                str = str + "," + at.getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 0; i < linear9.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear9.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                            } else {
-                                str = str + "," + at.getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 0; i < linear10.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear10.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                            } else {
-                                str = str + "," + at.getText().toString();
-                            }
-                        }
-                    }
-                    if ("kl8_any_two".equals(code)
-                            || "kl8_any_three".equals(code)
-                            || "kl8_any_four".equals(code)
-                            || "kl8_any_five".equals(code)
-                            || "kl8_any_six".equals(code)
-                            || "kl8_any_seven".equals(code)) {
-                        if (count > 8) {
-                            Toasty.info(GameCenterActivity.this, "最多只能选择8个号码位", 2000).show();
-                            return;
-                        }
-                    }
-                    if ("kl8_any_one".equals(code)) {
-                        if (count < 1) {
-                            Toasty.info(GameCenterActivity.this, "投注个数不够，请重新投注", 2000).show();
-                            return;
-                        }
-                        nums = count;
-                    }
-                    if ("kl8_any_two".equals(code)) {
-                        if (count < 2) {
-                            Toasty.info(GameCenterActivity.this, "投注个数不够，请重新投注", 2000).show();
-                            return;
-                        }
-                        nums = count * (count - 1) / 2;
-                    }
-                    if ("kl8_any_three".equals(code)) {
-                        if (count < 3) {
-                            Toasty.info(GameCenterActivity.this, "投注个数不够，请重新投注", 2000).show();
-                            return;
-                        }
-                        nums = count * (count - 1) * (count - 2) / 6;
-                    }
-                    if ("kl8_any_four".equals(code)) {
-                        if (count < 4) {
-                            Toasty.info(GameCenterActivity.this, "投注个数不够，请重新投注", 2000).show();
-                            return;
-                        }
-                        nums = count * (count - 1) * (count - 2) * (count - 3) / 24;
-                    }
-                    if ("kl8_any_five".equals(code)) {
-                        if (count < 5) {
-                            Toasty.info(GameCenterActivity.this, "投注个数不够，请重新投注", 2000).show();
-                            return;
-                        }
-                        nums = count * (count - 1) * (count - 2) * (count - 3) * (count - 4) / 120;
-                    }
-                    if ("kl8_any_six".equals(code)) {
-                        if (count < 6) {
-                            Toasty.info(GameCenterActivity.this, "投注个数不够，请重新投注", 2000).show();
-                            return;
-                        }
-                        nums = count * (count - 1) * (count - 2) * (count - 3) * (count - 4) * (count - 5) / 720;
-                    }
-                    if ("kl8_any_seven".equals(code)) {
-                        if (count < 7) {
-                            Toasty.info(GameCenterActivity.this, "投注个数不够，请重新投注", 2000).show();
-                            return;
-                        }
-                        nums = RxUtils.getInstance().JieCheng(count) / RxUtils.getInstance().JieCheng(7);
-                    }
-                    pickedNumber = str;
-
-                }
-                if ("kl8_five_elements".equals(code)) {
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    String str = "";
-                    String strt1 = "";
-                    int count = 0;
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = String.valueOf(at.getText().toString().charAt(0));
-                                strt1 = get5_Elements(String.valueOf(at.getText().toString().charAt(0)));
-                            } else {
-                                str = str + "," + String.valueOf(at.getText().toString().charAt(0));
-                                strt1 = strt1 + "," + get5_Elements(String.valueOf(at.getText().toString().charAt(0)));
-                            }
-                        }
-                    }
-                    for (int i = 0; i < linear2.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear2.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = String.valueOf(at.getText().toString().charAt(0));
-                                strt1 = get5_Elements(String.valueOf(at.getText().toString().charAt(0)));
-                            } else {
-                                str = str + "," + String.valueOf(at.getText().toString().charAt(0));
-                                strt1 = strt1 + "," + get5_Elements(String.valueOf(at.getText().toString().charAt(0)));
-                            }
-                        }
-                    }
-                    pickedNumber = strt1;
-                    pickedText = str;
-                    nums = count;
-                }
-                if (
-                        "sequence_star_3_group_6_duplex".equals(code)
-                                || "sequence_choose_2_no_fix".equals(code)
-                                || "3D_star_3_group_6_duplex".equals(code)
-                        ) {
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    String str = "";
-                    int n = 0;
-                    for (int i = 1; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            n++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                            } else {
-                                str = str + "," + at.getText().toString();
-                            }
-                        }
-                    }
-                    pickedNumber = str;
-                    if ("sequence_choose_2_no_fix".equals(code)) {
-                        nums = n * (n - 1) / 2;
-                    }
-                    if (
-                            "sequence_star_3_group_6_duplex".equals(code)
-                                    || "3D_star_3_group_6_duplex".equals(code)
-                            ) {
-                        nums = n * (n - 1) * (n - 2) / 6;
-                    }
-
-                }
-                if (
-                        "sequence_next_special".equals(code)
-                                || "sequence_prev_special".equals(code)
-                                || "3D_prev_special".equals(code)
-                                || "3D_next_special".equals(code)
-                        ) {
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-
-                    String str = "";
-                    String str2 = "";
-                    String strt1 = "";
-                    String strt2 = "";
-                    int n1 = 0;
-                    int n2 = 0;
-
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            n1++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                                strt1 = getBig(at.getText().toString());
-                            } else {
-                                str = str + at.getText().toString();
-                                strt1 = strt1 + getBig(at.getText().toString());
-                            }
-                        }
-                    }
-                    for (int i = 0; i < linear2.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear2.getChildAt(i);
-                        if (at.isChecked()) {
-                            n2++;
-                            if (str2 == "") {
-                                str2 = at.getText().toString();
-                                strt2 = getBig(at.getText().toString());
-                            } else {
-                                str2 = str2 + at.getText().toString();
-                                strt2 = strt1 + getBig(at.getText().toString());
-                            }
-                        }
-                    }
-                    pickedText = str + "," + str2;
-                    pickedNumber = strt1 + "," + strt2;
-                    nums = n1 * n2;
-
-                }
-                if (
-                        "lhc_orthocode".equals(code)
-                                || "lhc_special".equals(code)
-                        ) {
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.Linear1);
-                    LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.Linear2);
-                    LinearLayout linear3 = (LinearLayout) inte.findViewById(R.id.Linear3);
-                    LinearLayout linear4 = (LinearLayout) inte.findViewById(R.id.Linear4);
-                    LinearLayout linear5 = (LinearLayout) inte.findViewById(R.id.Linear5);
-                    LinearLayout linear6 = (LinearLayout) inte.findViewById(R.id.Linear6);
-                    String str = "";
-                    int count = 0;
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                            } else {
-                                str = str + "," + at.getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 0; i < linear2.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear2.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                            } else {
-                                str = str + "," + at.getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 0; i < linear3.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear3.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                            } else {
-                                str = str + "," + at.getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 0; i < linear4.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear4.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                            } else {
-                                str = str + "," + at.getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 0; i < linear5.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear5.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                            } else {
-                                str = str + "," + at.getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 0; i < linear6.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear6.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                            } else {
-                                str = str + "," + at.getText().toString();
-                            }
-                        }
-                    }
-                    pickedNumber = str;
-                    nums = count;
-                }
-                if (
-                        "lhc_special_max_min".equals(code)
-                                || "lhc_special_odd_even".equals(code)
-                                || "lhc_special_sum_max_min".equals(code)
-                                || "lhc_special_sum_odd_even".equals(code)
-                                || "lhc_special_last_max_min".equals(code)
-                                || "lhc_special_color".equals(code)
-                        ) {
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    String str = "";
-                    String strt1 = "";
-                    int count = 0;
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                                strt1 = getBigLHC(at.getText().toString());
-                            } else {
-                                str = str + "," + at.getText().toString();
-                                strt1 = strt1 + "," + getBigLHC(at.getText().toString());
-                            }
-                        }
-                    }
-                    pickedNumber = strt1;
-                    pickedText = str;
-                    nums = count;
-                }
-                if (
-                        "lhc_special_max_min_odd_even".equals(code)
-                                || "lhc_special_zodiacs".equals(code)
-
-                        ) {
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    String str = "";
-                    String strt1 = "";
-                    int count = 0;
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                                if ("lhc_special_max_min_odd_even".equals(code)) {
-                                    strt1 = getTELHC(at.getText().toString());
-                                } else {
-                                    strt1 = getSXLHC(at.getText().toString());
-                                }
-
-                            } else {
-                                str = str + "," + at.getText().toString();
-                                if ("lhc_special_max_min_odd_even".equals(code)) {
-                                    strt1 = strt1 + "," + getTELHC(at.getText().toString());
-                                } else {
-                                    strt1 = strt1 + "," + getSXLHC(at.getText().toString());
-                                }
-
-                            }
-                        }
-                    }
-                    for (int i = 0; i < linear2.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear2.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                                if ("lhc_special_max_min_odd_even".equals(code)) {
-                                    strt1 = getTELHC(at.getText().toString());
-                                } else {
-                                    strt1 = getSXLHC(at.getText().toString());
-                                }
-                            } else {
-                                str = str + "," + at.getText().toString();
-                                if ("lhc_special_max_min_odd_even".equals(code)) {
-                                    strt1 = strt1 + "," + getTELHC(at.getText().toString());
-                                } else {
-                                    strt1 = strt1 + "," + getSXLHC(at.getText().toString());
-                                }
-                            }
-                        }
-                    }
-                    pickedText = str;
-                    pickedNumber = strt1;
-                    nums = count;
-
-                }
-                if (
-                        "lhc_special_color_max_min".equals(code)
-                                || "lhc_special_color_odd_even".equals(code)
-                                || "lhc_special_color_max_min_odd_even".equals(code)
-                        ) {
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.Linear1);
-                    LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.Linear2);
-                    LinearLayout linear3 = (LinearLayout) inte.findViewById(R.id.Linear3);
-                    String str = "";
-                    String strt1 = "";
-                    int count = 0;
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                                strt1 = getBigLHC(at.getText().toString());
-                            } else {
-                                str = str + "," + at.getText().toString();
-                                strt1 = strt1 + "," + getBigLHC(at.getText().toString());
-                            }
-                        }
-                    }
-                    for (int i = 0; i < linear2.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear2.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                                strt1 = getBigLHC(at.getText().toString());
-                            } else {
-                                str = str + "," + at.getText().toString();
-                                strt1 = strt1 + "," + getBigLHC(at.getText().toString());
-                            }
-                        }
-                    }
-                    for (int i = 0; i < linear3.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear3.getChildAt(i);
-                        if (at.isChecked()) {
-                            count++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                                strt1 = getBigLHC(at.getText().toString());
-                            } else {
-                                str = str + "," + at.getText().toString();
-                                strt1 = strt1 + "," + getBigLHC(at.getText().toString());
-                            }
-                        }
-                    }
-                    pickedNumber = strt1;
-                    pickedText = str;
-                    nums = count;
-                }
-                if (
-                        "star_5_group_60".equals(code)
-                                || "2min_star_5_group_60".equals(code)
-                                || "star_5_group_10".equals(code)
-                                || "2min_star_5_group_10".equals(code)
-                                || "star_4_group_4".equals(code)
-                                || "2min_star_4_group_4".equals(code)
-                                || "star_4_group_12".equals(code)
-                                || "2min_star_4_group_12".equals(code)
-                                || "2min_star_5_group_5".equals(code)
-                                || "star_5_group_5".equals(code)
-                        ) {
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    String str = "";
-                    String str2 = "";
-                    int m = 0;
-                    int n = 0;
-                    int k = 0; //重复个数
-                    List<String> ns = new ArrayList<>();
-                    List<String> ms = new ArrayList<>();
-
-                    for (int i = 1; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            n++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                            } else {
-                                str = str + at.getText().toString();
-                            }
-                            ms.add(at.getText().toString());
-                        }
-                    }
-                    for (int i = 1; i < linear2.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear2.getChildAt(i);
-                        if (at.isChecked()) {
-                            m++;
-                            if (str2 == "") {
-                                str2 = at.getText().toString();
-                            } else {
-                                str2 = str2 + at.getText().toString();
-                            }
-                            ns.add(at.getText().toString());
-                        }
-                    }
-                    for (int i = 0; i < ns.size(); i++) {
-
-                        for (int i1 = 0; i1 < ms.size(); i1++) {
-                            if (ns.get(i) == ms.get(i1)) {
-                                k++;
-                            }
-                        }
-                    }
-                    pickedNumber = str + "," + str2;
-                    if (
-                            "star_5_group_10".equals(code)
-                                    || "star_5_group_5".equals(code)
-                                    || "star_4_group_4".equals(code)
-                                    || "2min_star_5_group_5".equals(code)
-                                    || "2min_star_5_group_10".equals(code)
-                                    || "2min_star_4_group_4".equals(code)
-                            ) {
-                        nums = n * m - k;
+            }
+            for (int i = 0; i < linear2.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear2.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                        strt1 = getBigLHC(at.getText().toString());
                     } else {
-                        nums = (n - 1) * (n - 2) * (m * n - 3 * k) / 6;
-                    }
-                    if (
-                            "star_4_group_12".equals(code)
-                                    || "2min_star_4_group_12".equals(code)
-                            ) {
-                        nums = n * (n - 1) * m / 2 - (n - 1) * k;
+                        str = str + "," + at.getText().toString();
+                        strt1 = strt1 + "," + getBigLHC(at.getText().toString());
                     }
                 }
-                if (
-                        "star_2_prev_special".equals(code)
-                                || "2min_star_2_prev_special".equals(code)
-                                || "star_2_next_special".equals(code)
-                                || "2min_star_2_next_special".equals(code)
-                        ) {
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    String str = "";
-                    String str2 = "";
-                    String strt1 = "";
-                    String strt2 = "";
-                    int c1 = 0;
-                    int c2 = 0;
-
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-
-                            c1++;
-                            if (str == "") {
-                                str = getBig(at.getText().toString());
-                                strt1 = at.getText().toString();
-                            } else {
-                                str = str + getBig(at.getText().toString());
-                                strt1 = strt1 + at.getText().toString();
-                            }
-                        }
+            }
+            for (int i = 0; i < linear3.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear3.getChildAt(i);
+                if (at.isChecked()) {
+                    count++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                        strt1 = getBigLHC(at.getText().toString());
+                    } else {
+                        str = str + "," + at.getText().toString();
+                        strt1 = strt1 + "," + getBigLHC(at.getText().toString());
                     }
-                    for (int i = 0; i < linear2.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear2.getChildAt(i);
-                        if (at.isChecked()) {
-                            c2++;
-                            if (str2 == "") {
-                                str2 = getBig(at.getText().toString());
-                                strt2 = at.getText().toString();
-                            } else {
-                                str2 = str2 + getBig(at.getText().toString());
-                                strt2 = strt2 + at.getText().toString();
-                            }
-                        }
-                    }
-                    nums = c1 * c2;
-                    pickedNumber = str + "," + str2;
-                    pickedText = strt1 + "," + strt2;
                 }
-                if (
-                        "star_3_prev_special".equals(code)
-                                || "2min_star_3_prev_special".equals(code)
-                                || "star_3_next_special".equals(code)
-                                || "2min_star_3_next_special".equals(code)
-                        ) {
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    LinearLayout linear3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
-                    String str = "";
-                    String str2 = "";
-                    String str3 = "";
-                    String strt1 = "";
-                    String strt2 = "";
-                    String strt3 = "";
-                    int c1 = 0;
-                    int c2 = 0;
-                    int c3 = 0;
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            c1++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                                strt1 = getBig(at.getText().toString());
-                            } else {
-                                str = str + at.getText().toString();
-                                strt1 = strt1 + getBig(at.getText().toString());
-                            }
-                        }
+            }
+            pickedNumber = strt1;
+            pickedText = str;
+            nums = count;
+        }
+        if (
+                "star_5_group_60".equals(code)
+                        || "2min_star_5_group_60".equals(code)
+                        || "star_5_group_10".equals(code)
+                        || "2min_star_5_group_10".equals(code)
+                        || "star_4_group_4".equals(code)
+                        || "2min_star_4_group_4".equals(code)
+                        || "star_4_group_12".equals(code)
+                        || "2min_star_4_group_12".equals(code)
+                        || "2min_star_5_group_5".equals(code)
+                        || "star_5_group_5".equals(code)
+                ) {
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            String str = "";
+            String str2 = "";
+            int m = 0;
+            int n = 0;
+            int k = 0; //重复个数
+            List<String> ns = new ArrayList<>();
+            List<String> ms = new ArrayList<>();
+
+            for (int i = 1; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    n++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                    } else {
+                        str = str + at.getText().toString();
                     }
-                    for (int i = 0; i < linear2.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear2.getChildAt(i);
-                        if (at.isChecked()) {
-                            c2++;
-                            if (str2 == "") {
-                                str2 = at.getText().toString();
-                                strt2 = getBig(at.getText().toString());
-                            } else {
-                                str2 = str2 + at.getText().toString();
-                                strt2 = strt2 + getBig(at.getText().toString());
-                            }
-                        }
-                    }
-                    for (int i = 0; i < linear3.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear3.getChildAt(i);
-                        if (at.isChecked()) {
-                            c3++;
-                            if (str3 == "") {
-                                str3 = at.getText().toString();
-                                strt3 = getBig(at.getText().toString());
-                            } else {
-                                str3 = str3 + at.getText().toString();
-                                strt3 = strt3 + getBig(at.getText().toString());
-                            }
-                        }
-                    }
-                    nums = c1 * c2 * c3;
-                    pickedText = str + "," + str2 + "," + str3;
-                    pickedNumber = strt1 + "," + strt2 + "," + strt3;
+                    ms.add(at.getText().toString());
                 }
-                if (
-                        "banker_player".equals(code)
-                                || "2min_banker_player".equals(code)
-                                || "equal".equals(code)
-                                || "2min_equal".equals(code)
-                                || "same_two".equals(code)
-                                || "2min_same_two".equals(code)
-                                || "same_three".equals(code)
-                                || "2min_same_three".equals(code)
-                                || "heavenly_king".equals(code)
-                                || "2min_heavenly_king".equals(code)
-                                || "sum_special".equals(code)
-                                || "2min_sum_special".equals(code)
-                        ) {
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    String str = "";
-                    String strt1 = "";
-                    int c1 = 0;
+            }
+            for (int i = 1; i < linear2.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear2.getChildAt(i);
+                if (at.isChecked()) {
+                    m++;
+                    if (str2 == "") {
+                        str2 = at.getText().toString();
+                    } else {
+                        str2 = str2 + at.getText().toString();
+                    }
+                    ns.add(at.getText().toString());
+                }
+            }
+            for (int i = 0; i < ns.size(); i++) {
 
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            c1++;
-                            if (str == "") {
-                                str = at.getText().toString();
-                                if ("sum_special".equals(code)
-                                        || "2min_sum_special".equals(code)) {
-                                    strt1 = getBig(at.getText().toString());
-                                } else {
-                                    strt1 = getBaccarat(at.getText().toString());
-                                }
-                            } else {
-                                str = str + "," + at.getText().toString();
-                                if ("sum_special".equals(code)
-                                        || "2min_sum_special".equals(code)) {
-                                    strt1 = strt1 + "," + getBig(at.getText().toString());
-                                } else {
-                                    strt1 = strt1 + "," + getBaccarat(at.getText().toString());
-                                }
-                            }
+                for (int i1 = 0; i1 < ms.size(); i1++) {
+                    if (ns.get(i) == ms.get(i1)) {
+                        k++;
+                    }
+                }
+            }
+            pickedNumber = str + "," + str2;
+            if (
+                    "star_5_group_10".equals(code)
+                            || "star_5_group_5".equals(code)
+                            || "star_4_group_4".equals(code)
+                            || "2min_star_5_group_5".equals(code)
+                            || "2min_star_5_group_10".equals(code)
+                            || "2min_star_4_group_4".equals(code)
+                    ) {
+                nums = n * m - k;
+            } else {
+                nums = (n - 1) * (n - 2) * (m * n - 3 * k) / 6;
+            }
+            if (
+                    "star_4_group_12".equals(code)
+                            || "2min_star_4_group_12".equals(code)
+                    ) {
+                nums = n * (n - 1) * m / 2 - (n - 1) * k;
+            }
+        }
+        if (
+                "star_2_prev_special".equals(code)
+                        || "2min_star_2_prev_special".equals(code)
+                        || "star_2_next_special".equals(code)
+                        || "2min_star_2_next_special".equals(code)
+                ) {
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            String str = "";
+            String str2 = "";
+            String strt1 = "";
+            String strt2 = "";
+            int c1 = 0;
+            int c2 = 0;
+
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+
+                    c1++;
+                    if (str == "") {
+                        str = getBig(at.getText().toString());
+                        strt1 = at.getText().toString();
+                    } else {
+                        str = str + getBig(at.getText().toString());
+                        strt1 = strt1 + at.getText().toString();
+                    }
+                }
+            }
+            for (int i = 0; i < linear2.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear2.getChildAt(i);
+                if (at.isChecked()) {
+                    c2++;
+                    if (str2 == "") {
+                        str2 = getBig(at.getText().toString());
+                        strt2 = at.getText().toString();
+                    } else {
+                        str2 = str2 + getBig(at.getText().toString());
+                        strt2 = strt2 + at.getText().toString();
+                    }
+                }
+            }
+            nums = c1 * c2;
+            pickedNumber = str + "," + str2;
+            pickedText = strt1 + "," + strt2;
+        }
+        if (
+                "star_3_prev_special".equals(code)
+                        || "2min_star_3_prev_special".equals(code)
+                        || "star_3_next_special".equals(code)
+                        || "2min_star_3_next_special".equals(code)
+                ) {
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            LinearLayout linear3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
+            String str = "";
+            String str2 = "";
+            String str3 = "";
+            String strt1 = "";
+            String strt2 = "";
+            String strt3 = "";
+            int c1 = 0;
+            int c2 = 0;
+            int c3 = 0;
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    c1++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                        strt1 = getBig(at.getText().toString());
+                    } else {
+                        str = str + at.getText().toString();
+                        strt1 = strt1 + getBig(at.getText().toString());
+                    }
+                }
+            }
+            for (int i = 0; i < linear2.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear2.getChildAt(i);
+                if (at.isChecked()) {
+                    c2++;
+                    if (str2 == "") {
+                        str2 = at.getText().toString();
+                        strt2 = getBig(at.getText().toString());
+                    } else {
+                        str2 = str2 + at.getText().toString();
+                        strt2 = strt2 + getBig(at.getText().toString());
+                    }
+                }
+            }
+            for (int i = 0; i < linear3.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear3.getChildAt(i);
+                if (at.isChecked()) {
+                    c3++;
+                    if (str3 == "") {
+                        str3 = at.getText().toString();
+                        strt3 = getBig(at.getText().toString());
+                    } else {
+                        str3 = str3 + at.getText().toString();
+                        strt3 = strt3 + getBig(at.getText().toString());
+                    }
+                }
+            }
+            nums = c1 * c2 * c3;
+            pickedText = str + "," + str2 + "," + str3;
+            pickedNumber = strt1 + "," + strt2 + "," + strt3;
+        }
+        if (
+                "banker_player".equals(code)
+                        || "2min_banker_player".equals(code)
+                        || "equal".equals(code)
+                        || "2min_equal".equals(code)
+                        || "same_two".equals(code)
+                        || "2min_same_two".equals(code)
+                        || "same_three".equals(code)
+                        || "2min_same_three".equals(code)
+                        || "heavenly_king".equals(code)
+                        || "2min_heavenly_king".equals(code)
+                        || "sum_special".equals(code)
+                        || "2min_sum_special".equals(code)
+                ) {
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            String str = "";
+            String strt1 = "";
+            int c1 = 0;
+
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    c1++;
+                    if (str == "") {
+                        str = at.getText().toString();
+                        if ("sum_special".equals(code)
+                                || "2min_sum_special".equals(code)) {
+                            strt1 = getBig(at.getText().toString());
+                        } else {
+                            strt1 = getBaccarat(at.getText().toString());
+                        }
+                    } else {
+                        str = str + "," + at.getText().toString();
+                        if ("sum_special".equals(code)
+                                || "2min_sum_special".equals(code)) {
+                            strt1 = strt1 + "," + getBig(at.getText().toString());
+                        } else {
+                            strt1 = strt1 + "," + getBaccarat(at.getText().toString());
                         }
                     }
-                    pickedNumber = strt1;
-                    pickedText = str;
-                    nums = c1;
                 }
-                if (
-                        "star_5_single".equals(code)
-                                || "2min_star_5_single".equals(code)
-                                || "star_4_single".equals(code)
-                                || "2min_star_4_single".equals(code)
-                                || "star_3_next_single".equals(code)
-                                || "2min_star_3_next_single".equals(code)
+            }
+            pickedNumber = strt1;
+            pickedText = str;
+            nums = c1;
+        }
+        if (
+                "star_5_single".equals(code)
+                        || "2min_star_5_single".equals(code)
+                        || "star_4_single".equals(code)
+                        || "2min_star_4_single".equals(code)
+                        || "star_3_next_single".equals(code)
+                        || "2min_star_3_next_single".equals(code)
 
-                                || "star_3_next_group_single".equals(code)
-                                || "2min_star_3_next_group_single".equals(code)
-                                || "star_3_next_group_single_6".equals(code)
-                                || "2min_star_3_next_group_single_6".equals(code)
-                                || "star_3_next_group_diverse".equals(code)
-                                || "2min_star_3_next_group_diverse".equals(code)
-                                || "star_3_prev_group_single".equals(code)
-                                || "2min_star_3_prev_group_single".equals(code)
-                                || "star_3_prev_group_single_6".equals(code)
-                                || "2min_star_3_prev_group_single_6".equals(code)
-                                || "star_3_prev_single".equals(code)
-                                || "2min_star_3_prev_single".equals(code)
+                        || "star_3_next_group_single".equals(code)
+                        || "2min_star_3_next_group_single".equals(code)
+                        || "star_3_next_group_single_6".equals(code)
+                        || "2min_star_3_next_group_single_6".equals(code)
+                        || "star_3_next_group_diverse".equals(code)
+                        || "2min_star_3_next_group_diverse".equals(code)
+                        || "star_3_prev_group_single".equals(code)
+                        || "2min_star_3_prev_group_single".equals(code)
+                        || "star_3_prev_group_single_6".equals(code)
+                        || "2min_star_3_prev_group_single_6".equals(code)
+                        || "star_3_prev_single".equals(code)
+                        || "2min_star_3_prev_single".equals(code)
 
-                                || "star_3_prev_group_diverse".equals(code)
-                                || "2min_star_3_prev_group_diverse".equals(code)
-                                || "star_3_midd_single".equals(code)
-                                || "2min_star_3_midd_single".equals(code)
-                                || "star_3_midd_group_single".equals(code)
-                                || "2min_star_3_midd_group_single".equals(code)
-                                || "star_3_midd_group_single_6".equals(code)
-                                || "2min_star_3_midd_group_single_6".equals(code)
-                                || "star_3_midd_group_diverse".equals(code)
-                                || "2min_star_3_midd_group_diverse".equals(code)
-                                || "star_2_next_group_single".equals(code)
-                                || "2min_star_2_next_group_single".equals(code)
-                                || "star_2_prev_single".equals(code)
-                                || "2min_star_2_prev_single".equals(code)
-                                || "star_2_prev_group_single".equals(code)
-                                || "2min_star_2_prev_group_single".equals(code)
+                        || "star_3_prev_group_diverse".equals(code)
+                        || "2min_star_3_prev_group_diverse".equals(code)
+                        || "star_3_midd_single".equals(code)
+                        || "2min_star_3_midd_single".equals(code)
+                        || "star_3_midd_group_single".equals(code)
+                        || "2min_star_3_midd_group_single".equals(code)
+                        || "star_3_midd_group_single_6".equals(code)
+                        || "2min_star_3_midd_group_single_6".equals(code)
+                        || "star_3_midd_group_diverse".equals(code)
+                        || "2min_star_3_midd_group_diverse".equals(code)
+                        || "star_2_next_group_single".equals(code)
+                        || "2min_star_2_next_group_single".equals(code)
+                        || "star_2_prev_single".equals(code)
+                        || "2min_star_2_prev_single".equals(code)
+                        || "star_2_prev_group_single".equals(code)
+                        || "2min_star_2_prev_group_single".equals(code)
 
 
-                        ) {
-                    final EditText g2_editText = (EditText) inte.findViewById(R.id.g2_EditText);
-                    String s = g2_editText.getText().toString().trim();
-                    if (s.equals("")) {
-                        Toasty.error(GameCenterActivity.this, "请输入内容", 2000).show();
+                ) {
+            final EditText g2_editText = (EditText) inte.findViewById(R.id.g2_EditText);
+            String s = g2_editText.getText().toString().trim();
+            if (s.equals("")) {
+                //Toasty.error(GameCenterActivity.this, "请输入内容", 2000).show();
+                return;
+            }
+            if (s.substring(s.length() - 1, s.length()).equals(",")) {
+                s = s.substring(s.length() - 1, s.length());
+            }
+
+            int seleNum = 0;
+            if ("star_5_single".equals(code)
+                    || "2min_star_5_single".equals(code)) {
+                seleNum = 5;
+            }
+            if ("star_4_single".equals(code)
+                    || "2min_star_4_single".equals(code)) {
+                seleNum = 4;
+            }
+            if ("star_3_next_single".equals(code)
+                    || "2min_star_3_next_single".equals(code)
+                    || "star_3_next_group_single".equals(code)
+                    || "2min_star_3_next_group_single".equals(code)
+
+                    || "star_3_next_group_single_6".equals(code)
+                    || "2min_star_3_next_group_single_6".equals(code)
+                    || "star_3_prev_group_single_6".equals(code)
+                    || "2min_star_3_prev_group_single_6".equals(code)
+                    || "star_3_prev_group_single".equals(code)
+                    || "2min_star_3_prev_group_single".equals(code)
+
+                    || "star_3_next_group_diverse".equals(code)
+                    || "2min_star_3_next_group_diverse".equals(code)
+                    || "star_3_prev_group_diverse".equals(code)
+                    || "2min_star_3_prev_group_diverse".equals(code)
+
+                    || "star_3_prev_single".equals(code)
+                    || "2min_star_3_prev_single".equals(code)
+                    || "star_3_midd_single".equals(code)
+                    || "2min_star_3_midd_single".equals(code)
+                    || "star_3_midd_group_single".equals(code)
+                    || "2min_star_3_midd_group_single".equals(code)
+                    || "star_3_midd_group_single_6".equals(code)
+                    || "2min_star_3_midd_group_single_6".equals(code)
+                    || "star_3_midd_group_diverse".equals(code)
+                    || "2min_star_3_midd_group_diverse".equals(code)
+
+
+                    ) {
+                seleNum = 3;
+            }
+            if (
+                    "star_2_next_single".equals(code)
+                            || "2min_star_2_next_single".equals(code)
+                            || "star_2_next_group_single".equals(code)
+                            || "2min_star_2_next_group_single".equals(code)
+                            || "star_2_prev_single".equals(code)
+                            || "2min_star_2_prev_single".equals(code)
+                            || "star_2_prev_group_single".equals(code)
+                            || "2min_star_2_prev_group_single".equals(code)
+                    ) {
+                seleNum = 2;
+            }
+            if (s.contains(",")) {
+                String[] sp = s.split(",");
+                nums = sp.length;
+                for (int i = 0; i < sp.length; i++) {
+                    if (sp[i].length() != seleNum) {
+                        //Toasty.error(GameCenterActivity.this, "请至少输入一注进行投注", 2000).show();
                         return;
                     }
-                    if (s.substring(s.length() - 1, s.length()).equals(",")) {
-                        s = s.substring(s.length() - 1, s.length());
-                    }
-
-                    int seleNum = 0;
-                    if ("star_5_single".equals(code)
-                            || "2min_star_5_single".equals(code)) {
-                        seleNum = 5;
-                    }
-                    if ("star_4_single".equals(code)
-                            || "2min_star_4_single".equals(code)) {
-                        seleNum = 4;
-                    }
-                    if ("star_3_next_single".equals(code)
-                            || "2min_star_3_next_single".equals(code)
-                            || "star_3_next_group_single".equals(code)
-                            || "2min_star_3_next_group_single".equals(code)
-
-                            || "star_3_next_group_single_6".equals(code)
-                            || "2min_star_3_next_group_single_6".equals(code)
-                            || "star_3_prev_group_single_6".equals(code)
-                            || "2min_star_3_prev_group_single_6".equals(code)
-                            || "star_3_prev_group_single".equals(code)
-                            || "2min_star_3_prev_group_single".equals(code)
-
-                            || "star_3_next_group_diverse".equals(code)
+                    if ("star_3_next_group_diverse".equals(code)
                             || "2min_star_3_next_group_diverse".equals(code)
                             || "star_3_prev_group_diverse".equals(code)
                             || "2min_star_3_prev_group_diverse".equals(code)
-
-                            || "star_3_prev_single".equals(code)
-                            || "2min_star_3_prev_single".equals(code)
-                            || "star_3_midd_single".equals(code)
-                            || "2min_star_3_midd_single".equals(code)
-                            || "star_3_midd_group_single".equals(code)
-                            || "2min_star_3_midd_group_single".equals(code)
-                            || "star_3_midd_group_single_6".equals(code)
-                            || "2min_star_3_midd_group_single_6".equals(code)
                             || "star_3_midd_group_diverse".equals(code)
-                            || "2min_star_3_midd_group_diverse".equals(code)
-
-
-                            ) {
-                        seleNum = 3;
-                    }
-                    if (
-                            "star_2_next_single".equals(code)
-                                    || "2min_star_2_next_single".equals(code)
-                                    || "star_2_next_group_single".equals(code)
-                                    || "2min_star_2_next_group_single".equals(code)
-                                    || "star_2_prev_single".equals(code)
-                                    || "2min_star_2_prev_single".equals(code)
-                                    || "star_2_prev_group_single".equals(code)
-                                    || "2min_star_2_prev_group_single".equals(code)
-                            ) {
-                        seleNum = 2;
-                    }
-                    if (s.contains(",")) {
-                        String[] sp = s.split(",");
-                        nums = sp.length;
-                        for (int i = 0; i < sp.length; i++) {
-                            if (sp[i].length() != seleNum) {
-                                Toasty.error(GameCenterActivity.this, "请至少输入一注进行投注", 2000).show();
-                                return;
-                            }
-                            if ("star_3_next_group_diverse".equals(code)
-                                    || "2min_star_3_next_group_diverse".equals(code)
-                                    || "star_3_prev_group_diverse".equals(code)
-                                    || "2min_star_3_prev_group_diverse".equals(code)
-                                    || "star_3_midd_group_diverse".equals(code)
-                                    || "2min_star_3_midd_group_diverse".equals(code)) {
-                                String s1 = sp[i].substring(0, 1);
-                                String s2 = sp[i].substring(1, 2);
-                                String s3 = sp[i].substring(2, 3);
-                                if (s1.equals(s2) && s1.equals(s3) && s3.equals(s2)) {
-                                    Toasty.error(GameCenterActivity.this, "三个号码不能完全相同", 2000).show();
-                                    return;
-                                }
-                            }
-                            if ("star_2_next_group_single".equals(code)
-                                    || "2min_star_2_next_group_single".equals(code)
-                                    || "star_2_prev_group_single".equals(code)
-                                    || "2min_star_2_prev_group_single".equals(code)) {
-                                String s1 = sp[i].substring(0, 1);
-                                String s2 = sp[i].substring(1, 2);
-                                if (s1.equals(s2)) {
-                                    Toasty.error(GameCenterActivity.this, "两个号码不能完全相同", 2000).show();
-                                    return;
-                                }
-                            }
-
-                        }
-                    } else {
-                        nums = 1;
-                        if (s.length() != seleNum) {
-                            Toasty.error(GameCenterActivity.this, "请至少输入一注进行投注", 2000).show();
+                            || "2min_star_3_midd_group_diverse".equals(code)) {
+                        String s1 = sp[i].substring(0, 1);
+                        String s2 = sp[i].substring(1, 2);
+                        String s3 = sp[i].substring(2, 3);
+                        if (s1.equals(s2) && s1.equals(s3) && s3.equals(s2)) {
+                            //Toasty.error(GameCenterActivity.this, "三个号码不能完全相同", 2000).show();
                             return;
-
                         }
+                    }
+                    if ("star_2_next_group_single".equals(code)
+                            || "2min_star_2_next_group_single".equals(code)
+                            || "star_2_prev_group_single".equals(code)
+                            || "2min_star_2_prev_group_single".equals(code)) {
+                        String s1 = sp[i].substring(0, 1);
+                        String s2 = sp[i].substring(1, 2);
+                        if (s1.equals(s2)) {
+                            //Toasty.error(GameCenterActivity.this, "两个号码不能完全相同", 2000).show();
+                            return;
+                        }
+                    }
+
+                }
+            } else {
+                nums = 1;
+                if (s.length() != seleNum) {
+                    //Toasty.error(GameCenterActivity.this, "请至少输入一注进行投注", 2000).show();
+                    return;
+
+                }
                        /* pickedNumber = s;
                         Nums = Integer.parseInt(edit1.getText().toString().trim());
                         nums = 1;
@@ -6174,63 +6207,63 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             return;
                         }
                         AddLottery();*/
-                    }
-                    locationText = "";
-                    location = "";
+            }
+            locationText = "";
+            location = "";
 
 
-                    pickedNumber = s;
+            pickedNumber = s;
 
-                    Nums = Integer.parseInt(edit1.getText().toString().trim());
+            Nums = Integer.parseInt(edit1.getText().toString().trim());
 
-                    amount = nums * 2;
-                    if (PriceUnit == 2) {
-                        amount = amount / 10;
-                    }
-                    if (PriceUnit == 3) {
-                        amount = amount / 100;
-                    }
-                    if (PriceUnit == 4) {
-                        amount = amount / 1000;
-                    }
-                    amount = amount * Nums;
-                    classCode = code;
-                    multiple = Nums;
-                    if (nums == 0) {
-                        return;
-                    }
-                    AddLottery();
+            amount = nums * 2;
+            if (PriceUnit == 2) {
+                amount = amount / 10;
+            }
+            if (PriceUnit == 3) {
+                amount = amount / 100;
+            }
+            if (PriceUnit == 4) {
+                amount = amount / 1000;
+            }
+            amount = amount * Nums;
+            classCode = code;
+            multiple = Nums;
+            if (nums == 0) {
+                return;
+            }
+            AddLottery();
 
-                    return;
+            return;
+        }
+        if (
+                "star_2_any_single".equals(code)
+                        || "2min_star_2_any_single".equals(code)
+                        || "star_2_any_group_single".equals(code)
+                        || "2min_star_2_any_group_single".equals(code)
+                )
+
+        {
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearCheck);
+            EditText editT = (EditText) inte.findViewById(R.id.optional2_editText);
+            String s = editT.getText().toString().trim();
+            int n = 0;
+            List<String> ns = new ArrayList<>();
+            if ("".equals(s) || " ".equals(s)) {
+                //Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
+                return;
+            }
+            if (s.substring(s.length() - 1, s.length()).equals(",")) {
+                s = s.substring(s.length() - 1, s.length());
+            }
+
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    n++;
+                    ns.add(at.getText().toString().substring(0, 1));
                 }
-                if (
-                        "star_2_any_single".equals(code)
-                                || "2min_star_2_any_single".equals(code)
-                                || "star_2_any_group_single".equals(code)
-                                || "2min_star_2_any_group_single".equals(code)
-                        )
-
-                {
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearCheck);
-                    EditText editT = (EditText) inte.findViewById(R.id.optional2_editText);
-                    String s = editT.getText().toString().trim();
-                    int n = 0;
-                    List<String> ns = new ArrayList<>();
-                    if ("".equals(s) || " ".equals(s)) {
-                        Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
-                        return;
-                    }
-                    if (s.substring(s.length() - 1, s.length()).equals(",")) {
-                        s = s.substring(s.length() - 1, s.length());
-                    }
-
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            n++;
-                            ns.add(at.getText().toString().substring(0, 1));
-                        }
-                    }
+            }
                     /*for (int j = 0; j < sp.length; j++) {
                         int n = 0;
                         String l = "";
@@ -6262,1232 +6295,1256 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             }
                         }*/
 
-                    if (n < 2) {
-                        Toasty.error(GameCenterActivity.this, "请至少选择一注,请重新投注.", 2000).show();
+            if (n < 2) {
+                //Toasty.error(GameCenterActivity.this, "请至少选择一注,请重新投注.", 2000).show();
+                return;
+            }
+            if (s.contains(",")) {
+                String[] sp = s.split(",");
+                for (int j = 0; j < sp.length; j++) {
+                    if (sp[j].length() != 2) {
+                        //Toasty.error(GameCenterActivity.this, "投注个数不正确,请重新投注.", 2000).show();
                         return;
                     }
-                    if (s.contains(",")) {
-                        String[] sp = s.split(",");
-                        for (int j = 0; j < sp.length; j++) {
-                            if (sp[j].length() != 2) {
-                                Toasty.error(GameCenterActivity.this, "投注个数不正确,请重新投注.", 2000).show();
-                                return;
-                            }
-                            if ("star_2_any_group_single".equals(code)
-                                    || "2min_star_2_any_group_single".equals(code)) {
-                                String s1 = sp[j].substring(0, 1);
-                                String s2 = sp[j].substring(1, 2);
-                                if (s1.equals(s2)) {
-                                    Toasty.error(GameCenterActivity.this, "两个号码不能完全相同", 2000).show();
-                                    return;
-                                }
-                            }
-                        }
-                    } else {
-                        if (s.length() != 2) {
-                            Toasty.error(GameCenterActivity.this, "投注个数不正确,请重新投注.", 2000).show();
+                    if ("star_2_any_group_single".equals(code)
+                            || "2min_star_2_any_group_single".equals(code)) {
+                        String s1 = sp[j].substring(0, 1);
+                        String s2 = sp[j].substring(1, 2);
+                        if (s1.equals(s2)) {
+                            //Toasty.error(GameCenterActivity.this, "两个号码不能完全相同", 2000).show();
                             return;
                         }
-                        if ("star_2_any_group_single".equals(code)
-                                || "2min_star_2_any_group_single".equals(code)) {
-                            String s1 = s.substring(0, 1);
-                            String s2 = s.substring(1, 2);
-                            if (s1.equals(s2)) {
-                                Toasty.error(GameCenterActivity.this, "两个号码不能完全相同", 2000).show();
-                                return;
-                            }
-                        }
-
-
                     }
-                    List<List<String>> check = getCheck(ns);
-                    for (int i = 0; i < check.size(); i++) {
-                        List<String> list = check.get(i);
-                        locationText = list.get(0);
-                        location = list.get(1);
-                        nums = 1;
-
-                        pickedNumber = s;
-                        GameTypeName = GameTypeName + "-" + list.get(0);
-                        Nums = Integer.parseInt(edit1.getText().toString().trim());
-                        amount = nums * 2;
-                        if (PriceUnit == 2) {
-                            amount = amount / 10;
-                        }
-                        if (PriceUnit == 3) {
-                            amount = amount / 100;
-                        }
-                        if (PriceUnit == 4) {
-                            amount = amount / 1000;
-                        }
-                        amount = amount * Nums;
-                        classCode = code;
-                        multiple = Nums;
-                        if (nums == 0) {
-                            return;
-                        }
-                        AddLottery();
-                        GameTypeName = name.get(position);
-                    }
-
-
+                }
+            } else {
+                if (s.length() != 2) {
+                    //Toasty.error(GameCenterActivity.this, "投注个数不正确,请重新投注.", 2000).show();
                     return;
                 }
-                if (
-                        "star_3_any_single".equals(code)
-                                || "2min_star_3_any_single".equals(code)
-                                || "star_3_any_group_single".equals(code)
-                                || "2min_star_3_any_group_single".equals(code)
-                                || "star_3_any_group_single_6".equals(code)
-                                || "2min_star_3_any_group_single_6".equals(code)
-                                || "star_3_any_group_diverse".equals(code)
-                                || "2min_star_3_any_group_diverse".equals(code)
-
-                        ) {
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearCheck);
-                    EditText editT = (EditText) inte.findViewById(R.id.optional2_editText);
-                    String s = editT.getText().toString().trim();
-                    if ("".equals(s) || " ".equals(s)) {
-                        Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
+                if ("star_2_any_group_single".equals(code)
+                        || "2min_star_2_any_group_single".equals(code)) {
+                    String s1 = s.substring(0, 1);
+                    String s2 = s.substring(1, 2);
+                    if (s1.equals(s2)) {
+                        //Toasty.error(GameCenterActivity.this, "两个号码不能完全相同", 2000).show();
                         return;
                     }
-                    String str = "";
-                    int n = 0;
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            n++;
-                        }
-                    }
-                    if (n < 3) {
-                        Toasty.error(GameCenterActivity.this, "至少选择三个", 2000).show();
-                        return;
-
-                    }
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            if (str == "") {
-                                str = at.getText().toString().substring(0, 1);
-                            } else {
-                                str = str + at.getText().toString().substring(0, 1);
-                            }
-                        }
-                    }
-                    List<List<String>> check3 = getCheck3(str);
-                    if ("".equals(s) || " ".equals(s)) {
-                        Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
-                        return;
-                    } else {
-                        if (s.substring(s.length() - 1, s.length()).equals(",")) {
-                            s = s.substring(0, s.length() - 1);
-                        }
-                    }
-
-                    if (s.contains(",")) {
-                        String[] sp = s.split(",");
-                        nums = sp.length;
-                        for (int i = 0; i < sp.length; i++) {
-                            if (sp[i].contains(" ")) {
-                                Toasty.error(GameCenterActivity.this, "不能存在空格", 2000).show();
-                                return;
-                            }
-                            if (sp[i].length() != 3) {
-                                Toasty.error(GameCenterActivity.this, "三个号码位一注", 2000).show();
-                                return;
-                            } else {
-                                if ("star_3_any_group_single".equals(code)
-                                        || "2min_star_3_any_group_single".equals(code)) {
-                                    String s1 = sp[i].substring(0, 1);
-                                    String s2 = sp[i].substring(1, 2);
-                                    String s3 = sp[i].substring(2, 3);
-                                    if (!s1.equals(s2) && !s1.equals(s3) && !s2.equals(s3)) {
-                                        Toasty.error(GameCenterActivity.this, "必须有两个号码相同", 2000).show();
-                                        return;
-                                    }
-                                    if (s1.equals(s2) && s1.equals(s3)) {
-                                        Toasty.error(GameCenterActivity.this, "三个号码不能同时相同", 2000).show();
-                                        return;
-                                    }
-                                }
-                                if ("star_3_any_group_single_6".equals(code)
-                                        || "2min_star_3_any_group_single_6".equals(code)) {
-                                    String s1 = sp[i].substring(0, 1);
-                                    String s2 = sp[i].substring(1, 2);
-                                    String s3 = sp[i].substring(2, 3);
-                                    if (s1.equals(s2) || s1.equals(s3) || s2.equals(s3)) {
-                                        Toasty.error(GameCenterActivity.this, "不能有相同的号码", 2000).show();
-                                        return;
-                                    }
-                                }
-                                if ("star_3_any_group_diverse".equals(code)
-                                        || "2min_star_3_any_group_diverse".equals(code)) {
-                                    String s1 = sp[i].substring(0, 1);
-                                    String s2 = sp[i].substring(1, 2);
-                                    String s3 = sp[i].substring(2, 3);
-                                    if (!s1.equals(s2) && !s1.equals(s3) && !s2.equals(s3)) {
-                                        Toasty.error(GameCenterActivity.this, "至少需要两个相同的号码", 2000).show();
-                                        return;
-                                    }
-                                }
-
-
-                            }
-                        }
-                    } else {
-                        if (s.contains(" ")) {
-                            Toasty.error(GameCenterActivity.this, "不能存在空格", 2000).show();
-                            return;
-                        }
-                        if (s.length() != 3) {
-                            Toasty.error(GameCenterActivity.this, "三个号码位一注", 2000).show();
-                            return;
-                        } else {
-                            if ("star_3_any_group_single".equals(code)
-                                    || "2min_star_3_any_group_single".equals(code)) {
-                                String s1 = s.substring(0, 1);
-                                String s2 = s.substring(1, 2);
-                                String s3 = s.substring(2, 3);
-                                if (!s1.equals(s2) && !s1.equals(s3) && !s2.equals(s3)) {
-                                    Toasty.error(GameCenterActivity.this, "必须有两个号码相同", 2000).show();
-                                    return;
-                                }
-                                if (s1.equals(s2) && s1.equals(s3)) {
-                                    Toasty.error(GameCenterActivity.this, "三个号码不能同时相同", 2000).show();
-                                    return;
-                                }
-                            }
-                            if ("star_3_any_group_single_6".equals(code)
-                                    || "2min_star_3_any_group_single_6".equals(code)) {
-                                String s1 = s.substring(0, 1);
-                                String s2 = s.substring(1, 2);
-                                String s3 = s.substring(2, 3);
-                                if (s1.equals(s2) || s1.equals(s3) || s2.equals(s3)) {
-                                    Toasty.error(GameCenterActivity.this, "不能有相同的号码", 2000).show();
-                                    return;
-                                }
-                            }
-                            if ("star_3_any_group_diverse".equals(code)
-                                    || "2min_star_3_any_group_diverse".equals(code)) {
-                                String s1 = s.substring(0, 1);
-                                String s2 = s.substring(1, 2);
-                                String s3 = s.substring(2, 3);
-                                if (!s1.equals(s2) && !s1.equals(s3) && !s2.equals(s3)) {
-                                    Toasty.error(GameCenterActivity.this, "至少需要两个相同的号码", 2000).show();
-                                    return;
-                                }
-                            }
-
-                        }
-                    }
-                    pickedNumber = s;
-                    for (int i = 0; i < check3.size(); i++) {
-                        List<String> list = check3.get(i);
-                        locationText = list.get(0);
-                        location = list.get(1);
-                        nums = 1;
-
-                        pickedNumber = s;
-                        Log.d("个十百千万选择", list.get(0));
-                        GameTypeName = GameTypeName + "-" + list.get(0);
-                        Nums = Integer.parseInt(edit1.getText().toString().trim());
-                        amount = nums * 2;
-                        if (PriceUnit == 2) {
-                            amount = amount / 10;
-                        }
-                        if (PriceUnit == 3) {
-                            amount = amount / 100;
-                        }
-                        if (PriceUnit == 4) {
-                            amount = amount / 1000;
-                        }
-                        amount = amount * Nums;
-                        classCode = code;
-                        multiple = Nums;
-                        if (nums == 0) {
-                            return;
-                        }
-                        AddLottery();
-                        GameTypeName = GameTypeName.substring(0, GameTypeName.length() - 6);
-                    }
-                    return;
-                }
-                if (
-                        "eleven_star_3_prev_single".equals(code)
-                                || "eleven_star_3_prev_group_single".equals(code)
-                                || "eleven_star_2_prev_single".equals(code)
-                                || "eleven_star_2_prev_group_single".equals(code)
-
-
-                                || "eleven_any_one_single".equals(code)
-                                || "eleven_any_two_single".equals(code)
-                                || "eleven_any_three_single".equals(code)
-                                || "eleven_any_four_single".equals(code)
-                                || "eleven_any_five_single".equals(code)
-                                || "eleven_any_six_single".equals(code)
-                                || "eleven_any_seven_single".equals(code)
-                                || "eleven_any_eight_single".equals(code)
-
-                                || "PK10_1st_2nd_single".equals(code)
-                                || "PK10_1st_2nd_3th_single".equals(code)
-
-                        ) {
-                    final EditText g2_editText = (EditText) inte.findViewById(R.id.g2_EditText);
-                    String s = g2_editText.getText().toString().trim();
-                    if ("".equals(s) || " ".equals(s)) {
-                        Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
-                        return;
-                    }
-                    int co = 0;
-                    int ns = 11;
-
-                    if (
-                            "PK10_1st_2nd_single".equals(code)
-                                    || "PK10_1st_2nd_3th_single".equals(code)
-                            ) {
-                        ns = 10;
-                    }
-                    if ("eleven_any_one_single".equals(code)) {
-                        co = 1;
-                    }
-                    if (
-                            "eleven_star_3_prev_single".equals(code)
-                                    || "eleven_star_3_prev_group_single".equals(code)
-                                    || "eleven_any_three_single".equals(code)
-                                    || "PK10_1st_2nd_3th_single".equals(code)
-
-                            ) {
-                        co = 3;
-                    }
-                    if (
-                            "eleven_star_2_prev_single".equals(code)
-                                    || "eleven_star_2_prev_group_single".equals(code)
-                                    || "eleven_any_two_single".equals(code)
-                                    || "PK10_1st_2nd_single".equals(code)
-
-                            ) {
-                        co = 2;
-                    }
-                    if ("eleven_any_four_single".equals(code)) {
-                        co = 4;
-                    }
-                    if ("eleven_any_five_single".equals(code)) {
-                        co = 5;
-                    }
-                    if ("eleven_any_six_single".equals(code)) {
-                        co = 6;
-                    }
-                    if ("eleven_any_seven_single".equals(code)) {
-                        co = 7;
-                    }
-                    if ("eleven_any_eight_single".equals(code)) {
-                        co = 8;
-                    }
-                    if (s.contains(",")) {
-                        String[] split = s.split(",");
-                        nums = split.length;
-                        for (int i = 0; i < split.length; i++) {
-                            String s1 = split[i];
-                            if (!"eleven_any_one_single".equals(code)) {
-                                if (s1.contains(" ")) {
-                                    String[] sp1 = s1.split(" ");
-                                    if (sp1.length != co) {
-                                        Toasty.error(GameCenterActivity.this, "投注内容不正确", 2000).show();
-                                        return;
-                                    } else {
-                                        for (int i1 = 0; i1 < sp1.length; i1++) {
-                                            if (sp1[i1].length() != 2) {
-                                                Toasty.error(GameCenterActivity.this, "投注内容位数不正确", 2000).show();
-                                                return;
-                                            }
-                                            int i2 = Integer.parseInt(sp1[i1]);
-                                            if (i2 < 1 || i2 > ns) {
-                                                Toasty.error(GameCenterActivity.this, "有投注内容不在范围内", 2000).show();
-                                                return;
-                                            }
-                                        }
-                                    }
-                                } else {
-                                    Toasty.error(GameCenterActivity.this, "投注内容不足", 2000).show();
-                                    return;
-                                }
-                            }
-
-                        }
-                    } else {
-                        nums = 1;
-                        if (!"eleven_any_one_single".equals(code)) {
-                            if (s.contains(" ")) {
-                                String[] sp1 = s.split(" ");
-                                if (sp1.length != co) {
-                                    Toasty.error(GameCenterActivity.this, "投注内容不正确", 2000).show();
-                                    return;
-                                } else {
-                                    for (int i1 = 0; i1 < sp1.length; i1++) {
-                                        if (sp1[i1].length() != 2) {
-                                            Toasty.error(GameCenterActivity.this, "投注内容位数不正确", 2000).show();
-                                            return;
-                                        }
-                                        int i2 = Integer.parseInt(sp1[i1]);
-                                        if (i2 < 1 || i2 > ns) {
-                                            Toasty.error(GameCenterActivity.this, "有投注内容不在范围内", 2000).show();
-                                            return;
-                                        }
-                                    }
-                                }
-                            }/* else {
-                                Toasty.error(GameCenterActivity.this, "投注内容不足", 2000).show();
-                                return;
-                            }*/
-                        }
-
-                    }
-                    pickedNumber = s;
-
-                    int i = Integer.parseInt("05");
-
-                }
-                if (
-                        "k3_double_single".equals(code)
-                                || "k3_different_3_single".equals(code)
-                        ) {
-                    final EditText g2_editText = (EditText) inte.findViewById(R.id.g2_EditText);
-                    String s = g2_editText.getText().toString().trim();
-
-                    if (",".equals(s.substring(s.length() - 1, s.length()))) {
-                        s = s.substring(0, s.length() - 1);
-                    }
-                    Log.d("江苏快三单", s + "");
-                    String s1 = "";
-                    String s2 = "";
-                    String s3 = "";
-                    if (s.contains(",")) {
-                        String[] sp1 = s.split(",");
-                        nums = sp1.length;
-
-                        for (int i = 0; i < sp1.length; i++) {
-                            String ss = sp1[i];
-                            if (ss.length() != 3) {
-                                Toasty.error(GameCenterActivity.this, "投注内容位数不正确", 2000).show();
-                                return;
-                            } else {
-                                s1 = ss.substring(0, 1);
-                                s2 = ss.substring(1, 2);
-                                s3 = ss.substring(2, 3);
-                                if (s1.equals(s2)) {
-                                    if (s1.equals(s3)) {
-                                        Toasty.error(GameCenterActivity.this, "三个号码不能完全相同", 2000).show();
-                                        return;
-                                    }
-                                }
-                                if ("k3_double_single".equals(code)) {
-                                    if (!s3.equals(s2) && !s3.equals(s1) && !s2.equals(s1)) {
-                                        Toasty.error(GameCenterActivity.this, "必须有两个同号", 2000).show();
-                                        return;
-
-                                    }
-                                }
-                                if ("k3_different_3_single".equals(code)) {
-                                    if (s3.equals(s2) || s3.equals(s1) || s2.equals(s1)) {
-                                        Toasty.error(GameCenterActivity.this, "不能存在相同的号码", 2000).show();
-                                        return;
-
-                                    }
-                                }
-
-
-                            }
-                            int i1 = Integer.parseInt(s1);
-                            int i2 = Integer.parseInt(s2);
-                            int i3 = Integer.parseInt(s3);
-                            if (i1 < 1 || i1 > 6 || i2 < 1 || i2 > 6 || i3 < 1 || i3 > 6) {
-                                Toasty.error(GameCenterActivity.this, "选取号码在1-6之间", 2000).show();
-                                return;
-                            }
-                        }
-                    } else {
-
-
-                        nums = 1;
-                        if (s.length() != 3) {
-                            Toasty.error(GameCenterActivity.this, "投注内容位数不正确", 2000).show();
-                            return;
-                        } else {
-                            s1 = s.substring(0, 1);
-                            s2 = s.substring(1, 2);
-                            s3 = s.substring(2, 3);
-                            if (s1.equals(s2) && s1.equals(s3)) {
-
-                                Toasty.error(GameCenterActivity.this, "三个号码不能完全相同", 2000).show();
-                                return;
-
-                            }
-
-                            if ("k3_double_single".equals(code)) {
-                                if (!s3.equals(s2) && !s3.equals(s1) && !s2.equals(s1)) {
-                                    Toasty.error(GameCenterActivity.this, "必须有两个同号", 2000).show();
-                                    return;
-
-                                }
-                            }
-                            if ("k3_different_3_single".equals(code)) {
-                                if (s3.equals(s2) || s3.equals(s1) || s2.equals(s1)) {
-                                    Toasty.error(GameCenterActivity.this, "不能存在相同的号码", 2000).show();
-                                    return;
-
-                                }
-                            }
-
-                        }
-                        int i1 = Integer.parseInt(s1);
-                        int i2 = Integer.parseInt(s2);
-                        int i3 = Integer.parseInt(s3);
-                        if (i1 < 1 || i1 > 6 || i2 < 1 || i2 > 6 || i3 < 1 || i3 > 6) {
-                            Toasty.error(GameCenterActivity.this, "选取号码在1-6之间", 2000).show();
-                            return;
-                        }
-                    }
-                    pickedNumber = s;
-
-                }
-                if ("k3_different_2_single".equals(code)) {
-                    final EditText g2_editText = (EditText) inte.findViewById(R.id.g2_EditText);
-                    String s = g2_editText.getText().toString().trim();
-
-                    if (",".equals(s.substring(s.length() - 1, s.length()))) {
-                        s = s.substring(0, s.length() - 1);
-                    }
-                    Log.d("江苏快三二不同号单", s + "");
-                    String s1 = "";
-                    String s2 = "";
-                    if (s.contains(",")) {
-                        String[] sp1 = s.split(",");
-                        nums = sp1.length;
-
-                        for (int i = 0; i < sp1.length; i++) {
-                            String ss = sp1[i];
-                            if (ss.length() != 2) {
-                                Toasty.error(GameCenterActivity.this, "投注内容位数不正确", 2000).show();
-                                return;
-                            } else {
-                                s1 = ss.substring(0, 1);
-                                s2 = ss.substring(1, 2);
-
-                                if (s1.equals(s2)) {
-                                    Toasty.error(GameCenterActivity.this, "两个号码不能完全相同", 2000).show();
-                                    return;
-                                }
-                            }
-
-
-                            int i1 = Integer.parseInt(s1);
-                            int i2 = Integer.parseInt(s2);
-
-                            if (i1 < 1 || i1 > 6 || i2 < 1 || i2 > 6) {
-                                Toasty.error(GameCenterActivity.this, "选取号码在1-6之间", 2000).show();
-                                return;
-                            }
-                        }
-                    } else {
-                        nums = 1;
-                        if (s.length() != 2) {
-                            Toasty.error(GameCenterActivity.this, "投注内容位数不正确", 2000).show();
-                            return;
-                        } else {
-                            s1 = s.substring(0, 1);
-                            s2 = s.substring(1, 2);
-
-                            if (s1.equals(s2)) {
-
-                                Toasty.error(GameCenterActivity.this, "两个号码不能完全相同", 2000).show();
-                                return;
-
-                            }
-
-
-                        }
-                        int i1 = Integer.parseInt(s1);
-                        int i2 = Integer.parseInt(s2);
-
-                        if (i1 < 1 || i1 > 6 || i2 < 1 || i2 > 6) {
-                            Toasty.error(GameCenterActivity.this, "选取号码在1-6之间", 2000).show();
-                            return;
-                        }
-                    }
-                    pickedNumber = s;
-                }
-                if (
-                        "sequence_star_3_single".equals(code)
-                                || "sequence_star_3_group_3_single".equals(code)
-                                || "sequence_star_3_group_6_single".equals(code)
-                                || "sequence_star_3_group_diverse".equals(code)
-                                || "3D_star_3_single".equals(code)
-                                || "3D_star_3_group_3_single".equals(code)
-                                || "3D_star_3_group_6_single".equals(code)
-                                || "3D_star_3_group_diverse".equals(code)
-
-                        ) {
-                    final EditText g2_editText = (EditText) inte.findViewById(R.id.g2_EditText);
-                    String s = g2_editText.getText().toString().trim();
-                    if ("".equals(s) || " ".equals(s)) {
-                        Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
-                        return;
-                    }
-                    if (",".equals(s.substring(s.length() - 1, s.length()))) {
-                        s = s.substring(0, s.length() - 1);
-                    }
-                    if (s.contains(",")) {
-
-                        String[] sp = s.split(",");
-                        nums = sp.length;
-                        for (int i = 0; i < sp.length; i++) {
-                            if (sp[i].length() != 3) {
-                                Toasty.error(GameCenterActivity.this, "投注内容位数不正确", 2000).show();
-                                return;
-                            } else {
-                                if (
-                                        "sequence_star_3_group_3_single".equals(code)
-                                                || "3D_star_3_group_3_single".equals(code)
-                                        ) {
-                                    String s1 = sp[i].substring(0, 1);
-                                    String s2 = sp[i].substring(1, 2);
-                                    String s3 = sp[i].substring(2, 3);
-                                    if (s1.equals(s2) && s1.equals(s3)) {
-                                        Toasty.error(GameCenterActivity.this, "三个号码不能完全相同", 2000).show();
-                                        return;
-                                    }
-                                    if (!s1.equals(s2) && !s1.equals(s3) && !s2.equals(s3)) {
-                                        Toasty.error(GameCenterActivity.this, "需要两个相同的号码", 2000).show();
-                                        return;
-                                    }
-                                }
-                                if (
-                                        "sequence_star_3_group_6_single".equals(code)
-                                                || "3D_star_3_group_6_single".equals(code)
-                                        ) {
-                                    String s1 = sp[i].substring(0, 1);
-                                    String s2 = sp[i].substring(1, 2);
-                                    String s3 = sp[i].substring(2, 3);
-                                    if (s1.equals(s2) && s1.equals(s3)) {
-                                        Toasty.error(GameCenterActivity.this, "不能存在相同的号码", 2000).show();
-                                        return;
-                                    }
-                                    if (s1.equals(s2) || s1.equals(s3) || s2.equals(s3)) {
-                                        Toasty.error(GameCenterActivity.this, "不能存在相同的号码", 2000).show();
-                                        return;
-                                    }
-                                }
-                                if (
-                                        "sequence_star_3_group_diverse".equals(code)
-                                                || "3D_star_3_group_diverse".equals(code)
-                                        ) {
-                                    String s1 = sp[i].substring(0, 1);
-                                    String s2 = sp[i].substring(1, 2);
-                                    String s3 = sp[i].substring(2, 3);
-                                    if (s1.equals(s2) && s1.equals(s3)) {
-                                        Toasty.error(GameCenterActivity.this, "三个号码不能完全相同", 2000).show();
-                                        return;
-                                    }
-
-                                }
-
-                            }
-                        }
-                    } else {
-                        nums = 1;
-                        if (s.length() != 3) {
-                            Toasty.error(GameCenterActivity.this, "投注内容位数不正确", 2000).show();
-                            return;
-                        } else {
-                            if (
-                                    "sequence_star_3_group_3_single".equals(code) ||
-                                            "3D_star_3_group_3_single".equals(code)) {
-                                String s1 = s.substring(0, 1);
-                                String s2 = s.substring(1, 2);
-                                String s3 = s.substring(2, 3);
-                                if (s1.equals(s2) && s1.equals(s3)) {
-                                    Toasty.error(GameCenterActivity.this, "三个号码不能完全相同", 2000).show();
-                                    return;
-                                }
-                                if (!s1.equals(s2) && !s1.equals(s3) && !s2.equals(s3)) {
-                                    Toasty.error(GameCenterActivity.this, "需要两个相同的号码", 2000).show();
-                                    return;
-                                }
-                            }
-                            if (
-                                    "sequence_star_3_group_6_single".equals(code)
-                                            || "3D_star_3_group_6_single".equals(code)
-                                    ) {
-                                String s1 = s.substring(0, 1);
-                                String s2 = s.substring(1, 2);
-                                String s3 = s.substring(2, 3);
-                                if (s1.equals(s2) && s1.equals(s3)) {
-                                    Toasty.error(GameCenterActivity.this, "不能存在相同的号码", 2000).show();
-                                    return;
-                                }
-                                if (s1.equals(s2) || s1.equals(s3) || s2.equals(s3)) {
-                                    Toasty.error(GameCenterActivity.this, "不能存在相同的号码", 2000).show();
-                                    return;
-                                }
-                            }
-                            if (
-                                    "sequence_star_3_group_diverse".equals(code)
-                                            || "3D_star_3_group_diverse".equals(code)
-                                    ) {
-                                String s1 = s.substring(0, 1);
-                                String s2 = s.substring(1, 2);
-                                String s3 = s.substring(2, 3);
-                                if (s1.equals(s2) && s1.equals(s3)) {
-                                    Toasty.error(GameCenterActivity.this, "三个号码不能完全相同", 2000).show();
-                                    return;
-                                }
-
-                            }
-                        }
-                    }
-                    pickedNumber = s;
-                }
-                if (
-                        "sequence_star_2_prev_single".equals(code)
-                                || "sequence_star_2_next_single".equals(code)
-                                || "sequence_star_2_prev_group_single".equals(code)
-                                || "sequence_star_2_next_group_single".equals(code)
-
-                                || "3D_star_2_prev_single".equals(code)
-                                || "3D_star_2_next_single".equals(code)
-                                || "3D_star_2_prev_group_single".equals(code)
-                                || "3D_star_2_next_group_single".equals(code)
-
-                        ) {
-                    final EditText g2_editText = (EditText) inte.findViewById(R.id.g2_EditText);
-                    String s = g2_editText.getText().toString().trim();
-                    if ("".equals(s) || " ".equals(s)) {
-                        Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
-                        return;
-                    }
-                    if (",".equals(s.substring(s.length() - 1, s.length()))) {
-                        s = s.substring(0, s.length() - 1);
-                    }
-                    if (s.contains(",")) {
-
-                        String[] sp = s.split(",");
-                        nums = sp.length;
-                        for (int i = 0; i < sp.length; i++) {
-                            if (sp[i].length() != 2) {
-                                Toasty.error(GameCenterActivity.this, "投注内容位数不正确", 2000).show();
-                                return;
-                            } else {
-                                if (
-                                        "sequence_star_2_prev_group_single".equals(code)
-                                                || "sequence_star_2_next_group_single".equals(code)
-                                                || "3D_star_2_prev_group_single".equals(code)
-                                                || "3D_star_2_next_group_single".equals(code)
-                                        ) {
-                                    String s1 = sp[i].substring(0, 1);
-                                    String s2 = sp[i].substring(1, 2);
-
-                                    if (s1.equals(s2)) {
-                                        Toasty.error(GameCenterActivity.this, "两个号码不能完全相同", 2000).show();
-                                        return;
-                                    }
-                                }
-
-                            }
-                        }
-                    } else {
-                        nums = 1;
-                        if (s.length() != 2) {
-                            Toasty.error(GameCenterActivity.this, "投注内容位数不正确", 2000).show();
-                            return;
-                        } else {
-                            if (
-                                    "sequence_star_2_prev_group_single".equals(code)
-                                            || "sequence_star_2_next_group_single".equals(code)
-                                            || "3D_star_2_prev_group_single".equals(code)
-                                            || "3D_star_2_next_group_single".equals(code)
-                                    ) {
-                                String s1 = s.substring(0, 1);
-                                String s2 = s.substring(1, 2);
-
-                                if (s1.equals(s2)) {
-                                    Toasty.error(GameCenterActivity.this, "两个号码不能完全相同", 2000).show();
-                                    return;
-                                }
-                            }
-                        }
-                    }
-                    pickedNumber = s;
-
-
-                }
-                if (
-                        "star_3_any_sum".equals(code)
-                                || "2min_star_3_any_sum".equals(code)
-                                || "star_3_any_group_sum".equals(code)
-                                || "2min_star_3_any_group_sum".equals(code)
-                        ) {
-                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearCheck);
-                    LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    LinearLayout LinearThree = (LinearLayout) inte.findViewById(R.id.LinearThree);
-
-                    String str = "";
-                    String strc = "";
-                    int n = 0;
-
-
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            n++;
-                            if (strc == "") {
-                                strc = at.getText().toString().substring(0, 1);
-                            } else {
-                                strc = strc + at.getText().toString().substring(0, 1);
-                            }
-                        }
-                    }
-                    if (n < 3) {
-                        Toasty.error(GameCenterActivity.this, "至少选择三个", 2000).show();
-                        return;
-
-                    }
-                    List<List<String>> check3 = getCheck3(strc);
-                    List<Integer> ns = new ArrayList<>();
-                    for (int i = 0; i < LinearOne.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
-                        if (at.isChecked()) {
-                            ns.add(Integer.parseInt(at.getText().toString()));
-                            if (str == "") {
-                                str = at.getText().toString();
-                            } else {
-                                str = str + "," + at.getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 0; i < LinearTwo.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
-                        if (at.isChecked()) {
-                            ns.add(Integer.parseInt(at.getText().toString()));
-                            if (str == "") {
-                                str = at.getText().toString();
-                            } else {
-                                str = str + "," + at.getText().toString();
-                            }
-                        }
-                    }
-                    for (int i = 0; i < LinearThree.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) LinearThree.getChildAt(i);
-                        if (at.isChecked()) {
-                            ns.add(Integer.parseInt(at.getText().toString()));
-                            if (str == "") {
-                                str = at.getText().toString();
-                            } else {
-                                str = str + "," + at.getText().toString();
-                            }
-                        }
-                    }
-
-                    for (int i = 0; i < check3.size(); i++) {
-                        List<String> list = check3.get(i);
-                        locationText = list.get(0);
-                        location = list.get(1);
-                        if ("star_3_any_sum".equals(code)
-                                || "2min_star_3_any_sum".equals(code)) {
-                            nums = getNum(ns) * check3.size();
-                        }
-                        if ("star_3_any_group_sum".equals(code)
-                                || "2min_star_3_any_group_sum".equals(code)) {
-                            nums = getNumZuHe(ns) * check3.size();
-                        }
-
-
-                        pickedNumber = str;
-                        Log.d("个十百千万选择", list.get(0));
-                        GameTypeName = GameTypeName + "-" + list.get(0);
-                        Nums = Integer.parseInt(edit1.getText().toString().trim());
-                        amount = nums * 2;
-                        if (PriceUnit == 2) {
-                            amount = amount / 10;
-                        }
-                        if (PriceUnit == 3) {
-                            amount = amount / 100;
-                        }
-                        if (PriceUnit == 4) {
-                            amount = amount / 1000;
-                        }
-                        amount = amount * Nums;
-                        classCode = code;
-                        multiple = Nums;
-                        if (nums == 0) {
-                            return;
-                        }
-                        AddLottery();
-                        GameTypeName = GameTypeName.substring(0, GameTypeName.length() - 6);
-                    }
-                    return;
-                }
-                if (
-                        "star_4_any_single".equals(code)
-                                || "2min_star_4_any_single".equals(code)
-                        ) {
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearCheck);
-                    EditText editT = (EditText) inte.findViewById(R.id.optional2_editText);
-                    String s = editT.getText().toString().trim();
-                    if ("".equals(s) || " ".equals(s)) {
-                        Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
-                        return;
-                    }
-                    String str = "";
-                    int n = 0;
-                    int ns = 0;
-
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            n++;
-                            if (str == "") {
-                                str = at.getText().toString().substring(0, 1);
-                            } else {
-                                str = str + at.getText().toString().substring(0, 1);
-                            }
-                        }
-                    }
-                    if (n < 4) {
-                        Toasty.error(GameCenterActivity.this, "至少选择四个", 2000).show();
-                        return;
-
-                    }
-                    List<List<String>> check4 = getCheck4(str);
-                    if ("".equals(s) || " ".equals(s)) {
-                        Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
-                        return;
-                    } else {
-                        if (s.substring(s.length() - 1, s.length()).equals(",")) {
-                            s = s.substring(0, s.length() - 1);
-                        }
-                    }
-
-                    if (s.contains(",")) {
-                        String[] sp = s.split(",");
-                        ns = sp.length;
-                        for (int i = 0; i < sp.length; i++) {
-                            if (sp[i].contains(" ")) {
-                                Toasty.error(GameCenterActivity.this, "不能存在空格", 2000).show();
-                                return;
-                            }
-                            if (sp[i].length() != 4) {
-                                Toasty.error(GameCenterActivity.this, "四个号码位一注", 2000).show();
-                                return;
-                            } else {
-
-                            }
-                        }
-                    } else {
-                        ns = 1;
-                        if (s.contains(" ")) {
-                            Toasty.error(GameCenterActivity.this, "不能存在空格", 2000).show();
-                            return;
-                        }
-                        if (s.length() != 4) {
-                            Toasty.error(GameCenterActivity.this, "四个号码位一注", 2000).show();
-                            return;
-                        } else {
-
-                        }
-                    }
-                    pickedNumber = s;
-                    for (int i = 0; i < check4.size(); i++) {
-                        List<String> list = check4.get(i);
-                        locationText = list.get(0);
-                        location = list.get(1);
-                        nums = check4.size() * ns;
-
-                        pickedNumber = s;
-                        Log.d("个十百千万选择", list.get(0));
-                        GameTypeName = GameTypeName + "-" + list.get(0);
-                        Nums = Integer.parseInt(edit1.getText().toString().trim());
-                        amount = nums * 2;
-                        if (PriceUnit == 2) {
-                            amount = amount / 10;
-                        }
-                        if (PriceUnit == 3) {
-                            amount = amount / 100;
-                        }
-                        if (PriceUnit == 4) {
-                            amount = amount / 1000;
-                        }
-                        amount = amount * Nums / check4.size();
-                        classCode = code;
-                        multiple = Nums;
-                        if (nums == 0) {
-                            return;
-                        }
-                        AddLottery();
-                        GameTypeName = GameTypeName.substring(0, 4);
-                    }
-                    return;
-                }
-                if (
-                        "star_4_any_group_24".equals(code)
-                                || "2min_star_4_any_group_24".equals(code)
-                                || "star_4_any_group_6".equals(code)
-                                || "2min_star_4_any_group_6".equals(code)
-                        ) {
-                    String str = "";
-                    String strNum = "";
-                    int n = 0;
-                    int ns = 0;
-                    int num_count = 0;
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearCheck);
-                    LinearLayout linearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            n++;
-                            if (str == "") {
-                                str = at.getText().toString().substring(0, 1);
-                            } else {
-                                str = str + at.getText().toString().substring(0, 1);
-                            }
-                        }
-                    }
-                    if (n < 4) {
-                        Toasty.error(GameCenterActivity.this, "至少选择四个", 2000).show();
-                        return;
-
-                    }
-                    for (int i = 1; i < linearOne.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linearOne.getChildAt(i);
-                        if (at.isChecked()) {
-                            num_count++;
-                            if (strNum == "") {
-                                strNum = at.getText().toString();
-                            } else {
-                                strNum = strNum + "," + at.getText().toString();
-                            }
-                        }
-                    }
-                    if (num_count < 4) {
-                        Toasty.error(GameCenterActivity.this, "至少选择四个号码", 2000).show();
-                        return;
-                    }
-                    List<List<String>> check4 = getCheck4(str);
-                    for (int i = 0; i < check4.size(); i++) {
-                        List<String> list = check4.get(i);
-                        locationText = list.get(0);
-                        location = list.get(1);
-                        if ("star_4_any_group_24".equals(code)
-                                || "2min_star_4_any_group_24".equals(code)) {
-                            int jn = RxUtils.getInstance().JieCheng(num_count);
-                            int j4 = RxUtils.getInstance().JieCheng(4);
-                            int jn4 = RxUtils.getInstance().JieCheng(num_count - 4);
-                            nums = jn / (j4 * jn4);
-                        } else if ("star_4_any_group_6".equals(code)
-                                || "2min_star_4_any_group_6".equals(code)) {
-                            nums = num_count * (num_count - 1) / 2;
-                        }
-
-                        Log.d("个十百千万Nums", nums + "");
-                        pickedNumber = strNum;
-                        Log.d("个十百千万选择", list.get(0));
-                        GameTypeName = GameTypeName + "-" + list.get(0);
-                        Nums = Integer.parseInt(edit1.getText().toString().trim());
-                        amount = nums * 2;
-                        if (PriceUnit == 2) {
-                            amount = amount / 10;
-                        }
-                        if (PriceUnit == 3) {
-                            amount = amount / 100;
-                        }
-                        if (PriceUnit == 4) {
-                            amount = amount / 1000;
-                        }
-                        amount = amount * Nums;
-                        classCode = code;
-                        multiple = Nums;
-                        if (nums == 0) {
-                            return;
-                        }
-                        AddLottery();
-                        GameTypeName = GameTypeName.substring(0, 4);
-                    }
-                    return;
-                }
-                if (
-                        "star_4_any_group_12".equals(code)
-                                || "2min_star_4_any_group_12".equals(code)
-                                || "star_4_any_group_4".equals(code)
-                                || "2min_star_4_any_group_4".equals(code)
-                        ) {
-                    String str = "";
-                    String strNum1 = "";
-                    String strNum2 = "";
-                    int n = 0;
-                    int ns = 0;
-                    int c1 = 0;
-                    int c2 = 0;
-                    List<String> nns = new ArrayList<>();
-                    List<String> mms = new ArrayList<>();
-                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearCheck);
-                    LinearLayout linearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
-                    LinearLayout linearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
-                    for (int i = 0; i < linear1.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linear1.getChildAt(i);
-                        if (at.isChecked()) {
-                            n++;
-
-                            if (str == "") {
-                                str = at.getText().toString().substring(0, 1);
-                            } else {
-                                str = str + at.getText().toString().substring(0, 1);
-                            }
-                        }
-                    }
-                    if (n < 4) {
-                        Toasty.error(GameCenterActivity.this, "至少选择四个", 2000).show();
-                        return;
-
-                    }
-                    for (int i = 1; i < linearOne.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linearOne.getChildAt(i);
-                        if (at.isChecked()) {
-                            c1++;
-                            nns.add(at.getText().toString());
-                            strNum1 = strNum1 + at.getText().toString();
-
-                        }
-                    }
-                    for (int i = 1; i < linearTwo.getChildCount(); i++) {
-                        CheckBox at = (CheckBox) linearTwo.getChildAt(i);
-                        if (at.isChecked()) {
-                            c2++;
-                            strNum2 = strNum2 + at.getText().toString();
-                            mms.add(at.getText().toString());
-                        }
-                    }
-                    if (c1 > 0 && c2 > 2) {
-                        int d = 0;
-                        for (int i = 0; i < nns.size(); i++) {
-                            Log.d("重号", nns.get(i) + "");
-                            for (int i1 = 0; i1 < mms.size(); i1++) {
-                                Log.d("单号", mms.get(i) + "");
-                                if (nns.get(i) == mms.get(i1)) {
-                                    d++;
-                                }
-                            }
-                        }
-                        if ("star_4_any_group_12".equals(code)
-                                || "2min_star_4_any_group_12".equals(code)) {
-                            nums = c1 * c2 * (c2 - 1) / 2 - d * (c2 - 1);
-                            Log.d("组选注数", nums + "");
-                        }
-                        if ("star_4_any_group_4".equals(code)
-                                || "2min_star_4_any_group_4".equals(code)) {
-                            nums = c1 * c2 - d;
-                            Log.d("组选注数", nums + "");
-                        }
-
-                    } else {
-                        if ("star_4_any_group_12".equals(code)
-                                || "2min_star_4_any_group_12".equals(code)) {
-                            if (c1 < 0 || c1 == 0) {
-                                Toasty.error(GameCenterActivity.this, "重号个数不够", 2000).show();
-                                return;
-                            }
-                            if (c2 < 2 || c2 == 2) {
-                                Toasty.error(GameCenterActivity.this, "单号个数不够", 2000).show();
-                                return;
-                            }
-                        }
-
-                    }
-                    List<List<String>> check4 = getCheck4(str);
-                    for (int i = 0; i < check4.size(); i++) {
-                        List<String> list = check4.get(i);
-                        locationText = list.get(0);
-                        location = list.get(1);
-
-
-                        Log.d("个十百千万Nums", nums + "");
-                        pickedNumber = strNum1 + "," + strNum2;
-                        Log.d("个十百千万选择", list.get(0));
-                        GameTypeName = GameTypeName + "-" + list.get(0);
-                        Nums = Integer.parseInt(edit1.getText().toString().trim());
-                        amount = nums * 2;
-                        if (PriceUnit == 2) {
-                            amount = amount / 10;
-                        }
-                        if (PriceUnit == 3) {
-                            amount = amount / 100;
-                        }
-                        if (PriceUnit == 4) {
-                            amount = amount / 1000;
-                        }
-                        amount = amount * Nums;
-                        classCode = code;
-                        multiple = Nums;
-                        if (nums == 0) {
-                            return;
-                        }
-                        AddLottery();
-                        GameTypeName = GameTypeName.substring(0, 4);
-                    }
-                    return;
-                }
-                if (nums == 0)
-
-                {
-                    Toasty.error(GameCenterActivity.this, "投注注数为0,请重新投注", 2000).show();
-                    return;
                 }
 
-                Nums = Integer.parseInt(edit1.getText().
 
-                        toString().
+            }
+            List<List<String>> check = getCheck(ns);
+            for (int i = 0; i < check.size(); i++) {
+                List<String> list = check.get(i);
+                locationText = list.get(0);
+                location = list.get(1);
+                nums = 1;
 
-                        trim());
+                pickedNumber = s;
+                GameTypeName = GameTypeName + "-" + list.get(0);
+                Nums = Integer.parseInt(edit1.getText().toString().trim());
                 amount = nums * 2;
-                if (PriceUnit == 2)
-
-                {
+                if (PriceUnit == 2) {
                     amount = amount / 10;
                 }
-                if (PriceUnit == 3)
-
-                {
+                if (PriceUnit == 3) {
                     amount = amount / 100;
                 }
-                if (PriceUnit == 4)
-
-                {
+                if (PriceUnit == 4) {
                     amount = amount / 1000;
                 }
-
                 amount = amount * Nums;
                 classCode = code;
                 multiple = Nums;
-                priceType = SpinnerMoney.getSelectedItemPosition();
-                TextView Zhu = (TextView) contentView.findViewById(R.id.Zhu);
-                TextView Amounts = (TextView) contentView.findViewById(R.id.GameAmounts);
-                TextView TouZhuContent = (TextView) contentView.findViewById(R.id.TouZhuContent);
-                TextView GameType = (TextView) contentView.findViewById(R.id.GameType);
-                GameType.setText(GameTypeName);
-                if (pickedText != "") {
-                    TouZhuContent.setText(pickedText);
+                if (nums == 0) {
+                    return;
+                }
+                AddLottery();
+                GameTypeName = name.get(position);
+            }
+
+
+            return;
+        }
+        if (
+                "star_3_any_single".equals(code)
+                        || "2min_star_3_any_single".equals(code)
+                        || "star_3_any_group_single".equals(code)
+                        || "2min_star_3_any_group_single".equals(code)
+                        || "star_3_any_group_single_6".equals(code)
+                        || "2min_star_3_any_group_single_6".equals(code)
+                        || "star_3_any_group_diverse".equals(code)
+                        || "2min_star_3_any_group_diverse".equals(code)
+
+                ) {
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearCheck);
+            EditText editT = (EditText) inte.findViewById(R.id.optional2_editText);
+            String s = editT.getText().toString().trim();
+            if ("".equals(s) || " ".equals(s)) {
+                //Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
+                return;
+            }
+            String str = "";
+            int n = 0;
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    n++;
+                }
+            }
+            if (n < 3) {
+                //Toasty.error(GameCenterActivity.this, "至少选择三个", 2000).show();
+                return;
+
+            }
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    if (str == "") {
+                        str = at.getText().toString().substring(0, 1);
+                    } else {
+                        str = str + at.getText().toString().substring(0, 1);
+                    }
+                }
+            }
+            List<List<String>> check3 = getCheck3(str);
+            if ("".equals(s) || " ".equals(s)) {
+                //Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
+                return;
+            } else {
+                if (s.substring(s.length() - 1, s.length()).equals(",")) {
+                    s = s.substring(0, s.length() - 1);
+                }
+            }
+
+            if (s.contains(",")) {
+                String[] sp = s.split(",");
+                nums = sp.length;
+                for (int i = 0; i < sp.length; i++) {
+                    if (sp[i].contains(" ")) {
+                        //Toasty.error(GameCenterActivity.this, "不能存在空格", 2000).show();
+                        return;
+                    }
+                    if (sp[i].length() != 3) {
+                        //Toasty.error(GameCenterActivity.this, "三个号码位一注", 2000).show();
+                        return;
+                    } else {
+                        if ("star_3_any_group_single".equals(code)
+                                || "2min_star_3_any_group_single".equals(code)) {
+                            String s1 = sp[i].substring(0, 1);
+                            String s2 = sp[i].substring(1, 2);
+                            String s3 = sp[i].substring(2, 3);
+                            if (!s1.equals(s2) && !s1.equals(s3) && !s2.equals(s3)) {
+                                //Toasty.error(GameCenterActivity.this, "必须有两个号码相同", 2000).show();
+                                return;
+                            }
+                            if (s1.equals(s2) && s1.equals(s3)) {
+                                //Toasty.error(GameCenterActivity.this, "三个号码不能同时相同", 2000).show();
+                                return;
+                            }
+                        }
+                        if ("star_3_any_group_single_6".equals(code)
+                                || "2min_star_3_any_group_single_6".equals(code)) {
+                            String s1 = sp[i].substring(0, 1);
+                            String s2 = sp[i].substring(1, 2);
+                            String s3 = sp[i].substring(2, 3);
+                            if (s1.equals(s2) || s1.equals(s3) || s2.equals(s3)) {
+                                //Toasty.error(GameCenterActivity.this, "不能有相同的号码", 2000).show();
+                                return;
+                            }
+                        }
+                        if ("star_3_any_group_diverse".equals(code)
+                                || "2min_star_3_any_group_diverse".equals(code)) {
+                            String s1 = sp[i].substring(0, 1);
+                            String s2 = sp[i].substring(1, 2);
+                            String s3 = sp[i].substring(2, 3);
+                            if (!s1.equals(s2) && !s1.equals(s3) && !s2.equals(s3)) {
+                                //Toasty.error(GameCenterActivity.this, "至少需要两个相同的号码", 2000).show();
+                                return;
+                            }
+                        }
+
+
+                    }
+                }
+            } else {
+                if (s.contains(" ")) {
+                    //Toasty.error(GameCenterActivity.this, "不能存在空格", 2000).show();
+                    return;
+                }
+                if (s.length() != 3) {
+                    //Toasty.error(GameCenterActivity.this, "三个号码位一注", 2000).show();
+                    return;
+                } else {
+                    if ("star_3_any_group_single".equals(code)
+                            || "2min_star_3_any_group_single".equals(code)) {
+                        String s1 = s.substring(0, 1);
+                        String s2 = s.substring(1, 2);
+                        String s3 = s.substring(2, 3);
+                        if (!s1.equals(s2) && !s1.equals(s3) && !s2.equals(s3)) {
+                            //Toasty.error(GameCenterActivity.this, "必须有两个号码相同", 2000).show();
+                            return;
+                        }
+                        if (s1.equals(s2) && s1.equals(s3)) {
+                            //Toasty.error(GameCenterActivity.this, "三个号码不能同时相同", 2000).show();
+                            return;
+                        }
+                    }
+                    if ("star_3_any_group_single_6".equals(code)
+                            || "2min_star_3_any_group_single_6".equals(code)) {
+                        String s1 = s.substring(0, 1);
+                        String s2 = s.substring(1, 2);
+                        String s3 = s.substring(2, 3);
+                        if (s1.equals(s2) || s1.equals(s3) || s2.equals(s3)) {
+                            //Toasty.error(GameCenterActivity.this, "不能有相同的号码", 2000).show();
+                            return;
+                        }
+                    }
+                    if ("star_3_any_group_diverse".equals(code)
+                            || "2min_star_3_any_group_diverse".equals(code)) {
+                        String s1 = s.substring(0, 1);
+                        String s2 = s.substring(1, 2);
+                        String s3 = s.substring(2, 3);
+                        if (!s1.equals(s2) && !s1.equals(s3) && !s2.equals(s3)) {
+                            //Toasty.error(GameCenterActivity.this, "至少需要两个相同的号码", 2000).show();
+                            return;
+                        }
+                    }
+
+                }
+            }
+            pickedNumber = s;
+            for (int i = 0; i < check3.size(); i++) {
+                List<String> list = check3.get(i);
+                locationText = list.get(0);
+                location = list.get(1);
+                nums = 1;
+
+                pickedNumber = s;
+                Log.d("个十百千万选择", list.get(0));
+                GameTypeName = GameTypeName + "-" + list.get(0);
+                Nums = Integer.parseInt(edit1.getText().toString().trim());
+                amount = nums * 2;
+                if (PriceUnit == 2) {
+                    amount = amount / 10;
+                }
+                if (PriceUnit == 3) {
+                    amount = amount / 100;
+                }
+                if (PriceUnit == 4) {
+                    amount = amount / 1000;
+                }
+                amount = amount * Nums;
+                classCode = code;
+                multiple = Nums;
+                if (nums == 0) {
+                    return;
+                }
+                AddLottery();
+                GameTypeName = GameTypeName.substring(0, GameTypeName.length() - 6);
+            }
+            return;
+        }
+        if (
+                "eleven_star_3_prev_single".equals(code)
+                        || "eleven_star_3_prev_group_single".equals(code)
+                        || "eleven_star_2_prev_single".equals(code)
+                        || "eleven_star_2_prev_group_single".equals(code)
+
+
+                        || "eleven_any_one_single".equals(code)
+                        || "eleven_any_two_single".equals(code)
+                        || "eleven_any_three_single".equals(code)
+                        || "eleven_any_four_single".equals(code)
+                        || "eleven_any_five_single".equals(code)
+                        || "eleven_any_six_single".equals(code)
+                        || "eleven_any_seven_single".equals(code)
+                        || "eleven_any_eight_single".equals(code)
+
+                        || "PK10_1st_2nd_single".equals(code)
+                        || "PK10_1st_2nd_3th_single".equals(code)
+
+                ) {
+            final EditText g2_editText = (EditText) inte.findViewById(R.id.g2_EditText);
+            String s = g2_editText.getText().toString().trim();
+            if ("".equals(s) || " ".equals(s)) {
+                //Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
+                return;
+            }
+            int co = 0;
+            int ns = 11;
+
+            if (
+                    "PK10_1st_2nd_single".equals(code)
+                            || "PK10_1st_2nd_3th_single".equals(code)
+                    ) {
+                ns = 10;
+            }
+            if ("eleven_any_one_single".equals(code)) {
+                co = 1;
+            }
+            if (
+                    "eleven_star_3_prev_single".equals(code)
+                            || "eleven_star_3_prev_group_single".equals(code)
+                            || "eleven_any_three_single".equals(code)
+                            || "PK10_1st_2nd_3th_single".equals(code)
+
+                    ) {
+                co = 3;
+            }
+            if (
+                    "eleven_star_2_prev_single".equals(code)
+                            || "eleven_star_2_prev_group_single".equals(code)
+                            || "eleven_any_two_single".equals(code)
+                            || "PK10_1st_2nd_single".equals(code)
+
+                    ) {
+                co = 2;
+            }
+            if ("eleven_any_four_single".equals(code)) {
+                co = 4;
+            }
+            if ("eleven_any_five_single".equals(code)) {
+                co = 5;
+            }
+            if ("eleven_any_six_single".equals(code)) {
+                co = 6;
+            }
+            if ("eleven_any_seven_single".equals(code)) {
+                co = 7;
+            }
+            if ("eleven_any_eight_single".equals(code)) {
+                co = 8;
+            }
+            if (s.contains(",")) {
+                String[] split = s.split(",");
+                nums = split.length;
+                for (int i = 0; i < split.length; i++) {
+                    String s1 = split[i];
+                    if (!"eleven_any_one_single".equals(code)) {
+                        if (s1.contains(" ")) {
+                            String[] sp1 = s1.split(" ");
+                            if (sp1.length != co) {
+                                //Toasty.error(GameCenterActivity.this, "投注内容不正确", 2000).show();
+                                return;
+                            } else {
+                                for (int i1 = 0; i1 < sp1.length; i1++) {
+                                    if (sp1[i1].length() != 2) {
+                                        //Toasty.error(GameCenterActivity.this, "投注内容位数不正确", 2000).show();
+                                        return;
+                                    }
+                                    int i2 = Integer.parseInt(sp1[i1]);
+                                    if (i2 < 1 || i2 > ns) {
+                                        //Toasty.error(GameCenterActivity.this, "有投注内容不在范围内", 2000).show();
+                                        return;
+                                    }
+                                }
+                            }
+                        } else {
+                            //Toasty.error(GameCenterActivity.this, "投注内容不足", 2000).show();
+                            return;
+                        }
+                    }
+
+                }
+            } else {
+                nums = 1;
+                if (!"eleven_any_one_single".equals(code)) {
+                    if (s.contains(" ")) {
+                        String[] sp1 = s.split(" ");
+                        if (sp1.length != co) {
+                            //Toasty.error(GameCenterActivity.this, "投注内容不正确", 2000).show();
+                            return;
+                        } else {
+                            for (int i1 = 0; i1 < sp1.length; i1++) {
+                                if (sp1[i1].length() != 2) {
+                                    //Toasty.error(GameCenterActivity.this, "投注内容位数不正确", 2000).show();
+                                    return;
+                                }
+                                int i2 = Integer.parseInt(sp1[i1]);
+                                if (i2 < 1 || i2 > ns) {
+                                    //Toasty.error(GameCenterActivity.this, "有投注内容不在范围内", 2000).show();
+                                    return;
+                                }
+                            }
+                        }
+                    }/* else {
+                                //Toasty.error(GameCenterActivity.this, "投注内容不足", 2000).show();
+                                return;
+                            }*/
+                }
+
+            }
+            pickedNumber = s;
+
+            int i = Integer.parseInt("05");
+
+        }
+        if (
+                "k3_double_single".equals(code)
+                        || "k3_different_3_single".equals(code)
+                ) {
+            final EditText g2_editText = (EditText) inte.findViewById(R.id.g2_EditText);
+            String s = g2_editText.getText().toString().trim();
+
+            if (",".equals(s.substring(s.length() - 1, s.length()))) {
+                s = s.substring(0, s.length() - 1);
+            }
+            Log.d("江苏快三单", s + "");
+            String s1 = "";
+            String s2 = "";
+            String s3 = "";
+            if (s.contains(",")) {
+                String[] sp1 = s.split(",");
+                nums = sp1.length;
+
+                for (int i = 0; i < sp1.length; i++) {
+                    String ss = sp1[i];
+                    if (ss.length() != 3) {
+                        //Toasty.error(GameCenterActivity.this, "投注内容位数不正确", 2000).show();
+                        return;
+                    } else {
+                        s1 = ss.substring(0, 1);
+                        s2 = ss.substring(1, 2);
+                        s3 = ss.substring(2, 3);
+                        if (s1.equals(s2)) {
+                            if (s1.equals(s3)) {
+                                //Toasty.error(GameCenterActivity.this, "三个号码不能完全相同", 2000).show();
+                                return;
+                            }
+                        }
+                        if ("k3_double_single".equals(code)) {
+                            if (!s3.equals(s2) && !s3.equals(s1) && !s2.equals(s1)) {
+                                //Toasty.error(GameCenterActivity.this, "必须有两个同号", 2000).show();
+                                return;
+
+                            }
+                        }
+                        if ("k3_different_3_single".equals(code)) {
+                            if (s3.equals(s2) || s3.equals(s1) || s2.equals(s1)) {
+                                //Toasty.error(GameCenterActivity.this, "不能存在相同的号码", 2000).show();
+                                return;
+
+                            }
+                        }
+
+
+                    }
+                    int i1 = Integer.parseInt(s1);
+                    int i2 = Integer.parseInt(s2);
+                    int i3 = Integer.parseInt(s3);
+                    if (i1 < 1 || i1 > 6 || i2 < 1 || i2 > 6 || i3 < 1 || i3 > 6) {
+                        //Toasty.error(GameCenterActivity.this, "选取号码在1-6之间", 2000).show();
+                        return;
+                    }
+                }
+            } else {
+
+
+                nums = 1;
+                if (s.length() != 3) {
+                    //Toasty.error(GameCenterActivity.this, "投注内容位数不正确", 2000).show();
+                    return;
+                } else {
+                    s1 = s.substring(0, 1);
+                    s2 = s.substring(1, 2);
+                    s3 = s.substring(2, 3);
+                    if (s1.equals(s2) && s1.equals(s3)) {
+
+                        //Toasty.error(GameCenterActivity.this, "三个号码不能完全相同", 2000).show();
+                        return;
+
+                    }
+
+                    if ("k3_double_single".equals(code)) {
+                        if (!s3.equals(s2) && !s3.equals(s1) && !s2.equals(s1)) {
+                            //Toasty.error(GameCenterActivity.this, "必须有两个同号", 2000).show();
+                            return;
+
+                        }
+                    }
+                    if ("k3_different_3_single".equals(code)) {
+                        if (s3.equals(s2) || s3.equals(s1) || s2.equals(s1)) {
+                            //Toasty.error(GameCenterActivity.this, "不能存在相同的号码", 2000).show();
+                            return;
+
+                        }
+                    }
+
+                }
+                int i1 = Integer.parseInt(s1);
+                int i2 = Integer.parseInt(s2);
+                int i3 = Integer.parseInt(s3);
+                if (i1 < 1 || i1 > 6 || i2 < 1 || i2 > 6 || i3 < 1 || i3 > 6) {
+                    //Toasty.error(GameCenterActivity.this, "选取号码在1-6之间", 2000).show();
+                    return;
+                }
+            }
+            pickedNumber = s;
+
+        }
+        if ("k3_different_2_single".equals(code)) {
+            final EditText g2_editText = (EditText) inte.findViewById(R.id.g2_EditText);
+            String s = g2_editText.getText().toString().trim();
+
+            if (",".equals(s.substring(s.length() - 1, s.length()))) {
+                s = s.substring(0, s.length() - 1);
+            }
+            Log.d("江苏快三二不同号单", s + "");
+            String s1 = "";
+            String s2 = "";
+            if (s.contains(",")) {
+                String[] sp1 = s.split(",");
+                nums = sp1.length;
+
+                for (int i = 0; i < sp1.length; i++) {
+                    String ss = sp1[i];
+                    if (ss.length() != 2) {
+                        //Toasty.error(GameCenterActivity.this, "投注内容位数不正确", 2000).show();
+                        return;
+                    } else {
+                        s1 = ss.substring(0, 1);
+                        s2 = ss.substring(1, 2);
+
+                        if (s1.equals(s2)) {
+                            //Toasty.error(GameCenterActivity.this, "两个号码不能完全相同", 2000).show();
+                            return;
+                        }
+                    }
+
+
+                    int i1 = Integer.parseInt(s1);
+                    int i2 = Integer.parseInt(s2);
+
+                    if (i1 < 1 || i1 > 6 || i2 < 1 || i2 > 6) {
+                        //Toasty.error(GameCenterActivity.this, "选取号码在1-6之间", 2000).show();
+                        return;
+                    }
+                }
+            } else {
+                nums = 1;
+                if (s.length() != 2) {
+                    //Toasty.error(GameCenterActivity.this, "投注内容位数不正确", 2000).show();
+                    return;
+                } else {
+                    s1 = s.substring(0, 1);
+                    s2 = s.substring(1, 2);
+
+                    if (s1.equals(s2)) {
+
+                        //Toasty.error(GameCenterActivity.this, "两个号码不能完全相同", 2000).show();
+                        return;
+
+                    }
+
+
+                }
+                int i1 = Integer.parseInt(s1);
+                int i2 = Integer.parseInt(s2);
+
+                if (i1 < 1 || i1 > 6 || i2 < 1 || i2 > 6) {
+                    //Toasty.error(GameCenterActivity.this, "选取号码在1-6之间", 2000).show();
+                    return;
+                }
+            }
+            pickedNumber = s;
+        }
+        if (
+                "sequence_star_3_single".equals(code)
+                        || "sequence_star_3_group_3_single".equals(code)
+                        || "sequence_star_3_group_6_single".equals(code)
+                        || "sequence_star_3_group_diverse".equals(code)
+                        || "3D_star_3_single".equals(code)
+                        || "3D_star_3_group_3_single".equals(code)
+                        || "3D_star_3_group_6_single".equals(code)
+                        || "3D_star_3_group_diverse".equals(code)
+
+                ) {
+            final EditText g2_editText = (EditText) inte.findViewById(R.id.g2_EditText);
+            String s = g2_editText.getText().toString().trim();
+            if ("".equals(s) || " ".equals(s)) {
+                //Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
+                return;
+            }
+            if (",".equals(s.substring(s.length() - 1, s.length()))) {
+                s = s.substring(0, s.length() - 1);
+            }
+            if (s.contains(",")) {
+
+                String[] sp = s.split(",");
+                nums = sp.length;
+                for (int i = 0; i < sp.length; i++) {
+                    if (sp[i].length() != 3) {
+                        //Toasty.error(GameCenterActivity.this, "投注内容位数不正确", 2000).show();
+                        return;
+                    } else {
+                        if (
+                                "sequence_star_3_group_3_single".equals(code)
+                                        || "3D_star_3_group_3_single".equals(code)
+                                ) {
+                            String s1 = sp[i].substring(0, 1);
+                            String s2 = sp[i].substring(1, 2);
+                            String s3 = sp[i].substring(2, 3);
+                            if (s1.equals(s2) && s1.equals(s3)) {
+                                //Toasty.error(GameCenterActivity.this, "三个号码不能完全相同", 2000).show();
+                                return;
+                            }
+                            if (!s1.equals(s2) && !s1.equals(s3) && !s2.equals(s3)) {
+                                //Toasty.error(GameCenterActivity.this, "需要两个相同的号码", 2000).show();
+                                return;
+                            }
+                        }
+                        if (
+                                "sequence_star_3_group_6_single".equals(code)
+                                        || "3D_star_3_group_6_single".equals(code)
+                                ) {
+                            String s1 = sp[i].substring(0, 1);
+                            String s2 = sp[i].substring(1, 2);
+                            String s3 = sp[i].substring(2, 3);
+                            if (s1.equals(s2) && s1.equals(s3)) {
+                                //Toasty.error(GameCenterActivity.this, "不能存在相同的号码", 2000).show();
+                                return;
+                            }
+                            if (s1.equals(s2) || s1.equals(s3) || s2.equals(s3)) {
+                                //Toasty.error(GameCenterActivity.this, "不能存在相同的号码", 2000).show();
+                                return;
+                            }
+                        }
+                        if (
+                                "sequence_star_3_group_diverse".equals(code)
+                                        || "3D_star_3_group_diverse".equals(code)
+                                ) {
+                            String s1 = sp[i].substring(0, 1);
+                            String s2 = sp[i].substring(1, 2);
+                            String s3 = sp[i].substring(2, 3);
+                            if (s1.equals(s2) && s1.equals(s3)) {
+                                //Toasty.error(GameCenterActivity.this, "三个号码不能完全相同", 2000).show();
+                                return;
+                            }
+
+                        }
+
+                    }
+                }
+            } else {
+                nums = 1;
+                if (s.length() != 3) {
+                    //Toasty.error(GameCenterActivity.this, "投注内容位数不正确", 2000).show();
+                    return;
+                } else {
+                    if (
+                            "sequence_star_3_group_3_single".equals(code) ||
+                                    "3D_star_3_group_3_single".equals(code)) {
+                        String s1 = s.substring(0, 1);
+                        String s2 = s.substring(1, 2);
+                        String s3 = s.substring(2, 3);
+                        if (s1.equals(s2) && s1.equals(s3)) {
+                            //Toasty.error(GameCenterActivity.this, "三个号码不能完全相同", 2000).show();
+                            return;
+                        }
+                        if (!s1.equals(s2) && !s1.equals(s3) && !s2.equals(s3)) {
+                            //Toasty.error(GameCenterActivity.this, "需要两个相同的号码", 2000).show();
+                            return;
+                        }
+                    }
+                    if (
+                            "sequence_star_3_group_6_single".equals(code)
+                                    || "3D_star_3_group_6_single".equals(code)
+                            ) {
+                        String s1 = s.substring(0, 1);
+                        String s2 = s.substring(1, 2);
+                        String s3 = s.substring(2, 3);
+                        if (s1.equals(s2) && s1.equals(s3)) {
+                            //Toasty.error(GameCenterActivity.this, "不能存在相同的号码", 2000).show();
+                            return;
+                        }
+                        if (s1.equals(s2) || s1.equals(s3) || s2.equals(s3)) {
+                            //Toasty.error(GameCenterActivity.this, "不能存在相同的号码", 2000).show();
+                            return;
+                        }
+                    }
+                    if (
+                            "sequence_star_3_group_diverse".equals(code)
+                                    || "3D_star_3_group_diverse".equals(code)
+                            ) {
+                        String s1 = s.substring(0, 1);
+                        String s2 = s.substring(1, 2);
+                        String s3 = s.substring(2, 3);
+                        if (s1.equals(s2) && s1.equals(s3)) {
+                            //Toasty.error(GameCenterActivity.this, "三个号码不能完全相同", 2000).show();
+                            return;
+                        }
+
+                    }
+                }
+            }
+            pickedNumber = s;
+        }
+        if (
+                "sequence_star_2_prev_single".equals(code)
+                        || "sequence_star_2_next_single".equals(code)
+                        || "sequence_star_2_prev_group_single".equals(code)
+                        || "sequence_star_2_next_group_single".equals(code)
+
+                        || "3D_star_2_prev_single".equals(code)
+                        || "3D_star_2_next_single".equals(code)
+                        || "3D_star_2_prev_group_single".equals(code)
+                        || "3D_star_2_next_group_single".equals(code)
+
+                ) {
+            final EditText g2_editText = (EditText) inte.findViewById(R.id.g2_EditText);
+            String s = g2_editText.getText().toString().trim();
+            if ("".equals(s) || " ".equals(s)) {
+                //Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
+                return;
+            }
+            if (",".equals(s.substring(s.length() - 1, s.length()))) {
+                s = s.substring(0, s.length() - 1);
+            }
+            if (s.contains(",")) {
+
+                String[] sp = s.split(",");
+                nums = sp.length;
+                for (int i = 0; i < sp.length; i++) {
+                    if (sp[i].length() != 2) {
+                        //Toasty.error(GameCenterActivity.this, "投注内容位数不正确", 2000).show();
+                        return;
+                    } else {
+                        if (
+                                "sequence_star_2_prev_group_single".equals(code)
+                                        || "sequence_star_2_next_group_single".equals(code)
+                                        || "3D_star_2_prev_group_single".equals(code)
+                                        || "3D_star_2_next_group_single".equals(code)
+                                ) {
+                            String s1 = sp[i].substring(0, 1);
+                            String s2 = sp[i].substring(1, 2);
+
+                            if (s1.equals(s2)) {
+                                //Toasty.error(GameCenterActivity.this, "两个号码不能完全相同", 2000).show();
+                                return;
+                            }
+                        }
+
+                    }
+                }
+            } else {
+                nums = 1;
+                if (s.length() != 2) {
+                    //Toasty.error(GameCenterActivity.this, "投注内容位数不正确", 2000).show();
+                    return;
+                } else {
+                    if (
+                            "sequence_star_2_prev_group_single".equals(code)
+                                    || "sequence_star_2_next_group_single".equals(code)
+                                    || "3D_star_2_prev_group_single".equals(code)
+                                    || "3D_star_2_next_group_single".equals(code)
+                            ) {
+                        String s1 = s.substring(0, 1);
+                        String s2 = s.substring(1, 2);
+
+                        if (s1.equals(s2)) {
+                            //Toasty.error(GameCenterActivity.this, "两个号码不能完全相同", 2000).show();
+                            return;
+                        }
+                    }
+                }
+            }
+            pickedNumber = s;
+
+
+        }
+        if (
+                "star_3_any_sum".equals(code)
+                        || "2min_star_3_any_sum".equals(code)
+                        || "star_3_any_group_sum".equals(code)
+                        || "2min_star_3_any_group_sum".equals(code)
+                ) {
+            LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearCheck);
+            LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            LinearLayout LinearThree = (LinearLayout) inte.findViewById(R.id.LinearThree);
+
+            String str = "";
+            String strc = "";
+            int n = 0;
+
+
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    n++;
+                    if (strc == "") {
+                        strc = at.getText().toString().substring(0, 1);
+                    } else {
+                        strc = strc + at.getText().toString().substring(0, 1);
+                    }
+                }
+            }
+            if (n < 3) {
+                //Toasty.error(GameCenterActivity.this, "至少选择三个", 2000).show();
+                return;
+
+            }
+            List<List<String>> check3 = getCheck3(strc);
+            List<Integer> ns = new ArrayList<>();
+            for (int i = 0; i < LinearOne.getChildCount(); i++) {
+                CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                if (at.isChecked()) {
+                    ns.add(Integer.parseInt(at.getText().toString()));
+                    if (str == "") {
+                        str = at.getText().toString();
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            for (int i = 0; i < LinearTwo.getChildCount(); i++) {
+                CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                if (at.isChecked()) {
+                    ns.add(Integer.parseInt(at.getText().toString()));
+                    if (str == "") {
+                        str = at.getText().toString();
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            for (int i = 0; i < LinearThree.getChildCount(); i++) {
+                CheckBox at = (CheckBox) LinearThree.getChildAt(i);
+                if (at.isChecked()) {
+                    ns.add(Integer.parseInt(at.getText().toString()));
+                    if (str == "") {
+                        str = at.getText().toString();
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+
+            for (int i = 0; i < check3.size(); i++) {
+                List<String> list = check3.get(i);
+                locationText = list.get(0);
+                location = list.get(1);
+                if ("star_3_any_sum".equals(code)
+                        || "2min_star_3_any_sum".equals(code)) {
+                    nums = getNum(ns) * check3.size();
+                }
+                if ("star_3_any_group_sum".equals(code)
+                        || "2min_star_3_any_group_sum".equals(code)) {
+                    nums = getNumZuHe(ns) * check3.size();
+                }
+
+
+                pickedNumber = str;
+                Log.d("个十百千万选择", list.get(0));
+                GameTypeName = GameTypeName + "-" + list.get(0);
+                Nums = Integer.parseInt(edit1.getText().toString().trim());
+                amount = nums * 2;
+                if (PriceUnit == 2) {
+                    amount = amount / 10;
+                }
+                if (PriceUnit == 3) {
+                    amount = amount / 100;
+                }
+                if (PriceUnit == 4) {
+                    amount = amount / 1000;
+                }
+                amount = amount * Nums;
+                classCode = code;
+                multiple = Nums;
+                if (nums == 0) {
+                    return;
+                }
+                AddLottery();
+                GameTypeName = GameTypeName.substring(0, GameTypeName.length() - 6);
+            }
+            return;
+        }
+        if (
+                "star_4_any_single".equals(code)
+                        || "2min_star_4_any_single".equals(code)
+                ) {
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearCheck);
+            EditText editT = (EditText) inte.findViewById(R.id.optional2_editText);
+            String s = editT.getText().toString().trim();
+            if ("".equals(s) || " ".equals(s)) {
+                //Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
+                return;
+            }
+            String str = "";
+            int n = 0;
+            int ns = 0;
+
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    n++;
+                    if (str == "") {
+                        str = at.getText().toString().substring(0, 1);
+                    } else {
+                        str = str + at.getText().toString().substring(0, 1);
+                    }
+                }
+            }
+            if (n < 4) {
+                //Toasty.error(GameCenterActivity.this, "至少选择四个", 2000).show();
+                return;
+
+            }
+            List<List<String>> check4 = getCheck4(str);
+            if ("".equals(s) || " ".equals(s)) {
+                //Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
+                return;
+            } else {
+                if (s.substring(s.length() - 1, s.length()).equals(",")) {
+                    s = s.substring(0, s.length() - 1);
+                }
+            }
+
+            if (s.contains(",")) {
+                String[] sp = s.split(",");
+                ns = sp.length;
+                for (int i = 0; i < sp.length; i++) {
+                    if (sp[i].contains(" ")) {
+                        //Toasty.error(GameCenterActivity.this, "不能存在空格", 2000).show();
+                        return;
+                    }
+                    if (sp[i].length() != 4) {
+                        //Toasty.error(GameCenterActivity.this, "四个号码位一注", 2000).show();
+                        return;
+                    } else {
+
+                    }
+                }
+            } else {
+                ns = 1;
+                if (s.contains(" ")) {
+                    //Toasty.error(GameCenterActivity.this, "不能存在空格", 2000).show();
+                    return;
+                }
+                if (s.length() != 4) {
+                    //Toasty.error(GameCenterActivity.this, "四个号码位一注", 2000).show();
+                    return;
                 } else {
 
-                    TouZhuContent.setText(pickedNumber);
                 }
-                Zhu.setText(nums + "");
-                Amounts.setText(amount + "");
-                if (nums > 0)
+            }
+            pickedNumber = s;
+            for (int i = 0; i < check4.size(); i++) {
+                List<String> list = check4.get(i);
+                locationText = list.get(0);
+                location = list.get(1);
+                nums = check4.size() * ns;
 
-                {
-                    alertView.show();
+                pickedNumber = s;
+                Log.d("个十百千万选择", list.get(0));
+                GameTypeName = GameTypeName + "-" + list.get(0);
+                Nums = Integer.parseInt(edit1.getText().toString().trim());
+                amount = nums * 2;
+                if (PriceUnit == 2) {
+                    amount = amount / 10;
                 }
-                break;
+                if (PriceUnit == 3) {
+                    amount = amount / 100;
+                }
+                if (PriceUnit == 4) {
+                    amount = amount / 1000;
+                }
+                amount = amount * Nums / check4.size();
+                classCode = code;
+                multiple = Nums;
+                if (nums == 0) {
+                    return;
+                }
+                AddLottery();
+                GameTypeName = GameTypeName.substring(0, 4);
+            }
+            return;
         }
+        if (
+                "star_4_any_group_24".equals(code)
+                        || "2min_star_4_any_group_24".equals(code)
+                        || "star_4_any_group_6".equals(code)
+                        || "2min_star_4_any_group_6".equals(code)
+                ) {
+            String str = "";
+            String strNum = "";
+            int n = 0;
+            int ns = 0;
+            int num_count = 0;
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearCheck);
+            LinearLayout linearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    n++;
+                    if (str == "") {
+                        str = at.getText().toString().substring(0, 1);
+                    } else {
+                        str = str + at.getText().toString().substring(0, 1);
+                    }
+                }
+            }
+            if (n < 4) {
+                //Toasty.error(GameCenterActivity.this, "至少选择四个", 2000).show();
+                return;
+
+            }
+            for (int i = 1; i < linearOne.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linearOne.getChildAt(i);
+                if (at.isChecked()) {
+                    num_count++;
+                    if (strNum == "") {
+                        strNum = at.getText().toString();
+                    } else {
+                        strNum = strNum + "," + at.getText().toString();
+                    }
+                }
+            }
+            if (num_count < 4) {
+                //Toasty.error(GameCenterActivity.this, "至少选择四个号码", 2000).show();
+                return;
+            }
+            List<List<String>> check4 = getCheck4(str);
+            for (int i = 0; i < check4.size(); i++) {
+                List<String> list = check4.get(i);
+                locationText = list.get(0);
+                location = list.get(1);
+                if ("star_4_any_group_24".equals(code)
+                        || "2min_star_4_any_group_24".equals(code)) {
+                    int jn = RxUtils.getInstance().JieCheng(num_count);
+                    int j4 = RxUtils.getInstance().JieCheng(4);
+                    int jn4 = RxUtils.getInstance().JieCheng(num_count - 4);
+                    nums = jn / (j4 * jn4);
+                } else if ("star_4_any_group_6".equals(code)
+                        || "2min_star_4_any_group_6".equals(code)) {
+                    nums = num_count * (num_count - 1) / 2;
+                }
+
+                Log.d("个十百千万Nums", nums + "");
+                pickedNumber = strNum;
+                Log.d("个十百千万选择", list.get(0));
+                GameTypeName = GameTypeName + "-" + list.get(0);
+                Nums = Integer.parseInt(edit1.getText().toString().trim());
+                amount = nums * 2;
+                if (PriceUnit == 2) {
+                    amount = amount / 10;
+                }
+                if (PriceUnit == 3) {
+                    amount = amount / 100;
+                }
+                if (PriceUnit == 4) {
+                    amount = amount / 1000;
+                }
+                amount = amount * Nums;
+                classCode = code;
+                multiple = Nums;
+                if (nums == 0) {
+                    return;
+                }
+                AddLottery();
+                GameTypeName = GameTypeName.substring(0, 4);
+            }
+            return;
+        }
+        if (
+                "star_4_any_group_12".equals(code)
+                        || "2min_star_4_any_group_12".equals(code)
+                        || "star_4_any_group_4".equals(code)
+                        || "2min_star_4_any_group_4".equals(code)
+                ) {
+            String str = "";
+            String strNum1 = "";
+            String strNum2 = "";
+            int n = 0;
+            int ns = 0;
+            int c1 = 0;
+            int c2 = 0;
+            List<String> nns = new ArrayList<>();
+            List<String> mms = new ArrayList<>();
+            LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearCheck);
+            LinearLayout linearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            LinearLayout linearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+            for (int i = 0; i < linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    n++;
+
+                    if (str == "") {
+                        str = at.getText().toString().substring(0, 1);
+                    } else {
+                        str = str + at.getText().toString().substring(0, 1);
+                    }
+                }
+            }
+            if (n < 4) {
+                //Toasty.error(GameCenterActivity.this, "至少选择四个", 2000).show();
+                return;
+
+            }
+            for (int i = 1; i < linearOne.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linearOne.getChildAt(i);
+                if (at.isChecked()) {
+                    c1++;
+                    nns.add(at.getText().toString());
+                    strNum1 = strNum1 + at.getText().toString();
+
+                }
+            }
+            for (int i = 1; i < linearTwo.getChildCount(); i++) {
+                CheckBox at = (CheckBox) linearTwo.getChildAt(i);
+                if (at.isChecked()) {
+                    c2++;
+                    strNum2 = strNum2 + at.getText().toString();
+                    mms.add(at.getText().toString());
+                }
+            }
+            if (c1 > 0 && c2 > 2) {
+                int d = 0;
+                for (int i = 0; i < nns.size(); i++) {
+                    Log.d("重号", nns.get(i) + "");
+                    for (int i1 = 0; i1 < mms.size(); i1++) {
+                        Log.d("单号", mms.get(i) + "");
+                        if (nns.get(i) == mms.get(i1)) {
+                            d++;
+                        }
+                    }
+                }
+                if ("star_4_any_group_12".equals(code)
+                        || "2min_star_4_any_group_12".equals(code)) {
+                    nums = c1 * c2 * (c2 - 1) / 2 - d * (c2 - 1);
+                    Log.d("组选注数", nums + "");
+                }
+                if ("star_4_any_group_4".equals(code)
+                        || "2min_star_4_any_group_4".equals(code)) {
+                    nums = c1 * c2 - d;
+                    Log.d("组选注数", nums + "");
+                }
+
+            } else {
+                if ("star_4_any_group_12".equals(code)
+                        || "2min_star_4_any_group_12".equals(code)) {
+                    if (c1 < 0 || c1 == 0) {
+                        //Toasty.error(GameCenterActivity.this, "重号个数不够", 2000).show();
+                        return;
+                    }
+                    if (c2 < 2 || c2 == 2) {
+                        //Toasty.error(GameCenterActivity.this, "单号个数不够", 2000).show();
+                        return;
+                    }
+                }
+
+            }
+            List<List<String>> check4 = getCheck4(str);
+            for (int i = 0; i < check4.size(); i++) {
+                List<String> list = check4.get(i);
+                locationText = list.get(0);
+                location = list.get(1);
+
+
+                Log.d("个十百千万Nums", nums + "");
+                pickedNumber = strNum1 + "," + strNum2;
+                Log.d("个十百千万选择", list.get(0));
+                GameTypeName = GameTypeName + "-" + list.get(0);
+                Nums = Integer.parseInt(edit1.getText().toString().trim());
+                amount = nums * 2;
+                if (PriceUnit == 2) {
+                    amount = amount / 10;
+                }
+                if (PriceUnit == 3) {
+                    amount = amount / 100;
+                }
+                if (PriceUnit == 4) {
+                    amount = amount / 1000;
+                }
+                amount = amount * Nums;
+                classCode = code;
+                multiple = Nums;
+                if (nums == 0) {
+                    return;
+                }
+                AddLottery();
+                GameTypeName = GameTypeName.substring(0, 4);
+            }
+            return;
+        }
+    /*    if (nums == 0)
+
+        {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    handler1.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            //Toasty.error(GameCenterActivity.this, "投注注数为0,请重新投注", 2000).show();
+                        }
+                    });
+
+                }
+            }).start();
+
+            return;
+        }*/
+
+        Nums = Integer.parseInt(edit1.getText().
+
+                toString().
+
+                trim());
+        amount = nums * 2;
+        if (PriceUnit == 2)
+
+        {
+            amount = amount / 10;
+        }
+        if (PriceUnit == 3)
+
+        {
+            amount = amount / 100;
+        }
+        if (PriceUnit == 4)
+
+        {
+            amount = amount / 1000;
+        }
+
+        amount = amount * Nums;
+        classCode = code;
+        multiple = Nums;
+        priceType = SpinnerMoney.getSelectedItemPosition();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                handler1.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        GameZhu.setText(nums + "");
+                        GameYuan.setText(amount + "");
+                    }
+                });
+
+            }
+        }).start();
+        
+       /* TextView Zhu = (TextView) contentView.findViewById(R.id.Zhu);
+        TextView Amounts = (TextView) contentView.findViewById(R.id.GameAmounts);
+        TextView TouZhuContent = (TextView) contentView.findViewById(R.id.TouZhuContent);
+        TextView GameType = (TextView) contentView.findViewById(R.id.GameType);
+        GameType.setText(GameTypeName);
+        if (pickedText != "") {
+            TouZhuContent.setText(pickedText);
+        } else {
+
+            TouZhuContent.setText(pickedNumber);
+        }
+        Zhu.setText(nums + "");
+        Amounts.setText(amount + "");
+        if (nums > 0)
+
+        {
+            alertView.show();
+        }*/
     }
 
     public List<List<String>> getCheck3(String string) {
@@ -8088,8 +8145,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         }
         String s = SendGameNum.getText().toString();
         int num = Integer.parseInt(s);
-        SendGameNum.setText(num + 1 + "");
-
+        // SendGameNum.setText(num + 1 + "");
 
     }
 
@@ -8430,6 +8486,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         handler.removeCallbacks(runnable);
         if (timer != null) {
             timer.cancel();
+        }
+        if (timerSelect != null) {
+            timerSelect.cancel();
         }
     }
 }
