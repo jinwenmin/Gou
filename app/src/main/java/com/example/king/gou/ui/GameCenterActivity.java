@@ -8,7 +8,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.widget.NestedScrollView;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -179,6 +181,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     List<String> name = null;
     List<Rates> MinAndMaxs;
     int REQUESTCODE = 1;
+    double mons = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -315,6 +318,12 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
             });
         }
 
+    }
+
+    public void setGameMoney(int nums) {
+        GameZhu.setText(nums + "");
+        int i = Integer.parseInt(edit1.getText().toString().trim());
+        GameYuan.setText(nums * mons * 2 * i + "");
     }
 
     public void Select10(LinearLayout view1, final LinearLayout view2) {
@@ -524,7 +533,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 code = class_code.get(position);
                 GameTypeName = name.get(position);
                 nums = 0;
-
+                setGameMoney(0);
+                edit1.setText(1 + "");
 
               /*  Map<String, Object> map = new HashMap();
                 map.put("pickedNumber", "125,268,1,3,4");
@@ -601,6 +611,117 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout select_3 = (LinearLayout) inte.findViewById(R.id.select_3);
                     LinearLayout select_4 = (LinearLayout) inte.findViewById(R.id.select_4);
                     LinearLayout select_5 = (LinearLayout) inte.findViewById(R.id.select_5);
+                    final int[] count1 = {0};
+                    final int[] count2 = {0};
+                    final int[] count3 = {0};
+                    final int[] count4 = {0};
+                    final int[] count5 = {0};
+                    final int[] s = {0};
+                    for (int i = 1; i < LinearWan.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearWan.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count1[0]++;
+                                    s[0] = count1[0] * count2[0] * count3[0] * count4[0] * count5[0];
+                                    setGameMoney(s[0]);
+                                    Log.d("五星直选注数", String.valueOf(s[0]));
+                                }
+                                if (!b) {
+                                    count1[0]--;
+                                    s[0] = count1[0] * count2[0] * count3[0] * count4[0] * count5[0];
+                                    setGameMoney(s[0]);
+                                    Log.d("五星直选注数", String.valueOf(s[0]));
+                                }
+                            }
+                        });
+
+                    }
+                    for (int i = 1; i < LinearQian.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearQian.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count2[0]++;
+                                    s[0] = count1[0] * count2[0] * count3[0] * count4[0] * count5[0];
+                                    Log.d("五星直选注数", String.valueOf(s[0]));
+                                    setGameMoney(s[0]);
+                                }
+                                if (!b) {
+                                    count2[0]--;
+                                    s[0] = count1[0] * count2[0] * count3[0] * count4[0] * count5[0];
+                                    Log.d("五星直选注数", String.valueOf(s[0]));
+                                    setGameMoney(s[0]);
+                                }
+                            }
+                        });
+
+                    }
+                    for (int i = 1; i < LinearBai.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearBai.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count3[0]++;
+                                    s[0] = count1[0] * count2[0] * count3[0] * count4[0] * count5[0];
+                                    Log.d("五星直选注数", String.valueOf(s[0]));
+                                    setGameMoney(s[0]);
+                                }
+                                if (!b) {
+                                    count3[0]--;
+                                    s[0] = count1[0] * count2[0] * count3[0] * count4[0] * count5[0];
+                                    Log.d("五星直选注数", String.valueOf(s[0]));
+                                    setGameMoney(s[0]);
+                                }
+                            }
+                        });
+
+                    }
+                    for (int i = 1; i < LinearShi.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearShi.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count4[0]++;
+                                    s[0] = count1[0] * count2[0] * count3[0] * count4[0] * count5[0];
+                                    Log.d("五星直选注数", String.valueOf(s[0]));
+                                    setGameMoney(s[0]);
+                                }
+                                if (!b) {
+                                    count4[0]--;
+                                    s[0] = count1[0] * count2[0] * count3[0] * count4[0] * count5[0];
+                                    Log.d("五星直选注数", String.valueOf(s[0]));
+                                    setGameMoney(s[0]);
+                                }
+                            }
+                        });
+
+                    }
+                    for (int i = 1; i < LinearGe.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearGe.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count5[0]++;
+                                    s[0] = count1[0] * count2[0] * count3[0] * count4[0] * count5[0];
+                                    Log.d("五星直选注数", String.valueOf(s[0]));
+                                    setGameMoney(s[0]);
+                                }
+                                if (!b) {
+                                    count5[0]--;
+                                    s[0] = count1[0] * count2[0] * count3[0] * count4[0] * count5[0];
+                                    Log.d("五星直选注数", String.valueOf(s[0]));
+                                    setGameMoney(s[0]);
+                                }
+                            }
+                        });
+
+                    }
                     Select9(select_1, LinearWan);
                     Select9(select_2, LinearQian);
                     Select9(select_3, LinearBai);
@@ -804,6 +925,28 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g3_120, null, false);
                     LinearLayout Linear120 = (LinearLayout) inte.findViewById(R.id.Linear120);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
+                    final int[] count = {0};
+                    for (int i = 1; i < Linear120.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) Linear120.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count[0]++;
+                                    if (count[0] > 4) {
+                                        int nns = RxUtils.getInstance().JieCheng(count[0]) / (RxUtils.getInstance().JieCheng(5) * RxUtils.getInstance().JieCheng(count[0] - 5));
+                                        setGameMoney(nns);
+                                    }
+                                } else {
+                                    count[0]--;
+                                    if (count[0] > 4) {
+                                        int nns = RxUtils.getInstance().JieCheng(count[0]) / (RxUtils.getInstance().JieCheng(5) * RxUtils.getInstance().JieCheng(count[0] - 5));
+                                        setGameMoney(nns);
+                                    }
+                                }
+                            }
+                        });
+                    }
                     Select9(select_1, Linear120);
                 }
                 if (
@@ -816,8 +959,92 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
                     LinearLayout select_2 = (LinearLayout) inte.findViewById(R.id.select_2);
+                    final List<String> s1 = new ArrayList<String>();
+                    final List<String> s2 = new ArrayList<String>();
+                    final int[] c1 = {0};
+                    final int[] c2 = {0};
+                    final int[] k = {0};
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                k[0] = 0;
+                                if (b) {
+                                    c1[0]++;
+                                    s1.add(at.getText().toString());
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        for (int i2 = 0; i2 < s2.size(); i2++) {
+                                            if (s1.get(i1).equals(s2.get(i2))) {
+                                                k[0]++;
+                                                Log.d("重复个数", k[0] + "");
+                                            }
+                                        }
+                                    }
+
+                                    setGameMoney(c2[0] * (c2[0] - 1) * c1[0] / 2 - (c2[0] - 1) * k[0]);
+
+                                } else {
+                                    c1[0]--;
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        if (s1.get(i1).equals(at.getText().toString())) {
+                                            s1.remove(i1);
+                                        }
+                                    }
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        for (int i2 = 0; i2 < s2.size(); i2++) {
+                                            if (s1.get(i1).equals(s2.get(i2))) {
+                                                k[0]++;
+                                                Log.d("重复个数", k[0] + "");
+                                            }
+                                        }
+                                    }
+                                    setGameMoney(c2[0] * (c2[0] - 1) * c1[0] / 2 - (c2[0] - 1) * k[0]);
+                                }
+                            }
+                        });
+                    }
+                    for (int i = 1; i < LinearTwo.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                k[0] = 0;
+                                if (b) {
+                                    c2[0]++;
+                                    s2.add(at.getText().toString());
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        for (int i2 = 0; i2 < s2.size(); i2++) {
+                                            if (s1.get(i1).equals(s2.get(i2))) {
+                                                k[0]++;
+                                                Log.d("重复个数", k[0] + "");
+                                            }
+                                        }
+                                    }
+                                    setGameMoney(c2[0] * (c2[0] - 1) * c1[0] / 2 - (c2[0] - 1) * k[0]);
+                                } else {
+                                    c2[0]--;
+                                    for (int i1 = 0; i1 < s2.size(); i1++) {
+                                        if (s2.get(i1).equals(at.getText().toString())) {
+                                            s2.remove(i1);
+                                        }
+                                    }
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        for (int i2 = 0; i2 < s2.size(); i2++) {
+                                            if (s1.get(i1).equals(s2.get(i2))) {
+                                                k[0]++;
+                                                Log.d("重复个数", k[0] + "");
+                                            }
+                                        }
+                                    }
+                                    setGameMoney(c2[0] * (c2[0] - 1) * c1[0] / 2 - (c2[0] - 1) * k[0]);
+                                }
+                            }
+                        });
+                    }
                     Select9(select_1, LinearOne);
                     Select9(select_2, LinearTwo);
+
                 }
                 if (
                         "star_5_group_20".equals(code)
@@ -828,6 +1055,89 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
                     LinearLayout select_2 = (LinearLayout) inte.findViewById(R.id.select_2);
+                    final List<String> s1 = new ArrayList<String>();
+                    final List<String> s2 = new ArrayList<String>();
+                    final int[] c1 = {0};
+                    final int[] c2 = {0};
+                    final int[] k = {0};
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                k[0] = 0;
+                                if (b) {
+                                    c1[0]++;
+                                    s1.add(at.getText().toString());
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        for (int i2 = 0; i2 < s2.size(); i2++) {
+                                            if (s1.get(i1).equals(s2.get(i2))) {
+                                                k[0]++;
+                                                Log.d("重复个数", k[0] + "");
+                                            }
+                                        }
+                                    }
+
+                                    setGameMoney(c2[0] * (c2[0] - 1) * c1[0] / 2 - (c2[0] - 1) * k[0]);
+
+                                } else {
+                                    c1[0]--;
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        if (s1.get(i1).equals(at.getText().toString())) {
+                                            s1.remove(i1);
+                                        }
+                                    }
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        for (int i2 = 0; i2 < s2.size(); i2++) {
+                                            if (s1.get(i1).equals(s2.get(i2))) {
+                                                k[0]++;
+                                                Log.d("重复个数", k[0] + "");
+                                            }
+                                        }
+                                    }
+                                    setGameMoney(c2[0] * (c2[0] - 1) * c1[0] / 2 - (c2[0] - 1) * k[0]);
+                                }
+                            }
+                        });
+                    }
+                    for (int i = 1; i < LinearTwo.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                k[0] = 0;
+                                if (b) {
+                                    c2[0]++;
+                                    s2.add(at.getText().toString());
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        for (int i2 = 0; i2 < s2.size(); i2++) {
+                                            if (s1.get(i1).equals(s2.get(i2))) {
+                                                k[0]++;
+                                                Log.d("重复个数", k[0] + "");
+                                            }
+                                        }
+                                    }
+                                    setGameMoney(c2[0] * (c2[0] - 1) * c1[0] / 2 - (c2[0] - 1) * k[0]);
+                                } else {
+                                    c2[0]--;
+                                    for (int i1 = 0; i1 < s2.size(); i1++) {
+                                        if (s2.get(i1).equals(at.getText().toString())) {
+                                            s2.remove(i1);
+                                        }
+                                    }
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        for (int i2 = 0; i2 < s2.size(); i2++) {
+                                            if (s1.get(i1).equals(s2.get(i2))) {
+                                                k[0]++;
+                                                Log.d("重复个数", k[0] + "");
+                                            }
+                                        }
+                                    }
+                                    setGameMoney(c2[0] * (c2[0] - 1) * c1[0] / 2 - (c2[0] - 1) * k[0]);
+                                }
+                            }
+                        });
+                    }
                     Select9(select_1, LinearOne);
                     Select9(select_2, LinearTwo);
                 }
@@ -840,6 +1150,89 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
                     LinearLayout select_2 = (LinearLayout) inte.findViewById(R.id.select_2);
+                    final List<String> s1 = new ArrayList<String>();
+                    final List<String> s2 = new ArrayList<String>();
+                    final int[] c1 = {0};
+                    final int[] c2 = {0};
+                    final int[] k = {0};
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                k[0] = 0;
+                                if (b) {
+                                    c1[0]++;
+                                    s1.add(at.getText().toString());
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        for (int i2 = 0; i2 < s2.size(); i2++) {
+                                            if (s1.get(i1).equals(s2.get(i2))) {
+                                                k[0]++;
+                                                Log.d("重复个数", k[0] + "");
+                                            }
+                                        }
+                                    }
+
+                                    setGameMoney((c2[0] - 1) * (c2[0] - 2) * (c1[0] * c2[0] - 3 * k[0]) / 6);
+
+                                } else {
+                                    c1[0]--;
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        if (s1.get(i1).equals(at.getText().toString())) {
+                                            s1.remove(i1);
+                                        }
+                                    }
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        for (int i2 = 0; i2 < s2.size(); i2++) {
+                                            if (s1.get(i1).equals(s2.get(i2))) {
+                                                k[0]++;
+                                                Log.d("重复个数", k[0] + "");
+                                            }
+                                        }
+                                    }
+                                    setGameMoney((c2[0] - 1) * (c2[0] - 2) * (c1[0] * c2[0] - 3 * k[0]) / 6);
+                                }
+                            }
+                        });
+                    }
+                    for (int i = 1; i < LinearTwo.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                k[0] = 0;
+                                if (b) {
+                                    c2[0]++;
+                                    s2.add(at.getText().toString());
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        for (int i2 = 0; i2 < s2.size(); i2++) {
+                                            if (s1.get(i1).equals(s2.get(i2))) {
+                                                k[0]++;
+                                                Log.d("重复个数", k[0] + "");
+                                            }
+                                        }
+                                    }
+                                    setGameMoney((c2[0] - 1) * (c2[0] - 2) * (c1[0] * c2[0] - 3 * k[0]) / 6);
+                                } else {
+                                    c2[0]--;
+                                    for (int i1 = 0; i1 < s2.size(); i1++) {
+                                        if (s2.get(i1).equals(at.getText().toString())) {
+                                            s2.remove(i1);
+                                        }
+                                    }
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        for (int i2 = 0; i2 < s2.size(); i2++) {
+                                            if (s1.get(i1).equals(s2.get(i2))) {
+                                                k[0]++;
+                                                Log.d("重复个数", k[0] + "");
+                                            }
+                                        }
+                                    }
+                                    setGameMoney((c2[0] - 1) * (c2[0] - 2) * (c1[0] * c2[0] - 3 * k[0]) / 6);
+                                }
+                            }
+                        });
+                    }
                     Select9(select_1, LinearOne);
                     Select9(select_2, LinearTwo);
                 }
@@ -852,6 +1245,89 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
                     LinearLayout select_2 = (LinearLayout) inte.findViewById(R.id.select_2);
+                    final List<String> s1 = new ArrayList<String>();
+                    final List<String> s2 = new ArrayList<String>();
+                    final int[] c1 = {0};
+                    final int[] c2 = {0};
+                    final int[] k = {0};
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                k[0] = 0;
+                                if (b) {
+                                    c1[0]++;
+                                    s1.add(at.getText().toString());
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        for (int i2 = 0; i2 < s2.size(); i2++) {
+                                            if (s1.get(i1).equals(s2.get(i2))) {
+                                                k[0]++;
+                                                Log.d("重复个数", k[0] + "");
+                                            }
+                                        }
+                                    }
+
+                                    setGameMoney(c1[0] * c2[0] - k[0]);
+
+                                } else {
+                                    c1[0]--;
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        if (s1.get(i1).equals(at.getText().toString())) {
+                                            s1.remove(i1);
+                                        }
+                                    }
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        for (int i2 = 0; i2 < s2.size(); i2++) {
+                                            if (s1.get(i1).equals(s2.get(i2))) {
+                                                k[0]++;
+                                                Log.d("重复个数", k[0] + "");
+                                            }
+                                        }
+                                    }
+                                    setGameMoney(c1[0] * c2[0] - k[0]);
+                                }
+                            }
+                        });
+                    }
+                    for (int i = 1; i < LinearTwo.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                k[0] = 0;
+                                if (b) {
+                                    c2[0]++;
+                                    s2.add(at.getText().toString());
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        for (int i2 = 0; i2 < s2.size(); i2++) {
+                                            if (s1.get(i1).equals(s2.get(i2))) {
+                                                k[0]++;
+                                                Log.d("重复个数", k[0] + "");
+                                            }
+                                        }
+                                    }
+                                    setGameMoney(c1[0] * c2[0] - k[0]);
+                                } else {
+                                    c2[0]--;
+                                    for (int i1 = 0; i1 < s2.size(); i1++) {
+                                        if (s2.get(i1).equals(at.getText().toString())) {
+                                            s2.remove(i1);
+                                        }
+                                    }
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        for (int i2 = 0; i2 < s2.size(); i2++) {
+                                            if (s1.get(i1).equals(s2.get(i2))) {
+                                                k[0]++;
+                                                Log.d("重复个数", k[0] + "");
+                                            }
+                                        }
+                                    }
+                                    setGameMoney(c1[0] * c2[0] - k[0]);
+                                }
+                            }
+                        });
+                    }
                     Select9(select_1, LinearOne);
                     Select9(select_2, LinearTwo);
                 }
@@ -870,6 +1346,21 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     g4_name.setText(name.get(position));
                     LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
+                    final int[] count = {0};
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count[0]++;
+                                } else {
+                                    count[0]--;
+                                }
+                                setGameMoney(count[0]);
+                            }
+                        });
+                    }
                     Select9(select_1, LinearOne);
                 }
                 if (
@@ -885,6 +1376,95 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout select_2 = (LinearLayout) inte.findViewById(R.id.select_2);
                     LinearLayout select_3 = (LinearLayout) inte.findViewById(R.id.select_3);
                     LinearLayout select_4 = (LinearLayout) inte.findViewById(R.id.select_4);
+                    final int[] count1 = {0};
+                    final int[] count2 = {0};
+                    final int[] count3 = {0};
+                    final int[] count4 = {0};
+
+                    final int[] s = {0};
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count1[0]++;
+                                    s[0] = count1[0] * count2[0] * count3[0] * count4[0];
+
+                                }
+                                if (!b) {
+                                    count1[0]--;
+                                    s[0] = count1[0] * count2[0] * count3[0] * count4[0];
+
+
+                                }
+                                setGameMoney(s[0]);
+                            }
+                        });
+
+                    }
+                    for (int i = 1; i < LinearTwo.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count2[0]++;
+                                    s[0] = count1[0] * count2[0] * count3[0] * count4[0];
+
+                                }
+                                if (!b) {
+                                    count2[0]--;
+                                    s[0] = count1[0] * count2[0] * count3[0] * count4[0];
+
+                                }
+                                setGameMoney(s[0]);
+                            }
+                        });
+
+                    }
+                    for (int i = 1; i < LinearThree.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearThree.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count3[0]++;
+                                    s[0] = count1[0] * count2[0] * count3[0] * count4[0];
+
+                                }
+                                if (!b) {
+                                    count3[0]--;
+                                    s[0] = count1[0] * count2[0] * count3[0] * count4[0];
+
+
+                                }
+                                setGameMoney(s[0]);
+                            }
+                        });
+
+                    }
+                    for (int i = 1; i < LinearFour.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearFour.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count4[0]++;
+                                    s[0] = count1[0] * count2[0] * count3[0] * count4[0];
+
+                                }
+                                if (!b) {
+                                    count4[0]--;
+                                    s[0] = count1[0] * count2[0] * count3[0] * count4[0];
+
+
+                                }
+                                setGameMoney(s[0]);
+                            }
+                        });
+
+                    }
                     Select9(select_1, LinearOne);
                     Select9(select_2, LinearTwo);
                     Select9(select_3, LinearThree);
@@ -897,6 +1477,23 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_4_star_after_24, null, false);
                     LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
+                    final int[] count = {0};
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count[0]++;
+                                } else {
+                                    count[0]--;
+                                }
+                                if (count[0] > 3) {
+                                    setGameMoney(RxUtils.getInstance().JieCheng(count[0]) / (RxUtils.getInstance().JieCheng(4) * RxUtils.getInstance().JieCheng(count[0] - 4)));
+                                }
+                            }
+                        });
+                    }
                     Select9(select_1, LinearOne);
                 }
                 if (
@@ -908,6 +1505,89 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
                     LinearLayout select_2 = (LinearLayout) inte.findViewById(R.id.select_2);
+                    final List<String> s1 = new ArrayList<String>();
+                    final List<String> s2 = new ArrayList<String>();
+                    final int[] c1 = {0};
+                    final int[] c2 = {0};
+                    final int[] k = {0};
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                k[0] = 0;
+                                if (b) {
+                                    c1[0]++;
+                                    s1.add(at.getText().toString());
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        for (int i2 = 0; i2 < s2.size(); i2++) {
+                                            if (s1.get(i1).equals(s2.get(i2))) {
+                                                k[0]++;
+                                                Log.d("重复个数", k[0] + "");
+                                            }
+                                        }
+                                    }
+
+                                    setGameMoney(c2[0] * (c2[0] - 1) * c1[0] / 2 - (c2[0] - 1) * k[0]);
+
+                                } else {
+                                    c1[0]--;
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        if (s1.get(i1).equals(at.getText().toString())) {
+                                            s1.remove(i1);
+                                        }
+                                    }
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        for (int i2 = 0; i2 < s2.size(); i2++) {
+                                            if (s1.get(i1).equals(s2.get(i2))) {
+                                                k[0]++;
+                                                Log.d("重复个数", k[0] + "");
+                                            }
+                                        }
+                                    }
+                                    setGameMoney(c2[0] * (c2[0] - 1) * c1[0] / 2 - (c2[0] - 1) * k[0]);
+                                }
+                            }
+                        });
+                    }
+                    for (int i = 1; i < LinearTwo.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                k[0] = 0;
+                                if (b) {
+                                    c2[0]++;
+                                    s2.add(at.getText().toString());
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        for (int i2 = 0; i2 < s2.size(); i2++) {
+                                            if (s1.get(i1).equals(s2.get(i2))) {
+                                                k[0]++;
+                                                Log.d("重复个数", k[0] + "");
+                                            }
+                                        }
+                                    }
+                                    setGameMoney(c2[0] * (c2[0] - 1) * c1[0] / 2 - (c2[0] - 1) * k[0]);
+                                } else {
+                                    c2[0]--;
+                                    for (int i1 = 0; i1 < s2.size(); i1++) {
+                                        if (s2.get(i1).equals(at.getText().toString())) {
+                                            s2.remove(i1);
+                                        }
+                                    }
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        for (int i2 = 0; i2 < s2.size(); i2++) {
+                                            if (s1.get(i1).equals(s2.get(i2))) {
+                                                k[0]++;
+                                                Log.d("重复个数", k[0] + "");
+                                            }
+                                        }
+                                    }
+                                    setGameMoney(c2[0] * (c2[0] - 1) * c1[0] / 2 - (c2[0] - 1) * k[0]);
+                                }
+                            }
+                        });
+                    }
                     Select9(select_1, LinearOne);
                     Select9(select_2, LinearTwo);
                 }
@@ -920,7 +1600,23 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
 
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
+                    final int[] count = {0};
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count[0]++;
+                                } else {
+                                    count[0]--;
+                                }
 
+                                setGameMoney(count[0] * (count[0] - 1) / 2);
+
+                            }
+                        });
+                    }
                     Select9(select_1, LinearOne);
                 }
                 if ("star_4_group_4".equals(code) || "2min_star_4_group_4".equals(code)) {
@@ -929,6 +1625,89 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
                     LinearLayout select_2 = (LinearLayout) inte.findViewById(R.id.select_2);
+                    final List<String> s1 = new ArrayList<String>();
+                    final List<String> s2 = new ArrayList<String>();
+                    final int[] c1 = {0};
+                    final int[] c2 = {0};
+                    final int[] k = {0};
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                k[0] = 0;
+                                if (b) {
+                                    c1[0]++;
+                                    s1.add(at.getText().toString());
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        for (int i2 = 0; i2 < s2.size(); i2++) {
+                                            if (s1.get(i1).equals(s2.get(i2))) {
+                                                k[0]++;
+                                                Log.d("重复个数", k[0] + "");
+                                            }
+                                        }
+                                    }
+
+                                    setGameMoney(c1[0] * c2[0] - k[0]);
+
+                                } else {
+                                    c1[0]--;
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        if (s1.get(i1).equals(at.getText().toString())) {
+                                            s1.remove(i1);
+                                        }
+                                    }
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        for (int i2 = 0; i2 < s2.size(); i2++) {
+                                            if (s1.get(i1).equals(s2.get(i2))) {
+                                                k[0]++;
+                                                Log.d("重复个数", k[0] + "");
+                                            }
+                                        }
+                                    }
+                                    setGameMoney(c1[0] * c2[0] - k[0]);
+                                }
+                            }
+                        });
+                    }
+                    for (int i = 1; i < LinearTwo.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                k[0] = 0;
+                                if (b) {
+                                    c2[0]++;
+                                    s2.add(at.getText().toString());
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        for (int i2 = 0; i2 < s2.size(); i2++) {
+                                            if (s1.get(i1).equals(s2.get(i2))) {
+                                                k[0]++;
+                                                Log.d("重复个数", k[0] + "");
+                                            }
+                                        }
+                                    }
+                                    setGameMoney(c1[0] * c2[0] - k[0]);
+                                } else {
+                                    c2[0]--;
+                                    for (int i1 = 0; i1 < s2.size(); i1++) {
+                                        if (s2.get(i1).equals(at.getText().toString())) {
+                                            s2.remove(i1);
+                                        }
+                                    }
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        for (int i2 = 0; i2 < s2.size(); i2++) {
+                                            if (s1.get(i1).equals(s2.get(i2))) {
+                                                k[0]++;
+                                                Log.d("重复个数", k[0] + "");
+                                            }
+                                        }
+                                    }
+                                    setGameMoney(c1[0] * c2[0] - k[0]);
+                                }
+                            }
+                        });
+                    }
                     Select9(select_1, LinearOne);
                     Select9(select_2, LinearTwo);
                 }
@@ -2999,17 +3778,6 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_xg_tb_big_small_dan_shuang, null, false);
                 }
                 GameCenterLinear.addView(inte);
-                timerSelect = new Timer();
-                final TimerTask timerTasks = new TimerTask() {
-                    @Override
-                    public void run() {
-                        //  Looper.prepare();
-                        SelectNums();
-                        //Looper.loop();
-                    }
-                };
-
-                timerSelect.schedule(timerTasks, 0, 100);
             }
 
             @Override
@@ -3058,15 +3826,23 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     if (isChecked) {
                         if (finalI == 0) {
                             PriceUnit = 1;
+                            mons = 1;
+                            GameYuan.setText(Double.parseDouble(GameZhu.getText().toString()) * 2 * mons + "");
                         }
                         if (finalI == 1) {
                             PriceUnit = 2;
+                            mons = 0.1;
+                            GameYuan.setText(Double.parseDouble(GameZhu.getText().toString()) * 2 * mons + "");
                         }
                         if (finalI == 2) {
                             PriceUnit = 3;
+                            mons = 0.01;
+                            GameYuan.setText(Double.parseDouble(GameZhu.getText().toString()) * 2 * mons + "");
                         }
                         if (finalI == 3) {
                             PriceUnit = 4;
+                            mons = 0.001;
+                            GameYuan.setText(Double.parseDouble(GameZhu.getText().toString()) * 2 * mons + "");
                         }
                         for (int i1 = 0; i1 < LinearMoneyGetCheck.getChildCount(); i1++) {
                             if (i1 != finalI) {
@@ -3077,6 +3853,28 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 }
             });
         }
+        edit1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Log.e("输入过程中执行该方法", charSequence.toString());
+                if ("".equals(charSequence.toString())) {
+                    edit1.setText(1 + "");
+                }
+                int zhu = Integer.parseInt(GameZhu.getText().toString());
+                int bei = Integer.parseInt(edit1.getText().toString());
+                GameYuan.setText(zhu * bei * 2 * mons + "");
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
      /*   RadioGroupGameCenter.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
@@ -7513,19 +8311,6 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         classCode = code;
         multiple = Nums;
         priceType = SpinnerMoney.getSelectedItemPosition();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                handler1.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        GameZhu.setText(nums + "");
-                        GameYuan.setText(amount + "");
-                    }
-                });
-
-            }
-        }).start();
         
        /* TextView Zhu = (TextView) contentView.findViewById(R.id.Zhu);
         TextView Amounts = (TextView) contentView.findViewById(R.id.GameAmounts);
@@ -8487,8 +9272,6 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         if (timer != null) {
             timer.cancel();
         }
-        if (timerSelect != null) {
-            timerSelect.cancel();
-        }
+
     }
 }
