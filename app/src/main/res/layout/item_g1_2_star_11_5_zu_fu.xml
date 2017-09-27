@@ -20,7 +20,7 @@
             android:background="@drawable/gamecenter_btn"
             android:gravity="center"
             android:padding="5px"
-            android:text="第一位"
+            android:text="组选"
             android:textColor="@android:color/white"
             android:textSize="30px" />
 

@@ -1724,6 +1724,97 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
                     LinearLayout select_2 = (LinearLayout) inte.findViewById(R.id.select_2);
                     LinearLayout select_3 = (LinearLayout) inte.findViewById(R.id.select_3);
+                    final int[] count1 = {0};
+                    final int[] count2 = {0};
+                    final int[] count3 = {0};
+                    final int[] countSum = {0};
+
+                    final int[] s = {0};
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count1[0]++;
+                                    countSum[0]++;
+                                    s[0] = count1[0] * count2[0] * count3[0];
+
+                                }
+                                if (!b) {
+                                    count1[0]--;
+                                    countSum[0]--;
+                                    s[0] = count1[0] * count2[0] * count3[0];
+
+
+                                }
+
+                                if ("3D_fix".equals(code)) {
+                                    setGameMoney(countSum[0]);
+                                } else {
+
+                                    setGameMoney(s[0]);
+                                }
+                            }
+                        });
+
+                    }
+                    for (int i = 1; i < LinearTwo.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count2[0]++;
+                                    countSum[0]++;
+                                    s[0] = count1[0] * count2[0] * count3[0];
+
+                                }
+                                if (!b) {
+                                    count2[0]--;
+                                    countSum[0]--;
+                                    s[0] = count1[0] * count2[0] * count3[0];
+
+                                }
+                                if ("3D_fix".equals(code)) {
+                                    setGameMoney(countSum[0]);
+                                } else {
+
+                                    setGameMoney(s[0]);
+                                }
+                            }
+                        });
+
+                    }
+                    for (int i = 1; i < LinearThree.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearThree.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count3[0]++;
+                                    countSum[0]++;
+                                    s[0] = count1[0] * count2[0] * count3[0];
+
+                                }
+                                if (!b) {
+                                    count3[0]--;
+                                    countSum[0]--;
+                                    s[0] = count1[0] * count2[0] * count3[0];
+
+
+                                }
+                                if ("3D_fix".equals(code)) {
+                                    setGameMoney(countSum[0]);
+                                } else {
+
+                                    setGameMoney(s[0]);
+                                }
+                            }
+                        });
+
+                    }
+
                     Select9(select_1, LinearOne);
                     Select9(select_2, LinearTwo);
                     Select9(select_3, LinearThree);
@@ -1737,6 +1828,57 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 || "3D_star_3_sum".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_3_star_he, null, false);
+                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    LinearLayout LinearThree = (LinearLayout) inte.findViewById(R.id.LinearThree);
+                    final int[] counts = {0};
+                    for (int i = 0; i < LinearOne.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    counts[0] = counts[0] + ThreeStarHe(Integer.parseInt(at.getText().toString().trim()));
+                                }
+                                if (!b) {
+                                    counts[0] = counts[0] - ThreeStarHe(Integer.parseInt(at.getText().toString().trim()));
+                                }
+                                setGameMoney(counts[0]);
+                            }
+                        });
+
+
+                    }
+                    for (int i = 0; i < LinearTwo.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    counts[0] = counts[0] + ThreeStarHe(Integer.parseInt(at.getText().toString().trim()));
+                                }
+                                if (!b) {
+                                    counts[0] = counts[0] - ThreeStarHe(Integer.parseInt(at.getText().toString().trim()));
+                                }
+                                setGameMoney(counts[0]);
+                            }
+                        });
+                    }
+                    for (int i = 0; i < LinearThree.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearThree.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    counts[0] = counts[0] + ThreeStarHe(Integer.parseInt(at.getText().toString().trim()));
+                                }
+                                if (!b) {
+                                    counts[0] = counts[0] - ThreeStarHe(Integer.parseInt(at.getText().toString().trim()));
+                                }
+                                setGameMoney(counts[0]);
+                            }
+                        });
+                    }
                 }
                 if (
                         "star_3_next_sub".equals(code)
@@ -1752,6 +1894,22 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_3_star_kua, null, false);
                     LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
+                    final int[] count = {0};
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count[0] = count[0] + ThreeKua(Integer.parseInt(at.getText().toString().trim()));
+                                }
+                                if (!b) {
+                                    count[0] = count[0] - ThreeKua(Integer.parseInt(at.getText().toString().trim()));
+                                }
+                                setGameMoney(count[0]);
+                            }
+                        });
+                    }
                     Select9(select_1, LinearOne);
                 }
                 if (
@@ -1795,6 +1953,77 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     TextView g4_name = (TextView) inte.findViewById(R.id.g4_name);
                     LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
+                    final int[] count = {0};
+                    final int[] countSum = {0};
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count[0]++;
+                                    countSum[0] = countSum[0] + TwoKua(Integer.parseInt(at.getText().toString().trim()));
+                                } else {
+                                    count[0]--;
+                                    countSum[0] = countSum[0] - TwoKua(Integer.parseInt(at.getText().toString().trim()));
+                                }
+                                if (
+                                        "star_3_next_one_no_fix".equals(code)
+                                                || "2min_star_3_next_one_no_fix".equals(code)
+                                                || "star_3_prev_one_no_fix".equals(code)
+                                                || "2min_star_3_prev_one_no_fix".equals(code)
+                                                || "star_4_one_no_fix".equals(code)
+                                                || "2min_star_4_one_no_fix".equals(code)
+                                        ) {
+                                    setGameMoney(count[0]);
+                                }
+                                if (
+                                        "star_3_next_two_no_fix".equals(code)
+                                                || "2min_star_3_next_two_no_fix".equals(code)
+                                                || "star_3_prev_two_no_fix".equals(code)
+                                                || "2min_star_3_prev_two_no_fix".equals(code)
+                                                || "star_4_two_no_fix".equals(code)
+                                                || "2min_star_4_two_no_fix".equals(code)
+                                                || "star_5_two_no_fix".equals(code)
+                                                || "2min_star_5_two_no_fix".equals(code)
+
+                                        ) {
+                                    setGameMoney(count[0] * (count[0] - 1) / 2);
+                                }
+                                if (
+                                        "star_2_next_sub".equals(code)
+                                                || "2min_star_2_next_sub".equals(code)
+                                        ) {
+                                    setGameMoney(countSum[0]);
+                                }
+                                if (
+                                        "star_3_next_group_duplex".equals(code)
+                                                || "2min_star_3_next_group_duplex".equals(code)
+                                                || "star_3_prev_group_duplex".equals(code)
+                                                || "2min_star_3_prev_group_duplex".equals(code)
+                                        ) {
+                                    setGameMoney(count[0] * (count[0] - 1));
+                                }
+                                if (
+                                        "star_3_next_group_duplex_6".equals(code)
+                                                || "2min_star_3_next_group_duplex_6".equals(code)
+                                                || "star_3_prev_group_duplex_6".equals(code)
+                                                || "2min_star_3_prev_group_duplex_6".equals(code)
+                                                || "star_3_midd_group_duplex_6".equals(code)
+                                                || "2min_star_3_midd_group_duplex_6".equals(code)
+                                                || "star_5_three_no_fix".equals(code)
+                                                || "2min_star_5_three_no_fix".equals(code)
+                                        ) {
+                                    if (count[0] > 2) {
+                                        int n1 = RxUtils.getInstance().JieCheng(count[0]);
+                                        int n2 = RxUtils.getInstance().JieCheng(3);
+                                        int n3 = RxUtils.getInstance().JieCheng(count[0] - 3);
+                                        setGameMoney((n2 * n3 <= 0 ? 0 : n1 / (n2 * n3)));
+                                    }
+                                }
+                            }
+                        });
+                    }
                     Select9(select_1, LinearOne);
                     g4_name.setText(name.get(position));
                 }
@@ -1809,6 +2038,53 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
 
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_3_star_he, null, false);
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.Linear1);
+                    LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.Linear2);
+                    LinearLayout linear3 = (LinearLayout) inte.findViewById(R.id.Linear3);
+                    final int[] c = {0};
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c[0] = c[0] + ThreeZuHe(Integer.parseInt(at.getText().toString().trim()));
+                                } else if (!b) {
+                                    c[0] = c[0] - ThreeZuHe(Integer.parseInt(at.getText().toString().trim()));
+                                }
+                                setGameMoney(c[0]);
+                            }
+                        });
+                    }
+                    for (int i = 0; i < linear2.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) linear2.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c[0] = c[0] + ThreeZuHe(Integer.parseInt(at.getText().toString().trim()));
+                                } else if (!b) {
+                                    c[0] = c[0] - ThreeZuHe(Integer.parseInt(at.getText().toString().trim()));
+                                }
+                                setGameMoney(c[0]);
+                            }
+                        });
+                    }
+                    for (int i = 0; i < linear3.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) linear3.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c[0] = c[0] + ThreeZuHe(Integer.parseInt(at.getText().toString().trim()));
+                                } else if (!b) {
+                                    c[0] = c[0] - ThreeZuHe(Integer.parseInt(at.getText().toString().trim()));
+                                }
+                                setGameMoney(c[0]);
+                            }
+                        });
+                    }
+
                 }
                 if (
                         "star_3_next_group_any".equals(code)
@@ -1816,7 +2092,6 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 || "star_3_midd_group_any".equals(code)
                                 || "star_2_next_group_any".equals(code)
                                 || "star_2_prev_group_any".equals(code)
-
                                 || "2min_star_3_next_group_any".equals(code)
                                 || "2min_star_3_prev_group_any".equals(code)
                                 || "2min_star_3_midd_group_any".equals(code)
@@ -1826,6 +2101,18 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
 
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_3_star_after_baodan, null, false);
+                    if ("star_3_next_group_any".equals(code)
+                            || "star_3_prev_group_any".equals(code)
+                            || "star_3_midd_group_any".equals(code)
+
+                            || "2min_star_3_next_group_any".equals(code)
+                            || "2min_star_3_prev_group_any".equals(code)
+                            || "2min_star_3_midd_group_any".equals(code)) {
+                        setGameMoney(54);
+                    } else {
+                        setGameMoney(9);
+                    }
+
                 }
                 if (
                         "star_3_prev_duplex".equals(code)
@@ -1839,6 +2126,87 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
                     LinearLayout select_2 = (LinearLayout) inte.findViewById(R.id.select_2);
                     LinearLayout select_3 = (LinearLayout) inte.findViewById(R.id.select_3);
+                    final int[] count1 = {0};
+                    final int[] count2 = {0};
+                    final int[] count3 = {0};
+                    final int[] countSum = {0};
+
+                    final int[] s = {0};
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count1[0]++;
+                                    countSum[0]++;
+                                    s[0] = count1[0] * count2[0] * count3[0];
+
+                                }
+                                if (!b) {
+                                    count1[0]--;
+                                    countSum[0]--;
+                                    s[0] = count1[0] * count2[0] * count3[0];
+
+
+                                }
+
+
+                                setGameMoney(s[0]);
+
+                            }
+                        });
+
+                    }
+                    for (int i = 1; i < LinearTwo.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count2[0]++;
+                                    countSum[0]++;
+                                    s[0] = count1[0] * count2[0] * count3[0];
+
+                                }
+                                if (!b) {
+                                    count2[0]--;
+                                    countSum[0]--;
+                                    s[0] = count1[0] * count2[0] * count3[0];
+
+                                }
+
+                                setGameMoney(s[0]);
+
+                            }
+                        });
+
+                    }
+                    for (int i = 1; i < LinearThree.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearThree.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count3[0]++;
+                                    countSum[0]++;
+                                    s[0] = count1[0] * count2[0] * count3[0];
+
+                                }
+                                if (!b) {
+                                    count3[0]--;
+                                    countSum[0]--;
+                                    s[0] = count1[0] * count2[0] * count3[0];
+
+
+                                }
+
+                                setGameMoney(s[0]);
+
+                            }
+                        });
+
+                    }
                     Select9(select_1, LinearOne);
                     Select9(select_2, LinearTwo);
                     Select9(select_3, LinearThree);
@@ -1854,6 +2222,87 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
                     LinearLayout select_2 = (LinearLayout) inte.findViewById(R.id.select_2);
                     LinearLayout select_3 = (LinearLayout) inte.findViewById(R.id.select_3);
+                    final int[] count1 = {0};
+                    final int[] count2 = {0};
+                    final int[] count3 = {0};
+                    final int[] countSum = {0};
+
+                    final int[] s = {0};
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count1[0]++;
+                                    countSum[0]++;
+                                    s[0] = count1[0] * count2[0] * count3[0];
+
+                                }
+                                if (!b) {
+                                    count1[0]--;
+                                    countSum[0]--;
+                                    s[0] = count1[0] * count2[0] * count3[0];
+
+
+                                }
+
+
+                                setGameMoney(s[0]);
+
+                            }
+                        });
+
+                    }
+                    for (int i = 1; i < LinearTwo.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count2[0]++;
+                                    countSum[0]++;
+                                    s[0] = count1[0] * count2[0] * count3[0];
+
+                                }
+                                if (!b) {
+                                    count2[0]--;
+                                    countSum[0]--;
+                                    s[0] = count1[0] * count2[0] * count3[0];
+
+                                }
+
+                                setGameMoney(s[0]);
+
+                            }
+                        });
+
+                    }
+                    for (int i = 1; i < LinearThree.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearThree.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count3[0]++;
+                                    countSum[0]++;
+                                    s[0] = count1[0] * count2[0] * count3[0];
+
+                                }
+                                if (!b) {
+                                    count3[0]--;
+                                    countSum[0]--;
+                                    s[0] = count1[0] * count2[0] * count3[0];
+
+
+                                }
+
+                                setGameMoney(s[0]);
+
+                            }
+                        });
+
+                    }
                     Select9(select_1, LinearOne);
                     Select9(select_2, LinearTwo);
                     Select9(select_3, LinearThree);
@@ -1869,6 +2318,58 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
                     LinearLayout select_2 = (LinearLayout) inte.findViewById(R.id.select_2);
+                    final int[] count1 = {0};
+                    final int[] count2 = {0};
+
+                    final int[] countSum = {0};
+
+                    final int[] s = {0};
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count1[0]++;
+                                    countSum[0]++;
+                                    s[0] = count1[0] * count2[0];
+
+                                }
+                                if (!b) {
+                                    count1[0]--;
+                                    countSum[0]--;
+                                    s[0] = count1[0] * count2[0];
+
+
+                                }
+
+                                setGameMoney(s[0]);
+
+                            }
+                        });
+
+                    }
+                    for (int i = 1; i < LinearTwo.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count2[0]++;
+                                    countSum[0]++;
+                                    s[0] = count1[0] * count2[0];
+
+                                }
+                                if (!b) {
+                                    count2[0]--;
+                                    countSum[0]--;
+                                    s[0] = count1[0] * count2[0];
+
+                                }
+                                setGameMoney(s[0]);
+                            }
+                        });
+                    }
                     Select9(select_1, LinearOne);
                     Select9(select_2, LinearTwo);
                 }
@@ -1877,6 +2378,41 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 || "2min_star_2_next_sum".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_2_star_he1, null, false);
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    final int[] counts = {0};
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    counts[0] = counts[0] + TwoHe1(Integer.parseInt(at.getText().toString().trim()));
+                                }
+                                if (!b) {
+                                    counts[0] = counts[0] - TwoHe1(Integer.parseInt(at.getText().toString().trim()));
+                                }
+                                setGameMoney(counts[0]);
+                            }
+                        });
+
+
+                    }
+                    for (int i = 0; i < linear2.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) linear2.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    counts[0] = counts[0] + TwoHe1(Integer.parseInt(at.getText().toString().trim()));
+                                }
+                                if (!b) {
+                                    counts[0] = counts[0] - TwoHe1(Integer.parseInt(at.getText().toString().trim()));
+                                }
+                                setGameMoney(counts[0]);
+                            }
+                        });
+                    }
                 }
                 if (
                         "star_2_next_group_sum".equals(code)
@@ -1886,6 +2422,41 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
 
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_2_star_he2, null, false);
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    final int[] cSum = {0};
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    cSum[0] = cSum[0] + TwoZuHe(Integer.parseInt(at.getText().toString().trim()));
+                                } else if (!b) {
+                                    cSum[0] = cSum[0] - TwoZuHe(Integer.parseInt(at.getText().toString().trim()));
+                                }
+                                setGameMoney(cSum[0]);
+                            }
+
+                        });
+                    }
+                    for (int i = 0; i < linear2.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) linear2.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    cSum[0] = cSum[0] + TwoZuHe(Integer.parseInt(at.getText().toString().trim()));
+                                } else if (!b) {
+                                    cSum[0] = cSum[0] - TwoZuHe(Integer.parseInt(at.getText().toString().trim()));
+                                }
+                                setGameMoney(cSum[0]);
+                            }
+
+                        });
+                    }
+
+
                 }
                 if (
                         "star_2_prev_duplex".equals(code)
@@ -1898,6 +2469,56 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
                     LinearLayout select_2 = (LinearLayout) inte.findViewById(R.id.select_2);
+
+                    final int[] count1 = {0};
+                    final int[] count2 = {0};
+                    final int[] countSum = {0};
+
+                    final int[] s = {0};
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count1[0]++;
+                                    countSum[0]++;
+                                    s[0] = count1[0] * count2[0];
+
+                                }
+                                if (!b) {
+                                    count1[0]--;
+                                    countSum[0]--;
+                                    s[0] = count1[0] * count2[0];
+                                }
+                                setGameMoney(s[0]);
+
+                            }
+                        });
+
+                    }
+                    for (int i = 1; i < LinearTwo.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count2[0]++;
+                                    countSum[0]++;
+                                    s[0] = count1[0] * count2[0];
+
+                                }
+                                if (!b) {
+                                    count2[0]--;
+                                    countSum[0]--;
+                                    s[0] = count1[0] * count2[0];
+
+                                }
+                                setGameMoney(s[0]);
+                            }
+                        });
+                    }
+
                     Select9(select_1, LinearOne);
                     Select9(select_2, LinearTwo);
                 }
@@ -1934,6 +2555,198 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     Select9(select_3, LinearThree);
                     Select9(select_4, LinearFour);
                     Select9(select_5, LinearFive);
+                    final int[] c = {0};
+                    final int[] c1 = {0};
+                    final int[] c2 = {0};
+                    final int[] c3 = {0};
+                    final int[] c4 = {0};
+                    final int[] c5 = {0};
+
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c[0]++;
+                                    c1[0]++;
+                                } else if (!b) {
+                                    c[0]--;
+                                    c1[0]--;
+                                }
+                                if (
+                                        "star_2_any_duplex".equals(code)
+                                                || "2min_star_2_any_duplex".equals(code)
+                                        ) {
+                                    setGameMoney(c1[0] * (c2[0] + c3[0] + c4[0] + c5[0]) + c2[0] * (c3[0] + c4[0] + c5[0]) + c3[0] * (c4[0] + c5[0]) + c4[0] * c5[0]);
+                                }
+                                if ("fix".equals(code)
+                                        || "2min_fix".equals(code)) {
+                                    setGameMoney(c[0]);
+                                }
+                                if (
+                                        "star_3_any_duplex".equals(code)
+                                                || "2min_star_3_any_duplex".equals(code)
+                                        ) {
+                                    setGameMoney(c1[0] * c2[0] * c3[0] + c1[0] * c2[0] * c4[0] + c1[0] * c2[0] * c5[0] + c1[0] * c3[0] * c4[0] + c1[0] * c3[0] * c5[0] + c1[0] * c4[0] * c5[0] + c2[0] * c3[0] * c4[0] + c2[0] * c3[0] * c5[0] + c2[0] * c4[0] * c5[0] + c3[0] * c4[0] * c5[0]);
+                                }
+                                if (
+                                        "star_4_any_duplex".equals(code)
+                                                || "2min_star_4_any_duplex".equals(code)
+                                        ) {
+                                    nums = c1[0] * c2[0] * c3[0] * c4[0] + c1[0] * c2[0] * c3[0] * c5[0] + c1[0] * c2[0] * c4[0] * c5[0] + c1[0] * c3[0] * c4[0] * c5[0] + c2[0] * c3[0] * c4[0] * c5[0];
+                                }
+                            }
+                        });
+                    }
+                    for (int i = 1; i < LinearTwo.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c[0]++;
+                                    c2[0]++;
+                                } else if (!b) {
+                                    c[0]--;
+                                    c2[0]--;
+                                }
+                                if (
+                                        "star_2_any_duplex".equals(code)
+                                                || "2min_star_2_any_duplex".equals(code)
+                                        ) {
+                                    setGameMoney(c1[0] * (c2[0] + c3[0] + c4[0] + c5[0]) + c2[0] * (c3[0] + c4[0] + c5[0]) + c3[0] * (c4[0] + c5[0]) + c4[0] * c5[0]);
+                                }
+                                if ("fix".equals(code)
+                                        || "2min_fix".equals(code)) {
+                                    setGameMoney(c[0]);
+                                }
+                                if (
+                                        "star_3_any_duplex".equals(code)
+                                                || "2min_star_3_any_duplex".equals(code)
+                                        ) {
+                                    setGameMoney(c1[0] * c2[0] * c3[0] + c1[0] * c2[0] * c4[0] + c1[0] * c2[0] * c5[0] + c1[0] * c3[0] * c4[0] + c1[0] * c3[0] * c5[0] + c1[0] * c4[0] * c5[0] + c2[0] * c3[0] * c4[0] + c2[0] * c3[0] * c5[0] + c2[0] * c4[0] * c5[0] + c3[0] * c4[0] * c5[0]);
+                                }
+                                if (
+                                        "star_4_any_duplex".equals(code)
+                                                || "2min_star_4_any_duplex".equals(code)
+                                        ) {
+                                    nums = c1[0] * c2[0] * c3[0] * c4[0] + c1[0] * c2[0] * c3[0] * c5[0] + c1[0] * c2[0] * c4[0] * c5[0] + c1[0] * c3[0] * c4[0] * c5[0] + c2[0] * c3[0] * c4[0] * c5[0];
+                                }
+                            }
+                        });
+                    }
+                    for (int i = 1; i < LinearThree.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearThree.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c[0]++;
+                                    c3[0]++;
+                                } else if (!b) {
+                                    c[0]--;
+                                    c3[0]--;
+                                }
+                                if (
+                                        "star_2_any_duplex".equals(code)
+                                                || "2min_star_2_any_duplex".equals(code)
+                                        ) {
+                                    setGameMoney(c1[0] * (c2[0] + c3[0] + c4[0] + c5[0]) + c2[0] * (c3[0] + c4[0] + c5[0]) + c3[0] * (c4[0] + c5[0]) + c4[0] * c5[0]);
+                                }
+                                if ("fix".equals(code)
+                                        || "2min_fix".equals(code)) {
+                                    setGameMoney(c[0]);
+                                }
+                                if (
+                                        "star_3_any_duplex".equals(code)
+                                                || "2min_star_3_any_duplex".equals(code)
+                                        ) {
+                                    setGameMoney(c1[0] * c2[0] * c3[0] + c1[0] * c2[0] * c4[0] + c1[0] * c2[0] * c5[0] + c1[0] * c3[0] * c4[0] + c1[0] * c3[0] * c5[0] + c1[0] * c4[0] * c5[0] + c2[0] * c3[0] * c4[0] + c2[0] * c3[0] * c5[0] + c2[0] * c4[0] * c5[0] + c3[0] * c4[0] * c5[0]);
+                                }
+                                if (
+                                        "star_4_any_duplex".equals(code)
+                                                || "2min_star_4_any_duplex".equals(code)
+                                        ) {
+                                    nums = c1[0] * c2[0] * c3[0] * c4[0] + c1[0] * c2[0] * c3[0] * c5[0] + c1[0] * c2[0] * c4[0] * c5[0] + c1[0] * c3[0] * c4[0] * c5[0] + c2[0] * c3[0] * c4[0] * c5[0];
+                                }
+                            }
+                        });
+                    }
+                    for (int i = 1; i < LinearFour.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearFour.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c[0]++;
+                                    c4[0]++;
+                                } else if (!b) {
+                                    c[0]--;
+                                    c4[0]--;
+                                }
+                                if (
+                                        "star_2_any_duplex".equals(code)
+                                                || "2min_star_2_any_duplex".equals(code)
+                                        ) {
+                                    setGameMoney(c1[0] * (c2[0] + c3[0] + c4[0] + c5[0]) + c2[0] * (c3[0] + c4[0] + c5[0]) + c3[0] * (c4[0] + c5[0]) + c4[0] * c5[0]);
+                                }
+                                if ("fix".equals(code)
+                                        || "2min_fix".equals(code)) {
+                                    setGameMoney(c[0]);
+                                }
+                                if (
+                                        "star_3_any_duplex".equals(code)
+                                                || "2min_star_3_any_duplex".equals(code)
+                                        ) {
+                                    setGameMoney(c1[0] * c2[0] * c3[0] + c1[0] * c2[0] * c4[0] + c1[0] * c2[0] * c5[0] + c1[0] * c3[0] * c4[0] + c1[0] * c3[0] * c5[0] + c1[0] * c4[0] * c5[0] + c2[0] * c3[0] * c4[0] + c2[0] * c3[0] * c5[0] + c2[0] * c4[0] * c5[0] + c3[0] * c4[0] * c5[0]);
+                                }
+                                if (
+                                        "star_4_any_duplex".equals(code)
+                                                || "2min_star_4_any_duplex".equals(code)
+                                        ) {
+                                    nums = c1[0] * c2[0] * c3[0] * c4[0] + c1[0] * c2[0] * c3[0] * c5[0] + c1[0] * c2[0] * c4[0] * c5[0] + c1[0] * c3[0] * c4[0] * c5[0] + c2[0] * c3[0] * c4[0] * c5[0];
+                                }
+                            }
+                        });
+                    }
+                    for (int i = 1; i < LinearFive.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearFive.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c[0]++;
+                                    c5[0]++;
+                                } else if (!b) {
+                                    c[0]--;
+                                    c5[0]--;
+                                }
+                                if (
+                                        "star_2_any_duplex".equals(code)
+                                                || "2min_star_2_any_duplex".equals(code)
+                                        ) {
+                                    setGameMoney(c1[0] * (c2[0] + c3[0] + c4[0] + c5[0]) + c2[0] * (c3[0] + c4[0] + c5[0]) + c3[0] * (c4[0] + c5[0]) + c4[0] * c5[0]);
+                                }
+                                if ("fix".equals(code)
+                                        || "2min_fix".equals(code)) {
+                                    setGameMoney(c[0]);
+                                }
+                                if (
+                                        "star_3_any_duplex".equals(code)
+                                                || "2min_star_3_any_duplex".equals(code)
+                                        ) {
+                                    setGameMoney(c1[0] * c2[0] * c3[0] + c1[0] * c2[0] * c4[0] + c1[0] * c2[0] * c5[0] + c1[0] * c3[0] * c4[0] + c1[0] * c3[0] * c5[0] + c1[0] * c4[0] * c5[0] + c2[0] * c3[0] * c4[0] + c2[0] * c3[0] * c5[0] + c2[0] * c4[0] * c5[0] + c3[0] * c4[0] * c5[0]);
+                                }
+                                if (
+                                        "star_4_any_duplex".equals(code)
+                                                || "2min_star_4_any_duplex".equals(code)
+                                        ) {
+                                    nums = c1[0] * c2[0] * c3[0] * c4[0] + c1[0] * c2[0] * c3[0] * c5[0] + c1[0] * c2[0] * c4[0] * c5[0] + c1[0] * c3[0] * c4[0] * c5[0] + c2[0] * c3[0] * c4[0] * c5[0];
+                                }
+                            }
+                        });
+                    }
                 }
                 /*if (
 
@@ -2610,60 +3423,323 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 || "2min_star_2_prev_special".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_quwei_2_before, null, false);
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    final int[] c1 = {0};
+                    final int[] c2 = {0};
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c1[0]++;
+                                } else if (!b) {
+                                    c1[0]--;
+                                }
+                                setGameMoney(c1[0] * c2[0]);
+                            }
+                        });
+                    }
+                    for (int i = 0; i < linear2.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear2.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c2[0]++;
+                                } else if (!b) {
+                                    c2[0]--;
+                                }
+                                setGameMoney(c1[0] * c2[0]);
+                            }
+                        });
+                    }
                 }
                 if (
                         "star_2_next_special".equals(code)
                                 || "2min_star_2_next_special".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_quwei_2_after, null, false);
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    final int[] c1 = {0};
+                    final int[] c2 = {0};
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c1[0]++;
+                                } else if (!b) {
+                                    c1[0]--;
+                                }
+                                setGameMoney(c1[0] * c2[0]);
+                            }
+                        });
+                    }
+                    for (int i = 0; i < linear2.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear2.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c2[0]++;
+                                } else if (!b) {
+                                    c2[0]--;
+                                }
+                                setGameMoney(c1[0] * c2[0]);
+                            }
+                        });
+                    }
                 }
                 if (
                         "star_3_prev_special".equals(code)
                                 || "2min_star_3_prev_special".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_quwei_3_before, null, false);
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    LinearLayout linear3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
+                    final int[] c1 = {0};
+                    final int[] c2 = {0};
+                    final int[] c3 = {0};
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c1[0]++;
+                                } else if (!b) {
+                                    c1[0]--;
+                                }
+                                setGameMoney(c1[0] * c2[0] * c3[0]);
+                            }
+                        });
+                    }
+                    for (int i = 0; i < linear2.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear2.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c2[0]++;
+                                } else if (!b) {
+                                    c2[0]--;
+                                }
+                                setGameMoney(c1[0] * c2[0] * c3[0]);
+                            }
+                        });
+                    }
+                    for (int i = 0; i < linear3.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear3.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c3[0]++;
+                                } else if (!b) {
+                                    c3[0]--;
+                                }
+                                setGameMoney(c1[0] * c2[0] * c3[0]);
+                            }
+                        });
+                    }
                 }
                 if (
                         "star_3_next_special".equals(code)
                                 || "2min_star_3_next_special".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_quwei_3_after, null, false);
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    LinearLayout linear3 = (LinearLayout) inte.findViewById(R.id.LinearThree);
+                    final int[] c1 = {0};
+                    final int[] c2 = {0};
+                    final int[] c3 = {0};
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c1[0]++;
+                                } else if (!b) {
+                                    c1[0]--;
+                                }
+                                setGameMoney(c1[0] * c2[0] * c3[0]);
+                            }
+                        });
+                    }
+                    for (int i = 0; i < linear2.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear2.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c2[0]++;
+                                } else if (!b) {
+                                    c2[0]--;
+                                }
+                                setGameMoney(c1[0] * c2[0] * c3[0]);
+                            }
+                        });
+                    }
+                    for (int i = 0; i < linear3.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear3.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c3[0]++;
+                                } else if (!b) {
+                                    c3[0]--;
+                                }
+                                setGameMoney(c1[0] * c2[0] * c3[0]);
+                            }
+                        });
+                    }
                 }
                 if (
                         "banker_player".equals(code)
                                 || "2min_banker_player".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_ldle, null, false);
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    final int[] c1 = {0};
+
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c1[0]++;
+                                } else if (!b) {
+                                    c1[0]--;
+                                }
+                                setGameMoney(c1[0]);
+                            }
+                        });
+                    }
+
                 }
                 if (
                         "equal".equals(code)
                                 || "2min_equal".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_flat, null, false);
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    final int[] c1 = {0};
+
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c1[0]++;
+                                } else if (!b) {
+                                    c1[0]--;
+                                }
+                                setGameMoney(c1[0]);
+                            }
+                        });
+                    }
                 }
                 if (
                         "same_two".equals(code)
                                 || "2min_same_two".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_sub, null, false);
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    final int[] c1 = {0};
+
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c1[0]++;
+                                } else if (!b) {
+                                    c1[0]--;
+                                }
+                                setGameMoney(c1[0]);
+                            }
+                        });
+                    }
                 }
                 if (
                         "same_three".equals(code)
                                 || "2min_same_three".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_leopard, null, false);
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    final int[] c1 = {0};
+
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c1[0]++;
+                                } else if (!b) {
+                                    c1[0]--;
+                                }
+                                setGameMoney(c1[0]);
+                            }
+                        });
+                    }
                 }
                 if (
                         "heavenly_king".equals(code)
                                 || "2min_heavenly_king".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_king, null, false);
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    final int[] c1 = {0};
+
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c1[0]++;
+                                } else if (!b) {
+                                    c1[0]--;
+                                }
+                                setGameMoney(c1[0]);
+                            }
+                        });
+                    }
                 }
                 if (
                         "sum_special".equals(code)
                                 || "2min_sum_special".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g3_sum_big_dan, null, false);
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    final int[] c1 = {0};
+
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c1[0]++;
+                                } else if (!b) {
+                                    c1[0]--;
+                                }
+                                setGameMoney(c1[0]);
+                            }
+                        });
+                    }
                 }
                 if (
                         "toradora_wq".equals(code)
@@ -2689,6 +3765,23 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
 
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_dragon_tiger, null, false);
+                    LinearLayout linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    final int[] c1 = {0};
+
+                    for (int i = 0; i < linear1.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linear1.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c1[0]++;
+                                } else if (!b) {
+                                    c1[0]--;
+                                }
+                                setGameMoney(c1[0]);
+                            }
+                        });
+                    }
                 }
                 if (
                         "eleven_star_3_prev_duplex".equals(code)
@@ -2703,6 +3796,109 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     Select9(select_1, LinearOne);
                     Select9(select_2, LinearTwo);
                     Select9(select_3, LinearThree);
+                    final List<String> s1 = new ArrayList<String>();
+                    final List<String> s2 = new ArrayList<String>();
+                    final List<String> s3 = new ArrayList<String>();
+
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    s1.add(at.getText().toString().trim());
+                                } else if (!b) {
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        if (s1.get(i1).equals(at.getText().toString().trim())) {
+                                            s1.remove(i1);
+                                        }
+                                    }
+                                }
+
+                                int coun = 0;
+                                for (int m = 0; m < s1.size(); m++) {
+                                    for (int j = 0; j < s2.size(); j++) {
+                                        if (Integer.parseInt(s1.get(m)) == Integer.parseInt(s2.get(j)))
+                                            continue;
+                                        else {
+                                            for (int k = 0; k < s3.size(); k++) {
+                                                if (Integer.parseInt(s1.get(m)) == Integer.parseInt(s3.get(k)) || Integer.parseInt(s2.get(j)) == Integer.parseInt(s3.get(k)))
+                                                    continue;
+                                                else coun++;
+                                            }
+                                        }
+                                    }
+                                }
+                                setGameMoney(coun);
+                            }
+                        });
+                    }
+                    for (int i = 1; i < LinearTwo.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    s2.add(at.getText().toString().trim());
+                                } else if (!b) {
+                                    for (int i1 = 0; i1 < s2.size(); i1++) {
+                                        if (s2.get(i1).equals(at.getText().toString().trim())) {
+                                            s2.remove(i1);
+                                        }
+                                    }
+                                }
+
+                                int coun = 0;
+                                for (int m = 0; m < s1.size(); m++) {
+                                    for (int j = 0; j < s2.size(); j++) {
+                                        if (Integer.parseInt(s1.get(m)) == Integer.parseInt(s2.get(j)))
+                                            continue;
+                                        else {
+                                            for (int k = 0; k < s3.size(); k++) {
+                                                if (Integer.parseInt(s1.get(m)) == Integer.parseInt(s3.get(k)) || Integer.parseInt(s2.get(j)) == Integer.parseInt(s3.get(k)))
+                                                    continue;
+                                                else coun++;
+                                            }
+                                        }
+                                    }
+                                }
+                                setGameMoney(coun);
+                            }
+                        });
+                    }
+                    for (int i = 1; i < LinearThree.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearThree.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    s3.add(at.getText().toString().trim());
+                                } else if (!b) {
+                                    for (int i1 = 0; i1 < s3.size(); i1++) {
+                                        if (s3.get(i1).equals(at.getText().toString().trim())) {
+                                            s3.remove(i1);
+                                        }
+                                    }
+                                }
+
+                                int coun = 0;
+                                for (int m = 0; m < s1.size(); m++) {
+                                    for (int j = 0; j < s2.size(); j++) {
+                                        if (Integer.parseInt(s1.get(m)) == Integer.parseInt(s2.get(j)))
+                                            continue;
+                                        else {
+                                            for (int k = 0; k < s3.size(); k++) {
+                                                if (Integer.parseInt(s1.get(m)) == Integer.parseInt(s3.get(k)) || Integer.parseInt(s2.get(j)) == Integer.parseInt(s3.get(k)))
+                                                    continue;
+                                                else coun++;
+                                            }
+                                        }
+                                    }
+                                }
+                                setGameMoney(coun);
+                            }
+                        });
+                    }
                 }
                 if (
                         "eleven_star_3_prev_group_duplex".equals(code)
@@ -2711,6 +3907,21 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
                     Select9(select_1, LinearOne);
+                    final int[] n = {0};
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    n[0]++;
+                                } else if (!b) {
+                                    n[0]--;
+                                }
+                                setGameMoney(n[0] * (n[0] - 1) * (n[0] - 2) / 6);
+                            }
+                        });
+                    }
                 }
                 if (
                         "eleven_star_2_prev_duplex".equals(code)
@@ -2722,6 +3933,61 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout select_2 = (LinearLayout) inte.findViewById(R.id.select_2);
                     Select9(select_1, LinearOne);
                     Select9(select_2, LinearTwo);
+                    final List<String> s1 = new ArrayList<String>();
+                    final List<String> s2 = new ArrayList<String>();
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    s1.add(at.getText().toString().trim());
+                                } else if (!b) {
+                                    for (int i1 = 0; i1 < s1.size(); i1++) {
+                                        if (s1.get(i1).equals(at.getText().toString().trim())) {
+                                            s1.remove(i1);
+                                        }
+                                    }
+                                }
+                                int coun = 0;
+                                for (int m = 0; m < s1.size(); m++) {
+                                    for (int j = 0; j < s2.size(); j++) {
+                                        if (Integer.parseInt(s1.get(m)) == Integer.parseInt(s2.get(j)))
+                                            continue;
+                                        coun += 1;
+                                    }
+                                }
+                                setGameMoney(coun);
+                            }
+                        });
+                    }
+                    for (int i = 1; i < LinearTwo.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    s2.add(at.getText().toString().trim());
+                                } else if (!b) {
+                                    for (int i1 = 0; i1 < s2.size(); i1++) {
+                                        if (s2.get(i1).equals(at.getText().toString().trim())) {
+                                            s2.remove(i1);
+                                        }
+                                    }
+                                }
+                                int coun = 0;
+                                for (int m = 0; m < s1.size(); m++) {
+                                    for (int j = 0; j < s2.size(); j++) {
+                                        if (Integer.parseInt(s1.get(m)) == Integer.parseInt(s2.get(j)))
+                                            continue;
+                                        coun += 1;
+                                    }
+                                }
+                                setGameMoney(coun);
+
+                            }
+                        });
+                    }
                 }
                 if (
                         "eleven_star_2_prev_group_duplex".equals(code)
@@ -2730,6 +3996,21 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
                     Select9(select_1, LinearOne);
+                    final int[] c = {0};
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c[0]++;
+                                } else if (!b) {
+                                    c[0]--;
+                                }
+                                setGameMoney(c[0] * (c[0] - 1) / 2);
+                            }
+                        });
+                    }
                 }
                 if (
                         "eleven_star_3_prev_no_fix".equals(code)
@@ -2738,6 +4019,22 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
                     Select9(select_1, LinearOne);
+
+                    final int[] c = {0};
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c[0]++;
+                                } else if (!b) {
+                                    c[0]--;
+                                }
+                                setGameMoney(c[0]);
+                            }
+                        });
+                    }
                 }
                 if (
                         "eleven_fix".equals(code)
@@ -2752,16 +4049,158 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     Select9(select_1, LinearOne);
                     Select9(select_2, LinearTwo);
                     Select9(select_3, LinearThree);
+                    final int[] count1 = {0};
+                    final int[] count2 = {0};
+                    final int[] count3 = {0};
+
+
+                    final int[] s = {0};
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count1[0]++;
+                                    s[0] = count1[0] + count2[0] + count3[0];
+                                }
+                                if (!b) {
+                                    count1[0]--;
+                                    s[0] = count1[0] + count2[0] + count3[0];
+                                }
+
+
+                                setGameMoney(s[0]);
+
+                            }
+                        });
+
+                    }
+                    for (int i = 1; i < LinearTwo.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count2[0]++;
+                                    s[0] = count1[0] + count2[0] + count3[0];
+
+                                }
+                                if (!b) {
+                                    count2[0]--;
+                                    s[0] = count1[0] + count2[0] + count3[0];
+
+                                }
+
+                                setGameMoney(s[0]);
+
+                            }
+                        });
+
+                    }
+                    for (int i = 1; i < LinearThree.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearThree.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count3[0]++;
+                                    s[0] = count1[0] + count2[0] + count3[0];
+                                }
+                                if (!b) {
+                                    count3[0]--;
+                                    s[0] = count1[0] + count2[0] + count3[0];
+                                }
+
+                                setGameMoney(s[0]);
+
+                            }
+                        });
+
+                    }
                 }
                 if (
                         "eleven_even_or_odd".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_quwei_11_5_single_double, null, false);
+                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout LinearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+
+
+                    final int[] count1 = {0};
+                    final int[] count2 = {0};
+
+
+                    final int[] s = {0};
+                    for (int i = 0; i < LinearOne.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count1[0]++;
+                                    s[0] = count1[0] + count2[0];
+                                }
+                                if (!b) {
+                                    count1[0]--;
+                                    s[0] = count1[0] + count2[0];
+                                }
+
+
+                                setGameMoney(s[0]);
+
+                            }
+                        });
+
+                    }
+                    for (int i = 0; i < LinearTwo.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearTwo.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count2[0]++;
+                                    s[0] = count1[0] + count2[0];
+
+                                }
+                                if (!b) {
+                                    count2[0]--;
+                                    s[0] = count1[0] + count2[0];
+                                }
+                                setGameMoney(s[0]);
+
+                            }
+                        });
+
+                    }
+
                 }
                 if (
                         "eleven_middle".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_quwei_11_5_caizhong, null, false);
+                    LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+
+                    final int[] count1 = {0};
+
+                    final int[] s = {0};
+                    for (int i = 0; i < LinearOne.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    count1[0]++;
+                                }
+                                if (!b) {
+                                    count1[0]--;
+                                }
+                                setGameMoney(count1[0]);
+
+                            }
+                        });
+
+                    }
                 }
                 if (
                         "eleven_any_one_duplex".equals(code)
@@ -3232,6 +4671,24 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     names.setText("组选");
                     LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
+                    final int[] c = {0};
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c[0]++;
+                                } else if (!b) {
+                                    c[0]--;
+                                }
+                                if ("star_2_next_group_duplex".equals(code)
+                                        || "2min_star_2_next_group_duplex".equals(code)) {
+                                    setGameMoney(c[0] * (c[0] - 1) / 2);
+                                }
+                            }
+                        });
+                    }
                     Select9(select_1, LinearOne);
                 }
                 if (
@@ -4517,8 +5974,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             || code.equals("star_3_prev_group_duplex")
                             || code.equals("2min_star_3_prev_group_duplex")
                             || code.equals("star_3_midd_group_duplex")
-                            || code.equals("2min_star_3_midd_group_duplex") || "star_5_three_no_fix".equals(code)
-                            || "2min_star_5_three_no_fix".equals(code)
+                            || code.equals("2min_star_3_midd_group_duplex")
+
                     ) {
                 if (count1[0] < 2) {
                     nums = 0;
@@ -5031,6 +6488,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     }
                 }
             }
+            Log.d("11选5的注数", coun + "");
             nums = coun;
             pickedNumber = str1 + "," + str2 + "," + str3;
         }
@@ -8685,6 +10143,44 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         return nss;
     }
 
+    public int TwoHe1(int n) {
+        int nss = 0;
+
+        if (n == 0 || n == 18) {
+            return 1;
+        }
+        if (n == 1 || n == 17) {
+            return 2;
+        }
+        if (n == 2 || n == 16) {
+            return 3;
+        }
+        if (n == 3 || n == 15) {
+            return 4;
+        }
+        if (n == 4 || n == 14) {
+            return 5;
+        }
+        if (n == 5 || n == 13) {
+            return 6;
+        }
+        if (n == 6 || n == 12) {
+            return 7;
+        }
+        if (n == 7 || n == 11) {
+            nss = nss + 8;
+        }
+        if (n == 8 || n == 10) {
+            nss = nss + 9;
+        }
+        if (n == 9) {
+            nss = nss + 10;
+        }
+
+
+        return nss;
+    }
+
     public int getNumHe22(List<Integer> ns) {
         int nss = 0;
         for (int i = 0; i < ns.size(); i++) {
@@ -8718,6 +10214,40 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 nss = nss + 5;
             }
 
+        }
+        return nss;
+    }
+
+    public int TwoZuHe(int n) {
+        int nss = 0;
+
+
+        if (n == 1 || n == 17) {
+            return 1;
+        }
+        if (n == 2 || n == 16) {
+            return 1;
+        }
+        if (n == 3 || n == 15) {
+            return 2;
+        }
+        if (n == 4 || n == 14) {
+            return 2;
+        }
+        if (n == 5 || n == 13) {
+            return 3;
+        }
+        if (n == 6 || n == 12) {
+            return 3;
+        }
+        if (n == 7 || n == 11) {
+            return 4;
+        }
+        if (n == 8 || n == 10) {
+            return 4;
+        }
+        if (n == 9) {
+            return 5;
         }
         return nss;
     }
@@ -8757,6 +10287,42 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 nss = nss + 2;
             }
 
+        }
+        return nss;
+    }
+
+    public int TwoKua(int n) {
+        int nss = 0;
+
+        if (n == 0) {
+            nss = nss + 10;
+        }
+        if (n == 1) {
+            nss = nss + 18;
+        }
+        if (n == 2) {
+            return 16;
+        }
+        if (n == 3) {
+            return 14;
+        }
+        if (n == 4) {
+            return 12;
+        }
+        if (n == 5) {
+            return 10;
+        }
+        if (n == 6) {
+            return 8;
+        }
+        if (n == 7) {
+            return 6;
+        }
+        if (n == 8) {
+            return 4;
+        }
+        if (n == 9) {
+            return 2;
         }
         return nss;
     }
@@ -8824,6 +10390,55 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         return isint;
     }
 
+    public int ThreeStarHe(int n) {
+        int isint = 0;
+
+        if (n == 0 || n == 27) {
+            return 1;
+        }
+        if (n == 1 || n == 26) {
+            return 3;
+        }
+        if (n == 2 || n == 25) {
+            return 6;
+        }
+        if (n == 3 || n == 24) {
+            return 10;
+        }
+        if (n == 4 || n == 23) {
+            return 15;
+        }
+        if (n == 5 || n == 22) {
+            return 21;
+        }
+        if (n == 6 || n == 21) {
+            return 28;
+        }
+        if (n == 7 || n == 20) {
+            return 36;
+        }
+        if (n == 8 || n == 19) {
+            return 45;
+        }
+        if (n == 9 || n == 18) {
+            return 55;
+        }
+        if (n == 10 || n == 17) {
+            return 63;
+        }
+        if (n == 11 || n == 16) {
+            return 69;
+        }
+        if (n == 12 || n == 15) {
+            return 73;
+        }
+        if (n == 13 || n == 14) {
+            return 75;
+        }
+
+        return isint;
+    }
+
     public int getNumKua(List<Integer> listn) {
         int isint = 0;
 
@@ -8848,6 +10463,31 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 isint = isint + 150;
             }
 
+        }
+        return isint;
+    }
+
+    public int ThreeKua(int n) {
+        int isint = 0;
+
+
+        if (n == 0) {
+            return 10;
+        }
+        if (n == 1 || n == 9) {
+            return 54;
+        }
+        if (n == 2 || n == 8) {
+            return 96;
+        }
+        if (n == 3 || n == 7) {
+            return 126;
+        }
+        if (n == 4 || n == 6) {
+            return 144;
+        }
+        if (n == 5) {
+            return 150;
         }
         return isint;
     }
@@ -8897,6 +10537,52 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 isint = isint + 15;
             }
 
+        }
+        return isint;
+    }
+
+    public int ThreeZuHe(int n) {
+        int isint = 0;
+
+
+        if (n == 1 || n == 26) {
+            return 1;
+        }
+        if (n == 2 || n == 25) {
+            return 2;
+        }
+        if (n == 3 || n == 24) {
+            return 2;
+        }
+        if (n == 4 || n == 23) {
+            return 4;
+        }
+        if (n == 5 || n == 22) {
+            return 5;
+        }
+        if (n == 6 || n == 21) {
+            return 6;
+        }
+        if (n == 7 || n == 20) {
+            return 8;
+        }
+        if (n == 8 || n == 19) {
+            isint = isint + 10;
+        }
+        if (n == 9 || n == 18) {
+            return 11;
+        }
+        if (n == 10 || n == 17) {
+            return 13;
+        }
+        if (n == 11 || n == 16) {
+            return 14;
+        }
+        if (n == 12 || n == 15) {
+            return 14;
+        }
+        if (n == 13 || n == 14) {
+            return 15;
         }
         return isint;
     }
