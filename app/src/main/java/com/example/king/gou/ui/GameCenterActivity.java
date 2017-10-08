@@ -50,6 +50,7 @@ import com.example.king.gou.utils.RxUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -747,7 +748,6 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         || "star_2_next_group_single".equals(code)
                         || "star_2_prev_single".equals(code)
                         || "star_2_prev_group_single".equals(code)
-
                         || "eleven_star_3_prev_single".equals(code)
                         || "eleven_star_3_prev_group_single".equals(code)
                         || "eleven_star_2_prev_single".equals(code)
@@ -817,8 +817,98 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                             String s = charSequence.toString();
                             Log.d("单式模式的", s + "   " + i + "    " + i1 + "   " + i2);
-                            if (s.length() > 4) {
+                            int seleNums=0;
+                            if (
+                                    "star_5_single".equals(code)
+                                    ||"2min_star_5_single".equals(code)
+                                    ) {
+                                seleNums=5;
+                            }if (
+                                    "star_4_single".equals(code)
+                                    ||"2min_star_4_single".equals(code)
+                                    ) {
+                                seleNums=4;
+                            }if (
+                                    "star_3_next_single".equals(code)
+                                    ||"2min_star_3_next_single".equals(code)
+                                    ||"star_3_next_group_single".equals(code)
+                                    ||"2min_star_3_next_group_single".equals(code)
+                                    ||"star_3_next_group_single_6".equals(code)
+                                    ||"2min_star_3_next_group_single_6".equals(code)
+                                    ||"star_3_next_group_diverse".equals(code)
+                                    ||"2min_star_3_next_group_diverse".equals(code)
 
+                                    || "star_3_prev_single".equals(code)
+                                    ||"2min_star_3_prev_single".equals(code)
+                                    ||"star_3_prev_group_single".equals(code)
+                                    ||"2min_star_3_prev_group_single".equals(code)
+                                    ||"star_3_prev_group_single_6".equals(code)
+                                    ||"2min_star_3_prev_group_single_6".equals(code)
+                                    ||"star_3_prev_group_diverse".equals(code)
+                                    ||"2min_star_3_prev_group_diverse".equals(code)
+
+                                      || "star_3_midd_single".equals(code)
+                                    ||"2min_star_3_midd_single".equals(code)
+                                    ||"star_3_midd_group_single".equals(code)
+                                    ||"2min_star_3_midd_group_single".equals(code)
+                                    ||"star_3_midd_group_single_6".equals(code)
+                                    ||"2min_star_3_midd_group_single_6".equals(code)
+                                    ||"star_3_midd_group_diverse".equals(code)
+                                    ||"2min_star_3_midd_group_diverse".equals(code)
+
+                                    ) {
+                                seleNums=3;
+                            }
+                            if (s.length() > seleNums-1) {
+                                if (s.contains(",")) {
+                                    String[] sp = s.split(",");
+                                    Log.d("单式模式的Sp",sp.length+"");
+                                    int c=0;
+                                    for (int i3 = 0; i3 < sp.length; i3++) {
+                                        String s1 = sp[i3];
+                                        if (s1.length()==seleNums) {
+                                            for (int i4 = 0; i4 < s1.length(); i4++) {
+                                                String sub = s1.substring(i4, i4 + 1);
+                                                Log.d("判断是不是数字",sub.matches("\\d+")+"");
+                                                if (sub.matches("\\d+")) {
+                                                    if (i4==seleNums-1) {
+                                                        if (s.substring(i4, i4 + 1).matches("\\d+")) {
+                                                            c++;
+                                                        }
+                                                    }
+                                                }else{
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    for (int i3 = 0; i3 < sp.length; i3++) {
+
+                                    }
+                                    setGameMoney(c);
+                                }else{
+                                    if (s.length()==seleNums) {
+                                        for (int i3 = 0; i3 < s.length(); i3++) {
+                                            String sub = s.substring(i3, i3 + 1);
+                                            Log.d("判断是不是数字",sub.matches("\\d+")+"");
+                                            if (sub.matches("\\d+")) {
+
+                                                if (i3==seleNums-1) {
+                                                    if (s.substring(i3, i3 + 1).matches("\\d+")) {
+                                                        setGameMoney(1);
+                                                    }
+                                                }
+                                            }else{
+                                                break;
+                                            }
+                                        }
+                                    }else{
+                                        setGameMoney(0);
+                                    }
+                            }
+
+                            }else{
+                                setGameMoney(0);
                             }
                         }
 
@@ -843,10 +933,10 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     TextView numDelete = (TextView) inte.findViewById(R.id.numDelete);
                     // g2_editText.setInputType(InputType.TYPE_NULL);
 
-                    num0.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            g2_editText.setText(g2_editText.getText().toString() + "0");
+                            num0.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    g2_editText.setText(g2_editText.getText().toString() + "0");
                         }
                     });
                     num1.setOnClickListener(new View.OnClickListener() {
