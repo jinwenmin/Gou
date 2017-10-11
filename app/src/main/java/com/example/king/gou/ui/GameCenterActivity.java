@@ -817,97 +817,311 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                             String s = charSequence.toString();
                             Log.d("单式模式的", s + "   " + i + "    " + i1 + "   " + i2);
-                            int seleNums=0;
+                            int seleNums = 0;
+                            List<String> NS;
                             if (
                                     "star_5_single".equals(code)
-                                    ||"2min_star_5_single".equals(code)
+                                            || "2min_star_5_single".equals(code)
                                     ) {
-                                seleNums=5;
-                            }if (
-                                    "star_4_single".equals(code)
-                                    ||"2min_star_4_single".equals(code)
-                                    ) {
-                                seleNums=4;
-                            }if (
-                                    "star_3_next_single".equals(code)
-                                    ||"2min_star_3_next_single".equals(code)
-                                    ||"star_3_next_group_single".equals(code)
-                                    ||"2min_star_3_next_group_single".equals(code)
-                                    ||"star_3_next_group_single_6".equals(code)
-                                    ||"2min_star_3_next_group_single_6".equals(code)
-                                    ||"star_3_next_group_diverse".equals(code)
-                                    ||"2min_star_3_next_group_diverse".equals(code)
-
-                                    || "star_3_prev_single".equals(code)
-                                    ||"2min_star_3_prev_single".equals(code)
-                                    ||"star_3_prev_group_single".equals(code)
-                                    ||"2min_star_3_prev_group_single".equals(code)
-                                    ||"star_3_prev_group_single_6".equals(code)
-                                    ||"2min_star_3_prev_group_single_6".equals(code)
-                                    ||"star_3_prev_group_diverse".equals(code)
-                                    ||"2min_star_3_prev_group_diverse".equals(code)
-
-                                      || "star_3_midd_single".equals(code)
-                                    ||"2min_star_3_midd_single".equals(code)
-                                    ||"star_3_midd_group_single".equals(code)
-                                    ||"2min_star_3_midd_group_single".equals(code)
-                                    ||"star_3_midd_group_single_6".equals(code)
-                                    ||"2min_star_3_midd_group_single_6".equals(code)
-                                    ||"star_3_midd_group_diverse".equals(code)
-                                    ||"2min_star_3_midd_group_diverse".equals(code)
-
-                                    ) {
-                                seleNums=3;
+                                seleNums = 5;
                             }
-                            if (s.length() > seleNums-1) {
+                            if (
+                                    "star_4_single".equals(code)
+                                            || "2min_star_4_single".equals(code)
+                                    ) {
+                                seleNums = 4;
+                            }
+                            if (
+                                    "star_3_next_single".equals(code)
+                                            || "2min_star_3_next_single".equals(code)
+                                            || "star_3_next_group_single".equals(code)
+                                            || "2min_star_3_next_group_single".equals(code)
+                                            || "star_3_next_group_single_6".equals(code)
+                                            || "2min_star_3_next_group_single_6".equals(code)
+                                            || "star_3_next_group_diverse".equals(code)
+                                            || "2min_star_3_next_group_diverse".equals(code)
+
+                                            || "star_3_prev_single".equals(code)
+                                            || "2min_star_3_prev_single".equals(code)
+                                            || "star_3_prev_group_single".equals(code)
+                                            || "2min_star_3_prev_group_single".equals(code)
+                                            || "star_3_prev_group_single_6".equals(code)
+                                            || "2min_star_3_prev_group_single_6".equals(code)
+                                            || "star_3_prev_group_diverse".equals(code)
+                                            || "2min_star_3_prev_group_diverse".equals(code)
+
+                                            || "star_3_midd_single".equals(code)
+                                            || "2min_star_3_midd_single".equals(code)
+                                            || "star_3_midd_group_single".equals(code)
+                                            || "2min_star_3_midd_group_single".equals(code)
+                                            || "star_3_midd_group_single_6".equals(code)
+                                            || "2min_star_3_midd_group_single_6".equals(code)
+                                            || "star_3_midd_group_diverse".equals(code)
+                                            || "2min_star_3_midd_group_diverse".equals(code)
+
+                                    ) {
+                                seleNums = 3;
+                            }
+                            if (
+                                    "star_2_next_single".equals(code)
+                                            || "2min_star_2_next_single".equals(code)
+                                            || "star_2_next_group_single".equals(code)
+                                            || "2min_star_2_next_group_single".equals(code)
+
+                                            || "star_2_prev_single".equals(code)
+                                            || "2min_star_2_prev_single".equals(code)
+                                            || "star_2_prev_group_single".equals(code)
+                                            || "2min_star_2_prev_group_single".equals(code)
+
+                                    ) {
+                                seleNums = 2;
+                            }
+                            if (s.length() > seleNums - 1) {
                                 if (s.contains(",")) {
+                                    NS = new ArrayList<String>();
                                     String[] sp = s.split(",");
-                                    Log.d("单式模式的Sp",sp.length+"");
-                                    int c=0;
+                                    Log.d("单式模式的Sp", sp.length + "");
+                                    int c = 0;
                                     for (int i3 = 0; i3 < sp.length; i3++) {
                                         String s1 = sp[i3];
-                                        if (s1.length()==seleNums) {
+                                        if (s1.length() == seleNums) {
                                             for (int i4 = 0; i4 < s1.length(); i4++) {
                                                 String sub = s1.substring(i4, i4 + 1);
-                                                Log.d("判断是不是数字",sub.matches("\\d+")+"");
+                                                Log.d("判断是不是数字", sub.matches("\\d+") + "");
                                                 if (sub.matches("\\d+")) {
-                                                    if (i4==seleNums-1) {
+                                                    if (i4 == seleNums - 1) {
                                                         if (s.substring(i4, i4 + 1).matches("\\d+")) {
+                                                            NS.add(s1);
                                                             c++;
                                                         }
                                                     }
-                                                }else{
+                                                } else {
                                                     break;
                                                 }
                                             }
                                         }
                                     }
-                                    for (int i3 = 0; i3 < sp.length; i3++) {
+                                    if (
+                                            "star_3_next_group_single".equals(code)
+                                                    || "2min_star_3_next_group_single".equals(code)
+                                                    || "star_3_prev_group_single".equals(code)
+                                                    || "2min_star_3_prev_group_single".equals(code) || "star_3_midd_group_single".equals(code)
+                                                    || "2min_star_3_midd_group_single".equals(code)
+                                            ) {
+                                        int cc = 0;
+                                        for (int i3 = 0; i3 < NS.size(); i3++) {
+                                            String ss1 = NS.get(i3);
+                                            Log.d("组三单式Nums", ss1);
+                                            int s1 = Integer.parseInt(ss1.substring(0, 1));
+                                            int s2 = Integer.parseInt(ss1.substring(1, 2));
+                                            int s3 = Integer.parseInt(ss1.substring(2, 3));
+                                            if (s1 == s2 && s1 == s3 && s2 == s3) {
 
+                                            } else if (s1 != s2 && s1 != s3 && s2 != s3) {
+
+                                            } else {
+                                                cc++;
+                                            }
+
+                                        }
+                                        Log.d("组三单式NumsCC", cc + "");
+                                        setGameMoney(cc);
+                                    } else if (
+                                            "star_3_next_group_single_6".equals(code)
+                                                    || "2min_star_3_next_group_single_6".equals(code)
+                                                    || "star_3_prev_group_single_6".equals(code)
+                                                    || "2min_star_3_prev_group_single_6".equals(code) || "star_3_midd_group_single_6".equals(code)
+                                                    || "2min_star_3_midd_group_single_6".equals(code)
+                                            ) {
+                                        int cc6 = 0;
+                                        for (int i3 = 0; i3 < NS.size(); i3++) {
+                                            String ss1 = NS.get(i3);
+                                            int s1 = Integer.parseInt(ss1.substring(0, 1));
+                                            int s2 = Integer.parseInt(ss1.substring(1, 2));
+                                            int s3 = Integer.parseInt(ss1.substring(2, 3));
+                                            if (s1 == s2 || s1 == s3 || s2 == s3) {
+
+                                            } else {
+                                                cc6++;
+                                            }
+                                        }
+                                        setGameMoney(cc6);
+                                    } else if (
+                                            "star_3_next_group_diverse".equals(code)
+                                                    || "2min_star_3_next_group_diverse".equals(code)
+                                                    || "star_3_prev_group_diverse".equals(code)
+                                                    || "2min_star_3_prev_group_diverse".equals(code) || "star_3_midd_group_diverse".equals(code)
+                                                    || "2min_star_3_midd_group_diverse".equals(code)
+                                            ) {
+                                        int ccHe = 0;
+                                        for (int i3 = 0; i3 < NS.size(); i3++) {
+                                            String ss1 = NS.get(i3);
+                                            int s1 = Integer.parseInt(ss1.substring(0, 1));
+                                            int s2 = Integer.parseInt(ss1.substring(1, 2));
+                                            int s3 = Integer.parseInt(ss1.substring(2, 3));
+                                            if (s1 == s2 && s1 == s3 && s2 == s3) {
+
+                                            } else {
+                                                ccHe++;
+                                            }
+                                        }
+                                        setGameMoney(ccHe);
+                                    } else if (
+                                            "star_2_prev_group_single".equals(code)
+                                                    || "2min_star_2_prev_group_single".equals(code)
+                                                    || "star_2_next_group_single".equals(code)
+                                                    || "2min_star_2_next_group_single".equals(code)
+
+                                            ) {
+                                        int cc2 = 0;
+                                        for (int i3 = 0; i3 < NS.size(); i3++) {
+                                            String ss1 = NS.get(i3);
+                                            int s1 = Integer.parseInt(ss1.substring(0, 1));
+                                            int s2 = Integer.parseInt(ss1.substring(1, 2));
+
+                                            if (s1 == s2) {
+                                            } else {
+                                                cc2++;
+                                            }
+                                        }
+                                        setGameMoney(cc2);
+                                    } else {
+                                        Log.d("组三单式Nums注", c + "");
+                                        setGameMoney(c);
                                     }
-                                    setGameMoney(c);
-                                }else{
-                                    if (s.length()==seleNums) {
+
+                                } else {
+                                    NS = new ArrayList<String>();
+                                    if (s.length() == seleNums) {
                                         for (int i3 = 0; i3 < s.length(); i3++) {
                                             String sub = s.substring(i3, i3 + 1);
-                                            Log.d("判断是不是数字",sub.matches("\\d+")+"");
+                                            Log.d("判断是不是数字", sub.matches("\\d+") + "");
                                             if (sub.matches("\\d+")) {
-
-                                                if (i3==seleNums-1) {
+                                                if (i3 == seleNums - 1) {
                                                     if (s.substring(i3, i3 + 1).matches("\\d+")) {
-                                                        setGameMoney(1);
+                                                        NS.add(s);
                                                     }
                                                 }
-                                            }else{
+                                            } else {
                                                 break;
                                             }
                                         }
-                                    }else{
+                                    }
+                                    if (NS.size() != 0) {
+                                        if (
+                                                "star_5_single".equals(code)
+                                                        || "2min_star_5_single".equals(code)
+                                                        ||"star_4_single".equals(code)
+                                                || "2min_star_4_single".equals(code)
+
+                                                ||"star_3_next_single".equals(code)
+                                                || "2min_star_3_next_single".equals(code)
+                                                || "star_3_prev_single".equals(code)
+                                                || "2min_star_3_prev_single".equals(code)
+                                                || "star_3_midd_single".equals(code)
+                                                || "2min_star_3_midd_single".equals(code)
+
+                                                        || "star_2_prev_single".equals(code)
+                                                        || "2min_star_2_prev_single".equals(code)
+                                                        || "star_2_next_single".equals(code)
+                                                        || "2min_star_2_next_single".equals(code)
+                                                ) {
+                                            Log.d("执行这一步", "为1");
+                                            setGameMoney(1);
+                                        }
+                                    }
+
+                                    if (
+                                            "star_3_next_group_single".equals(code)
+                                                    || "2min_star_3_next_group_single".equals(code)
+                                                    || "star_3_prev_group_single".equals(code)
+                                                    || "2min_star_3_prev_group_single".equals(code) || "star_3_midd_group_single".equals(code)
+                                                    || "2min_star_3_midd_group_single".equals(code)
+                                            ) {
+                                        int cc = 0;
+                                        for (int i3 = 0; i3 < NS.size(); i3++) {
+                                            String ss1 = NS.get(i3);
+                                            Log.d("组三单式Nums", ss1);
+                                            int s1 = Integer.parseInt(ss1.substring(0, 1));
+                                            int s2 = Integer.parseInt(ss1.substring(1, 2));
+                                            int s3 = Integer.parseInt(ss1.substring(2, 3));
+                                            if (s1 == s2 && s1 == s3 && s2 == s3) {
+
+                                            } else if (s1 != s2 && s1 != s3 && s2 != s3) {
+
+                                            } else {
+                                                setGameMoney(1);
+                                            }
+
+                                        }
+
+
+                                    } else if (
+                                            "star_3_next_group_single_6".equals(code)
+                                                    || "2min_star_3_next_group_single_6".equals(code)
+                                                    || "star_3_prev_group_single_6".equals(code)
+                                                    || "2min_star_3_prev_group_single_6".equals(code) || "star_3_midd_group_single_6".equals(code)
+                                                    || "2min_star_3_midd_group_single_6".equals(code)
+                                            ) {
+                                        int cc6 = 0;
+                                        for (int i3 = 0; i3 < NS.size(); i3++) {
+                                            String ss1 = NS.get(i3);
+                                            int s1 = Integer.parseInt(ss1.substring(0, 1));
+                                            int s2 = Integer.parseInt(ss1.substring(1, 2));
+                                            int s3 = Integer.parseInt(ss1.substring(2, 3));
+                                            if (s1 == s2 || s1 == s3 || s2 == s3) {
+
+                                            } else {
+                                                setGameMoney(1);
+                                            }
+                                        }
+
+                                    } else if (
+                                            "star_3_next_group_diverse".equals(code)
+                                                    || "2min_star_3_next_group_diverse".equals(code)
+                                                    || "star_3_prev_group_diverse".equals(code)
+                                                    || "2min_star_3_prev_group_diverse".equals(code) || "star_3_midd_group_diverse".equals(code)
+                                                    || "2min_star_3_midd_group_diverse".equals(code)
+                                            ) {
+                                        int ccHe = 0;
+                                        for (int i3 = 0; i3 < NS.size(); i3++) {
+                                            String ss1 = NS.get(i3);
+                                            int s1 = Integer.parseInt(ss1.substring(0, 1));
+                                            int s2 = Integer.parseInt(ss1.substring(1, 2));
+                                            int s3 = Integer.parseInt(ss1.substring(2, 3));
+                                            if (s1 == s2 && s1 == s3 && s2 == s3) {
+
+                                            } else {
+                                                setGameMoney(1);
+                                            }
+                                        }
+
+                                    } else if (
+                                            "star_2_prev_group_single".equals(code)
+                                                    || "2min_star_2_prev_group_single".equals(code)
+                                                    || "star_2_next_group_single".equals(code)
+                                                    || "2min_star_2_next_group_single".equals(code)
+
+                                            ) {
+                                        int cc2 = 0;
+                                        for (int i3 = 0; i3 < NS.size(); i3++) {
+                                            String ss1 = NS.get(i3);
+                                            int s1 = Integer.parseInt(ss1.substring(0, 1));
+                                            int s2 = Integer.parseInt(ss1.substring(1, 2));
+
+                                            if (s1 == s2) {
+                                            } else {
+                                                setGameMoney(1);
+                                            }
+                                        }
+
+                                    }
+                                    if (NS.size() == 0) {
                                         setGameMoney(0);
                                     }
-                            }
+                                }
 
-                            }else{
+                            } else {
                                 setGameMoney(0);
                             }
                         }
@@ -933,10 +1147,10 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     TextView numDelete = (TextView) inte.findViewById(R.id.numDelete);
                     // g2_editText.setInputType(InputType.TYPE_NULL);
 
-                            num0.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    g2_editText.setText(g2_editText.getText().toString() + "0");
+                    num0.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "0");
                         }
                     });
                     num1.setOnClickListener(new View.OnClickListener() {
@@ -2883,9 +3097,144 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 if (
                         "star_2_any_single".equals(code)
                                 || "2min_star_2_any_single".equals(code)
+                                || "star_2_any_group_single".equals(code)
+                                || "2min_star_2_any_group_single".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_optional2, null, false);
                     final EditText g2_editText = (EditText) inte.findViewById(R.id.optional2_editText);
+                    LinearLayout linearCheck = (LinearLayout) inte.findViewById(R.id.LinearCheck);
+                    final TextView checkNum = (TextView) inte.findViewById(R.id.CheckNum);
+                    final TextView FangAnNum = (TextView) inte.findViewById(R.id.FangAnNum);
+                    final int[] cc2 = {0};
+                    g2_editText.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                            String s = charSequence.toString();
+                            int seleNums = 2;
+                            List<String> NS;
+                            if (s.length() > seleNums - 1) {
+                                if (s.contains(",")) {
+                                    NS = new ArrayList<String>();
+                                    String[] sp = s.split(",");
+                                    Log.d("单式模式的Sp", sp.length + "");
+                                    int c = 0;
+                                    for (int i3 = 0; i3 < sp.length; i3++) {
+                                        String s1 = sp[i3];
+                                        if (s1.length() == seleNums) {
+                                            for (int i4 = 0; i4 < s1.length(); i4++) {
+                                                String sub = s1.substring(i4, i4 + 1);
+                                                Log.d("判断是不是数字", sub.matches("\\d+") + "");
+                                                if (sub.matches("\\d+")) {
+                                                    if (i4 == seleNums - 1) {
+                                                        if (s.substring(i4, i4 + 1).matches("\\d+")) {
+                                                            NS.add(s1);
+                                                            c++;
+                                                        }
+                                                    }
+                                                } else {
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if ("star_2_any_group_single".equals(code)
+                                            || "2min_star_2_any_group_single".equals(code)) {
+                                        cc2[0] = 0;
+                                        for (int i3 = 0; i3 < NS.size(); i3++) {
+                                            String ss1 = NS.get(i3);
+                                            int s1 = Integer.parseInt(ss1.substring(0, 1));
+                                            int s2 = Integer.parseInt(ss1.substring(1, 2));
+
+                                            if (s1 == s2) {
+                                            } else {
+                                                cc2[0]++;
+                                            }
+                                        }
+                                        setGameMoney(cc2[0] * Integer.parseInt(FangAnNum.getText().toString()));
+                                    } else {
+                                        setGameMoney(NS.size() * Integer.parseInt(FangAnNum.getText().toString()));
+                                    }
+
+
+                                } else {
+                                    NS = new ArrayList<String>();
+                                    if (s.length() == seleNums) {
+                                        for (int i3 = 0; i3 < s.length(); i3++) {
+                                            String sub = s.substring(i3, i3 + 1);
+                                            Log.d("判断是不是数字", sub.matches("\\d+") + "");
+                                            if (sub.matches("\\d+")) {
+                                                if (i3 == seleNums - 1) {
+                                                    if (s.substring(i3, i3 + 1).matches("\\d+")) {
+                                                        cc2[0] = 1;
+                                                        NS.add(s);
+                                                    }
+                                                }
+                                            } else {
+                                                break;
+                                            }
+                                        }
+                                        if ("star_2_any_group_single".equals(code)
+                                                || "2min_star_2_any_group_single".equals(code)) {
+
+                                            for (int i3 = 0; i3 < NS.size(); i3++) {
+                                                String ss1 = NS.get(i3);
+                                                int s1 = Integer.parseInt(ss1.substring(0, 1));
+                                                int s2 = Integer.parseInt(ss1.substring(1, 2));
+
+                                                if (s1 == s2) {
+                                                    setGameMoney(0);
+                                                } else {
+                                                    setGameMoney(1 * Integer.parseInt(FangAnNum.getText().toString()));
+                                                    cc2[0] = 1;
+                                                }
+                                            }
+
+                                        } else {
+                                            cc2[0] = 1;
+                                            setGameMoney(1 * Integer.parseInt(FangAnNum.getText().toString()));
+                                        }
+                                    } else {
+                                        setGameMoney(0);
+                                    }
+                                }
+
+                            } else {
+                                setGameMoney(0);
+                            }
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+
+                        }
+                    });
+                    final int[] c = {0};
+                    for (int i = 0; i < linearCheck.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linearCheck.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c[0]++;
+                                    checkNum.setText(c[0] + "");
+                                    FangAnNum.setText(c[0] * (c[0] - 1) / 2 + "");
+                                    setGameMoney(c[0] * (c[0] - 1) / 2 * cc2[0]);
+                                } else {
+                                    c[0]--;
+                                    checkNum.setText(c[0] + "");
+                                    FangAnNum.setText(c[0] * (c[0] - 1) / 2 + "");
+                                    setGameMoney(c[0] * (c[0] - 1) / 2 * cc2[0]);
+                                }
+                            }
+                        });
+                    }
+                    ((CheckBox) linearCheck.getChildAt(3)).setChecked(true);
+                    ((CheckBox) linearCheck.getChildAt(4)).setChecked(true);
                     final TextView num0 = (TextView) inte.findViewById(R.id.num0);
                     TextView num1 = (TextView) inte.findViewById(R.id.num1);
                     TextView num2 = (TextView) inte.findViewById(R.id.num2);
@@ -2898,7 +3247,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     TextView num9 = (TextView) inte.findViewById(R.id.num9);
                     TextView numd = (TextView) inte.findViewById(R.id.numd);
                     TextView numDelete = (TextView) inte.findViewById(R.id.numDelete);
-                    g2_editText.setInputType(InputType.TYPE_NULL);
+                    //   g2_editText.setInputType(InputType.TYPE_NULL);
 
                     num0.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -2985,6 +3334,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             }
                         }
                     });
+
                 }
                 if (
                         "star_2_any_sum".equals(code)
@@ -3001,7 +3351,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
                     Select9(select_1, LinearOne);
                 }
-                if (
+               /* if (
                         "star_2_any_group_single".equals(code)
                                 || "2min_star_2_any_group_single".equals(code)
                         ) {
@@ -3106,7 +3456,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             }
                         }
                     });
-                }
+                }*/
                 if (
                         "star_2_any_group_sum".equals(code)
                                 || "2min_star_2_any_group_sum".equals(code)

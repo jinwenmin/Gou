@@ -49,7 +49,6 @@
             android:id="@+id/shi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
             android:text="十位"
             android:textSize="30px" />
 
@@ -57,7 +56,7 @@
             android:id="@+id/ge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
+
             android:text="个位"
             android:textSize="30px" />
 
@@ -68,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10px"
         android:orientation="horizontal"
-        android:visibility="gone">
+   >
 
         <TextView
             android:layout_width="wrap_content"
