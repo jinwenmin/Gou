@@ -39,7 +39,7 @@
             android:id="@+id/shi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
+
             android:text="十位"
             android:textSize="30px" />
 
@@ -47,7 +47,7 @@
             android:id="@+id/ge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
+
             android:text="个位"
             android:textSize="30px" />
 
@@ -69,7 +69,7 @@
             android:id="@+id/CheckNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2"
+            android:text="0"
             android:textSize="25px" />
 
         <TextView
@@ -82,7 +82,7 @@
             android:id="@+id/FangAnNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1"
+            android:text="0"
             android:textSize="25px" />
 
         <TextView
