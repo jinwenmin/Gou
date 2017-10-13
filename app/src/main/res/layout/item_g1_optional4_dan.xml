@@ -32,7 +32,7 @@
             android:textSize="30px" />
 
         <CheckBox
-            android:checked="true"
+
             android:id="@+id/qian"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             android:id="@+id/bai"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
+
             android:text="百位"
             android:textSize="30px" />
 
@@ -51,7 +51,7 @@
             android:id="@+id/shi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
+
             android:text="十位"
             android:textSize="30px" />
 
@@ -59,17 +59,17 @@
             android:id="@+id/ge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
+
             android:text="个位"
             android:textSize="30px" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginLeft="20px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -81,7 +81,7 @@
             android:id="@+id/CheckNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="3"
+            android:text="0"
             android:textSize="25px" />
 
         <TextView
@@ -94,7 +94,7 @@
             android:id="@+id/FangAnNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1"
+            android:text="0"
             android:textSize="25px" />
 
         <TextView

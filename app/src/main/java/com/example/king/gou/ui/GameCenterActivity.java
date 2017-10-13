@@ -880,10 +880,11 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 if (s.contains(",")) {
                                     NS = new ArrayList<String>();
                                     String[] sp = s.split(",");
-                                    Log.d("单式模式的Sp", sp.length + "");
+
                                     int c = 0;
                                     for (int i3 = 0; i3 < sp.length; i3++) {
                                         String s1 = sp[i3];
+                                        Log.d("单式模式的判断", s1 + "");
                                         if (s1.length() == seleNums) {
                                             for (int i4 = 0; i4 < s1.length(); i4++) {
                                                 String sub = s1.substring(i4, i4 + 1);
@@ -986,8 +987,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                         }
                                         setGameMoney(cc2);
                                     } else {
-                                        Log.d("组三单式Nums注", c + "");
-                                        setGameMoney(c);
+                                        Log.d("组三单式Nums注", NS.size() + "");
+                                        setGameMoney(NS.size());
                                     }
 
                                 } else {
@@ -3843,6 +3844,77 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 || "2min_star_3_any_sum".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_optional3_he, null, false);
+                    LinearLayout linearCheck = (LinearLayout) inte.findViewById(R.id.LinearCheck);
+                    LinearLayout linearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout linearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    LinearLayout linearThree = (LinearLayout) inte.findViewById(R.id.LinearThree);
+                    final TextView checkNum = (TextView) inte.findViewById(R.id.CheckNum);
+                    final TextView FANum = (TextView) inte.findViewById(R.id.FangAnNum);
+
+                    final int[] c = {0};
+                    final int[] sum = {0};
+                    for (int i = 0; i < linearCheck.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linearCheck.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c[0]++;
+                                } else {
+                                    c[0]--;
+                                }
+                                checkNum.setText(c[0] + "");
+                                int c1 = c[0] * (c[0] - 1) * (c[0] - 2);
+                                FANum.setText(c1 / 6 + "");
+                                setGameMoney(c1 / 6 * sum[0]);
+                            }
+                        });
+                    }
+                    ((CheckBox) linearCheck.getChildAt(2)).setChecked(true);
+                    ((CheckBox) linearCheck.getChildAt(3)).setChecked(true);
+                    ((CheckBox) linearCheck.getChildAt(4)).setChecked(true);
+                    for (int i = 0; i < linearOne.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) linearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    sum[0] = sum[0] + getOptional3_he(Integer.parseInt(at.getText().toString()));
+                                } else {
+                                    sum[0] = sum[0] - getOptional3_he(Integer.parseInt(at.getText().toString()));
+                                }
+                                setGameMoney(sum[0] * Integer.parseInt(FANum.getText().toString()));
+                            }
+                        });
+                    }
+                    for (int i = 0; i < linearTwo.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) linearTwo.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    sum[0] = sum[0] + getOptional3_he(Integer.parseInt(at.getText().toString()));
+                                } else {
+                                    sum[0] = sum[0] - getOptional3_he(Integer.parseInt(at.getText().toString()));
+                                }
+                                setGameMoney(sum[0] * Integer.parseInt(FANum.getText().toString()));
+                            }
+                        });
+                    }
+                    for (int i = 0; i < linearThree.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) linearThree.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    sum[0] = sum[0] + getOptional3_he(Integer.parseInt(at.getText().toString()));
+                                } else {
+                                    sum[0] = sum[0] - getOptional3_he(Integer.parseInt(at.getText().toString()));
+                                }
+                                setGameMoney(sum[0] * Integer.parseInt(FANum.getText().toString()));
+                            }
+                        });
+                    }
                 }
                 if (
                         "star_3_any_group_duplex".equals(code)
@@ -3853,6 +3925,61 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     LinearLayout LinearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
                     LinearLayout select_1 = (LinearLayout) inte.findViewById(R.id.select_1);
                     Select9(select_1, LinearOne);
+                    LinearLayout linearCheck = (LinearLayout) inte.findViewById(R.id.LinearCheck);
+                    final TextView checkNum = (TextView) inte.findViewById(R.id.CheckNum);
+                    final TextView FANum = (TextView) inte.findViewById(R.id.FangAnNum);
+
+                    final int[] c = {0};
+                    final int[] sum = {0};
+                    final int[] count = {0};
+                    for (int i = 0; i < linearCheck.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linearCheck.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c[0]++;
+                                } else {
+                                    c[0]--;
+                                }
+                                checkNum.setText(c[0] + "");
+                                int c1 = c[0] * (c[0] - 1) * (c[0] - 2);
+                                FANum.setText(c1 / 6 + "");
+                                if ("star_3_any_group_duplex".equals(code)
+                                        || "2min_star_3_any_group_duplex".equals(code)) {
+
+                                    setGameMoney(c1 / 6 * sum[0]);
+                                } else {
+                                    setGameMoney(c1 / 6 * sum[0] * (sum[0] - 1) * (sum[0] - 2) / 6);
+                                }
+                            }
+                        });
+                    }
+                    ((CheckBox) linearCheck.getChildAt(2)).setChecked(true);
+                    ((CheckBox) linearCheck.getChildAt(3)).setChecked(true);
+                    ((CheckBox) linearCheck.getChildAt(4)).setChecked(true);
+                    for (int i = 1; i < LinearOne.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) LinearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                sum[0] = 0;
+                                if (b) {
+                                    count[0]++;
+                                } else {
+                                    count[0]--;
+                                }
+                                sum[0] = count[0];
+                                if ("star_3_any_group_duplex".equals(code)
+                                        || "2min_star_3_any_group_duplex".equals(code)) {
+
+                                    setGameMoney(count[0] * (count[0] - 1) * Integer.parseInt(FANum.getText().toString()));
+                                } else {
+                                    setGameMoney(Integer.parseInt(FANum.getText().toString()) * sum[0] * (sum[0] - 1) * (sum[0] - 2) / 6);
+                                }
+                            }
+                        });
+                    }
                 }
                 if (
                         "star_3_any_group_single".equals(code)
@@ -3865,6 +3992,191 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_optional3_dan, null, false);
                     final EditText g2_editText = (EditText) inte.findViewById(R.id.optional2_editText);
+                    LinearLayout linearCheck = (LinearLayout) inte.findViewById(R.id.LinearCheck);
+                    final TextView checkNum = (TextView) inte.findViewById(R.id.CheckNum);
+                    final TextView FangAnNum = (TextView) inte.findViewById(R.id.FangAnNum);
+                    final int[] c1 = {0};
+
+                    final int[] count = {0};
+                    for (int i = 0; i < linearCheck.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linearCheck.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c1[0]++;
+                                } else {
+                                    c1[0]--;
+                                }
+                                checkNum.setText(c1[0] + "");
+                                FangAnNum.setText(c1[0] * (c1[0] - 1) * (c1[0] - 2) / 6 + "");
+                                setGameMoney(c1[0] * (c1[0] - 1) * (c1[0] - 2) / 6 * count[0]);
+
+                            }
+                        });
+                    }
+                    ((CheckBox) linearCheck.getChildAt(2)).setChecked(true);
+                    ((CheckBox) linearCheck.getChildAt(3)).setChecked(true);
+                    ((CheckBox) linearCheck.getChildAt(4)).setChecked(true);
+                    g2_editText.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                            String s = charSequence.toString();
+                            List<String> NS;
+                            int seleNums = 3;
+                            if (s.length() > seleNums - 1) {
+                                if (s.contains(",")) {
+                                    NS = new ArrayList<String>();
+                                    String[] sp = s.split(",");
+                                    for (int i3 = 0; i3 < sp.length; i3++) {
+                                        String s1 = sp[i3];
+                                        Log.d("单式模式的判断", s1 + "");
+                                        if (s1.length() == seleNums) {
+                                            for (int i4 = 0; i4 < s1.length(); i4++) {
+                                                String sub = s1.substring(i4, i4 + 1);
+                                                Log.d("判断是不是数字", sub.matches("\\d+") + "");
+                                                if (sub.matches("\\d+")) {
+                                                    if (i4 == seleNums - 1) {
+                                                        if (s.substring(i4, i4 + 1).matches("\\d+")) {
+                                                            NS.add(s1);
+                                                            count[0]++;
+                                                        }
+                                                    }
+                                                } else {
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    int cc = 0;
+                                    for (int i3 = 0; i3 < NS.size(); i3++) {
+                                        String ss1 = NS.get(i3);
+                                        Log.d("组三单式Nums", ss1);
+                                        int s1 = Integer.parseInt(ss1.substring(0, 1));
+                                        int s2 = Integer.parseInt(ss1.substring(1, 2));
+                                        int s3 = Integer.parseInt(ss1.substring(2, 3));
+                                        if (
+                                                "star_3_any_group_single".equals(code)
+                                                        || "2min_star_3_any_group_single".equals(code)
+                                                ) {
+                                            if (s1 == s2 && s1 == s3 && s2 == s3) {
+
+                                            } else if (s1 != s2 && s1 != s3 && s2 != s3) {
+
+                                            } else {
+                                                cc++;
+                                            }
+                                        }
+                                        if (
+                                                "star_3_any_group_single_6".equals(code)
+                                                        || "2min_star_3_any_group_single_6".equals(code)
+                                                ) {
+                                            if (s1 == s2 || s1 == s3 || s2 == s3) {
+
+                                            } else {
+                                                cc++;
+                                            }
+                                        }
+                                        if (
+                                                "star_3_any_group_diverse".equals(code)
+                                                        || "2min_star_3_any_group_diverse".equals(code)
+                                                ) {
+                                            if (s1 == s2 && s1 == s3 && s2 == s3) {
+
+                                            } else {
+                                                cc++;
+                                            }
+                                        }
+
+
+                                    }
+                                    Log.d("组三单式NumsCC", cc + "");
+                                    setGameMoney(cc * Integer.parseInt(FangAnNum.getText().toString()));
+
+
+                                } else {
+                                    NS = new ArrayList<String>();
+                                    if (s.length() == seleNums) {
+                                        for (int i3 = 0; i3 < s.length(); i3++) {
+                                            String sub = s.substring(i3, i3 + 1);
+                                            Log.d("判断是不是数字", sub.matches("\\d+") + "");
+                                            if (sub.matches("\\d+")) {
+                                                if (i3 == seleNums - 1) {
+                                                    if (s.substring(i3, i3 + 1).matches("\\d+")) {
+                                                        NS.add(s);
+                                                        count[0] = 1;
+                                                    }
+                                                }
+                                            } else {
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (NS.size() != 0) {
+                                        for (int i3 = 0; i3 < NS.size(); i3++) {
+                                            String ss1 = NS.get(i3);
+                                            Log.d("组三单式Nums", ss1);
+                                            int s1 = Integer.parseInt(ss1.substring(0, 1));
+                                            int s2 = Integer.parseInt(ss1.substring(1, 2));
+                                            int s3 = Integer.parseInt(ss1.substring(2, 3));
+                                            if (
+                                                    "star_3_any_group_single".equals(code)
+                                                            || "2min_star_3_any_group_single".equals(code)
+                                                    ) {
+                                                if (s1 == s2 && s1 == s3 && s2 == s3) {
+
+                                                } else if (s1 != s2 && s1 != s3 && s2 != s3) {
+
+                                                } else {
+                                                    setGameMoney(1 * Integer.parseInt(FangAnNum.getText().toString()));
+                                                }
+                                            }
+                                            if (
+                                                    "star_3_any_group_single_6".equals(code)
+                                                            || "2min_star_3_any_group_single_6".equals(code)
+                                                    ) {
+                                                if (s1 == s2 || s1 == s3 || s2 == s3) {
+
+                                                } else {
+                                                    setGameMoney(1 * Integer.parseInt(FangAnNum.getText().toString()));
+                                                }
+                                            }
+                                            if (
+                                                    "star_3_any_group_diverse".equals(code)
+                                                            || "2min_star_3_any_group_diverse".equals(code)
+                                                    ) {
+                                                if (s1 == s2 && s1 == s3 && s2 == s3) {
+
+                                                } else {
+                                                    setGameMoney(1 * Integer.parseInt(FangAnNum.getText().toString()));
+                                                }
+                                            }
+
+                                        }
+
+
+                                    }
+                                    if (NS.size() == 0) {
+                                        setGameMoney(0);
+                                    }
+                                }
+
+                            } else {
+                                setGameMoney(0);
+                            }
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+
+                        }
+                    });
                     final TextView num0 = (TextView) inte.findViewById(R.id.num0);
                     TextView num1 = (TextView) inte.findViewById(R.id.num1);
                     TextView num2 = (TextView) inte.findViewById(R.id.num2);
@@ -3879,7 +4191,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     TextView kong = (TextView) inte.findViewById(R.id.kong);
 
                     TextView numDelete = (TextView) inte.findViewById(R.id.numDelete);
-                    g2_editText.setInputType(InputType.TYPE_NULL);
+                    //g2_editText.setInputType(InputType.TYPE_NULL);
                     int c = 0;
                     num0.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -3986,6 +4298,80 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 || "2min_star_3_any_group_sum".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2_optional3_he, null, false);
+                    LinearLayout linearCheck = (LinearLayout) inte.findViewById(R.id.LinearCheck);
+                    final TextView checkNum = (TextView) inte.findViewById(R.id.CheckNum);
+                    final TextView FangAnNum = (TextView) inte.findViewById(R.id.FangAnNum);
+                    LinearLayout linearOne = (LinearLayout) inte.findViewById(R.id.LinearOne);
+                    LinearLayout linearTwo = (LinearLayout) inte.findViewById(R.id.LinearTwo);
+                    LinearLayout linearThree = (LinearLayout) inte.findViewById(R.id.LinearThree);
+
+                    final int[] c1 = {0};
+
+
+                    final int[] sum = {0};
+                    for (int i = 0; i < linearCheck.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linearCheck.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c1[0]++;
+                                } else {
+                                    c1[0]--;
+                                }
+                                checkNum.setText(c1[0] + "");
+                                FangAnNum.setText(c1[0] * (c1[0] - 1) * (c1[0] - 2) / 6 + "");
+                                setGameMoney(c1[0] * (c1[0] - 1) * (c1[0] - 2) / 6 * sum[0]);
+
+                            }
+                        });
+                    }
+                    ((CheckBox) linearCheck.getChildAt(2)).setChecked(true);
+                    ((CheckBox) linearCheck.getChildAt(3)).setChecked(true);
+                    ((CheckBox) linearCheck.getChildAt(4)).setChecked(true);
+                    for (int i = 0; i < linearOne.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) linearOne.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    sum[0] = sum[0] + getOptional3_Zuhe(Integer.parseInt(at.getText().toString()));
+                                } else {
+                                    sum[0] = sum[0] - getOptional3_Zuhe(Integer.parseInt(at.getText().toString()));
+                                }
+                                setGameMoney(sum[0] * c1[0] * (c1[0] - 1) * (c1[0] - 2) / 6);
+                            }
+                        });
+                    }
+                    for (int i = 0; i < linearThree.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) linearThree.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    sum[0] = sum[0] + getOptional3_Zuhe(Integer.parseInt(at.getText().toString()));
+                                } else {
+                                    sum[0] = sum[0] - getOptional3_Zuhe(Integer.parseInt(at.getText().toString()));
+                                }
+                                setGameMoney(sum[0] * c1[0] * (c1[0] - 1) * (c1[0] - 2) / 6);
+                            }
+                        });
+                    }
+                    for (int i = 0; i < linearTwo.getChildCount(); i++) {
+                        final CheckBox at = (CheckBox) linearTwo.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    sum[0] = sum[0] + getOptional3_Zuhe(Integer.parseInt(at.getText().toString()));
+                                } else {
+                                    sum[0] = sum[0] - getOptional3_Zuhe(Integer.parseInt(at.getText().toString()));
+                                }
+                                setGameMoney(sum[0] * c1[0] * (c1[0] - 1) * (c1[0] - 2) / 6);
+                            }
+                        });
+                    }
+
                 }
                 if (
                         "star_4_any_single".equals(code)
@@ -3993,6 +4379,195 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g1_optional4_dan, null, false);
                     final EditText g2_editText = (EditText) inte.findViewById(R.id.optional2_editText);
+                    LinearLayout linearCheck = (LinearLayout) inte.findViewById(R.id.LinearCheck);
+                    final TextView checkNum = (TextView) inte.findViewById(R.id.CheckNum);
+                    final TextView FangAnNum = (TextView) inte.findViewById(R.id.FangAnNum);
+
+                    final int[] c1 = {0};
+
+                    final int[] sum = {0};
+                    for (int i = 0; i < linearCheck.getChildCount(); i++) {
+                        CheckBox at = (CheckBox) linearCheck.getChildAt(i);
+                        at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                if (b) {
+                                    c1[0]++;
+                                } else {
+                                    c1[0]--;
+                                }
+                                checkNum.setText(c1[0] + "");
+                                FangAnNum.setText(c1[0] * (c1[0] - 1) * (c1[0] - 2) * (c1[0] - 3) / 24 + "");
+                                setGameMoney(c1[0] * (c1[0] - 1) * (c1[0] - 2) * (c1[0] - 3) / 24 * sum[0]);
+
+                            }
+                        });
+                    }
+                    ((CheckBox) linearCheck.getChildAt(1)).setChecked(true);
+                    ((CheckBox) linearCheck.getChildAt(2)).setChecked(true);
+                    ((CheckBox) linearCheck.getChildAt(3)).setChecked(true);
+                    ((CheckBox) linearCheck.getChildAt(4)).setChecked(true);
+
+                    g2_editText.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                            String s = charSequence.toString();
+                            List<String> NS;
+                            int seleNums = 3;
+                            if (s.length() > seleNums - 1) {
+                                if (s.contains(",")) {
+                                    NS = new ArrayList<String>();
+                                    String[] sp = s.split(",");
+                                    for (int i3 = 0; i3 < sp.length; i3++) {
+                                        String s1 = sp[i3];
+                                        Log.d("单式模式的判断", s1 + "");
+                                        if (s1.length() == seleNums) {
+                                            for (int i4 = 0; i4 < s1.length(); i4++) {
+                                                String sub = s1.substring(i4, i4 + 1);
+                                                Log.d("判断是不是数字", sub.matches("\\d+") + "");
+                                                if (sub.matches("\\d+")) {
+                                                    if (i4 == seleNums - 1) {
+                                                        if (s.substring(i4, i4 + 1).matches("\\d+")) {
+                                                            NS.add(s1);
+                                                            count[0]++;
+                                                        }
+                                                    }
+                                                } else {
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    int cc = 0;
+                                    for (int i3 = 0; i3 < NS.size(); i3++) {
+                                        String ss1 = NS.get(i3);
+                                        Log.d("组三单式Nums", ss1);
+                                        int s1 = Integer.parseInt(ss1.substring(0, 1));
+                                        int s2 = Integer.parseInt(ss1.substring(1, 2));
+                                        int s3 = Integer.parseInt(ss1.substring(2, 3));
+                                        if (
+                                                "star_3_any_group_single".equals(code)
+                                                        || "2min_star_3_any_group_single".equals(code)
+                                                ) {
+                                            if (s1 == s2 && s1 == s3 && s2 == s3) {
+
+                                            } else if (s1 != s2 && s1 != s3 && s2 != s3) {
+
+                                            } else {
+                                                cc++;
+                                            }
+                                        }
+                                        if (
+                                                "star_3_any_group_single_6".equals(code)
+                                                        || "2min_star_3_any_group_single_6".equals(code)
+                                                ) {
+                                            if (s1 == s2 || s1 == s3 || s2 == s3) {
+
+                                            } else {
+                                                cc++;
+                                            }
+                                        }
+                                        if (
+                                                "star_3_any_group_diverse".equals(code)
+                                                        || "2min_star_3_any_group_diverse".equals(code)
+                                                ) {
+                                            if (s1 == s2 && s1 == s3 && s2 == s3) {
+
+                                            } else {
+                                                cc++;
+                                            }
+                                        }
+
+
+                                    }
+                                    Log.d("组三单式NumsCC", cc + "");
+                                    setGameMoney(cc * Integer.parseInt(FangAnNum.getText().toString()));
+
+
+                                } else {
+                                    NS = new ArrayList<String>();
+                                    if (s.length() == seleNums) {
+                                        for (int i3 = 0; i3 < s.length(); i3++) {
+                                            String sub = s.substring(i3, i3 + 1);
+                                            Log.d("判断是不是数字", sub.matches("\\d+") + "");
+                                            if (sub.matches("\\d+")) {
+                                                if (i3 == seleNums - 1) {
+                                                    if (s.substring(i3, i3 + 1).matches("\\d+")) {
+                                                        NS.add(s);
+                                                        count[0] = 1;
+                                                    }
+                                                }
+                                            } else {
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (NS.size() != 0) {
+                                        for (int i3 = 0; i3 < NS.size(); i3++) {
+                                            String ss1 = NS.get(i3);
+                                            Log.d("组三单式Nums", ss1);
+                                            int s1 = Integer.parseInt(ss1.substring(0, 1));
+                                            int s2 = Integer.parseInt(ss1.substring(1, 2));
+                                            int s3 = Integer.parseInt(ss1.substring(2, 3));
+                                            if (
+                                                    "star_3_any_group_single".equals(code)
+                                                            || "2min_star_3_any_group_single".equals(code)
+                                                    ) {
+                                                if (s1 == s2 && s1 == s3 && s2 == s3) {
+
+                                                } else if (s1 != s2 && s1 != s3 && s2 != s3) {
+
+                                                } else {
+                                                    setGameMoney(1 * Integer.parseInt(FangAnNum.getText().toString()));
+                                                }
+                                            }
+                                            if (
+                                                    "star_3_any_group_single_6".equals(code)
+                                                            || "2min_star_3_any_group_single_6".equals(code)
+                                                    ) {
+                                                if (s1 == s2 || s1 == s3 || s2 == s3) {
+
+                                                } else {
+                                                    setGameMoney(1 * Integer.parseInt(FangAnNum.getText().toString()));
+                                                }
+                                            }
+                                            if (
+                                                    "star_3_any_group_diverse".equals(code)
+                                                            || "2min_star_3_any_group_diverse".equals(code)
+                                                    ) {
+                                                if (s1 == s2 && s1 == s3 && s2 == s3) {
+
+                                                } else {
+                                                    setGameMoney(1 * Integer.parseInt(FangAnNum.getText().toString()));
+                                                }
+                                            }
+
+                                        }
+
+
+                                    }
+                                    if (NS.size() == 0) {
+                                        setGameMoney(0);
+                                    }
+                                }
+
+                            } else {
+                                setGameMoney(0);
+                            }
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+
+                        }
+                    });
+
                     final TextView num0 = (TextView) inte.findViewById(R.id.num0);
                     TextView num1 = (TextView) inte.findViewById(R.id.num1);
                     TextView num2 = (TextView) inte.findViewById(R.id.num2);
@@ -13420,12 +13995,11 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         return isint;
     }
 
-    public int get3_5NumZuHe(String ns) {
-        int isint = 0;
-        int n = Integer.parseInt(ns);
+    public int getOptional3_Zuhe(int n) {
+
 
         if (n == 1 || n == 26) {
-            isint = isint + 1;
+            return 1;
         }
         if (n == 2 || n == 25) {
             return 2;
@@ -13449,7 +14023,104 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
             return 10;
         }
         if (n == 9 || n == 18) {
-            isint = isint + 11;
+            return 11;
+        }
+        if (n == 10 || n == 17) {
+            return 13;
+        }
+        if (n == 11 || n == 16) {
+            return 14;
+        }
+        if (n == 12 || n == 15) {
+            return 14;
+        }
+        if (n == 13 || n == 14) {
+            return 15;
+        }
+
+
+        return 0;
+    }
+
+    public int getOptional3_he(int n) {
+
+        if (n == 0 || n == 27) {
+            return 1;
+        }
+        if (n == 1 || n == 26) {
+            return 3;
+        }
+        if (n == 2 || n == 25) {
+            return 6;
+        }
+        if (n == 3 || n == 24) {
+            return 10;
+        }
+        if (n == 4 || n == 23) {
+            return 15;
+        }
+        if (n == 5 || n == 22) {
+            return 21;
+        }
+        if (n == 6 || n == 21) {
+            return 28;
+        }
+        if (n == 7 || n == 20) {
+            return 36;
+        }
+        if (n == 8 || n == 19) {
+            return 45;
+        }
+        if (n == 9 || n == 18) {
+            return 55;
+        }
+        if (n == 10 || n == 17) {
+            return 63;
+        }
+        if (n == 11 || n == 16) {
+            return 69;
+        }
+        if (n == 12 || n == 15) {
+            return 73;
+        }
+        if (n == 13 || n == 14) {
+            return 75;
+        }
+
+
+        return 0;
+    }
+
+    public int get3_5NumZuHe(String ns) {
+        int isint = 0;
+        int n = Integer.parseInt(ns);
+
+        if (n == 1 || n == 26) {
+            return 1;
+        }
+        if (n == 2 || n == 25) {
+            return 2;
+        }
+        if (n == 3 || n == 24) {
+            return 2;
+        }
+        if (n == 4 || n == 23) {
+            return 4;
+        }
+        if (n == 5 || n == 22) {
+            return 5;
+        }
+        if (n == 6 || n == 21) {
+            return 6;
+        }
+        if (n == 7 || n == 20) {
+            return 8;
+        }
+        if (n == 8 || n == 19) {
+            return 10;
+        }
+        if (n == 9 || n == 18) {
+            return 11;
         }
         if (n == 10 || n == 17) {
             return 13;
