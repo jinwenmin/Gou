@@ -21,7 +21,7 @@
             android:textSize="30px" />
 
         <CheckBox
-            android:checked="true"
+
             android:id="@+id/qian"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             android:id="@+id/bai"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
+
             android:text="百位"
             android:textSize="30px" />
 
@@ -41,7 +41,7 @@
             android:id="@+id/shi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
+
             android:text="十位"
             android:textSize="30px" />
 
@@ -49,14 +49,14 @@
             android:id="@+id/ge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
+
             android:text="个位"
             android:textSize="30px" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="gone"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20px"
@@ -72,7 +72,7 @@
             android:id="@+id/CheckNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="4"
+            android:text="0"
             android:textSize="25px" />
 
         <TextView
@@ -85,7 +85,7 @@
             android:id="@+id/FangAnNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1"
+            android:text="0"
             android:textSize="25px" />
 
         <TextView
@@ -118,132 +118,133 @@
             android:textSize="30px" />
 
 
-                <CheckBox
-                    android:id="@+id/checkBoxOne_0"
-                    android:layout_width="45px"
-                    android:layout_height="45px"
-                    android:layout_margin="5px"
-                    android:background="@drawable/item_gameselect"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="0"
-                    android:textColor="@color/select_gamecolor"
-                    android:textSize="30px" />
+        <CheckBox
+            android:id="@+id/checkBoxOne_0"
+            android:layout_width="45px"
+            android:layout_height="45px"
+            android:layout_margin="5px"
+            android:background="@drawable/item_gameselect"
+            android:button="@null"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/select_gamecolor"
+            android:textSize="30px" />
 
-                <CheckBox
-                    android:id="@+id/checkBoxOne_1"
-                    android:layout_width="45px"
-                    android:layout_height="45px"
-                    android:layout_margin="5px"
+        <CheckBox
+            android:id="@+id/checkBoxOne_1"
+            android:layout_width="45px"
+            android:layout_height="45px"
+            android:layout_margin="5px"
 
-                    android:background="@drawable/item_gameselect"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="1"
-                    android:textColor="@color/select_gamecolor"
-                    android:textSize="30px" />
+            android:background="@drawable/item_gameselect"
+            android:button="@null"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@color/select_gamecolor"
+            android:textSize="30px" />
 
-                <CheckBox
-                    android:id="@+id/checkBoxOne_2"
-                    android:layout_width="45px"
-                    android:layout_height="45px"
-                    android:layout_margin="5px"
+        <CheckBox
+            android:id="@+id/checkBoxOne_2"
+            android:layout_width="45px"
+            android:layout_height="45px"
+            android:layout_margin="5px"
 
-                    android:background="@drawable/item_gameselect"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="2"
-                    android:textColor="@color/select_gamecolor"
-                    android:textSize="30px" />
+            android:background="@drawable/item_gameselect"
+            android:button="@null"
+            android:gravity="center"
+            android:text="2"
+            android:textColor="@color/select_gamecolor"
+            android:textSize="30px" />
 
-                <CheckBox
-                    android:id="@+id/checkBoxOne_3"
-                    android:layout_width="45px"
-                    android:layout_height="45px"
-                    android:layout_margin="5px"
+        <CheckBox
+            android:id="@+id/checkBoxOne_3"
+            android:layout_width="45px"
+            android:layout_height="45px"
+            android:layout_margin="5px"
 
-                    android:background="@drawable/item_gameselect"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="3"
-                    android:textColor="@color/select_gamecolor"
-                    android:textSize="30px" />
+            android:background="@drawable/item_gameselect"
+            android:button="@null"
+            android:gravity="center"
+            android:text="3"
+            android:textColor="@color/select_gamecolor"
+            android:textSize="30px" />
 
-                <CheckBox
-                    android:id="@+id/checkBoxOne_4"
-                    android:layout_width="45px"
-                    android:layout_height="45px"
-                    android:layout_margin="5px"
+        <CheckBox
+            android:id="@+id/checkBoxOne_4"
+            android:layout_width="45px"
+            android:layout_height="45px"
+            android:layout_margin="5px"
 
-                    android:background="@drawable/item_gameselect"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="4"
-                    android:textColor="@color/select_gamecolor"
-                    android:textSize="30px" />
+            android:background="@drawable/item_gameselect"
+            android:button="@null"
+            android:gravity="center"
+            android:text="4"
+            android:textColor="@color/select_gamecolor"
+            android:textSize="30px" />
 
-                <CheckBox
-                    android:id="@+id/checkBoxOne_5"
-                    android:layout_width="45px"
-                    android:layout_height="45px"
-                    android:layout_margin="5px"
+        <CheckBox
+            android:id="@+id/checkBoxOne_5"
+            android:layout_width="45px"
+            android:layout_height="45px"
+            android:layout_margin="5px"
 
-                    android:background="@drawable/item_gameselect"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="5"
-                    android:textColor="@color/select_gamecolor"
-                    android:textSize="30px" />
+            android:background="@drawable/item_gameselect"
+            android:button="@null"
+            android:gravity="center"
+            android:text="5"
+            android:textColor="@color/select_gamecolor"
+            android:textSize="30px" />
 
-                <CheckBox
-                    android:id="@+id/checkBoxOne_6"
-                    android:layout_width="45px"
-                    android:layout_height="45px"
-                    android:layout_margin="5px"
-                    android:background="@drawable/item_gameselect"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="6"
-                    android:textColor="@color/select_gamecolor"
-                    android:textSize="30px" />
+        <CheckBox
+            android:id="@+id/checkBoxOne_6"
+            android:layout_width="45px"
+            android:layout_height="45px"
+            android:layout_margin="5px"
+            android:background="@drawable/item_gameselect"
+            android:button="@null"
+            android:gravity="center"
+            android:text="6"
+            android:textColor="@color/select_gamecolor"
+            android:textSize="30px" />
 
-                <CheckBox
-                    android:id="@+id/checkBoxOne_7"
-                    android:layout_width="45px"
-                    android:layout_height="45px"
-                    android:layout_margin="5px"
+        <CheckBox
+            android:id="@+id/checkBoxOne_7"
+            android:layout_width="45px"
+            android:layout_height="45px"
+            android:layout_margin="5px"
 
-                    android:background="@drawable/item_gameselect"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="7"
-                    android:textColor="@color/select_gamecolor"
-                    android:textSize="30px" />
+            android:background="@drawable/item_gameselect"
+            android:button="@null"
+            android:gravity="center"
+            android:text="7"
+            android:textColor="@color/select_gamecolor"
+            android:textSize="30px" />
 
-                <CheckBox
-                    android:id="@+id/checkBoxOne_8"
-                    android:layout_width="45px"
-                    android:layout_height="45px"
-                    android:layout_margin="5px"
-                    android:background="@drawable/item_gameselect"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="8"
-                    android:textColor="@color/select_gamecolor"
-                    android:textSize="30px" />
+        <CheckBox
+            android:id="@+id/checkBoxOne_8"
+            android:layout_width="45px"
+            android:layout_height="45px"
+            android:layout_margin="5px"
+            android:background="@drawable/item_gameselect"
+            android:button="@null"
+            android:gravity="center"
+            android:text="8"
+            android:textColor="@color/select_gamecolor"
+            android:textSize="30px" />
 
-                <CheckBox
-                    android:id="@+id/checkBoxOne_9"
-                    android:layout_width="45px"
-                    android:layout_height="45px"
-                    android:layout_margin="5px"
-                    android:background="@drawable/item_gameselect"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="9"
-                    android:textColor="@color/select_gamecolor"
-                    android:textSize="30px" />
-            </LinearLayout>
+        <CheckBox
+            android:id="@+id/checkBoxOne_9"
+            android:layout_width="45px"
+            android:layout_height="45px"
+            android:layout_margin="5px"
+            android:background="@drawable/item_gameselect"
+            android:button="@null"
+            android:gravity="center"
+            android:text="9"
+            android:textColor="@color/select_gamecolor"
+            android:textSize="30px" />
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/select_1"
         android:layout_width="wrap_content"
