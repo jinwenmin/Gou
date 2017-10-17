@@ -778,7 +778,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                                                 NS.add(siSp);
                                                             }
                                                         }
-                                                    }else{
+                                                    } else {
                                                         break;
                                                     }
                                                 } else {
@@ -829,7 +829,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                                             NS.add(siSp);
                                                         }
                                                     }
-                                                }else{
+                                                } else {
                                                     break;
                                                 }
                                             } else {
@@ -868,6 +868,288 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
 
                             }
                         }
+
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+
+                        }
+                    });
+                    final TextView num0 = (TextView) inte.findViewById(R.id.num0);
+                    TextView num1 = (TextView) inte.findViewById(R.id.num1);
+                    TextView num2 = (TextView) inte.findViewById(R.id.num2);
+                    TextView num3 = (TextView) inte.findViewById(R.id.num3);
+                    TextView num4 = (TextView) inte.findViewById(R.id.num4);
+                    TextView num5 = (TextView) inte.findViewById(R.id.num5);
+                    TextView num6 = (TextView) inte.findViewById(R.id.num6);
+                    TextView num7 = (TextView) inte.findViewById(R.id.num7);
+                    TextView num8 = (TextView) inte.findViewById(R.id.num8);
+                    TextView num9 = (TextView) inte.findViewById(R.id.num9);
+                    TextView numd = (TextView) inte.findViewById(R.id.numd);
+                    TextView kong = (TextView) inte.findViewById(R.id.kong);
+
+                    TextView numDelete = (TextView) inte.findViewById(R.id.numDelete);
+                    // g2_editText.setInputType(InputType.TYPE_NULL);
+
+                    num0.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "0");
+                        }
+                    });
+                    num1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "1");
+                        }
+                    });
+                    num2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "2");
+                        }
+                    });
+                    num3.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "3");
+                        }
+                    });
+                    num4.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "4");
+                        }
+                    });
+                    num5.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "5");
+                        }
+                    });
+                    num6.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "6");
+                        }
+                    });
+                    num7.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "7");
+                        }
+                    });
+                    num8.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "8");
+                        }
+                    });
+                    num9.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            g2_editText.setText(g2_editText.getText().toString() + "9");
+                        }
+                    });
+                    numd.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String text = g2_editText.getText().toString();
+                            if (text.length() == 0) {
+                                return;
+                            }
+                            if (!",".equals(text.substring(text.length() - 1))) {
+                                g2_editText.setText(g2_editText.getText().toString() + ",");
+                            }
+                        }
+                    });
+                    numDelete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String text = g2_editText.getText().toString();
+                            if (text.length() == 0) {
+                                return;
+                            }
+                            if (text.length() > 0) {
+                                text = text.substring(0, text.length() - 1);
+                                g2_editText.setText(text);
+                            }
+                        }
+                    });
+
+                    kong.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String text = g2_editText.getText().toString();
+                            if (text.length() == 0) {
+                                return;
+                            }
+                            if (!" ".equals(text.substring(text.length() - 1))) {
+                                g2_editText.setText(g2_editText.getText().toString().trim() + " ");
+                            }
+                        }
+                    });
+                }
+                if (
+                        "eleven_any_one_single".equals(code)
+                                || "eleven_any_two_single".equals(code)
+                                || "eleven_any_three_single".equals(code)
+                                || "eleven_any_four_single".equals(code)
+                                || "eleven_any_five_single".equals(code)
+                                || "eleven_any_six_single".equals(code)
+                                || "eleven_any_seven_single".equals(code)
+                                || "eleven_any_eight_single".equals(code)
+                        ) {
+                    inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2, null, false);
+                    final EditText g2_editText = (EditText) inte.findViewById(R.id.g2_EditText);
+                    int seleNum = 0;
+                    if (
+                            "eleven_any_one_single".equals(code)
+
+                            ) {
+                        seleNum = 1;
+                    }
+                    if (
+                            "eleven_any_two_single".equals(code)
+
+                            ) {
+                        seleNum = 2;
+                    }
+                    if (
+                            "eleven_any_three_single".equals(code)
+
+                            ) {
+                        seleNum = 3;
+                    }
+                    if (
+                            "eleven_any_four_single".equals(code)
+
+                            ) {
+                        seleNum = 4;
+                    }
+                    if (
+                            "eleven_any_five_single".equals(code)
+
+                            ) {
+                        seleNum = 5;
+                    }
+                    if (
+                            "eleven_any_six_single".equals(code)
+
+                            ) {
+                        seleNum = 6;
+                    }
+                    if (
+                            "eleven_any_seven_single".equals(code)
+
+                            ) {
+                        seleNum = 7;
+                    }
+                    if (
+                            "eleven_any_eight_single".equals(code)
+
+                            ) {
+                        seleNum = 8;
+                    }
+                    final int finalSeleNum = seleNum;
+
+                    g2_editText.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                            String s = charSequence.toString();
+                            List<String[]> NS = new ArrayList<String[]>();
+                          /*  if (s.contains(",")) {
+                                String[] sp = s.split(",");
+                                for (int i3 = 0; i3 < sp.length; i3++) {
+                                    String si = sp[i3];
+                                    if (si.contains(" ")) {
+                                        String[] siSp = si.split(" ");
+                                        if (siSp.length == finalSeleNum) {
+                                            for (int i4 = 0; i4 < siSp.length; i4++) {
+                                                if (siSp[i4].matches("\\d+")) {
+                                                    if (siSp[i4].length() == 2 && Integer.parseInt(siSp[i4]) > 0 && Integer.parseInt(siSp[i4]) < 12) {
+                                                        if (i4 == finalSeleNum - 1) {
+                                                            if (siSp[i4].matches("\\d+") && siSp[i4].length() == 2 && Integer.parseInt(siSp[i4]) > 0 && Integer.parseInt(siSp[i4]) < 12) {
+                                                                NS.add(siSp);
+                                                            }
+                                                        }
+                                                    } else {
+                                                        break;
+                                                    }
+                                                } else {
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                int nus = 0;
+                                for (int i3 = 0; i3 < NS.size(); i3++) {
+                                    for (int i4 = 1; i4 < NS.size(); i4++) {
+                                        if (NS.get(i3).equals(NS.get(i4))) {
+                                            nus++;
+                                        }
+                                    }
+                                }
+                                if (nus==0) {
+                                    setGameMoney(1);
+                                }
+
+                            } else {*/
+                           if ("eleven_any_two_single".equals(code)
+                                    || "eleven_any_three_single".equals(code)
+                                    || "eleven_any_four_single".equals(code)
+                                    || "eleven_any_five_single".equals(code)
+                                    || "eleven_any_six_single".equals(code)
+                                    || "eleven_any_seven_single".equals(code)
+                                    || "eleven_any_eight_single".equals(code)) {
+                               if (s.contains(" ")) {
+                                   String[] siSp = s.split(" ");
+                                   if (siSp.length == finalSeleNum) {
+                                       for (int i4 = 0; i4 < siSp.length; i4++) {
+                                           if (siSp[i4].matches("\\d+")) {
+                                               if (siSp[i4].length() == 2 && Integer.parseInt(siSp[i4]) > 0 && Integer.parseInt(siSp[i4]) < 12) {
+                                                   if (i4 == finalSeleNum - 1) {
+                                                       if (siSp[i4].matches("\\d+") && siSp[i4].length() == 2 && Integer.parseInt(siSp[i4]) > 0 && Integer.parseInt(siSp[i4]) < 12) {
+                                                           NS.add(siSp);
+                                                       }
+                                                   }
+                                               } else {
+                                                   break;
+                                               }
+                                           } else {
+                                               break;
+                                           }
+                                       }
+                                       int nus = -1;
+                                       for (int i3 = 0; i3 < NS.size(); i3++) {
+                                           for (int i4 = 1; i4 < NS.size(); i4++) {
+                                               if (NS.get(i3).equals(NS.get(i4))) {
+                                                   nus++;
+                                               }
+                                           }
+                                       }
+                                       if (nus==0) {
+                                           setGameMoney(1);
+                                       }
+                                   }
+                               }
+                            }else{
+                               if (s.matches("\\d+")) {
+                                   if (s.length()==2&&Integer.parseInt(s)>0&&Integer.parseInt(s)<12) {
+                                       setGameMoney(1);
+                                   }
+                               }
+                           }
+
+
+
+                            }
+                       // }
 
                         @Override
                         public void afterTextChanged(Editable editable) {
@@ -1030,15 +1312,6 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         || "3D_star_2_next_single".equals(code)
                         || "3D_star_2_prev_group_single".equals(code)
                         || "3D_star_2_next_group_single".equals(code)
-
-                        || "eleven_any_one_single".equals(code)
-                        || "eleven_any_two_single".equals(code)
-                        || "eleven_any_three_single".equals(code)
-                        || "eleven_any_four_single".equals(code)
-                        || "eleven_any_five_single".equals(code)
-                        || "eleven_any_six_single".equals(code)
-                        || "eleven_any_seven_single".equals(code)
-                        || "eleven_any_eight_single".equals(code)
 
 
                         || "2min_star_5_single".equals(code)
