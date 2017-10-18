@@ -998,24 +998,29 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 || "eleven_any_six_single".equals(code)
                                 || "eleven_any_seven_single".equals(code)
                                 || "eleven_any_eight_single".equals(code)
+                                || "PK10_1st_2nd_single".equals(code)
+                                || "PK10_1st_2nd_3th_single".equals(code)
                         ) {
                     inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_g2, null, false);
                     final EditText g2_editText = (EditText) inte.findViewById(R.id.g2_EditText);
                     int seleNum = 0;
+                    int maxnum = 0;
                     if (
                             "eleven_any_one_single".equals(code)
 
                             ) {
                         seleNum = 1;
+
                     }
                     if (
                             "eleven_any_two_single".equals(code)
-
+                                    || "PK10_1st_2nd_single".equals(code)
                             ) {
                         seleNum = 2;
                     }
                     if (
                             "eleven_any_three_single".equals(code)
+                                    || "PK10_1st_2nd_3th_single".equals(code)
 
                             ) {
                         seleNum = 3;
@@ -1050,8 +1055,17 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                             ) {
                         seleNum = 8;
                     }
+                    if (
+                            "PK10_1st_2nd_single".equals(code)
+                                    || "PK10_1st_2nd_3th_single".equals(code)
+                            ) {
+                        maxnum = 11;
+                    } else {
+                        maxnum = 12;
+                    }
                     final int finalSeleNum = seleNum;
 
+                    final int finalMaxnum = maxnum;
                     g2_editText.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -1062,19 +1076,34 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                             String s = charSequence.toString();
                             List<String[]> NS = new ArrayList<String[]>();
-                          /*  if (s.contains(",")) {
+                            boolean nus = false;
+                            int cfNum = 0;
+                            if (s.contains(",")) {
                                 String[] sp = s.split(",");
+                                NS = new ArrayList<String[]>();
                                 for (int i3 = 0; i3 < sp.length; i3++) {
+                                    nus = false;
                                     String si = sp[i3];
                                     if (si.contains(" ")) {
                                         String[] siSp = si.split(" ");
                                         if (siSp.length == finalSeleNum) {
                                             for (int i4 = 0; i4 < siSp.length; i4++) {
+
                                                 if (siSp[i4].matches("\\d+")) {
-                                                    if (siSp[i4].length() == 2 && Integer.parseInt(siSp[i4]) > 0 && Integer.parseInt(siSp[i4]) < 12) {
+                                                    if (siSp[i4].length() == 2 && Integer.parseInt(siSp[i4]) > 0 && Integer.parseInt(siSp[i4]) < finalMaxnum) {
                                                         if (i4 == finalSeleNum - 1) {
-                                                            if (siSp[i4].matches("\\d+") && siSp[i4].length() == 2 && Integer.parseInt(siSp[i4]) > 0 && Integer.parseInt(siSp[i4]) < 12) {
+                                                            if (siSp[i4].matches("\\d+") && siSp[i4].length() == 2 && Integer.parseInt(siSp[i4]) > 0 && Integer.parseInt(siSp[i4]) < finalMaxnum) {
                                                                 NS.add(siSp);
+
+                                                                for (int ii4 = 0; ii4 < siSp.length - 1; ii4++) {
+                                                                    for (int i5 = ii4 + 1; i5 < siSp.length; i5++) {
+                                                                        Log.d("ss[i4][i5]", siSp[ii4] + "    " + siSp[i5]);
+                                                                        if (siSp[ii4].equals(siSp[i5])) {
+                                                                            nus = true;
+                                                                            break;
+                                                                        }
+                                                                    }
+                                                                }
                                                             }
                                                         }
                                                     } else {
@@ -1083,73 +1112,196 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                                 } else {
                                                     break;
                                                 }
+
+                                            }
+
+                                        }
+                                    } else {
+                                        setGameMoney(0);
+                                    }
+                                    if (nus == true) {
+                                        cfNum++;
+                                    }
+                                    Log.d("nus", nus + "");
+                                }
+                                if (NS.size() != 0) {
+                                    setGameMoney(NS.size() - cfNum);
+                                } else {
+                                    setGameMoney(0);
+                                }
+                             /*   int nus = 0;
+                                for (int i3 = 0; i3 < NS.size(); i3++) {
+                                    String[] ss = NS.get(i3);
+                                    for (int i4 = 0; i4 < ss.length; i4++) {
+                                        for (int i5 = i4 + 1; i5 < ss.length - i4 - 1; i5++) {
+                                            Log.d("ss[i4][i5]", ss[i4] + "    " + ss[i5]);
+                                            if (ss[i4].equals(ss[i5])) {
+                                                nus++;
+                                                break;
                                             }
                                         }
                                     }
+                                }*/
+
+                               /* if (nus) {
+
+                                } else {
+                                    setGameMoney(nus);
+                                }*/
+
+                            } else {
+                                nus = false;
+                                NS = new ArrayList<String[]>();
+                                if (s.contains(" ")) {
+                                    String[] siSp = s.split(" ");
+                                    if (siSp.length == finalSeleNum) {
+                                        for (int i4 = 0; i4 < siSp.length; i4++) {
+                                            if (siSp[i4].matches("\\d+")) {
+                                                if (siSp[i4].length() == 2 && Integer.parseInt(siSp[i4]) > 0 && Integer.parseInt(siSp[i4]) < finalMaxnum) {
+                                                    if (i4 == finalSeleNum - 1) {
+                                                        if (siSp[i4].matches("\\d+") && siSp[i4].length() == 2 && Integer.parseInt(siSp[i4]) > 0 && Integer.parseInt(siSp[i4]) < finalMaxnum) {
+                                                            NS.add(siSp);
+                                                            for (int ii4 = 0; ii4 < siSp.length - 1; ii4++) {
+                                                                for (int i5 = ii4 + 1; i5 < siSp.length; i5++) {
+                                                                    Log.d("ss[i4][i5]", siSp[ii4] + "    " + siSp[i5]);
+                                                                    if (siSp[ii4].equals(siSp[i5])) {
+                                                                        nus = true;
+                                                                        break;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                } else {
+                                                    break;
+                                                }
+                                            } else {
+                                                break;
+                                            }
+                                        }
+
+                                        if (nus == true) {
+                                            setGameMoney(0);
+                                        } else {
+                                            setGameMoney(NS.size());
+                                        }
+                                    } else {
+                                        setGameMoney(0);
+                                    }
+
                                 }
-                                int nus = 0;
+                             /*   int nus = 0;
                                 for (int i3 = 0; i3 < NS.size(); i3++) {
-                                    for (int i4 = 1; i4 < NS.size(); i4++) {
-                                        if (NS.get(i3).equals(NS.get(i4))) {
+                                    String[] s1 = NS.get(i3);
+                                    if (
+                                            "eleven_star_3_prev_single".equals(code)
+                                                    || "eleven_star_3_prev_group_single".equals(code)
+                                            ) {
+                                        int ii1 = Integer.parseInt(s1[0]);
+                                        int ii2 = Integer.parseInt(s1[1]);
+                                        int ii3 = Integer.parseInt(s1[2]);
+                                        if (ii1 == ii2 || ii1 == ii3 || ii2 == ii3) {
+
+                                        } else {
+                                            nus++;
+                                        }
+                                    } else {
+                                        int ii1 = Integer.parseInt(s1[0]);
+                                        int ii2 = Integer.parseInt(s1[1]);
+
+                                        if (ii1 == ii2) {
+
+                                        } else {
                                             nus++;
                                         }
                                     }
                                 }
-                                if (nus==0) {
-                                    setGameMoney(1);
-                                }
+                                setGameMoney(nus);*/
 
-                            } else {*/
-                           if ("eleven_any_two_single".equals(code)
+                            }
+                        }
+
+
+
+
+
+
+                        /*{
+                            String s = charSequence.toString();
+                            List<String[]> NS = new ArrayList<String[]>();
+                            if ("eleven_any_two_single".equals(code)
+                                    || "PK10_1st_2nd_single".equals(code)
+                                    || "PK10_1st_2nd_3th_single".equals(code)
                                     || "eleven_any_three_single".equals(code)
                                     || "eleven_any_four_single".equals(code)
                                     || "eleven_any_five_single".equals(code)
                                     || "eleven_any_six_single".equals(code)
                                     || "eleven_any_seven_single".equals(code)
                                     || "eleven_any_eight_single".equals(code)) {
-                               if (s.contains(" ")) {
-                                   String[] siSp = s.split(" ");
-                                   if (siSp.length == finalSeleNum) {
-                                       for (int i4 = 0; i4 < siSp.length; i4++) {
-                                           if (siSp[i4].matches("\\d+")) {
-                                               if (siSp[i4].length() == 2 && Integer.parseInt(siSp[i4]) > 0 && Integer.parseInt(siSp[i4]) < 12) {
-                                                   if (i4 == finalSeleNum - 1) {
-                                                       if (siSp[i4].matches("\\d+") && siSp[i4].length() == 2 && Integer.parseInt(siSp[i4]) > 0 && Integer.parseInt(siSp[i4]) < 12) {
-                                                           NS.add(siSp);
-                                                       }
-                                                   }
-                                               } else {
-                                                   break;
-                                               }
-                                           } else {
-                                               break;
-                                           }
-                                       }
-                                       int nus = -1;
-                                       for (int i3 = 0; i3 < NS.size(); i3++) {
-                                           for (int i4 = 1; i4 < NS.size(); i4++) {
-                                               if (NS.get(i3).equals(NS.get(i4))) {
-                                                   nus++;
-                                               }
-                                           }
-                                       }
-                                       if (nus==0) {
-                                           setGameMoney(1);
-                                       }
-                                   }
-                               }
-                            }else{
-                               if (s.matches("\\d+")) {
-                                   if (s.length()==2&&Integer.parseInt(s)>0&&Integer.parseInt(s)<12) {
-                                       setGameMoney(1);
-                                   }
-                               }
-                           }
+                                if (s.contains(" ")) {
+                                    String[] siSp = s.split(" ");
+                                    if (siSp.length == finalSeleNum) {
+                                        for (int i4 = 0; i4 < siSp.length; i4++) {
+                                            if (siSp[i4].matches("\\d+")) {
+                                                if (siSp[i4].length() == 2 && Integer.parseInt(siSp[i4]) > 0 && Integer.parseInt(siSp[i4]) < finalMaxnum) {
+                                                    if (i4 == finalSeleNum - 1) {
+                                                        if (siSp[i4].matches("\\d+") && siSp[i4].length() == 2 && Integer.parseInt(siSp[i4]) > 0 && Integer.parseInt(siSp[i4]) < finalMaxnum) {
+                                                            NS.add(siSp);
+                                                            break;
+                                                        }
+                                                    }
+                                                } else {
+                                                    break;
+                                                }
+                                            } else {
+                                                break;
+                                            }
+                                        }
+                                        Log.d("11选5的个数",NS.size()+"");
+                                        if (NS.size() == finalSeleNum) {
+                                            int nus = 0;
+                                            for (int i3 = 0; i3 < NS.size(); i3++) {
+                                                String[] ss = NS.get(i3);
+                                                for (int i4 = 0; i4 < ss.length; i4++) {
+                                                    for (int i5 = i4 + 1; i5 < ss.length - i3 - 1; i5++) {
+                                                        if (ss[i4].equals(ss[i5])) {
+                                                            nus++;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            if (nus == 0) {
+                                                setGameMoney(1);
+                                            } else {
+                                                setGameMoney(0);
+                                            }
+                                        } else {
+                                            setGameMoney(0);
+                                        }
 
-
-
+                                    } else {
+                                        setGameMoney(0);
+                                    }
+                                } else {
+                                    setGameMoney(0);
+                                }
                             }
-                       // }
+                            if (
+                                    "eleven_any_one_single".equals(code)
+                                    ) {
+                                if (s.matches("\\d+")) {
+                                    if (s.length() == 2 && Integer.parseInt(s) > 0 && Integer.parseInt(s) < finalMaxnum) {
+                                        setGameMoney(1);
+                                    }
+                                }
+                                if (s.length() != 2) {
+                                    setGameMoney(0);
+                                }
+                            }
+
+
+                        }*/
+                        // }
 
                         @Override
                         public void afterTextChanged(Editable editable) {
@@ -1291,8 +1443,6 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         || "star_2_prev_group_single".equals(code)
 
 
-                        || "PK10_1st_2nd_single".equals(code)
-                        || "PK10_1st_2nd_3th_single".equals(code)
                         || "k3_double_single".equals(code)
                         || "k3_different_3_single".equals(code)
                         || "k3_different_2_single".equals(code)
@@ -1389,6 +1539,21 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                             || "star_3_midd_group_diverse".equals(code)
                                             || "2min_star_3_midd_group_diverse".equals(code)
 
+
+                                            || "k3_double_single".equals(code)
+                                            || "k3_different_3_single".equals(code)
+
+
+                                            || "sequence_star_3_single".equals(code)
+                                            || "sequence_star_3_group_3_single".equals(code)
+                                            || "sequence_star_3_group_6_single".equals(code)
+                                            || "sequence_star_3_group_diverse".equals(code)
+
+
+                                            || "3D_star_3_single".equals(code)
+                                            || "3D_star_3_group_3_single".equals(code)
+                                            || "3D_star_3_group_6_single".equals(code)
+                                            || "3D_star_3_group_diverse".equals(code)
                                     ) {
                                 seleNums = 3;
                             }
@@ -1403,6 +1568,19 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                             || "star_2_prev_group_single".equals(code)
                                             || "2min_star_2_prev_group_single".equals(code)
 
+
+                                            || "k3_different_2_single".equals(code)
+
+
+                                            || "sequence_star_2_prev_single".equals(code)
+                                            || "sequence_star_2_next_single".equals(code)
+                                            || "sequence_star_2_prev_group_single".equals(code)
+                                            || "sequence_star_2_next_group_single".equals(code)
+
+                                            || "3D_star_2_prev_single".equals(code)
+                                            || "3D_star_2_next_single".equals(code)
+                                            || "3D_star_2_prev_group_single".equals(code)
+                                            || "3D_star_2_next_group_single".equals(code)
                                     ) {
                                 seleNums = 2;
                             }
@@ -1438,6 +1616,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                                     || "star_3_prev_group_single".equals(code)
                                                     || "2min_star_3_prev_group_single".equals(code) || "star_3_midd_group_single".equals(code)
                                                     || "2min_star_3_midd_group_single".equals(code)
+                                                    || "k3_double_single".equals(code)
+                                                    || "sequence_star_3_group_3_single".equals(code)
+                                                    || "3D_star_3_group_3_single".equals(code)
                                             ) {
                                         int cc = 0;
                                         for (int i3 = 0; i3 < NS.size(); i3++) {
@@ -1463,6 +1644,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                                     || "star_3_prev_group_single_6".equals(code)
                                                     || "2min_star_3_prev_group_single_6".equals(code) || "star_3_midd_group_single_6".equals(code)
                                                     || "2min_star_3_midd_group_single_6".equals(code)
+                                                    || "k3_different_3_single".equals(code)
+                                                    || "sequence_star_3_group_6_single".equals(code)
+                                                    || "3D_star_3_group_6_single".equals(code)
                                             ) {
                                         int cc6 = 0;
                                         for (int i3 = 0; i3 < NS.size(); i3++) {
@@ -1483,6 +1667,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                                     || "star_3_prev_group_diverse".equals(code)
                                                     || "2min_star_3_prev_group_diverse".equals(code) || "star_3_midd_group_diverse".equals(code)
                                                     || "2min_star_3_midd_group_diverse".equals(code)
+                                                    || "sequence_star_3_group_diverse".equals(code)
+                                                    || "3D_star_3_group_diverse".equals(code)
                                             ) {
                                         int ccHe = 0;
                                         for (int i3 = 0; i3 < NS.size(); i3++) {
@@ -1502,7 +1688,11 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                                     || "2min_star_2_prev_group_single".equals(code)
                                                     || "star_2_next_group_single".equals(code)
                                                     || "2min_star_2_next_group_single".equals(code)
-
+                                                    || "k3_different_2_single".equals(code)
+                                                    || "sequence_star_2_prev_group_single".equals(code)
+                                                    || "sequence_star_2_next_group_single".equals(code)
+                                                    || "3D_star_2_prev_group_single".equals(code)
+                                                    || "3D_star_2_next_group_single".equals(code)
                                             ) {
                                         int cc2 = 0;
                                         for (int i3 = 0; i3 < NS.size(); i3++) {
@@ -1537,6 +1727,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                                 break;
                                             }
                                         }
+                                    } else {
+                                        setGameMoney(NS.size());
                                     }
                                     if (NS.size() != 0) {
                                         if (
@@ -1568,6 +1760,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                                     || "star_3_prev_group_single".equals(code)
                                                     || "2min_star_3_prev_group_single".equals(code) || "star_3_midd_group_single".equals(code)
                                                     || "2min_star_3_midd_group_single".equals(code)
+                                                    || "k3_double_single".equals(code)
+                                                    || "sequence_star_3_group_3_single".equals(code)
+                                                    || "3D_star_3_group_3_single".equals(code)
                                             ) {
                                         int cc = 0;
                                         for (int i3 = 0; i3 < NS.size(); i3++) {
@@ -1593,6 +1788,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                                     || "star_3_prev_group_single_6".equals(code)
                                                     || "2min_star_3_prev_group_single_6".equals(code) || "star_3_midd_group_single_6".equals(code)
                                                     || "2min_star_3_midd_group_single_6".equals(code)
+                                                    || "k3_different_3_single".equals(code)
+                                                    || "sequence_star_3_group_6_single".equals(code)
+                                                    || "3D_star_3_group_6_single".equals(code)
                                             ) {
                                         int cc6 = 0;
                                         for (int i3 = 0; i3 < NS.size(); i3++) {
@@ -1613,6 +1811,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                                     || "star_3_prev_group_diverse".equals(code)
                                                     || "2min_star_3_prev_group_diverse".equals(code) || "star_3_midd_group_diverse".equals(code)
                                                     || "2min_star_3_midd_group_diverse".equals(code)
+                                                    || "sequence_star_3_group_diverse".equals(code)
+                                                    || "3D_star_3_group_diverse".equals(code)
                                             ) {
                                         int ccHe = 0;
                                         for (int i3 = 0; i3 < NS.size(); i3++) {
@@ -1632,6 +1832,11 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                                     || "2min_star_2_prev_group_single".equals(code)
                                                     || "star_2_next_group_single".equals(code)
                                                     || "2min_star_2_next_group_single".equals(code)
+                                                    || "k3_different_2_single".equals(code)
+                                                    || "sequence_star_2_prev_group_single".equals(code)
+                                                    || "sequence_star_2_next_group_single".equals(code)
+                                                    || "3D_star_2_prev_group_single".equals(code)
+                                                    || "3D_star_2_next_group_single".equals(code)
 
                                             ) {
                                         int cc2 = 0;
@@ -1646,10 +1851,10 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                             }
                                         }
 
+                                    } else {
+                                        setGameMoney(NS.size());
                                     }
-                                    if (NS.size() == 0) {
-                                        setGameMoney(0);
-                                    }
+
                                 }
 
                             } else {
