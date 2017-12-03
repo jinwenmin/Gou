@@ -154,8 +154,8 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
                 menu.add(0, 0, 0, "查询团队余额");
                 menu.add(0, 1, 0, "设置返点");
                 //  menu.add(0, 3, 0, "获得上级充值数据");
-                menu.add(0, 2, 0, "保存上级充值");
-                menu.add(0, 3, 0, "保存日工资充值");
+                menu.add(0, 2, 0, "上级充值");
+                menu.add(0, 3, 0, "日工资充值");
                 menu.add(0, 4, 0, "帐变记录");
 
             }
@@ -215,11 +215,13 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
                 if (ts.size() > 1) {
                     uid = ts.get(1).get(i).getUid();
                     name = ts.get(1).get(i).getName();
-                    ItemOnLongClick1();
+                    //ItemOnLongClick1();
+                    RetrofitService.getInstance().getSreChargeData3(ProxyHomeActivity.this, uid);
                 }
                 return false;
             }
         });
+
     }
 
     @Override
@@ -242,6 +244,9 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
             ProxyUserCounts.setText("总会员数：" + ts.get(0).get(0).getTotalElements() + "人");
             if (ts.size() > 1) {
                 List<TeamUserInfo> teamUserInfos = ts.get(1);
+                adapter.addList(teamUserInfos);
+            } else {
+                List<TeamUserInfo> teamUserInfos = new ArrayList<>();
                 adapter.addList(teamUserInfos);
             }
         }
@@ -308,14 +313,32 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
             setTrans.setHint("充值范围:" + SreChargeMin + "~" + SreChargeMax);
             alertView2.show();
             isS = "Show2";
+        }if (apiId == RetrofitService.API_ID_SRECHARGE3) {
+            sreCharge = (SreCharge) object;
+
+            ActivityProxyListView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+                public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                    menu.add(0, 0, 0, "查询团队余额");
+                    menu.add(0, 1, 0, "设置返点");
+                    //  menu.add(0, 3, 0, "获得上级充值数据");
+                    if (sreCharge.getStype() != 0) {
+                        menu.add(0, 2, 0, "上级充值");
+                    }
+                    if (sreCharge.isDtype() == true) {
+                        menu.add(0, 3, 0, "日工资充值");
+                    }
+                    menu.add(0, 4, 0, "帐变记录");
+
+                }
+            });
         }
         if (apiId == RetrofitService.API_ID_SRECHARGE2) {
             sreCharge = (SreCharge) object;
-            if (sreCharge.isDtype()==false) {
+            if (sreCharge.isDtype() == false) {
                 Toasty.error(this, "没有权限日工资充值", 2000).show();
                 return;
             }
-            if (sreCharge.isDtype() ==true) {
+            if (sreCharge.isDtype() == true) {
                 Toasty.success(this, "有权限日工资充值", 2000).show();
             }
             proxyName = ((TextView) contentView2.findViewById(R.id.proxy_name));

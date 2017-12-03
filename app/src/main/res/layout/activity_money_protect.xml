@@ -67,17 +67,20 @@
         android:padding="15px">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:gravity="right"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_weight="2"
             android:text="答案:"
             android:textSize="30px" />
 
         <EditText
             android:id="@+id/SavePwdProtectEdittext"
-            android:layout_width="match_parent"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30px"
+            android:layout_weight="7"
             android:background="@null"
             android:gravity="center"
             android:hint="输入答案"
@@ -85,12 +88,40 @@
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4px"
+        android:background="@android:color/white"
+        android:padding="15px">
+
+        <TextView
+            android:gravity="right"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:text="答案确认:"
+            android:textSize="30px" />
+
+        <EditText
+            android:id="@+id/CheckSavePwdProtectEdittext"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30px"
+            android:layout_weight="7"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="请输入相同的答案"
+            android:textSize="30px"></EditText>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30px"
         android:background="@android:color/white"
-        android:padding="15px">
+        android:padding="15px"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -110,12 +141,12 @@
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4px"
         android:background="@android:color/white"
-        android:padding="15px">
+        android:padding="15px"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -135,12 +166,12 @@
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="60px"
         android:background="@android:color/white"
-        android:padding="15px">
+        android:padding="15px"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -159,12 +190,12 @@
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4px"
         android:background="@android:color/white"
-        android:padding="15px">
+        android:padding="15px"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -184,12 +215,12 @@
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4px"
         android:background="@android:color/white"
-        android:padding="15px">
+        android:padding="15px"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="20px"
+        android:text="返点设置"
+        android:textColor="@android:color/black"
+        android:textSize="30px" />
+
+    <EditText
+        android:id="@+id/rateFW"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20px"
+        android:layout_marginRight="20px"
+        android:background="@null"
+        android:gravity="center"
+        android:hint="返点的范围是0.0-12.5" />
+
+    <RadioGroup
+        android:id="@+id/rateType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rateType1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="推广为代理用户"
+            android:textSize="30px" />
+
+        <RadioButton
+            android:id="@+id/rateType2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="推广为普通会员"
+            android:textSize="30px" />
+    </RadioGroup>
+</LinearLayout>

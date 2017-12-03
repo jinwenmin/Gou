@@ -12,6 +12,7 @@ import android.widget.Spinner;
 
 import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
+import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.utils.HttpEngine;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -22,6 +23,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
+
+import static com.example.king.gou.service.RetrofitService.API_ID_PWDPROTACT;
 
 
 public class MoneyProtectActivity extends AutoLayoutActivity implements View.OnClickListener, HttpEngine.DataListener {
@@ -41,6 +44,8 @@ public class MoneyProtectActivity extends AutoLayoutActivity implements View.OnC
     Button SavePwdProtect;
     @BindView(R.id.SavePwdProtectEdittext)
     EditText SavePwdProtectEdittext;
+    @BindView(R.id.CheckSavePwdProtectEdittext)
+    EditText CheckSavePwdProtectEdittext;
     private ArrayAdapter<String> adapter;
 
     @Override
@@ -69,8 +74,17 @@ public class MoneyProtectActivity extends AutoLayoutActivity implements View.OnC
                 String selectedItem = (String) SpinnerQues1.getSelectedItem();
                 Log.d("选中的问题", selectedItem);
                 String SaveEditeText = SavePwdProtectEdittext.getText().toString().trim();
+                String CheckSaveEditeText = CheckSavePwdProtectEdittext.getText().toString().trim();
                 if (SaveEditeText == null || "".equals(SaveEditeText)) {
                     Toasty.error(MoneyProtectActivity.this, "答案不能为空", 2000).show();
+                    return;
+                }
+                if (CheckSaveEditeText == null || "".equals(CheckSaveEditeText)) {
+                    Toasty.error(MoneyProtectActivity.this, "确认答案不能为空", 2000).show();
+                    return;
+                }
+                if (!CheckSaveEditeText.equals(SaveEditeText)) {
+                    Toasty.error(MoneyProtectActivity.this, "两次答案不一致", 2000).show();
                     return;
                 }
                 RetrofitService.getInstance().getSaveSafeQus(this, selectedItem, SaveEditeText);
@@ -90,6 +104,19 @@ public class MoneyProtectActivity extends AutoLayoutActivity implements View.OnC
                 SpinnerQues1.setAdapter(adapter);
 
 
+            }
+        }
+        if (apiId == RetrofitService.API_ID_PWDPROTACT) {
+            if (object != null) {
+                RestultInfo restultInfo = (RestultInfo) object;
+                if (restultInfo.isRc()) {
+                    Toasty.success(MoneyProtectActivity.this, restultInfo.getMsg(), 2000).show();
+                    finish();
+                    return;
+                } else {
+                    Toasty.error(MoneyProtectActivity.this, restultInfo.getMsg(), 2000).show();
+                    return;
+                }
             }
         }
     }

@@ -313,6 +313,8 @@ public class TeamCunQuActivity extends AutoLayoutActivity implements View.OnClic
                 Expend.setText(cq.get(0).get(0).getExpengs() + "");
                 if (cq.size() > 1) {
                     rechargeDrawAdapter.getList(cq.get(1));
+                } else {
+                    rechargeDrawAdapter.getList(new ArrayList<CunQu>());
                 }
             }
             CunQuListView.setAdapter(rechargeDrawAdapter);

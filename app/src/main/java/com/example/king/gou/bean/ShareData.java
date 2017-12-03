@@ -15,6 +15,7 @@ public class ShareData {
     double offset;
     int uid;
 
+
     @Override
     public String toString() {
         return "ShareData{" +

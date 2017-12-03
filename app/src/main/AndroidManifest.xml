@@ -27,6 +27,7 @@
         <service
             android:name="com.squareup.leakcanary.DisplayLeakService"
             android:enabled="false" />
+
         <activity android:name=".ui.MainActivity" />
         <activity android:name=".ui.LoginActivity">
             <intent-filter>
@@ -106,7 +107,8 @@
         <activity android:name=".ui.settingfragment.AboutUsWebActivity" />
         <activity android:name=".ui.frmMyActivity.GetSendMsgActivity" />
         <activity android:name=".ui.gameAcVpFrms.GameCartActivity" />
-        <activity android:name=".ui.CNumberActivity"></activity>
+        <activity android:name=".ui.CNumberActivity" />
+        <activity android:name=".ui.gameAcVpFrms.BettingDetailActivity"></activity>
     </application>
 
 </manifest>

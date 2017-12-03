@@ -1,5 +1,6 @@
 package com.example.king.gou.ui.orderFrmActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.example.king.gou.bean.TouZhu;
 import com.example.king.gou.fragment.BaseFragment;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.ui.gameAcVpFrms.AllFragment;
+import com.example.king.gou.ui.gameAcVpFrms.BettingDetailActivity;
 import com.example.king.gou.ui.gameAcVpFrms.KillOrderFragment;
 import com.example.king.gou.ui.gameAcVpFrms.ManKillOrderFragment;
 import com.example.king.gou.ui.gameAcVpFrms.NoBuyFragment;
@@ -35,6 +37,7 @@ import com.example.king.gou.ui.gameAcVpFrms.OverDueFragment;
 import com.example.king.gou.ui.gameAcVpFrms.PaiJiangFragment;
 import com.example.king.gou.ui.gameAcVpFrms.TerraceKillFragment;
 import com.example.king.gou.utils.HttpEngine;
+import com.example.king.gou.utils.PinnedHeaderListView;
 import com.example.king.gou.utils.RxUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -171,8 +174,8 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
         int status = titsname.get(GameJiluSpinner.getSelectedItemPosition());
         String rebuy = rebuyName.get(RebuySpinner.getSelectedItemPosition());
         int gid = gameTypes1.get(gameType1.getSelectedItemPosition()).getGid();
-        int tid = gameTypes2.get(gameType2.getSelectedItemPosition()).getTid();
-        RetrofitService.getInstance().getBettingRecord(GameJiluActivity.this, 1, 100, "serial_number", "desc", time1, time2, gid, tid, status, "", searString);
+        int rid = gameTypes2.get(gameType2.getSelectedItemPosition()).getGrid();
+        RetrofitService.getInstance().getBettingRecord(GameJiluActivity.this, 1, 100, "serial_number", "desc", time1, time2, gid, rid, status, "", searString);
         //RetrofitService.getInstance().getBettingRecord(GameJiluActivity.this, 1, 100, "serial_number", "desc", time1, time2, gid, tid, -1, "", searText);
     }
 
@@ -220,6 +223,15 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
         relateTime2.setOnClickListener(this);
         gamejlBack.setOnClickListener(this);
         SearchQiHao.setOnClickListener(this);
+        GameJiLuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(GameJiluActivity.this, BettingDetailActivity.class);
+                TouZhu t = (TouZhu) touZhuAdapter.getItem(i);
+                intent.putExtra("bid", t.getBid());
+                startActivity(intent);
+            }
+        });
     }
 
 

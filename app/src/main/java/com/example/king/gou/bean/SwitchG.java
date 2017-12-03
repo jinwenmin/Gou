@@ -76,9 +76,9 @@ public class SwitchG {
         Object id2;
         Object name2;
         String class_code2;
+        String description2;
+        String grprize2;
         double minimum2;
-        double coefficient2;
-        List<SwitchGam> switchGams;
 
         @Override
         public String toString() {
@@ -86,11 +86,32 @@ public class SwitchG {
                     "id2=" + id2 +
                     ", name2=" + name2 +
                     ", class_code2='" + class_code2 + '\'' +
+                    ", description2='" + description2 + '\'' +
+                    ", grprize2='" + grprize2 + '\'' +
                     ", minimum2=" + minimum2 +
                     ", coefficient2=" + coefficient2 +
                     ", switchGams=" + switchGams +
                     ", rate2=" + rate2 +
                     '}';
+        }
+
+        public String getGrprize2() {
+            return grprize2;
+        }
+
+        public void setGrprize2(String grprize2) {
+            this.grprize2 = grprize2;
+        }
+
+        double coefficient2;
+        List<SwitchGam> switchGams;
+
+        public String getDescription2() {
+            return description2;
+        }
+
+        public void setDescription2(String description2) {
+            this.description2 = description2;
         }
 
         public double getRate2() {
@@ -155,9 +176,7 @@ public class SwitchG {
             Object id3;
             Object name3;
             String class_code3;
-            double minimum3;
-            double coefficient3;
-            double rate3;
+            String grprize3;
 
             @Override
             public String toString() {
@@ -165,10 +184,33 @@ public class SwitchG {
                         "id3=" + id3 +
                         ", name3=" + name3 +
                         ", class_code3='" + class_code3 + '\'' +
+                        ", grprize3='" + grprize3 + '\'' +
                         ", minimum3=" + minimum3 +
                         ", coefficient3=" + coefficient3 +
-                        ", rate=" + rate3 +
+                        ", rate3=" + rate3 +
+                        ", description3='" + description3 + '\'' +
                         '}';
+            }
+
+            public String getGrprize3() {
+                return grprize3;
+            }
+
+            public void setGrprize3(String grprize3) {
+                this.grprize3 = grprize3;
+            }
+
+            double minimum3;
+            double coefficient3;
+            double rate3;
+            String description3;
+
+            public String getDescription3() {
+                return description3;
+            }
+
+            public void setDescription3(String description3) {
+                this.description3 = description3;
             }
 
             public double getRate3() {

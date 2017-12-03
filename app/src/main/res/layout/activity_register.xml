@@ -36,11 +36,13 @@
         android:layout_marginTop="20px">
 
         <TextView
+            android:id="@+id/textView13"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
             android:layout_weight="3"
-            android:text="注册用户名"
+            android:gravity="right"
+            android:text="注册用户名："
             android:textColor="@android:color/black"
             android:textSize="35px" />
 
@@ -62,11 +64,12 @@
         android:layout_marginTop="20px">
 
         <TextView
+            android:gravity="right"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
             android:layout_weight="3"
-            android:text="昵称"
+            android:text="昵称："
             android:textColor="@android:color/black"
             android:textSize="35px" />
 
@@ -88,11 +91,12 @@
         android:layout_marginTop="20px">
 
         <TextView
+            android:gravity="right"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
             android:layout_weight="3"
-            android:text="登录密码"
+            android:text="登录密码："
             android:textColor="@android:color/black"
             android:textSize="35px" />
 
@@ -115,11 +119,12 @@
         android:layout_marginTop="20px">
 
         <TextView
+            android:gravity="right"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
             android:layout_weight="3"
-            android:text="确认密码"
+            android:text="确认密码："
             android:textColor="@android:color/black"
             android:textSize="35px" />
 
@@ -142,11 +147,12 @@
         android:layout_marginTop="20px">
 
         <TextView
+            android:gravity="right"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
             android:layout_weight="3"
-            android:text="推广码"
+            android:text="推广码："
             android:textColor="@android:color/black"
             android:textSize="35px" />
 
@@ -168,11 +174,12 @@
         android:layout_marginTop="20px">
 
         <TextView
+            android:gravity="right"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
             android:layout_weight="3"
-            android:text="验证码"
+            android:text="验证码："
             android:textColor="@android:color/black"
             android:textSize="35px" />
 
@@ -203,6 +210,7 @@
             android:layout_gravity="left" />
 
         <TextView
+            android:textSize="30px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10px"

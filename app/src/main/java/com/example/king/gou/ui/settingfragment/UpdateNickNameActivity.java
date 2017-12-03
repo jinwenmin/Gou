@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.RestultInfo;
-
 import com.example.king.gou.bean.UserInfo;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.utils.HttpEngine;
@@ -39,6 +38,10 @@ public class UpdateNickNameActivity extends AutoLayoutActivity implements View.O
     Button UpDateCheck;
     String nickName;
     List<UserInfo> userInfos;
+    @BindView(R.id.CheckNewUserNickName)
+    EditText CheckNewUserNickName;
+    private String checkNickName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +49,7 @@ public class UpdateNickNameActivity extends AutoLayoutActivity implements View.O
         ButterKnife.bind(this);
         MyApp.getInstance().addActivitys(this);
         RetrofitService.getInstance().GetUserInfo(this);
-       // OldUserNickName.setText(MyApp.getInstance().getUserNickName());
+        // OldUserNickName.setText(MyApp.getInstance().getUserNickName());
         initCLick();
     }
 
@@ -63,8 +66,17 @@ public class UpdateNickNameActivity extends AutoLayoutActivity implements View.O
                 break;
             case R.id.UpDateCheck:
                 nickName = NewUserNickName.getText().toString().trim();
-                if (nickName == null) {
+                checkNickName = CheckNewUserNickName.getText().toString().trim();
+                if (nickName == null || "".equals(nickName)) {
                     Toasty.error(UpdateNickNameActivity.this, "用户昵称不可为空", 2000).show();
+                    return;
+                }
+                if (checkNickName == null || "".equals(checkNickName)) {
+                    Toasty.error(UpdateNickNameActivity.this, "确认昵称不可为空", 2000).show();
+                    return;
+                }
+                if (!checkNickName.equals(nickName)) {
+                    Toasty.error(UpdateNickNameActivity.this, "两次昵称不相同", 2000).show();
                     return;
                 }
                 RetrofitService.getInstance().getUpdateNickName(this, nickName);

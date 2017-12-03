@@ -556,7 +556,7 @@ public interface ApiInterface {
     //投注单详情
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/betting-details/{id}")
-    Call<Object> getBettingDetails(
+    Call<Map<String,Object>> getBettingDetails(
             @Path("id") int id,//id为投注单bid
             @Query("AppClient") int num,
             @Query("reqkey") String reqkey,

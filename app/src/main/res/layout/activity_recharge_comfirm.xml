@@ -78,7 +78,7 @@
         android:layout_toRightOf="@id/textMoney"
         android:background="@null"
         android:hint="请输入您的支付宝姓名"
-        android:inputType="number"
+
         android:textSize="30px" />
 
     <View

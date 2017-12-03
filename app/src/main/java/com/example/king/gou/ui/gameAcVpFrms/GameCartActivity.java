@@ -27,7 +27,6 @@ import com.example.king.gou.bean.Ids;
 import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.bean.ZhuiHaoCNum;
 import com.example.king.gou.service.RetrofitService;
-import com.example.king.gou.ui.CNumberActivity;
 import com.example.king.gou.utils.HttpEngine;
 import com.google.gson.Gson;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -62,6 +61,8 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
     TextView ToBettingAuto;
     @BindView(R.id.AmountSum)
     TextView AmountSum;
+    @BindView(R.id.ClearGameCart)
+    TextView ClearGameCart;
     private AlertView alertView;
     // 一个自定义的布局，作为显示的内容
     View contentView;
@@ -119,6 +120,7 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
         Back.setOnClickListener(this);
         ToSendGame.setOnClickListener(this);
         ToBettingAuto.setOnClickListener(this);
+        ClearGameCart.setOnClickListener(this);
     }
 
     private class Broadcast extends BroadcastReceiver {
@@ -132,7 +134,11 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
                 int position = intent.getIntExtra("position", 0);
                 String trim = AmountSum.getText().toString().trim();
                 double as = Double.parseDouble(trim);
-                AmountSum.setText(as - amounts + "");
+                if (as - amounts < 0) {
+                    AmountSum.setText("0.0");
+                } else {
+                    AmountSum.setText(as - amounts + "");
+                }
                 listids.remove(position);
                 adapter.addList(listids);
             }
@@ -199,6 +205,11 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
                 }
                 RetrofitService.getInstance().getBettingAutoPurchase(GameCartActivity.this, gid, period, Integer.parseInt(qi));
                 break;
+            case R.id.ClearGameCart:
+                listids = new ArrayList<>();
+                adapter.addList(listids);
+                AmountSum.setText("0.0");
+                break;
         }
     }
 
@@ -224,10 +235,15 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
                 RestultInfo restultInfo = (RestultInfo) object;
                 if (restultInfo.isRc()) {
                     listids = new ArrayList<>();
+                    adapter.addList(listids);
                     AmountSum.setText("0.0");
                     Toasty.success(GameCartActivity.this, restultInfo.getMsg(), 2000).show();
+                    Intent intent1 = new Intent();
+                    intent1.putExtra("ids", (Serializable) listids);
+                    setResult(1, intent1);
+                    finish();
                 } else {
-                    Toasty.error(GameCartActivity.this, restultInfo.getMsg(), 2000).show();
+                    Toasty.error(GameCartActivity.this, "投注失败", 2000).show();
                 }
             }
         }

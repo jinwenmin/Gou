@@ -36,6 +36,7 @@ public class GameCertAdapter extends BaseAdapter {
         this.idses = idses;
         notifyDataSetChanged();
     }
+
     @Override
     public int getCount() {
         return idses.size();
@@ -61,8 +62,12 @@ public class GameCertAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        if (!"".equals(idses.get(i).getPickedNumber())) {
-            viewHolder.GameTypeContent.setText(idses.get(i).getPickedNumber());
+        if (!"".equals(idses.get(i).getPickedText())) {
+            viewHolder.GameTypeContent.setText(idses.get(i).getPickedText());
+        } else {
+            if (!"".equals(idses.get(i).getPickedNumber())) {
+                viewHolder.GameTypeContent.setText(idses.get(i).getPickedNumber());
+            }
         }
         if (0 != idses.get(i).getNum()) {
             viewHolder.GameTypeZhu.setText("共" + idses.get(i).getNum() + "注");

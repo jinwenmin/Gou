@@ -52,7 +52,7 @@ public class LotteryFragment extends BaseFragment implements HttpEngine.DataList
     private List<GameImages> imgs = new ArrayList<>();
     private int GameImgs[] = new int[]{
             R.drawable.logo1, R.drawable.logo2, R.drawable.logo3, 0, 0, 0, R.drawable.logo7, R.drawable.logo8, R.drawable.logo9, R.drawable.logo10,
-            R.drawable.logo11, R.drawable.logo12, R.drawable.logo13, R.drawable.logo14, R.drawable.logo15, 0, 0, 0, R.drawable.logo19, R.drawable.logo20,
+            R.drawable.logo11, R.drawable.logo12, R.drawable.logo13, R.drawable.logo14, R.drawable.logo15, R.drawable.logo16, 0, 0, R.drawable.logo19, R.drawable.logo20,
             R.drawable.logo21, 0, R.drawable.logo23, R.drawable.logo24, R.drawable.logo25, R.drawable.logo26, R.drawable.logo27, R.drawable.logo28
 
     };
@@ -209,7 +209,13 @@ public class LotteryFragment extends BaseFragment implements HttpEngine.DataList
 
                 if (group_id == 1) {
                     gameTypes1.setType("时时彩");
-                    if (ListgameTypes.get(i).getGid() == 2) {
+                    if (ListgameTypes.get(i).getGid() == 1) {
+                        GameIm gameIm1 = new GameIm();
+                        gameIm1.setGameimg(R.drawable.logo1);
+                        gameIm1.setImgText(ListgameTypes.get(i).getName());
+                        gameIms1.add(gameIm1);
+
+                    }if (ListgameTypes.get(i).getGid() == 2) {
                         GameIm gameIm1 = new GameIm();
                         gameIm1.setGameimg(R.drawable.logo2);
                         gameIm1.setImgText(ListgameTypes.get(i).getName());
@@ -343,6 +349,12 @@ public class LotteryFragment extends BaseFragment implements HttpEngine.DataList
                     if (ListgameTypes.get(i).getGid() == 13) {
                         GameIm gameIm1 = new GameIm();
                         gameIm1.setGameimg(R.drawable.logo13);
+                        gameIm1.setImgText(ListgameTypes.get(i).getName());
+                        gameIms5.add(gameIm1);
+
+                    } if (ListgameTypes.get(i).getGid() == 16) {
+                        GameIm gameIm1 = new GameIm();
+                        gameIm1.setGameimg(R.drawable.logo16);
                         gameIm1.setImgText(ListgameTypes.get(i).getName());
                         gameIms5.add(gameIm1);
 

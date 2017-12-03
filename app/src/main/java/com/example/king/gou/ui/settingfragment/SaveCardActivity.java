@@ -85,7 +85,7 @@ public class SaveCardActivity extends AutoLayoutActivity implements View.OnClick
         SpinnnerBank.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                BankId = bankss.get(0).getBankid();
+                BankId = bankss.get(position).getBankid();
 
             }
 
@@ -152,6 +152,9 @@ public class SaveCardActivity extends AutoLayoutActivity implements View.OnClick
             if (object != null) {
                 cs = (List<List<CardsData>>) object;
                 bankss = cs.get(1);
+                for (int i = 0; i < bankss.size(); i++) {
+                    Log.d("银行卡的id", bankss.get(i).toString());
+                }
                 provincess = cs.get(2);
                 List<String> bankname = new ArrayList<>();
                 List<String> province = new ArrayList<>();
@@ -214,6 +217,7 @@ public class SaveCardActivity extends AutoLayoutActivity implements View.OnClick
                 RestultInfo restultInfo = (RestultInfo) object;
                 if (restultInfo.isRc()) {
                     Toasty.success(this, restultInfo.getMsg(), 2000).show();
+                    finish();
                 } else {
                     Toasty.error(this, restultInfo.getMsg(), 2000).show();
                 }

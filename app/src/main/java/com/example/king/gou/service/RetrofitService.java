@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.pm.LabeledIntent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.icu.text.LocaleDisplayNames;
 import android.media.Image;
 import android.os.AsyncTask;
 import android.os.SystemClock;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import com.example.king.gou.MyApp;
 import com.example.king.gou.bean.AccountChange;
 import com.example.king.gou.bean.ActivityBean;
+import com.example.king.gou.bean.BettingDetail;
 import com.example.king.gou.bean.BettingSync;
 import com.example.king.gou.bean.CardsData;
 import com.example.king.gou.bean.CunQu;
@@ -156,6 +158,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_SETRATESAVE = 45;//查询会员返点
     public static int API_ID_SRECHARGE = 46;//获取上级充值数据
     public static int API_ID_SRECHARGE2 = 47;//获取上级充值数据2
+    public static int API_ID_SRECHARGE3 = 471;//获取上级充值数据3
     public static int API_ID_OWNTRANSFER = 48;//给下级充值
     public static int API_ID_ACTIVITYLIST = 49;//获取活动列表
     public static int API_ID_ACTIVITYDETAIL = 50;//获取活动详情
@@ -183,6 +186,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_BEETING_AUTO = 73;//获取追号信息
     public static int API_ID_USERBETTING = 74;//个人报表彩票投注
     public static int API_ID_SENDBETTING = 75;//提交购彩单
+    public static int API_ID_PWDPROTACT = 76;//密码保护 密码
 
     private Retrofit retrofit;
     private ApiInterface apiInterface;
@@ -739,45 +743,7 @@ public class RetrofitService extends HttpEngine {
                     String s1 = response.body().toString();
                     String GameT = s1.substring(1, s1.length() - 1);
                     String[] split = GameT.split(",");
-                   /* if ("1".equals(StringType)) {
-                        for (int i = 0; i < split.length; i = i + 2) {
-                            GameType gameType = new GameType();
-                            String GameName = split[i].substring(split[i].indexOf("name=") + 5, split[i].length());
-                            String GameTid = split[i + 1].substring(split[i + 1].indexOf("tid=") + 4, split[i + 1].length() - 3);
-                            int intGameTid = Integer.parseInt(GameTid);
-                            gameType.setName(GameName);
-                            gameType.setTid(intGameTid);
-                            // Log.d("Game游戏==", gameType.toString());
-                            ListgameTypes.add(gameType);
-                        }
-                    }*/
-                    /*if ("2".equals(StringType)) {
 
-                        for (int i = 0; i < split.length; i = i + 3) {
-                            //Log.d("Game游戏Split=", split[i]);
-                            GameType gameType = new GameType();
-                            String GameName = split[i + 1].substring(split[i + 1].indexOf("name=") + 5, split[i + 1].length());
-                            String GameTid = split[i + 2].substring(split[i + 2].indexOf("tid=") + 4, split[i + 2].length() - 3);
-                            String GameGid = split[i].substring(split[i].indexOf("gid=") + 4, split[i].length() - 2);
-                            gameType.setGid(Integer.parseInt(GameGid));
-                            gameType.setTid(Integer.parseInt(GameTid));
-                            gameType.setName(GameName);
-                            //  Log.d("Game游戏==", gameType.toString());
-                            ListgameTypes.add(gameType);
-                        }
-                    }*/
-                    /*if ("3".equals(StringType)) {
-                        for (int i = 0; i < split.length; i = i + 2) {
-                            //Log.d("Game游戏Split=", split[i]);
-                            GameType gameType = new GameType();
-                            String GameGroupId = split[i].substring(split[i].indexOf("group_id=") + 9, split[i].length() - 2);
-                            String GameName = split[i + 1].substring(split[i + 1].indexOf("name=") + 5, split[i + 1].length() - 1);
-                            gameType.setGroup_id(Integer.parseInt(GameGroupId));
-                            gameType.setName(GameName);
-                            //  Log.d("Game游戏==", gameType.toString());
-                            ListgameTypes.add(gameType);
-                        }
-                    }*/
                     if ("4".equals(StringType)) {
                         GameType g2 = new GameType();
                         g2.setGrid(0);
@@ -809,44 +775,17 @@ public class RetrofitService extends HttpEngine {
                             Log.d("Game游戏4==", gameType.toString());
                             ListgameTypes.add(gameType);
                         }
-                    /*    for (int i = 0; i < split.length; i = i + 3) {
-                            //Log.d("Game游戏Split=", split[i]);
-                            GameType gameType = new GameType();
-                            String GameGid = split[i].substring(split[i].indexOf("gid=") + 4, split[i].length() - 2);
-                            String GameGroupId = split[i + 1].substring(split[i + 1].indexOf("group_id=") + 9, split[i + 1].length() - 2);
-                            String GameName = split[i + 2].substring(split[i + 2].indexOf("name=") + 5, split[i + 2].length() - 1);
-                            gameType.setGid(Integer.parseInt(GameGid));
-                            gameType.setGroup_id(Integer.parseInt(GameGroupId));
-                            gameType.setName(GameName);
-                            Log.d("Game游戏4==", gameType.toString());
-                            ListgameTypes.add(gameType);
-                        }*/
+
                         listener.onReceivedData(API_ID_GAME4, ListgameTypes, API_ID_ERROR);
                     }
-                 /*   if ("5".equals(StringType)) {
-                        for (int i = 0; i < split.length; i = i + 4) {
-                            // Log.d("Game游戏Split=", split[i]);
-                            GameType gameType = new GameType();
-                            String GameGid = split[i].substring(split[i].indexOf("gid=") + 4, split[i].length() - 2);
-                            String GameName = split[i + 1].substring(split[i + 1].indexOf("name=") + 5, split[i + 1].length());
-                            String GamePtidId = split[i + 2].substring(split[i + 2].indexOf("ptid=") + 5, split[i + 2].length() - 2);
-                            String GameTidId = split[i + 3].substring(split[i + 3].indexOf("tid=") + 4, split[i + 3].length() - 3);
-                            gameType.setGid(Integer.parseInt(GameGid));
-                            gameType.setName(GameName);
-                            gameType.setPtid(Integer.parseInt(GamePtidId));
-                            gameType.setTid(Integer.parseInt(GameTidId));
-                            ListgameTypes.add(gameType);
-                            // Log.d("Game游戏==", gameType.toString());
-                        }
-                        listener.onReceivedData(API_ID_GAME5, ListgameTypes, API_ID_ERROR);
-                    }*/
+
                     if ("7".equals(StringType)) {
                         boolean flag = false;
                         Log.d("Split.leng=", split.length + "");
 
                         if (flag == false) {
                             GameType gameType1 = new GameType();
-                            gameType1.setName("全部彩种");
+                            gameType1.setName("全部玩法");
                             gameType1.setTid(0);
                             ListgameTypes.add(gameType1);
                             flag = true;
@@ -880,30 +819,211 @@ public class RetrofitService extends HttpEngine {
                             }
                             GameType gameType = new GameType();
                             gameType.setGid(RxUtils.getInstance().getInt(gid));
-                            gameType.setName(name);
+
                             gameType.setGrid(RxUtils.getInstance().getInt(grid));
-                            gameType.setTid(RxUtils.getInstance().getInt(tid));
+                            int tidd = RxUtils.getInstance().getInt(tid);
+                            gameType.setTid(tidd);
+                            String ns = "";
+                            if (tidd == 2 || tidd == 3 || tidd == 4 || tidd == 62 || tidd == 63 || tidd == 64 || tidd == 93 || tidd == 94 || tidd == 95 || tidd == 527 || tidd == 528 || tidd == 529
+                                    || tidd == 343 || tidd == 344 || tidd == 345 || tidd == 237 || tidd == 238 || tidd == 239 || tidd == 381 || tidd == 382 || tidd == 383
+                                    || tidd == 605 || tidd == 606 || tidd == 607 || tidd == 643 || tidd == 644 || tidd == 645 || tidd == 699 || tidd == 700 || tidd == 701
+                                    ) {
+                                ns = "五星";
+                            }
+                            if (tidd == 6 || tidd == 7 || tidd == 66 || tidd == 67 || tidd == 97 || tidd == 98 || tidd == 531 || tidd == 532
+                                    || tidd == 347 || tidd == 348 || tidd == 241 || tidd == 242 || tidd == 385 || tidd == 386
+                                    || tidd == 609 || tidd == 610 || tidd == 647 || tidd == 648 || tidd == 703 || tidd == 704
+                                    ) {
+                                ns = "四星";
+                            }
+                            if (tidd == 9 || tidd == 10 || tidd == 69 || tidd == 70 || tidd == 100 || tidd == 101 || tidd == 534 || tidd == 535
+                                    || tidd == 350 || tidd == 351 || tidd == 244 || tidd == 245 || tidd == 388 || tidd == 389
+                                    || tidd == 612 || tidd == 613 || tidd == 650 || tidd == 651 || tidd == 706 || tidd == 707
+                                    ) {
+                                ns = "后三";
+                            }
+                            if (tidd == 12 || tidd == 13 || tidd == 72 || tidd == 73 || tidd == 103 || tidd == 104 || tidd == 537 || tidd == 538
+                                    || tidd == 353 || tidd == 354 || tidd == 247 || tidd == 248 || tidd == 391 || tidd == 392
+                                    || tidd == 615 || tidd == 616 || tidd == 653 || tidd == 654 || tidd == 709 || tidd == 710
+                                    ) {
+                                ns = "前三";
+                            }
+                            if (tidd == 263 || tidd == 264 || tidd == 266 || tidd == 267 || tidd == 269 || tidd == 270 || tidd == 553 || tidd == 554
+                                    || tidd == 369 || tidd == 370 || tidd == 278 || tidd == 279 || tidd == 407 || tidd == 408
+                                    || tidd == 631 || tidd == 632 || tidd == 669 || tidd == 670 || tidd == 725 || tidd == 726
+                                    ) {
+                                ns = "中三";
+                            }
+
+                            if (tidd == 15 || tidd == 16 || tidd == 75 || tidd == 76 || tidd == 106 || tidd == 107 || tidd == 540 || tidd == 541
+                                    || tidd == 356 || tidd == 357 || tidd == 250 || tidd == 251 || tidd == 394 || tidd == 395
+                                    || tidd == 618 || tidd == 619 || tidd == 656 || tidd == 657 || tidd == 712 || tidd == 713
+                                    ) {
+                                ns = "后二";
+                            }
+                            if (tidd == 18 || tidd == 19 || tidd == 78 || tidd == 79 || tidd == 109 || tidd == 110 || tidd == 543 || tidd == 544
+                                    || tidd == 359 || tidd == 360 || tidd == 253 || tidd == 254 || tidd == 397 || tidd == 398
+                                    || tidd == 621 || tidd == 622 || tidd == 659 || tidd == 660 || tidd == 715 || tidd == 716
+                                    ) {
+                                ns = "前二";
+                            }
+                            if (tidd == 20 || tidd == 80 || tidd == 111 || tidd == 545 || tidd == 361 || tidd == 255 || tidd == 399 || tidd == 623 || tidd == 661 || tidd == 717) {
+                                ns = "定位胆";
+                            }
+                            if (tidd == 21 || tidd == 81 || tidd == 112 || tidd == 546 || tidd == 362 || tidd == 256 || tidd == 400 || tidd == 624 || tidd == 662 || tidd == 718) {
+                                ns = "不定位";
+                            }
+                            if (tidd == 48 || tidd == 49 || tidd == 50 || tidd == 82 || tidd == 83 || tidd == 84 || tidd == 113 || tidd == 114 || tidd == 115 || tidd == 547 || tidd == 548 || tidd == 549
+                                    || tidd == 363 || tidd == 364 || tidd == 365 || tidd == 257 || tidd == 258 || tidd == 259 || tidd == 401 || tidd == 402 || tidd == 403
+                                    || tidd == 625 || tidd == 626 || tidd == 627 || tidd == 663 || tidd == 664 || tidd == 665 || tidd == 719 || tidd == 720 || tidd == 721
+                                    ) {
+                                ns = "不定位";
+                            }
+                            if (tidd == 749 || tidd == 751 || tidd == 753 || tidd == 769 || tidd == 761 || tidd == 759 || tidd == 763 || tidd == 773 || tidd == 775 || tidd == 777) {
+                                ns = "龙虎斗";
+                            }
+                            if (tidd == 456 || tidd == 457 || tidd == 60 || tidd == 86 || tidd == 508 || tidd == 509 || tidd == 117 || tidd == 510 || tidd == 511 || tidd == 551 || tidd == 564 || tidd == 565
+                                    || tidd == 367 || tidd == 512 || tidd == 513 || tidd == 261 || tidd == 458 || tidd == 459 || tidd == 405 || tidd == 514 || tidd == 515
+                                    || tidd == 629 || tidd == 686 || tidd == 687 || tidd == 667 || tidd == 688 || tidd == 689 || tidd == 723 || tidd == 736 || tidd == 737
+                                    ) {
+                                ns = "趣味";
+                            }
+                            if (tidd == 287 || tidd == 288 || tidd == 296 || tidd == 297 || tidd == 306 || tidd == 305 || tidd == 562 || tidd == 563
+                                    || tidd == 378 || tidd == 379 || tidd == 332 || tidd == 333 || tidd == 416 || tidd == 417
+                                    || tidd == 640 || tidd == 641 || tidd == 678 || tidd == 679 || tidd == 734 || tidd == 735
+                                    ) {
+                                ns = "任选四";
+                            }
+                            if (tidd == 284 || tidd == 285 || tidd == 293 || tidd == 302 || tidd == 303 || tidd == 294 || tidd == 559 || tidd == 560
+                                    || tidd == 375 || tidd == 376 || tidd == 329 || tidd == 330 || tidd == 413 || tidd == 414
+                                    || tidd == 637 || tidd == 638 || tidd == 675 || tidd == 676 || tidd == 731 || tidd == 732
+                                    ) {
+                                ns = "任选三";
+                            }
+                            if (tidd == 281 || tidd == 282 || tidd == 291 || tidd == 290 || tidd == 299 || tidd == 300 || tidd == 556 || tidd == 557
+                                    || tidd == 372 || tidd == 373 || tidd == 326 || tidd == 327 || tidd == 410 || tidd == 411
+                                    || tidd == 634 || tidd == 635 || tidd == 672 || tidd == 673 || tidd == 728 || tidd == 729
+                                    ) {
+                                ns = "任选二";
+                            }
+                            if (tidd == 22 || tidd == 215 || tidd == 334 || tidd == 690) {
+                                ns = "三码";
+                            }
+                            if (tidd == 23 || tidd == 216 || tidd == 335 || tidd == 691) {
+                                ns = "二码";
+                            }
+                            if (tidd == 24 || tidd == 217 || tidd == 336 || tidd == 692) {
+                                ns = "不定位";
+                            }
+                            if (tidd == 25 || tidd == 218 || tidd == 337 || tidd == 693) {
+                                ns = "定位胆";
+                            }
+                            if (tidd == 26 || tidd == 219 || tidd == 338 || tidd == 694) {
+                                ns = "趣味性";
+                            }
+                            if (tidd == 27 || tidd == 220 || tidd == 339 || tidd == 695) {
+                                ns = "任选复式";
+                            }
+                            if (tidd == 28 || tidd == 221 || tidd == 340 || tidd == 696) {
+                                ns = "任选单式";
+                            }
+                            if (tidd == 40) {
+                                ns = "和值";
+                            }
+                            if (tidd == 41) {
+                                ns = "三同号通选";
+                            }
+                            if (tidd == 42) {
+                                ns = "三同号单选";
+                            }
+                            if (tidd == 43) {
+                                ns = "二同号复选";
+                            }
+                            if (tidd == 44) {
+                                ns = "二同号单选";
+                            }
+                            if (tidd == 45) {
+                                ns = "三不同号";
+                            }
+                            if (tidd == 46) {
+                                ns = "二不同号";
+                            }
+                            if (tidd == 47) {
+                                ns = "三连号通选";
+                            }
+                            if (tidd == 230) {
+                                ns = "猜冠军";
+                            }
+                            if (tidd == 231) {
+                                ns = "猜冠亚军";
+                            }
+                            if (tidd == 232) {
+                                ns = "猜前三名";
+                            }
+                            if (tidd == 233) {
+                                ns = "定位胆";
+                            }
+                            if (tidd == 234) {
+                                ns = "大小";
+                            }
+                            if (tidd == 235) {
+                                ns = "单双";
+                            }
+
+                            if (tidd == 499 || tidd == 517 || tidd == 739) {
+                                ns = "趣味";
+                            }
+                            if (tidd == 501 || tidd == 519 || tidd == 741) {
+                                ns = "任选";
+                            }
+                            if (tidd == 503 || tidd == 521 || tidd == 743) {
+                                ns = "和值";
+                            }
+                            if (tidd == 505 || tidd == 523 || tidd == 745) {
+                                ns = "盘面";
+                            }
+                            if (tidd == 507 || tidd == 525 || tidd == 747) {
+                                ns = "五行";
+                            }
+
+
+                            if (tidd == 32 || tidd == 37) {
+                                ns = "不定位";
+                            }
+                            if (tidd == 33 || tidd == 38) {
+                                ns = "定位胆";
+                            }
+                            if (tidd == 53 || tidd == 54 || tidd == 57 || tidd == 58) {
+                                ns = "二星";
+                            }
+                            if (tidd == 51 || tidd == 52 || tidd == 56 || tidd == 55) {
+                                ns = "三星";
+                            }
+                            if (tidd == 34 || tidd == 39) {
+                                ns = "大小单双";
+                            }
+
+                            if (tidd == 783) {
+                                ns = "正码";
+                            }
+                            if (tidd == 784) {
+                                ns = "特码";
+                            }
+                            if (tidd == 786) {
+                                ns = "特码大小单双";
+                            }
+                            if (tidd == 787) {
+                                ns = "生肖";
+                            }
+                            if (tidd == 789) {
+                                ns = "特码波色";
+                            }
+
+                            gameType.setName(ns + "-" + name);
                             ListgameTypes.add(gameType);
+                            Log.d("Game游戏7==", gameType.toString());
                         }
-                       /* if (split.length > 10) {
-                            for (int i = 0; i < split.length; i = i + 4) {
-                                Log.d("Game游戏Split=", split[i]);
-                                GameType gameType = new GameType();
-                                String GameGid = split[i].substring(split[i].indexOf("gid=") + 4, split[i].length() - 2);
-                                String GameGridId = split[i + 1].substring(split[i + 1].indexOf("grid=") + 5, split[i + 1].length() - 2);
-                                String GameName = split[i + 2].substring(split[i + 2].indexOf("name=") + 5, split[i + 2].length());
-                                String GameTidId = split[i + 3].substring(split[i + 3].indexOf("tid=") + 4, split[i + 3].length() - 3);
-                                gameType.setGid(Integer.parseInt(GameGid));
-                                gameType.setName(GameName);
-                                gameType.setGrid(Integer.parseInt(GameGridId));
-                                gameType.setTid(Integer.parseInt(GameTidId));
-                                ListgameTypes.add(gameType);
-                                Log.d("Game游戏7==", gameType.toString());
-                            }
-                            for (int i = 0; i < ListgameTypes.size(); i++) {
-                                Log.d("Game游戏77==", ListgameTypes.get(i).getName());
-                            }
-                        }*/
+
 
                         listener.onReceivedData(API_ID_GAME7, ListgameTypes, API_ID_ERROR);
                     }
@@ -1379,7 +1499,7 @@ public class RetrofitService extends HttpEngine {
     }
 
     //保存安全问题
-    public void getSaveSafeQus(DataListener listener, String q, String a) {
+    public void getSaveSafeQus(final DataListener listener, String q, String a) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         map.put("q", q);
@@ -1391,6 +1511,7 @@ public class RetrofitService extends HttpEngine {
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
                 if (response.code() == 200) {
                     Log.d("验证安全密码", response.body().toString());
+                    listener.onReceivedData(API_ID_PWDPROTACT, response.body(), API_ID_ERROR);
                 }
             }
 
@@ -1602,6 +1723,7 @@ public class RetrofitService extends HttpEngine {
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
         Call<RestultInfo> saveBankCard = apiInterface.getSaveBankCard(1, bank, province_id, province, city_id, city, branch, name, card, reqkey, currentTimeMillis);
         Call<RestultInfo> clone = saveBankCard.clone();
+        Log.d("保存银行卡请求完全体", clone.request().toString());
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
@@ -3055,36 +3177,7 @@ public class RetrofitService extends HttpEngine {
                         }
                         cqs.add(cs);
                     }
-                   /* if (i1 > 0) {
-                        //String substring1 = substring.substring(substring.indexOf("id=") + 3, substring.indexOf(", cell="));
-                        String[] ss = substring.split(", ");
-                        for (int i = 0; i < ss.length; i = i + 10) {
-                            Log.d("团队报表充提记录Split==", ss[i]);
-                            CunQu cunQu = new CunQu();
-                            String id = ss[i].substring(4, ss[i].length());
-                            String serial_number = ss[i + 1].substring(6, ss[i + 1].length());
-                            String uname = ss[i + 2];
-                            String date = ss[i + 3];
-                            String stype = ss[i + 4];
-                            String income = ss[i + 5];
-                            String expend = ss[i + 6];
-                            String amount = ss[i + 7];
-                            String status = ss[i + 8];
-                            String detial = ss[i + 9];
-                            cunQu.setId(Integer.parseInt(id));
-                            cunQu.setSerial_number(serial_number);
-                            cunQu.setUname(uname);
-                            cunQu.setDate(date);
-                            cunQu.setStype(Integer.parseInt(stype));
-                            cunQu.setIncome(Double.parseDouble(income));
-                            cunQu.setExpend(Double.parseDouble(expend));
-                            cunQu.setAmount(Double.parseDouble(amount));
-                            cunQu.setStatus(Integer.parseInt(status));
-                            cunQu.setDetial(detial);
-                            cs.add(cunQu);
-                        }
-                        cqs.add(cs);
-                    }*/
+
                     listener.onReceivedData(API_ID_TEAMCQ, cqs, API_ID_ERROR);
                 }
 
@@ -3730,10 +3823,14 @@ public class RetrofitService extends HttpEngine {
                                 if (list2.size() > 3) {
                                     double coefficient22 = (double) list2.get(3);
                                     double min22 = (double) list2.get(4);
-                                    Log.d("RES第二层11", id2 + "   " + name2 + "   " + coefficient22 + "   " + min22);
+                                    String description2 = (String) list2.get(8);
+                                    String grprize2 = (String) list2.get(9);
+                                    Log.d("RES第二层11", id2 + "   " + name2 + "   " + coefficient22 + "   " + min22 + "   " + description2 + "   " + grprize2);
                                     ssa.setMinimum2(min22);
                                     ssa.setCoefficient2(coefficient22);
                                     ssa.setRate2(rate);
+                                    ssa.setDescription2(description2);
+                                    ssa.setGrprize2(grprize2);
                                 }
 
                                 ssg.add(ssa);
@@ -3750,7 +3847,9 @@ public class RetrofitService extends HttpEngine {
                                     String class_code3 = (String) ll.get(2);
                                     double coefficient = (double) ll.get(3);
                                     double min = (double) ll.get(4);
-                                    Log.d("RES第三层", id3 + "   " + name3 + "   " + coefficient + "   " + min);
+                                    String description3 = (String) ll.get(8);
+                                    String grprize3 = (String) ll.get(9);
+                                    Log.d("RES第三层", id3 + "   " + name3 + "   " + coefficient + "   " + min + "   " + description3 + "   " + grprize3);
 
                                     SwitchG.SwitchGa.SwitchGam sssg = new SwitchG.SwitchGa.SwitchGam();
                                     sssg.setId3(id3);
@@ -3759,6 +3858,8 @@ public class RetrofitService extends HttpEngine {
                                     sssg.setMinimum3(min);
                                     sssg.setCoefficient3(coefficient);
                                     sssg.setRate3(rate);
+                                    sssg.setDescription3(description3);
+                                    sssg.setGrprize3(grprize3);
                                     sga.add(sssg);
 
 
@@ -3775,7 +3876,9 @@ public class RetrofitService extends HttpEngine {
                                 String class_code2 = (String) list2.get(2);
                                 double coefficient = (double) list.get(3);
                                 double min = (double) list.get(4);
-                                Log.d("RE第二层22", id2 + "   " + name2 + "   " + coefficient + "   " + min);
+                                String description4 = (String) list.get(8);
+                                String grprize4 = (String) list.get(9);
+                                Log.d("RE第二层22", id2 + "   " + name2 + "   " + coefficient + "   " + min + "   " + description4 + "   " + grprize4);
                                 List<SwitchG.SwitchGa> ssg = new ArrayList<SwitchG.SwitchGa>();
                                 SwitchG.SwitchGa ssa = new SwitchG.SwitchGa();
                                 ssa.setId2(id2);
@@ -3784,6 +3887,8 @@ public class RetrofitService extends HttpEngine {
                                 ssa.setMinimum2(min);
                                 ssa.setCoefficient2(coefficient);
                                 ssa.setRate2(rate);
+                                ssa.setDescription2(description4);
+                                ssa.setGrprize2(grprize4);
                                 ssg.add(ssa);
                             }
                         }
@@ -3970,6 +4075,7 @@ public class RetrofitService extends HttpEngine {
                     Log.d("获取推广设置数据", response.body().toString());
                     Map<String, Object> map = response.body();
                     Map<String, Object> others = new HashMap<>();
+
                     List<List<ShareData>> sds = new ArrayList<List<ShareData>>();
                     if (map.size() > 0) {
                         for (Map.Entry<String, Object> entry : map.entrySet()) {
@@ -3978,7 +4084,9 @@ public class RetrofitService extends HttpEngine {
                             }
                         }
                     }
+
                     List<ShareData> sd = new ArrayList<ShareData>();
+
                     sds.add(sd);
                     List<Object> glist = new ArrayList<>();
                     if (others.size() > 0) {
@@ -3987,7 +4095,7 @@ public class RetrofitService extends HttpEngine {
                         double rate = 0;
                         double mxrate = 0;
                         boolean checked = false;
-
+                        String shareCode = "";
                         for (Map.Entry<String, Object> entry : others.entrySet()) {
                             if ("uid".equals(entry.getKey())) {
                                 uid = (double) entry.getValue();
@@ -4007,6 +4115,9 @@ public class RetrofitService extends HttpEngine {
                             if ("glist".equals(entry.getKey())) {
                                 glist = (List<Object>) entry.getValue();
                             }
+                            if ("shareCode".equals(entry.getKey())) {
+                                shareCode = (String) entry.getValue();
+                            }
                         }
                         ShareData sd2 = new ShareData();
                         sd2.setChecked(checked);
@@ -4014,6 +4125,7 @@ public class RetrofitService extends HttpEngine {
                         sd2.setRebate_id(RxUtils.getInstance().getInt(rebate_id));
                         sd2.setRate(RxUtils.getInstance().getInt(rate));
                         sd2.setMxrate(RxUtils.getInstance().getInt(mxrate));
+                        sd2.setShareCode(shareCode);
                         sd.add(sd2);
 
                     }
@@ -4040,6 +4152,27 @@ public class RetrofitService extends HttpEngine {
             @Override
             public void onFailure(Call<Map<String, Object>> call, Throwable t) {
 
+            }
+        });
+    }  //推广设置-保存
+
+    public void getGeneralizeSave(final DataListener listener, double l, int t) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map map = new HashMap();
+        map.put("l", l + "");
+        String reqkey = RxUtils.getInstance().getRegistersReqkey(map, t);
+        Call<Object> shareData = apiInterface.getGeneralizeSave(1, l, reqkey, t);
+        Call<Object> clone = shareData.clone();
+        Log.d("推广设置-保存请求完全体", clone.request().toString() + "");
+        clone.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+                Log.d("推广设置-保存", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Log.d("推广设置-保存Error", t.toString());
             }
         });
     }
@@ -4542,19 +4675,39 @@ public class RetrofitService extends HttpEngine {
     public void getBettingDetails(DataListener listener, int id) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
+
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> bettingDetails = apiInterface.getBettingDetails(id, 1, reqkey, currentTimeMillis);
-        Call<Object> clone = bettingDetails.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<Map<String, Object>> bettingDetails = apiInterface.getBettingDetails(id, 1, reqkey, currentTimeMillis);
+        Call<Map<String, Object>> clone = bettingDetails.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 if (response.code() == 200) {
                     Log.d("投注单详情", response.body().toString());
+                    Map<String, Object> map = response.body();
+                    List<Object> o = new ArrayList<>();
+                    double id = 0;
+                    boolean rc = false;
+                    BettingDetail bd=new BettingDetail();
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if ("rc".equals(entry.getKey())) {
+                                rc= (boolean) entry.getValue();
+                            }if ("id".equals(entry.getKey())) {
+                                id= (double) entry.getValue();
+                            }if ("others".equals(entry.getKey())) {
+                                o= (List<Object>) entry.getValue();
+                            }
+                        }
+                    }
+                    for (int i = 0; i < o.size(); i++) {
+
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
 
             }
         });
@@ -4597,9 +4750,11 @@ public class RetrofitService extends HttpEngine {
         String registersReqkey = RxUtils.getInstance().getRegistersReqkey(map, t);
         Call<RestultInfo> vipSignUpSave = apiInterface.getVIPSignUpSave(1, u, n, l, code, t, p, c, registersReqkey);
         Call<RestultInfo> clone = vipSignUpSave.clone();
+        Log.d("添加会员-保存请求完全体", clone.request().toString());
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+
                 if (response.code() == 200) {
                     Log.d("添加会员-保存", response.body().toString());
                     listener.onReceivedData(API_ID_ADDCIPSAVE, response.body(), API_ID_ERROR);
@@ -4632,8 +4787,8 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
             public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
+                List<List<TeamUserInfo>> ts = new ArrayList<List<TeamUserInfo>>();
                 if (response.code() == 200) {
-                    List<List<TeamUserInfo>> ts = new ArrayList<List<TeamUserInfo>>();
                     String s = response.body().toString();
                     Log.d("会员管理", s);
                     List<List<Object>> con = new ArrayList<List<Object>>();
@@ -4892,13 +5047,13 @@ public class RetrofitService extends HttpEngine {
                     Boolean hassqas = false;
                     String q = null;
                     Double amounts1 = null;
-                    Double min1= null;
-                    Double max1= null;
-                    Double amounts2= null;
-                    Double min2= null;
-                    Double max2= null;
-                    int stype= 0;
-                    Boolean dtype= null;
+                    Double min1 = null;
+                    Double max1 = null;
+                    Double amounts2 = null;
+                    Double min2 = null;
+                    Double max2 = null;
+                    int stype = 0;
+                    Boolean dtype = null;
                     if (others.size() > 0) {
                         for (Map.Entry<String, Object> entry : others.entrySet()) {
                             if (entry.getKey().equals("ruser")) {
@@ -4937,7 +5092,8 @@ public class RetrofitService extends HttpEngine {
                             if (entry.getKey().equals("stype")) {
                                 double styped = (Double) entry.getValue();
                                 stype = RxUtils.getInstance().getInt(styped);
-                            }if (entry.getKey().equals("dtype")) {
+                            }
+                            if (entry.getKey().equals("dtype")) {
 
                                 dtype = (Boolean) entry.getValue();
                             }
@@ -4970,6 +5126,7 @@ public class RetrofitService extends HttpEngine {
             }
         });
     } //获取上级充值数据
+
     public void getSreChargeData2(final DataListener listener, int uid) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
@@ -5004,13 +5161,13 @@ public class RetrofitService extends HttpEngine {
                     Boolean hassqas = false;
                     String q = null;
                     Double amounts1 = null;
-                    Double min1= null;
-                    Double max1= null;
-                    Double amounts2= null;
-                    Double min2= null;
-                    Double max2= null;
-                    int stype= 0;
-                    Boolean dtype= null;
+                    Double min1 = null;
+                    Double max1 = null;
+                    Double amounts2 = null;
+                    Double min2 = null;
+                    Double max2 = null;
+                    int stype = 0;
+                    Boolean dtype = null;
                     if (others.size() > 0) {
                         for (Map.Entry<String, Object> entry : others.entrySet()) {
                             if (entry.getKey().equals("others")) {
@@ -5049,7 +5206,8 @@ public class RetrofitService extends HttpEngine {
                             if (entry.getKey().equals("stype")) {
                                 double styped = (Double) entry.getValue();
                                 stype = RxUtils.getInstance().getInt(styped);
-                            }if (entry.getKey().equals("dtype")) {
+                            }
+                            if (entry.getKey().equals("dtype")) {
 
                                 dtype = (Boolean) entry.getValue();
                             }
@@ -5072,6 +5230,120 @@ public class RetrofitService extends HttpEngine {
                     sreCharge.setStype(stype);
                     sreCharge.setDtype(dtype);
                     listener.onReceivedData(API_ID_SRECHARGE2, sreCharge, API_ID_ERROR);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+
+            }
+        });
+    }//获取上级充值数据
+
+    public void getSreChargeData3(final DataListener listener, int uid) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", uid + "");
+        final String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Map<String, Object>> SreChargeData = apiInterface.getSreChargeData(1, uid, reqkey, currentTimeMillis);
+        Call<Map<String, Object>> clone = SreChargeData.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
+            @Override
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
+                if (response.code() == 200) {
+                    String s = response.body().toString();
+                    Log.d("获取上级充值数据", s);
+                    Map<String, Object> map = response.body();
+                    Map<String, Object> others = new HashMap<>();
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if (entry.getKey().equals("others")) {
+                                others = (Map<String, Object>) entry.getValue();
+                            }
+                        }
+                    }
+                /*    String others1 = s.substring(s.indexOf("others={") + 8, s.length() - 2);
+                    String[] so = others.split(", ");
+                    for (int i = 0; i < so.length; i++) {
+                        Log.d("获取上级充值数据Split", so[i]);
+                    }
+                    int i = 0;*/
+                    String ruser = null;
+                    String username = null;
+                    Boolean haspass = false;
+                    Boolean hassqas = false;
+                    String q = null;
+                    Double amounts1 = null;
+                    Double min1 = null;
+                    Double max1 = null;
+                    Double amounts2 = null;
+                    Double min2 = null;
+                    Double max2 = null;
+                    int stype = 0;
+                    Boolean dtype = null;
+                    if (others.size() > 0) {
+                        for (Map.Entry<String, Object> entry : others.entrySet()) {
+                            if (entry.getKey().equals("others")) {
+                                ruser = (String) entry.getValue();
+                            }
+                            if (entry.getKey().equals("username")) {
+                                username = (String) entry.getValue();
+                            }
+                            if (entry.getKey().equals("haspass")) {
+                                haspass = (Boolean) entry.getValue();
+                            }
+                            if (entry.getKey().equals("hassqas")) {
+                                hassqas = (Boolean) entry.getValue();
+                            }
+                            if (entry.getKey().equals("q")) {
+                                q = (String) entry.getValue();
+                            }
+                            if (entry.getKey().equals("amounts1")) {
+                                amounts1 = (Double) entry.getValue();
+                            }
+                            if (entry.getKey().equals("min1")) {
+                                min1 = (Double) entry.getValue();
+                            }
+                            if (entry.getKey().equals("max1")) {
+                                max1 = (Double) entry.getValue();
+                            }
+                            if (entry.getKey().equals("amounts2")) {
+                                amounts2 = (Double) entry.getValue();
+                            }
+                            if (entry.getKey().equals("min2")) {
+                                min2 = (Double) entry.getValue();
+                            }
+                            if (entry.getKey().equals("max2")) {
+                                max2 = (Double) entry.getValue();
+                            }
+                            if (entry.getKey().equals("stype")) {
+                                double styped = (Double) entry.getValue();
+                                stype = RxUtils.getInstance().getInt(styped);
+                            }
+                            if (entry.getKey().equals("dtype")) {
+
+                                dtype = (Boolean) entry.getValue();
+                            }
+                        }
+                    }
+
+
+                    SreCharge sreCharge = new SreCharge();
+                    sreCharge.setRuser(ruser);
+                    sreCharge.setUsername(username);
+                    sreCharge.setHaspass(haspass);
+                    sreCharge.setHassqas(hassqas);
+                    sreCharge.setQ(q);
+                    sreCharge.setAmounts1(amounts1);
+                    sreCharge.setAmounts2(amounts2);
+                    sreCharge.setMin1(min1);
+                    sreCharge.setMin2(min2);
+                    sreCharge.setMax1(max1);
+                    sreCharge.setMax2(max2);
+                    sreCharge.setStype(stype);
+                    sreCharge.setDtype(dtype);
+                    listener.onReceivedData(API_ID_SRECHARGE3, sreCharge, API_ID_ERROR);
                 }
 
             }

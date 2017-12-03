@@ -322,13 +322,15 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
                     startActivity(intent);
                 }
             }
-        }if (apiId == RetrofitService.API_ID_SAFEPWD) {
+        }
+        if (apiId == RetrofitService.API_ID_SAFEPWD) {
             if (object != null) {
-                RestultInfo    restultInfo = (RestultInfo) object;
+                RestultInfo restultInfo = (RestultInfo) object;
                 if (restultInfo.isRc() == true) {
                     RetrofitService.getInstance().getWithDrawDatas(this);
-                }if (restultInfo.isRc() == false) {
-                    Toasty.error(getActivity(),restultInfo.getMsg(),2000).show();
+                }
+                if (restultInfo.isRc() == false) {
+                    Toasty.error(getActivity(), restultInfo.getMsg(), 2000).show();
                     return;
                 }
             }
@@ -343,6 +345,14 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
     @Override
     public void onRequestEnd(int apiId) {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        RetrofitService.getInstance().LoginUserAmount(this);
+        RetrofitService.getInstance().GetUserInfo(this);
+        RetrofitService.getInstance().getSafeQues(this);
     }
 
     @Override
@@ -368,11 +378,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
                 EditText safepwd = (EditText) contentViewSafe.findViewById(R.id.AnswerQues);
                 String pwd = safepwd.getText().toString().trim();
                 if ("".equals(pwd)) {
-                    Toasty.error(getActivity(),"安全密码不可为空",2000).show();
+                    Toasty.error(getActivity(), "安全密码不可为空", 2000).show();
                     return;
                 }
                 String hmacsha256 = RxUtils.getInstance().HMACSHA256(pwd, MyApp.getInstance().getUserName());
                 RetrofitService.getInstance().getCheckSafePwd(this, hmacsha256);
+                safepwd.setText("");
             }
 
         }

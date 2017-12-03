@@ -33,7 +33,7 @@
                         android:src="@mipmap/ic_dailishouye" />
 
                     <TextView
-
+                        android:textSize="30px"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -59,7 +59,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-
+                        android:textSize="30px"
                         android:gravity="center_horizontal"
                         android:text="推广设置" />
                 </LinearLayout>
@@ -82,7 +82,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-
+                        android:textSize="30px"
                         android:gravity="center_horizontal"
                         android:text="团队投注" />
                 </LinearLayout>
@@ -112,9 +112,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-
+                        android:textSize="30px"
                         android:gravity="center_horizontal"
-                        android:text="会员管理" />
+                        android:text="会员统计" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -131,7 +131,7 @@
                         android:src="@mipmap/ic_tuanduizbjl" />
 
                     <TextView
-
+                        android:textSize="30px"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -157,7 +157,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-
+                        android:textSize="30px"
                         android:gravity="center_horizontal"
                         android:text="团队彩票盈亏" />
                 </LinearLayout>
@@ -188,7 +188,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-
+                        android:textSize="30px"
                         android:gravity="center_horizontal"
                         android:text="游戏奖金" />
                 </LinearLayout>
@@ -211,7 +211,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-
+                        android:textSize="30px"
                         android:gravity="center_horizontal"
                         android:text="团队存取款记录" />
                 </LinearLayout>
@@ -234,7 +234,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-
+                        android:textSize="30px"
                         android:gravity="center_horizontal"
                         android:text="团队活动报表" />
                 </LinearLayout>

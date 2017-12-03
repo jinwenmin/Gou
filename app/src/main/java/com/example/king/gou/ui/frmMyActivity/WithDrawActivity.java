@@ -56,7 +56,7 @@ public class WithDrawActivity extends AutoLayoutActivity implements HttpEngine.D
         ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
         amounts = getIntent().getStringExtra("amounts");
         wd = (List<WithDraw>) getIntent().getSerializableExtra("banks");
-        WithDrawAmount.setHint("最大取款金额为:" + amounts);
+        WithDrawAmount.setHint("最大金额:" + amounts);
         RetrofitService.getInstance().getCardDatas(this);
         initClick();
         initSpinner();
@@ -134,6 +134,9 @@ public class WithDrawActivity extends AutoLayoutActivity implements HttpEngine.D
                     return;
                 }
                 RetrofitService.getInstance().getWithDrawCreates(this, wd.get(SpinnerWithDarw.getSelectedItemPosition()).getAid(), money);
+                break;
+            case R.id._back:
+                finish();break;
         }
     }
 }

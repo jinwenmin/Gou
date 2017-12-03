@@ -106,6 +106,7 @@
             android:orientation="horizontal">
 
             <TextView
+android:textSize="25px"
                 android:id="@+id/forget_pwd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -116,6 +117,7 @@
                 android:textColor="#4F94CD" />
 
             <TextView
+                android:textSize="25px"
                 android:id="@+id/rigisterUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -144,6 +146,7 @@
                     android:src="@mipmap/ic_kefu" />
 
                 <TextView
+                    android:textSize="25px"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -158,12 +161,14 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:textSize="25px"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="当前版本:"
                     android:textColor="@android:color/holo_blue_light" />
 
                 <TextView
+                    android:textSize="25px"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1.1.1.1.1"

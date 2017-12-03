@@ -41,7 +41,7 @@
     <Spinner
         android:id="@+id/SpinnerWithDarw"
         android:layout_width="match_parent"
-        android:layout_height="80px"
+        android:layout_height="60px"
         android:layout_marginTop="20px"></Spinner>
 
 
@@ -65,8 +65,9 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:gravity="center"
+            android:inputType="numberDecimal"
             android:hint="取款金额"
-            android:textSize="30px" />
+            android:textSize="20px" />
     </LinearLayout>
 
     <Button

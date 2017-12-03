@@ -6,6 +6,7 @@ import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -49,7 +50,7 @@ public class AddNewTeamUserActivity extends AutoLayoutActivity implements View.O
     Button AddUserBtn;
     @BindView(R.id.AddRadioGroup)
     RadioGroup AddRadioGroup;
-    int t = 0;
+    int t = 2;
     @BindView(R.id.AddUserRate)
     EditText AddUserRate;
 
@@ -57,21 +58,11 @@ public class AddNewTeamUserActivity extends AutoLayoutActivity implements View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_team_user);
-        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
+        ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         Intent intent = getIntent();
         String code = intent.getStringExtra("code");
         AddUserTopCode.setText(code);
-        initClick();
-
-    }
-
-    private void initCheck() {
-        String addUserName = AddUserName.getText().toString().trim();
-        String addUserNickName = AddUserNickName.getText().toString().trim();
-        String addUserNewPwd = AddUserNewPwd.getText().toString().trim();
-        String addUserCheckPwd = AddUserCheckPwd.getText().toString().trim();
-        String addUserTopCode = AddUserTopCode.getText().toString().trim();
-        String addUserRate = AddUserRate.getText().toString().trim();
         AddRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
@@ -83,6 +74,19 @@ public class AddNewTeamUserActivity extends AutoLayoutActivity implements View.O
                 }
             }
         });
+        ((RadioButton) AddRadioGroup.getChildAt(0)).setChecked(true);
+        initClick();
+
+    }
+
+    private void initCheck() {
+        String addUserName = AddUserName.getText().toString().trim();
+        String addUserNickName = AddUserNickName.getText().toString().trim();
+        String addUserNewPwd = AddUserNewPwd.getText().toString().trim();
+        String addUserCheckPwd = AddUserCheckPwd.getText().toString().trim();
+        String addUserTopCode = AddUserTopCode.getText().toString().trim();
+        String addUserRate = AddUserRate.getText().toString().trim();
+
         if ("".equals(addUserName)) {
             Toasty.error(AddNewTeamUserActivity.this, "用户名不可为空", 2000).show();
             return;
@@ -114,7 +118,7 @@ public class AddNewTeamUserActivity extends AutoLayoutActivity implements View.O
             return;
         }
         Double addUserR = Double.parseDouble(addUserRate);
-        if(addUserR<  0||addUserR>12.6) {
+        if (addUserR < 0 || addUserR > 12.6) {
             Toasty.error(AddNewTeamUserActivity.this, "返点不符合规则", 2000).show();
             return;
         }
@@ -144,6 +148,12 @@ public class AddNewTeamUserActivity extends AutoLayoutActivity implements View.O
         if (apiId == RetrofitService.API_ID_ADDCIPSAVE) {
             RestultInfo restultInfo = (RestultInfo) object;
             if (restultInfo.isRc()) {
+
+                AddUserName.setText("");
+                AddUserNickName.setText("");
+                AddUserNewPwd.setText("");
+                AddUserCheckPwd.setText("");
+                AddUserRate.setText("");
                 if (t == 2) {
                     Toasty.success(this, "添加代理用户成功", 2000).show();
                 } else {
@@ -152,6 +162,7 @@ public class AddNewTeamUserActivity extends AutoLayoutActivity implements View.O
             } else if (!restultInfo.isRc()) {
                 Toasty.error(this, restultInfo.getMsg(), 2000).show();
             }
+            finish();
         }
     }
 

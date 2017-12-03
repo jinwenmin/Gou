@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,156 +7,208 @@
     android:orientation="vertical"
     tools:context="com.example.king.gou.ui.proxyfragment.ShareDataActivity">
 
-    <RelativeLayout
-        android:id="@+id/ProxyTop"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/top_height"
-        android:background="@color/top_background">
-
-        <ImageView
-            android:id="@+id/_back"
-            android:layout_width="@dimen/top_back"
-            android:layout_height="@dimen/top_back"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_back" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="推广设置"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/top_textsize" />
-    </RelativeLayout>
-
-    <LinearLayout
+    <Button
+        android:id="@+id/SaveShare"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_marginLeft="10px"
         android:layout_marginRight="10px"
-        android:layout_marginTop="10px">
-
-        <LinearLayout
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="用户类型:"
-                android:textSize="25px" />
-
-            <TextView
-                android:id="@+id/Stype"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="XXX"
-                android:textSize="25px" />
-        </LinearLayout>
-    </LinearLayout>
+        android:background="@drawable/recharge_btn"
+        android:text="推广保存"
+        android:textColor="@color/color_bg"
+        android:textSize="45px" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10px"
-        android:layout_marginRight="10px"
-        android:layout_marginTop="10px">
+        android:layout_height="match_parent"
+        android:layout_above="@id/SaveShare"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/ProxyTop"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/top_height"
+            android:background="@color/top_background">
+
+            <ImageView
+                android:id="@+id/_back"
+                android:layout_width="@dimen/top_back"
+                android:layout_height="@dimen/top_back"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="推广设置"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/top_textsize" />
+        </RelativeLayout>
 
         <LinearLayout
-            android:layout_width="0px"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginLeft="10px"
+            android:layout_marginRight="10px"
+            android:layout_marginTop="10px">
+
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="用户类型:"
+                    android:textSize="25px" />
+
+                <TextView
+                    android:id="@+id/Stype"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="XXX"
+                    android:textSize="25px" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10px"
+            android:layout_marginRight="10px"
+            android:layout_marginTop="10px">
+
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="用户ID："
+                    android:textSize="25px" />
+
+                <TextView
+                    android:id="@+id/uid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="XXX"
+                    android:textSize="25px" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="推广返点ID："
+                    android:textSize="25px" />
+
+                <TextView
+                    android:id="@+id/rebate_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="XXX"
+                    android:textSize="25px" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10px">
+
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="最大返点："
+                    android:textSize="25px" />
+
+                <TextView
+                    android:id="@+id/mxrate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="XXX"
+                    android:textSize="25px" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="默认返点："
+                    android:textSize="25px" />
+
+                <TextView
+                    android:id="@+id/rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="XXX"
+                    android:textSize="25px" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10px"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="用户ID："
+                android:text="推广链接："
                 android:textSize="25px" />
 
             <TextView
-                android:id="@+id/uid"
+                android:id="@+id/ShareCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="XXX"
+                android:text=""
                 android:textSize="25px" />
+
+            <TextView
+                android:layout_marginLeft="5px"
+                android:id="@+id/copyText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="复制链接"
+                android:textColor="@android:color/black"
+                android:textSize="30px" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="推广返点ID："
-                android:textSize="25px" />
-
-            <TextView
-                android:id="@+id/rebate_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="XXX"
-                android:textSize="25px" />
-        </LinearLayout>
+        <ListView
+            android:id="@+id/ShareList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10px">
 
-        <LinearLayout
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="最大返点："
-                android:textSize="25px" />
-
-            <TextView
-                android:id="@+id/mxrate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="XXX"
-                android:textSize="25px" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="默认返点："
-                android:textSize="25px" />
-
-            <TextView
-                android:id="@+id/rate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="XXX"
-                android:textSize="25px" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/gray" />
-    <ListView
-        android:id="@+id/ShareList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
-</LinearLayout>
+</RelativeLayout>

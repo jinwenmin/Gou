@@ -288,6 +288,7 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
                     return;
                 }
                 alertViewAnswer.show();
+                show = "2";
             }
 
         }
@@ -295,9 +296,12 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
             if (object != null) {
                 RestultInfo restultInfo = (RestultInfo) object;
                 if (restultInfo.isRc()) {
+                    answerQues.setText("");
                     startActivity(new Intent(SettingActivity.this, ResetPwdActivity.class));
+
                 }
                 if (!restultInfo.isRc()) {
+                    answerQues.setText("");
                     Toasty.error(this, restultInfo.getMsg(), 2000).show();
                     return;
                 }
@@ -305,12 +309,13 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
         }
         if (apiId == RetrofitService.API_ID_SAFEPWD) {
             if (object != null) {
-                RestultInfo    restultInfo = (RestultInfo) object;
+                RestultInfo restultInfo = (RestultInfo) object;
                 if (restultInfo.isRc() == true) {
                     StartA(MoneyProtectActivity.class);
                     return;
-                }if (restultInfo.isRc() == false) {
-                    Toasty.error(this,restultInfo.getMsg(),2000).show();
+                }
+                if (restultInfo.isRc() == false) {
+                    Toasty.error(this, restultInfo.getMsg(), 2000).show();
                     return;
                 }
             }
@@ -347,7 +352,7 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
                 EditText safepwd = (EditText) contentViewSafe.findViewById(R.id.AnswerQues);
                 String pwd = safepwd.getText().toString().trim();
                 if ("".equals(pwd)) {
-                    Toasty.error(this,"安全密码不可为空",2000).show();
+                    Toasty.error(this, "安全密码不可为空", 2000).show();
                     return;
                 }
                 String hmacsha256 = RxUtils.getInstance().HMACSHA256(pwd, MyApp.getInstance().getUserName());

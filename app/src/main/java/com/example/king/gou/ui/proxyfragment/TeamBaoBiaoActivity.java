@@ -105,6 +105,7 @@ public class TeamBaoBiaoActivity extends AutoLayoutActivity implements View.OnCl
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 RetrofitService.getInstance().getGame(TeamBaoBiaoActivity.this, 7, gameTypes.get(i).getGid(), 0, 0);
+
             }
 
             @Override
@@ -271,7 +272,8 @@ public class TeamBaoBiaoActivity extends AutoLayoutActivity implements View.OnCl
                 break;
             case R.id.TeamBetting_back:
                 finish();
-                break;  case R.id.ToSearchName:
+                break;
+            case R.id.ToSearchName:
                 initRetrofit();
                 break;
         }

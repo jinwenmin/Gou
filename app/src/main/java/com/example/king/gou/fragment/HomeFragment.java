@@ -111,6 +111,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             R.drawable.logo21, 0, R.drawable.logo23, R.drawable.logo24, R.drawable.logo25, R.drawable.logo26, R.drawable.logo27, R.drawable.logo28
 
     };
+
     public static HomeFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -195,7 +196,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 startActivity(intent);
             }
         });
-         adapters.addList(hs);
+        adapters.addList(hs);
         PageAdapter pageAdapter = new PageAdapter(imgs);
         homeViewpager.setAdapter(pageAdapter);
         initScrollView();
@@ -384,6 +385,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                     homeNotice.setText(Html.fromHtml(listnotice.get(0)));
                     alertView.show();
                     show = "0";
+                    MainScrollAd.setVisibility(View.GONE);
                 } else {
                     TextView textView = new TextView(getActivity());
                     textView.setText(Html.fromHtml(listnotice.get(0)));

@@ -10,7 +10,7 @@
         android:layout_height="60px"
         android:layout_margin="10px"
         android:gravity="center"
-        android:text="XXX"
+        android:text=""
         android:textSize="40px"></TextView>
 
     <EditText

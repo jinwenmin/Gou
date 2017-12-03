@@ -41,7 +41,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5px"
-                android:text="安全设置" />
+                android:text="安全设置"
+                android:textSize="30px" />
 
             <RelativeLayout
                 android:id="@+id/Setting_UpdataPwd"
@@ -86,8 +87,8 @@
                 android:id="@+id/updateMoneyPwd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                android:background="@android:color/white">
+                android:background="@android:color/white"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/Setting_img2"
@@ -315,7 +316,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15px"
-                android:text="用户信息设置" />
+                android:text="用户信息设置"
+                android:textSize="30px" />
 
             <RelativeLayout
                 android:id="@+id/update_NickName"

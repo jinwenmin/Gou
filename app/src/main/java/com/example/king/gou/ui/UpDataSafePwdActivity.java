@@ -10,10 +10,13 @@ import android.widget.RelativeLayout;
 import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.RestultInfo;
+import com.example.king.gou.bean.UserInfo;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,12 +39,15 @@ public class UpDataSafePwdActivity extends AutoLayoutActivity implements View.On
     EditText UpdataSafepwdEmail;
     @BindView(R.id.UpDataPwdClick)
     Button UpDataPwdClick;
+    private String emailINFO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_up_data_safe_pwd);
-        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
+        ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
+        RetrofitService.getInstance().GetUserInfo(this);
         initClick();
     }
 
@@ -80,6 +86,11 @@ public class UpDataSafePwdActivity extends AutoLayoutActivity implements View.On
                     Toasty.error(this, "绑定的邮箱不能为空", 2000).show();
                     return;
                 }
+                if (!RxUtils.getInstance().checkEmaile(email)) {
+                    Toasty.error(this, "邮箱输入有误", 2000).show();
+                    return;
+                }
+
                 if ("a123456".equals(newpwd)) {
                     Toasty.error(this, "新密码不能为初始密码", 2000).show();
                     return;
@@ -106,6 +117,13 @@ public class UpDataSafePwdActivity extends AutoLayoutActivity implements View.On
                     Toasty.error(this, restultInfo.getMsg(), 2000).show();
                     return;
                 }
+            }
+        }
+        if (apiId == RetrofitService.API_ID_USERINFO) {
+            if (object != null) {
+                List<UserInfo> userInfos = (List<UserInfo>) object;
+                UserInfo userInfo = userInfos.get(0);
+                emailINFO = userInfo.getEmail();
             }
         }
     }

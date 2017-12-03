@@ -7,47 +7,47 @@
 
 
     <LinearLayout
-        android:layout_marginTop="10px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10px"
         android:orientation="horizontal">
 
         <TextView
 
-            android:layout_gravity="center"
             android:layout_width="0px"
             android:layout_height="70px"
+            android:layout_gravity="center"
             android:layout_margin="5px"
             android:layout_weight="4"
             android:background="@drawable/gamecenter_btn"
             android:gravity="center"
             android:padding="5px"
             android:text="包胆"
-            android:textSize="30px"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="30px" />
 
         <LinearLayout
-            android:gravity="center_vertical"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical"
-            android:layout_weight="14"
             android:layout_width="0px"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="14"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
             <RadioGroup
                 android:id="@+id/RadioG1"
-                android:gravity="center"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
 
 
                 <RadioButton
-                    android:layout_gravity="center_vertical"
                     android:id="@+id/RadioButtonOne_0"
-
                     android:layout_width="70px"
+
                     android:layout_height="70px"
+                    android:layout_gravity="center_vertical"
                     android:layout_margin="5px"
                     android:background="@drawable/item_gameselect"
                     android:button="@null"
@@ -61,8 +61,8 @@
                     android:id="@+id/RadioButtonOne_1"
                     android:layout_width="70px"
                     android:layout_height="70px"
-                    android:layout_margin="5px"
                     android:layout_gravity="center_vertical"
+                    android:layout_margin="5px"
                     android:background="@drawable/item_gameselect"
                     android:button="@null"
                     android:gravity="center"
@@ -74,8 +74,8 @@
                     android:id="@+id/RadioButtonOne_2"
                     android:layout_width="70px"
                     android:layout_height="70px"
-                    android:layout_margin="5px"
                     android:layout_gravity="center_vertical"
+                    android:layout_margin="5px"
                     android:background="@drawable/item_gameselect"
                     android:button="@null"
                     android:gravity="center"
@@ -87,8 +87,8 @@
                     android:id="@+id/RadioButtonOne_3"
                     android:layout_width="70px"
                     android:layout_height="70px"
-                    android:layout_margin="5px"
                     android:layout_gravity="center_vertical"
+                    android:layout_margin="5px"
                     android:background="@drawable/item_gameselect"
                     android:button="@null"
                     android:gravity="center"
@@ -100,8 +100,8 @@
                     android:id="@+id/RadioButtonOne_4"
                     android:layout_width="70px"
                     android:layout_height="70px"
-                    android:layout_margin="5px"
                     android:layout_gravity="center_vertical"
+                    android:layout_margin="5px"
                     android:background="@drawable/item_gameselect"
                     android:button="@null"
                     android:gravity="center"
@@ -110,10 +110,10 @@
                     android:textSize="40px" />
 
                 <RadioButton
-                    android:layout_gravity="center_vertical"
                     android:id="@+id/RadioButtonOne_5"
                     android:layout_width="70px"
                     android:layout_height="70px"
+                    android:layout_gravity="center_vertical"
                     android:layout_margin="5px"
                     android:background="@drawable/item_gameselect"
                     android:button="@null"
@@ -126,8 +126,8 @@
                     android:id="@+id/RadioButtonOne_6"
                     android:layout_width="70px"
                     android:layout_height="70px"
-                    android:layout_margin="5px"
                     android:layout_gravity="center_vertical"
+                    android:layout_margin="5px"
                     android:background="@drawable/item_gameselect"
                     android:button="@null"
                     android:gravity="center"
@@ -136,10 +136,10 @@
                     android:textSize="40px" />
 
                 <RadioButton
-                    android:layout_gravity="center_vertical"
                     android:id="@+id/RadioButtonOne_7"
                     android:layout_width="70px"
                     android:layout_height="70px"
+                    android:layout_gravity="center_vertical"
                     android:layout_margin="5px"
                     android:background="@drawable/item_gameselect"
                     android:button="@null"
@@ -149,10 +149,10 @@
                     android:textSize="40px" />
 
                 <RadioButton
-                    android:layout_gravity="center_vertical"
                     android:id="@+id/RadioButtonOne_8"
                     android:layout_width="70px"
                     android:layout_height="70px"
+                    android:layout_gravity="center_vertical"
                     android:layout_margin="5px"
                     android:background="@drawable/item_gameselect"
                     android:button="@null"
@@ -162,10 +162,10 @@
                     android:textSize="40px" />
 
                 <RadioButton
-                    android:layout_gravity="center_vertical"
                     android:id="@+id/RadioButtonOne_9"
                     android:layout_width="70px"
                     android:layout_height="70px"
+                    android:layout_gravity="center_vertical"
                     android:layout_margin="5px"
                     android:background="@drawable/item_gameselect"
                     android:button="@null"

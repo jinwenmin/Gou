@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/ACAid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,6 +15,8 @@
         android:textSize="30px" />
 
     <TextView
+        android:padding="10px"
+        android:gravity="center"
         android:id="@+id/ACName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -28,9 +28,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-
                 android:gravity="center_horizontal"
-                android:text="游戏记录" />
+                android:text="游戏记录"
+                android:textSize="30px" />
         </LinearLayout>
 
         <LinearLayout
@@ -50,9 +50,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-
                 android:gravity="center_horizontal"
-                android:text="追号记录" />
+                android:text="追号记录"
+                android:textSize="30px" />
         </LinearLayout>
 
         <LinearLayout
@@ -73,9 +73,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-
                 android:gravity="center_horizontal"
-                android:text="彩票报表" />
+                android:text="彩票报表"
+                android:textSize="30px" />
         </LinearLayout>
 
 
@@ -100,12 +100,12 @@
                 android:src="@mipmap/ic_cunqukuanjilu" />
 
             <TextView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:text="存取款记录" />
+                android:text="存取款记录"
+                android:textSize="30px" />
         </LinearLayout>
 
         <LinearLayout
@@ -122,22 +122,45 @@
                 android:src="@mipmap/ic_zhangbianjilu" />
 
             <TextView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:text="个人账变记录" />
+                android:text="个人账变记录"
+                android:textSize="30px" />
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="invisible"
-            android:id="@+id/FanDianjl"
+            android:id="@+id/CaiPiaoyk"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="150px"
+                android:layout_height="150px"
+                android:src="@mipmap/ic_caipiaobaobiao" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="彩票盈亏"
+                android:textSize="30px" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/FanDianjl"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="150px"
@@ -180,42 +203,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-
                 android:gravity="center_horizontal"
-                android:text="活动记录" />
+                android:text="活动记录"
+                android:textSize="30px" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/CaiPiaoyk"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="150px"
-                android:layout_height="150px"
-                android:src="@mipmap/ic_caipiaobaobiao" />
-
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-
-                android:gravity="center_horizontal"
-                android:text="彩票盈亏" />
-        </LinearLayout>
 
         <LinearLayout
-            android:visibility="invisible"
             android:id="@+id/ZhuanZhangjl"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="invisible">
 
             <ImageView
                 android:layout_width="150px"
@@ -232,6 +233,17 @@
                 android:text="转账记录" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="0px"
+
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+
+        </LinearLayout>
 
 
     </LinearLayout>
