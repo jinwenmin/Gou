@@ -13,6 +13,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
@@ -41,6 +42,7 @@ import com.example.king.gou.bean.HistoryGames;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.ui.AddGameActivity;
 import com.example.king.gou.ui.GameCenterActivity;
+import com.example.king.gou.utils.AutoTextView;
 import com.example.king.gou.utils.BaseAutoScrollUpTextView;
 import com.example.king.gou.utils.DataBaseHelper;
 import com.example.king.gou.utils.FingerPrintUtils;
@@ -56,7 +58,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import es.dmoral.toasty.Toasty;
-import it.sephiroth.android.library.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -84,6 +85,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     GridView HomeGridView;
     @BindView(R.id.home_ralative)
     RelativeLayout homeRalative;
+    @BindView(R.id.Autotext)
+    AutoTextView Autotext;
     private AlertView alertView;
     // 一个自定义的布局，作为显示的内容
     View contentView;
@@ -111,6 +114,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             R.drawable.logo21, 0, R.drawable.logo23, R.drawable.logo24, R.drawable.logo25, R.drawable.logo26, R.drawable.logo27, R.drawable.logo28
 
     };
+    private List<String> arrList = new ArrayList<String>();
+    private Handler handler = new Handler();
+    private int count = 0;
 
     public static HomeFragment newInstance() {
 
@@ -131,7 +137,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         unbinder = ButterKnife.bind(this, view);
         DataBaseHelper dataBaseHelper = new DataBaseHelper(getActivity());
         db = dataBaseHelper.getWritableDatabase();
-
+        // getData();
 
         RetrofitService.getInstance().GetUserInfo(this);
         mKeyguardManager = (KeyguardManager) getActivity().getSystemService(Context.KEYGUARD_SERVICE);
@@ -205,12 +211,42 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         return view;
     }
 
+    private void getData() {
+        // TODO Auto-generated method stub
+        for (int i = 0; i < 10; i++) {
+            arrList.add("竖直滚动TextView-数据" + i);
+        }
+    }
+
+    Runnable runnable = new Runnable() {
+
+        @Override
+        public void run() {
+            // handler自带方法实现定时器
+            try {
+                handler.postDelayed(this, 3000);
+                Autotext.next();
+                Autotext.setText(arrList.get(count % arrList.size()));
+                count++;
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    };
+
+
     @Override
     public void onResume() {
         super.onResume();
-
+        handler.postDelayed(runnable, 3000);
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+    }
 
     /**
      * 判断是否满足设置指纹的条件
@@ -390,7 +426,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                     TextView textView = new TextView(getActivity());
                     textView.setText(Html.fromHtml(listnotice.get(0)));
                     Log.d("这个是首页的公告==", Html.fromHtml(listnotice.get(0)) + "");
-                    ArrayList<AdvertisementObject> notices = new ArrayList<AdvertisementObject>();
+                    arrList.add(textView.getText().toString());
+                    handler.postDelayed(runnable, 0);
+                   /* ArrayList<AdvertisementObject> notices = new ArrayList<AdvertisementObject>();
                     AdvertisementObject advertisementObject = new AdvertisementObject();
                     advertisementObject.info = Html.fromHtml(listnotice.get(0)) + "";
                     notices.add(advertisementObject);
@@ -404,7 +442,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                             Toast.makeText(getActivity(), Html.fromHtml(listnotice.get(0)) + "", Toast.LENGTH_SHORT).show();
                         }
                     });
-                    MainScrollAd.start();
+                    MainScrollAd.start();*/
 
                 }
             }

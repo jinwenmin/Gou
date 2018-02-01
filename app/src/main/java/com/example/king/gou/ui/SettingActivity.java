@@ -160,7 +160,7 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
         mKeyguardManager = (KeyguardManager) this.getSystemService(Context.KEYGUARD_SERVICE);
         initDataHelper();
 
-        alertViewAnswer = new AlertView(null, null, "取消", new String[]{"确认"}, null, this, AlertView.Style.Alert, this);
+        alertViewAnswer = new AlertView(null, null, null, new String[]{"确认"}, null, this, AlertView.Style.Alert, this);
         contentViewAnswer = LayoutInflater.from(this).inflate(
                 R.layout.reset_pwdcheck, null);
         alertViewAnswer.addExtView(contentViewAnswer);
@@ -249,7 +249,16 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
                 finish();
                 break;
             case R.id.ResetPwd:
-                RetrofitService.getInstance().GetUserInfo(this);
+                SafeQues = (TextView) contentViewAnswer.findViewById(R.id.SafeQues);
+                answerQues = ((EditText) contentViewAnswer.findViewById(R.id.AnswerQues));
+
+                SafeQues.setText(RetrofitService.getInstance().getUser().getQuestion());
+                if (RetrofitService.getInstance().getUser().getQuestion().length() < 1) {
+                    Toasty.error(this, "未设置安全问题", 2000).show();
+                    return;
+                }
+                alertViewAnswer.show();
+                show = "2";
                 break;
             case R.id.Aboutus:
                 StartA(AboutUsActivity.class);
@@ -261,44 +270,20 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
                 intent.putExtra("LogOut", "logout");
                 startActivity(intent);
                 MyApp.getInstance().finishActivity();
-             /*   Intent intent = new Intent(Intent.ACTION_MAIN);
-                intent.addCategory(Intent.CATEGORY_HOME);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                this.startActivity(intent);
-
-                System.exit(0);*/
-                //Intent intent = new Intent("action.Finish");
-                // this.sendBroadcast(intent);
                 break;
         }
     }
 
     @Override
     public void onReceivedData(int apiId, Object object, int errorId) {
-        if (apiId == RetrofitService.API_ID_USERINFO) {
-            if (object != null) {
-                userInfos = (List<UserInfo>) object;
-                SafeQues = (TextView) contentViewAnswer.findViewById(R.id.SafeQues);
-                answerQues = ((EditText) contentViewAnswer.findViewById(R.id.AnswerQues));
-                if (userInfos.get(0).isHasQuestions()) {
-                    SafeQues.setText(userInfos.get(0).getQuestion());
-                }
-                if (!userInfos.get(0).isHasQuestions()) {
-                    Toasty.error(this, "未设置安全问题", 2000).show();
-                    return;
-                }
-                alertViewAnswer.show();
-                show = "2";
-            }
 
-        }
         if (apiId == RetrofitService.API_ID_SAFEPWDCHECK) {
             if (object != null) {
                 RestultInfo restultInfo = (RestultInfo) object;
                 if (restultInfo.isRc()) {
                     answerQues.setText("");
                     startActivity(new Intent(SettingActivity.this, ResetPwdActivity.class));
-
+                    alertViewAnswer.dismiss();
                 }
                 if (!restultInfo.isRc()) {
                     answerQues.setText("");
@@ -338,18 +323,22 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
 
         }
         if ("2".equals(show)) {
-            if (position != AlertView.CANCELPOSITION) {
+            if (position == AlertView.CANCELPOSITION) {
+                alertViewAnswer.dismiss();
+            } else if (position != AlertView.CANCELPOSITION) {
                 String Answer = answerQues.getText().toString().trim();
                 if (Answer == null || "".equals(Answer)) {
                     Toasty.error(this, "问题答案不能为空", 2000).show();
-                    return;
+                    alertViewAnswer.dismiss();
+
+                } else {
+                    RetrofitService.getInstance().getSecurityQuestionCheck(this, Answer);
                 }
-                RetrofitService.getInstance().getSecurityQuestionCheck(this, Answer);
             }
         }
         if ("3".equals(show)) {
+            EditText safepwd = (EditText) contentViewSafe.findViewById(R.id.AnswerQues);
             if (position != AlertView.CANCELPOSITION) {
-                EditText safepwd = (EditText) contentViewSafe.findViewById(R.id.AnswerQues);
                 String pwd = safepwd.getText().toString().trim();
                 if ("".equals(pwd)) {
                     Toasty.error(this, "安全密码不可为空", 2000).show();
@@ -358,6 +347,7 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
                 String hmacsha256 = RxUtils.getInstance().HMACSHA256(pwd, MyApp.getInstance().getUserName());
                 RetrofitService.getInstance().getCheckSafePwd(this, hmacsha256);
             }
+            safepwd.setText("");
         }
 
         if (position == AlertView.CANCELPOSITION) {

@@ -17,16 +17,8 @@ public class BettingDetail {
     int multiple;
     int price_unit;
     double amount;
-    int status;
-    int bid;
-    int bstatus;
-    int price_type;
-    double minimum;
-    double coefficient;
-    double rate;
-    int num;
-    String class_code;
-    String uid;
+    double prize;
+    String winning_numbers;
 
     @Override
     public String toString() {
@@ -43,6 +35,8 @@ public class BettingDetail {
                 ", multiple=" + multiple +
                 ", price_unit=" + price_unit +
                 ", amount=" + amount +
+                ", prize=" + prize +
+                ", winning_numbers='" + winning_numbers + '\'' +
                 ", status=" + status +
                 ", bid=" + bid +
                 ", bstatus=" + bstatus +
@@ -55,6 +49,33 @@ public class BettingDetail {
                 ", uid='" + uid + '\'' +
                 '}';
     }
+
+    public double getPrize() {
+        return prize;
+    }
+
+    public void setPrize(double prize) {
+        this.prize = prize;
+    }
+
+    public String getWinning_numbers() {
+        return winning_numbers;
+    }
+
+    public void setWinning_numbers(String winning_numbers) {
+        this.winning_numbers = winning_numbers;
+    }
+
+    int status;
+    int bid;
+    int bstatus;
+    int price_type;
+    String minimum;
+    double coefficient;
+    double rate;
+    int num;
+    String class_code;
+    String uid;
 
     public boolean isRc() {
         return rc;
@@ -184,11 +205,11 @@ public class BettingDetail {
         this.price_type = price_type;
     }
 
-    public double getMinimum() {
+    public String getMinimum() {
         return minimum;
     }
 
-    public void setMinimum(double minimum) {
+    public void setMinimum(String minimum) {
         this.minimum = minimum;
     }
 

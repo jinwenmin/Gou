@@ -179,6 +179,11 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
         //RetrofitService.getInstance().getBettingRecord(GameJiluActivity.this, 1, 100, "serial_number", "desc", time1, time2, gid, tid, -1, "", searText);
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        initRetrofit();
+    }
 
     private void initSpinner() {
         rebuys.add("");
@@ -243,16 +248,19 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH) + 1;
         day = calendar.get(Calendar.DAY_OF_MONTH);
-        timetext.setText(year + "-" + month + "-" + day);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         //获取当前所有的毫秒数
         long times = System.currentTimeMillis();
+        Date date1=new Date(times);
+        timetext.setText( sdf.format(date1));
         //加上一天的毫秒数就是明天的时间
         long hou = times + 86400000;
         Date date = new Date(hou);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
         System.out.println();
         Log.e("times", sdf.format(date));
         timetext2.setText(sdf.format(date));
+        //第一个日期选择器
     }
 
     @Override
@@ -326,19 +334,7 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
                 finish();
                 break;
             case R.id.SearchQiHao:
-                String time1;
-                String time2;
-                if (date1 == null || date2 == null) {
-                    time1 = timetext.getText().toString().trim() + " 00:00:01";
-                    time2 = timetext2.getText().toString().trim() + " 23:59:59";
-                } else {
-                    time1 = date1;
-                    time2 = date2;
-                }
-                String searText = timetext3.getText().toString().trim();
-                int gid = gameTypes1.get(gameType1.getSelectedItemPosition()).getGid();
-                int tid = gameTypes2.get(gameType2.getSelectedItemPosition()).getTid();
-
+           initRetrofit();
                 break;
         }
     }

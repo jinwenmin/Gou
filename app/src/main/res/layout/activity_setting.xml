@@ -222,7 +222,7 @@
                     android:layout_centerVertical="true"
                     android:layout_margin="2px"
                     android:layout_toRightOf="@id/Setting_img3"
-                    android:text="密码保护"
+                    android:text="修改密码保护"
                     android:textSize="35px" />
 
                 <ImageView
@@ -626,6 +626,7 @@
                     android:src="@drawable/img_next" />
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"

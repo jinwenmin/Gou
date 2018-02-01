@@ -14,12 +14,13 @@
         android:textSize="30px" />
 
     <EditText
+
         android:id="@+id/rateFW"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20px"
-        android:layout_marginRight="20px"
-        android:background="@null"
+        android:layout_marginLeft="50px"
+        android:layout_marginRight="50px"
+        android:background="@drawable/showrate_biankuang"
         android:gravity="center"
         android:hint="返点的范围是0.0-12.5" />
 
@@ -35,13 +36,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="推广为代理用户"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <RadioButton
             android:id="@+id/rateType2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="推广为普通会员"
-            android:textSize="30px" />
+            android:textSize="25px" />
     </RadioGroup>
 </LinearLayout>

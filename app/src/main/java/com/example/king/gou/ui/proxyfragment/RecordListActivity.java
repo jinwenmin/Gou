@@ -72,7 +72,8 @@ public class RecordListActivity extends AutoLayoutActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_list);
-        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
+        ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         recordListAdapter = new RecordListAdapter(this);
         RecordList.setAdapter(recordListAdapter);
         initCLick();
@@ -161,13 +162,15 @@ public class RecordListActivity extends AutoLayoutActivity implements View.OnCli
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH) + 1;
         day = calendar.get(Calendar.DAY_OF_MONTH);
-        TeamZBJLtimetext.setText(year + "-" + month + "-" + day);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         //获取当前所有的毫秒数
         long times = System.currentTimeMillis();
+        Date date1=new Date(times);
+        TeamZBJLtimetext.setText( sdf.format(date1));
         //加上一天的毫秒数就是明天的时间
         long hou = times + 86400000;
         Date date = new Date(hou);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
         System.out.println();
         Log.e("times", sdf.format(date));
         TeamZBJLtimetext2.setText(sdf.format(date));
@@ -175,10 +178,12 @@ public class RecordListActivity extends AutoLayoutActivity implements View.OnCli
     }
 
     private void initRetrofit() {
-        RetrofitService.getInstance().getRecordList(RecordListActivity.this, 1, 100, "draw_period", "desc", ListgameTypes.get(GameName.getSelectedItemPosition()).getGid(), SearchPeriod.getText().toString().trim(), TeamZBJLtimetext.getText().toString().trim(), TeamZBJLtimetext2.getText().toString().trim());
+        RetrofitService.getInstance().getRecordList(RecordListActivity.this, 1000, 1, "draw_period", "desc", ListgameTypes.get(GameName.getSelectedItemPosition()).getGid(), SearchPeriod.getText().toString().trim(), TeamZBJLtimetext.getText().toString().trim(), TeamZBJLtimetext2.getText().toString().trim());
     }
 
     private void initSpinnerSelect() {
+        GameName.setSelection(1);
+
         GameName.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -191,6 +196,7 @@ public class RecordListActivity extends AutoLayoutActivity implements View.OnCli
 
             }
         });
+
     }
 
     @Override

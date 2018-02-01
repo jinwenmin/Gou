@@ -64,7 +64,7 @@ public class ZhuiHaoAdapter extends BaseAdapter {
             viewHolder.ZhuiHaoZT.setTextColor(Color.parseColor("#666666"));
         }
         if (zh.get(i).getStatus() == 1) {
-            viewHolder.ZhuiHaoZT.setText("未完成");
+            viewHolder.ZhuiHaoZT.setText("已完成");
             viewHolder.ZhuiHaoZT.setTextColor(Color.parseColor("#69c361"));
         }
         if (zh.get(i).getGname() != null) {

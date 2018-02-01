@@ -54,8 +54,30 @@
                 android:text="追号记录"
                 android:textSize="30px" />
         </LinearLayout>
-
         <LinearLayout
+            android:id="@+id/GeRenbjl"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="150px"
+                android:layout_height="150px"
+                android:src="@mipmap/ic_baijialebaobiao" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="活动记录"
+                android:textSize="30px" />
+        </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
             android:id="@+id/CaiPiaobb"
             android:layout_width="0px"
             android:layout_height="wrap_content"
@@ -185,28 +207,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/GeRenbjl"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="150px"
-                android:layout_height="150px"
-                android:src="@mipmap/ic_baijialebaobiao" />
-
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="活动记录"
-                android:textSize="30px" />
-        </LinearLayout>
 
 
         <LinearLayout

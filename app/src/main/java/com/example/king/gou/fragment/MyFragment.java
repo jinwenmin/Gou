@@ -207,7 +207,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
                 startActivity(new Intent(getActivity(), ChatUserActivity.class));
                 break;
             case R.id.ToRecharge:
-                startActivity(new Intent(getActivity(), ReChargeActivity.class));
+                // startActivity(new Intent(getActivity(), ReChargeActivity.class));
                 break;
             case R.id.ToQukuan:
                 //
@@ -216,7 +216,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
                 //RetrofitService.getInstance().getWithDrawDatas(this);
                 break;
             case R.id.ToZhuanZhang:
-                startActivity(new Intent(getActivity(), ZhuanZhangActivity.class));
+                //   startActivity(new Intent(getActivity(), ZhuanZhangActivity.class));
 
                 break;
             case R.id.frmMySetting:
@@ -374,8 +374,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
             }
         }
         if ("2".equals(show)) {
+            EditText safepwd = (EditText) contentViewSafe.findViewById(R.id.AnswerQues);
             if (position != AlertView.CANCELPOSITION) {
-                EditText safepwd = (EditText) contentViewSafe.findViewById(R.id.AnswerQues);
                 String pwd = safepwd.getText().toString().trim();
                 if ("".equals(pwd)) {
                     Toasty.error(getActivity(), "安全密码不可为空", 2000).show();
@@ -383,8 +383,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
                 }
                 String hmacsha256 = RxUtils.getInstance().HMACSHA256(pwd, MyApp.getInstance().getUserName());
                 RetrofitService.getInstance().getCheckSafePwd(this, hmacsha256);
-                safepwd.setText("");
             }
+            safepwd.setText("");
 
         }
 

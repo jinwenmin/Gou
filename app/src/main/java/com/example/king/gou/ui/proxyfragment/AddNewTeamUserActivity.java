@@ -3,15 +3,17 @@ package com.example.king.gou.ui.proxyfragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
@@ -20,6 +22,9 @@ import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
+
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,6 +58,10 @@ public class AddNewTeamUserActivity extends AutoLayoutActivity implements View.O
     int t = 2;
     @BindView(R.id.AddUserRate)
     EditText AddUserRate;
+    @BindView(R.id.ShowRates)
+    LinearLayout ShowRates;
+    @BindView(R.id.default_show)
+    LinearLayout defaultShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +72,7 @@ public class AddNewTeamUserActivity extends AutoLayoutActivity implements View.O
         Intent intent = getIntent();
         String code = intent.getStringExtra("code");
         AddUserTopCode.setText(code);
+        RetrofitService.getInstance().getAddUserData(this);
         AddRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
@@ -101,20 +111,9 @@ public class AddNewTeamUserActivity extends AutoLayoutActivity implements View.O
             return;
         }
 
-        if ("".equals(addUserNewPwd)) {
-            Toasty.error(AddNewTeamUserActivity.this, "密码不可为空", 2000).show();
-            return;
-        }
-        if ("".equals(addUserCheckPwd)) {
-            Toasty.error(AddNewTeamUserActivity.this, "确认密码不可为空", 2000).show();
-            return;
-        }
+
         if ("".equals(addUserTopCode)) {
             Toasty.error(AddNewTeamUserActivity.this, "上级推广码不可为空", 2000).show();
-            return;
-        }
-        if (!addUserNewPwd.equals(addUserCheckPwd)) {
-            Toasty.error(AddNewTeamUserActivity.this, "密码和确认密码不一致", 2000).show();
             return;
         }
         Double addUserR = Double.parseDouble(addUserRate);
@@ -122,7 +121,7 @@ public class AddNewTeamUserActivity extends AutoLayoutActivity implements View.O
             Toasty.error(AddNewTeamUserActivity.this, "返点不符合规则", 2000).show();
             return;
         }
-        String pwd = RxUtils.getInstance().HMACSHA256(addUserNewPwd, addUserName);
+        String pwd = RxUtils.getInstance().HMACSHA256("a123456", addUserName);
         RetrofitService.getInstance().getVIPSignUpSave(AddNewTeamUserActivity.this, addUserName, addUserNickName, Double.parseDouble(addUserRate), addUserTopCode, t, pwd, "addnewuser");
     }
 
@@ -163,6 +162,27 @@ public class AddNewTeamUserActivity extends AutoLayoutActivity implements View.O
                 Toasty.error(this, restultInfo.getMsg(), 2000).show();
             }
             finish();
+        }
+        if (apiId == RetrofitService.API_ID_ADDVIPCODE) {
+            if (object != null) {
+
+                List<Object> AddDatas = (List<Object>) object;
+                Map<String, Object> rs = (Map) AddDatas.get(1);
+                Log.d("ShowRates", rs.size() + "");
+                if (rs.size() > 0) {
+                    defaultShow.setVisibility(View.GONE);
+                }
+                for (Map.Entry<String, Object> entry : rs.entrySet()) {
+                    View view = LayoutInflater.from(this).inflate(R.layout.item_rates, null);
+                    TextView Rate = (TextView) view.findViewById(R.id.Rate);
+                    TextView RateNum = (TextView) view.findViewById(R.id.RateNum);
+                    Log.d("ShowRates", entry.getKey() + "  " + entry.getValue());
+                    Rate.setText(entry.getKey());
+                    RateNum.setText(entry.getValue() + "");
+                    ShowRates.addView(view);
+                }
+            }
+
         }
     }
 

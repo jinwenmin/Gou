@@ -1,6 +1,8 @@
 package com.example.king.gou.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +14,7 @@ import com.example.king.gou.R;
 import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.bean.UserInfo;
 import com.example.king.gou.service.RetrofitService;
+import com.example.king.gou.ui.settingfragment.ResetPwdActivity;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -40,6 +43,7 @@ public class UpDataSafePwdActivity extends AutoLayoutActivity implements View.On
     @BindView(R.id.UpDataPwdClick)
     Button UpDataPwdClick;
     private String emailINFO;
+    private UserInfo userinfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +51,10 @@ public class UpDataSafePwdActivity extends AutoLayoutActivity implements View.On
         setContentView(R.layout.activity_up_data_safe_pwd);
         ButterKnife.bind(this);
         MyApp.getInstance().addActivitys(this);
-        RetrofitService.getInstance().GetUserInfo(this);
         initClick();
+        userinfo = RetrofitService.getInstance().getUser();
+        Log.d("邮箱是", userinfo.toString());
+
     }
 
     private void initClick() {
@@ -99,6 +105,10 @@ public class UpDataSafePwdActivity extends AutoLayoutActivity implements View.On
                     Toasty.error(this, "密码长度不正确", 2000).show();
                     return;
                 }
+                if (email.equals(userinfo.getEmail())) {
+                    Toasty.error(this, "邮箱跟当前的邮箱相同", 2000).show();
+                    return;
+                }
                 RetrofitService.getInstance().getUpDataSafePwd(this, oldpwd256, newpwd256, email);
                 break;
         }
@@ -111,6 +121,11 @@ public class UpDataSafePwdActivity extends AutoLayoutActivity implements View.On
                 RestultInfo restultInfo = (RestultInfo) object;
                 if (restultInfo.isRc()) {
                     Toasty.success(this, restultInfo.getMsg(), 2000).show();
+                    RetrofitService.getInstance().LogOut();
+                    Intent intent = new Intent(UpDataSafePwdActivity.this, LoginActivity.class);
+                    intent.putExtra("LogOut", "logout");
+                    startActivity(intent);
+                    MyApp.getInstance().finishActivity();
                     return;
                 }
                 if (!restultInfo.isRc()) {
@@ -119,13 +134,7 @@ public class UpDataSafePwdActivity extends AutoLayoutActivity implements View.On
                 }
             }
         }
-        if (apiId == RetrofitService.API_ID_USERINFO) {
-            if (object != null) {
-                List<UserInfo> userInfos = (List<UserInfo>) object;
-                UserInfo userInfo = userInfos.get(0);
-                emailINFO = userInfo.getEmail();
-            }
-        }
+
     }
 
     @Override

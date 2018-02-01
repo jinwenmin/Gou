@@ -203,14 +203,15 @@ public class TeamBaoBiaoActivity extends AutoLayoutActivity implements View.OnCl
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH) + 1;
         day = calendar.get(Calendar.DAY_OF_MONTH);
-        TeamBettingtimetext.setText(year + "-" + month + "-" + day);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         //获取当前所有的毫秒数
         long times = System.currentTimeMillis();
+        Date date1=new Date(times);
+        TeamBettingtimetext.setText( sdf.format(date1));
         //加上一天的毫秒数就是明天的时间
         long hou = times + 86400000;
         Date date = new Date(hou);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        System.out.println();
+
         Log.e("times", sdf.format(date));
         TeamBettingtimetext2.setText(sdf.format(date));
 

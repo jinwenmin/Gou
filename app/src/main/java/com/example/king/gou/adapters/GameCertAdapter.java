@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.king.gou.R;
 import com.example.king.gou.bean.Ids;
+import com.example.king.gou.utils.RxUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +77,9 @@ public class GameCertAdapter extends BaseAdapter {
             viewHolder.GameTypeBei.setText("共" + idses.get(i).getMultiple() + "倍");
         }
         if (0 != idses.get(i).getAmount()) {
-            viewHolder.GameTypeAmount.setText("共" + idses.get(i).getAmount() + "元");
+
+
+            viewHolder.GameTypeAmount.setText("共" + RxUtils.getInstance().getDouble2(idses.get(i).getAmount()) + "元");
         }
         if (!"".equals(idses.get(i).getGamename())) {
             viewHolder.GameTypeName.setText(idses.get(i).getGamename());

@@ -92,16 +92,15 @@ public class LotteryBaoBiaoActivity extends AutoLayoutActivity implements View.O
         ints.add(2);
         ints.add(3);
         ints.add(4);
-        ints.add(5);
         ints.add(6);
         status = new ArrayList<>();
         status.add("所有状态");
-        status.add("未开奖");
-        status.add("未中奖");
+        status.add("已过期");
         status.add("已派奖");
+        status.add("未开奖");
         status.add("本人撤单");
         status.add("管理员撤单");
-        status.add("已过期");
+        status.add("未中奖");
         status.add("平台撤单");
         adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, status);
         //第三步：为适配器设置下拉列表下拉时的菜单样式。

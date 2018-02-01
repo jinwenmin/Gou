@@ -81,6 +81,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import es.dmoral.toasty.Toasty;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.annotations.NonNull;
@@ -187,11 +188,16 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_USERBETTING = 74;//个人报表彩票投注
     public static int API_ID_SENDBETTING = 75;//提交购彩单
     public static int API_ID_PWDPROTACT = 76;//密码保护 密码
+    public static int API_ID_BETTINGDETAIL = 77;//投注单详情
+    public static int API_ID_BETREVOKE1 = 78;//撤销投注单
+    public static int API_ID_GENERALIZESAVE = 79;//推广设置
+    public static int API_ID_CHECKCAEDNUM = 80;//验证银行卡
 
     private Retrofit retrofit;
     private ApiInterface apiInterface;
     String sessionLoginId;
     String reqkey;
+    UserInfo users = null;
 
     public static class SingleInstanceHolder {
         private static RetrofitService retrofitService = new RetrofitService();
@@ -200,6 +206,14 @@ public class RetrofitService extends HttpEngine {
     public static RetrofitService getInstance() {
         return SingleInstanceHolder.retrofitService;
 
+    }
+
+    public UserInfo getUser() {
+        if (users == null) {
+            return null;
+        } else {
+            return users;
+        }
     }
 
     public RetrofitService() {
@@ -250,7 +264,7 @@ public class RetrofitService extends HttpEngine {
                     }
                 })
                 .addInterceptor(new ReceivedCookiesInterceptor())
-                .connectTimeout(30, TimeUnit.SECONDS).build();
+                .connectTimeout(40, TimeUnit.SECONDS).build();
         Gson gson = new GsonBuilder().setLenient().create();
 
         retrofit = new Retrofit.Builder()
@@ -431,7 +445,7 @@ public class RetrofitService extends HttpEngine {
 
             @Override
             public void onFailure(Call<Login> call, Throwable t) {
-                Log.d("用户信息Error", t.getMessage().toString());
+                Log.d("用户信息Error", "");
             }
         });
     }
@@ -454,6 +468,7 @@ public class RetrofitService extends HttpEngine {
                     userInfos.add(0, response.body());
                     listener.onReceivedData(API_ID_USERINFO, userInfos, API_ID_ERROR);
                     System.out.println("用户的基本信息==" + response.body());
+                    users = response.body();
                     listener.onRequestEnd(API_ID_USERINFO);
                 }
 
@@ -840,13 +855,13 @@ public class RetrofitService extends HttpEngine {
                                     || tidd == 350 || tidd == 351 || tidd == 244 || tidd == 245 || tidd == 388 || tidd == 389
                                     || tidd == 612 || tidd == 613 || tidd == 650 || tidd == 651 || tidd == 706 || tidd == 707
                                     ) {
-                                ns = "后三";
+                                ns = "前三";
                             }
                             if (tidd == 12 || tidd == 13 || tidd == 72 || tidd == 73 || tidd == 103 || tidd == 104 || tidd == 537 || tidd == 538
                                     || tidd == 353 || tidd == 354 || tidd == 247 || tidd == 248 || tidd == 391 || tidd == 392
                                     || tidd == 615 || tidd == 616 || tidd == 653 || tidd == 654 || tidd == 709 || tidd == 710
                                     ) {
-                                ns = "前三";
+                                ns = "后三";
                             }
                             if (tidd == 263 || tidd == 264 || tidd == 266 || tidd == 267 || tidd == 269 || tidd == 270 || tidd == 553 || tidd == 554
                                     || tidd == 369 || tidd == 370 || tidd == 278 || tidd == 279 || tidd == 407 || tidd == 408
@@ -859,13 +874,13 @@ public class RetrofitService extends HttpEngine {
                                     || tidd == 356 || tidd == 357 || tidd == 250 || tidd == 251 || tidd == 394 || tidd == 395
                                     || tidd == 618 || tidd == 619 || tidd == 656 || tidd == 657 || tidd == 712 || tidd == 713
                                     ) {
-                                ns = "后二";
+                                ns = "前二";
                             }
                             if (tidd == 18 || tidd == 19 || tidd == 78 || tidd == 79 || tidd == 109 || tidd == 110 || tidd == 543 || tidd == 544
                                     || tidd == 359 || tidd == 360 || tidd == 253 || tidd == 254 || tidd == 397 || tidd == 398
                                     || tidd == 621 || tidd == 622 || tidd == 659 || tidd == 660 || tidd == 715 || tidd == 716
                                     ) {
-                                ns = "前二";
+                                ns = "后二";
                             }
                             if (tidd == 20 || tidd == 80 || tidd == 111 || tidd == 545 || tidd == 361 || tidd == 255 || tidd == 399 || tidd == 623 || tidd == 661 || tidd == 717) {
                                 ns = "定位胆";
@@ -1148,6 +1163,7 @@ public class RetrofitService extends HttpEngine {
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
         Call<Map<String, Object>> recordList = apiInterface.getRecordList(1, rows, page, sidx, sord, id, period, start, end, reqkey, currentTimeMillis);
         Call<Map<String, Object>> clone = recordList.clone();
+        Log.d("游戏开奖记录请求完全体", clone.request().toString() + "");
         clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
             public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
@@ -1326,15 +1342,17 @@ public class RetrofitService extends HttpEngine {
     }
 
     //强制修改初始密码
-    public void getUpdateFirstPwd(final DataListener listener, String p0, String p1, String p2, String email) {
+    public void getUpdateFirstPwd(final DataListener listener, String p0, String p1, String p2, String email, String q, String a) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         map.put("p0", p0);
         map.put("p1", p1);
         map.put("p2", p2);
         map.put("email", email);
+        map.put("q", q);
+        map.put("a", a);
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<RestultInfo> updateFirstPwd = apiInterface.getUpdateFirstPwd(1, p0, p1, p2, email, reqkey, currentTimeMillis);
+        Call<RestultInfo> updateFirstPwd = apiInterface.getUpdateFirstPwd(1, p0, p1, p2, email, q, a, reqkey, currentTimeMillis);
         String s = updateFirstPwd.request().toString();
         Log.d("强制修改初始密码的结果请求", s);
         Call<RestultInfo> clone = updateFirstPwd.clone();
@@ -1486,7 +1504,7 @@ public class RetrofitService extends HttpEngine {
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
                 if (response.code() == 200) {
                     listener.onReceivedData(API_ID_SAFEPWD, response.body(), API_ID_ERROR);
-                    Log.d("验证安全问题的结果", response.body().toString());
+                    Log.d("验证安全密码的结果", response.body().toString());
                 }
 
             }
@@ -1621,24 +1639,25 @@ public class RetrofitService extends HttpEngine {
     }
 
     //验证银行卡号
-    public void getCheckCardNum(DataListener listener, String name, String card) {
+    public void getCheckCardNum(final DataListener listener, String name, String card) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         map.put("name", name);
         map.put("card", card);
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> checkBankCardNum = apiInterface.getCheckBankCardNum(1, name, card, reqkey, currentTimeMillis);
-        Call<Object> clone = checkBankCardNum.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<RestultInfo> checkBankCardNum = apiInterface.getCheckBankCardNum(1, name, card, reqkey, currentTimeMillis);
+        Call<RestultInfo> clone = checkBankCardNum.clone();
+        clone.enqueue(new Callback<RestultInfo>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
                 if (response.code() == 200) {
                     Log.d("验证卡号返回的", response.body().toString());
+                    listener.onReceivedData(API_ID_CHECKCAEDNUM, response.body(), API_ID_ERROR);
                 }
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
 
             }
         });
@@ -2279,7 +2298,8 @@ public class RetrofitService extends HttpEngine {
                             z.setCancel_amount((Double) cn.get(12));
                             z.setPrize_num(RxUtils.getInstance().getInt(cn.get(13)));
                             z.setPrize_amount((Double) cn.get(14));
-                            z.setStatus(RxUtils.getInstance().getInt(15));
+                            z.setBids((String) cn.get(15));
+                            z.setStatus(RxUtils.getInstance().getInt(cn.get(16)));
                             Log.d("查询追号的Bean", z.toString());
                             zhuiHaos.add(z);
 
@@ -2430,34 +2450,35 @@ public class RetrofitService extends HttpEngine {
         map.put("sord", sord);
         map.put("id", id + "");
         String reqkey = RxUtils.getInstance().getReqkey(map, l);
-        Call<Object> keepNumBet = apiInterface.getKeepNumBet(1, page, rows, sidx, sord, id, reqkey, l);
-        Call<Object> clone = keepNumBet.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<Map<String, Object>> keepNumBet = apiInterface.getKeepNumBet(1, page, rows, sidx, sord, id, reqkey, l);
+        Call<Map<String, Object>> clone = keepNumBet.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 if (response.code() == 200) {
                     String s = response.body().toString();
                     Log.d("查询追号投注记录", s);
-                    String substring = s.substring(s.indexOf("content=[") + 9, s.indexOf("], number="));
-                    String[] sp = substring.split(", ");
-                    List<ZhuiHao> zhs = new ArrayList<ZhuiHao>();
-                    if (sp.length > 4) {
-                        for (int i = 0; i < sp.length; i = i + 5) {
-                            Log.d("查询追号投注记录Split", sp[i]);
-                            String id = sp[i].substring(sp[i].indexOf("[") + 1, sp[i].length() - 2);//投注单id
-                            String draw_period = sp[i + 1];//投注期号
-                            String multiple = sp[i + 2].substring(0, sp[i + 2].length() - 2);//投注倍数
-                            String status = sp[i + 3].substring(0, sp[i + 3].length() - 2);//投注单状态
-                            ZhuiHao zh = new ZhuiHao();
-                            zh.setId(Integer.parseInt(id));
-                            zh.setNumber(draw_period);
-                            zh.setPrize_num(Integer.parseInt(multiple));
-                            zh.setStatus(Integer.parseInt(status));
-                            Log.d("查询追号投注记录Bean", zh.toString());
-                            zhs.add(zh);
+                    Map<String, Object> map = response.body();
+                    List<List<Object>> content = null;
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if ("content".equals(entry.getKey())) {
+                                content = (List<List<Object>>) entry.getValue();
+                            }
                         }
-
                     }
+                    List<ZhuiHao> zhs = new ArrayList<ZhuiHao>();
+                    for (int i = 0; i < content.size(); i++) {
+                        List<Object> l = content.get(i);
+                        ZhuiHao zh = new ZhuiHao();
+                        zh.setId(RxUtils.getInstance().getInt(l.get(0)));
+                        zh.setNumber((String) l.get(1));
+                        zh.setPrize_num(RxUtils.getInstance().getInt(l.get(2)));
+                        zh.setStatus(RxUtils.getInstance().getInt(l.get(3)));
+                        Log.d("查询追号投注记录Bean", zh.toString());
+                        zhs.add(zh);
+                    }
+
                     listener.onReceivedData(API_ID_ZHTZDETAIL, zhs, API_ID_ERROR);
                 }
 
@@ -2465,7 +2486,7 @@ public class RetrofitService extends HttpEngine {
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
 
             }
         });
@@ -2482,6 +2503,7 @@ public class RetrofitService extends HttpEngine {
         clone.enqueue(new Callback<RestultInfo>() {
             @Override
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+                Log.d("批量撤销投注单Code", response.code() + "");
                 if (response.code() == 200) {
                     Log.d("批量撤销投注单", response.body().toString());
                     listener.onReceivedData(API_ID_CACEL, response.body(), API_ID_ERROR);
@@ -2490,7 +2512,8 @@ public class RetrofitService extends HttpEngine {
 
             @Override
             public void onFailure(Call<RestultInfo> call, Throwable t) {
-
+                Toasty.info(MyApp.getInstance().getApplicationContext(), "服务器响应超时", 2000).show();
+                //  Log.d("批量撤销投注单Error", t.toString() + "");
             }
         });
 
@@ -2547,76 +2570,35 @@ public class RetrofitService extends HttpEngine {
                                 amount = (double) entry.getValue();
                             }
                         }
-                        ac.setAmount(amount);
+                        ac.setAmountss(amount);
                         acs1.add(ac);
                     }
                     account.add(acs1);
+                    List<AccountChange> acs2 = new ArrayList<AccountChange>();
                     for (int i = 0; i < r.size(); i++) {
                         Map<String, Object> m = (Map<String, Object>) r.get(i);
                         if (m.size() > 0) {
-                            String id = null;
-                            String uname = null;
-                            String date = null;
-                            String stype = null;
-                            String gname = null;
-                            String rname = null;
-                            String period = null;
-                            String model = null;
-                            String amoun = null;
-                            String amounts = null;
-                            AccountChange ac = new AccountChange();
+                            List<Object> cell = new ArrayList<>();
                             for (Map.Entry<String, Object> entry : m.entrySet()) {
-                                if ("id".equals(entry.getKey())) {
-                                    amoun = (String) entry.getValue();
+                                if ("cell".equals(entry.getKey())) {
+                                    cell = (List<Object>) entry.getValue();
                                 }
                             }
-                            ac.setAmount(Double.parseDouble(amoun));
-                            acs1.add(ac);
+                            AccountChange acc = new AccountChange();
+                            acc.setUname((String) cell.get(0));
+                            acc.setDate((String) cell.get(1));
+                            acc.setStype(Integer.parseInt((String) cell.get(2)));
+                            acc.setGname((String) cell.get(3));
+                            acc.setRname((String) cell.get(4));
+                            acc.setPeriod((String) cell.get(5));
+                            acc.setModel(Integer.parseInt((String) cell.get(6)));
+                            acc.setAmount(Double.parseDouble((String) cell.get(7)));
+                            acc.setAmounts(Double.parseDouble((String) cell.get(8)));
+                            acs2.add(acc);
                         }
                     }
-                   /* List<AccountChange> acs1 = new ArrayList<AccountChange>();
-                    String substring = s.substring(s.indexOf("records=") + 8, s.indexOf(".0, rows="));
-                    int ReCords = Integer.parseInt(substring);
-                    String rows = s.substring(s.indexOf("rows=[") + 6, s.indexOf("], userdata="));
-
-                    AccountChange a = new AccountChange();
-                    String as = s.substring(s.indexOf("userdata={amount=") + 17, s.indexOf(", name="));
-                    a.setAmountss(Double.parseDouble(as));
-                    acs1.add(a);
-                    account.add(acs1);
-                    int length = rows.length();
-                    if (length > 0) {
-                        String[] ss = rows.split(", ");
-                        List<AccountChange> acs2 = new ArrayList<AccountChange>();
-                        for (int i = 0; i < ss.length; i = i + 10) {
-                            AccountChange ac = new AccountChange();
-                            String id = ss[i].substring(4, ss[i].length());
-                            String uname = ss[i + 1].substring(6, ss[i + 1].length());
-                            String date = ss[i + 2].substring(0, ss[i + 2].length());
-                            String stype = ss[i + 3];
-                            String gname = ss[i + 4];
-                            String rname = ss[i + 5];
-                            String period = ss[i + 6];
-                            String model = ss[i + 7];
-                            String amount = ss[i + 8];
-                            String amounts = ss[i + 9].substring(0, ss[i + 9].length() - 3);
-                            ac.setId(Integer.parseInt(id));
-                            ac.setUname(uname);
-                            ac.setDate(date);
-                            ac.setStype(Integer.parseInt(stype));
-                            ac.setGname(gname);
-                            ac.setRname(rname);
-                            ac.setPeriod(period);
-                            ac.setModel(Integer.parseInt(model));
-                            ac.setAmount(Double.parseDouble(amount));
-                            ac.setAmounts(Double.parseDouble(amounts));
-                            acs2.add(ac);
-                            //Log.d("查询个人报表彩票帐变SS", acs.toString());
-                        }
-                        account.add(acs2);
-
-                    }
-                    listener.onReceivedData(API_ID_ACCOUNTCHANGE, account, API_ID_ERROR);*/
+                    account.add(acs2);
+                    listener.onReceivedData(API_ID_ACCOUNTCHANGE, account, API_ID_ERROR);
                 }
 
             }
@@ -2793,38 +2775,7 @@ public class RetrofitService extends HttpEngine {
                             us.setStatus(RxUtils.getInstance().getInt(cn.get(11)));
                             userBetting.add(us);
                         }
-                       /* String con = s.substring(s.indexOf("content=[") + 9, s.indexOf("], number="));
-                        String[] cs = con.split(", ");
 
-                        for (int i = 0; i < cs.length; i = i + 12) {
-                            UserTeamBetting us = new UserTeamBetting();
-                            String bid = cs[i].substring(1, cs[i].length() - 2);
-                            String uid = cs[i + 1].substring(0, cs[i + 1].length() - 2);
-                            String uname = cs[i + 2];
-                            String date = cs[i + 3];
-                            String gname = cs[i + 4];
-                            String period = cs[i + 5];
-                            String rname = cs[i + 6];
-                            String picked_text = cs[i + 7];
-                            String amount = cs[i + 8];
-                            String prize = cs[i + 9];
-                            String winning_numbers = cs[i + 10];
-                            String status = cs[i + 11].substring(0, cs[i + 11].length() - 3);
-                            Log.d("彩票报表Split", cs[i]);
-                            us.setBid(Integer.parseInt(bid));
-                            us.setUid(Integer.parseInt(uid));
-                            us.setUname(uname);
-                            us.setDate(date);
-                            us.setGname(gname);
-                            us.setPeriod(period);
-                            us.setRname(rname);
-                            us.setPicked_text(picked_text);
-                            us.setAmount(Double.parseDouble(amount));
-                            us.setPrize(Double.parseDouble(prize));
-                            us.setWinning_number(winning_numbers);
-                            us.setStatus(Integer.parseInt(status));
-                            userBetting.add(us);
-                        }*/
                     }
                     listener.onReceivedData(API_ID_USERBETTING, userBetting, API_ID_ERROR);
                 }
@@ -2852,6 +2803,7 @@ public class RetrofitService extends HttpEngine {
         String reqkey = RxUtils.getInstance().getReqkey(maps, currentTimeMillis);
         Call<Map<String, Object>> profitLossList = apiInterface.getProfitLossList(1, page, rows, sidx, sord, from, to, gtype, reqkey, currentTimeMillis);
         Call<Map<String, Object>> clone = profitLossList.clone();
+        Log.d("个人报表彩票盈亏请求完全体", clone.request().toString());
         clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
             public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
@@ -4038,7 +3990,7 @@ public class RetrofitService extends HttpEngine {
             public void onResponse(Call<List<Object>> call, retrofit2.Response<List<Object>> response) {
                 Log.d("获取开奖历史记录Code", response.code() + "");
                 if (response.code() == 200) {
-                    Log.d("获取开奖历史记录", response.body().toString());
+                    Log.d("获取开奖历史记录1", response.body().toString());
                     List<Object> list = response.body();
                     List<RecordList> rcs = new ArrayList<RecordList>();
                     for (int i = 0; i < list.size(); i++) {
@@ -4161,17 +4113,19 @@ public class RetrofitService extends HttpEngine {
         Map map = new HashMap();
         map.put("l", l + "");
         String reqkey = RxUtils.getInstance().getRegistersReqkey(map, t);
-        Call<Object> shareData = apiInterface.getGeneralizeSave(1, l, reqkey, t);
-        Call<Object> clone = shareData.clone();
+        Call<RestultInfo> shareData = apiInterface.getGeneralizeSave(1, l, reqkey, t);
+        Call<RestultInfo> clone = shareData.clone();
         Log.d("推广设置-保存请求完全体", clone.request().toString() + "");
-        clone.enqueue(new Callback<Object>() {
+        clone.enqueue(new Callback<RestultInfo>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
                 Log.d("推广设置-保存", response.body().toString());
+                listener.onReceivedData(API_ID_GENERALIZESAVE, response.body(), API_ID_ERROR);
+
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
                 Log.d("推广设置-保存Error", t.toString());
             }
         });
@@ -4182,22 +4136,46 @@ public class RetrofitService extends HttpEngine {
         long currentTimeMillis = System.currentTimeMillis();
         Map map = new HashMap();
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> shareData = apiInterface.getAddUserData(1, reqkey, currentTimeMillis);
-        Call<Object> clone = shareData.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<Map<String, Object>> shareData = apiInterface.getAddUserData(1, reqkey, currentTimeMillis);
+        Call<Map<String, Object>> clone = shareData.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 if (response.code() == 200) {
                     String s = response.body().toString();
                     Log.d("获取添加会员数据", s);
-                    String Code = s.substring(s.indexOf("code=") + 5, s.indexOf(", rate="));
-                    listener.onReceivedData(API_ID_ADDVIPCODE, Code, API_ID_ERROR);
+                    Map<String, Object> map = response.body();
+                    Map<String, Object> rates = new HashMap<>();
+                    List<Object> AddNewDatas = new ArrayList<>();
+                    Map<String, Object> others = new HashMap<>();
+                    String code = null;
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if ("others".equals(entry.getKey())) {
+                                others = (Map<String, Object>) entry.getValue();
+                            }
+                        }
+                    }
+                    for (Map.Entry<String, Object> entry : others.entrySet()) {
+                        if ("code".equals(entry.getKey())) {
+                            code = (String) entry.getValue();
+                        }
+                        if ("rates".equals(entry.getKey())) {
+                            rates = (Map<String, Object>) entry.getValue();
+                        }
+                    }
+
+                    AddNewDatas.add(code);
+                    Log.d("ShowRates", rates.size() + "");
+                    AddNewDatas.add(rates);
+
+                    listener.onReceivedData(API_ID_ADDVIPCODE, AddNewDatas, API_ID_ERROR);
 
                 }
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
 
             }
         });
@@ -4672,7 +4650,7 @@ public class RetrofitService extends HttpEngine {
     }
 
     //投注单 详情
-    public void getBettingDetails(DataListener listener, int id) {
+    public void getBettingDetails(final DataListener listener, int id) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
 
@@ -4683,26 +4661,59 @@ public class RetrofitService extends HttpEngine {
             @Override
             public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
                 if (response.code() == 200) {
-                    Log.d("投注单详情", response.body().toString());
+                    Log.d("投注单详情1", response.body().toString());
                     Map<String, Object> map = response.body();
                     List<Object> o = new ArrayList<>();
                     double id = 0;
                     boolean rc = false;
-                    BettingDetail bd=new BettingDetail();
+                    BettingDetail bd = new BettingDetail();
                     if (map.size() > 0) {
                         for (Map.Entry<String, Object> entry : map.entrySet()) {
                             if ("rc".equals(entry.getKey())) {
-                                rc= (boolean) entry.getValue();
-                            }if ("id".equals(entry.getKey())) {
-                                id= (double) entry.getValue();
-                            }if ("others".equals(entry.getKey())) {
-                                o= (List<Object>) entry.getValue();
+                                rc = (boolean) entry.getValue();
+                            }
+                            if ("id".equals(entry.getKey())) {
+                                id = (double) entry.getValue();
+                            }
+                            if ("others".equals(entry.getKey())) {
+                                o = (List<Object>) entry.getValue();
                             }
                         }
                     }
                     for (int i = 0; i < o.size(); i++) {
-
+                        bd.setRc(rc);
+                        bd.setId(RxUtils.getInstance().getInt(id));
+                        bd.setSerial_number((String) o.get(0));
+                        bd.setUname((String) o.get(1));
+                        bd.setBuy_time((String) o.get(2));
+                        bd.setGname((String) o.get(3));
+                        bd.setRname((String) o.get(4));
+                        bd.setPeriod((String) o.get(5));
+                        bd.setPicked_text((String) o.get(6));
+                        bd.setMultiple(RxUtils.getInstance().getInt(o.get(7)));
+                        bd.setPrice_unit(RxUtils.getInstance().getInt(o.get(8)));
+                        bd.setAmount((Double) (o.get(9)));
+                        if (o.get(10) != null) {
+                            bd.setPrize((Double) (o.get(10)));
+                        }
+                        if (o.get(11) != null) {
+                            bd.setWinning_numbers((String) (o.get(11)));
+                        }
+                        //bd.setStatus(RxUtils.getInstance().getInt(o.get(12)));
+                        bd.setBid(RxUtils.getInstance().getInt(o.get(13)));
+                        bd.setBstatus(RxUtils.getInstance().getInt(o.get(14)));
+                        bd.setPrice_type(RxUtils.getInstance().getInt(o.get(15)));
+//                        bd.setMinimum(Double.parseDouble((String) (o.get(16))));
+                        String s1 = String.valueOf(o.get(16));
+                        bd.setMinimum(s1);
+                        bd.setCoefficient((Double) (o.get(17)));
+                        bd.setRate((Double) (o.get(18)));
+                        bd.setNum(RxUtils.getInstance().getInt(o.get(19)));
+                        bd.setClass_code((String) o.get(20));
+                        bd.setUid(String.valueOf((Double) o.get(21)));
                     }
+                    Log.d("投注单详情2", bd.toString());
+                    listener.onReceivedData(API_ID_BETTINGDETAIL, bd, API_ID_ERROR);
                 }
             }
 
@@ -4714,7 +4725,7 @@ public class RetrofitService extends HttpEngine {
     }
 
     //撤销投注单
-    public void getLotteryBetRevoke1(DataListener listener, int bid) {
+    public void getLotteryBetRevoke1(final DataListener listener, int bid) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
 
@@ -4726,6 +4737,7 @@ public class RetrofitService extends HttpEngine {
             public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
                 if (response.code() == 200) {
                     Log.d("撤销投注单", response.body().toString());
+                    listener.onReceivedData(API_ID_BETREVOKE1, response.body(), API_ID_ERROR);
                 }
             }
 

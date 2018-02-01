@@ -1,11 +1,13 @@
 package com.example.king.gou.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -54,8 +56,8 @@ public class MakeZhuiHaoAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        final ViewHolder viewHolder;
 
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.item_zhuihao_item, parent, false);
@@ -64,7 +66,7 @@ public class MakeZhuiHaoAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        ZhuiHaoCNum z = zh.get(position);
+        final ZhuiHaoCNum z = zh.get(position);
         if (!"".equals(z.getPeriod())) {
             viewHolder.ZhuiHaoPeriod.setText(z.getPeriod());
         }
@@ -74,6 +76,21 @@ public class MakeZhuiHaoAdapter extends BaseAdapter {
         if (!"".equals(z.getAmounts())) {
             viewHolder.ZhuiHaoAmount.setText(z.getAmounts() + "");
         }
+        viewHolder.ZhuiHaoCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Log.d("选择第", position + "个   " + z.isCheck()+"   "+b);
+               /* if (b) {
+                    z.setCheck(false);
+                    viewHolder.ZhuiHaoCheck.setChecked(z.isCheck());
+
+                } else {
+                    z.setCheck(true);
+                    Log.d("不选择第", position + "个   " + z.isCheck()+"   "+b);
+                    viewHolder.ZhuiHaoCheck.setChecked(z.isCheck());
+                }*/
+            }
+        });
         return convertView;
     }
 
@@ -89,6 +106,7 @@ public class MakeZhuiHaoAdapter extends BaseAdapter {
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
+
         }
     }
 }

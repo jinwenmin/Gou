@@ -17,7 +17,7 @@ public class LotteryLoss {
     double activity_amount;
     double activity_amount2;
     int counts;
-int id;
+    int id;
 
     @Override
     public String toString() {

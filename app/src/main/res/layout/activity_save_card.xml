@@ -47,14 +47,23 @@
             android:textColor="@android:color/black"
             android:textSize="30px" />
 
-        <Spinner
-
-            android:id="@+id/SpinnnerBank"
+        <LinearLayout
             android:layout_width="0px"
-            android:spinnerMode="dropdown"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="7"></Spinner>
+            android:layout_weight="7"
+            android:background="@drawable/edit_user_pwd_bg">
+
+            <Spinner
+
+                android:id="@+id/SpinnnerBank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+
+                android:spinnerMode="dropdown"></Spinner>
+        </LinearLayout>
+
+
     </LinearLayout>
 
     <LinearLayout
@@ -73,12 +82,19 @@
             android:textColor="@android:color/black"
             android:textSize="30px" />
 
-        <Spinner
-            android:id="@+id/SpinnerPrivince"
+        <LinearLayout
             android:layout_width="0px"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="7"></Spinner>
+            android:layout_weight="7"
+            android:background="@drawable/edit_user_pwd_bg">
+
+            <Spinner
+                android:id="@+id/SpinnerPrivince"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="7"></Spinner>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -97,12 +113,19 @@
             android:textColor="@android:color/black"
             android:textSize="30px" />
 
-        <Spinner
-            android:id="@+id/SpinnerCity"
+        <LinearLayout
             android:layout_width="0px"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="7"></Spinner>
+            android:layout_weight="7"
+            android:background="@drawable/edit_user_pwd_bg">
+
+            <Spinner
+                android:id="@+id/SpinnerCity"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="7"></Spinner>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -117,20 +140,20 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="3"
             android:gravity="center_horizontal"
-            android:text="支行名称"
             android:singleLine="true"
+            android:text="支行名称"
             android:textColor="@android:color/black"
             android:textSize="35px" />
 
         <EditText
-            android:singleLine="true"
-            android:gravity="center"
             android:id="@+id/EditTextBranch"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="7"
             android:background="@drawable/edit_user_pwd_bg"
+            android:gravity="center"
+            android:singleLine="true"
             android:textSize="35px"></EditText>
     </LinearLayout>
 
@@ -151,14 +174,14 @@
             android:textSize="35px" />
 
         <EditText
-            android:gravity="center"
-            android:singleLine="true"
             android:id="@+id/EditTextUserName"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="7"
             android:background="@drawable/edit_user_pwd_bg"
+            android:gravity="center"
+            android:singleLine="true"
             android:textSize="35px"></EditText>
     </LinearLayout>
 
@@ -179,14 +202,14 @@
             android:textSize="35px" />
 
         <EditText
-            android:singleLine="true"
-            android:gravity="center"
             android:id="@+id/EditTextCardNum"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="7"
             android:background="@drawable/edit_user_pwd_bg"
+            android:gravity="center"
+            android:singleLine="true"
             android:textSize="35px"></EditText>
     </LinearLayout>
 

@@ -8,13 +8,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bigkoo.alertview.AlertView;
@@ -28,6 +32,7 @@ import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.bean.ZhuiHaoCNum;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.utils.HttpEngine;
+import com.example.king.gou.utils.RxUtils;
 import com.google.gson.Gson;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -76,7 +81,11 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
     MakeZhuiHaoAdapter Zhadapter;
     private ListView listZhuiH;
     private CheckBox ZhuiHaoCheck;
+    private CheckBox ZhuiHaoListCheck;
+    private Spinner SelectPeriodsSpinner;
     private Broadcast broad;
+    ArrayAdapter selectPeriodAdapter;
+    LinearLayout ZhuiHaoLinear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,19 +102,24 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
         editQiNum = ((EditText) contentView.findViewById(R.id.EditQiNum));
         listZhuiH = ((ListView) contentView.findViewById(R.id.ZhuiHaoList));
         ZhuiHaoCheck = ((CheckBox) contentView.findViewById(R.id.ZhuiHaoStop));
+        ZhuiHaoLinear = (LinearLayout) contentView.findViewById(R.id.ZhuiHaoLinear);
+        ZhuiHaoListCheck = ((CheckBox) contentView.findViewById(R.id.ZhuiHaoListCheck));
+        SelectPeriodsSpinner = ((Spinner) contentView.findViewById(R.id.SelectPeriodsSpinner));
+
         listZhuiH.setAdapter(Zhadapter);
         ZhuiHaoMake.setOnClickListener(this);
         alertView.addExtView(contentView);
         Intent intent = getIntent();
         listids = (ArrayList<Ids>) intent.getSerializableExtra("listids");
         gid = intent.getIntExtra("gid", 0);
+        initSpinner();
         initClick();
         period = intent.getStringExtra("period");
         for (int i = 0; i < listids.size(); i++) {
             Log.d("购彩单的数据=", listids.get(i).toString());
             Amounts = Amounts + listids.get(i).getAmounts();
         }
-        AmountSum.setText(Amounts + "");
+        AmountSum.setText(RxUtils.getInstance().getDouble2(Amounts) + "");
         adapter = new GameCertAdapter(this);
         GameCartList.setAdapter(adapter);
         adapter.addList(listids);
@@ -116,11 +130,58 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
         this.registerReceiver(broad, intentFilter);
     }
 
+    private void initSpinner() {
+        final List<String> periods = new ArrayList<>();
+        periods.add("0");
+        periods.add("5");
+        periods.add("10");
+        periods.add("15");
+        periods.add("20");
+        periods.add("25");
+        selectPeriodAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, periods);
+        //第三步：为适配器设置下拉列表下拉时的菜单样式。
+        selectPeriodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //第四步：将适配器添加到下拉列表上
+        SelectPeriodsSpinner.setAdapter(selectPeriodAdapter);
+        SelectPeriodsSpinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                editQiNum.setText(periods.get(position));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
     private void initClick() {
         Back.setOnClickListener(this);
         ToSendGame.setOnClickListener(this);
         ToBettingAuto.setOnClickListener(this);
         ClearGameCart.setOnClickListener(this);
+        listZhuiH.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                System.out.println("点击了" + i + "个");
+            }
+        });
+        ZhuiHaoListCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                boolean flag = false;
+                if (b) {
+                    flag = true;
+                } else {
+                    flag = false;
+                }
+                for (int i = 0; i < ZhuiHaoLinear.getChildCount(); i++) {
+                    LinearLayout linear1 = (LinearLayout) ZhuiHaoLinear.getChildAt(i);
+                    ((CheckBox) linear1.getChildAt(0)).setChecked(flag);
+                }
+            }
+        });
     }
 
     private class Broadcast extends BroadcastReceiver {
@@ -220,14 +281,22 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
                 zhCNum = (List<ZhuiHaoCNum>) object;
                 adapterData = new ArrayList<>();
                 for (int i = 0; i < zhCNum.size(); i++) {
-                    Log.d("追号详情", zhCNum.get(i).toString());
+                    View view = LayoutInflater.from(this).inflate(R.layout.item_zhuihao_item, null);
+                    TextView ZhuiHaoAmount = (TextView) view.findViewById(R.id.ZhuiHaoAmount);
+                    EditText ZhuihaoBei = (EditText) view.findViewById(R.id.ZhuiHaoBei1);
+                    TextView ZhuiHaoPeriod = (TextView) view.findViewById(R.id.ZhuiHaoPeriod);
+                    ZhuiHaoAmount.setText(Amounts + "");
+                    ZhuihaoBei.setText(Integer.parseInt(bei) + "");
+                    ZhuiHaoPeriod.setText(zhCNum.get(i).getPeriod());
+                   /* Log.d("追号详情", zhCNum.get(i).toString());
                     ZhuiHaoCNum zh = new ZhuiHaoCNum();
                     zh.setPeriod(zhCNum.get(i).getPeriod());
                     zh.setBei(Integer.parseInt(bei));
                     zh.setAmounts(Amounts);
-                    adapterData.add(zh);
+                    adapterData.add(zh);*/
+                    ZhuiHaoLinear.addView(view);
                 }
-                Zhadapter.addList(adapterData);
+                //   Zhadapter.addList(adapterData);
             }
         }
         if (apiId == RetrofitService.API_ID_SENDBETTING) {
@@ -243,7 +312,11 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
                     setResult(1, intent1);
                     finish();
                 } else {
-                    Toasty.error(GameCartActivity.this, "投注失败", 2000).show();
+                    if (restultInfo.getMsg().contains("<")) {
+                        Toasty.error(GameCartActivity.this, "投注失败", 2000).show();
+                    } else {
+                        Toasty.error(GameCartActivity.this, restultInfo.getMsg()+"", 2000).show();
+                    }
                 }
             }
         }
@@ -290,22 +363,23 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
                 map.put("vcode", "");
                 ids.add(map);
             }
-            List<Map<String, Object>> ars = new ArrayList<>();
+
             if (zhCNum == null) {
                 Toasty.info(GameCartActivity.this, "没有追号列表", 2000).show();
                 return;
             }
-            for (int i = 0; i < zhCNum.size(); i++) {
-                Map<String, Object> map = new HashMap();
-                LinearLayout v = (LinearLayout) listZhuiH.getChildAt(i);
-                if (((CheckBox) v.getChildAt(0)).isChecked()) {
 
-                    map.put("period", ((TextView) v.getChildAt(1)).getText().toString());
-                    map.put("multiple", Integer.parseInt(((EditText) v.getChildAt(2)).getText().toString()));
+            List<Map<String, Object>> ars = new ArrayList<>();
+            for (int i1 = 0; i1 < ZhuiHaoLinear.getChildCount(); i1++) {
+                Map<String, Object> map = new HashMap();
+                LinearLayout linear1 = (LinearLayout) ZhuiHaoLinear.getChildAt(i1);
+                Log.d("追号列表", ((CheckBox) linear1.getChildAt(0)).isChecked() + "   "
+                        + ((TextView) linear1.getChildAt(1)).getText().toString() + "   " + Integer.parseInt(((EditText) linear1.getChildAt(2)).getText().toString()));
+                if (((CheckBox) linear1.getChildAt(0)).isChecked()) {
+                    map.put("period", ((TextView) linear1.getChildAt(1)).getText().toString());
+                    map.put("multiple", Integer.parseInt(((EditText) linear1.getChildAt(2)).getText().toString()));
                     ars.add(map);
                 }
-
-
             }
             if (ars.size() == 0) {
                 Toasty.error(GameCartActivity.this, "没有选择任何期数", 2000).show();
@@ -320,5 +394,11 @@ public class GameCartActivity extends AutoLayoutActivity implements View.OnClick
             }
             RetrofitService.getInstance().getSendBetting(this, gid, "", idsString, period, arstring, Amounts, stop);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broad);
     }
 }

@@ -88,4 +88,10 @@ public class AboutUsActivity extends AutoLayoutActivity implements View.OnClickL
                 break;
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        webs = null;
+    }
 }

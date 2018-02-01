@@ -14,14 +14,14 @@
         android:textSize="40px"></TextView>
 
     <EditText
-        android:singleLine="true"
         android:id="@+id/AnswerQues"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10px"
         android:background="@drawable/edit_user_pwd_bg"
         android:gravity="center"
+        android:hint="请输入答案"
         android:padding="10px"
-        android:hint="请输入问题的答案"
+        android:singleLine="true"
         android:textSize="30px" />
 </LinearLayout>

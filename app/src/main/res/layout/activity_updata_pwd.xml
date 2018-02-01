@@ -38,22 +38,24 @@
         android:padding="20px">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="当前密码"
+            android:layout_weight="4"
+            android:gravity="right"
+            android:text="当前密码："
             android:textColor="@android:color/black"
             android:textSize="30px" />
 
         <EditText
-            android:singleLine="true"
-            android:inputType="textPassword"
             android:id="@+id/UpdataPwdOldPwd"
-            android:layout_width="match_parent"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
+            android:layout_weight="7"
             android:background="@null"
-            android:gravity="center"
+            android:gravity="left"
             android:hint="请输入当前的密码"
+            android:inputType="textPassword"
+            android:singleLine="true"
             android:textSize="30px" />
     </LinearLayout>
 
@@ -80,22 +82,24 @@
         android:padding="20px">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="输入新密码"
+            android:layout_weight="4"
+            android:gravity="right"
+            android:text="输入新密码："
             android:textColor="@android:color/black"
             android:textSize="30px" />
 
         <EditText
-            android:singleLine="true"
-            android:inputType="textPassword"
             android:id="@+id/UpdataPwdNewPwd"
-            android:layout_width="match_parent"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
+            android:layout_weight="7"
             android:background="@null"
-            android:gravity="center"
+            android:gravity="left"
             android:hint="6-14位字符 由数字和字母组成"
+            android:inputType="textPassword"
+            android:singleLine="true"
             android:textSize="30px" />
     </LinearLayout>
 
@@ -107,22 +111,25 @@
         android:padding="20px">
 
         <TextView
-            android:layout_width="wrap_content"
+
+            android:layout_width="0px"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="确认新密码"
+            android:layout_weight="4"
+            android:gravity="right"
+            android:text="确认新密码："
             android:textColor="@android:color/black"
             android:textSize="30px" />
 
         <EditText
-            android:singleLine="true"
-            android:inputType="textPassword"
             android:id="@+id/UpdataPwdCheckNewPwd"
-            android:layout_width="match_parent"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
+            android:layout_weight="7"
             android:background="@null"
-            android:gravity="center"
+            android:gravity="left"
             android:hint="与新密码保持一致"
+            android:inputType="textPassword"
+            android:singleLine="true"
             android:textSize="30px" />
     </LinearLayout>
 

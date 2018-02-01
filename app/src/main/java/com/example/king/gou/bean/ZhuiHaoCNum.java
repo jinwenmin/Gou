@@ -9,6 +9,7 @@ public class ZhuiHaoCNum {
     String date;
     int bei;
     double amounts;
+    boolean isCheck;
 
     @Override
     public String toString() {
@@ -17,7 +18,16 @@ public class ZhuiHaoCNum {
                 ", date='" + date + '\'' +
                 ", bei=" + bei +
                 ", amounts=" + amounts +
+                ", isCheck=" + isCheck +
                 '}';
+    }
+
+    public boolean isCheck() {
+        return isCheck;
+    }
+
+    public void setCheck(boolean check) {
+        isCheck = check;
     }
 
     public int getBei() {

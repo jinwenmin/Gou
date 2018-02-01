@@ -44,18 +44,19 @@
             android:gravity="right"
             android:text="注册用户名："
             android:textColor="@android:color/black"
-            android:textSize="35px" />
+            android:textSize="30px" />
 
         <EditText
+            android:layout_gravity="center_vertical"
             android:id="@+id/Name"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="7"
             android:background="@null"
-            android:gravity="center"
+            android:gravity="left"
             android:hint="请输入用户名"
             android:singleLine="true"
-            android:textSize="35px" />
+            android:textSize="30px" />
     </LinearLayout>
 
     <LinearLayout
@@ -64,69 +65,74 @@
         android:layout_marginTop="20px">
 
         <TextView
-            android:gravity="right"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
             android:layout_weight="3"
+            android:gravity="right"
             android:text="昵称："
             android:textColor="@android:color/black"
-            android:textSize="35px" />
+            android:textSize="30px" />
 
         <EditText
+            android:layout_gravity="center_vertical"
             android:id="@+id/UserNickName"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="7"
             android:background="@null"
-            android:gravity="center"
+            android:gravity="left"
             android:hint="请输入昵称"
             android:singleLine="true"
-            android:textSize="35px" />
+            android:textSize="30px" />
     </LinearLayout>
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20px">
 
         <TextView
-            android:gravity="right"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
             android:layout_weight="3"
-            android:text="登录密码："
+            android:gravity="right"
+            android:text="初始密码："
             android:textColor="@android:color/black"
-            android:textSize="35px" />
+            android:textSize="30px" />
 
         <EditText
+
             android:id="@+id/NewPwd"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="7"
             android:background="@null"
-            android:gravity="center"
-            android:hint="请输入密码"
-            android:inputType="textPassword"
+            android:editable="false"
+            android:gravity="left"
+            android:layout_gravity="center_vertical"
             android:singleLine="true"
-            android:textSize="35px" />
+            android:text="a123456"
+            android:textSize="30px" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20px">
+        android:layout_marginTop="20px"
+        android:visibility="gone">
 
         <TextView
-            android:gravity="right"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
             android:layout_weight="3"
+            android:gravity="right"
             android:text="确认密码："
             android:textColor="@android:color/black"
-            android:textSize="35px" />
+            android:textSize="30px" />
 
         <EditText
             android:id="@+id/CheckPwd"
@@ -134,11 +140,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="7"
             android:background="@null"
-            android:gravity="center"
+            android:gravity="left"
             android:hint="请确认密码"
             android:inputType="textPassword"
             android:singleLine="true"
-            android:textSize="35px" />
+            android:textSize="30px" />
     </LinearLayout>
 
     <LinearLayout
@@ -147,25 +153,26 @@
         android:layout_marginTop="20px">
 
         <TextView
-            android:gravity="right"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
             android:layout_weight="3"
+            android:gravity="right"
             android:text="推广码："
             android:textColor="@android:color/black"
-            android:textSize="35px" />
+            android:textSize="30px" />
 
         <EditText
+            android:layout_gravity="center_vertical"
             android:id="@+id/TopCode"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="7"
             android:background="@null"
-            android:gravity="center"
+            android:gravity="left"
             android:hint="请输入上级代理推广码"
             android:singleLine="true"
-            android:textSize="35px" />
+            android:textSize="30px" />
     </LinearLayout>
 
     <LinearLayout
@@ -174,25 +181,27 @@
         android:layout_marginTop="20px">
 
         <TextView
-            android:gravity="right"
+            android:layout_gravity="center_vertical"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
             android:layout_weight="3"
+            android:gravity="right"
             android:text="验证码："
             android:textColor="@android:color/black"
-            android:textSize="35px" />
+            android:textSize="30px" />
 
         <EditText
+            android:layout_gravity="center_vertical"
             android:id="@+id/YZMCheck"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="7"
             android:background="@null"
-            android:gravity="center"
+            android:gravity="left"
             android:hint="请正确的输入下方的验证码"
             android:singleLine="true"
-            android:textSize="35px" />
+            android:textSize="30px" />
     </LinearLayout>
 
     <LinearLayout
@@ -207,14 +216,14 @@
             android:id="@+id/ImageYZM"
             android:layout_width="200px"
             android:layout_height="100px"
-            android:layout_gravity="left" />
+            android:layout_gravity="center" />
 
         <TextView
-            android:textSize="30px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10px"
-            android:text="验证码看不清?请点击图片刷新" />
+            android:text="验证码看不清?请点击图片刷新"
+            android:textSize="30px" />
 
         <Button
             android:id="@+id/UpdataYZM"
@@ -222,7 +231,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:text="刷新验证码"
-            android:textSize="35px"
+            android:textSize="30px"
             android:visibility="gone" />
     </LinearLayout>
 

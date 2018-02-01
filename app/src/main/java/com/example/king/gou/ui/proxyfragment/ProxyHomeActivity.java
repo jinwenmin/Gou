@@ -29,11 +29,13 @@ import com.example.king.gou.bean.SetRate;
 import com.example.king.gou.bean.SreCharge;
 import com.example.king.gou.bean.TeamUserInfo;
 import com.example.king.gou.service.RetrofitService;
+import com.example.king.gou.ui.CheckRechargeActivity;
 import com.example.king.gou.utils.HttpEngine;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -182,7 +184,13 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
                /* Toast.makeText(ProxyHomeActivity.this,
                         "获得上级充值数据",
                         Toast.LENGTH_SHORT).show();*/
-                RetrofitService.getInstance().getSreChargeData(this, uid);
+                Intent inte = new Intent(ProxyHomeActivity.this, CheckRechargeActivity.class);
+                inte.putExtra("uid", uid);
+                startActivity(inte);
+                alertView.dismiss();
+                alertView1.dismiss();
+                alertView2.dismiss();
+              //  RetrofitService.getInstance().getSreChargeData(this, uid);
                 break;
             case 3:
                 //  RetrofitService.getInstance().getTquotaData(this, uid);
@@ -251,11 +259,15 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
             }
         }
         if (apiId == RetrofitService.API_ID_ADDVIPCODE) {
-            String Code = (String) object;
-            Intent intent = new Intent(getApplicationContext(), AddNewTeamUserActivity.class);
-            intent.putExtra("code", Code);
-            startActivity(intent);
-            finish();
+            if (object != null) {
+                List<Object> AddDatas = (List<Object>) object;
+                String code = (String) AddDatas.get(0);
+                Intent intent = new Intent(getApplicationContext(), AddNewTeamUserActivity.class);
+                intent.putExtra("code", code);
+                startActivity(intent);
+                finish();
+            }
+
         }
         if (apiId == RetrofitService.API_ID_TEAMBALANCEVIEW) {
             if (object != null) {
@@ -313,7 +325,8 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
             setTrans.setHint("充值范围:" + SreChargeMin + "~" + SreChargeMax);
             alertView2.show();
             isS = "Show2";
-        }if (apiId == RetrofitService.API_ID_SRECHARGE3) {
+        }
+        if (apiId == RetrofitService.API_ID_SRECHARGE3) {
             sreCharge = (SreCharge) object;
 
             ActivityProxyListView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {

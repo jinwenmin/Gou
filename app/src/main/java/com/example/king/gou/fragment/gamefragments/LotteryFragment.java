@@ -52,8 +52,8 @@ public class LotteryFragment extends BaseFragment implements HttpEngine.DataList
     private List<GameImages> imgs = new ArrayList<>();
     private int GameImgs[] = new int[]{
             R.drawable.logo1, R.drawable.logo2, R.drawable.logo3, 0, 0, 0, R.drawable.logo7, R.drawable.logo8, R.drawable.logo9, R.drawable.logo10,
-            R.drawable.logo11, R.drawable.logo12, R.drawable.logo13, R.drawable.logo14, R.drawable.logo15, R.drawable.logo16, 0, 0, R.drawable.logo19, R.drawable.logo20,
-            R.drawable.logo21, 0, R.drawable.logo23, R.drawable.logo24, R.drawable.logo25, R.drawable.logo26, R.drawable.logo27, R.drawable.logo28
+            R.drawable.logo11, R.drawable.logo12, R.drawable.logo13, R.drawable.logo14, R.drawable.logo15, R.drawable.logo16, R.drawable.logo17, 0, R.drawable.logo19, R.drawable.logo20,
+            R.drawable.logo21,  R.drawable.logo22, R.drawable.logo23, R.drawable.logo24, R.drawable.logo25, R.drawable.logo26, R.drawable.logo27, R.drawable.logo28
 
     };
     private int ssc[] = new int[]{R.drawable.ic_shishicai_cq, R.drawable.ic_shishicai_tj, R.drawable.ic_shishicai_xj, R.drawable.ic_shishicai_bj};
@@ -381,16 +381,34 @@ public class LotteryFragment extends BaseFragment implements HttpEngine.DataList
 
                     gameTypes6.setType("境外时时彩");
 
-                    if (ListgameTypes.get(i).getGid() == 23) {
+                    if (ListgameTypes.get(i).getGid() == 17) {
+                        GameIm gameIm1 = new GameIm();
+                        gameIm1.setGameimg(R.drawable.logo17);
+                        gameIm1.setImgText(ListgameTypes.get(i).getName());
+                        gameIms6.add(gameIm1);
+
+                    }if (ListgameTypes.get(i).getGid() == 22) {
+                        GameIm gameIm1 = new GameIm();
+                        gameIm1.setGameimg(R.drawable.logo22);
+                        gameIm1.setImgText(ListgameTypes.get(i).getName());
+                        gameIms6.add(gameIm1);
+
+                    }if (ListgameTypes.get(i).getGid() == 23) {
                         GameIm gameIm1 = new GameIm();
                         gameIm1.setGameimg(R.drawable.logo23);
                         gameIm1.setImgText(ListgameTypes.get(i).getName());
                         gameIms6.add(gameIm1);
 
-                    }
-                    if (ListgameTypes.get(i).getGid() == 24) {
+                    }if (ListgameTypes.get(i).getGid() == 24) {
                         GameIm gameIm1 = new GameIm();
                         gameIm1.setGameimg(R.drawable.logo24);
+                        gameIm1.setImgText(ListgameTypes.get(i).getName());
+                        gameIms6.add(gameIm1);
+
+                    }
+                    if (ListgameTypes.get(i).getGid() == 26) {
+                        GameIm gameIm1 = new GameIm();
+                        gameIm1.setGameimg(R.drawable.logo26);
                         gameIm1.setImgText(ListgameTypes.get(i).getName());
                         gameIms6.add(gameIm1);
 

@@ -39,8 +39,9 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
-            android:layout_weight="3"
-            android:text="注册用户名"
+            android:layout_weight="4"
+            android:gravity="right"
+            android:text="注册用户名:"
             android:textColor="@android:color/black"
             android:textSize="35px" />
 
@@ -50,9 +51,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="7"
             android:background="@null"
-            android:gravity="center"
+            android:gravity="left"
             android:hint="请输入用户名"
             android:singleLine="true"
+            android:textColor="@android:color/black"
             android:textSize="35px" />
     </LinearLayout>
 
@@ -65,8 +67,9 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
-            android:layout_weight="3"
-            android:text="昵称"
+            android:layout_weight="4"
+            android:gravity="right"
+            android:text="昵称:"
             android:textColor="@android:color/black"
             android:textSize="35px" />
 
@@ -76,9 +79,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="7"
             android:background="@null"
-            android:gravity="center"
+            android:gravity="left"
             android:hint="请输入昵称"
             android:singleLine="true"
+            android:textColor="@android:color/black"
             android:textSize="35px" />
     </LinearLayout>
 
@@ -91,8 +95,9 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
-            android:layout_weight="3"
-            android:text="会员返点"
+            android:layout_weight="4"
+            android:gravity="right"
+            android:text="会员返点:"
             android:textColor="@android:color/black"
             android:textSize="35px" />
 
@@ -102,10 +107,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="7"
             android:background="@null"
-            android:gravity="center"
+            android:gravity="left"
             android:hint="范围0.0~12.6"
             android:inputType="numberDecimal"
             android:singleLine="true"
+            android:textColor="@android:color/black"
             android:textSize="35px" />
     </LinearLayout>
 
@@ -115,11 +121,13 @@
         android:layout_marginTop="20px">
 
         <TextView
+            android:id="@+id/textView16"
             android:layout_width="0px"
+
             android:layout_height="wrap_content"
-            android:layout_margin="5px"
-            android:layout_weight="3"
-            android:text="登录密码"
+            android:layout_weight="4"
+            android:gravity="right"
+            android:text="默认登录密码:"
             android:textColor="@android:color/black"
             android:textSize="35px" />
 
@@ -129,24 +137,28 @@
             android:layout_height="wrap_content"
             android:layout_weight="7"
             android:background="@null"
-            android:gravity="center"
-            android:hint="请输入密码"
-            android:inputType="textPassword"
+            android:editable="false"
+            android:gravity="left"
             android:singleLine="true"
+            android:text="a123456"
+            android:textColor="@android:color/black"
             android:textSize="35px" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20px">
+        android:layout_marginTop="20px"
+        android:visibility="gone">
 
         <TextView
+            android:id="@+id/textView14"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_margin="5px"
             android:layout_weight="3"
-            android:text="确认密码"
+            android:gravity="right"
+            android:text="确认密码:"
             android:textColor="@android:color/black"
             android:textSize="35px" />
 
@@ -156,7 +168,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="7"
             android:background="@null"
-            android:gravity="center"
+            android:gravity="left"
             android:hint="请确认密码"
             android:inputType="textPassword"
             android:singleLine="true"
@@ -166,7 +178,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20px">
+        android:layout_marginTop="20px"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="0px"
@@ -194,6 +207,7 @@
         android:id="@+id/AddRadioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5px"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -211,6 +225,85 @@
             android:text="普通用户" />
     </RadioGroup>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10px"
+            android:layout_marginLeft="10px"
+            android:layout_marginTop="10px">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/holo_blue_light"
+                    android:padding="10px"
+                    android:text="返点等级"
+                    android:textColor="@android:color/white"
+                    android:textSize="30px" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/holo_blue_light"
+                    android:padding="10px"
+                    android:text="剩余配额"
+                    android:textColor="@android:color/white"
+                    android:textSize="30px" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <HorizontalScrollView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10px">
+
+            <LinearLayout
+                android:id="@+id/ShowRates"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/default_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="350px"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+
+                        android:padding="10px"
+                        android:text="没有需要配额的返点"
+                        android:textColor="@android:color/black"
+                        android:textSize="30px" />
+
+                    <TextView
+                        android:layout_width="100px"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:padding="10px"
+                        android:text=""
+                        android:textColor="@android:color/black"
+                        android:textSize="30px" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </HorizontalScrollView>
+    </LinearLayout>
 
     <Button
         android:id="@+id/AddUserBtn"

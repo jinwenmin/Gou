@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="7"
-                    android:text="B171120002581"
+                    android:text=""
                     android:textSize="32px" />
             </LinearLayout>
 
@@ -98,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="7"
                     android:gravity="center_vertical"
-                    android:text="2017-11-23 10:12:20"
+                    android:text=""
                     android:textSize="32px" />
             </LinearLayout>
 
@@ -129,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="7"
                     android:gravity="center_vertical"
-                    android:text="福彩3D"
+                    android:text=""
                     android:textSize="32px" />
             </LinearLayout>
 
@@ -160,7 +160,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="7"
                     android:gravity="center_vertical"
-                    android:text="2"
+                    android:text=""
                     android:textSize="32px" />
             </LinearLayout>
 
@@ -191,7 +191,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="7"
                     android:gravity="center_vertical"
-                    android:text="元"
+                    android:text=""
                     android:textSize="32px" />
             </LinearLayout>
 
@@ -222,7 +222,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="7"
                     android:gravity="center_vertical"
-                    android:text="553.333 - 8.00%"
+                    android:text=""
                     android:textSize="32px" />
             </LinearLayout>
 
@@ -253,7 +253,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="7"
                     android:gravity="center_vertical"
-                    android:text="未中奖"
+                    android:text=""
                     android:textSize="32px" />
             </LinearLayout>
 
@@ -284,7 +284,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="7"
                     android:gravity="center_vertical"
-                    android:text="122,212"
+                    android:text=""
                     android:textSize="32px" />
             </LinearLayout>
 
@@ -315,7 +315,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="7"
                     android:gravity="center_vertical"
-                    android:text="testapp"
+                    android:text=""
                     android:textSize="32px" />
             </LinearLayout>
 
@@ -346,7 +346,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="7"
                     android:gravity="center_vertical"
-                    android:text="2017-320"
+                    android:text=""
                     android:textSize="32px" />
             </LinearLayout>
 
@@ -377,7 +377,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="7"
                     android:gravity="center_vertical"
-                    android:text="三星组三单式"
+                    android:text=""
                     android:textSize="32px" />
             </LinearLayout>
 
@@ -408,7 +408,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="7"
                     android:gravity="center_vertical"
-                    android:text="1"
+                    android:text=""
                     android:textSize="32px" />
             </LinearLayout>
 
@@ -439,7 +439,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="7"
                     android:gravity="center_vertical"
-                    android:text="4"
+                    android:text=""
                     android:textSize="32px" />
             </LinearLayout>
 
@@ -470,7 +470,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="7"
                     android:gravity="center_vertical"
-                    android:text="5,4,3"
+                    android:text=""
                     android:textSize="32px" />
             </LinearLayout>
 
@@ -508,12 +508,14 @@
     </ScrollView>
 
     <Button
-        android:layout_alignParentBottom="true"
+        android:id="@+id/BtnBetRevoke"
         android:layout_width="match_parent"
         android:layout_height="70px"
+        android:layout_alignParentBottom="true"
         android:layout_margin="30px"
         android:background="@drawable/recharge_btn"
         android:text="撤单"
+        android:visibility="gone"
         android:textColor="@android:color/white"
         android:textSize="40px" />
 </RelativeLayout>

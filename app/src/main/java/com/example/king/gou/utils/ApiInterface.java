@@ -298,6 +298,8 @@ public interface ApiInterface {
             @Query("p1") String p1,//新密码
             @Query("p2") String p2,//安全密码
             @Query("email") String email,//邮箱
+            @Query("q") String q,//安全问题
+            @Query("a") String a,//安全问题答案
             @Query("reqkey") String reqkey,
             @Query("t") long t
     );
@@ -364,7 +366,7 @@ public interface ApiInterface {
     //验证银行卡号
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/check-bankcard-resource")
-    Call<Object> getCheckBankCardNum(
+    Call<RestultInfo> getCheckBankCardNum(
             @Query("AppClient") int num,
             @Query("name") String name,//持卡人姓名
             @Query("card") String card,//银行卡号
@@ -634,7 +636,7 @@ public interface ApiInterface {
     //48 查询追号投注记录
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/keep-number-bet-list")
-    Call<Object> getKeepNumBet(
+    Call<Map<String,Object>> getKeepNumBet(
             @Query("AppClient") int num,
             @Query("page") int page,
             @Query("rows") int rows,
@@ -935,7 +937,7 @@ public interface ApiInterface {
     //62推广设置-保存
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/generalize-save")
-    Call<Object> getGeneralizeSave(
+    Call<RestultInfo> getGeneralizeSave(
             @Query("AppClient") int num,//推广的返点，数值在0-12.5之间
             @Query("l") double l,
             @Query("reqkey") String reqkey,
@@ -947,7 +949,7 @@ public interface ApiInterface {
     //63 获取添加会员数据
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/adduser-data")
-    Call<Object> getAddUserData(
+    Call<Map<String,Object>> getAddUserData(
             @Query("AppClient") int num,
             @Query("reqkey") String reqkey,
             @Query("t") long t
@@ -1375,7 +1377,7 @@ public interface ApiInterface {
             @Query("t") long t
     );
 
-    //97 验证安全问题
+    //97 Token自动登录
     @Headers("X-Requested-With: XMLHttpRequest")
 
     @POST("/token-signin")

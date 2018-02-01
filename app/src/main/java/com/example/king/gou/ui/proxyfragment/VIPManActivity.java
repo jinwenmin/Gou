@@ -19,6 +19,7 @@ import com.example.king.gou.adapters.TeamUserInfoAdapter;
 import com.example.king.gou.bean.TeamUserInfo;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.utils.HttpEngine;
+import com.example.king.gou.utils.RxUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.ArrayList;
@@ -121,11 +122,11 @@ public class VIPManActivity extends AutoLayoutActivity implements View.OnClickLi
     public void onReceivedData(int apiId, Object object, int errorId) {
         if (apiId == RetrofitService.API_ID_USERSTA) {
             userSta = (List<String>) object;
-            VipManTeamCount.setText(userSta.get(0));
-            VipManLoginCount.setText(userSta.get(1));
-            VipManTeamAmount.setText(userSta.get(2));
-            VipManNoLogin.setText(userSta.get(3));
-            VipManRegisterToday.setText(userSta.get(4));
+            VipManTeamCount.setText(RxUtils.getInstance().getInt(Double.parseDouble(userSta.get(0))) + "");
+            VipManLoginCount.setText(RxUtils.getInstance().getInt(Double.parseDouble(userSta.get(1))) + "");
+            VipManTeamAmount.setText(userSta.get(2) + "");
+            VipManNoLogin.setText(RxUtils.getInstance().getInt(Double.parseDouble(userSta.get(3))) + "");
+            VipManRegisterToday.setText(RxUtils.getInstance().getInt(Double.parseDouble(userSta.get(4)))+ "");
         }
         if (apiId == RetrofitService.API_ID_TEAMUSERLIST) {
             ts = (List<List<TeamUserInfo>>) object;
@@ -134,7 +135,7 @@ public class VIPManActivity extends AutoLayoutActivity implements View.OnClickLi
                 List<TeamUserInfo> teamUserInfos = ts.get(1);
                 adapter.addList(teamUserInfos);
                 VIPManSwipe.setRefreshing(false);
-            }else{
+            } else {
                 List<TeamUserInfo> teamUserInfos = new ArrayList<>();
                 adapter.addList(teamUserInfos);
                 VIPManSwipe.setRefreshing(false);

@@ -49,7 +49,7 @@
             android:id="@+id/GameTypeContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:layout_marginRight="80px"
             android:text=""
             android:textSize="30px" />
     </LinearLayout>

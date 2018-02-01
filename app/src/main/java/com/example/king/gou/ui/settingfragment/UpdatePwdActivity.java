@@ -1,5 +1,6 @@
 package com.example.king.gou.ui.settingfragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,8 @@ import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.service.RetrofitService;
+import com.example.king.gou.ui.LoginActivity;
+import com.example.king.gou.ui.SettingActivity;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -37,12 +40,14 @@ public class UpdatePwdActivity extends AutoLayoutActivity implements View.OnClic
     Button UpDataPwdClick;
     RestultInfo restultInfo;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_updata_pwd);
         ButterKnife.bind(this);
         MyApp.getInstance().addActivitys(this);
+
         initClick();
     }
 
@@ -98,6 +103,11 @@ public class UpdatePwdActivity extends AutoLayoutActivity implements View.OnClic
                 restultInfo = (RestultInfo) object;
                 if (restultInfo.isRc()) {
                     Toasty.success(UpdatePwdActivity.this, restultInfo.getMsg(), 2000).show();
+                    RetrofitService.getInstance().LogOut();
+                    Intent intent = new Intent(UpdatePwdActivity.this, LoginActivity.class);
+                    intent.putExtra("LogOut", "logout");
+                    startActivity(intent);
+                    MyApp.getInstance().finishActivity();
                 }if (!restultInfo.isRc()) {
                     Toasty.error(UpdatePwdActivity.this, restultInfo.getMsg(), 2000).show();
                 }

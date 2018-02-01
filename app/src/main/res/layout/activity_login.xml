@@ -9,12 +9,12 @@
 
     <ImageView
         android:id="@+id/login_icon"
-        android:layout_margin="20px"
         android:layout_width="268px"
         android:layout_height="108px"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:src="@mipmap/signin_logo" />
+        android:layout_margin="20px"
+        android:src="@drawable/signin_logo" />
 
 
     <RelativeLayout
@@ -25,7 +25,7 @@
 
         <RelativeLayout
             android:id="@+id/relativelayuout1"
-            android:layout_width="wrap_content"
+            android:layout_width="500px"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_margin="10px"
@@ -55,7 +55,7 @@
 
         <RelativeLayout
             android:id="@+id/relativelayout2"
-            android:layout_width="wrap_content"
+            android:layout_width="500px"
             android:layout_height="wrap_content"
             android:layout_below="@id/relativelayuout1"
             android:layout_centerHorizontal="true"
@@ -106,7 +106,6 @@
             android:orientation="horizontal">
 
             <TextView
-android:textSize="25px"
                 android:id="@+id/forget_pwd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -114,10 +113,11 @@ android:textSize="25px"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="20px"
                 android:text="忘记密码？"
-                android:textColor="#4F94CD" />
+                android:textColor="#4F94CD"
+                android:textSize="25px"
+                android:visibility="gone" />
 
             <TextView
-                android:textSize="25px"
                 android:id="@+id/rigisterUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -125,7 +125,8 @@ android:textSize="25px"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="20px"
                 android:text="现在注册？"
-                android:textColor="#4F94CD" />
+                android:textColor="#4F94CD"
+                android:textSize="25px" />
         </LinearLayout>
 
 
@@ -138,7 +139,8 @@ android:textSize="25px"
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="40px"
@@ -146,33 +148,34 @@ android:textSize="25px"
                     android:src="@mipmap/ic_kefu" />
 
                 <TextView
-                    android:textSize="25px"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="联系客服"
-                    android:textColor="@android:color/holo_blue_light" />
+                    android:textColor="@android:color/holo_blue_light"
+                    android:textSize="25px" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
-                    android:textSize="25px"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="当前版本:"
-                    android:textColor="@android:color/holo_blue_light" />
+                    android:textColor="@android:color/holo_blue_light"
+                    android:textSize="25px" />
 
                 <TextView
-                    android:textSize="25px"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1.1.1.1.1"
-                    android:textColor="@android:color/holo_blue_light" />
+                    android:textColor="@android:color/holo_blue_light"
+                    android:textSize="25px" />
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>

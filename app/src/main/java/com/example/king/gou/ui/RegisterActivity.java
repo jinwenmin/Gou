@@ -79,17 +79,12 @@ public class RegisterActivity extends AutoLayoutActivity implements HttpEngine.D
     }
 
     private void initYZM() {
-      /*  long currentTimeMillis = System.currentTimeMillis();
-        Map<String, String> maps = new HashMap<>();
-        maps.put("t", currentTimeMillis + "");
-        String reqkey = RxUtils.getInstance().getReqkey(maps, currentTimeMillis);
-        String url = ApiInterface.HOST + "/captcha?AppClient=1&reqkey=" + reqkey + "&t=" + currentTimeMillis + "&t=" + currentTimeMillis;
-        Picasso.with(this).load(url).into(ImageYZM);*/
+
         long currentTimeMillis = System.currentTimeMillis();
         RetrofitService.getInstance().getCaptCha(this, currentTimeMillis);
         ImageView imgs = new ImageView(this);
         Picasso.with(this).load(ApiInterface.HOST + "/captcha?t=" + currentTimeMillis).into(imgs);
-        //     ImageYZM.addView(imgs);
+
 
     }
 
@@ -162,30 +157,20 @@ public class RegisterActivity extends AutoLayoutActivity implements HttpEngine.D
                     Toasty.error(RegisterActivity.this, "用户名不可为空", 2000).show();
                     return;
                 }
-                if ("".equals(newpwd)) {
-                    Toasty.error(RegisterActivity.this, "密码不可为空", 2000).show();
-                    return;
-                }
-                if ("".equals(checkPwd)) {
-                    Toasty.error(RegisterActivity.this, "确认密码不可为空", 2000).show();
-                    return;
-                }
+
                 if ("".equals(userNickname)) {
                     Toasty.error(RegisterActivity.this, "用户昵称不可为空", 2000).show();
                     return;
                 }
-                /*if ("".equals(yzmCheck)) {
+                if ("".equals(yzmCheck)) {
                     Toasty.error(RegisterActivity.this, "验证码不可为空", 2000).show();
                     return;
-                }*/
+                }
                 if ("".equals(topcode)) {
                     Toasty.error(RegisterActivity.this, "上级推广码不可为空", 2000).show();
                     return;
                 }
-                if (!newpwd.equals(checkPwd)) {
-                    Toasty.error(RegisterActivity.this, "密码和确认密码不一致", 2000).show();
-                    return;
-                }
+
                 RetrofitService.getInstance().getCaptChaCheck(RegisterActivity.this, "", yzmCheck);
                 break;
             case R.id.ImageYZM:

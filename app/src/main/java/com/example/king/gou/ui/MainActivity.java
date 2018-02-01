@@ -50,6 +50,7 @@ import com.example.king.gou.service.RetrofitService;
 
 import com.example.king.gou.utils.FingerPrintUtils;
 import com.example.king.gou.utils.HttpEngine;
+import com.squareup.leakcanary.RefWatcher;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.sql.Time;
@@ -185,6 +186,11 @@ public class MainActivity extends AutoLayoutActivity implements HttpEngine.DataL
     protected void onDestroy() {
         super.onDestroy();
         timer.cancel();
+        RefWatcher refWatcher = MyApp.getRefWatcher(this);
+        refWatcher.watch(this);
+        if (ts != null) {
+            ts = null;
+        }
     }
 
     @Override

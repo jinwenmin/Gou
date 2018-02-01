@@ -309,6 +309,7 @@
                 android:layout_weight="2">
 
                 <TextView
+                    android:id="@+id/ClearNumBtn"
                     android:layout_width="0px"
                     android:layout_height="55px"
                     android:layout_gravity="center_vertical"
@@ -319,8 +320,7 @@
                     android:gravity="center"
                     android:text="清除"
                     android:textColor="@android:color/white"
-                    android:textSize="35px"
-                    android:visibility="gone" />
+                    android:textSize="35px" />
 
                 <TextView
                     android:layout_width="0px"
@@ -334,7 +334,7 @@
                     android:text="机选"
                     android:textColor="@android:color/white"
                     android:textSize="35px"
-                    android:visibility="gone" />
+                    android:visibility="invisible" />
             </LinearLayout>
 
             <LinearLayout
@@ -453,7 +453,7 @@
                     android:layout_toRightOf="@id/text1"
                     android:text=""
                     android:textColor="@color/top_background"
-                    android:textSize="20px" />
+                    android:textSize="30px" />
 
                 <TextView
                     android:id="@+id/text3"
@@ -470,8 +470,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/text3"
-                    android:text="0:00"
-                    android:textSize="20px" />
+                    android:text=""
+                    android:textSize="30px" />
 
                 <ImageView
                     android:layout_width="50px"
@@ -515,6 +515,8 @@
                 android:layout_height="8px"
                 android:max="200"
                 android:progress="30" />
+
+
 
             <LinearLayout
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.text.Html;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,7 +100,7 @@ public class ActivityDetailsActivity extends AutoLayoutActivity implements HttpE
         contentView2 = LayoutInflater.from(this).inflate(
                 R.layout.item_reward_money, null);
         TextView money = (TextView) contentView2.findViewById(R.id.reward_money);
-        money.setText("获得奖金99999元");
+        money.setText("");
         alertView2.addExtView(contentView2);
 
 
@@ -146,6 +147,10 @@ public class ActivityDetailsActivity extends AutoLayoutActivity implements HttpE
             settings.setBuiltInZoomControls(true);
             ActivityWeb.setWebChromeClient(new WebChromeClient());
             ActivityWeb.loadDataWithBaseURL("about:blank", uc.getMsg(), "text/html", "utf-8", null);
+            ActivityWeb.getSettings().setDisplayZoomControls(false);
+            WebSettings.TextSize textSize = WebSettings.TextSize.LARGEST;
+            ActivityWeb.getSettings().setTextSize(textSize);
+            //ActivityDetail.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
             //ActivityDetail.setText(Html.fromHtml(uc.getMsg()));
             id = uc.getId();
             Log.d("ActivityDetailId", id + "");
@@ -234,6 +239,12 @@ public class ActivityDetailsActivity extends AutoLayoutActivity implements HttpE
     @Override
     public void onRequestEnd(int apiId) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        alid[0] = 0;
     }
 
     @Override

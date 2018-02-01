@@ -98,10 +98,22 @@
             android:textSize="30px" />
     </LinearLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/ZhuiHaoTZll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"></LinearLayout>
+    </ScrollView>
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/ZhuiHaoTZRe"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <ListView
             android:id="@+id/ZhuiHaoTZListView"

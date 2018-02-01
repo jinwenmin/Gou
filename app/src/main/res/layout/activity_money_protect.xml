@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="密码保护"
+            android:text="修改密码保护"
             android:textColor="@android:color/white"
             android:textSize="@dimen/top_textsize" />
     </RelativeLayout>
@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30px"
-        android:text="请设置不一样的问题和答案,保存后"
+        android:text="请设置不一样的问题和答案,保存好"
         android:textSize="30px" />
 
     <LinearLayout
@@ -43,17 +43,20 @@
         android:padding="15px">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:gravity="right"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_weight="2"
             android:text="问题:"
             android:textSize="30px" />
 
         <Spinner
             android:id="@+id/SpinnerQues1"
-            android:layout_width="match_parent"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30px"
+            android:layout_weight="7"
 
             android:spinnerMode="dropdown"
             android:textSize="30px"></Spinner>
@@ -67,11 +70,11 @@
         android:padding="15px">
 
         <TextView
-            android:gravity="right"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="2"
+            android:gravity="right"
             android:text="答案:"
             android:textSize="30px" />
 
@@ -82,8 +85,9 @@
             android:layout_marginLeft="30px"
             android:layout_weight="7"
             android:background="@null"
-            android:gravity="center"
+            android:gravity="left"
             android:hint="输入答案"
+            android:singleLine="true"
             android:textSize="30px"></EditText>
     </LinearLayout>
 
@@ -95,11 +99,11 @@
         android:padding="15px">
 
         <TextView
-            android:gravity="right"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="2"
+            android:gravity="right"
             android:text="答案确认:"
             android:textSize="30px" />
 
@@ -110,8 +114,9 @@
             android:layout_marginLeft="30px"
             android:layout_weight="7"
             android:background="@null"
-            android:gravity="center"
+            android:gravity="left"
             android:hint="请输入相同的答案"
+            android:singleLine="true"
             android:textSize="30px"></EditText>
     </LinearLayout>
 

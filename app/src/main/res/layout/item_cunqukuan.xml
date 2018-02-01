@@ -22,7 +22,7 @@
             android:id="@+id/uname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="50"
+            android:text=""
             android:textSize="25px" />
     </LinearLayout>
 
@@ -48,7 +48,7 @@
                 android:id="@+id/serial_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="50"
+                android:text=""
                 android:textSize="25px" />
         </LinearLayout>
 
@@ -70,7 +70,7 @@
                 android:paddingLeft="15px"
                 android:paddingRight="15px"
                 android:paddingTop="5px"
-                android:text="已完成"
+                android:text=""
                 android:textColor="#436EEE" />
 
         </RelativeLayout>
@@ -93,7 +93,7 @@
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="00000"
+            android:text=""
             android:textSize="25px" />
     </LinearLayout>
 
@@ -120,7 +120,7 @@
                 android:id="@+id/stype"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="00"
+                android:text=""
                 android:textSize="25px" />
         </LinearLayout>
 
@@ -149,7 +149,7 @@
                 android:id="@+id/income"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="00"
+                android:text=""
                 android:textSize="25px" />
         </LinearLayout>
 
@@ -171,7 +171,7 @@
                 android:id="@+id/expend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="00"
+                android:text=""
                 android:textSize="25px" />
         </LinearLayout>
     </LinearLayout>

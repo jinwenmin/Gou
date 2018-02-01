@@ -20,6 +20,7 @@ import com.example.king.gou.bean.CardsData;
 import com.example.king.gou.bean.MapsIdAndValue;
 import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.service.RetrofitService;
+import com.example.king.gou.ui.CheckBankCardActivity;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
 import com.example.king.gou.utils.SlideCutListView;
@@ -46,23 +47,24 @@ public class BankCardManActivity extends AutoLayoutActivity implements SlideCutL
     RelativeLayout Top;
     @BindView(R.id.BindCardBtn)
     Button BindCardBtn;
-    List<List<MapsIdAndValue>> MapsBank;
     List<List<CardsData>> cs = new ArrayList<>();
     private AlertView alertViewSafe;
     // 一个自定义的布局，作为显示的内容
     View contentViewSafe;
     EditText safepwd;
+    List<CardsData> cardsDatas;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank_card_man);
         ButterKnife.bind(this);
         MyApp.getInstance().addActivitys(this);
+
         alertViewSafe = new AlertView(null, null, "取消", new String[]{"确认"}, null, this, AlertView.Style.Alert, this);
         contentViewSafe = LayoutInflater.from(this).inflate(
                 R.layout.item_safepwd, null);
         alertViewSafe.addExtView(contentViewSafe);
-        safepwd  = (EditText) contentViewSafe.findViewById(R.id.AnswerQues);
+        safepwd = (EditText) contentViewSafe.findViewById(R.id.AnswerQues);
         RetrofitService.getInstance().getCardDatas(this);
         cardAdapter = new CardAdapter(this);
         nocardList.setAdapter(cardAdapter);
@@ -105,8 +107,8 @@ public class BankCardManActivity extends AutoLayoutActivity implements SlideCutL
                 RestultInfo restultInfo = (RestultInfo) object;
                 if (restultInfo.isRc() == true) {
                     Toasty.success(this, restultInfo.getMsg(), 2000).show();
-                    // BindCardBtn.setVisibility(View.GONE);
-
+                    BindCardBtn.setVisibility(View.GONE);
+                    CardLock.setVisibility(View.GONE);
                 } else {
                     Toasty.error(this, restultInfo.getMsg(), 2000).show();
                 }
@@ -114,17 +116,19 @@ public class BankCardManActivity extends AutoLayoutActivity implements SlideCutL
         }
         if (apiId == RetrofitService.API_ID_CARDDATAS) {
             if (object != null) {
-               /* MapsBank = (List<List<MapsIdAndValue>>) object;
-                List<MapsIdAndValue> mapsBank = MapsBank.get(2);
-                String locked = mapsBank.get(1).getLocked();
-                if ("true".equals(locked)) {
-                    //BindCardBtn.setVisibility(View.GONE);
-                } else {
-                    BindCardBtn.setVisibility(View.VISIBLE);
-                }*/
-                cs = (List<List<CardsData>>) object;
-                List<CardsData> cardsDatas = cs.get(0);
 
+                cs = (List<List<CardsData>>) object;
+                 cardsDatas = cs.get(0);
+                List<CardsData> locked = cs.get(3);
+                for (int i = 0; i < locked.size(); i++) {
+                    if (locked.get(i).isLocked()) {
+                        BindCardBtn.setVisibility(View.GONE);
+                        CardLock.setVisibility(View.GONE);
+                    } else {
+                        BindCardBtn.setVisibility(View.VISIBLE);
+                        CardLock.setVisibility(View.VISIBLE);
+                    }
+                }
                 cardAdapter.addCards(cardsDatas);
             }
         }
@@ -133,7 +137,11 @@ public class BankCardManActivity extends AutoLayoutActivity implements SlideCutL
                 RestultInfo restultInfo = (RestultInfo) object;
                 if (restultInfo.isRc()) {
                     safepwd.setText("");
-                    startActivity(new Intent(BankCardManActivity.this, SaveCardActivity.class));
+                    if (cardsDatas.size()==0) {
+                        startActivity(new Intent(BankCardManActivity.this, SaveCardActivity.class));
+                    }else{
+                        startActivity(new Intent(BankCardManActivity.this, CheckBankCardActivity.class));
+                    }
                 }
                 if (!restultInfo.isRc()) {
                     safepwd.setText("");
@@ -173,5 +181,11 @@ public class BankCardManActivity extends AutoLayoutActivity implements SlideCutL
             RetrofitService.getInstance().getCheckSafePwd(this, hmacsha256);
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        cs = null;
     }
 }

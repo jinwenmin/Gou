@@ -29,7 +29,7 @@
                 android:id="@+id/ChangeUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="XXX"
+                android:text=""
                 android:textSize="20px" />
         </LinearLayout>
 
@@ -50,7 +50,7 @@
                 android:id="@+id/ChangeModel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="XXX"
+                android:text=""
                 android:textSize="20px" />
 
         </LinearLayout>
@@ -83,7 +83,7 @@
                 android:id="@+id/Stype"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="XXX"
+                android:text=""
                 android:textSize="20px" />
         </LinearLayout>
 
@@ -104,7 +104,7 @@
                 android:id="@+id/ChangePeriod"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="XXX"
+                android:text=""
                 android:textSize="20px" />
         </LinearLayout>
 
@@ -135,7 +135,7 @@
                 android:id="@+id/Gname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="XXX"
+                android:text=""
                 android:textSize="20px" />
         </LinearLayout>
 
@@ -156,7 +156,7 @@
                 android:id="@+id/Rname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="XXX"
+                android:text=""
                 android:textSize="20px" />
         </LinearLayout>
 
@@ -186,7 +186,7 @@
                 android:id="@+id/ChangeAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="XXX"
+                android:text=""
                 android:textSize="20px" /></LinearLayout>
 
         <LinearLayout
@@ -204,7 +204,7 @@
                 android:id="@+id/ChangeDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="XXX"
+                android:text=""
                 android:textSize="20px" /></LinearLayout>
 
 

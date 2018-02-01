@@ -1,5 +1,6 @@
 package com.example.king.gou.ui.settingfragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.util.Log;
@@ -15,6 +16,8 @@ import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.service.RetrofitService;
+import com.example.king.gou.ui.LoginActivity;
+import com.example.king.gou.ui.SettingActivity;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -48,7 +51,8 @@ public class ResetPwdActivity extends AutoLayoutActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_pwd);
-        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
+        ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         initClick();
         ResetPwdRadioG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -108,6 +112,11 @@ public class ResetPwdActivity extends AutoLayoutActivity implements View.OnClick
                 RestultInfo restultInfo = (RestultInfo) object;
                 if (restultInfo.isRc()) {
                     Toasty.success(this, restultInfo.getMsg(), 2000).show();
+                    RetrofitService.getInstance().LogOut();
+                    Intent intent = new Intent(ResetPwdActivity.this, LoginActivity.class);
+                    intent.putExtra("LogOut", "logout");
+                    startActivity(intent);
+                    MyApp.getInstance().finishActivity();
                     return;
                 }
                 if (!restultInfo.isRc()) {

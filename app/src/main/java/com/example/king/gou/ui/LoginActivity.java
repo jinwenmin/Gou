@@ -19,8 +19,13 @@ import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.Login;
 import com.example.king.gou.bean.RestultInfo;
+import com.example.king.gou.bean.UserInfo;
+import com.example.king.gou.fragment.BaseFragment;
+import com.example.king.gou.fragment.myfragment.OrderFragment;
+import com.example.king.gou.fragment.myfragment.ProxyFragment;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.ui.settingfragment.UpDateFirstPwdActivity;
+import com.example.king.gou.ui.settingfragment.UpdatePwdActivity;
 import com.example.king.gou.utils.ApiInterface;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
@@ -30,6 +35,8 @@ import com.zhy.autolayout.AutoLayoutActivity;
 import net.lemonsoft.lemonbubble.LemonBubble;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,12 +82,11 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
         Intent intent = getIntent();
         String logOut = intent.getStringExtra("LogOut");
         if ("logout".equals(logOut)) {
-            Toasty.info(this,"正常退出,请重新登陆",2000).show();
-        }
-         else if("errorout".equals(logOut)) {
-            Toasty.info(this,"登录异常,请重新登陆",2000).show();
-        }else{
-           RetrofitService.getInstance().getTokenSignin(this);
+            Toasty.info(this, "正常退出,请重新登陆", 2000).show();
+        } else if ("errorout".equals(logOut)) {
+            Toasty.info(this, "登录异常,请重新登陆", 2000).show();
+        } else {
+            RetrofitService.getInstance().getTokenSignin(this);
         }
         MyApp.getInstance().addActivitys(this);
 
@@ -117,28 +123,6 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
         }
         return "";
     }
-
-    /*private void Login2() {
-        OkHttpClient okHttpClient = new OkHttpClient();
-        Request.Builder requestBuilder = new Request.Builder().url("http://vipfacaiflvbceshi.com/chat-message?luid=2047&uonline=1&type=1");
-        //可以省略，默认是GET请求
-        requestBuilder.method("GET", null);
-        final Request request = requestBuilder.build();
-        Call mcall = okHttpClient.newCall(request);
-        mcall.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String sessionCookie = getSessionCookie(response.headers().get("Set-Cookie"));
-                System.out.println("SessionCook==" + sessionCookie);
-            }
-        });
-    }*/
-
 
     private void initNameAndPwd() {
         Login_UserName = loginUser.getText().toString().trim();
@@ -238,8 +222,7 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
                 edit.commit();
                 MyApp.getInstance().setUserName(Login_UserName);
                 if (Login_Pwd.equals("a123456")) {
-
-                    startActivity(new Intent(LoginActivity.this, UpDateFirstPwdActivity.class));
+                    RetrofitService.getInstance().GetUserInfo(this);
                     return;
                 } else {
                     MyApp.getInstance().setUserUid(login.getUid());
@@ -276,6 +259,21 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
             } else {
                 //LemonBubble.showError(this, "验证失败,请重新登陆", 2000);
             }
+        }
+        if (RetrofitService.API_ID_USERINFO == apiId) {
+            if (object!=null) {
+                List<UserInfo> userInfos= (List<UserInfo>) object;
+                UserInfo userInfo = userInfos.get(0);
+                if (userInfo.isHasSafetyPassword()) {
+                    Intent intent=new Intent(LoginActivity.this, UpdatePwdActivity.class);
+                    startActivity(intent);
+                    return;
+                }else{
+                    startActivity(new Intent(LoginActivity.this, UpDateFirstPwdActivity.class));
+                    return;
+                }
+            }
+
         }
     }
 

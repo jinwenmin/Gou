@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.king.gou.ui.RegisterActivity">
+
+    <RelativeLayout
+        android:id="@+id/RegisterTop"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_height"
+        android:background="@color/top_background">
+
+        <ImageView
+            android:id="@+id/_back"
+            android:layout_width="@dimen/top_back"
+            android:layout_height="@dimen/top_back"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="验证银行卡号"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/top_textsize" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20px">
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_margin="5px"
+            android:layout_weight="3"
+            android:gravity="right"
+            android:text="开户人姓名："
+            android:textColor="@android:color/black"
+            android:textSize="30px" />
+
+        <EditText
+            android:id="@+id/UserName"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="7"
+            android:background="@null"
+            android:gravity="left"
+            android:hint="请输入最近绑定的真实姓名"
+            android:singleLine="true"
+            android:textSize="30px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20px">
+
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_margin="5px"
+            android:layout_weight="3"
+            android:gravity="right"
+            android:text="银行卡号："
+            android:textColor="@android:color/black"
+            android:textSize="30px" />
+
+        <EditText
+            android:id="@+id/BankCardNum"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="7"
+            android:background="@null"
+            android:gravity="left"
+            android:hint="请输入最近绑定银行卡号"
+            android:singleLine="true"
+            android:textSize="30px" />
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/CheckBankCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="50px"
+        android:background="@drawable/recharge_btn"
+        android:text="验证银行卡"
+        android:textColor="@color/color_bg"
+        android:textSize="45px" />
+</LinearLayout>

@@ -15,7 +15,7 @@
         <TextView
 
             android:layout_width="0px"
-            android:layout_height="70px"
+            android:layout_height="@dimen/radiowh"
             android:layout_gravity="center"
             android:layout_margin="5px"
             android:layout_weight="4"
@@ -44,9 +44,9 @@
 
                 <RadioButton
                     android:id="@+id/RadioButtonOne_0"
-                    android:layout_width="70px"
+                    android:layout_width="@dimen/radiowh"
 
-                    android:layout_height="70px"
+                    android:layout_height="@dimen/radiowh"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5px"
                     android:background="@drawable/item_gameselect"
@@ -54,13 +54,13 @@
                     android:gravity="center"
                     android:text="0"
                     android:textColor="@color/select_gamecolor"
-                    android:textSize="40px" />
+                    android:textSize="35px" />
 
                 <RadioButton
 
                     android:id="@+id/RadioButtonOne_1"
-                    android:layout_width="70px"
-                    android:layout_height="70px"
+                    android:layout_width="@dimen/radiowh"
+                    android:layout_height="@dimen/radiowh"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5px"
                     android:background="@drawable/item_gameselect"
@@ -68,12 +68,12 @@
                     android:gravity="center"
                     android:text="1"
                     android:textColor="@color/select_gamecolor"
-                    android:textSize="40px" />
+                    android:textSize="35px" />
 
                 <RadioButton
                     android:id="@+id/RadioButtonOne_2"
-                    android:layout_width="70px"
-                    android:layout_height="70px"
+                    android:layout_width="@dimen/radiowh"
+                    android:layout_height="@dimen/radiowh"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5px"
                     android:background="@drawable/item_gameselect"
@@ -81,12 +81,12 @@
                     android:gravity="center"
                     android:text="2"
                     android:textColor="@color/select_gamecolor"
-                    android:textSize="40px" />
+                    android:textSize="35px" />
 
                 <RadioButton
                     android:id="@+id/RadioButtonOne_3"
-                    android:layout_width="70px"
-                    android:layout_height="70px"
+                    android:layout_width="@dimen/radiowh"
+                    android:layout_height="@dimen/radiowh"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5px"
                     android:background="@drawable/item_gameselect"
@@ -94,12 +94,12 @@
                     android:gravity="center"
                     android:text="3"
                     android:textColor="@color/select_gamecolor"
-                    android:textSize="40px" />
+                    android:textSize="35px" />
 
                 <RadioButton
                     android:id="@+id/RadioButtonOne_4"
-                    android:layout_width="70px"
-                    android:layout_height="70px"
+                    android:layout_width="@dimen/radiowh"
+                    android:layout_height="@dimen/radiowh"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5px"
                     android:background="@drawable/item_gameselect"
@@ -107,12 +107,12 @@
                     android:gravity="center"
                     android:text="4"
                     android:textColor="@color/select_gamecolor"
-                    android:textSize="40px" />
+                    android:textSize="35px" />
 
                 <RadioButton
                     android:id="@+id/RadioButtonOne_5"
-                    android:layout_width="70px"
-                    android:layout_height="70px"
+                    android:layout_width="@dimen/radiowh"
+                    android:layout_height="@dimen/radiowh"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5px"
                     android:background="@drawable/item_gameselect"
@@ -120,12 +120,12 @@
                     android:gravity="center"
                     android:text="5"
                     android:textColor="@color/select_gamecolor"
-                    android:textSize="40px" />
+                    android:textSize="35px" />
 
                 <RadioButton
                     android:id="@+id/RadioButtonOne_6"
-                    android:layout_width="70px"
-                    android:layout_height="70px"
+                    android:layout_width="@dimen/radiowh"
+                    android:layout_height="@dimen/radiowh"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5px"
                     android:background="@drawable/item_gameselect"
@@ -133,12 +133,12 @@
                     android:gravity="center"
                     android:text="6"
                     android:textColor="@color/select_gamecolor"
-                    android:textSize="40px" />
+                    android:textSize="35px" />
 
                 <RadioButton
                     android:id="@+id/RadioButtonOne_7"
-                    android:layout_width="70px"
-                    android:layout_height="70px"
+                    android:layout_width="@dimen/radiowh"
+                    android:layout_height="@dimen/radiowh"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5px"
                     android:background="@drawable/item_gameselect"
@@ -146,12 +146,12 @@
                     android:gravity="center"
                     android:text="7"
                     android:textColor="@color/select_gamecolor"
-                    android:textSize="40px" />
+                    android:textSize="35px" />
 
                 <RadioButton
                     android:id="@+id/RadioButtonOne_8"
-                    android:layout_width="70px"
-                    android:layout_height="70px"
+                    android:layout_width="@dimen/radiowh"
+                    android:layout_height="@dimen/radiowh"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5px"
                     android:background="@drawable/item_gameselect"
@@ -159,12 +159,12 @@
                     android:gravity="center"
                     android:text="8"
                     android:textColor="@color/select_gamecolor"
-                    android:textSize="40px" />
+                    android:textSize="35px" />
 
                 <RadioButton
                     android:id="@+id/RadioButtonOne_9"
-                    android:layout_width="70px"
-                    android:layout_height="70px"
+                    android:layout_width="@dimen/radiowh"
+                    android:layout_height="@dimen/radiowh"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5px"
                     android:background="@drawable/item_gameselect"
@@ -172,7 +172,7 @@
                     android:gravity="center"
                     android:text="9"
                     android:textColor="@color/select_gamecolor"
-                    android:textSize="40px" />
+                    android:textSize="35px" />
             </RadioGroup>
         </LinearLayout>
     </LinearLayout>

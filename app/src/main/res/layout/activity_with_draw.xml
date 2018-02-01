@@ -51,22 +51,24 @@
         android:layout_marginTop="20px">
 
         <TextView
+            android:id="@+id/textView17"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="10px"
-            android:layout_marginTop="10px"
+
             android:gravity="center_vertical"
             android:text="请输入取款金额："
             android:textSize="30px" />
 
         <EditText
+            android:layout_gravity="left"
             android:id="@+id/WithDrawAmount"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
-            android:gravity="center"
+            android:gravity="center_vertical"
+            android:hint="最大金额:50000"
             android:inputType="numberDecimal"
-            android:hint="取款金额"
             android:textSize="20px" />
     </LinearLayout>
 

@@ -15,7 +15,7 @@
         android:layout_marginLeft="10px"
         android:layout_marginRight="10px"
         android:background="@drawable/recharge_btn"
-        android:text="推广保存"
+        android:text="推广设置"
         android:textColor="@color/color_bg"
         android:textSize="45px" />
 
@@ -63,19 +63,20 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="用户类型:"
+                    android:text="推广用户类型:"
                     android:textSize="25px" />
 
                 <TextView
                     android:id="@+id/Stype"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="XXX"
+                    android:text=""
                     android:textSize="25px" />
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10px"
@@ -98,7 +99,7 @@
                     android:id="@+id/uid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="XXX"
+                    android:text=""
                     android:textSize="25px" />
             </LinearLayout>
 
@@ -118,7 +119,7 @@
                     android:id="@+id/rebate_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="XXX"
+                    android:text=""
                     android:textSize="25px" />
             </LinearLayout>
         </LinearLayout>
@@ -144,7 +145,7 @@
                     android:id="@+id/mxrate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="XXX"
+                    android:text=""
                     android:textSize="25px" />
             </LinearLayout>
 
@@ -157,14 +158,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="默认返点："
+                    android:text="默认推广返点："
                     android:textSize="25px" />
 
                 <TextView
                     android:id="@+id/rate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="XXX"
+                    android:text=""
                     android:textSize="25px" />
             </LinearLayout>
         </LinearLayout>

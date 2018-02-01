@@ -25,9 +25,9 @@
             android:layout_weight="2"
             android:gravity="center"
             android:padding="15px"
-            android:text="投注单id"
+            android:text=""
             android:textColor="@android:color/black"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <TextView
             android:id="@+id/TouZhuQi"
@@ -37,9 +37,9 @@
             android:layout_weight="2"
             android:gravity="center"
             android:padding="15px"
-            android:text="投注期号"
+            android:text=""
             android:textColor="@android:color/black"
-            android:textSize="30px" />
+            android:textSize="20px" />
 
         <TextView
             android:id="@+id/TouZhuBei"
@@ -49,9 +49,9 @@
             android:layout_weight="2"
             android:gravity="center"
             android:padding="15px"
-            android:text="投注倍数"
+            android:text=""
             android:textColor="@android:color/black"
-            android:textSize="30px" />
+            android:textSize="25px" />
 
         <TextView
             android:id="@+id/TouZhuStatus"
@@ -61,8 +61,12 @@
             android:layout_weight="2"
             android:gravity="center"
             android:padding="5px"
-            android:text="投注单状态"
+            android:text=""
             android:textColor="@android:color/black"
-            android:textSize="30px" />
+            android:textSize="25px" />
     </LinearLayout>
+    <View
+        android:background="@android:color/darker_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
 </LinearLayout>

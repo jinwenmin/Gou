@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -43,6 +45,8 @@ public class ZhuiHaoTouZhuActivity extends AutoLayoutActivity implements HttpEng
     TextView Cacel;
     @BindView(R.id.ZHTZCheck)
     CheckBox ZHTZCheck;
+    @BindView(R.id.ZhuiHaoTZll)
+    LinearLayout ZhuiHaoTZll;
     private int id;
     List<ZhuiHao> zh = new ArrayList<>();
     private ZhuihaoTZAdapter zhuihaoTZAdapter;
@@ -52,7 +56,8 @@ public class ZhuiHaoTouZhuActivity extends AutoLayoutActivity implements HttpEng
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zhui_hao_tou_zhu);
-        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
+        ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         zhuihaoTZAdapter = new ZhuihaoTZAdapter(this);
         ZhuiHaoTZListView.setAdapter(zhuihaoTZAdapter);
         Intent intent = getIntent();
@@ -72,16 +77,20 @@ public class ZhuiHaoTouZhuActivity extends AutoLayoutActivity implements HttpEng
         Cacel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String str = null;
-                for (int i = 0; i < zhuihaoTZAdapter.mChecked.size(); i++) {
-                    Log.d("判断  ", zhuihaoTZAdapter.mChecked.get(i).booleanValue() + "");
-
-                    if (zhuihaoTZAdapter.mChecked.get(i).booleanValue()) {
-                        str = str + zh.get(i).getId();
+                String str = "";
+                for (int i = 0; i < ZhuiHaoTZll.getChildCount(); i++) {
+                    LinearLayout linear = (LinearLayout) ZhuiHaoTZll.getChildAt(i);
+                    LinearLayout linear1 = (LinearLayout) linear.getChildAt(0);
+                    if (((CheckBox) linear1.getChildAt(0)).isChecked()) {
+                        if (str == "") {
+                            str = zh.get(i).getId()+"";
+                        } else {
+                            str = str + "," + zh.get(i).getId();
+                        }
                     }
                 }
                 if (str == null) {
-                   Toasty.error(ZhuiHaoTouZhuActivity.this,"未选中任何栏目",2000).show();
+                    Toasty.error(ZhuiHaoTouZhuActivity.this, "未选中任何栏目", 2000).show();
                     return;
                 }
                 RetrofitService.getInstance().getLotteryBetRevoke(ZhuiHaoTouZhuActivity.this, str);
@@ -97,16 +106,20 @@ public class ZhuiHaoTouZhuActivity extends AutoLayoutActivity implements HttpEng
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b == true) {
-                    for (int i = 0; i < zh.size(); i++) {
-                        zh.get(i).setBo(true);
+                    for (int i = 0; i < ZhuiHaoTZll.getChildCount(); i++) {
+                        LinearLayout linear1 = (LinearLayout) ZhuiHaoTZll.getChildAt(i);
+                        LinearLayout linear2 = (LinearLayout) linear1.getChildAt(0);
+                        if (zh.get(i).getStatus() == 1) {
+                            ((CheckBox) linear2.getChildAt(0)).setChecked(true);
+                        }
+                    }
+                } else {
+                    for (int i = 0; i < ZhuiHaoTZll.getChildCount(); i++) {
+                        LinearLayout linear1 = (LinearLayout) ZhuiHaoTZll.getChildAt(i);
+                        LinearLayout linear2 = (LinearLayout) linear1.getChildAt(0);
+                        ((CheckBox) linear2.getChildAt(0)).setChecked(false);
                     }
                 }
-                if (b == false) {
-                    for (int i = 0; i < zh.size(); i++) {
-                        zh.get(i).setBo(false);
-                    }
-                }
-                zhuihaoTZAdapter.notifyDataSetChanged();
             }
         });
 
@@ -117,8 +130,34 @@ public class ZhuiHaoTouZhuActivity extends AutoLayoutActivity implements HttpEng
         if (apiId == RetrofitService.API_ID_ZHTZDETAIL) {
             if (object != null) {
                 zh = (List<ZhuiHao>) object;
-                zhuihaoTZAdapter.getList(zh);
-                ZhuiHaoTZRe.setRefreshing(false);
+                for (int i = 0; i < zh.size(); i++) {
+                    View view = LayoutInflater.from(this).inflate(R.layout.item_zhtz, null);
+                    TextView tzId = (TextView) view.findViewById(R.id.TouZhuId);
+                    TextView tzq = (TextView) view.findViewById(R.id.TouZhuQi);
+                    TextView tzb = (TextView) view.findViewById(R.id.TouZhuBei);
+                    TextView tzzt = (TextView) view.findViewById(R.id.TouZhuStatus);
+                    final CheckBox tzck = (CheckBox) view.findViewById(R.id.TouZhuCheck);
+                    final int finalI = i;
+                    tzck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                            if (zh.get(finalI).getStatus() == 0) {
+                                tzck.setChecked(false);
+                            }
+                        }
+                    });
+                    tzId.setText(zh.get(i).getId() + "");
+                    tzq.setText(zh.get(i).getNumber());
+                    tzb.setText(zh.get(i).getPrize_num() + "");
+                    if (zh.get(i).getStatus() == 0) {
+                        tzzt.setText("不可勾选");
+                    } else {
+                        tzzt.setText("可勾选");
+                    }
+                    ZhuiHaoTZll.addView(view);
+                }
+                //zhuihaoTZAdapter.getList(zh);
+                //  ZhuiHaoTZRe.setRefreshing(false);
             }
         }
         if (apiId == RetrofitService.API_ID_CACEL) {
