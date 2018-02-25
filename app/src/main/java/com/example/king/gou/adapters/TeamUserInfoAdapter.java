@@ -70,7 +70,7 @@ public class TeamUserInfoAdapter extends BaseAdapter {
         if (ts.get(position).getUtype() == 3) {
             viewHolder.TeamUserType.setText("普通用户");
         }
-        if (!"null".equals(ts.get(position).getLogin())) {
+        if (ts.get(position).getLogin()!=null) {
             viewHolder.TeamUserLogin.setText(ts.get(position).getLogin());
         } else {
             viewHolder.TeamUserLogin.setText("从未登陆");

@@ -2,7 +2,7 @@ package com.example.king.gou.ui.proxyfragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -17,7 +17,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
@@ -35,7 +34,6 @@ import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,6 +66,8 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
     List<String> tName = new ArrayList<>();
     int uid;
     String name;
+    @BindView(R.id.ReSwipe)
+    SwipeRefreshLayout ReSwipe;
     private AlertView alertView;
     // 一个自定义的布局，作为显示的内容
     View contentView;
@@ -90,6 +90,12 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
     private EditText setTrans;
     SreCharge sreCharge;
     private TextView username;
+    private AlertView alertViewAnswer;
+    // 一个自定义的布局，作为显示的内容
+    View contentViewAnswer;
+    private TextView SafeQues;
+    private EditText AnswerQues;
+    private String ruser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,12 +118,16 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
                 R.layout.proxy_owntransfer, null);
         alertView2.addExtView(contentView2);
 
+        alertViewAnswer = new AlertView(null, null, "取消", new String[]{"确认"}, null, this, AlertView.Style.Alert, this);
+        contentViewAnswer = LayoutInflater.from(this).inflate(R.layout.reset_pwdcheck, null);
+        alertViewAnswer.addExtView(contentViewAnswer);
+        SafeQues = ((TextView) contentViewAnswer.findViewById(R.id.SafeQues));
+        AnswerQues = ((EditText) contentViewAnswer.findViewById(R.id.AnswerQues));
 
         adapter = new TeamUserInfoAdapter(this);
         ActivityProxyListView.setAdapter(adapter);
         initSpinner();
-        // RetrofitService.getInstance().getShareData(this);
-        // RetrofitService.getInstance().getAddUserData(this);4
+
 
         initClick();
     }
@@ -181,16 +191,13 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
                 break;
 
             case 2:
-               /* Toast.makeText(ProxyHomeActivity.this,
-                        "获得上级充值数据",
-                        Toast.LENGTH_SHORT).show();*/
-                Intent inte = new Intent(ProxyHomeActivity.this, CheckRechargeActivity.class);
-                inte.putExtra("uid", uid);
-                startActivity(inte);
-                alertView.dismiss();
-                alertView1.dismiss();
-                alertView2.dismiss();
-              //  RetrofitService.getInstance().getSreChargeData(this, uid);
+                //  Intent inte = new Intent(ProxyHomeActivity.this, CheckRechargeActivity.class);
+                // inte.putExtra("uid", uid);
+                // startActivity(inte);
+                // alertView.dismiss();
+                //alertView1.dismiss();
+                // alertView2.dismiss();
+                RetrofitService.getInstance().getSreChargeData(this, uid);
                 break;
             case 3:
                 //  RetrofitService.getInstance().getTquotaData(this, uid);
@@ -220,6 +227,7 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
         ActivityProxyListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d("长按按钮", "触发事件" + ts.size());
                 if (ts.size() > 1) {
                     uid = ts.get(1).get(i).getUid();
                     name = ts.get(1).get(i).getName();
@@ -227,6 +235,12 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
                     RetrofitService.getInstance().getSreChargeData3(ProxyHomeActivity.this, uid);
                 }
                 return false;
+            }
+        });
+        ReSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                RetrofitService.getInstance().getTeamUserInfo(ProxyHomeActivity.this, 1, 100, "uid", "desc", MyApp.getInstance().getUserUid(), "", ProxyHomeSpinner.getSelectedItemPosition());
             }
         });
 
@@ -246,9 +260,16 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        RetrofitService.getInstance().getTeamUserInfo(ProxyHomeActivity.this, 1, 100, "uid", "desc", MyApp.getInstance().getUserUid(), "", ProxyHomeSpinner.getSelectedItemPosition());
+    }
+
+    @Override
     public void onReceivedData(int apiId, Object object, int errorId) {
         if (apiId == RetrofitService.API_ID_TEAMUSERINFO) {
             ts = (List<List<TeamUserInfo>>) object;
+            ReSwipe.setRefreshing(false);
             ProxyUserCounts.setText("总会员数：" + ts.get(0).get(0).getTotalElements() + "人");
             if (ts.size() > 1) {
                 List<TeamUserInfo> teamUserInfos = ts.get(1);
@@ -304,13 +325,20 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
                 Toasty.error(this, "没有充值权限", 2000).show();
                 return;
             }
-            if (sreCharge.getStype() == 1) {
-                Toasty.success(this, "直属下级可充值", 2000).show();
-            }
-            if (sreCharge.getStype() == 2) {
-                Toasty.success(this, "所有下级可充值", 2000).show();
-            }
+            if (sreCharge.getStype() == 1 || sreCharge.getStype() == 2) {
+                if (RetrofitService.getInstance().getUser().getQuestion().length() < 1) {
+                    Toasty.error(this, "未设置安全问题", 2000).show();
+                    return;
+                }
+                SafeQues.setText(RetrofitService.getInstance().getUser().getQuestion());
+                ruser = sreCharge.getRuser();
+                SreChargeMin = sreCharge.getMin1();
+                SreChargeMax = sreCharge.getMax1();
+                alertViewAnswer.show();
+                isS = "Show4";
 
+            }
+/*
             proxyName = ((TextView) contentView2.findViewById(R.id.proxy_name));
             username = ((TextView) contentView2.findViewById(R.id.UserTitle));
             username.setText("保存上级充值");
@@ -324,13 +352,14 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
             }
             setTrans.setHint("充值范围:" + SreChargeMin + "~" + SreChargeMax);
             alertView2.show();
-            isS = "Show2";
+            isS = "Show2";*/
         }
         if (apiId == RetrofitService.API_ID_SRECHARGE3) {
             sreCharge = (SreCharge) object;
 
             ActivityProxyListView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
                 public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                    Log.d("长按菜单", "长按菜单");
                     menu.add(0, 0, 0, "查询团队余额");
                     menu.add(0, 1, 0, "设置返点");
                     //  menu.add(0, 3, 0, "获得上级充值数据");
@@ -343,7 +372,9 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
                     menu.add(0, 4, 0, "帐变记录");
 
                 }
+
             });
+
         }
         if (apiId == RetrofitService.API_ID_SRECHARGE2) {
             sreCharge = (SreCharge) object;
@@ -393,6 +424,25 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
 
             }
         }
+        if (apiId == RetrofitService.API_ID_SAFEPWDCHECK) {
+            if (object != null) {
+                RestultInfo restultInfo = (RestultInfo) object;
+                if (restultInfo.isRc() == true) {
+                    Intent inte = new Intent(ProxyHomeActivity.this, CheckRechargeActivity.class);
+
+                    inte.putExtra("uid", uid);
+                    inte.putExtra("ruser", ruser);
+                    inte.putExtra("SreChargeMin", SreChargeMin);
+                    inte.putExtra("SreChargeMax", SreChargeMax);
+                    startActivity(inte);
+                    return;
+                }
+                if (restultInfo.isRc() == false) {
+                    Toasty.error(this, restultInfo.getMsg(), 2000).show();
+                    return;
+                }
+            }
+        }
     }
 
     @Override
@@ -421,9 +471,10 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
                         return;
                     }
                     RetrofitService.getInstance().getTeamUserRebateSave(this, editV, uid);
-                    proxySetRate.setText("");
+
                 }
             }
+            proxySetRate.setText("");
         }
         if ("Show2".equals(isS)) {
             if (position == AlertView.CANCELPOSITION) {
@@ -440,9 +491,10 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
                         return;
                     }
                     RetrofitService.getInstance().getOwnReansferTrans(this, editV, proxyName.getText().toString().trim());
-                    setTrans.setText("");
+
                 }
             }
+            setTrans.setText("");
         }
         if ("Show3".equals(isS)) {
             if (position == AlertView.CANCELPOSITION) {
@@ -458,9 +510,36 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
                         return;
                     }
                     RetrofitService.getInstance().getDailyRechargeTrans(this, editV, proxyName.getText().toString().trim());
-                    setTrans.setText("");
+
                 }
             }
+            setTrans.setText("");
         }
+        if ("Show4".equals(isS)) {
+            if (position == AlertView.CANCELPOSITION) {
+                Log.d("充值测试AlertView", "取消");
+                alertViewAnswer.dismiss();
+            } else {
+                Log.d("充值测试AlertView", "确认");
+
+                if (position != AlertView.CANCELPOSITION) {
+                    String pwd = AnswerQues.getText().toString().trim();
+                    if ("".equals(pwd)) {
+                        Toasty.error(this, "密保答案不可为空", 2000).show();
+                        return;
+                    }
+                    RetrofitService.getInstance().getSecurityQuestionCheck(this, pwd);
+                }
+
+            }
+            AnswerQues.setText("");
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        tId = null;
+        tName = null;
     }
 }

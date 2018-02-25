@@ -51,8 +51,14 @@ public class BankCardManActivity extends AutoLayoutActivity implements SlideCutL
     private AlertView alertViewSafe;
     // 一个自定义的布局，作为显示的内容
     View contentViewSafe;
+
+    private AlertView alertViewLock;
+    // 一个自定义的布局，作为显示的内容
+    View contentViewLock;
     EditText safepwd;
     List<CardsData> cardsDatas;
+    String show = "1";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +71,13 @@ public class BankCardManActivity extends AutoLayoutActivity implements SlideCutL
                 R.layout.item_safepwd, null);
         alertViewSafe.addExtView(contentViewSafe);
         safepwd = (EditText) contentViewSafe.findViewById(R.id.AnswerQues);
+
+        alertViewLock = new AlertView(null, null, "取消", new String[]{"确认"}, null, this, AlertView.Style.Alert, this);
+        contentViewLock = LayoutInflater.from(this).inflate(
+                R.layout.item_bankcardlock, null);
+        alertViewLock.addExtView(contentViewLock);
+
+
         RetrofitService.getInstance().getCardDatas(this);
         cardAdapter = new CardAdapter(this);
         nocardList.setAdapter(cardAdapter);
@@ -88,11 +101,13 @@ public class BankCardManActivity extends AutoLayoutActivity implements SlideCutL
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.CardLock:
-                RetrofitService.getInstance().getBingCardLock(this);
+                alertViewLock.show();
+                show = "1";
                 break;
             case R.id.BindCardBtn:
                 alertViewSafe.show();
-                // startActivity(new Intent(BankCardManActivity.this, SaveCardActivity.class));
+                show = "2";
+
                 break;
             case R.id._back:
                 finish();
@@ -118,7 +133,7 @@ public class BankCardManActivity extends AutoLayoutActivity implements SlideCutL
             if (object != null) {
 
                 cs = (List<List<CardsData>>) object;
-                 cardsDatas = cs.get(0);
+                cardsDatas = cs.get(0);
                 List<CardsData> locked = cs.get(3);
                 for (int i = 0; i < locked.size(); i++) {
                     if (locked.get(i).isLocked()) {
@@ -137,9 +152,9 @@ public class BankCardManActivity extends AutoLayoutActivity implements SlideCutL
                 RestultInfo restultInfo = (RestultInfo) object;
                 if (restultInfo.isRc()) {
                     safepwd.setText("");
-                    if (cardsDatas.size()==0) {
+                    if (cardsDatas.size() == 0) {
                         startActivity(new Intent(BankCardManActivity.this, SaveCardActivity.class));
-                    }else{
+                    } else {
                         startActivity(new Intent(BankCardManActivity.this, CheckBankCardActivity.class));
                     }
                 }
@@ -170,16 +185,24 @@ public class BankCardManActivity extends AutoLayoutActivity implements SlideCutL
 
     @Override
     public void onItemClick(Object o, int position) {
-        if (position != AlertView.CANCELPOSITION) {
+        if (show.equals("2")) {
+            if (position != AlertView.CANCELPOSITION) {
 
-            String pwd = safepwd.getText().toString().trim();
-            if ("".equals(pwd)) {
-                Toasty.error(this, "安全密码不可为空", 2000).show();
-                return;
+                String pwd = safepwd.getText().toString().trim();
+                if ("".equals(pwd)) {
+                    Toasty.error(this, "安全密码不可为空", 2000).show();
+                    return;
+                }
+                String hmacsha256 = RxUtils.getInstance().HMACSHA256(pwd, MyApp.getInstance().getUserName());
+                RetrofitService.getInstance().getCheckSafePwd(this, hmacsha256);
             }
-            String hmacsha256 = RxUtils.getInstance().HMACSHA256(pwd, MyApp.getInstance().getUserName());
-            RetrofitService.getInstance().getCheckSafePwd(this, hmacsha256);
         }
+        if (show.equals("1")) {
+            if (position!= AlertView.CANCELPOSITION) {
+                RetrofitService.getInstance().getBingCardLock(this);
+            }
+        }
+
 
     }
 

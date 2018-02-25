@@ -75,4 +75,5 @@ public class HomeGamesAdapters extends BaseAdapter {
             ButterKnife.bind(this, view);
         }
     }
+
 }

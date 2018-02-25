@@ -7,16 +7,35 @@ import java.math.BigDecimal;
  * Created by Administrator on 2017/7/24.
  */
 
-public class WithDraw implements Serializable{
+public class WithDraw implements Serializable {
     boolean freeze;
     boolean notime;
     String start;
     String end;
     int nums;
+
+    public double getMin() {
+        return min;
+    }
+
+    public void setMin(double min) {
+        this.min = min;
+    }
+
+    public double getMax() {
+        return max;
+    }
+
+    public void setMax(double max) {
+        this.max = max;
+    }
+
     BigDecimal amounts;
     int aid;
     String cardNumber;
     String holders_name;
+    double min;
+    double max;
 
     @Override
     public String toString() {
@@ -30,6 +49,8 @@ public class WithDraw implements Serializable{
                 ", aid=" + aid +
                 ", cardNumber='" + cardNumber + '\'' +
                 ", holders_name='" + holders_name + '\'' +
+                ", min=" + min +
+                ", max=" + max +
                 '}';
     }
 

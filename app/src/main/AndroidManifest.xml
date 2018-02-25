@@ -112,7 +112,9 @@
         <activity android:name=".ui.CNumberActivity" />
         <activity android:name=".ui.gameAcVpFrms.BettingDetailActivity" />
         <activity android:name=".ui.CheckRechargeActivity" />
-        <activity android:name=".ui.CheckBankCardActivity"></activity>
+        <activity android:name=".ui.CheckBankCardActivity" />
+        <activity android:name=".ui.settingfragment.CheckQuestionActivity" />
+        <activity android:name=".ui.OwnRechaegeSaveWebActivity"></activity>
     </application>
 
 </manifest>

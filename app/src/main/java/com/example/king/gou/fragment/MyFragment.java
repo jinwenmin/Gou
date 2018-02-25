@@ -207,7 +207,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
                 startActivity(new Intent(getActivity(), ChatUserActivity.class));
                 break;
             case R.id.ToRecharge:
-                // startActivity(new Intent(getActivity(), ReChargeActivity.class));
+                 startActivity(new Intent(getActivity(), ReChargeActivity.class));
                 break;
             case R.id.ToQukuan:
                 //
@@ -306,7 +306,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
                     Log.d("提现参数：持卡人", cards.get(i).getHolders_name() + "");
                     WithDraw withDraw = new WithDraw();
                     withDraw.setAid(cards.get(i).getAid());
-                    withDraw.setCardNumber(cards.get(i).getCardNumber());
+                    withDraw.setCardNumber(cards.get(i).getCardNumber()+" "+cards.get(i).getHolders_name());
                     withDraw.setHolders_name(cards.get(i).getHolders_name());
                     banks.add(withDraw);
                 }
@@ -319,6 +319,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ht
                     Intent intent = new Intent(getActivity(), WithDrawActivity.class);
                     intent.putExtra("amounts", amounts + "");
                     intent.putExtra("banks", (Serializable) banks);
+                    intent.putExtra("datas", (Serializable) datas);
                     startActivity(intent);
                 }
             }

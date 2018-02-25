@@ -220,5 +220,9 @@ public class LotteryLossActivity extends AutoLayoutActivity implements View.OnCl
 
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        losses=null;
+    }
 }

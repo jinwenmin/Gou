@@ -38,12 +38,9 @@ public class UpDataSafePwdActivity extends AutoLayoutActivity implements View.On
     EditText UpdataSafePwdNewPwd;
     @BindView(R.id.UpdataSafePwdCheck)
     EditText UpdataSafePwdCheck;
-    @BindView(R.id.UpdataSafepwdEmail)
-    EditText UpdataSafepwdEmail;
     @BindView(R.id.UpDataPwdClick)
     Button UpDataPwdClick;
-    private String emailINFO;
-    private UserInfo userinfo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +49,6 @@ public class UpDataSafePwdActivity extends AutoLayoutActivity implements View.On
         ButterKnife.bind(this);
         MyApp.getInstance().addActivitys(this);
         initClick();
-        userinfo = RetrofitService.getInstance().getUser();
-        Log.d("邮箱是", userinfo.toString());
 
     }
 
@@ -72,7 +67,7 @@ public class UpDataSafePwdActivity extends AutoLayoutActivity implements View.On
                 String oldPwd = UpdataPwdOldPwd.getText().toString().trim();
                 String newpwd = UpdataSafePwdNewPwd.getText().toString().trim();
                 String newpwdCheck = UpdataSafePwdCheck.getText().toString().trim();
-                String email = UpdataSafepwdEmail.getText().toString().trim();
+
                 String userName = MyApp.getInstance().getUserName();
                 String oldpwd256 = RxUtils.getInstance().HMACSHA256(oldPwd, userName);
                 String newpwd256 = RxUtils.getInstance().HMACSHA256(newpwd, userName);
@@ -88,14 +83,6 @@ public class UpDataSafePwdActivity extends AutoLayoutActivity implements View.On
                     Toasty.error(this, "新安全密码跟确认密码不一致", 2000).show();
                     return;
                 }
-                if ("".equals(email)) {
-                    Toasty.error(this, "绑定的邮箱不能为空", 2000).show();
-                    return;
-                }
-                if (!RxUtils.getInstance().checkEmaile(email)) {
-                    Toasty.error(this, "邮箱输入有误", 2000).show();
-                    return;
-                }
 
                 if ("a123456".equals(newpwd)) {
                     Toasty.error(this, "新密码不能为初始密码", 2000).show();
@@ -105,11 +92,8 @@ public class UpDataSafePwdActivity extends AutoLayoutActivity implements View.On
                     Toasty.error(this, "密码长度不正确", 2000).show();
                     return;
                 }
-                if (email.equals(userinfo.getEmail())) {
-                    Toasty.error(this, "邮箱跟当前的邮箱相同", 2000).show();
-                    return;
-                }
-                RetrofitService.getInstance().getUpDataSafePwd(this, oldpwd256, newpwd256, email);
+
+                RetrofitService.getInstance().getUpDataSafePwd(this, oldpwd256, newpwd256, "");
                 break;
         }
     }

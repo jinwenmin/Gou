@@ -109,7 +109,7 @@ public class AccountChangeDetailActivity extends AutoLayoutActivity implements V
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id._back:
+            case R.id.gamejl_back:
                 finish();
                 break;
         }

@@ -1,6 +1,7 @@
 package com.example.king.gou.ui.proxyfragment;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.text.Html;
@@ -146,10 +147,14 @@ public class ActivityDetailsActivity extends AutoLayoutActivity implements HttpE
             settings.setSupportZoom(true);
             settings.setBuiltInZoomControls(true);
             ActivityWeb.setWebChromeClient(new WebChromeClient());
-            ActivityWeb.loadDataWithBaseURL("about:blank", uc.getMsg(), "text/html", "utf-8", null);
-            ActivityWeb.getSettings().setDisplayZoomControls(false);
+            settings.setDefaultTextEncodingName("UTF-8");
+            ActivityWeb.loadData(uc.getMsg(),"text/html;charset=utf-8",null);
+          //  ActivityWeb.loadDataWithBaseURL("", uc.getMsg(), "text/html", "utf-8", "");
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                settings.setDisplayZoomControls(false);
+            }
             WebSettings.TextSize textSize = WebSettings.TextSize.LARGEST;
-            ActivityWeb.getSettings().setTextSize(textSize);
+            settings.setTextSize(textSize);
             //ActivityDetail.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
             //ActivityDetail.setText(Html.fromHtml(uc.getMsg()));
             id = uc.getId();
@@ -245,6 +250,7 @@ public class ActivityDetailsActivity extends AutoLayoutActivity implements HttpE
     protected void onDestroy() {
         super.onDestroy();
         alid[0] = 0;
+        uc=null;
     }
 
     @Override

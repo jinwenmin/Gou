@@ -36,6 +36,7 @@ import com.example.king.gou.service.RetrofitService;
 
 import com.example.king.gou.ui.settingfragment.AboutUsActivity;
 import com.example.king.gou.ui.settingfragment.BankCardManActivity;
+import com.example.king.gou.ui.settingfragment.CheckQuestionActivity;
 import com.example.king.gou.ui.settingfragment.MoneyProtectActivity;
 import com.example.king.gou.ui.settingfragment.ResetPwdActivity;
 import com.example.king.gou.ui.settingfragment.UpdateMoneyPwdActivity;
@@ -160,14 +161,12 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
         mKeyguardManager = (KeyguardManager) this.getSystemService(Context.KEYGUARD_SERVICE);
         initDataHelper();
 
-        alertViewAnswer = new AlertView(null, null, null, new String[]{"确认"}, null, this, AlertView.Style.Alert, this);
-        contentViewAnswer = LayoutInflater.from(this).inflate(
-                R.layout.reset_pwdcheck, null);
+        alertViewAnswer = new AlertView(null, null, "取消", new String[]{"确认"}, null, this, AlertView.Style.Alert, this);
+        contentViewAnswer = LayoutInflater.from(this).inflate(R.layout.reset_pwdcheck, null);
         alertViewAnswer.addExtView(contentViewAnswer);
 
         alertViewSafe = new AlertView(null, null, "取消", new String[]{"确认"}, null, this, AlertView.Style.Alert, this);
-        contentViewSafe = LayoutInflater.from(this).inflate(
-                R.layout.item_safepwd, null);
+        contentViewSafe = LayoutInflater.from(this).inflate(R.layout.item_safepwd, null);
         alertViewSafe.addExtView(contentViewSafe);
         initClick();
 
@@ -251,12 +250,12 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
             case R.id.ResetPwd:
                 SafeQues = (TextView) contentViewAnswer.findViewById(R.id.SafeQues);
                 answerQues = ((EditText) contentViewAnswer.findViewById(R.id.AnswerQues));
-
-                SafeQues.setText(RetrofitService.getInstance().getUser().getQuestion());
                 if (RetrofitService.getInstance().getUser().getQuestion().length() < 1) {
                     Toasty.error(this, "未设置安全问题", 2000).show();
                     return;
                 }
+                SafeQues.setText(RetrofitService.getInstance().getUser().getQuestion());
+                ///StartA(CheckQuestionActivity.class);
                 alertViewAnswer.show();
                 show = "2";
                 break;
@@ -323,9 +322,7 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
 
         }
         if ("2".equals(show)) {
-            if (position == AlertView.CANCELPOSITION) {
-                alertViewAnswer.dismiss();
-            } else if (position != AlertView.CANCELPOSITION) {
+            if (position != AlertView.CANCELPOSITION) {
                 String Answer = answerQues.getText().toString().trim();
                 if (Answer == null || "".equals(Answer)) {
                     Toasty.error(this, "问题答案不能为空", 2000).show();
@@ -335,6 +332,7 @@ public class SettingActivity extends AutoLayoutActivity implements View.OnClickL
                     RetrofitService.getInstance().getSecurityQuestionCheck(this, Answer);
                 }
             }
+            answerQues.setText("");
         }
         if ("3".equals(show)) {
             EditText safepwd = (EditText) contentViewSafe.findViewById(R.id.AnswerQues);

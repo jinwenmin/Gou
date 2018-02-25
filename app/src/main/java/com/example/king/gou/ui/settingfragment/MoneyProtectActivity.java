@@ -9,8 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
@@ -27,8 +29,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
 
-import static com.example.king.gou.service.RetrofitService.API_ID_PWDPROTACT;
-
 
 public class MoneyProtectActivity extends AutoLayoutActivity implements View.OnClickListener, HttpEngine.DataListener {
 
@@ -38,10 +38,6 @@ public class MoneyProtectActivity extends AutoLayoutActivity implements View.OnC
     RelativeLayout MoneyProtectTop;
     @BindView(R.id.SpinnerQues1)
     Spinner SpinnerQues1;
-    @BindView(R.id.SpinnerQues2)
-    Spinner SpinnerQues2;
-    @BindView(R.id.SpinnerQues3)
-    Spinner SpinnerQues3;
     List<String> Safes = new ArrayList<String>();
     @BindView(R.id.SavePwdProtect)
     Button SavePwdProtect;
@@ -49,6 +45,10 @@ public class MoneyProtectActivity extends AutoLayoutActivity implements View.OnC
     EditText SavePwdProtectEdittext;
     @BindView(R.id.CheckSavePwdProtectEdittext)
     EditText CheckSavePwdProtectEdittext;
+    @BindView(R.id.LinearCheckPwd)
+    LinearLayout LinearCheckPwd;
+    @BindView(R.id.TextHint)
+    TextView TextHint;
     private ArrayAdapter<String> adapter;
     private String SaveEditeText;
     private String CheckSaveEditeText;
@@ -65,6 +65,20 @@ public class MoneyProtectActivity extends AutoLayoutActivity implements View.OnC
     }
 
     private void initClick() {
+        if (RetrofitService.getInstance().getUser().isHasQuestions()) {
+            SavePwdProtect.setVisibility(View.GONE);
+            LinearCheckPwd.setVisibility(View.GONE);
+            SavePwdProtectEdittext.setText("安全问题答案不可见");
+            SavePwdProtectEdittext.setFocusable(false);
+            TextHint.setVisibility(View.VISIBLE);
+            for (int i = 0; i < Safes.size(); i++) {
+                if (Safes.get(i).equals(RetrofitService.getInstance().getUser().getQuestion())) {
+                    SpinnerQues1.setSelection(i);
+                }
+            }
+            SpinnerQues1.setFocusable(false);
+            return;
+        }
         Back.setOnClickListener(this);
         SavePwdProtect.setOnClickListener(this);
         SpinnerQues1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

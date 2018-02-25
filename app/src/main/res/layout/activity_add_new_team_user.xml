@@ -52,6 +52,7 @@
             android:layout_weight="7"
             android:background="@null"
             android:gravity="left"
+            android:layout_gravity="center_vertical"
             android:hint="请输入用户名"
             android:singleLine="true"
             android:textColor="@android:color/black"
@@ -80,6 +81,7 @@
             android:layout_weight="7"
             android:background="@null"
             android:gravity="left"
+            android:layout_gravity="center_vertical"
             android:hint="请输入昵称"
             android:singleLine="true"
             android:textColor="@android:color/black"
@@ -108,6 +110,7 @@
             android:layout_weight="7"
             android:background="@null"
             android:gravity="left"
+            android:layout_gravity="center_vertical"
             android:hint="范围0.0~12.6"
             android:inputType="numberDecimal"
             android:singleLine="true"
@@ -141,6 +144,7 @@
             android:gravity="left"
             android:singleLine="true"
             android:text="a123456"
+            android:layout_gravity="center_vertical"
             android:textColor="@android:color/black"
             android:textSize="35px" />
     </LinearLayout>
@@ -243,7 +247,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150px"
                     android:layout_height="wrap_content"
                     android:background="@android:color/holo_blue_light"
                     android:padding="10px"
@@ -251,8 +255,13 @@
                     android:textColor="@android:color/white"
                     android:textSize="30px" />
 
+                <View
+                    android:background="@android:color/white"
+                    android:layout_width="150px"
+                    android:layout_height="1px" />
+
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150px"
                     android:layout_height="wrap_content"
                     android:background="@android:color/holo_blue_light"
                     android:padding="10px"

@@ -101,7 +101,7 @@
             android:hint="6-14位字符 由数字和字母组成"
             android:inputType="textPassword"
             android:singleLine="true"
-            android:textSize="25px" />
+            android:textSize="28px" />
     </LinearLayout>
 
     <LinearLayout
@@ -118,7 +118,7 @@
             android:gravity="right"
             android:text="确认新安全密码:"
             android:textColor="@android:color/black"
-            android:textSize="25px" />
+            android:textSize="30px" />
 
         <EditText
             android:id="@+id/UpdataSafePwdCheck"
@@ -130,37 +130,9 @@
             android:hint="与新密码保持一致"
             android:inputType="textPassword"
             android:singleLine="true"
-            android:textSize="30px" />
+            android:textSize="28px" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10px"
-        android:background="@android:color/white"
-        android:padding="15px">
-
-        <TextView
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:gravity="right"
-            android:text="输入绑定邮箱:"
-            android:textColor="@android:color/black"
-            android:textSize="25px" />
-
-        <EditText
-            android:id="@+id/UpdataSafepwdEmail"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="7"
-            android:background="@null"
-            android:gravity="left"
-            android:hint="输入绑定的邮箱"
-            android:inputType="textEmailAddress"
-            android:singleLine="true"
-            android:textSize="30px" />
-    </LinearLayout>
 
     <Button
         android:id="@+id/UpDataPwdClick"

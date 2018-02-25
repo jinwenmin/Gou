@@ -43,11 +43,11 @@
         android:padding="15px">
 
         <TextView
-            android:gravity="right"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="2"
+            android:gravity="right"
             android:text="问题:"
             android:textSize="30px" />
 
@@ -92,6 +92,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/LinearCheckPwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4px"
@@ -120,130 +121,17 @@
             android:textSize="30px"></EditText>
     </LinearLayout>
 
-    <LinearLayout
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/TextHint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30px"
-        android:background="@android:color/white"
-        android:padding="15px"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="问题二:"
-            android:textSize="30px" />
-
-        <Spinner
-            android:id="@+id/SpinnerQues2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-
-            android:spinnerMode="dropdown"
-            android:textSize="30px"></Spinner>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4px"
-        android:background="@android:color/white"
-        android:padding="15px"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="答案:"
-            android:textSize="30px" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30px"
-            android:background="@null"
-            android:gravity="center"
-            android:hint="输入答案"
-            android:textSize="30px"></EditText>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60px"
-        android:background="@android:color/white"
-        android:padding="15px"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="问题三:"
-            android:textSize="30px" />
-
-        <Spinner
-            android:id="@+id/SpinnerQues3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30px"
-            android:spinnerMode="dropdown"
-            android:textSize="30px"></Spinner>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4px"
-        android:background="@android:color/white"
-        android:padding="15px"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="答案:"
-            android:textSize="30px" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30px"
-            android:background="@null"
-            android:gravity="center"
-            android:hint="输入答案"
-            android:textSize="30px"></EditText>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4px"
-        android:background="@android:color/white"
-        android:padding="15px"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="资金密码"
-            android:textColor="@color/top_background"
-            android:textSize="30px" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30px"
-            android:background="@null"
-            android:gravity="center"
-            android:hint="请输入资金密码"
-            android:textSize="30px"></EditText>
-    </LinearLayout>
+        android:layout_gravity="center"
+        android:layout_marginTop="10px"
+        android:gravity="center"
+        android:text="您已经设置了安全问题,不允许修改安全问题及答案"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="30px" />
 
     <Button
         android:id="@+id/SavePwdProtect"

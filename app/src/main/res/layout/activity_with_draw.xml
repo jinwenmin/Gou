@@ -51,26 +51,147 @@
         android:layout_marginTop="20px">
 
         <TextView
-            android:id="@+id/textView17"
+
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="10px"
-
             android:gravity="center_vertical"
             android:text="请输入取款金额："
+            android:textColor="@android:color/black"
             android:textSize="30px" />
 
         <EditText
-            android:layout_gravity="left"
             android:id="@+id/WithDrawAmount"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="left"
             android:background="@null"
             android:gravity="center_vertical"
-            android:hint="最大金额:50000"
+            android:hint="输入取现金额"
             android:inputType="numberDecimal"
-            android:textSize="20px" />
+            android:textSize="25px" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_margin="10px"
+            android:layout_weight="4"
+            android:gravity="right"
+            android:text="可提现时间:"
+            android:textSize="30px" />
+
+        <TextView
+            android:id="@+id/StartAndEnd"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_margin="10px"
+            android:layout_weight="7"
+            android:gravity="left"
+            android:text=""
+            android:textSize="30px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_margin="10px"
+            android:layout_weight="4"
+            android:gravity="right"
+            android:text="最小提现金额:"
+            android:textSize="30px" />
+
+        <TextView
+            android:id="@+id/Min"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_margin="10px"
+            android:layout_weight="7"
+            android:gravity="left"
+            android:text=""
+            android:textSize="30px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_margin="10px"
+            android:layout_weight="4"
+            android:gravity="right"
+            android:text="最大提现金额:"
+            android:textSize="30px" />
+
+        <TextView
+            android:id="@+id/Max"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_margin="10px"
+            android:layout_weight="7"
+            android:gravity="left"
+            android:text=""
+            android:textSize="30px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_margin="10px"
+            android:layout_weight="4"
+            android:gravity="right"
+            android:text="剩余可提现次数:"
+            android:textSize="30px" />
+
+        <TextView
+            android:id="@+id/Nums"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_margin="10px"
+            android:layout_weight="7"
+            android:gravity="left"
+            android:text=""
+            android:textSize="30px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_margin="10px"
+            android:layout_weight="4"
+            android:gravity="right"
+            android:text="可提现金额:"
+            android:textSize="30px" />
+
+        <TextView
+            android:id="@+id/Amounts"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_margin="10px"
+            android:layout_weight="7"
+            android:gravity="left"
+            android:text=""
+            android:textSize="30px" />
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/TiJiao"

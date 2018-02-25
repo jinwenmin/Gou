@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
@@ -18,6 +19,7 @@ import com.example.king.gou.bean.RestultInfo;
 import com.example.king.gou.bean.WithDraw;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.utils.HttpEngine;
+import com.example.king.gou.utils.RxUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.math.BigDecimal;
@@ -42,20 +44,33 @@ public class WithDrawActivity extends AutoLayoutActivity implements HttpEngine.D
     @BindView(R.id.TiJiao)
     Button TiJiao;
     List<List<CardsData>> cs = new ArrayList<>();
+    @BindView(R.id.StartAndEnd)
+    TextView StartAndEnd;
+    @BindView(R.id.Min)
+    TextView Min;
+    @BindView(R.id.Max)
+    TextView Max;
+    @BindView(R.id.Nums)
+    TextView Nums;
+    @BindView(R.id.Amounts)
+    TextView Amounts;
     private ArrayAdapter<String> adapterCard;
     List<String> cardData = new ArrayList<>();
     List<CardsData> cardsDatas = new ArrayList<>();
 
     String amounts;
     List<WithDraw> wd;
+    private List<WithDraw> datas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_with_draw);
-        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
+        ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         amounts = getIntent().getStringExtra("amounts");
         wd = (List<WithDraw>) getIntent().getSerializableExtra("banks");
+        datas = ((List<WithDraw>) getIntent().getSerializableExtra("datas"));
 
         RetrofitService.getInstance().getCardDatas(this);
         initClick();
@@ -68,11 +83,18 @@ public class WithDrawActivity extends AutoLayoutActivity implements HttpEngine.D
             String cardinfo = wd.get(i).getCardNumber();
             UserBank.add(cardinfo);
         }
-        adapterCard = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, UserBank);
-        //第三步：为适配器设置下拉列表下拉时的菜单样式。
-        adapterCard.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        SpinnerWithDarw.setAdapter(adapterCard);
-        initSpinnerSelect();
+        if (datas.size() > 0) {
+            StartAndEnd.setText(datas.get(0).getStart() + "-" + datas.get(0).getEnd());
+            Min.setText(RxUtils.getInstance().getDouble2(datas.get(0).getMin()));
+            Max.setText(RxUtils.getInstance().getDouble2(datas.get(0).getMax()));
+            Nums.setText(RxUtils.getInstance().getDouble2(datas.get(0).getNums()));
+            Amounts.setText(RxUtils.getInstance().getDouble2(Double.parseDouble(datas.get(0).getAmounts() + "")));
+            adapterCard = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, UserBank);
+            //第三步：为适配器设置下拉列表下拉时的菜单样式。
+            adapterCard.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            SpinnerWithDarw.setAdapter(adapterCard);
+            initSpinnerSelect();
+        }
     }
 
     private void initClick() {
@@ -100,7 +122,7 @@ public class WithDrawActivity extends AutoLayoutActivity implements HttpEngine.D
         if (apiId == RetrofitService.API_ID_WITHDRAWCREATE) {
             if (object != null) {
                 RestultInfo restultInfo = (RestultInfo) object;
-                Log.d("WithDarwMsg", restultInfo.getMsg()+"");
+                Log.d("WithDarwMsg", restultInfo.getMsg() + "");
                 if (restultInfo.isRc()) {
                     Toasty.success(this, restultInfo.getMsg(), 2000).show();
                     finish();
@@ -135,7 +157,8 @@ public class WithDrawActivity extends AutoLayoutActivity implements HttpEngine.D
                 RetrofitService.getInstance().getWithDrawCreates(this, wd.get(SpinnerWithDarw.getSelectedItemPosition()).getAid(), money);
                 break;
             case R.id._back:
-                finish();break;
+                finish();
+                break;
         }
     }
 }

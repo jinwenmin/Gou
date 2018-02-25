@@ -40,6 +40,7 @@ public interface ApiInterface {
     //默认的服务器地址
     // public final static String HOST = "http://vipfacaiflvbceshi.com";
     public final static String HOST = "http://23.88.226.5";
+    // public final static String HOST = "http://23.88.226.16";
 
     //登陆
     @Headers("X-Requested-With: XMLHttpRequest")
@@ -558,7 +559,7 @@ public interface ApiInterface {
     //投注单详情
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/betting-details/{id}")
-    Call<Map<String,Object>> getBettingDetails(
+    Call<Map<String, Object>> getBettingDetails(
             @Path("id") int id,//id为投注单bid
             @Query("AppClient") int num,
             @Query("reqkey") String reqkey,
@@ -636,7 +637,7 @@ public interface ApiInterface {
     //48 查询追号投注记录
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/keep-number-bet-list")
-    Call<Map<String,Object>> getKeepNumBet(
+    Call<Map<String, Object>> getKeepNumBet(
             @Query("AppClient") int num,
             @Query("page") int page,
             @Query("rows") int rows,
@@ -949,7 +950,7 @@ public interface ApiInterface {
     //63 获取添加会员数据
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/adduser-data")
-    Call<Map<String,Object>> getAddUserData(
+    Call<Map<String, Object>> getAddUserData(
             @Query("AppClient") int num,
             @Query("reqkey") String reqkey,
             @Query("t") long t
@@ -1072,7 +1073,7 @@ public interface ApiInterface {
     //72 获取上级充值数据
     @Headers("X-Requested-With: XMLHttpRequest")
     @POST("/srecharge-data")
-    Call<Map<String,Object>> getSreChargeData(
+    Call<Map<String, Object>> getSreChargeData(
             @Query("AppClient") int num,
             @Query("uid") int uid,//需要设置返点的用户id
             @Query("reqkey") String reqkey,
@@ -1381,7 +1382,69 @@ public interface ApiInterface {
     @Headers("X-Requested-With: XMLHttpRequest")
 
     @POST("/token-signin")
-    Call<Object> getTokenSignin(
+    Call<Map<String, String>> getTokenSignin(
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //98 APP易宝支付初始参数获取
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/yeepay")
+    Call<Map<String,Object>> getYeePay(
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //99 易宝支付保存
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/own-recharge-save")
+    Call<RestultInfo> getOwnRechargeSave(
+            @Query("AppClient") int num,
+            @Query("p5_Pid") String p5_Pid,//固定值 YTX_Payment
+            @Query("pd_FrpId") String pd_FrpId,//银行代码
+            @Query("amount") Integer amount,//充值金额[暂时只支持整数金额]
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //100 APP支付宝支付初始参数获取
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/aliplay")
+    Call<Map<String, Object>> getAliPay(
+            @Query("AppClient") int num,
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //101 APP支付宝支付保存
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/aliplay-recharge-save")
+    Call<Map<String, Object>> getAliPlayReChargeSave(
+            @Query("AppClient") int num,
+            @Query("type") int  type,//固定值 0:支付宝支付，1转账汇款
+            @Query("amount") Integer amount,//充值金额[暂时只支持整数金额]
+            @Query("holders_name") String holders_name,//银行卡/支付宝真实姓名
+            @Query("account_number") String account_number,//银行卡号/支付宝账号
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+
+    //102 支付宝支付确认支付
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/aliplay-recharge-submit")
+    Call<RestultInfo> getAliPlayReChargeSubmit(
+            @Query("AppClient") int num,
+            @Query("id") int  id,//上一步返回的充值记录ID
+            @Query("note") String note,//上一步返回的附言
+            @Query("reqkey") String reqkey,
+            @Query("t") long t
+    );
+    //103 转账汇款：APP支付宝支付初始参数获取
+    @Headers("X-Requested-With: XMLHttpRequest")
+    @POST("/remittance")
+    Call<Map<String, Object>> getRemittance(
             @Query("AppClient") int num,
             @Query("reqkey") String reqkey,
             @Query("t") long t

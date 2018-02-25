@@ -30,16 +30,14 @@ public class UpdateNickNameActivity extends AutoLayoutActivity implements View.O
     ImageView Back;
     @BindView(R.id.MoneyProtectTop)
     RelativeLayout MoneyProtectTop;
-    @BindView(R.id.OldUserNickName)
-    TextView OldUserNickName;
+
     @BindView(R.id.NewUserNickName)
     EditText NewUserNickName;
     @BindView(R.id.UpDateCheck)
     Button UpDateCheck;
     String nickName;
     List<UserInfo> userInfos;
-    @BindView(R.id.CheckNewUserNickName)
-    EditText CheckNewUserNickName;
+
     private String checkNickName;
 
     @Override
@@ -66,17 +64,9 @@ public class UpdateNickNameActivity extends AutoLayoutActivity implements View.O
                 break;
             case R.id.UpDateCheck:
                 nickName = NewUserNickName.getText().toString().trim();
-                checkNickName = CheckNewUserNickName.getText().toString().trim();
+
                 if (nickName == null || "".equals(nickName)) {
                     Toasty.error(UpdateNickNameActivity.this, "用户昵称不可为空", 2000).show();
-                    return;
-                }
-                if (checkNickName == null || "".equals(checkNickName)) {
-                    Toasty.error(UpdateNickNameActivity.this, "确认昵称不可为空", 2000).show();
-                    return;
-                }
-                if (!checkNickName.equals(nickName)) {
-                    Toasty.error(UpdateNickNameActivity.this, "两次昵称不相同", 2000).show();
                     return;
                 }
                 RetrofitService.getInstance().getUpdateNickName(this, nickName);
@@ -102,8 +92,7 @@ public class UpdateNickNameActivity extends AutoLayoutActivity implements View.O
         if (RetrofitService.API_ID_USERINFO == apiId) {
             userInfos = (List<UserInfo>) object;
             UserInfo userInfo = userInfos.get(0);
-            OldUserNickName.setText(userInfo.getNname());
-
+            NewUserNickName.setHint(userInfo.getNname());
 
         }
     }
@@ -116,5 +105,10 @@ public class UpdateNickNameActivity extends AutoLayoutActivity implements View.O
     @Override
     public void onRequestEnd(int apiId) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

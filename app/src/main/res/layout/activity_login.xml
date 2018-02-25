@@ -23,21 +23,27 @@
         android:layout_below="@id/login_icon"
         android:layout_centerHorizontal="true">
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/relativelayuout1"
             android:layout_width="500px"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_margin="10px"
-            android:background="@drawable/login_relativelayout_bg">
+            android:background="@drawable/login_relativelayout_bg"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="100px"
+                android:layout_height="80px"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_user_origin" />
 
             <com.chaychan.viewlib.PowerfulEditText
                 android:id="@+id/login_user"
-                android:layout_width="450px"
+                android:layout_width="350px"
                 android:layout_height="80px"
                 android:layout_centerVertical="true"
                 android:background="@null"
-                android:gravity="center"
                 android:hint="输入您的账号"
                 android:paddingBottom="15px"
                 android:paddingLeft="15px"
@@ -45,30 +51,32 @@
                 android:textSize="25px"
                 app:funcType="canClear" />
 
-            <ImageView
-                android:layout_width="100px"
-                android:layout_height="80px"
-                android:layout_centerVertical="true"
 
-                android:src="@mipmap/ic_user_origin" />
-        </RelativeLayout>
+        </LinearLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/relativelayout2"
             android:layout_width="500px"
             android:layout_height="wrap_content"
             android:layout_below="@id/relativelayuout1"
             android:layout_centerHorizontal="true"
             android:layout_margin="10px"
-            android:layout_marginTop="10px"
-            android:background="@drawable/login_relativelayout_bg">
+            android:background="@drawable/login_relativelayout_bg"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="100px"
+                android:layout_height="80px"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_password_origin" />
 
             <com.chaychan.viewlib.PowerfulEditText
                 android:id="@+id/login_pwd"
-                android:layout_width="450px"
+                android:layout_width="350px"
                 android:layout_height="80px"
+                android:layout_centerVertical="true"
                 android:background="@null"
-                android:gravity="center"
+
                 android:hint="输入你的密码"
                 android:inputType="textPassword"
                 android:paddingBottom="15px"
@@ -76,12 +84,8 @@
                 android:paddingTop="15px"
                 android:textSize="25px" />
 
-            <ImageView
-                android:layout_width="100px"
-                android:layout_height="80px"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/ic_password_origin" />
-        </RelativeLayout>
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/login_btn"

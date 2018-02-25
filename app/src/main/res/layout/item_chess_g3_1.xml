@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="50px"
+            android:layout_gravity="center"
+            android:layout_margin="5px"
+            android:layout_weight="3"
+            android:background="@drawable/gamecenter_btn"
+            android:gravity="center"
+            android:padding="5px"
+            android:text="德州扑克"
+            android:textColor="@android:color/white"
+            android:textSize="30px" />
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/LinearOne_0"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/checkBoxOne_0"
+                    android:layout_width="130px"
+                    android:layout_height="50px"
+                    android:layout_margin="5px"
+                    android:background="@drawable/item_gameselect1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="豹子"
+                    android:textColor="@color/select_gamecolor1"
+                    android:textSize="30px" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxOne_1"
+                    android:layout_width="130px"
+                    android:layout_height="50px"
+                    android:layout_margin="5px"
+                    android:background="@drawable/item_gameselect1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="四张"
+                    android:textColor="@color/select_gamecolor1"
+                    android:textSize="30px" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxOne_2"
+                    android:layout_width="130px"
+                    android:layout_height="50px"
+                    android:layout_margin="5px"
+                    android:background="@drawable/item_gameselect1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="葫芦"
+                    android:textColor="@color/select_gamecolor1"
+                    android:textSize="30px" />
+
+            </LinearLayout>  <LinearLayout
+                android:id="@+id/LinearTwo_0"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/checkBoxTwo_0"
+                    android:layout_width="130px"
+                    android:layout_height="50px"
+                    android:layout_margin="5px"
+                    android:background="@drawable/item_gameselect1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="顺子"
+                    android:textColor="@color/select_gamecolor1"
+                    android:textSize="30px" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxTwo_1"
+                    android:layout_width="130px"
+                    android:layout_height="50px"
+                    android:layout_margin="5px"
+                    android:background="@drawable/item_gameselect1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="三张"
+                    android:textColor="@color/select_gamecolor1"
+                    android:textSize="30px" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxTwo_2"
+                    android:layout_width="130px"
+                    android:layout_height="50px"
+                    android:layout_margin="5px"
+                    android:background="@drawable/item_gameselect1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="两对"
+                    android:textColor="@color/select_gamecolor1"
+                    android:textSize="30px" />
+
+            </LinearLayout><LinearLayout
+                android:id="@+id/LinearThree_0"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/checkBoxThree_0"
+                    android:layout_width="130px"
+                    android:layout_height="50px"
+                    android:layout_margin="5px"
+                    android:background="@drawable/item_gameselect1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="一对"
+                    android:textColor="@color/select_gamecolor1"
+                    android:textSize="30px" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxThree_1"
+                    android:layout_width="130px"
+                    android:layout_height="50px"
+                    android:layout_margin="5px"
+                    android:background="@drawable/item_gameselect1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="杂牌"
+                    android:textColor="@color/select_gamecolor1"
+                    android:textSize="30px" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxThree_2"
+                    android:layout_width="130px"
+                    android:layout_height="50px"
+                    android:layout_margin="5px"
+                    android:background="@drawable/item_gameselect1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="五离"
+                    android:textColor="@color/select_gamecolor1"
+                    android:textSize="30px" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

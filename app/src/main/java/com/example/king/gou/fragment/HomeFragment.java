@@ -139,6 +139,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         db = dataBaseHelper.getWritableDatabase();
         // getData();
 
+
         RetrofitService.getInstance().GetUserInfo(this);
         mKeyguardManager = (KeyguardManager) getActivity().getSystemService(Context.KEYGUARD_SERVICE);
         manager = FingerprintManagerCompat.from(getActivity());
@@ -211,13 +212,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         return view;
     }
 
-    private void getData() {
-        // TODO Auto-generated method stub
-        for (int i = 0; i < 10; i++) {
-            arrList.add("竖直滚动TextView-数据" + i);
-        }
-    }
-
     Runnable runnable = new Runnable() {
 
         @Override
@@ -225,6 +219,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             // handler自带方法实现定时器
             try {
                 handler.postDelayed(this, 3000);
+
                 Autotext.next();
                 Autotext.setText(arrList.get(count % arrList.size()));
                 count++;
@@ -348,29 +343,14 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         img1.setBackground(getResources().getDrawable(R.drawable.banner_0));
         ImageView img2 = new ImageView(getContext());
         img2.setBackground(getResources().getDrawable(R.drawable.banner_1));
-      /*  Picasso.with(getActivity()).load("file:///android_asset/banner1.webp").into(img1);
-        ImageView img2 = new ImageView(getContext());
-        Picasso.with(getActivity()).load("file:///android_asset/banner2.webp").into(img2);
-        ImageView img3 = new ImageView(getContext());
-        Picasso.with(getActivity()).load("file:///android_asset/banner3.webp").into(img3);
-        ImageView img4 = new ImageView(getContext());
-        Picasso.with(getActivity()).load("file:///android_asset/banner4.webp").into(img4);*/
-       /* img1.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        img2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        img3.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        img4.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));*/
         imgs.add(img1);
         imgs.add(img2);
-        //imgs.add(img3);
-        //  imgs.add(img4);
+
 
     }
 
     private void initScrollView() {
-    /*    Picasso.with(getActivity()).load("file:///android_asset/ic_sports.webp").into(ScrollImg1);
-        Picasso.with(getActivity()).load("file:///android_asset/ic_live_game.webp").into(ScrollImg2);
-        Picasso.with(getActivity()).load("file:///android_asset/ic_electric.webp").into(ScrollImg3);
-        Picasso.with(getActivity()).load("file:///android_asset/ic_lottery.webp").into(ScrollImg4);*/
+
     }
 
     @Override
@@ -393,6 +373,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 hs.add(h);
             }
             adapters.addList(hs);
+
         }
     }
 
@@ -426,7 +407,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                     TextView textView = new TextView(getActivity());
                     textView.setText(Html.fromHtml(listnotice.get(0)));
                     Log.d("这个是首页的公告==", Html.fromHtml(listnotice.get(0)) + "");
+                    textView.setTextColor(Color.parseColor("#FFFFFF"));
                     arrList.add(textView.getText().toString());
+                    Autotext.setVisibility(View.VISIBLE);
                     handler.postDelayed(runnable, 0);
                    /* ArrayList<AdvertisementObject> notices = new ArrayList<AdvertisementObject>();
                     AdvertisementObject advertisementObject = new AdvertisementObject();

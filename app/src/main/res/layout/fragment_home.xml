@@ -51,8 +51,9 @@
         android:id="@+id/Autotext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:layout_below="@id/home_top"></com.example.king.gou.utils.AutoTextView>
+        android:layout_below="@id/home_top"
+        android:visibility="gone"
+        android:background="@android:color/white"></com.example.king.gou.utils.AutoTextView>
 
     <com.jude.rollviewpager.RollPagerView
         android:id="@+id/home_viewpager"

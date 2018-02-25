@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="50px"
+            android:layout_gravity="center"
+            android:layout_margin="5px"
+            android:layout_weight="3"
+            android:background="@drawable/gamecenter_btn"
+            android:gravity="center"
+            android:padding="5px"
+            android:text="庄闲和"
+            android:textColor="@android:color/white"
+            android:textSize="30px" />
+
+        <LinearLayout
+            android:id="@+id/LinearOne"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="9"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/checkBoxOne_0"
+                android:layout_width="130px"
+                android:layout_height="50px"
+                android:layout_margin="5px"
+                android:background="@drawable/item_gameselect1"
+                android:button="@null"
+                android:gravity="center"
+                android:text="庄"
+                android:textColor="@color/select_gamecolor1"
+                android:textSize="30px" />
+
+            <CheckBox
+                android:id="@+id/checkBoxOne_1"
+                android:layout_width="130px"
+                android:layout_height="50px"
+                android:layout_margin="5px"
+                android:background="@drawable/item_gameselect1"
+                android:button="@null"
+                android:gravity="center"
+                android:text="闲"
+                android:textColor="@color/select_gamecolor1"
+                android:textSize="30px" />
+
+            <CheckBox
+                android:id="@+id/checkBoxOne_2"
+                android:layout_width="130px"
+                android:layout_height="50px"
+                android:layout_margin="5px"
+                android:background="@drawable/item_gameselect1"
+                android:button="@null"
+                android:gravity="center"
+                android:text="和"
+                android:textColor="@color/select_gamecolor1"
+                android:textSize="30px" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

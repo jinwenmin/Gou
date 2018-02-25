@@ -67,10 +67,10 @@ public class ProfitLossAdapter extends BaseAdapter {
         viewHolder.winningAmount.setText(ls.get(i).getWinning_amount() + "");
         int type = ls.get(i).getType();
         if (type == 1) {
-            viewHolder.bettingType.setText("彩票娱乐场");
+            viewHolder.bettingType.setText("香港六合彩");
         }
         if (type == 2) {
-            viewHolder.bettingType.setText("香港六合彩");
+            viewHolder.bettingType.setText("彩票娱乐场");
         }
         viewHolder.Uname.setText(ls.get(i).getUname());
 

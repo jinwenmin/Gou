@@ -10,7 +10,7 @@
         android:layout_width="100px"
         android:layout_height="100px"
         android:layout_gravity="center"
-        android:src="@mipmap/ic_launcher" />
+       />
 
     <TextView
         android:id="@+id/HistoryGame"
@@ -19,6 +19,6 @@
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
 
-        android:text="测试"
+        android:text=""
         android:textSize="25px" />
 </LinearLayout>

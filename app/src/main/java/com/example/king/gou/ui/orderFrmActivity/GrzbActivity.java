@@ -266,6 +266,9 @@ public class GrzbActivity extends AutoLayoutActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.gamejl_back:
+                this.finish();
+                break;
             case R.id.relateTime1:
                 //datePickerDialog.show();
                 DatePickDialog dialog = new DatePickDialog(this);
@@ -322,9 +325,7 @@ public class GrzbActivity extends AutoLayoutActivity implements View.OnClickList
                 });
                 dialog2.show();
                 break;
-            case R.id.gamejl_back:
-                finish();
-                break;
+
         }
     }
 

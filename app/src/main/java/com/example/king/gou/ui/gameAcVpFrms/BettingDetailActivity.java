@@ -170,4 +170,10 @@ public class BettingDetailActivity extends AutoLayoutActivity implements HttpEng
                 RetrofitService.getInstance().getLotteryBetRevoke1(this, bd.getBid());
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        bd=null;
+    }
 }

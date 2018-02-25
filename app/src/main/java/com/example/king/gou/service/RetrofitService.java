@@ -17,10 +17,13 @@ import android.widget.ImageView;
 import com.example.king.gou.MyApp;
 import com.example.king.gou.bean.AccountChange;
 import com.example.king.gou.bean.ActivityBean;
+import com.example.king.gou.bean.AliPay;
+import com.example.king.gou.bean.AliPayBean;
 import com.example.king.gou.bean.BettingDetail;
 import com.example.king.gou.bean.BettingSync;
 import com.example.king.gou.bean.CardsData;
 import com.example.king.gou.bean.CunQu;
+import com.example.king.gou.bean.EBao;
 import com.example.king.gou.bean.GamePrize;
 import com.example.king.gou.bean.GameType;
 import com.example.king.gou.bean.JoinActivity;
@@ -30,6 +33,8 @@ import com.example.king.gou.bean.LotteryLoss;
 import com.example.king.gou.bean.MapsIdAndValue;
 import com.example.king.gou.bean.Message;
 import com.example.king.gou.bean.RecordList;
+import com.example.king.gou.bean.Remittance;
+import com.example.king.gou.bean.Remittance_Record;
 import com.example.king.gou.bean.RestultInfo;
 
 import com.example.king.gou.bean.SetRate;
@@ -117,7 +122,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_USERAMOUNT = 3;//用户的总金额
     public static int API_ID_USERINFO = 4;//用户的基本信息
     public static int API_ID_NOTICECONTENT = 5;//公告
-    public static int API_ID_NOTICECONTENT2 = 6;//公告详情
+    public static int API_ID_NOTICECONTENT2 = 6;//公告详情G
     public static int API_ID_UPDATENICKNAME = 7;//修改用户昵称
     public static int API_ID_SAFEQUES = 8;//获取安全问题
     public static int API_ID_UPDATAPWD = 9;//修改登录密码
@@ -192,6 +197,12 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_BETREVOKE1 = 78;//撤销投注单
     public static int API_ID_GENERALIZESAVE = 79;//推广设置
     public static int API_ID_CHECKCAEDNUM = 80;//验证银行卡
+    public static int API_ID_YEEPAY = 81;//APP易宝支付初始参数获取
+    public static int API_ID_OWNRECHARGESAVE = 82;//APP易宝支付初始参数获取
+    public static int API_ID_ALIPAY = 83;//APP易宝支付初始参数获取
+    public static int API_ID_ALIPAYRECHARGESAVE = 84;//APP易宝支付初始参数获取
+    public static int API_ID_ALIPAYSUBMIT = 85;//支付宝支付确认
+    public static int API_ID_REMITTANCE = 86;//
 
     private Retrofit retrofit;
     private ApiInterface apiInterface;
@@ -264,7 +275,7 @@ public class RetrofitService extends HttpEngine {
                     }
                 })
                 .addInterceptor(new ReceivedCookiesInterceptor())
-                .connectTimeout(40, TimeUnit.SECONDS).build();
+                .connectTimeout(60, TimeUnit.SECONDS).build();
         Gson gson = new GsonBuilder().setLenient().create();
 
         retrofit = new Retrofit.Builder()
@@ -1781,6 +1792,8 @@ public class RetrofitService extends HttpEngine {
                     String end = null;
                     double nums = 0;
                     double amounts = 0;
+                    double min = 0;
+                    double max = 0;
                     List<List<WithDraw>> ws = new ArrayList<List<WithDraw>>();
                     if (map.size() > 0) {
                         for (Map.Entry<String, Object> entry : map.entrySet()) {
@@ -1802,6 +1815,12 @@ public class RetrofitService extends HttpEngine {
                             if ("amounts".equals(entry.getKey())) {
                                 amounts = (double) entry.getValue();
                             }
+                            if ("min".equals(entry.getKey())) {
+                                min = (double) entry.getValue();
+                            }
+                            if ("max".equals(entry.getKey())) {
+                                max = (double) entry.getValue();
+                            }
                             if ("cards".equals(entry.getKey())) {
                                 cards = (List<List<Object>>) entry.getValue();
                             }
@@ -1815,6 +1834,8 @@ public class RetrofitService extends HttpEngine {
                     withDraw.setEnd(end);
                     withDraw.setNums(RxUtils.getInstance().getInt(nums));
                     withDraw.setAmounts(BigDecimal.valueOf(amounts));
+                    withDraw.setMin(min);
+                    withDraw.setMax(max);
                     w.add(withDraw);
                     ws.add(w);
                     List<WithDraw> w2 = new ArrayList<WithDraw>();
@@ -4186,17 +4207,31 @@ public class RetrofitService extends HttpEngine {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> tokenSignin = apiInterface.getTokenSignin(1, reqkey, currentTimeMillis);
-        Call<Object> clone = tokenSignin.clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<Map<String, String>> tokenSignin = apiInterface.getTokenSignin(1, reqkey, currentTimeMillis);
+        Call<Map<String, String>> clone = tokenSignin.clone();
+        clone.enqueue(new Callback<Map<String, String>>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<Map<String, String>> call, retrofit2.Response<Map<String, String>> response) {
                 if (response.code() == 200) {
                     Log.d("Token自动登录", response.body().toString());
+                    Map<String, String> map = new HashMap<>();
+                    map = response.body();
+                    boolean state = false;
+                    String message = "";
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, String> entry : map.entrySet()) {
+                            if (entry.getKey().equals("state")) {
+                                state = Boolean.parseBoolean(entry.getValue());
+                            }
+                            if (entry.getKey().equals("message")) {
+                                message = entry.getValue();
+                            }
+
+                        }
+                    }
                     RestultInfo restultInfo = new RestultInfo();
-                    String t = response.body().toString();
-                    String state = t.substring(t.indexOf("state=") + 6, t.indexOf(", message="));
-                    String message = t.substring(t.indexOf("message=") + 8, t.length() - 1);
+                    restultInfo.setState(state);
+                    restultInfo.setMessage(message);
                     if ("true".equals(state)) {
                         restultInfo.setState(true);
                     } else {
@@ -4208,7 +4243,7 @@ public class RetrofitService extends HttpEngine {
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, String>> call, Throwable t) {
 
             }
         });
@@ -5047,12 +5082,7 @@ public class RetrofitService extends HttpEngine {
                             }
                         }
                     }
-                /*    String others1 = s.substring(s.indexOf("others={") + 8, s.length() - 2);
-                    String[] so = others.split(", ");
-                    for (int i = 0; i < so.length; i++) {
-                        Log.d("获取上级充值数据Split", so[i]);
-                    }
-                    int i = 0;*/
+
                     String ruser = null;
                     String username = null;
                     Boolean haspass = false;
@@ -5837,4 +5867,393 @@ public class RetrofitService extends HttpEngine {
         });
 
     }
+
+    //APP易宝支付初始参数获取
+    public void getYeePay(final DataListener listener) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Map<String, Object>> getyeelay = apiInterface.getYeePay(1, reqkey, currentTimeMillis);
+        Call<Map<String, Object>> clone = getyeelay.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
+            @Override
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
+                Log.d("APP易宝支付初始参数获取Code", response.code() + "");
+                if (response.code() == 200) {
+                    Log.d("APP易宝支付初始参数获取", response.body().toString());
+                    Map<String, Object> map = response.body();
+                    EBao eBao = new EBao();
+                    Map<String, Object> others = new HashMap<>();
+                    List<EBao.Others.Banks> banks1 = new ArrayList<>();
+                    EBao eBao1 = new EBao();
+                    EBao.Others others1 = eBao1.new Others();
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if (entry.getKey().equals("rc")) {
+                                eBao.setRc((Boolean) entry.getValue());
+                            }
+                            if (entry.getKey().equals("msg")) {
+                                eBao.setMsg((String) entry.getValue());
+                            }
+                            if (entry.getKey().equals("id")) {
+                                eBao.setId(RxUtils.getInstance().getInt(entry.getValue()));
+                            }
+                            if (entry.getKey().equals("others")) {
+                                others = (Map<String, Object>) entry.getValue();
+                            }
+                        }
+                    }
+                    if (others.size() > 0) {
+                        for (Map.Entry<String, Object> entry : others.entrySet()) {
+                            if (entry.getKey().equals("min")) {
+                                others1.setMin(
+                                        (Double) entry.getValue()
+                                );
+                            }
+                            if (entry.getKey().equals("max")) {
+                                others1.setMax((Double) entry.getValue());
+                            }
+                            if (entry.getKey().equals("freeze")) {
+                                others1.setFreeze((Boolean) entry.getValue());
+                            }
+                            if (entry.getKey().equals("banks")) {
+                                banks1 = (List<EBao.Others.Banks>) entry.getValue();
+                            }
+                        }
+                    }
+                    List<EBao.Others.Banks> bs = new ArrayList<>();
+                    for (int i = 0; i < banks1.size(); i++) {
+                        Map<String, Object> bk = (Map<String, Object>) banks1.get(i);
+                        String code = "";
+                        String name = "";
+                        if (bk.size() > 0) {
+                            for (Map.Entry<String, Object> entry : bk.entrySet()) {
+                                if (entry.getKey().equals("code")) {
+                                    code = (String) entry.getValue();
+                                }
+                                if (entry.getKey().equals("name")) {
+                                    name = (String) entry.getValue();
+                                }
+                            }
+                        }
+                        EBao.Others.Banks banks2 = others1.new Banks();
+                        banks2.setCode(code);
+                        banks2.setName(name);
+                        bs.add(banks2);
+                    }
+                    others1.setBanks(bs);
+
+                    eBao.setOthers(others1);
+                    Log.d("银行的信息Code_Name", eBao.toString());
+
+                    listener.onReceivedData(API_ID_YEEPAY, eBao, API_ID_ERROR);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+
+            }
+        });
+    } //易宝支付保存
+
+    public void getOwnRechargeSave(final DataListener listener, String p5_Pid, String pd_FrpId, Integer amount) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("p5_Pid", p5_Pid);
+        map.put("pd_FrpId", pd_FrpId);
+        map.put("amount", amount + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<RestultInfo> OwnRechargeSave = apiInterface.getOwnRechargeSave(1, p5_Pid, pd_FrpId, amount, reqkey, currentTimeMillis);
+        Call<RestultInfo> clone = OwnRechargeSave.clone();
+        clone.enqueue(new Callback<RestultInfo>() {
+            @Override
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+                Log.d("易宝支付保存Code", response.code() + "");
+                if (response.code() == 200) {
+                    Log.d("易宝支付保存", response.body().toString());
+                    listener.onReceivedData(API_ID_OWNRECHARGESAVE, response.body(), API_ID_ERROR);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //三、支付宝支付
+    public void getAliPay(final DataListener listener) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        final Call<Map<String, Object>> AliPay1 = apiInterface.getAliPay(1, reqkey, currentTimeMillis);
+        Call<Map<String, Object>> clone = AliPay1.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
+            @Override
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
+                Log.d("支付宝支付Code", response.code() + "");
+                if (response.code() == 200) {
+                    Log.d("支付宝支付", response.body().toString());
+                    Map<String, Object> map = response.body();
+                    AliPay aliPay = new AliPay();
+                    Map<String, Object> others = new HashMap<>();
+                    AliPay.Others os = aliPay.new Others();
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if (entry.getKey().equals("others")) {
+                                others = (Map<String, Object>) entry.getValue();
+                            }
+                        }
+                    }
+
+                    List<Remittance_Record> RR = new ArrayList<>();
+                    if (others.size() > 0) {
+                        double min = 0;
+                        double max = 0;
+                        boolean freeze = false;
+                        List<Object> rr = new ArrayList<>();
+
+
+                        for (Map.Entry<String, Object> entry : others.entrySet()) {
+                            if (entry.getKey().equals("min")) {
+                                min = (double) entry.getValue();
+                            }
+                            if (entry.getKey().equals("max")) {
+                                max = (double) entry.getValue();
+                            }
+                            if (entry.getKey().equals("freeze")) {
+                                freeze = (boolean) entry.getValue();
+                            }
+                            if (entry.getKey().equals("record")) {
+                                rr = (List<Object>) entry.getValue();
+                            }
+                        }
+
+                        for (int i = 0; i < rr.size(); i++) {
+                            Remittance_Record Rs = new Remittance_Record();
+                            List<Object> rs = (List<Object>) rr.get(i);
+                            Rs.setDatetime((String) rs.get(1));
+                            Rs.setAmount(RxUtils.getInstance().getInt(rs.get(2)));
+                            Rs.setNote((String) rs.get(3));
+                            Rs.setStatus(RxUtils.getInstance().getInt(rs.get(4)));
+                            Rs.setRemark((String) rs.get(5));
+                            RR.add(Rs);
+                        }
+                        os.setFreeze(freeze);
+                        os.setMax(max);
+                        os.setMin(min);
+                        os.setRecords(RR);
+                        aliPay.setOthers(os);
+
+                    }
+                    Log.d("支付宝支付ToString", aliPay.toString());
+                    listener.onReceivedData(API_ID_ALIPAY, aliPay, API_ID_ERROR);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //APP支付宝支付保存
+    public void getAliPlayReChargeSave(final DataListener listener, int type, Integer amount, String holders_name, String account_number) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("type", type + "");
+        map.put("amount", amount + "");
+        map.put("holders_name", holders_name + "");
+        map.put("account_number", account_number + "");
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<Map<String, Object>> AliPlayReChargeSave = apiInterface.getAliPlayReChargeSave(1, type, amount, holders_name, account_number, reqkey, currentTimeMillis);
+        Call<Map<String, Object>> clone = AliPlayReChargeSave.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
+            @Override
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
+                Log.d("APP支付宝支付保存Code", response.code() + "");
+                if (response.code() == 200) {
+                    Log.d("APP支付宝支付保存", response.body().toString());
+                    Map<String, Object> map = response.body();
+                    AliPayBean aliPayBean = new AliPayBean();
+                    Map<String, Object> others = new HashMap<>();
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if (entry.getKey().equals("rc")) {
+                                aliPayBean.setRc((Boolean) entry.getValue());
+                            }
+                            if (entry.getKey().equals("msg")) {
+                                aliPayBean.setMsg((String) entry.getValue());
+                            }
+                            if (entry.getKey().equals("id")) {
+                                aliPayBean.setId(RxUtils.getInstance().getInt(entry.getValue()));
+                            }
+                            if (entry.getKey().equals("others")) {
+                                others = (Map<String, Object>) entry.getValue();
+                            }
+                        }
+                    }
+                    if (others.size() > 0) {
+                        String note = "";
+                        String bank_name = "";
+                        String holders_name = "";
+                        String account_number = "";
+                        String bank_address = "";
+                        for (Map.Entry<String, Object> entry : others.entrySet()) {
+                            if (entry.getKey().equals("note")) {
+                                note = (String) entry.getValue();
+                            }
+                            if (entry.getKey().equals("bank_name")) {
+                                bank_name = (String) entry.getValue();
+                            }
+                            if (entry.getKey().equals("holders_name")) {
+                                holders_name = (String) entry.getValue();
+                            }
+                            if (entry.getKey().equals("account_number")) {
+                                account_number = (String) entry.getValue();
+                            }
+                            if (entry.getKey().equals("bank_address")) {
+                                bank_address = (String) entry.getValue();
+                            }
+                        }
+                        AliPayBean.Others others1 = aliPayBean.new Others();
+                        others1.setNote(note);
+                        others1.setBank_name(bank_name);
+                        others1.setHolders_name(holders_name);
+                        others1.setAccount_number(account_number);
+                        others1.setBank_address(bank_address);
+                        aliPayBean.setOthers(others1);
+                    }
+                    Log.d("APP支付宝支付保存String", aliPayBean.toString());
+                    listener.onReceivedData(API_ID_ALIPAYRECHARGESAVE, aliPayBean, API_ID_ERROR);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //支付宝支付确认支付
+    public void getAliPlayReChargeSubmit(final DataListener listener, int id, String note) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+        map.put("id", id + "");
+        map.put("note", note + "");
+
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        Call<RestultInfo> AliPlayReChargeSubmit = apiInterface.getAliPlayReChargeSubmit(1, id, note, reqkey, currentTimeMillis);
+        Call<RestultInfo> clone = AliPlayReChargeSubmit.clone();
+        clone.enqueue(new Callback<RestultInfo>() {
+            @Override
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
+                Log.d("支付宝支付确认支付Code", response.code() + "");
+                if (response.code() == 200) {
+                    Log.d("支付宝支付确认支付", response.body().toString());
+                    listener.onReceivedData(API_ID_ALIPAYSUBMIT, response.body(), API_ID_ERROR);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //转账汇款：APP支付宝支付初始参数获取
+    public void getRemittance(final DataListener listener) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<>();
+
+
+        String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
+        final Call<Map<String, Object>> Remittances = apiInterface.getRemittance(1, reqkey, currentTimeMillis);
+        Call<Map<String, Object>> clone = Remittances.clone();
+        clone.enqueue(new Callback<Map<String, Object>>() {
+            @Override
+            public void onResponse(Call<Map<String, Object>> call, retrofit2.Response<Map<String, Object>> response) {
+                Log.d("转账汇款Code", response.code() + "");
+                if (response.code() == 200) {
+                    Log.d("转账汇款", response.body().toString());
+                    Map<String, Object> map = response.body();
+                    Map<String, Object> others = new HashMap<>();
+                    Remittance remittance = new Remittance();
+                    Remittance.Others os = remittance.new Others();
+                    if (map.size() > 0) {
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if (entry.getKey().equals("rc")) {
+                                remittance.setRc((Boolean) entry.getValue());
+                            }
+                            if (entry.getKey().equals("msg")) {
+                                remittance.setMsg((String) entry.getValue());
+                            }
+                            if (entry.getKey().equals("id")) {
+                                remittance.setId(RxUtils.getInstance().getInt(entry.getValue()));
+                            }
+                            if (entry.getKey().equals("others")) {
+                                others = (Map<String, Object>) entry.getValue();
+                            }
+                        }
+                    }
+                    List<Remittance_Record> RR = new ArrayList<>();
+                    if (others.size() > 0) {
+                        double min = 0;
+                        double max = 0;
+                        boolean freeze = false;
+                        List<Object> rr = new ArrayList<>();
+
+
+                        for (Map.Entry<String, Object> entry : others.entrySet()) {
+                            if (entry.getKey().equals("min")) {
+                                min = (double) entry.getValue();
+                            }
+                            if (entry.getKey().equals("max")) {
+                                max = (double) entry.getValue();
+                            }
+                            if (entry.getKey().equals("freeze")) {
+                                freeze = (boolean) entry.getValue();
+                            }
+                            if (entry.getKey().equals("record")) {
+                                rr = (List<Object>) entry.getValue();
+                            }
+                        }
+
+                        for (int i = 0; i < rr.size(); i++) {
+                            Remittance_Record Rs = new Remittance_Record();
+                            List<Object> rs = (List<Object>) rr.get(i);
+                            Rs.setDatetime((String) rs.get(1));
+                            Rs.setAmount(RxUtils.getInstance().getInt(rs.get(2)));
+                            Rs.setNote((String) rs.get(3));
+                            Rs.setStatus(RxUtils.getInstance().getInt(rs.get(4)));
+                            Rs.setRemark((String) rs.get(5));
+                            RR.add(Rs);
+                        }
+                        os.setFreeze(freeze);
+                        os.setMax(max);
+                        os.setMin(min);
+                        os.setRR(RR);
+                        remittance.setOthers(os);
+
+                    }
+                    Log.d("转账汇款ToString", remittance.toString());
+                    listener.onReceivedData(API_ID_REMITTANCE, remittance, API_ID_ERROR);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+
+            }
+        });
+    }
+
+
 }

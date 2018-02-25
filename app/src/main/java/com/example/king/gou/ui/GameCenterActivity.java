@@ -274,7 +274,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 if (adapterTypeMoney.getItem(i).contains("最")) {
                     MoneyCount.setText("奖金详情");
                 } else {
-                    MoneyCount.setText(adapterTypeMoney.getItem(i) + "");
+                    MoneyCount.setText(RxUtils.getInstance().getDouble2(Double.parseDouble(adapterTypeMoney.getItem(i))) + "");
                 }
             }
 
@@ -1674,9 +1674,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                         seleNums = 2;
                     }
                     if (s.length() > seleNums - 1) {
-                        if (s.contains(",")) {
+                        if (s.contains(",") || s.contains(" ")) {
                             NS = new ArrayList<String>();
-                            String[] sp = s.split(",");
+                            String[] sp = s.split(" |,");
 
                             int c = 0;
                             for (int i3 = 0; i3 < sp.length; i3++) {
@@ -3412,31 +3412,42 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        for (int i2 = 1; i2 < linear1.getChildCount(); i2++) {
+                            CheckBox at = (CheckBox) linear1.getChildAt(i2);
+                            int c = 0;
+                            if (at.isChecked()) {
+                                c++;
+                            }
+                            if (c == 0) {
+                                setGameMoney(0);
+                            }
+                        }
                         if (b) {
                             for (int i1 = 1; i1 < linear1.getChildCount(); i1++) {
                                 CheckBox at1 = (CheckBox) linear1.getChildAt(i1);
                                 if (i1 != finalI) {
                                     at1.setChecked(false);
+
                                 } else {
                                     at1.setChecked(true);
+                                    if ("star_3_next_group_any".equals(code)
+                                            || "star_3_prev_group_any".equals(code)
+                                            || "star_3_midd_group_any".equals(code)
+
+                                            || "2min_star_3_next_group_any".equals(code)
+                                            || "2min_star_3_prev_group_any".equals(code)
+                                            || "2min_star_3_midd_group_any".equals(code)) {
+                                        setGameMoney(54);
+                                    } else {
+                                        setGameMoney(9);
+                                    }
                                 }
                             }
                         }
                     }
                 });
             }
-            ((CheckBox) linear1.getChildAt(1)).setChecked(true);
-            if ("star_3_next_group_any".equals(code)
-                    || "star_3_prev_group_any".equals(code)
-                    || "star_3_midd_group_any".equals(code)
 
-                    || "2min_star_3_next_group_any".equals(code)
-                    || "2min_star_3_prev_group_any".equals(code)
-                    || "2min_star_3_midd_group_any".equals(code)) {
-                setGameMoney(54);
-            } else {
-                setGameMoney(9);
-            }
         }
         if (
                 "star_3_prev_duplex".equals(code)
@@ -4157,9 +4168,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     int seleNums = 2;
                     List<String> NS;
                     if (s.length() > seleNums - 1) {
-                        if (s.contains(",")) {
+                        if (s.contains(",") || s.contains(" ")) {
                             NS = new ArrayList<String>();
-                            String[] sp = s.split(",");
+                            String[] sp = s.split(" |,");
                             Log.d("单式模式的Sp", sp.length + "");
                             int c = 0;
                             for (int i3 = 0; i3 < sp.length; i3++) {
@@ -4705,9 +4716,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     int seleNums = 3;
                     List<String> NS;
                     if (s.length() > seleNums - 1) {
-                        if (s.contains(",")) {
+                        if (s.contains(",") || s.contains(" ")) {
                             NS = new ArrayList<String>();
-                            String[] sp = s.split(",");
+                            String[] sp = s.split(" |,");
                             Log.d("单式模式的Sp", sp.length + "");
                             int c = 0;
                             count[0] = 0;
@@ -5084,9 +5095,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     int seleNums = 3;
                     count[0] = 0;
                     if (s.length() > seleNums - 1) {
-                        if (s.contains(",")) {
+                        if (s.contains(",") || s.contains(" ")) {
                             NS = new ArrayList<String>();
-                            String[] sp = s.split(",");
+                            String[] sp = s.split(" |,");
                             for (int i3 = 0; i3 < sp.length; i3++) {
                                 String s1 = sp[i3];
                                 Log.d("单式模式的判断", s1 + "");
@@ -5491,9 +5502,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     int seleNums = 4;
                     sum[0] = 0;
                     if (s.length() > seleNums - 1) {
-                        if (s.contains(",")) {
+                        if (s.contains(",") || s.contains(" ")) {
                             NS = new ArrayList<String>();
-                            String[] sp = s.split(",");
+                            String[] sp = s.split(" |,");
                             for (int i3 = 0; i3 < sp.length; i3++) {
                                 String s1 = sp[i3];
                                 Log.d("单式模式的判断", s1 + "");
@@ -5803,8 +5814,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 }
                             }
                         }
-                        sum[0] = nns.size() * mms.size() * (mms.size() - 1) / 2 - d * (mms.size() - 1);
-                        setGameMoney(nns.size() * mms.size() * (mms.size() - 1) / 2 - d * (mms.size() - 1));
+                        sum[0] = nns.size() * mms.size() * (mms.size() - 1) / 2 - d * (mms.size() - 1) * Integer.parseInt(FangAnNum.getText().toString());
+                        setGameMoney(sum[0]);
                     }
                 });
             }
@@ -5832,8 +5843,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                                 }
                             }
                         }
-                        sum[0] = nns.size() * mms.size() * (mms.size() - 1) / 2 - d * (mms.size() - 1);
-                        setGameMoney(nns.size() * mms.size() * (mms.size() - 1) / 2 - d * (mms.size() - 1));
+                        sum[0] = nns.size() * mms.size() * (mms.size() - 1) / 2 - d * (mms.size() - 1) * Integer.parseInt(FangAnNum.getText().toString());
+                        setGameMoney(sum[0]);
                     }
                 });
             }
@@ -8701,7 +8712,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
             final int[] c5 = {0};
             final int[] c6 = {0};
 
-            for (int i = 1; i < Linear1.getChildCount(); i++) {
+            for (int i = 0; i < Linear1.getChildCount(); i++) {
                 CheckBox at = (CheckBox) Linear1.getChildAt(i);
                 at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -8715,7 +8726,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     }
                 });
             }
-            for (int i = 1; i < Linear2.getChildCount(); i++) {
+            for (int i = 0; i < Linear2.getChildCount(); i++) {
                 CheckBox at = (CheckBox) Linear2.getChildAt(i);
                 at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -8729,7 +8740,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     }
                 });
             }
-            for (int i = 1; i < Linear3.getChildCount(); i++) {
+            for (int i = 0; i < Linear3.getChildCount(); i++) {
                 CheckBox at = (CheckBox) Linear3.getChildAt(i);
                 at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -8743,7 +8754,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     }
                 });
             }
-            for (int i = 1; i < Linear4.getChildCount(); i++) {
+            for (int i = 0; i < Linear4.getChildCount(); i++) {
                 CheckBox at = (CheckBox) Linear4.getChildAt(i);
                 at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -8757,7 +8768,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     }
                 });
             }
-            for (int i = 1; i < Linear5.getChildCount(); i++) {
+            for (int i = 0; i < Linear5.getChildCount(); i++) {
                 CheckBox at = (CheckBox) Linear5.getChildAt(i);
                 at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -8771,7 +8782,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     }
                 });
             }
-            for (int i = 1; i < Linear6.getChildCount(); i++) {
+            for (int i = 0; i < Linear6.getChildCount(); i++) {
                 CheckBox at = (CheckBox) Linear6.getChildAt(i);
                 at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -9654,7 +9665,385 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 });
             }
         }
+        if (
+                "bcr_bank_play_tie".equals(code)
+                        || "2min_bcr_bank_play_tie".equals(code)
+                ) {
+            inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_chess_g1_1, null, false);
+            LinearLayout Linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            final int[] c = {0};
+
+            for (int i = 0; i < Linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear1.getChildAt(i);
+                at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (b) {
+                            c[0]++;
+                        } else {
+                            c[0]--;
+                        }
+                        setGameMoney(c[0]);
+                    }
+                });
+            }
+        }
+        if (
+                "bcr_bank_play_pair".equals(code)
+                        || "2min_bcr_bank_play_pair".equals(code)
+                ) {
+            inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_chess_g1_2, null, false);
+            LinearLayout Linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            final int[] c = {0};
+            for (int i = 0; i < Linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear1.getChildAt(i);
+                at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (b) {
+                            c[0]++;
+                        } else {
+                            c[0]--;
+                        }
+                        setGameMoney(c[0]);
+                    }
+                });
+            }
+        }
+        if (
+                "bcr_special".equals(code)
+                        || "2min_bcr_special".equals(code)
+                ) {
+            inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_chess_g1_3, null, false);
+            LinearLayout Linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne_0);
+            LinearLayout Linear2 = (LinearLayout) inte.findViewById(R.id.LinearOne_1);
+            LinearLayout Linear3 = (LinearLayout) inte.findViewById(R.id.LinearTwo_0);
+            LinearLayout Linear4 = (LinearLayout) inte.findViewById(R.id.LinearTwo_1);
+            final int[] c = {0};
+            for (int i = 0; i < Linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear1.getChildAt(i);
+                at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (b) {
+                            c[0]++;
+                        } else {
+                            c[0]--;
+                        }
+                        setGameMoney(c[0]);
+                    }
+                });
+            }
+            for (int i = 0; i < Linear2.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear2.getChildAt(i);
+                at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (b) {
+                            c[0]++;
+                        } else {
+                            c[0]--;
+                        }
+                        setGameMoney(c[0]);
+                    }
+                });
+            }
+            for (int i = 0; i < Linear3.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear3.getChildAt(i);
+                at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (b) {
+                            c[0]++;
+                        } else {
+                            c[0]--;
+                        }
+                        setGameMoney(c[0]);
+                    }
+                });
+            }
+            for (int i = 0; i < Linear4.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear4.getChildAt(i);
+                at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (b) {
+                            c[0]++;
+                        } else {
+                            c[0]--;
+                        }
+                        setGameMoney(c[0]);
+                    }
+                });
+            }
+        }
+        if (
+                "cow".equals(code)
+                        || "2min_cow".equals(code)
+                ) {
+            inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_chess_g2_1, null, false);
+            LinearLayout Linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne_0);
+            LinearLayout Linear2 = (LinearLayout) inte.findViewById(R.id.LinearOne_1);
+            LinearLayout Linear3 = (LinearLayout) inte.findViewById(R.id.LinearOne_2);
+            final int[] c = {0};
+            for (int i = 0; i < Linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear1.getChildAt(i);
+                at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (b) {
+                            c[0]++;
+                        } else {
+                            c[0]--;
+                        }
+                        setGameMoney(c[0]);
+                    }
+                });
+            }
+            for (int i = 0; i < Linear2.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear2.getChildAt(i);
+                at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (b) {
+                            c[0]++;
+                        } else {
+                            c[0]--;
+                        }
+                        setGameMoney(c[0]);
+                    }
+                });
+            }
+            for (int i = 0; i < Linear3.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear3.getChildAt(i);
+                at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (b) {
+                            c[0]++;
+                        } else {
+                            c[0]--;
+                        }
+                        setGameMoney(c[0]);
+                    }
+                });
+            }
+        }
+        if (
+                "cow_special".equals(code)
+                        || "2min_cow_special".equals(code)
+                ) {
+            inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_chess_g2_2, null, false);
+            LinearLayout Linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            final int[] c = {0};
+            for (int i = 0; i < Linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear1.getChildAt(i);
+                at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (b) {
+                            c[0]++;
+                        } else {
+                            c[0]--;
+                        }
+                        setGameMoney(c[0]);
+                    }
+                });
+            }
+        }
+        if (
+                "texas".equals(code)
+                        || "2min_texas".equals(code)
+                ) {
+            inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_chess_g3_1, null, false);
+            LinearLayout Linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne_0);
+            LinearLayout Linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo_0);
+            LinearLayout Linear3 = (LinearLayout) inte.findViewById(R.id.LinearThree_0);
+            final int[] c = {0};
+            for (int i = 0; i < Linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear1.getChildAt(i);
+                at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (b) {
+                            c[0]++;
+                        } else {
+                            c[0]--;
+                        }
+                        setGameMoney(c[0]);
+                    }
+                });
+            }
+            for (int i = 0; i < Linear2.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear2.getChildAt(i);
+                at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (b) {
+                            c[0]++;
+                        } else {
+                            c[0]--;
+                        }
+                        setGameMoney(c[0]);
+                    }
+                });
+            }
+            for (int i = 0; i < Linear3.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear3.getChildAt(i);
+                at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (b) {
+                            c[0]++;
+                        } else {
+                            c[0]--;
+                        }
+                        setGameMoney(c[0]);
+                    }
+                });
+            }
+        }
+        if (
+                "tp_left_right_tie".equals(code)
+                        || "2min_tp_left_right_tie".equals(code)
+                ) {
+            inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_chess_g4_1, null, false);
+            LinearLayout Linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+
+            final int[] c = {0};
+            for (int i = 0; i < Linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear1.getChildAt(i);
+                at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (b) {
+                            c[0]++;
+                        } else {
+                            c[0]--;
+                        }
+                        setGameMoney(c[0]);
+                    }
+                });
+            }
+        }
+        if (
+                "tp_special".equals(code)
+                        || "2min_tp_special".equals(code)
+                ) {
+            inte = LayoutInflater.from(GameCenterActivity.this).inflate(R.layout.item_chess_g4_2, null, false);
+            LinearLayout Linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne_0);
+            LinearLayout Linear2 = (LinearLayout) inte.findViewById(R.id.LinearOne_1);
+            LinearLayout Linear3 = (LinearLayout) inte.findViewById(R.id.LinearTwo_0);
+            LinearLayout Linear4 = (LinearLayout) inte.findViewById(R.id.LinearTwo_1);
+            final int[] c = {0};
+            for (int i = 0; i < Linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear1.getChildAt(i);
+                at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (b) {
+                            c[0]++;
+                        } else {
+                            c[0]--;
+                        }
+                        setGameMoney(c[0]);
+                    }
+                });
+            }
+            for (int i = 0; i < Linear2.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear2.getChildAt(i);
+                at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (b) {
+                            c[0]++;
+                        } else {
+                            c[0]--;
+                        }
+                        setGameMoney(c[0]);
+                    }
+                });
+            }
+            for (int i = 0; i < Linear3.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear3.getChildAt(i);
+                at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (b) {
+                            c[0]++;
+                        } else {
+                            c[0]--;
+                        }
+                        setGameMoney(c[0]);
+                    }
+                });
+            }
+            for (int i = 0; i < Linear4.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear4.getChildAt(i);
+                at.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (b) {
+                            c[0]++;
+                        } else {
+                            c[0]--;
+                        }
+                        setGameMoney(c[0]);
+                    }
+                });
+            }
+        }
         GameCenterLinear.addView(inte);
+    }
+
+    public String getChessItem(String c) {
+        String s = "";
+        if (c.equals("和") || c.equals("没牛")) {
+            s = "0";
+        }
+        if (c.equals("庄") || c.equals("庄对") || c.equals("庄大") || c.equals("闲大") || c.equals("牛一") || c.equals("豹子") || c.equals("左闲") || c.equals("左闲尾大") || c.equals("右闲尾大")) {
+            s = "1";
+        }
+        if (c.equals("闲") || c.equals("闲对") || c.equals("庄小") || c.equals("闲小") || c.equals("牛二") || c.equals("四张") || c.equals("右闲") || c.equals("左闲尾小") || c.equals("右闲尾小")) {
+            s = "2";
+        }
+        if (c.equals("庄单") || c.equals("闲单") || c.equals("牛三") || c.equals("葫芦") || c.equals("左闲尾单") || c.equals("右闲尾单")) {
+            s = "3";
+        }
+        if (c.equals("庄双") || c.equals("闲双") || c.equals("牛四") || c.equals("顺子") || c.equals("左闲尾双") || c.equals("右闲尾双")) {
+            s = "4";
+        }
+        if (c.equals("庄质") || c.equals("闲质") || c.equals("牛五") || c.equals("三张") || c.equals("左闲尾质") || c.equals("右闲尾质")) {
+            s = "5";
+        }
+        if (c.equals("庄合") || c.equals("闲合") || c.equals("牛六") || c.equals("两对") || c.equals("左闲尾合") || c.equals("右闲尾合")) {
+            s = "6";
+        }
+        if (c.equals("牛七") || c.equals("一对")) {
+            s = "7";
+        }
+        if (c.equals("牛八") || c.equals("杂牌")) {
+            s = "8";
+        }
+        if (c.equals("牛九") || c.equals("五离")) {
+            s = "9";
+        }
+        if (c.equals("牛牛")) {
+            s = "10";
+        }
+        if (c.equals("牛大")) {
+            s = "56789";
+        }
+        if (c.equals("牛小")) {
+            s = "01234";
+        }
+        if (c.equals("牛单")) {
+            s = "13579";
+        }
+        if (c.equals("牛双")) {
+            s = "02468";
+        }
+        return s;
     }
 
     private void ChangeDesText(int potion) {
@@ -9668,8 +10057,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         Double coe = rates.getCoefficient();
         Double rate = rates.getRate();
         List<String> list = new ArrayList<>();
-        String mins = min + "";
-        String maxs = min + coe * rate + "";
+        String mins = RxUtils.getInstance().getDouble2(min);
+        String maxs = RxUtils.getInstance().getDouble2(min + coe * rate);
         if (min == 0) {
             mins = "最低奖";
         }
@@ -12511,7 +12900,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
             }
             pickedNumber = strt1;
             pickedText = str;
-            nums = count;
+            // nums = count;
         }
         if (
                 "lhc_special_max_min_odd_even".equals(code)
@@ -12968,14 +13357,6 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
             String s = editT.getText().toString().trim();
             int n = 0;
             List<String> ns = new ArrayList<>();
-            if ("".equals(s) || " ".equals(s)) {
-                //Toasty.error(GameCenterActivity.this, "未输入投注", 2000).show();
-                return;
-            }
-            if (s.substring(s.length() - 1, s.length()).equals(",")) {
-                s = s.substring(s.length() - 1, s.length());
-            }
-
             for (int i = 0; i < linear1.getChildCount(); i++) {
                 CheckBox at = (CheckBox) linear1.getChildAt(i);
                 if (at.isChecked()) {
@@ -12983,14 +13364,16 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     ns.add(at.getText().toString().substring(0, 1));
                 }
             }
-
-
             if (n < 2) {
                 Toasty.error(GameCenterActivity.this, "请至少选择一注,请重新投注.", 2000).show();
                 return;
             }
             int GameNum = Integer.parseInt(GameZhu.getText().toString());
-            if (Integer.parseInt(GameZhu.getText().toString()) > 1) {
+            if (GameNum < 1) {
+                Toasty.error(GameCenterActivity.this, "请至少选择一注,请重新投注.", 2000).show();
+                return;
+            }
+            /*if (Integer.parseInt(GameZhu.getText().toString()) > 1) {
                 String[] PickSp = pickedNumber.split(",");
                 Log.d("单式的内容Pick", pickedNumber);
                 Set set = new TreeSet();
@@ -13004,7 +13387,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     ss = ss + str + ",";
                 }
                 pickedNumber = ss.substring(0, ss.length() - 1);
-            }
+            }*/
             Ids ids1 = new Ids();
             ids1.setPickedNumber(pickedNumber);
             ids1.setMultiple(Integer.parseInt(edit1.getText().toString()));
@@ -13029,7 +13412,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 location = list.get(1);
                 Log.d("万千百十个任选2", list.get(0) + "     " + list.get(1));
                 //nums = Integer.parseInt(GameZhu.getText().toString().trim()) / check.size();
-                nums = GameNum;
+                nums = GameNum / check.size();
                 GameTypeName = GameTypeName + "-" + list.get(0);
                 Nums = Integer.parseInt(edit1.getText().toString().trim());
                 amount = nums * 2;
@@ -13058,9 +13441,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 ids.setClassCode(classCode);
                 ids.setPriceUnit(PriceUnit);
                 ids.setPriceType(priceType);
-                ids.setAmount(Integer.parseInt(edit1.getText().toString()) * mons * GameNum * 2);
+                ids.setAmount(Integer.parseInt(edit1.getText().toString()) * mons * GameNum * 2 / check.size());
                 ids.setMultiple(Integer.parseInt(edit1.getText().toString()));
-                ids.setAmounts(Integer.parseInt(edit1.getText().toString()) * mons * GameNum * 2);
+                ids.setAmounts(Integer.parseInt(edit1.getText().toString()) * mons * GameNum * 2 / check.size());
                 ids.setMultiples(Integer.parseInt(edit1.getText().toString()));
                 ids.setVcode(vcode);
                 ids.setGamename(GameTypeName);
@@ -13074,8 +13457,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 SendGameNum.setText(num + 1 + "");
 
                 GameTypeName = name.get(position);
-            }
 
+            }
+            GameSelect(po);
 
             return;
         }
@@ -13140,11 +13524,10 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 location = list.get(1);
                 Log.d("万千百十个任选2", list.get(0) + "     " + list.get(1));
                 nums = Integer.parseInt(GameZhu.getText().toString().trim()) / check.size();
-
                 pickedNumber = Snum;
                 GameTypeName = GameTypeName + "-" + list.get(0);
                 Nums = Integer.parseInt(edit1.getText().toString().trim());
-                amount = nums * 2;
+                amount = nums * 2 / check.size();
                 if (PriceUnit == 2) {
                     amount = amount / 10;
                 }
@@ -13172,9 +13555,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 ids.setClassCode(classCode);
                 ids.setPriceUnit(PriceUnit);
                 ids.setPriceType(priceType);
-                ids.setAmount(Double.parseDouble(GameYuan.getText().toString()));
+                ids.setAmount(Double.parseDouble(GameYuan.getText().toString()) / check.size());
                 ids.setMultiple(Integer.parseInt(edit1.getText().toString()));
-                ids.setAmounts(Double.parseDouble(GameYuan.getText().toString()));
+                ids.setAmounts(Double.parseDouble(GameYuan.getText().toString()) / check.size());
                 ids.setMultiples(Integer.parseInt(edit1.getText().toString()));
                 ids.setVcode(vcode);
                 ids.setGamename(GameTypeName);
@@ -13187,7 +13570,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 SendGameNum.setText(num + 1 + "");
 
                 GameTypeName = name.get(position);
+
             }
+            GameSelect(po);
             return;
         }
         if (
@@ -13287,7 +13672,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 SendGameNum.setText(num + 1 + "");
 
                 GameTypeName = name.get(position);
+
             }
+            GameSelect(po);
             return;
         }
         if (
@@ -13391,7 +13778,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 SendGameNum.setText(num + 1 + "");
 
                 GameTypeName = name.get(position);
+
             }
+            GameSelect(po);
             return;
         }
         if (
@@ -13504,7 +13893,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 SendGameNum.setText(num + 1 + "");
 
                 GameTypeName = name.get(position);
+
             }
+            GameSelect(po);
             return;
         }
         if (
@@ -13621,7 +14012,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 int num = Integer.parseInt(s1);
                 SendGameNum.setText(num + 1 + "");
                 GameTypeName = name.get(position);
+
             }
+            GameSelect(po);
             return;
         }
         if (
@@ -14095,8 +14488,10 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 String s = SendGameNum.getText().toString();
                 int num = Integer.parseInt(s);
                 SendGameNum.setText(num + 1 + "");
-                GameTypeName = GameTypeName.substring(0, GameTypeName.length() - 6);
+                GameTypeName = name.get(position);
+
             }
+            GameSelect(po);
             return;
         }
         if (
@@ -14204,8 +14599,10 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 String s1 = SendGameNum.getText().toString();
                 int num = Integer.parseInt(s1);
                 SendGameNum.setText(num + 1 + "");
-                GameTypeName = GameTypeName.substring(0, 4);
+                GameTypeName = name.get(position);
+
             }
+            GameSelect(po);
             return;
         }
         if (
@@ -14324,7 +14721,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 int num = Integer.parseInt(s);
                 SendGameNum.setText(num + 1 + "");
                 GameTypeName = name.get(position);
+
             }
+            GameSelect(po);
             return;
         }
         if (
@@ -14429,6 +14828,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 }
             }
             List<List<String>> check4 = getCheck4(str);
+            nums = Integer.parseInt(GameZhu.getText().toString()) / check4.size();
             for (int i = 0; i < check4.size(); i++) {
                 List<String> list = check4.get(i);
                 locationText = list.get(0);
@@ -14477,11 +14877,212 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 String s = SendGameNum.getText().toString();
                 int num = Integer.parseInt(s);
                 SendGameNum.setText(num + 1 + "");
-                GameTypeName = GameTypeName.substring(0, 4);
+                GameTypeName = name.get(position);
+
             }
+            GameSelect(po);
             return;
         }
+        if ("bcr_bank_play_tie".equals(code)
+                || "2min_bcr_bank_play_tie".equals(code)
+                || "bcr_bank_play_pair".equals(code)
+                || "2min_bcr_bank_play_pair".equals(code)
+                || "cow_special".equals(code)
+                || "2min_cow_special".equals(code)
+                || "tp_left_right_tie".equals(code)
+                || "2min_tp_left_right_tie".equals(code)) {
+            LinearLayout Linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne);
+            String str = "";
+            String strNum = "";
+            for (int i = 0; i < Linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    if (strNum == "") {
+                        strNum = getChessItem(at.getText().toString());
+                    } else {
+                        strNum = strNum + "," + getChessItem(at.getText().toString());
+                    }
+                    if (str == "") {
+                        str = at.getText().toString();
 
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            pickedText = str;
+            pickedNumber = strNum;
+
+        }
+        if ("bcr_special".equals(code)
+                || "2min_bcr_special".equals(code)
+                || "tp_special".equals(code)
+                || "2min_tp_special".equals(code)) {
+            LinearLayout Linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne_0);
+            LinearLayout Linear2 = (LinearLayout) inte.findViewById(R.id.LinearOne_1);
+            LinearLayout Linear3 = (LinearLayout) inte.findViewById(R.id.LinearTwo_0);
+            LinearLayout Linear4 = (LinearLayout) inte.findViewById(R.id.LinearTwo_1);
+            String str = "";
+            String str1 = "";
+            String strNum = "";
+            String strNum1 = "";
+            String s = "";
+            String s1 = "";
+            for (int i = 0; i < Linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    strNum = strNum + getChessItem(at.getText().toString());
+
+                    str = str + at.getText().toString();
+
+                }
+            }
+            for (int i = 0; i < Linear2.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear2.getChildAt(i);
+                if (at.isChecked()) {
+                    strNum = strNum + getChessItem(at.getText().toString());
+
+                    str = str + at.getText().toString();
+                }
+            }
+            for (int i = 0; i < Linear3.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear3.getChildAt(i);
+                if (at.isChecked()) {
+                    strNum1 = strNum1 + getChessItem(at.getText().toString());
+
+                    str1 = str1 + at.getText().toString();
+                }
+            }
+            for (int i = 0; i < Linear4.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear4.getChildAt(i);
+                if (at.isChecked()) {
+                    strNum1 = strNum1 + getChessItem(at.getText().toString());
+
+                    str1 = str1 + at.getText().toString();
+                }
+            }
+            pickedText = str+","+str1;
+            pickedNumber = strNum + "," + strNum1;;
+
+        }
+        if ("cow".equals(code)
+                || "2min_cow".equals(code)) {
+            LinearLayout Linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne_0);
+            LinearLayout Linear2 = (LinearLayout) inte.findViewById(R.id.LinearOne_1);
+            LinearLayout Linear3 = (LinearLayout) inte.findViewById(R.id.LinearOne_2);
+            String str = "";
+            String strNum = "";
+            for (int i = 0; i < Linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    if (strNum == "") {
+                        strNum = getChessItem(at.getText().toString());
+                    } else {
+                        strNum = strNum + "," + getChessItem(at.getText().toString());
+                    }
+                    if (str == "") {
+                        str = at.getText().toString();
+
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            for (int i = 0; i < Linear2.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear2.getChildAt(i);
+                if (at.isChecked()) {
+                    if (strNum == "") {
+                        strNum = getChessItem(at.getText().toString());
+                    } else {
+                        strNum = strNum + "," + getChessItem(at.getText().toString());
+                    }
+                    if (str == "") {
+                        str = at.getText().toString();
+
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            for (int i = 0; i < Linear3.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear3.getChildAt(i);
+                if (at.isChecked()) {
+                    if (strNum == "") {
+                        strNum = getChessItem(at.getText().toString());
+                    } else {
+                        strNum = strNum + "," + getChessItem(at.getText().toString());
+                    }
+                    if (str == "") {
+                        str = at.getText().toString();
+
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            pickedText = str;
+            pickedNumber = strNum;
+
+        }
+        if ("texas".equals(code)
+                || "2min_texas".equals(code)) {
+            LinearLayout Linear1 = (LinearLayout) inte.findViewById(R.id.LinearOne_0);
+            LinearLayout Linear2 = (LinearLayout) inte.findViewById(R.id.LinearTwo_0);
+            LinearLayout Linear3 = (LinearLayout) inte.findViewById(R.id.LinearThree_0);
+            String str = "";
+            String strNum = "";
+            for (int i = 0; i < Linear1.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear1.getChildAt(i);
+                if (at.isChecked()) {
+                    if (strNum == "") {
+                        strNum = getChessItem(at.getText().toString());
+                    } else {
+                        strNum = strNum + "," + getChessItem(at.getText().toString());
+                    }
+                    if (str == "") {
+                        str = at.getText().toString();
+
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            for (int i = 0; i < Linear2.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear2.getChildAt(i);
+                if (at.isChecked()) {
+                    if (strNum == "") {
+                        strNum = getChessItem(at.getText().toString());
+                    } else {
+                        strNum = strNum + "," + getChessItem(at.getText().toString());
+                    }
+                    if (str == "") {
+                        str = at.getText().toString();
+
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            for (int i = 0; i < Linear3.getChildCount(); i++) {
+                CheckBox at = (CheckBox) Linear3.getChildAt(i);
+                if (at.isChecked()) {
+                    if (strNum == "") {
+                        strNum = getChessItem(at.getText().toString());
+                    } else {
+                        strNum = strNum + "," + getChessItem(at.getText().toString());
+                    }
+                    if (str == "") {
+                        str = at.getText().toString();
+
+                    } else {
+                        str = str + "," + at.getText().toString();
+                    }
+                }
+            }
+            pickedText = str;
+            pickedNumber = strNum;
+
+        }
         Nums = Integer.parseInt(edit1.getText().
 
                 toString().
@@ -14509,24 +15110,6 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         multiple = Nums;
         priceType = SpinnerMoney.getSelectedItemPosition();
         AddLottery();
-       /* TextView Zhu = (TextView) contentView.findViewById(R.id.Zhu);
-        TextView Amounts = (TextView) contentView.findViewById(R.id.GameAmounts);
-        TextView TouZhuContent = (TextView) contentView.findViewById(R.id.TouZhuContent);
-        TextView GameType = (TextView) contentView.findViewById(R.id.GameType);
-        GameType.setText(GameTypeName);
-        if (pickedText != "") {
-            TouZhuContent.setText(pickedText);
-        } else {
-
-            TouZhuContent.setText(pickedNumber);
-        }
-        Zhu.setText(nums + "");
-        Amounts.setText(amount + "");
-        if (nums > 0)
-
-        {
-            alertView.show();
-        }*/
     }
 
     public List<List<String>> getCheck3(String string) {
@@ -15842,16 +16425,16 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     }
 
     public String getBigLHC(String n) {
-        if ("特大".equals(n) || "特和大".equals(n) || "特尾大".equals(n)) {
+        if ("特大".equals(n) || "特合大".equals(n) || "特尾大".equals(n)) {
             return "max";
         }
-        if ("特小".equals(n) || "特和小".equals(n) || "特尾小".equals(n)) {
+        if ("特小".equals(n) || "特合小".equals(n) || "特尾小".equals(n)) {
             return "min";
         }
-        if ("特单".equals(n) || "特和单".equals(n)) {
+        if ("特单".equals(n) || "特合单".equals(n)) {
             return "odd";
         }
-        if ("特双".equals(n) || "特和双".equals(n)) {
+        if ("特双".equals(n) || "特合双".equals(n)) {
             return "even";
         }
         if ("红波".equals(n)) {

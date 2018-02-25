@@ -54,12 +54,8 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
     ImageView loginIcon;
     @BindView(R.id.login_user)
     PowerfulEditText loginUser;
-    @BindView(R.id.relativelayuout1)
-    RelativeLayout relativelayuout1;
     @BindView(R.id.login_pwd)
     PowerfulEditText loginPwd;
-    @BindView(R.id.relativelayout2)
-    RelativeLayout relativelayout2;
     @BindView(R.id.login_btn)
     Button loginBtn;
     @BindView(R.id.forget_pwd)
@@ -90,15 +86,14 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
         }
         MyApp.getInstance().addActivitys(this);
 
-        // LemonBubble.showRoundProgress(this, "验证账号登录状态中");
+
         findViewById(R.id.login_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 initNameAndPwd();
 
                 Login();
-                //  Login2();
-                //   logout();
+
 
             }
         });
@@ -165,7 +160,6 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
     }
 
     public void LoginHttp() {
-        //String s = RxUtils.getInstance().SHA256("a12345678");
         if (Login_UserName.isEmpty() || Login_Pwd.isEmpty()) {
             Toast.makeText(this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
             return;
@@ -181,8 +175,6 @@ public class LoginActivity extends AutoLayoutActivity implements HttpEngine.Data
 
         OkHttpClient okHttpClient = new OkHttpClient();
         Request.Builder requestBuilder = new Request.Builder().url(ApiInterface.HOST + "/signin?AppClient=1&u=" + Login_UserName + "&p=" + password + "&ipwd=" + false + "&reqkey=" + rekey + "&t=" + timeMillis);
-        // Request.Builder requestBuilder = new Request.Builder().url("http://vipfacaiflvbceshi.com/logout");
-        // requestBuilder.addHeader( "XMLHttpRequest","X-Requested-With");
         //可以省略，默认是GET请求
         final Request request = requestBuilder.build();
         requestBuilder.method("GET", null);
