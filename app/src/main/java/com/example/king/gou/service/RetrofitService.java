@@ -189,6 +189,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_SENDMSG = 70;//获取聊天消息
     public static int API_ID_GETNEWMSG = 71;//轮询消息
     public static int API_ID_SWITCHGAME = 72;//获取游戏玩法详情
+    public static int API_ID_SWITCHGAME_STATUS = 721;//获取游戏玩法状态
     public static int API_ID_BEETING_AUTO = 73;//获取追号信息
     public static int API_ID_USERBETTING = 74;//个人报表彩票投注
     public static int API_ID_SENDBETTING = 75;//提交购彩单
@@ -203,6 +204,7 @@ public class RetrofitService extends HttpEngine {
     public static int API_ID_ALIPAYRECHARGESAVE = 84;//APP易宝支付初始参数获取
     public static int API_ID_ALIPAYSUBMIT = 85;//支付宝支付确认
     public static int API_ID_REMITTANCE = 86;//
+    public static int API_ID_RECEIVE = 87;//领取活动奖金
 
     private Retrofit retrofit;
     private ApiInterface apiInterface;
@@ -247,19 +249,6 @@ public class RetrofitService extends HttpEngine {
         }
     };
 
-    private static String bodyToString(final RequestBody request) {
-        try {
-            final RequestBody copy = request;
-            final Buffer buffer = new Buffer();
-            if (copy != null)
-                copy.writeTo(buffer);
-            else
-                return "";
-            return buffer.readUtf8();
-        } catch (final IOException e) {
-            return "did not work";
-        }
-    }
 
     private void initRetrofit() {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -275,7 +264,7 @@ public class RetrofitService extends HttpEngine {
                     }
                 })
                 .addInterceptor(new ReceivedCookiesInterceptor())
-                .connectTimeout(60, TimeUnit.SECONDS).build();
+                .connectTimeout(120, TimeUnit.SECONDS).build();
         Gson gson = new GsonBuilder().setLenient().create();
 
         retrofit = new Retrofit.Builder()
@@ -1298,24 +1287,25 @@ public class RetrofitService extends HttpEngine {
     }
 
     //领取活动奖金AID
-    public void getActivityCheckAid(DataListener listener, int id, int alid) {
+    public void getActivityCheckAid(final DataListener listener, int id, int alid) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, String> map = new HashMap<>();
         map.put("id", id + "");
         map.put("alid", alid + "");
         String reqkey = RxUtils.getInstance().getReqkey(map, currentTimeMillis);
-        Call<Object> clone = apiInterface.getActivityCheckAid(1, id, alid, reqkey, currentTimeMillis).clone();
-        clone.enqueue(new Callback<Object>() {
+        Call<RestultInfo> clone = apiInterface.getActivityCheckAid(1, id, alid, reqkey, currentTimeMillis).clone();
+        clone.enqueue(new Callback<RestultInfo>() {
             @Override
-            public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
+            public void onResponse(Call<RestultInfo> call, retrofit2.Response<RestultInfo> response) {
                 if (response.code() == 200) {
                     Log.d("领取活动奖金AID", response.body().toString());
+                    listener.onReceivedData(API_ID_RECEIVE, response.body(), API_ID_ERROR);
                 }
 
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<RestultInfo> call, Throwable t) {
 
             }
         });
@@ -3661,6 +3651,7 @@ public class RetrofitService extends HttpEngine {
                     String amount = null;//账户余额
                     String period = null;//当前期号
                     double count = 0;//未开奖期数
+                    SwitchGame switchGame;
                     if (map.size() > 0) {
                         for (Map.Entry<String, Object> entry : map.entrySet()) {
                             if ("priceTypes".equals(entry.getKey())) {
@@ -3725,7 +3716,7 @@ public class RetrofitService extends HttpEngine {
                             }
                         }
                     }
-                    SwitchGame switchGame = new SwitchGame();
+                    switchGame = new SwitchGame();
                     switchGame.setGid(RxUtils.getInstance().getInt(gid));
                     switchGame.setStatus(Integer.parseInt(status));
                     switchGame.setGameName(gameName);
@@ -3745,7 +3736,6 @@ public class RetrofitService extends HttpEngine {
                     Log.d("切换游戏/获取玩法数据(重点)String", switchGame.toString());
                     double rate = 0;
                     List<Object> list = new ArrayList<>();
-                    List<List<SwitchGame>> switchGames = new ArrayList<List<SwitchGame>>();
                     //   List<List<List<SwitchGame>>> s = new ArrayList<List<List<SwitchGame>>>();
                     List<SwitchG> sg = new ArrayList<SwitchG>();
                     if (datas.size() > 0) {
@@ -3883,6 +3873,7 @@ public class RetrofitService extends HttpEngine {
 
                     }
                     listener.onReceivedData(API_ID_SWITCHGAME, sg, API_ID_ERROR);
+                    listener.onReceivedData(API_ID_SWITCHGAME_STATUS, switchGame, API_ID_ERROR);
                 }
             }
 

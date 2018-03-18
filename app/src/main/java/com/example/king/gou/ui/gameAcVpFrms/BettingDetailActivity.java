@@ -127,7 +127,9 @@ public class BettingDetailActivity extends AutoLayoutActivity implements HttpEng
                     rname.setText(bd.getRname());
                     multiple.setText(bd.getMultiple() + "");
                     amount.setText(bd.getAmount() + "");
-                    winningNumbers.setText(bd.getWinning_numbers());
+                    if (bd.getWinning_numbers()!=null) {
+                        winningNumbers.setText(Html.fromHtml(bd.getWinning_numbers()));
+                    }
                     prize.setText(bd.getPrize() + "");
                     if (bd.getBstatus() < 2 && bd.getId() == MyApp.getInstance().getUserUid()) {
                         BtnBetRevoke.setVisibility(View.VISIBLE);
@@ -137,14 +139,14 @@ public class BettingDetailActivity extends AutoLayoutActivity implements HttpEng
                 }
             }
         }
-        if (apiId== RetrofitService.API_ID_BETREVOKE1) {
-            if (object!=null) {
-                RestultInfo restultInfo= (RestultInfo) object;
+        if (apiId == RetrofitService.API_ID_BETREVOKE1) {
+            if (object != null) {
+                RestultInfo restultInfo = (RestultInfo) object;
                 if (restultInfo.isRc()) {
-                    Toasty.success(this,restultInfo.getMsg(),2000).show();
+                    Toasty.success(this, restultInfo.getMsg(), 2000).show();
                     finish();
-                }else{
-                    Toasty.error(this,restultInfo.getMsg(),2000).show();
+                } else {
+                    Toasty.error(this, restultInfo.getMsg(), 2000).show();
                 }
             }
         }
@@ -174,6 +176,6 @@ public class BettingDetailActivity extends AutoLayoutActivity implements HttpEng
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        bd=null;
+        bd = null;
     }
 }

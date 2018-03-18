@@ -92,7 +92,7 @@ public class UpdateNickNameActivity extends AutoLayoutActivity implements View.O
         if (RetrofitService.API_ID_USERINFO == apiId) {
             userInfos = (List<UserInfo>) object;
             UserInfo userInfo = userInfos.get(0);
-            NewUserNickName.setHint(userInfo.getNname());
+            NewUserNickName.setText(userInfo.getNname());
 
         }
     }

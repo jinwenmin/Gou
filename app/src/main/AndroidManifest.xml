@@ -114,7 +114,9 @@
         <activity android:name=".ui.CheckRechargeActivity" />
         <activity android:name=".ui.CheckBankCardActivity" />
         <activity android:name=".ui.settingfragment.CheckQuestionActivity" />
-        <activity android:name=".ui.OwnRechaegeSaveWebActivity"></activity>
+        <activity android:name=".ui.OwnRechaegeSaveWebActivity" />
+        <activity android:name=".ui.proxyfragment.SetNewRateActivity" />
+        <activity android:name=".ui.proxyfragment.Check2PwdActivity"></activity>
     </application>
 
 </manifest>

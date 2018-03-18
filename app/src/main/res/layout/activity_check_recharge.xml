@@ -31,18 +31,19 @@
 
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10px"
-
+        android:background="@android:color/white"
+        android:orientation="horizontal"
         android:padding="15px">
 
         <TextView
-            android:text="充值对象："
-            android:textSize="30px"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="充值对象："
+            android:textSize="30px" />
+
         <TextView
             android:id="@+id/RechargeUser"
             android:layout_width="match_parent"
@@ -52,6 +53,7 @@
             android:singleLine="true"
             android:textSize="30px" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,11 +61,17 @@
         android:background="@android:color/white"
         android:padding="15px">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="充值金额："
+            android:textSize="30px" />
+
         <EditText
 
             android:id="@+id/RechargeMon"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40px"
             android:background="@null"
             android:gravity="left"
             android:hint="输入金额"

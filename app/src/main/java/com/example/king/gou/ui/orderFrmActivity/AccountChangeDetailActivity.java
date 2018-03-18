@@ -23,8 +23,8 @@ public class AccountChangeDetailActivity extends AutoLayoutActivity implements V
     ImageView gamejlBack;
     @BindView(R.id.ZhuiHaoTop)
     RelativeLayout ZhuiHaoTop;
-    @BindView(R.id.id)
-    TextView id;
+    @BindView(R.id.Name)
+    TextView Name;
     @BindView(R.id.date)
     TextView date;
     @BindView(R.id.stype)
@@ -51,7 +51,7 @@ public class AccountChangeDetailActivity extends AutoLayoutActivity implements V
         gamejlBack.setOnClickListener(this);
         Intent intent = getIntent();
         ac = (AccountChange) intent.getSerializableExtra("Account");
-        id.setText(ac.getId() + "");
+        Name.setText(ac.getUname() + "");
         date.setText(ac.getDate() + "");
         if (ac.getStype() != -1) {
             int stype = ac.getStype();

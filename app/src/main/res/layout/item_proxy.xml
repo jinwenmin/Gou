@@ -49,14 +49,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="用户类型："
-                android:textSize="28px" />
+                android:textSize="20px" />
 
             <TextView
                 android:id="@+id/TeamUserType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="28px" />
+                android:textSize="20px" />
         </LinearLayout>
     </LinearLayout>
 
@@ -78,14 +78,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="用户姓名："
-                android:textSize="28px" />
+                android:textSize="20px" />
 
             <TextView
                 android:id="@+id/TeamUserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="28px" />
+                android:textSize="20px" />
         </LinearLayout>
 
         <LinearLayout
@@ -98,14 +98,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="最后登陆时间："
-                android:textSize="28px" />
+                android:textSize="20px" />
 
             <TextView
                 android:id="@+id/TeamUserLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="从未登陆"
-                android:textSize="25px" />
+                android:textSize="20px" />
         </LinearLayout>
     </LinearLayout>
 
@@ -127,14 +127,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="用户返点："
-                android:textSize="28px" />
+                android:textSize="20px" />
 
             <TextView
                 android:id="@+id/TeamUserRate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="28px" />
+                android:textSize="20px" />
         </LinearLayout>
 
         <LinearLayout
@@ -147,7 +147,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="用户状态： "
-                android:textSize="28px" />
+                android:textSize="20px" />
 
             <TextView
                 android:textColor="#000000"
@@ -155,7 +155,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="离线"
-                android:textSize="28px" />
+                android:textSize="20px" />
         </LinearLayout>
     </LinearLayout>
 

@@ -1,6 +1,7 @@
 package com.example.king.gou.ui.proxyfragment;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +26,8 @@ import com.example.king.gou.adapters.AccountsAdapter;
 import com.example.king.gou.bean.AccountChange;
 import com.example.king.gou.bean.GameType;
 import com.example.king.gou.service.RetrofitService;
+import com.example.king.gou.ui.orderFrmActivity.AccountChangeDetailActivity;
+import com.example.king.gou.ui.orderFrmActivity.GrzbActivity;
 import com.example.king.gou.utils.DateUtil;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
@@ -258,6 +261,16 @@ public class TeamZBJLActivity extends AutoLayoutActivity implements View.OnClick
         TeamZBJLrelateTime2.setOnClickListener(this);
         Back.setOnClickListener(this);
         ToSearchName.setOnClickListener(this);
+        TeamListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(TeamZBJLActivity.this, AccountChangeDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("Account", acs.get(1).get(i));
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

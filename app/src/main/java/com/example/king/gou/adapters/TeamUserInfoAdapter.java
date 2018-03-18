@@ -45,12 +45,12 @@ public class TeamUserInfoAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return ts.get(position);
+        return ts.get(ts.size() - 1 - position);
     }
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return ts.size() - 1 - position;
     }
 
     @Override
@@ -63,27 +63,27 @@ public class TeamUserInfoAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.TeamUserId.setText(ts.get(position).getUid() + "");
-        if (ts.get(position).getUtype() == 2) {
+        viewHolder.TeamUserId.setText(ts.get(ts.size()-1-position).getUid() + "");
+        if (ts.get(ts.size()-1-position).getUtype() == 2) {
             viewHolder.TeamUserType.setText("代理用户");
         }
-        if (ts.get(position).getUtype() == 3) {
+        if (ts.get(ts.size()-1-position).getUtype() == 3) {
             viewHolder.TeamUserType.setText("普通用户");
         }
-        if (ts.get(position).getLogin()!=null) {
-            viewHolder.TeamUserLogin.setText(ts.get(position).getLogin());
+        if (ts.get(ts.size()-1-position).getLogin() != null) {
+            viewHolder.TeamUserLogin.setText(ts.get(ts.size()-1-position).getLogin());
         } else {
             viewHolder.TeamUserLogin.setText("从未登陆");
         }
-        if (!"".equals(ts.get(position).getName())) {
-            viewHolder.TeamUserName.setText(ts.get(position).getName());
+        if (!"".equals(ts.get(ts.size()-1-position).getName())) {
+            viewHolder.TeamUserName.setText(ts.get(ts.size()-1-position).getName());
         }
-        viewHolder.TeamUserRate.setText(ts.get(position).getRate() + "");
-        if (ts.get(position).getStatus() == 0) {
+        viewHolder.TeamUserRate.setText(ts.get(ts.size()-1-position).getRate() + "");
+        if (ts.get(ts.size()-1-position).getStatus() == 0) {
             viewHolder.TeamUserStatus.setText("离线");
             viewHolder.TeamUserStatus.setTextColor(Color.parseColor("#000000"));
         }
-        if (ts.get(position).getStatus() == 1) {
+        if (ts.get(ts.size()-1-position).getStatus() == 1) {
             viewHolder.TeamUserStatus.setText("在线");
             viewHolder.TeamUserStatus.setTextColor(Color.parseColor("#00FF00"));
         }

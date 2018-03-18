@@ -1,5 +1,6 @@
 package com.example.king.gou.ui.proxyfragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -21,8 +22,11 @@ import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.adapters.TeamBettingAdapter;
 import com.example.king.gou.bean.GameType;
+import com.example.king.gou.bean.TouZhu;
 import com.example.king.gou.bean.UserTeamBetting;
 import com.example.king.gou.service.RetrofitService;
+import com.example.king.gou.ui.gameAcVpFrms.BettingDetailActivity;
+import com.example.king.gou.ui.orderFrmActivity.GameJiluActivity;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -193,6 +197,15 @@ public class TeamBaoBiaoActivity extends AutoLayoutActivity implements View.OnCl
             }
         });
         ToSearchName.setOnClickListener(this);
+        TeamBettingListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(TeamBaoBiaoActivity.this, BettingDetailActivity.class);
+                UserTeamBetting t = (UserTeamBetting) teamBettingAdapter.getItem(i);
+                intent.putExtra("bid", t.getBid());
+                startActivity(intent);
+            }
+        });
     }
 
     private void initDateDialog() {

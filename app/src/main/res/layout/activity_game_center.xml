@@ -313,8 +313,8 @@
                     android:layout_width="0px"
                     android:layout_height="55px"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="30px"
-                    android:layout_marginRight="30px"
+                    android:layout_marginLeft="10px"
+                    android:layout_marginRight="10px"
                     android:layout_weight="1"
                     android:background="@drawable/gamecenter_btn1"
                     android:gravity="center"
@@ -323,18 +323,16 @@
                     android:textSize="35px" />
 
                 <TextView
+                    android:singleLine="true"
+                    android:lines="1"
+                    android:id="@+id/Remaining"
+                    android:textSize="20px"
                     android:layout_width="0px"
                     android:layout_height="55px"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="30px"
-                    android:layout_marginRight="30px"
-                    android:layout_weight="1"
-                    android:background="@drawable/gamecenter_btn1"
-                    android:gravity="center"
-                    android:text="机选"
-                    android:textColor="@android:color/white"
-                    android:textSize="35px"
-                    android:visibility="invisible" />
+                    android:layout_gravity="center"
+                    android:layout_weight="2"
+                    android:gravity="left|center"
+                    android:text="余额:" />
             </LinearLayout>
 
             <LinearLayout
@@ -515,7 +513,6 @@
                 android:layout_height="8px"
                 android:max="200"
                 android:progress="30" />
-
 
 
             <LinearLayout

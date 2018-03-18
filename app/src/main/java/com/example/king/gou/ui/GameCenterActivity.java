@@ -1,11 +1,12 @@
 package com.example.king.gou.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -43,12 +44,17 @@ import com.example.king.gou.bean.Ids;
 import com.example.king.gou.bean.Rates;
 import com.example.king.gou.bean.RecordList;
 import com.example.king.gou.bean.SwitchG;
+import com.example.king.gou.bean.SwitchGame;
+import com.example.king.gou.bean.UserInfo;
+import com.example.king.gou.fragment.BaseFragment;
 import com.example.king.gou.fragment.FindFragment;
+import com.example.king.gou.fragment.myfragment.OrderFragment;
+import com.example.king.gou.fragment.myfragment.ProxyFragment;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.ui.gameAcVpFrms.GameCartActivity;
 import com.example.king.gou.utils.HttpEngine;
+import com.example.king.gou.utils.MyUtil;
 import com.example.king.gou.utils.RxUtils;
-import com.example.king.gou.utils.SingleToast;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.io.Serializable;
@@ -131,6 +137,8 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     LinearLayout LinearRe;
     @BindView(R.id.ClearNumBtn)
     TextView ClearNumBtn;
+    @BindView(R.id.Remaining)
+    TextView Remaining;
 
 
     private int TIME = 1000;  //每隔1s执行一次.
@@ -162,6 +170,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     private ArrayAdapter<String> adapterType1;
     private ArrayAdapter<String> adapterType2;
     private ArrayAdapter<String> adapterTypeMoney;
+    List<UserInfo> userInfos;
     private AlertView alertView;
     // 一个自定义的布局，作为显示的内容
     View contentView;
@@ -264,6 +273,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
 
         RetrofitService.getInstance().getSwitchGameList(this, gid);
         RetrofitService.getInstance().getBettingSync(this, gid);
+        RetrofitService.getInstance().GetUserInfo(this);
         initTimer();
         initClick();
         initSpinner1();
@@ -10228,12 +10238,13 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     public void onFinish() {
                         listIds = new ArrayList<>();
                         SendGameNum.setText("0");
-                        toast = null;
+                        MyUtil.showToast(GameCenterActivity.this, bs.getPeriod() + "期开奖中,即将进入下期投注", 2000);
+                       /* toast = null;
                         //toast = Toast.makeText(GameCenterActivity.this, bs.getPeriod() + "期开奖中,即将进入下期投注", Toast.LENGTH_SHORT);
                         toast = Toasty.info(GameCenterActivity.this, bs.getPeriod() + "期开奖中,即将进入下期投注", 500);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
-                        timer.cancel();
+                        timer.cancel();*/
                         RetrofitService.getInstance().getBettingSync(GameCenterActivity.this, gid);
                         Log.d("第", openCount++ + "次开奖");
                     }
@@ -10256,6 +10267,7 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 for (int i = 0; i < sg.size(); i++) {
                     sgName.add((String) sg.get(i).getName1());
                 }
+
                 adapterType1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sgName);
                 //第三步：为适配器设置下拉列表下拉时的菜单样式。
                 adapterType1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -10264,6 +10276,33 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                 initSpinner1();
             }
         }
+        if (RetrofitService.API_ID_USERINFO == apiId) {
+            userInfos = (List<UserInfo>) object;
+            UserInfo userInfo = userInfos.get(0);
+            Remaining.setText("余额:" + userInfo.getAmount());
+
+        }
+        if (RetrofitService.API_ID_SWITCHGAME_STATUS == apiId) {
+            SwitchGame switchGame = (SwitchGame) object;
+            Log.d("GameStatus", switchGame.getStatus() + "");
+            if (switchGame.getStatus() != 1) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(GameCenterActivity.this);
+                builder.setView(LayoutInflater.from(this).inflate(R.layout.show_status, null));
+
+                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+
+        }
+
+
     }
 
     @Override
@@ -14961,8 +15000,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
                     str1 = str1 + at.getText().toString();
                 }
             }
-            pickedText = str+","+str1;
-            pickedNumber = strNum + "," + strNum1;;
+            pickedText = str + "," + str1;
+            pickedNumber = strNum + "," + strNum1;
+            ;
 
         }
         if ("cow".equals(code)
@@ -16729,10 +16769,17 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        RetrofitService.getInstance().GetUserInfo(this);
+    }
+
+    @Override
     protected void onRestart() {
         super.onRestart();
         RetrofitService.getInstance().getBettingSync(this, gid);
         RetrofitService.getInstance().getBettingDrawHistory(this, gid);
+
     }
 
     @Override
@@ -16751,7 +16798,9 @@ public class GameCenterActivity extends AutoLayoutActivity implements HttpEngine
         }
         if (toast != null) {
             toast.cancel();
+            toast = null;
         }
+
         if (timer != null) {
             timer.cancel();
             timer.cancel();

@@ -144,11 +144,16 @@
         android:orientation="horizontal">
 
         <Spinner
+            android:visibility="gone"
             android:id="@+id/TLotteryLossUid"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"></Spinner>
-
+        <Spinner
+            android:id="@+id/TLotteryLossTeam"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></Spinner>
         <Spinner
             android:id="@+id/TLotteryLossGtype"
             android:layout_width="0px"
@@ -162,21 +167,19 @@
         android:background="@color/gray"></View>
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="60px"
         android:orientation="horizontal">
 
         <Spinner
+
             android:id="@+id/TLotteryLossStype"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"></Spinner>
 
-        <Spinner
-            android:id="@+id/TLotteryLossTeam"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"></Spinner>
+
     </LinearLayout>
 
     <View

@@ -22,7 +22,8 @@
         android:id="@+id/g2_EditText"
         android:layout_width="match_parent"
         android:layout_height="200px"
-        android:layout_gravity="left|top"
+
+        android:gravity="left"
         android:layout_margin="10px"
         android:layout_marginTop="10px"
         android:background="@drawable/linear_biankuang"

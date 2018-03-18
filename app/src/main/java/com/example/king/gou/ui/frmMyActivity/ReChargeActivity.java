@@ -159,7 +159,7 @@ public class ReChargeActivity extends AutoLayoutActivity implements View.OnClick
                 eBao = (EBao) object;
                 minYB = eBao.getOthers().getMin();
                 maxYB = eBao.getOthers().getMax();
-                if (eBao.getOthers().isFreeze()) {
+                if (!eBao.getOthers().isFreeze()) {
                     alertView.show();
                     return;
                 }

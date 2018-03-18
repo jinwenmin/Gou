@@ -48,18 +48,20 @@
                 <TextView
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="帐变记录行ID:  "
+                    android:layout_weight="2"
+                    android:gravity="right"
+                    android:text="帐变用户:"
                     android:textColor="@android:color/black"
                     android:textSize="35px" />
 
                 <TextView
-                    android:id="@+id/id"
+                    android:id="@+id/Name"
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="4"
-                    android:text="ID"
+                    android:text=""
+                    android:gravity="left"
                     android:textSize="30px" />
             </LinearLayout>
 
@@ -78,8 +80,9 @@
                 <TextView
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="帐变时间:  "
+                    android:layout_weight="2"
+                    android:text="帐变时间:"
+                    android:gravity="right"
                     android:textColor="@android:color/black"
                     android:textSize="35px" />
 
@@ -89,7 +92,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="4"
-                    android:text="ID"
+                    android:text=""
+                    android:gravity="left"
                     android:textSize="30px" />
             </LinearLayout>
 
@@ -108,8 +112,9 @@
                 <TextView
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="帐变类型:  "
+                    android:layout_weight="2"
+                    android:text="帐变类型:"
+                    android:gravity="right"
                     android:textColor="@android:color/black"
                     android:textSize="35px" />
 
@@ -119,7 +124,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="4"
-                    android:text="ID"
+                    android:text=""
+                    android:gravity="left"
                     android:textSize="30px" />
             </LinearLayout>
 
@@ -138,8 +144,9 @@
                 <TextView
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="游戏名称:  "
+                    android:layout_weight="2"
+                    android:text="游戏名称:"
+                    android:gravity="right"
                     android:textColor="@android:color/black"
                     android:textSize="35px" />
 
@@ -149,7 +156,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="4"
-                    android:text="ID"
+                    android:text=""
+                    android:gravity="left"
                     android:textSize="30px" />
             </LinearLayout>
 
@@ -168,8 +176,9 @@
                 <TextView
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="玩法名称:  "
+                    android:layout_weight="2"
+                    android:text="玩法名称:"
+                    android:gravity="right"
                     android:textColor="@android:color/black"
                     android:textSize="35px" />
 
@@ -179,7 +188,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="4"
-                    android:text="ID"
+                    android:text=""
+                    android:gravity="left"
                     android:textSize="30px" />
             </LinearLayout>
 
@@ -198,8 +208,9 @@
                 <TextView
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="开奖期号:  "
+                    android:layout_weight="2"
+                    android:text="开奖期号:"
+                    android:gravity="right"
                     android:textColor="@android:color/black"
                     android:textSize="35px" />
 
@@ -209,7 +220,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="4"
-                    android:text="ID"
+                    android:text=""
+                    android:gravity="left"
                     android:textSize="30px" />
             </LinearLayout>
 
@@ -228,8 +240,9 @@
                 <TextView
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="投注模式:  "
+                    android:layout_weight="2"
+                    android:text="投注模式:"
+                    android:gravity="right"
                     android:textColor="@android:color/black"
                     android:textSize="35px" />
 
@@ -239,7 +252,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="4"
-                    android:text="ID"
+                    android:text=""
+                    android:gravity="left"
                     android:textSize="30px" />
             </LinearLayout>
 
@@ -258,8 +272,9 @@
                 <TextView
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="变动金额:  "
+                    android:layout_weight="2"
+                    android:text="变动金额:"
+                    android:gravity="right"
                     android:textColor="@android:color/black"
                     android:textSize="35px" />
 
@@ -269,7 +284,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="4"
-                    android:text="ID"
+                    android:text=""
+                    android:gravity="left"
                     android:textSize="30px" />
             </LinearLayout>
 
@@ -288,8 +304,9 @@
                 <TextView
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="账户余额:  "
+                    android:layout_weight="2"
+                    android:text="账户余额:"
+                    android:gravity="right"
                     android:textColor="@android:color/black"
                     android:textSize="35px" />
 
@@ -299,7 +316,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="4"
-                    android:text="ID"
+                    android:text=""
+                    android:gravity="left"
                     android:textSize="30px" />
             </LinearLayout>
 

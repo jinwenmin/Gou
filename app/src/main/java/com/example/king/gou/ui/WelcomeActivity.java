@@ -53,7 +53,7 @@ public class WelcomeActivity extends AutoLayoutActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-                Toast.makeText(WelcomeActivity.this, "准备跳转", Toast.LENGTH_SHORT).show();
+                handler.removeCallbacks(runnable);
                 finish();
             }
         });
@@ -66,7 +66,7 @@ public class WelcomeActivity extends AutoLayoutActivity {
             @Override
             public void run() {
                 startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-                Toast.makeText(WelcomeActivity.this, "准备跳转", Toast.LENGTH_SHORT).show();
+
                 finish();
             }
         };

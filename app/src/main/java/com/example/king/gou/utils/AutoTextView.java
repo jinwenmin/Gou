@@ -2,6 +2,7 @@ package com.example.king.gou.utils;
 
 import android.content.Context;
 import android.graphics.Camera;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -12,6 +13,8 @@ import android.view.animation.Transformation;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
+
+import com.example.king.gou.R;
 
 public class AutoTextView extends TextSwitcher implements
         ViewSwitcher.ViewFactory {
@@ -64,7 +67,8 @@ public class AutoTextView extends TextSwitcher implements
         TextView t = new TextView(mContext);
         t.setGravity(Gravity.CENTER_VERTICAL);
         t.setTextSize(mHeight);  
-        t.setMaxLines(1);  
+        t.setMaxLines(1);
+        t.setTextColor(Color.WHITE);
         return t;  
     }  
     //定义动作，向下滚动翻页  

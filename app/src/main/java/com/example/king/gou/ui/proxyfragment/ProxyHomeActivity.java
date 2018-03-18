@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
@@ -68,6 +69,10 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
     String name;
     @BindView(R.id.ReSwipe)
     SwipeRefreshLayout ReSwipe;
+    @BindView(R.id.UserNameEdit)
+    EditText UserNameEdit;
+    @BindView(R.id.SearchBtn)
+    Button SearchBtn;
     private AlertView alertView;
     // 一个自定义的布局，作为显示的内容
     View contentView;
@@ -96,6 +101,9 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
     private TextView SafeQues;
     private EditText AnswerQues;
     private String ruser;
+    int position;
+    private String UserEdit;
+    List<TeamUserInfo> teamUserInfos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,6 +172,7 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
         ActivityProxyListView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
                 menu.add(0, 0, 0, "查询团队余额");
+
                 menu.add(0, 1, 0, "设置返点");
                 //  menu.add(0, 3, 0, "获得上级充值数据");
                 menu.add(0, 2, 0, "上级充值");
@@ -226,14 +235,20 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
         TeamUserBtn.setOnClickListener(this);
         ActivityProxyListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d("长按按钮", "触发事件" + ts.size());
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                Log.d("长按按钮", "触发事件" + ts.size() + "   " + position);
+                position = i;
                 if (ts.size() > 1) {
-                    uid = ts.get(1).get(i).getUid();
-                    name = ts.get(1).get(i).getName();
+                    uid = ((TeamUserInfo) adapter.getItem(position)).getUid();
+                    name = ((TeamUserInfo) adapter.getItem(position)).getName();
+                    ruser = ((TeamUserInfo) adapter.getItem(position)).getName();
+                    //uid = ts.get(1).get(ts.size() - 1 - i).getUid();
+                    //name = ts.get(1).get(ts.size() - 1 - i).getName();
                     //ItemOnLongClick1();
                     RetrofitService.getInstance().getSreChargeData3(ProxyHomeActivity.this, uid);
                 }
+
+
                 return false;
             }
         });
@@ -243,7 +258,7 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
                 RetrofitService.getInstance().getTeamUserInfo(ProxyHomeActivity.this, 1, 100, "uid", "desc", MyApp.getInstance().getUserUid(), "", ProxyHomeSpinner.getSelectedItemPosition());
             }
         });
-
+        SearchBtn.setOnClickListener(this);
     }
 
     @Override
@@ -255,6 +270,23 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
             case R.id.TeamUserBtn:
                 RetrofitService.getInstance().getAddUserData(this);
                 break;
+            case R.id.SearchBtn:
+                UserEdit = UserNameEdit.getText().toString().trim();
+                if (UserEdit.equals("")) {
+                    Toasty.error(this, "请输入用户名", 2000).show();
+                    return;
+                }
+                List<TeamUserInfo> infos = new ArrayList<>();
+                for (int i = 0; i < teamUserInfos.size(); i++) {
+                    if (teamUserInfos.get(i).getName().equals(UserEdit)) {
+                        infos.add(teamUserInfos.get(i));
+                    }
+                }
+                adapter.addList(infos);
+                if (infos.size() == 0) {
+                    Toast.makeText(this, "未找到用户", Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
 
     }
@@ -263,6 +295,7 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
     protected void onRestart() {
         super.onRestart();
         RetrofitService.getInstance().getTeamUserInfo(ProxyHomeActivity.this, 1, 100, "uid", "desc", MyApp.getInstance().getUserUid(), "", ProxyHomeSpinner.getSelectedItemPosition());
+        UserNameEdit.setText("");
     }
 
     @Override
@@ -272,10 +305,10 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
             ReSwipe.setRefreshing(false);
             ProxyUserCounts.setText("总会员数：" + ts.get(0).get(0).getTotalElements() + "人");
             if (ts.size() > 1) {
-                List<TeamUserInfo> teamUserInfos = ts.get(1);
+                teamUserInfos = ts.get(1);
                 adapter.addList(teamUserInfos);
             } else {
-                List<TeamUserInfo> teamUserInfos = new ArrayList<>();
+                teamUserInfos = new ArrayList<>();
                 adapter.addList(teamUserInfos);
             }
         }
@@ -301,13 +334,19 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
         }
         if (apiId == RetrofitService.API_ID_UREBATEDATA) {
             if (object != null) {
+                Intent intent = new Intent(ProxyHomeActivity.this, SetNewRateActivity.class);
+
                 SetRate setRate = (SetRate) object;
                 max = setRate.getMxrate();
                 min = setRate.getMnrate();
-                proxySetRate = (EditText) contentView1.findViewById(R.id.Proxy_setRate);
-                proxySetRate.setHint("范围:" + min + "~" + max);
-                alertView1.show();
-                isS = "Show1";
+                intent.putExtra("min", min + "");
+                intent.putExtra("max", max + "");
+                intent.putExtra("uid", uid);
+                startActivity(intent);
+                //  proxySetRate = (EditText) contentView1.findViewById(R.id.Proxy_setRate);
+                //  proxySetRate.setHint("范围:" + min + "~" + max);
+                // alertView1.show();
+                // isS = "Show1";
             }
 
         }
@@ -330,12 +369,17 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
                     Toasty.error(this, "未设置安全问题", 2000).show();
                     return;
                 }
-                SafeQues.setText(RetrofitService.getInstance().getUser().getQuestion());
-                ruser = sreCharge.getRuser();
                 SreChargeMin = sreCharge.getMin1();
                 SreChargeMax = sreCharge.getMax1();
+                startActivity(new Intent(ProxyHomeActivity.this, Check2PwdActivity.class)
+                        .putExtra("uid", uid)
+                        .putExtra("ruser", ruser)
+                        .putExtra("SreChargeMin", SreChargeMin).putExtra("SreChargeMax", SreChargeMax));
+                /*    SafeQues.setText(RetrofitService.getInstance().getUser().getQuestion());
+                ruser = sreCharge.getRuser();
+
                 alertViewAnswer.show();
-                isS = "Show4";
+                isS = "Show4";*/
 
             }
 /*
@@ -356,16 +400,20 @@ public class ProxyHomeActivity extends AutoLayoutActivity implements View.OnClic
         }
         if (apiId == RetrofitService.API_ID_SRECHARGE3) {
             sreCharge = (SreCharge) object;
-
             ActivityProxyListView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
                 public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
                     Log.d("长按菜单", "长按菜单");
                     menu.add(0, 0, 0, "查询团队余额");
-                    menu.add(0, 1, 0, "设置返点");
-                    //  menu.add(0, 3, 0, "获得上级充值数据");
-                    if (sreCharge.getStype() != 0) {
-                        menu.add(0, 2, 0, "上级充值");
+                    if (((TeamUserInfo) adapter.getItem(position)).getUid() != MyApp.getInstance().getUserUid()) {
+                        menu.add(0, 1, 0, "设置返点");
                     }
+                    //  menu.add(0, 3, 0, "获得上级充值数据");
+                    if (((TeamUserInfo) adapter.getItem(position)).getUid() != MyApp.getInstance().getUserUid()) {
+                        if (sreCharge.getStype() != 0) {
+                            menu.add(0, 2, 0, "上级充值");
+                        }
+                    }
+
                     if (sreCharge.isDtype() == true) {
                         menu.add(0, 3, 0, "日工资充值");
                     }

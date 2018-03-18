@@ -92,7 +92,8 @@ public class TeamLotteryLossActivity extends AutoLayoutActivity implements View.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_lottery_loss);
-        ButterKnife.bind(this); MyApp.getInstance().addActivitys(this);
+        ButterKnife.bind(this);
+        MyApp.getInstance().addActivitys(this);
         profitLossAdapter = new ProfitLossAdapter(this);
         teamProfitLossList.setAdapter(profitLossAdapter);
         uids = MyApp.getInstance().getUids();
@@ -158,7 +159,7 @@ public class TeamLotteryLossActivity extends AutoLayoutActivity implements View.
         int Gtypeid = TLotteryLossGtype.getSelectedItemPosition();
         int StypeId = TLotteryLossStype.getSelectedItemPosition();
         int TeamId = Teamids.get(TLotteryLossTeam.getSelectedItemPosition());
-        RetrofitService.getInstance().getTeamProfitLossList(this, 1, 100, "betting_amount", "desc", t1, t2, searName, uid, Gtypeid, StypeId, TeamId);
+        RetrofitService.getInstance().getTeamProfitLossList(this, 1, 100, "betting_amount", "desc", t1, t2, searName, 0, Gtypeid, 2, TeamId);
     }
 
     private void initClick() {
@@ -224,8 +225,8 @@ public class TeamLotteryLossActivity extends AutoLayoutActivity implements View.
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         //获取当前所有的毫秒数
         long times = System.currentTimeMillis();
-        Date date1=new Date(times);
-        timetext.setText( sdf.format(date1));
+        Date date1 = new Date(times);
+        timetext.setText(sdf.format(date1));
         //加上一天的毫秒数就是明天的时间
         long hou = times + 86400000;
         Date date = new Date(hou);
@@ -323,5 +324,14 @@ public class TeamLotteryLossActivity extends AutoLayoutActivity implements View.
     @Override
     public void onRequestEnd(int apiId) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        adapterUid = null;
+        adapterGtype = null;
+        adapterStype = null;
+        adapterTeam = null;
     }
 }

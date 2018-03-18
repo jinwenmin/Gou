@@ -93,6 +93,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     private AlertView alertView1;
     // 一个自定义的布局，作为显示的内容
     View contentView1;
+
+    private AlertView alertViewNotice;
+    // 一个自定义的布局，作为显示的内容
+    View contentViewNotice;
+
+
     private final static String TAG = "MainActivity";
     private SharedPreferences Finger;
     FingerprintManagerCompat manager;
@@ -117,6 +123,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     private List<String> arrList = new ArrayList<String>();
     private Handler handler = new Handler();
     private int count = 0;
+    private TextView home_notice;
+    String notice = "";
 
     public static HomeFragment newInstance() {
 
@@ -146,21 +154,21 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         Finger = getActivity().getSharedPreferences("Finger", Activity.MODE_PRIVATE);
         finger = Finger.getBoolean("finger", false);
         Log.d("Finger==", finger + "");
-        alertView1 = new AlertView(null, null, "取消", null, null, getContext(), AlertView.Style.Alert, this);
-        contentView1 = LayoutInflater.from(getContext()).inflate(R.layout.item_finger, null);
-        alertView1.addExtView(contentView1);
-
-
-        alertView = new AlertView(null, null, "确认", null, null, getContext(), AlertView.Style.Alert, this);
-        contentView = LayoutInflater.from(getContext()).inflate(
-                R.layout.item_homenotice, null);
-        alertView.addExtView(contentView);
-        test.startScroll();
-        HomeFragmentAddGame.setOnClickListener(this);
-
+        initView();
 
         initImgs();
+        initSql();
+        initScrollView();
+        initClick();
+        return view;
+    }
 
+    private void initClick() {
+        HomeFragmentAddGame.setOnClickListener(this);
+        Autotext.setOnClickListener(this);
+    }
+
+    private void initSql() {
         Cursor cursor = db.rawQuery("select * from games order by count desc", null);
         List<HistoryGames> hs = new ArrayList<>();
         while (cursor.moveToNext()) {
@@ -206,10 +214,25 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         adapters.addList(hs);
         PageAdapter pageAdapter = new PageAdapter(imgs);
         homeViewpager.setAdapter(pageAdapter);
-        initScrollView();
+
+    }
+
+    private void initView() {
+        alertView1 = new AlertView(null, null, "取消", null, null, getContext(), AlertView.Style.Alert, this);
+        contentView1 = LayoutInflater.from(getContext()).inflate(R.layout.item_finger, null);
+        alertView1.addExtView(contentView1);
+
+        alertViewNotice = new AlertView(null, null, "确认", null, null, getContext(), AlertView.Style.Alert, this);
+        contentViewNotice = LayoutInflater.from(getContext()).inflate(R.layout.home_notice, null);
+        alertViewNotice.addExtView(contentViewNotice);
+        home_notice = ((TextView) contentViewNotice.findViewById(R.id.home_notice));
+
+        alertView = new AlertView(null, null, "确认", null, null, getContext(), AlertView.Style.Alert, this);
+        contentView = LayoutInflater.from(getContext()).inflate(
+                R.layout.item_homenotice, null);
+        alertView.addExtView(contentView);
 
 
-        return view;
     }
 
     Runnable runnable = new Runnable() {
@@ -222,6 +245,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
                 Autotext.next();
                 Autotext.setText(arrList.get(count % arrList.size()));
+                notice = arrList.get(count % arrList.size());
                 count++;
             } catch (Exception e) {
                 // TODO Auto-generated catch block
@@ -388,6 +412,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         switch (view.getId()) {
             case R.id.HomeFragment_addGame:
                 startActivity(new Intent(getActivity(), AddGameActivity.class));
+                break;
+            case R.id.Autotext:
+                home_notice.setText(notice);
+                alertViewNotice.show();
                 break;
         }
     }

@@ -34,7 +34,7 @@ public class TeamBettingAdapter extends BaseAdapter {
     }
 
     public void addList(List<UserTeamBetting> u) {
-        us=u;
+        us = u;
         notifyDataSetChanged();
     }
 
@@ -73,6 +73,9 @@ public class TeamBettingAdapter extends BaseAdapter {
         }
         if (!"".equals(u.getPeriod())) {
             viewHolder.lotteryDate.setText(u.getDate());
+        }
+        if (!"".equals(u.getUname())) {
+            viewHolder.username.setText(u.getUname());
         }
         viewHolder.TouZhuMoney.setText(u.getAmount() + "");
         viewHolder.ZhongJiangMoney.setText(u.getPrize() + "");
@@ -130,6 +133,8 @@ public class TeamBettingAdapter extends BaseAdapter {
         LinearLayout lotteryType3;
         @BindView(R.id.WinNum)
         TextView WinNum;
+        @BindView(R.id.username)
+        TextView username;
         @BindView(R.id.Lottery_status)
         TextView LotteryStatus;
 

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.king.gou.ui.proxyfragment.SetNewRateActivity">
+
+    <RelativeLayout
+        android:id="@+id/RegisterTop"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_height"
+        android:background="@color/top_background">
+
+        <ImageView
+            android:id="@+id/_back"
+            android:layout_width="@dimen/top_back"
+            android:layout_height="@dimen/top_back"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="设置新返点"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/top_textsize" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20px">
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5px"
+            android:layout_weight="4"
+            android:gravity="right"
+            android:text="设置新返点："
+            android:textColor="@android:color/black"
+            android:textSize="35px" />
+
+        <EditText
+            android:id="@+id/Rate"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10px"
+            android:layout_weight="7"
+            android:gravity="left"
+            android:hint=""
+            android:inputType="numberDecimal"
+            android:singleLine="true"
+            android:textSize="30px" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/SetRate"
+        android:layout_width="600px"
+        android:layout_height="70px"
+        android:layout_gravity="center"
+        android:layout_marginLeft="70px"
+        android:layout_marginRight="70px"
+        android:layout_marginTop="10px"
+        android:background="@drawable/login_btn_bg"
+        android:text="设置返点"
+        android:textColor="@android:color/white"
+        android:textSize="35px" />
+</LinearLayout>

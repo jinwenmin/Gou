@@ -84,21 +84,22 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
     @BindView(R.id.RebuySpinner)
     Spinner RebuySpinner;
 
-    private ArrayAdapter<String> adapter1;
-    private ArrayAdapter<String> adapterRebuy;
+
     String date1;
     String date2;
+
+    int Gid = 0;
+    public TouZhuAdapter touZhuAdapter;
+    private ArrayAdapter<String> adapter1;
+    private ArrayAdapter<String> adapterRebuy;
+    List<TouZhu> ts;
+    List<String> tits = new ArrayList<>();
+    List<Integer> titsname = new ArrayList<>();
+    List<String> rebuys = new ArrayList<>();
+    List<String> rebuyName = new ArrayList<>();
     List<GameType> gameTypes1 = new ArrayList<>();
     List<GameType> gameTypes2 = new ArrayList<>();
     private ArrayAdapter<String> adapter;
-    int Gid = 0;
-    List<TouZhu> ts;
-
-    List<String> tits = new ArrayList<>();
-    List<Integer> titsname = new ArrayList<>();
-    public TouZhuAdapter touZhuAdapter;
-    List<String> rebuys = new ArrayList<>();
-    List<String> rebuyName = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -251,8 +252,8 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         //获取当前所有的毫秒数
         long times = System.currentTimeMillis();
-        Date date1=new Date(times);
-        timetext.setText( sdf.format(date1));
+        Date date1 = new Date(times);
+        timetext.setText(sdf.format(date1));
         //加上一天的毫秒数就是明天的时间
         long hou = times + 86400000;
         Date date = new Date(hou);
@@ -334,7 +335,7 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
                 finish();
                 break;
             case R.id.SearchQiHao:
-           initRetrofit();
+                initRetrofit();
                 break;
         }
     }
@@ -460,5 +461,21 @@ public class GameJiluActivity extends AutoLayoutActivity implements View.OnClick
     @Override
     public void onRequestEnd(int apiId) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        touZhuAdapter = null;
+        adapter1 = null;
+        adapterRebuy = null;
+        ts = null;
+        tits = null;
+        titsname = null;
+        rebuys = null;
+        rebuyName = null;
+        gameTypes1 = null;
+        gameTypes2 = null;
+        adapter = null;
     }
 }

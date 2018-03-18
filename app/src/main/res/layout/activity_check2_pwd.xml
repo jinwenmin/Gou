@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.king.gou.ui.settingfragment.CheckQuestionActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_height"
+        android:background="@color/top_background">
+
+        <ImageView
+            android:id="@+id/_back"
+            android:layout_width="@dimen/top_back"
+            android:layout_height="@dimen/top_back"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="验证密保问题"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/top_textsize" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:gravity="right"
+            android:text="密保问题："
+            android:textColor="@android:color/black"
+            android:textSize="30px" />
+
+        <TextView
+            android:id="@+id/Question"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:gravity="left"
+            android:text=""
+            android:textColor="@android:color/black"
+            android:textSize="30px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15px"
+        android:background="@android:color/white"
+        android:padding="20px">
+
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:gravity="right"
+            android:text="输入密保答案："
+            android:textColor="@android:color/black"
+            android:textSize="30px" />
+
+        <EditText
+            android:id="@+id/CheckQuesEditText"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:background="@null"
+            android:gravity="left"
+            android:hint="输入答案"
+
+            android:singleLine="true"
+            android:textSize="30px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20px"
+        android:background="@android:color/white"
+        android:padding="20px">
+
+        <TextView
+
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:gravity="right"
+            android:text="输入安全密码："
+            android:textColor="@android:color/black"
+            android:textSize="30px" />
+
+        <EditText
+            android:id="@+id/CheckSafePwd"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:background="@null"
+            android:gravity="left"
+            android:inputType="textPassword"
+            android:hint="请输入安全密码"
+            android:textSize="30px" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/ToCheckQues"
+        android:layout_width="match_parent"
+        android:layout_height="80px"
+        android:layout_margin="80px"
+        android:background="@drawable/recharge_btn"
+        android:text="确认"
+
+        android:singleLine="true"
+        android:textColor="@color/my_btn_color"
+        android:textSize="40px" />
+</LinearLayout>

@@ -18,11 +18,13 @@ import android.widget.TextView;
 import com.example.king.gou.MyApp;
 import com.example.king.gou.R;
 import com.example.king.gou.bean.RestultInfo;
+import com.example.king.gou.bean.UserRate;
 import com.example.king.gou.service.RetrofitService;
 import com.example.king.gou.utils.HttpEngine;
 import com.example.king.gou.utils.RxUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -62,6 +64,8 @@ public class AddNewTeamUserActivity extends AutoLayoutActivity implements View.O
     LinearLayout ShowRates;
     @BindView(R.id.default_show)
     LinearLayout defaultShow;
+
+    List<UserRate> rates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,18 +176,52 @@ public class AddNewTeamUserActivity extends AutoLayoutActivity implements View.O
                 if (rs.size() > 0) {
                     defaultShow.setVisibility(View.GONE);
                 }
+                rates = new ArrayList<>();
+
                 for (Map.Entry<String, Object> entry : rs.entrySet()) {
                     View view = LayoutInflater.from(this).inflate(R.layout.item_rates, null);
                     TextView Rate = (TextView) view.findViewById(R.id.Rate);
                     TextView RateNum = (TextView) view.findViewById(R.id.RateNum);
                     Log.d("ShowRates", entry.getKey() + "  " + entry.getValue());
-                    Rate.setText(entry.getKey());
-                    RateNum.setText(entry.getValue() + "");
-                    ShowRates.addView(view);
+                    UserRate userRate = new UserRate();
+                    userRate.setRate(entry.getKey());
+                    userRate.setRateNum((String) entry.getValue());
+                    rates.add(userRate);
                 }
+
+                for (int i = 0; i < rates.size(); i++) {
+                    if (rates.get(i).getRate().equals("13.00")) {
+                        SetLinear(i, 0);
+                    }
+                    if (rates.get(i).getRate().equals("12.90")) {
+                        SetLinear(i, 1);
+                    }
+                    if (rates.get(i).getRate().equals("12.80")) {
+                        SetLinear(i, 2);
+                    }
+                    if (rates.get(i).getRate().equals("12.70")) {
+                        SetLinear(i, 3);
+                    }
+                    if (rates.get(i).getRate().equals("12.60")) {
+                        SetLinear(i, 4);
+                    }
+                    if (rates.get(i).getRate().equals("12.50")) {
+                        SetLinear(i, 5);
+                    }
+                }
+
             }
 
         }
+    }
+
+    private void SetLinear(int i, int index) {
+        View view = LayoutInflater.from(this).inflate(R.layout.item_rates, null);
+        TextView Rate = (TextView) view.findViewById(R.id.Rate);
+        TextView RateNum = (TextView) view.findViewById(R.id.RateNum);
+        Rate.setText(rates.get(i).getRate());
+        RateNum.setText(rates.get(i).getRateNum());
+        ShowRates.addView(view);
     }
 
     @Override

@@ -36,14 +36,14 @@ public class CheckRechargeActivity extends AutoLayoutActivity implements View.On
     @BindView(R.id.RechargeUser)
     TextView RechargeUser;
     private String answerSafePwd;
-    private int uid;
     private AlertView alertView2;
     // 一个自定义的布局，作为显示的内容
     View contentView2;
-
-
     private Intent intent;
+
+
     private String ruser;
+    private int uid;
     private double sreChargeMin;
     private double sreChargeMax;
 
@@ -109,6 +109,7 @@ public class CheckRechargeActivity extends AutoLayoutActivity implements View.On
                 }
                 if (!restultInfo.isRc()) {
                     Toasty.error(this, restultInfo.getMsg(), 2000).show();
+                    return;
                 }
 
             }

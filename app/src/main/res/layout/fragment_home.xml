@@ -47,23 +47,23 @@
         android:layout_below="@id/home_top"
         android:visibility="gone"></com.example.king.gou.utils.MainScrollUpAdvertisementView>
 
-    <com.example.king.gou.utils.AutoTextView
-        android:id="@+id/Autotext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/home_top"
-        android:visibility="gone"
-        android:background="@android:color/white"></com.example.king.gou.utils.AutoTextView>
+
 
     <com.jude.rollviewpager.RollPagerView
         android:id="@+id/home_viewpager"
         android:layout_width="fill_parent"
         android:layout_height="300px"
-
-        android:layout_below="@id/Autotext"
+        android:layout_below="@id/home_top"
         app:rollviewpager_play_delay="3000"></com.jude.rollviewpager.RollPagerView>
 
+    <com.example.king.gou.utils.AutoTextView
+        android:id="@+id/Autotext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/home_top"
 
+
+        ></com.example.king.gou.utils.AutoTextView>
     <com.example.king.gou.utils.MarqueeText
         android:id="@+id/test"
         android:layout_width="fill_parent"

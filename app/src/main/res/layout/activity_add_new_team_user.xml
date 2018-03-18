@@ -247,27 +247,29 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="150px"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/holo_blue_light"
                     android:padding="10px"
                     android:text="返点等级"
+                    android:gravity="center"
                     android:textColor="@android:color/white"
-                    android:textSize="30px" />
+                    android:textSize="25px" />
 
                 <View
                     android:background="@android:color/white"
-                    android:layout_width="150px"
+                    android:layout_width="120px"
                     android:layout_height="1px" />
 
                 <TextView
-                    android:layout_width="150px"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/holo_blue_light"
                     android:padding="10px"
                     android:text="剩余配额"
                     android:textColor="@android:color/white"
-                    android:textSize="30px" />
+                    android:textSize="25px" />
             </LinearLayout>
         </LinearLayout>
 
@@ -297,7 +299,7 @@
                         android:padding="10px"
                         android:text="没有需要配额的返点"
                         android:textColor="@android:color/black"
-                        android:textSize="30px" />
+                        android:textSize="25px" />
 
                     <TextView
                         android:layout_width="100px"
@@ -306,7 +308,7 @@
                         android:padding="10px"
                         android:text=""
                         android:textColor="@android:color/black"
-                        android:textSize="30px" />
+                        android:textSize="25px" />
 
                 </LinearLayout>
             </LinearLayout>

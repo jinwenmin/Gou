@@ -130,6 +130,7 @@ public class ActivityDetailsActivity extends AutoLayoutActivity implements HttpE
                     RetrofitService.getInstance().getActivityCheck(ActivityDetailsActivity.this, aid);
                     mExplosionField.explode(v);
                     v.setOnClickListener(null);
+                    RetrofitService.getInstance().getActivityNoticesView(ActivityDetailsActivity.this, aid);
                 }
             });
         }
@@ -148,8 +149,8 @@ public class ActivityDetailsActivity extends AutoLayoutActivity implements HttpE
             settings.setBuiltInZoomControls(true);
             ActivityWeb.setWebChromeClient(new WebChromeClient());
             settings.setDefaultTextEncodingName("UTF-8");
-            ActivityWeb.loadData(uc.getMsg(),"text/html;charset=utf-8",null);
-          //  ActivityWeb.loadDataWithBaseURL("", uc.getMsg(), "text/html", "utf-8", "");
+            ActivityWeb.loadData(uc.getMsg(), "text/html;charset=utf-8", null);
+            //  ActivityWeb.loadDataWithBaseURL("", uc.getMsg(), "text/html", "utf-8", "");
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 settings.setDisplayZoomControls(false);
             }
@@ -221,11 +222,13 @@ public class ActivityDetailsActivity extends AutoLayoutActivity implements HttpE
                 }
             }
         }
-        if (apiId == RetrofitService.API_ID_DRAWMONEY) {
+        if (apiId == RetrofitService.API_ID_DRAWMONEY || apiId == RetrofitService.API_ID_RECEIVE) {
             if (object != null) {
                 RestultInfo restultInfo = (RestultInfo) object;
+                RetrofitService.getInstance().getActivityNoticesView(ActivityDetailsActivity.this, aid);
                 if (restultInfo.isRc()) {
                     Toasty.success(this, restultInfo.getMsg(), 2000).show();
+
                     return;
                 }
                 if (!restultInfo.isRc()) {
@@ -250,7 +253,7 @@ public class ActivityDetailsActivity extends AutoLayoutActivity implements HttpE
     protected void onDestroy() {
         super.onDestroy();
         alid[0] = 0;
-        uc=null;
+        uc = null;
     }
 
     @Override
